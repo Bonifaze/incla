@@ -1,0 +1,157 @@
+@extends('layouts.mini')
+
+
+
+@section('pagetitle')
+    {{ $program->name }} {{ $level }} Level Courses
+@endsection
+
+
+@section('content')
+    <div class="content-wrapper">
+
+        <section class="content">
+            <div class="container-fluid">
+                <div class="col_full">
+
+                    @include('partialsv3.flash')
+                    <h1
+                        class="app-page-title text-uppercase h5 font-weight-bold p-2 mb-2 shadow-sm text-center text-success border">
+                        {{ $program->name }} {{ $level }} Level Courses
+                    </h1>
+
+                    <div class="card">
+                        <div class="table-responsive card-body">
+                            <table class="table table-striped">
+                                <thead>
+                                    <th>S/N</th>
+                                    <th>Code</th>
+                                    <th>Title</th>
+                                    <th>Hours</th>
+                                    <th>Host</th>
+                                    <th>Lecturer</th>
+                                    <th>Contact</th>
+                                    <th>Students</th>
+                                    <th>Status</th>
+                                    <th>Action</th>
+                                </thead>
+
+                                <tbody>
+                                    @foreach ($program_courses as $key => $program_course)
+                                        <tr>
+                                            <td> {{ $loop->iteration }}</td>
+                                            <td> {{ $program_course->course->code }}</td>
+                                            <td> {{ $program_course->course->title }}</td>
+                                            <td> {{ $program_course->hours }}</td>
+                                            <td> {{ $program_course->course->program->name }}</td>
+                                            <td> {{ $program_course->lecturer->full_name }}</td>
+                                            <td> {{ $program_course->lecturer->phone }}</td>
+                                            <td><a class="btn btn-primary" target="_blank"
+                                                    href="{{ route('program_course.students', base64_encode($program_course->id)) }}">
+                                                    List </a></td>
+
+                                            @if ($program_course->approval == 2)
+                                                <td> <a target="_blank"
+                                                        href="{{ route('program_course.result', base64_encode($program_course->id)) }}">
+                                                        View Result </a> </td>
+                                                <td>
+                                                    {!! Form::open([
+                                                        'method' => 'patch',
+                                                        'route' => 'program_course.approval',
+                                                        'id' => 'approvePCourseForm' . $program_course->id,
+                                                    ]) !!}
+                                                    {{ Form::hidden('program_course_id', $program_course->id) }}
+                                                    {{ Form::hidden('approval', '3') }}
+                                                    {{ Form::hidden('current', $program_course->approval) }}
+                                                    <button onclick="approvePCourse({{ $program_course->id }})"
+                                                        type="button"
+                                                        class="{{ $program_course->id }} btn btn-outline-success"> Approve
+                                                    </button>
+                                                    {!! Form::close() !!}
+                                                </td>
+                                            @elseif ($program_course->approval == 3)
+                                                <td> <a target="_blank"
+                                                        href="{{ route('program_course.result', base64_encode($program_course->id)) }}">
+                                                        View Result </a> </td>
+                                                <td>
+                                                    {!! Form::open([
+                                                        'method' => 'patch',
+                                                        'route' => 'program_course.approval',
+                                                        'id' => 'revokePCourseForm' . $program_course->id,
+                                                    ]) !!}
+                                                    {{ Form::hidden('program_course_id', $program_course->id) }}
+                                                    {{ Form::hidden('approval', '2') }}
+                                                    {{ Form::hidden('current', $program_course->approval) }}
+                                                    <button onclick="revokePCourse({{ $program_course->id }})"
+                                                        type="button"
+                                                        class="{{ $program_course->id }} btn btn-outline-warning"> Revoke
+                                                    </button>
+                                                    {!! Form::close() !!}
+                                                </td>
+                                            @else
+                                                <td> {{ $program_course->action }} </td>
+                                                <td> {{ $program_course->status }}</td>
+                                            @endif
+                                        </tr>
+                                    @endforeach
+
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+@endsection
+@section('pagescript')
+    <script src="{{ asset('dist/js/bootbox.min.js') }}"></script>
+
+    <script>
+        function approvePCourse(id) {
+            bootbox.dialog({
+                message: "<h4>Confirm you want to approve this course?</h4>",
+                buttons: {
+                    confirm: {
+                        label: 'Yes',
+                        className: 'btn-success',
+                        callback: function() {
+                            document.getElementById("approvePCourseForm" + id).submit();
+                        }
+                    },
+                    cancel: {
+                        label: 'No',
+                        className: 'btn-danger',
+                    }
+                },
+                callback: function(result) {}
+
+            });
+            // e.preventDefault(); // avoid to execute the actual submit of the form if onsubmit is used.
+        }
+    </script>
+
+    <script>
+        function revokePCourse(id) {
+            bootbox.dialog({
+                message: "<h4>Confirm you want to revoke this course approval?</h4>",
+                buttons: {
+                    confirm: {
+                        label: 'Yes',
+                        className: 'btn-success',
+                        callback: function() {
+                            document.getElementById("revokePCourseForm" + id).submit();
+                        }
+                    },
+                    cancel: {
+                        label: 'No',
+                        className: 'btn-danger',
+                    }
+                },
+                callback: function(result) {}
+
+            });
+            // e.preventDefault(); // avoid to execute the actual submit of the form if onsubmit is used.
+        }
+    </script>
+@endsection

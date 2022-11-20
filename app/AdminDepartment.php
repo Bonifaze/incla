@@ -1,0 +1,38 @@
+<?php
+
+namespace App;
+
+use Illuminate\Database\Eloquent\Model;
+
+class AdminDepartment extends Model
+{
+    //
+    public function parent()
+    {
+        return $this->belongsTo('App\AdminDepartment', 'parent_id');
+    }
+    
+    public function staff()
+    {
+        return $this->hasMany('App\StaffWorkprofile');
+    }
+    
+    public function academics()
+    {
+        if($this->academic_department_id != 0){
+            $academic = AcademicDepartment::find($this->academic_department_id);
+        }
+        else {
+            $academic = AcademicDepartment::find(1000);
+        }
+        return $academic;
+    }
+    
+    public function academic()
+    {
+        return $this->belongsTo('App\AcademicDepartment', 'academic_department_id');
+    }
+    
+   
+    
+}

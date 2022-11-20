@@ -1,0 +1,52 @@
+<?php
+
+
+Route::get('/rbac/create-role', 'RolesController@create')->name('rbac.create-role');
+
+Route::post('/rbac/store-role', 'RolesController@store')->name('rbac.store-role');
+
+Route::get('/rbac/edit-role/{id}', 'RolesController@edit')->name('rbac.edit-role');
+
+Route::patch('/rbac/edit-role/{id}', 'RolesController@update')->name('rbac.update-role');
+
+Route::get('/rbac/list-roles', 'RolesController@index')->name('rbac.list-roles');
+
+Route::get('/rbac/show-role/{id}', 'RolesController@show')->name('rbac.show-role');
+
+Route::patch('/rbac/delete-role', 'RolesController@delete')->name('rbac.delete-role');
+
+
+
+Route::get('/rbac/create-perm', 'PermissionsController@create')->name('rbac.create-perm');
+
+Route::post('/rbac/store-perm', 'PermissionsController@store')->name('rbac.store-perm');
+
+Route::get('/rbac/edit-perm/{id}', 'PermissionsController@edit')->name('rbac.edit-perm');
+
+Route::patch('/rbac/edit-perm/{id}', 'PermissionsController@update')->name('rbac.update-perm');
+
+Route::get('/rbac/list-perms', 'PermissionsController@index')->name('rbac.list-perms');
+
+Route::patch('/rbac/delete-perm', 'PermissionsController@delete')->name('rbac.delete-perm');
+
+
+
+Route::post('/rbac/assign-perm', 'RolesController@assignPermission')->name('rbac.assign-perm');
+
+Route::post('/rbac/remove-perm', 'RolesController@removePermission')->name('rbac.remove-perm');
+
+
+Route::post('/rbac/assign-role', 'UsersController@assignRole')->name('rbac.assign-role');
+
+Route::post('/rbac/remove-role', 'UsersController@removeRole')->name('rbac.remove-role');
+
+
+Route::post('/rbac/assign-role', 'StaffController@assignRole')->name('rbac.assign-role');
+
+Route::post('/rbac/remove-role', 'StaffController@removeRole')->name('rbac.remove-role');
+
+
+Route::get('/rbac/refresh-student-password', 'PermissionsController@refreshStudentPassword')->name('rbac.refreshstudentpassword');
+
+Route::post('/rbac/reset-student-password', 'PermissionsController@resetStudentPassword')->name('rbac.resetstudentpassword');
+
