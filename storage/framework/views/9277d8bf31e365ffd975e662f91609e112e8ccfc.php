@@ -1,0 +1,1 @@
+<?php /**PATH C:\Users\Lawrence Chris\Desktop\laraproject\resources\views/spartials/footer.blade.php ENDPATH**/ ?>

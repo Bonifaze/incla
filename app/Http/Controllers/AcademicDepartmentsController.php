@@ -42,7 +42,7 @@ class AcademicDepartmentsController extends Controller
         $departments = AcademicDepartment::with(['college','programs'])->orderBy('status','ASC')->orderBy('name','ASC')->paginate(40);
         return view('academia.departments.list',compact('departments'));
     }
-    
+
     public function create()
     {
         //
@@ -50,17 +50,17 @@ class AcademicDepartmentsController extends Controller
         $colleges = College::with('departments')->orderBy('name','ASC')->pluck('name','id');
       return view('academia.departments.create', compact('colleges'));
     }
-    
+
     public function edit($id)
     {
         $this->authorize('edit',AcademicDepartment::class);
         $department = AcademicDepartment::findOrFail($id);
         $colleges = College::with('departments')->orderBy('name','ASC')->pluck('name','id');
         return view('academia.departments.edit', compact('department','colleges'));
-        
+
     }
-    
-    
+
+
     /**
      * Store a newly created resource in storage.
      *
@@ -78,7 +78,7 @@ class AcademicDepartmentsController extends Controller
         $department->name = $request->name;
         $department->college_id = $request->college_id;
         $department->status = 1;
-        
+
         try{
             $department->save();
         } // end try
@@ -87,12 +87,12 @@ class AcademicDepartmentsController extends Controller
             $request->session()->flash('error', 'Error creating Academic Department ! <br />');
             return redirect()->route('academia.department.create');
         }
-        
+
         return redirect()->route('academia.department.list')
         ->with('success','New Academic Department created successfully');
     }  // end store
 
-    
+
     public function update(Request $request, $id)
     {
         $this->authorize('edit',AcademicDepartment::class);
@@ -105,7 +105,7 @@ class AcademicDepartmentsController extends Controller
         $department->name = $request->name;
         $department->college_id = $request->college_id;
         $department->status = $request->status;
-        
+
         try{
             $department->save();
         } // end try
@@ -114,12 +114,12 @@ class AcademicDepartmentsController extends Controller
             $request->session()->flash('error', 'Error editing Academic Department ! <br />');
             return redirect()->route('academia.department.edit', $id);
         }
-        
+
         return redirect()->route('academia.department.list')
         ->with('success','Academic Department edited successfully');
     }  // end update
 
-    
+
     public function delete(Request $request)
     {
         $this->authorize('delete',AcademicDepartment::class);
@@ -130,7 +130,7 @@ class AcademicDepartmentsController extends Controller
             $request->session()->flash('error', 'Error deleting Department. Programs exist under this Department !');
             return redirect()->route('academia.department.list');
         }
-        
+
         try{
             $department->delete();
         } // end try
@@ -141,7 +141,7 @@ class AcademicDepartmentsController extends Controller
         }
         return redirect()->route('academia.department.list')
         ->with('success','Department deleted successfully');
-        
+
     } // end delete
 
 

@@ -38,12 +38,14 @@ class AdminStudentsController extends Controller
      *
      * @return void
      */
+
     public function __construct()
     {
         $this->middleware('auth:staff');
+        //$this->middleware('auth:student');
     }
 
- /**
+   /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
@@ -295,7 +297,7 @@ class AdminStudentsController extends Controller
 
     public function show($id)
     {
-        // $this->authorize('show',Student::class);
+        $this->authorize('show',Student::class);
         $student = Student::findOrFail($id);
         $contact = $student->contact;
         $academic = $student->academic;
