@@ -86,7 +86,7 @@
                 <div class="card-footer">
 
 
-							<?php echo e(Form::submit('Create Department', array('class' => 'btn btn-primary'))); ?>
+							<?php echo e(Form::submit('Create Department', array('class' => 'btn btn-success'))); ?>
 
 
 

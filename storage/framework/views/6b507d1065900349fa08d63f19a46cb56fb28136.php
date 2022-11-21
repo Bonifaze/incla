@@ -1,17 +1,3 @@
-<?php
-
-if(!session('adminId'))
-{
-
-  header('location: /adminLogin');
-  exit;
-}
-?>
-
-
-
-
-
 <?php $__env->startSection('pagetitle'); ?>
     Staff Home
 <?php $__env->stopSection(); ?>
@@ -48,12 +34,10 @@ if(!session('adminId'))
                 <div class="col_full">
                     <h1
                         class="app-page-title text-uppercase h5 font-weight-bold p-2 mb-2 shadow-sm text-center text-success border">
-                    Score Upload
+                    Courses Score
                     </h1>
 
-                    <div class="card shadow border border-success">
-
-     <div class="row mb-4">
+                       <div class="row mb-4">
                     <div class="col-12">
                         <div class="card">
                             <div class="card-body">
@@ -76,7 +60,7 @@ if(!session('adminId'))
 
                                         </div>
                                     <?php endif; ?>
-                                    <form method="post" action="/admin/upload">
+                                    <form method="post" action="/admin/scores/approve">
                                         <?php echo csrf_field(); ?>
                                         <div class="table-responsive mt-5 mb-4">
                                             <table class="table table-bordered table-striped table-hover">
@@ -107,17 +91,11 @@ if(!session('adminId'))
                                                                     name="reg_ids[]" value="<?php echo e($student_course->id); ?>"></td>
                                                             <td><?php echo e($student_course->student_matric); ?></td>
                                                             <td><?php echo e($student_course->course_code); ?></td>
-                                                            <td><input type="number" name="ca_scores[]"
-                                                                    value="<?php echo e($student_course->ca_score); ?>"
-                                                                    id="<?php echo e('ca' . $student_course->student_id); ?>"
-                                                                    class="form-control"></td>
-                                                            <td><input type="number" name="exam_scores[]"
-                                                                    value="<?php echo e($student_course->exam_score); ?>"
-                                                                    id="<?php echo e('exam' . $student_course->student_id); ?>"
-                                                                    class="form-control"></td>
-                                                            <td><input type="number" name="total_scores[]"
-                                                                    value="<?php echo e($student_course->ca_score + $student_course->exam_score); ?>"
-                                                                    class="form-control" readonly></td>
+                                                            <td><?php echo e($student_course->ca_score); ?></td>
+                                                            <td><?php echo e($student_course->exam_score); ?></td>
+                                                            <td><?php echo e($student_course->ca_score + $student_course->exam_score); ?>
+
+                                                            </td>
                                                             <td><?php echo e($student_course->grade); ?></td>
                                                         </tr>
                                                     <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
@@ -125,8 +103,10 @@ if(!session('adminId'))
                                             </table>
                                         </div>
                                         <div class="mb-4">
-                                            <button type="submit" name="button" class="btn btn-success">Save & submit for
-                                                approval</button>
+                                            <button type="submit" name="button" class="btn btn-success">Approve
+                                                Scores</button>
+                                            <a href="/admin/scores/decline/<?php echo e($course->id); ?>"
+                                                class="btn btn-danger">Decline Scores</a>
                                         </div>
                                     </form>
                                 </div>
@@ -135,8 +115,6 @@ if(!session('adminId'))
                     </div>
                 </div>
 
-
-                    </div>
                 </div>
 
             </div>
@@ -148,4 +126,4 @@ if(!session('adminId'))
     <script src="<?php echo asset('dist/js/bootbox.min.js'); ?>"></script>
 <?php $__env->stopSection(); ?>
 
-<?php echo $__env->make('layouts.mini', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH C:\Users\Lawrence Chris\Desktop\laraproject\resources\views/results/scores_upload.blade.php ENDPATH**/ ?>
+<?php echo $__env->make('layouts.mini', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH C:\Users\Lawrence Chris\Desktop\laraproject\resources\views/results/view_scores.blade.php ENDPATH**/ ?>

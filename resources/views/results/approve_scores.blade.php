@@ -1,77 +1,94 @@
-@php
+@extends('layouts.mini')
 
-if(!session('adminId'))
-{
 
-  header('location: /adminLogin');
-  exit;
-}
-@endphp
-@extends('layouts.app')
+
+@section('pagetitle')
+    Staff Home
+@endsection
+
+
+
+<!-- Sidebar Links -->
+
+<!-- Treeview -->
+@section('staff-open')
+    menu-open
+@endsection
+
+@section('staff')
+    active
+@endsection
+
+<!-- Page -->
+@section('staff-home')
+    active
+@endsection
+
+<!-- End Sidebar links -->
+
+
 
 @section('content')
+    <div class="content-wrapper bg-white">
 
-<!-- Page Wrapper -->
-<div id="wrapper">
+        <!-- Main content -->
+        <section class="content">
+            <div class="container-fluid">
+                <!-- left column -->
+                <div class="col_full">
+                    <h1
+                        class="app-page-title text-uppercase h5 font-weight-bold p-2 mb-2 shadow-sm text-center text-success border">
+               Staff Courses Result
+                    </h1>
 
-    @include('layouts.sidebar')
-    <!-- Content Wrapper -->
-    <div id="content-wrapper" class="d-flex flex-column">
-
-        <!-- Begin Page Content -->
-        <div class="container-fluid p-5">
-
-            <!-- Page Heading -->
-            <!-- <div class="d-sm-flex align-items-center justify-content-between mb-4">
-                <h1 class="h5 mb-2 p-2 fw-bold text-capitalize text-success">Administrator Dashboard</h1>
-            </div> -->
-
-            <div class="row mb-4">
-                <div class="col-12">
-                    <div class="card">
-                        <div class="card-body">
-                            <div class="body">
-                                <h4 class="card-title">
-                                    Staff Course
-                                </h4>
-                                <div class="table-responsive mt-5">
-                                    <table class="table table-bordered table-striped table-hover tbl">
-                                        <thead>
-                                            <tr>
-                                                <th>#</th>
-                                                <th>Course Title</th>
-                                                <th>Course Code</th>
-                                                <th>Approval Status</th>
-                                                <th>Action</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            @foreach ($staff_courses as $staff_course)
+                <div class="row mb-4">
+                    <div class="col-12">
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="body">
+                                    {{--  <h4 class="card-title">
+                                        Staff Course
+                                    </h4>  --}}
+                                    <div class="table-responsive mt-5">
+                                        <table class="table table-bordered table-striped table-hover tbl">
+                                            <thead>
                                                 <tr>
-                                                    <td>{{ $loop->iteration }}</td>
-                                                    <td>{{ $staff_course->course_title }}</td>
-                                                    <td>{{ $staff_course->course_code }}</td>
-                                                    <td>{{ $staff_course->approval_status }}</td>
-                                                    <td><a href="{{ route('admin.view_scores', $staff_course->course_id) }}" class="btn btn-primary">View Scores</a></td>
+                                                    <th>#</th>
+                                                    <th>Course Title</th>
+                                                    <th>Course Code</th>
+                                                    <th>Approval Status</th>
+                                                    <th>Action</th>
                                                 </tr>
-                                            @endforeach
-                                        </tbody>
-                                    </table>
+                                            </thead>
+                                            <tbody>
+                                                @foreach ($staff_courses as $staff_course)
+                                                    <tr>
+                                                        <td>{{ $loop->iteration }}</td>
+                                                        <td>{{ $staff_course->course_title }}</td>
+                                                        <td>{{ $staff_course->course_code }}</td>
+                                                        <td>{{ $staff_course->approval_status }}</td>
+                                                        <td><a href="{{ route('admin.view_scores', $staff_course->course_id) }}"
+                                                                class="btn btn-primary">View Scores</a></td>
+                                                    </tr>
+                                                @endforeach
+                                            </tbody>
+                                        </table>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
+
+
+
+                </div>
+
             </div>
-
-
-            <!-- Footer -->
-            <!--  -->
-            <!-- End of Footer -->
-
-        </div>
-
+        </section>
     </div>
-    <!-- End of Content Wrapper -->
+@endsection
 
-    @endsection
+@section('pagescript')
+    <script src="<?php echo asset('dist/js/bootbox.min.js'); ?>"></script>
+@endsection

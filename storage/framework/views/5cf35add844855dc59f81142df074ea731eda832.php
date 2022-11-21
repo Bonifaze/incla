@@ -74,7 +74,7 @@
                     <ul class="nav nav-treeview">
 
                         <li class="nav-item ml-4">
-                            <a href="<?php echo e(route('staff.courses')); ?>" class="nav-link <?php echo $__env->yieldContent('staff-courses'); ?>">
+                            <a href="/admin/upload" class="nav-link <?php echo $__env->yieldContent('staff-courses'); ?>">
                                 <i class="fas fa-book-open nav-icon"></i>
                                 <p>My Courses</p>
                             </a>

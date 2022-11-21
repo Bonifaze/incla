@@ -1,13 +1,3 @@
-@php
-
-if(!session('adminId'))
-{
-
-  header('location: /adminLogin');
-  exit;
-}
-@endphp
-
 @extends('layouts.mini')
 
 
@@ -48,12 +38,10 @@ if(!session('adminId'))
                 <div class="col_full">
                     <h1
                         class="app-page-title text-uppercase h5 font-weight-bold p-2 mb-2 shadow-sm text-center text-success border">
-                    Score Upload
+                    Courses Score
                     </h1>
 
-                    <div class="card shadow border border-success">
-
-     <div class="row mb-4">
+                       <div class="row mb-4">
                     <div class="col-12">
                         <div class="card">
                             <div class="card-body">
@@ -73,7 +61,7 @@ if(!session('adminId'))
                                             {{ session()->get('success') }}
                                         </div>
                                     @endif
-                                    <form method="post" action="/admin/upload">
+                                    <form method="post" action="/admin/scores/approve">
                                         @csrf
                                         <div class="table-responsive mt-5 mb-4">
                                             <table class="table table-bordered table-striped table-hover">
@@ -104,17 +92,10 @@ if(!session('adminId'))
                                                                     name="reg_ids[]" value="{{ $student_course->id }}"></td>
                                                             <td>{{ $student_course->student_matric }}</td>
                                                             <td>{{ $student_course->course_code }}</td>
-                                                            <td><input type="number" name="ca_scores[]"
-                                                                    value="{{ $student_course->ca_score }}"
-                                                                    id="{{ 'ca' . $student_course->student_id }}"
-                                                                    class="form-control"></td>
-                                                            <td><input type="number" name="exam_scores[]"
-                                                                    value="{{ $student_course->exam_score }}"
-                                                                    id="{{ 'exam' . $student_course->student_id }}"
-                                                                    class="form-control"></td>
-                                                            <td><input type="number" name="total_scores[]"
-                                                                    value="{{ $student_course->ca_score + $student_course->exam_score }}"
-                                                                    class="form-control" readonly></td>
+                                                            <td>{{ $student_course->ca_score }}</td>
+                                                            <td>{{ $student_course->exam_score }}</td>
+                                                            <td>{{ $student_course->ca_score + $student_course->exam_score }}
+                                                            </td>
                                                             <td>{{ $student_course->grade }}</td>
                                                         </tr>
                                                     @endforeach
@@ -122,8 +103,10 @@ if(!session('adminId'))
                                             </table>
                                         </div>
                                         <div class="mb-4">
-                                            <button type="submit" name="button" class="btn btn-success">Save & submit for
-                                                approval</button>
+                                            <button type="submit" name="button" class="btn btn-success">Approve
+                                                Scores</button>
+                                            <a href="/admin/scores/decline/{{ $course->id }}"
+                                                class="btn btn-danger">Decline Scores</a>
                                         </div>
                                     </form>
                                 </div>
@@ -132,8 +115,6 @@ if(!session('adminId'))
                     </div>
                 </div>
 
-
-                    </div>
                 </div>
 
             </div>

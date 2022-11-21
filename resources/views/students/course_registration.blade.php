@@ -69,6 +69,7 @@
 
                             </div>
 
+
                         </div>
                         <table class="table table-bordered table-striped" width="100%" cellspacing="0">
                             <thead>
@@ -87,8 +88,8 @@
                                     @php
                                         $tatolCredits = 0;
                                     @endphp
-                                    <input id="" type="text" name="student_id" value="{{ Auth::guard('student')->user()->id }}">
-                                    <input id="" type="text" name="session" value="{{ $session->id }}">
+                                    <input id="" type="hidden" name="student_id" value="{{ Auth::guard('student')->user()->id }}">
+                                    <input id="" type="hidden" name="session" value="{{ $session->id }}">
                                     {{--  <input id="" type>  --}}
                                     {{--  <input id="" type="text"  name="session" value="{{ $prevsession }}" >  --}}
 
@@ -107,6 +108,8 @@
                                                         onclick="{{ $course->course_category == 1 ? 'return false' : 'totalIt()' }}">
                                                     <input type="hidden" name="course_units1[]"
                                                         value="{{ $course->credit_unit }}">
+                                                        <input type="hidden" name="course_semester[]"
+                                                    value="{{ $course->semester }}">
                                                 </td>
                                                 <td>{{ $course->course_code }}</td>
                                                 <td>{{ $course->course_title }}</td>
@@ -140,7 +143,7 @@
                                 @php
                                     $tatolCredits = 0;
                                 @endphp
-                                <input id="" type="text" name="student_id" value="{{ Auth::guard('student')->user()->id }}">
+                                <input id="" type="hidden" name="student_id" value="{{ Auth::guard('student')->user()->id }}">
                                 <input id="" type="hidden" name="session" value="{{ $session->id }}">
                                 {{--  <input id="" type="text"  name="session" value="{{ $prevsession }}" >  --}}
 
@@ -159,6 +162,8 @@
                                                     onclick="{{ $course->course_category == 1 ? 'return false' : 'totalIt2()' }}">
                                                 <input type="hidden" name="course_units2[]"
                                                     value="{{ $course->credit_unit }}">
+                                                    <input type="hidden" name="course_semester[]"
+                                                    value="{{ $course->semester }}">
                                             </td>
                                             <td>{{ $course->course_code }}</td>
                                             <td>{{ $course->course_title }}</td>
@@ -211,6 +216,8 @@
                                                         value="{{ $course->id }}" onclick=totalIt()>
                                                     <input type="hidden" name="course_units1[]"
                                                         value="{{ $course->credit_unit }}">
+                                                        <input type="hidden" name="course_semester[]"
+                                                    value="{{ $course->semester }}">
                                                 </td>
                                                 <td>{{ $course->course_code }}</td>
                                                 <td>{{ $course->course_title }}</td>
@@ -255,6 +262,8 @@
                                                         value="{{ $course->id }}" onclick=totalIt2()>
                                                     <input type="hidden" name="course_units2 []"
                                                         value="{{ $course->credit_unit }}">
+                                                        <input type="hidden" name="course_semester[]"
+                                                    value="{{ $course->semester }}">
                                                 </td>
                                                 <td>{{ $course->course_code }}</td>
                                                 <td>{{ $course->course_title }}</td>
@@ -311,9 +320,9 @@
                                 <form name=form1 method=post action="/dropcourse-reg">
                                     @csrf
 
-                                    <input id="" type="text" name="student_id"
+                                    <input id="" type="hidden" name="student_id"
                                         value="{{ Auth::guard('student')->user()->id }}">
-                                    <input id="" type="text" name="session" value="{{ $session->id }}">
+                                    <input id="" type="hidden" name="session" value="{{ $session->id }}">
                                     {{--  <input id="" type="text"  name="session" value="{{ $prevsession }}" >  --}}
 
                                     @php

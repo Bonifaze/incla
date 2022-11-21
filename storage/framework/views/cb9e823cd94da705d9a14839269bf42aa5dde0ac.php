@@ -66,6 +66,7 @@
 
                             </div>
 
+
                         </div>
                         <table class="table table-bordered table-striped" width="100%" cellspacing="0">
                             <thead>
@@ -84,8 +85,8 @@
                                     <?php
                                         $tatolCredits = 0;
                                     ?>
-                                    <input id="" type="text" name="student_id" value="<?php echo e(Auth::guard('student')->user()->id); ?>">
-                                    <input id="" type="text" name="session" value="<?php echo e($session->id); ?>">
+                                    <input id="" type="hidden" name="student_id" value="<?php echo e(Auth::guard('student')->user()->id); ?>">
+                                    <input id="" type="hidden" name="session" value="<?php echo e($session->id); ?>">
                                     
                                     
 
@@ -105,6 +106,8 @@
                                                         onclick="<?php echo e($course->course_category == 1 ? 'return false' : 'totalIt()'); ?>">
                                                     <input type="hidden" name="course_units1[]"
                                                         value="<?php echo e($course->credit_unit); ?>">
+                                                        <input type="hidden" name="course_semester[]"
+                                                    value="<?php echo e($course->semester); ?>">
                                                 </td>
                                                 <td><?php echo e($course->course_code); ?></td>
                                                 <td><?php echo e($course->course_title); ?></td>
@@ -138,7 +141,7 @@
                                 <?php
                                     $tatolCredits = 0;
                                 ?>
-                                <input id="" type="text" name="student_id" value="<?php echo e(Auth::guard('student')->user()->id); ?>">
+                                <input id="" type="hidden" name="student_id" value="<?php echo e(Auth::guard('student')->user()->id); ?>">
                                 <input id="" type="hidden" name="session" value="<?php echo e($session->id); ?>">
                                 
 
@@ -158,6 +161,8 @@
                                                     onclick="<?php echo e($course->course_category == 1 ? 'return false' : 'totalIt2()'); ?>">
                                                 <input type="hidden" name="course_units2[]"
                                                     value="<?php echo e($course->credit_unit); ?>">
+                                                    <input type="hidden" name="course_semester[]"
+                                                    value="<?php echo e($course->semester); ?>">
                                             </td>
                                             <td><?php echo e($course->course_code); ?></td>
                                             <td><?php echo e($course->course_title); ?></td>
@@ -210,6 +215,8 @@
                                                         value="<?php echo e($course->id); ?>" onclick=totalIt()>
                                                     <input type="hidden" name="course_units1[]"
                                                         value="<?php echo e($course->credit_unit); ?>">
+                                                        <input type="hidden" name="course_semester[]"
+                                                    value="<?php echo e($course->semester); ?>">
                                                 </td>
                                                 <td><?php echo e($course->course_code); ?></td>
                                                 <td><?php echo e($course->course_title); ?></td>
@@ -249,6 +256,8 @@
                                                         value="<?php echo e($course->id); ?>" onclick=totalIt2()>
                                                     <input type="hidden" name="course_units2 []"
                                                         value="<?php echo e($course->credit_unit); ?>">
+                                                        <input type="hidden" name="course_semester[]"
+                                                    value="<?php echo e($course->semester); ?>">
                                                 </td>
                                                 <td><?php echo e($course->course_code); ?></td>
                                                 <td><?php echo e($course->course_title); ?></td>
@@ -299,9 +308,9 @@
                                 <form name=form1 method=post action="/dropcourse-reg">
                                     <?php echo csrf_field(); ?>
 
-                                    <input id="" type="text" name="student_id"
+                                    <input id="" type="hidden" name="student_id"
                                         value="<?php echo e(Auth::guard('student')->user()->id); ?>">
-                                    <input id="" type="text" name="session" value="<?php echo e($session->id); ?>">
+                                    <input id="" type="hidden" name="session" value="<?php echo e($session->id); ?>">
                                     
 
                                     <?php
