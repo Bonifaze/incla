@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AdminController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 //use Symfony\Component\Routing\Route;
@@ -26,6 +27,9 @@ Route::post('/api/students/remita/confirm', 'APIController@confirmationNotificat
 Route::post('/api/test', 'APIController@test')->name('api.test');
 
 Auth::routes();
+
+
+
 
 //Authentication Staff Routes
 Route::get('/staff/login', 'Auth\StaffLoginController@showLoginForm')->name('staff.login');

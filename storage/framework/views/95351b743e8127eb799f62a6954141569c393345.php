@@ -76,6 +76,11 @@
             <a id="dropdownSubMenu1" style="color: #218c74;" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
                 class="nav-link dropdown-toggle">Results</a>
             <ul aria-labelledby="dropdownSubMenu1" class="dropdown-menu border-0 shadow">
+               <li><a href="/admin/upload" class="dropdown-item">Staff Score Upload </a></li>
+                <li><a href="admin/approved-score" class="dropdown-item">Approved Result
+                        </a></li>
+                         <li><a href="admin/compute" class="dropdown-item">Compute Result
+                        </a></li>
                 
 
 

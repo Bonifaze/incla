@@ -89,6 +89,7 @@
                                     @endphp
                                     <input id="" type="text" name="student_id" value="{{ Auth::guard('student')->user()->id }}">
                                     <input id="" type="text" name="session" value="{{ $session->id }}">
+                                    {{--  <input id="" type>  --}}
                                     {{--  <input id="" type="text"  name="session" value="{{ $prevsession }}" >  --}}
 
                                     @foreach ($courseFirst as $key => $course)

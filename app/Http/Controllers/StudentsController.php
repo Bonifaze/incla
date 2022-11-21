@@ -9,6 +9,7 @@ use App\Student;
 use App\StudentDebt;
 use App\ProgramCourse;
 use App\StudentResult;
+use App\StudentAcademic;
 use App\EvaluationResult;
 use App\EvaluationQuestion;
 use Illuminate\Http\Request;
@@ -177,7 +178,8 @@ class StudentsController extends Controller
         if ($student->academic->level ==100)
         {
             //first semester
-            $courseFirst = DB::table('courses')->where('program_id', $student->academic->program_id)
+            // $courseFirst = DB::table('courses')->where('program_id', $student->academic->program_id);
+            $courseFirst = DB::table('program_courses')->where('program_id', $student->academic->program_id)
             ->where('level',$student->academic->level )
             ->where('semester', 1)
             ->orderBy('course_category','ASC')
@@ -345,6 +347,7 @@ class StudentsController extends Controller
             ->leftJoin('colleges', 'colleges.id', '=', 'academic_departments.college_id' )
             // ->where('semester', 1)
             ->orderBy('level','ASC')
+            ->select('registered_courses.*', 'courses.program_id','courses.credit_unit', 'courses.course_title', 'courses.course_code','courses.course_category', 'programs.*', 'academic_departments.*', 'colleges.*')
             ->get();
 
                return view('students.course_registration', compact('courseFirst','courseSecond','session', 'lowercourseFirst' ,'lowercourseSecond' ,'courseform'));
@@ -358,7 +361,11 @@ class StudentsController extends Controller
 
     public function course_Reg(Request $req)
 {
-    // $student = Auth::guard('student')->user();
+     $student = Auth::guard('student')->user();
+    //  $contact = $student->contact;
+
+    //  $academic = $student->academic;
+
 
     $courses = $req->courses;
     $num_coourses = count($courses);
@@ -371,24 +378,30 @@ class StudentsController extends Controller
 
 
 
-    $studentCreditLoads = StudentCreditLoad::where('student_id', $req->student_id)->get();
-    $firstSemesterLoad = '';
-    $secondSemesterLoad = '';
+    // $studentCreditLoads = StudentCreditLoad::where('student_id', $req->student_id)->get();
+    // $firstSemesterLoad = '';
+    // $secondSemesterLoad = '';
 
-    foreach($studentCreditLoads as $student_credit_load)
-    {
-        if ($student_credit_load->semester == 1)
-        {
-            $firstSemesterLoad = $student_credit_load->credit_load;
-        }else{
-            $secondSemesterLoad = $student_credit_load->credit_load;
-        }
-    }
+    // foreach($studentCreditLoads as $student_credit_load)
+    // {
+    //     if ($student_credit_load->semester == 1)
+    //     {
+    //         $firstSemesterLoad = $student_credit_load->credit_load;
+    //     }else{
+    //         $secondSemesterLoad = $student_credit_load->credit_load;
+    //     }
+    // }
+
+    $student_aca = StudentAcademic::where('student_id', $student->id)->first();
+    // $student_aca = StudentAcademic::where('student_id', session('userid'))->first();
+    $firstSemesterLoad = $student_aca->first_semester_load;
+    $secondSemesterLoad = $student_aca->second_semester_load;
 
     $student_registered_courses = RegisteredCourse::where('student_id', $req->student_id)
     ->where('session', $req->session)->get();
     $total_reg_units1 = [];
     $total_reg_units2 = [];
+    // dd($total_reg_units1);
 
     foreach ($student_registered_courses as $student_registered_course)
     {
@@ -404,6 +417,7 @@ class StudentsController extends Controller
     $total_reg_units2 = array_sum($total_reg_units2);
     $student_courses = [];
 
+
     // $lowercourses = $req->lowercourses;
     try {
 
@@ -413,6 +427,8 @@ class StudentsController extends Controller
                 "course_id" => $courses[$x],
                 "student_id" => $req->student_id,
                 "session" => $req->session,
+                "program_id"=>  $student->academic->program_id,
+                "level"=>  $student->academic->level
 
             ];
 

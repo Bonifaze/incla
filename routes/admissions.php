@@ -1,5 +1,5 @@
 <?php
-
+use App\Http\Controllers\AdminController;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Route;
 
@@ -18,6 +18,19 @@ Route::get('/clear-cache', function () {
     $exitCode = Artisan::call('config-cache');
     return 'DONE';
 });
+
+Route::prefix('/admin')->group(function () {
+    Route::get('upload', [AdminController::class, 'courseUpload'])->name('admin.course_upload');
+    Route::get('upload/{course_id}', [AdminController::class, 'scoresUpload'])->name('admin.scores_upload');
+    Route::post('upload', [AdminController::class, 'uploadScores'])->name('admin.upload_scores');
+    Route::get('approve-scores', [AdminController::class, 'approveScores'])->name('admin.approve_scores');
+    Route::get('approve-scores/view/{course_id}', [AdminController::class, 'viewScores'])->name('admin.view_scores');
+    Route::post('/scores/approve', [AdminController::class, 'approve'])->name('admin.approve');
+    Route::get('/scores/decline/{staff_course_id}', [AdminController::class, 'decline'])->name('admin.decline');
+    Route::get('/compute', [AdminController::class, 'showCompute'])->name('admin.show_compute');
+    Route::post('/compute', [AdminController::class, 'compute'])->name('admin.compute');
+});
+
 
 //Registration Route
 Route::get('/register', function () {

@@ -87,6 +87,7 @@
                                     <input id="" type="text" name="student_id" value="<?php echo e(Auth::guard('student')->user()->id); ?>">
                                     <input id="" type="text" name="session" value="<?php echo e($session->id); ?>">
                                     
+                                    
 
                                     <?php $__currentLoopData = $courseFirst; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $key => $course): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                         <?php if($course->is_registered == 0): ?>

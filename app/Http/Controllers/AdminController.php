@@ -4,20 +4,144 @@ namespace App\Http\Controllers;
 
 use App\Remita;
 use App\FeeType;
+use App\Program;
+use App\Session;
 use App\programs;
 use App\subjects;
 use Carbon\Carbon;
 use App\Models\fee_types;
 use App\Mail\Confirmsignup;
+use App\Models\StaffCourse;
+use App\Models\GradeSetting;
 use Illuminate\Http\Request;
+use App\Models\RegisteredCourse;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
+use App\Computations\ResultComputation;
 use Illuminate\Database\QueryException;
 use Illuminate\Support\Facades\Redirect;
 
 class AdminController extends Controller
 {
+    protected $resultComputation;
+
+    public function __construct(ResultComputation $resultComputation)
+    {
+        $this->resultComputation = $resultComputation;
+    }
+
+    public function courseUpload()
+    {
+        $staff_courses = StaffCourse::all();
+        return view('results.course_upload', ['staff_courses' => $staff_courses]);
+    }
+
+    public function scoresupload($course_id)
+    {
+        $course = StaffCourse::where('id', $course_id)->first();
+        $student_registered_courses = RegisteredCourse::where('course_id', $course_id)
+        ->where('level', $course->level)
+        ->where('session', $this->getCurrentSession())
+        ->get();
+        return view('results.scores_upload', ['student_registered_courses' => $student_registered_courses, 'course' => $course]);
+    }
+
+    public function uploadScores(Request $request)
+    {
+        $reg_ids = $request->reg_ids;
+        $ca_scores = $request->ca_scores;
+        $exam_scores = $request->exam_scores;
+
+        for ($i=0; $i < count($reg_ids); $i++) {
+            $total_score = $ca_scores[$i] + $exam_scores[$i];
+            $grade_setting = GradeSetting::where('min_score', '<=', $total_score)->where('max_score', '>=', $total_score)->first();
+            $grade_id = $grade_setting->id;
+            if ($ca_scores[$i] > 30)
+            {
+                return redirect()->back()->withErrors(['error' => 'CA score cannot be more than 30']);
+            }
+            RegisteredCourse::where('id', $reg_ids[$i])->update([
+                'ca_score' => $ca_scores[$i],
+                'exam_score' => $exam_scores[$i],
+                'grade_id' => $grade_id,
+                'grade_status' => $grade_setting->status,
+                'status' => 'unpublished'
+            ]);
+        }
+        StaffCourse::where('course_id', $request->course_id)->update([
+            'upload_status' => 'uploaded',
+            'approval_status' => 'pending'
+        ]);
+        return redirect()->back()->with('success', 'Scores uploaded successfully');
+    }
+
+    public function approveScores()
+    {
+        $staff_courses = StaffCourse::where('upload_status', 'uploaded')->where('approval_status', 'pending')->get();
+        return view('results.approve_scores', ['staff_courses' => $staff_courses]);
+    }
+
+    public function viewScores($course_id)
+    {
+        $course = StaffCourse::where('course_id', $course_id)->first();
+        $student_registered_courses = RegisteredCourse::where('course_id', $course_id)
+        ->where('level', $course->level)
+        ->where('session', $this->getCurrentSession())
+        ->get();
+        return view('results.view_scores', ['student_registered_courses' => $student_registered_courses, 'course' => $course]);
+    }
+
+    public function approve(Request $request)
+    {
+        $staff_course_id = $request->course_id;
+        $reg_ids = $request->reg_ids;
+        for ($i = 0; $i < count($reg_ids); $i++) {
+            RegisteredCourse::where('id', $reg_ids[$i])->update([
+                'status' => 'published'
+            ]);
+        }
+        StaffCourse::where('id', $staff_course_id)->update([
+            'approval_status' => 'approved'
+        ]);
+        return redirect()->back()->with('success', 'Scores approved successfully');
+    }
+
+    public function showCompute()
+    {
+        $programmes = Program::all();
+        $sessions = Session::all();
+        return view('results.compute', ['programs' => $programmes, 'sessions' => $sessions]);
+    }
+
+    public function compute(Request $request)
+    {
+        $request->validate([
+            'program_id' => 'required',
+            'session' => 'required',
+            'level' => 'required',
+            'semester' => 'required',
+        ]);
+        $this->resultComputation->computeResult($request);
+        return redirect()->back()->with('success', 'Result Computed');
+    }
+
+    public function decline($staff_course_id)
+    {
+        StaffCourse::where('id', $staff_course_id)->update([
+            'approval_status' => 'declined'
+        ]);
+        return redirect()->back()->withErrors(['error' => 'Scores declined!!']);
+    }
+
+    protected function getCurrentSession()
+    {
+        $session = DB::table('sessions')->where('status', 1)
+            ->select('sessions.id')->first();
+        $ses = $session->id;
+        $currentsession = $ses;
+        return $currentsession;
+    }
 
     // Login Function
     public function login(Request $request)
