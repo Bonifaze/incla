@@ -1,82 +1,97 @@
-@extends('layouts.plain')
+<!DOCTYPE html>
+<html lang="en">
 
-
- @section('pagetitle')
-<!-- CSRF Token -->
-    <meta name="csrf-token" content="{{ csrf_token() }}">
-
-<title>Veritas University Abuja</title>
-
-@endsection
-
-  @section('css')
-
-   <!-- iCheck -->
-  <link rel="stylesheet" href="{{ asset('plugins/iCheck/square/blue.css')}}">
-
+<head>
+  <meta charset="UTF-8">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Veritas University|Home</title>
   <style>
+    .hero-full-screen {
+      height: 100vh;
+      display: -webkit-flex;
+      display: -ms-flexbox;
+      display: flex;
+      -webkit-flex-direction: column;
+      -ms-flex-direction: column;
+      flex-direction: column;
+      -webkit-align-items: center;
+      -ms-flex-align: center;
+      align-items: center;
+      -webkit-justify-content: center;
+      -ms-flex-pack: justify;
+      justify-content: center;
+      background:linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
+      url("{{ asset('/css/view-2.jpg') }}") center center no-repeat;
+      background-size: cover;
+    }
 
-  .loginbg {
-  	background-color: rgba(0,0,0,0.1);
-    border: 1px solid;
-    border-top-color: rgba(255,255,255,.4);
-    border-left-color: rgba(255,255,255,.4);
-    border-bottom-color: rgba(60,60,60,.4);
-    border-right-color: rgba(60,60,60,.4);
-}
+    .hero-full-screen .middle-content-section {
+      text-align: center;
+      color: #fefefe;
+    }
+
+    .hero-full-screen .top-bar {
+      background: transparent;
+    }
+
+    .hero-full-screen .top-bar .menu {
+      background: transparent;
+    }
+
+    .hero-full-screen .top-bar .menu-text {
+      color: #fefefe;
+    }
+
+    .hero-full-screen .top-bar .menu li {
+      display: -webkit-flex;
+      display: -ms-flexbox;
+      display: flex;
+      -webkit-align-items: center;
+      -ms-flex-align: center;
+      align-items: center;
+    }
+
+    .hero-full-screen .top-bar .menu a {
+      color: #fefefe;
+      font-weight: bold;
+    }
+
+    h1,
+    h2,
+    h3,
+    h4,
+    h5 {
+      text-transform: uppercase;
+    }
+
+    h1 {
+      font-size: 3.5em;
+    }
+
   </style>
 
+</head>
 
+<body>
 
-@endsection
+  <div class="hero-full-screen">
 
-  @section('content')
-
-<body class="hold-transition login-page" style="background-image: url({{ asset( 'dist/img/vuna3.jpg' ) }}); background-repeat: no-repeat; background-size: cover;">
-<div  style="float:right; padding-right: 200px; padding-top: 100px;">
-<div class="login-box">
-  <div class="login-logo">
-    <a href="{{ asset( url('/') ) }}"><b>Veritas University </b>ECampus</a>
-  </div>
-  <!-- /.login-logo -->
-  <div class="login-box-body loginbg">
-  <a class="btn btn-block bg-gradient btn-primary" style='font-size:20px'; href="{{ route('staff.login') }}"> <i class="fa fa-user" style='font-size:36px';></i> Staff Login </a>
-
-  </div>
-
-  <div> <p> </p> </div>
-
-  <div class="login-box-body loginbg">
-  <a class="btn btn-block bg-gradient btn-success" href="{{ route('student.login') }}" style='font-size:20px;'> <i class="fa fa-graduation-cap" style='font-size:36px;'></i> Student Login </a>
+    <div class="middle-content-section">
+      <h4 class="m-4 ">Welcome to</h4>
+      <h1 class="m-4 fw-bold">Veritas University Portal</h1>
+      <a href="{{ route('student.login') }}" class="btn btn-success px-4 m-2 fs-5">STUDENT</a>
+      <a href="{{ route('staff.login') }}" class="btn btn-success px-4 m-2 fs-5">STAFF</a>
+      <a href="/admissions/login" class="btn btn-success px-4 m-2 fs-5">APPLICANT</a>
+      <!-- <button class="button large">Button</button> -->
+    </div>
 
   </div>
-  <!-- /.login-box-body -->
-  <div> <p> </p> </div>
-
-  <div class="login-box-body loginbg">
-  <a class="btn btn-block btn-success" href="/admissions/login" style='font-size:20px;'> <i class="fa fa-graduation-cap" style='font-size:36px;'></i> Applicant Login </a>
-
-  </div>
-</div>
-<!-- /.login-box -->
-
-</div>
-
-@endsection
-
-@section('pagescript')
-<!-- iCheck -->
-<script src="{{ asset('plugins/iCheck/icheck.min.js') }}"></script>
-<script>
-  $(function () {
-    $('input').iCheck({
-      checkboxClass: 'icheckbox_square-blue',
-      radioClass: 'iradio_square-blue',
-      increaseArea: '20%' // optional
-    });
-  });
-</script>
-@endsection
 
 
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
 
+</body>
+
+</html>
