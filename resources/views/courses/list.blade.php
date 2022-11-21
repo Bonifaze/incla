@@ -75,7 +75,7 @@
                                             <td>{{ $course->credit_unit }}</td>
                                             {{--  <td>{{ $course->description }}</td>  --}}
                                             {{--  <td>{{ $course->course_status }}</td>  --}}
-                                            <td><a href="{{ route('course.edit', $course->id) }}"> Edit </td>
+                                            <td><a href="{{ route('course.edit', $course->id) }}" class="btn btn-default"> Edit </td>
 
                                             <td>
                                                 {!! Form::open(['method' => 'Delete', 'route' => 'course.delete', 'id' => 'deleteCourseForm' . $course->id]) !!}

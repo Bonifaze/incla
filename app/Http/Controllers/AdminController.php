@@ -168,7 +168,7 @@ class AdminController extends Controller
                     $fullName = $admin->first_name . " " . $admin->surname;
 
                     //return view('admissions.administratorHome', compact('fullName'));
-                    return redirect('/adminHome')->with('loginMsg', $fullName);
+                    return redirect('/staff/home')->with('loginMsg', $fullName);
 
 
 

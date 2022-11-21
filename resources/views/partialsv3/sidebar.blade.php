@@ -79,12 +79,12 @@
                                 <p>My Courses</p>
                             </a>
                         </li>
-                        <li class="nav-item ml-4">
+                        {{--  <li class="nav-item ml-4">
                             <a href="{{ route('staff.results') }}" class="nav-link @yield('staff-results')">
                                 <i class="fas fa-list-alt nav-icon"></i>
                                 <p>My Results</p>
                             </a>
-                        </li>
+                        </li>  --}}
 
                         <li class="nav-item has-treeview @yield('exam-officers-open') ml-4">
                             <a href="#" class="nav-link @yield('results')">
@@ -152,28 +152,28 @@
                                 <li class="nav-item">
                                     <a href="{{ route('program_course.create') }}" class="nav-link @yield('exam-remark')">
                                         <i class="fa fa-plus nav-icon"></i>
-                                        <p>Create Program Course</p>
+                                        <p>Allocate Course</p>
                                     </a>
                                 </li>
-                                 <li class="nav-item">
+                                 {{--  <li class="nav-item">
                                     <a href="{{ route('program_course.assign') }}" class="nav-link @yield('exam-remark')">
                                         <i class="fa fa-plus nav-icon"></i>
                                         <p>Assign Course </p>
                                     </a>
-                                </li>
+                                </li>  --}}
                                 <li class="nav-item">
                                     <a href="{{ route('course.search') }}" class="nav-link @yield('exam-remark')">
                                         <i class="fa fa-search nav-icon"></i>
                                         <p>Search Course</p>
                                     </a>
                                 </li>
-                                <li class="nav-item">
+                                {{--  <li class="nav-item">
                                     <a href="{{ route('program_course.search') }}"
                                         class="nav-link @yield('exam-remark')">
                                         <i class="fa fa-search nav-icon"></i>
                                         <p>List Program Course</p>
                                     </a>
-                                </li>
+                                </li>  --}}
 
                             </ul>
                         </li>
@@ -431,7 +431,7 @@
                 </li>
 
 
-                <li class="nav-item has-treeview @yield('results-open')">
+                {{--  <li class="nav-item has-treeview @yield('results-open')">
                     <a href="#" class="nav-link @yield('results')">
                         <i class="nav-icon fas fa-graduation-cap"></i>
                         <p>
@@ -458,14 +458,14 @@
                                 <p>New Student</p>
                             </a>
                         </li>
-                        {{--  <li class="nav-item">
+                        <li class="nav-item">
                             <a href="" class="nav-link @yield('departments')">
                                 <i class="fas fa-list-alt nav-icon"></i>
                                 <p>Graduated Students</p>
                             </a>
-                        </li>  --}}
+                        </li>
                     </ul>
-                </li>
+                </li>  --}}
 
                 <li class="nav-item has-treeview @yield('bursary-open')">
                     <a href="#" class="nav-link @yield('bursary')">
@@ -542,7 +542,7 @@
                         <li class="nav-item">
                             <a href="/addRemitaServiceType" class="nav-link @yield('remita-list')">
                                 <i class="fas fa-plus nav-icon"></i>
-                                <p>Add Servie Type</p>
+                                <p>Add Service Type</p>
                             </a>
                         </li>
                         {{--  <li class="nav-item">

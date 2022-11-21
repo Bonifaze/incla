@@ -49,50 +49,50 @@
 
                         @include('partialsv3.flash')
 
-                  {!! Form::model($course, ['method' => 'PATCH', 'route' => ['course.update', $course->id]]) !!}
-                    @csrf
-                    <div class="card-body">
+                        {!! Form::model($course, ['method' => 'PATCH', 'route' => ['course.update', $course->id]]) !!}
+                        @csrf
+                        <div class="card-body">
 
-                        <div class="box-body">
+                            <div class="box-body">
 
-                            <div class="row">
-                                <div class="col-md-4 form-group">
-                                    <label for="code">Course Code :</label>
-                                    {!! Form::text('course_code', null, [
-                                        'placeholder' => '',
-                                        'class' => 'form-control',
-                                        'id' => 'course_code',
-                                        'required' => 'required',
-                                    ]) !!}
-                                    <span class="text-danger"> {{ $errors->first('code') }}</span>
+                                <div class="row">
+                                    <div class="col-md-4 form-group">
+                                        <label for="code">Course Code :</label>
+                                        {!! Form::text('course_code', null, [
+                                            'placeholder' => '',
+                                            'class' => 'form-control',
+                                            'id' => 'course_code',
+                                            'required' => 'required',
+                                        ]) !!}
+                                        <span class="text-danger"> {{ $errors->first('code') }}</span>
+                                    </div>
+
+                                    <div class="col-md-8 form-group">
+                                        <label for="title">Course Title :</label>
+                                        {!! Form::text('course_title', null, [
+                                            'placeholder' => '',
+                                            'class' => 'form-control',
+                                            'id' => 'course_title',
+                                            'required' => 'required',
+                                        ]) !!}
+                                        <span class="text-danger"> {{ $errors->first('title') }}</span>
+                                    </div>
                                 </div>
 
-                                <div class="col-md-8 form-group">
-                                    <label for="title">Course Title :</label>
-                                    {!! Form::text('course_title', null, [
-                                        'placeholder' => '',
-                                        'class' => 'form-control',
-                                        'id' => 'course_title',
-                                        'required' => 'required',
-                                    ]) !!}
-                                    <span class="text-danger"> {{ $errors->first('title') }}</span>
-                                </div>
-                            </div>
 
+                                <div class="row">
+                                    <div class="col-md-3 form-group">
+                                        <label for="hours">Credit Load :</label>
+                                        {!! Form::text('credit_unit', null, [
+                                            'placeholder' => '',
+                                            'class' => 'form-control',
+                                            'id' => 'credit_unit',
+                                            'required' => 'required',
+                                        ]) !!}
+                                        <span class="text-danger"> {{ $errors->first('credit_unit') }}</span>
+                                    </div>
 
-                            <div class="row">
-                                <div class="col-md-3 form-group">
-                                    <label for="hours">Credit Load :</label>
-                                    {!! Form::text('credit_unit', null, [
-                                        'placeholder' => '',
-                                        'class' => 'form-control',
-                                        'id' => 'credit_unit',
-                                        'required' => 'required',
-                                    ]) !!}
-                                    <span class="text-danger"> {{ $errors->first('credit_unit') }}</span>
-                                </div>
-
-                                {{--  <div class="col-md-3 form-group">
+                                    {{--  <div class="col-md-3 form-group">
 								<label for="status">Status :</label>
 								{{ Form::select('status', [
 	                        		'1' => 'Active',
@@ -103,60 +103,51 @@
 	                    			<span class="text-danger"> {{ $errors->first('status') }}</span>
 							</div>  --}}
 
-                                <div class="col-md-6 form-group">
-                                    <label for="program_id">Program :</label>
-                                    {{ Form::select('program_id', $programs, null, ['class' => 'form-control', 'id' => 'program_id', 'name' => 'program_id']) }}
-                                    <span class="text-danger"> {{ $errors->first('program_id') }}</span>
+                                    <div class="col-md-6 form-group">
+                                        <label for="program_id">Program :</label>
+                                        {{ Form::select('program_id', $programs, null, ['class' => 'form-control', 'id' => 'program_id', 'name' => 'program_id']) }}
+                                        <span class="text-danger"> {{ $errors->first('program_id') }}</span>
+                                    </div>
+
+                                    <div class="col-md-3 form-group">
+                                        <label for="level">Level :</label>
+                                        {{ Form::select(
+                                            'level',
+                                            [
+                                                '100' => '100 Level',
+                                                '200' => '200 Level',
+                                                '300' => '300 Level',
+                                                '400' => '400 Level',
+                                                '500' => '500 Level',
+                                                '600' => '600 Level',
+                                                '700' => 'PGD',
+                                                '800' => 'MSc',
+                                                '900' => 'PhD',
+                                            ],
+                                            $course->level,
+                                            ['class' => 'form-control select2'],
+                                        ) }}
+                                        <span class="text-danger"> {{ $errors->first('level') }}</span>
+                                    </div>
                                 </div>
 
-                                <div class="col-md-3 form-group">
-                                    <label for="level">Level :</label>
-                                    {{ Form::select(
-                                        'level',
-                                        [
-                                            '100' => '100 Level',
-                                            '200' => '200 Level',
-                                            '300' => '300 Level',
-                                            '400' => '400 Level',
-                                            '500' => '500 Level',
-                                            '600' => '600 Level',
-                                            '700' => 'PGD',
-                                            '800' => 'MSc',
-                                            '900' => 'PhD',
-                                        ],
-                                        $course->level,
-                                        ['class' => 'form-control select2'],
-                                    ) }}
-                                    <span class="text-danger"> {{ $errors->first('level') }}</span>
-                                </div>
-                            </div>
-
-                            <div class="row">
+                                <div class="row">
 
 
-
-
-
-                            </div>
-
-
-                            <div class="row">
-
-
-                                <div class="col-md-6 form-group pull-left">
 
 
 
                                 </div>
+
+
                             </div>
                         </div>
-                    </div>
-                    <!-- /.card-body -->
+                        <!-- /.card-body -->
 
-                    <div class="card-footer">
+                        <div class="card-footer">
 
 
-                        {{ Form::submit('Edit Course', ['class' => 'btn btn-primary']) }}
+                            {{ Form::submit('Update', ['class' => 'btn btn-primary']) }}
                         </div>
 
                         {!! Form::close() !!}

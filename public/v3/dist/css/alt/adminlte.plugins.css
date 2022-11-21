@@ -530,7 +530,7 @@
 
 .select2-container--default .select2-danger .select2-results__option--highlighted,
 .select2-danger .select2-container--default .select2-results__option--highlighted {
-  background-color: #dc3545;
+  background-color: #CD5C5C;
   color: #ffffff;
 }
 
@@ -548,7 +548,7 @@
 
 .select2-container--default .select2-danger .select2-selection--multiple .select2-selection__choice,
 .select2-danger .select2-container--default .select2-selection--multiple .select2-selection__choice {
-  background-color: #dc3545;
+  background-color: #CD5C5C;
   border-color: #d32535;
   color: #ffffff;
 }
@@ -1167,7 +1167,7 @@
 
 .select2-container--default .select2-red .select2-results__option--highlighted,
 .select2-red .select2-container--default .select2-results__option--highlighted {
-  background-color: #dc3545;
+  background-color: #CD5C5C;
   color: #ffffff;
 }
 
@@ -1185,7 +1185,7 @@
 
 .select2-container--default .select2-red .select2-selection--multiple .select2-selection__choice,
 .select2-red .select2-container--default .select2-selection--multiple .select2-selection__choice {
-  background-color: #dc3545;
+  background-color: #CD5C5C;
   border-color: #d32535;
   color: #ffffff;
 }
@@ -1630,7 +1630,7 @@
 }
 
 .slider-danger .slider .slider-selection {
-  background: #dc3545;
+  background: #CD5C5C;
 }
 
 .slider-light .slider .slider-selection {
@@ -1682,7 +1682,7 @@
 }
 
 .slider-red .slider .slider-selection {
-  background: #dc3545;
+  background: #CD5C5C;
 }
 
 .slider-orange .slider .slider-selection {
@@ -1799,18 +1799,18 @@
 
 .icheck-danger > input:first-child:not(:checked):not(:disabled):hover + label::before,
 .icheck-danger > input:first-child:not(:checked):not(:disabled):hover + input[type="hidden"] + label::before {
-  border-color: #dc3545;
+  border-color: #CD5C5C;
 }
 
 .icheck-danger > input:first-child:not(:checked):not(:disabled):focus + label::before,
 .icheck-danger > input:first-child:not(:checked):not(:disabled):focus + input[type="hidden"] + label::before {
-  border-color: #dc3545;
+  border-color: #CD5C5C;
 }
 
 .icheck-danger > input:first-child:checked + label::before,
 .icheck-danger > input:first-child:checked + input[type="hidden"] + label::before {
-  background-color: #dc3545;
-  border-color: #dc3545;
+  background-color: #CD5C5C;
+  border-color: #CD5C5C;
 }
 
 .icheck-light > input:first-child:not(:checked):not(:disabled):hover + label::before,
@@ -2007,18 +2007,18 @@
 
 .icheck-red > input:first-child:not(:checked):not(:disabled):hover + label::before,
 .icheck-red > input:first-child:not(:checked):not(:disabled):hover + input[type="hidden"] + label::before {
-  border-color: #dc3545;
+  border-color: #CD5C5C;
 }
 
 .icheck-red > input:first-child:not(:checked):not(:disabled):focus + label::before,
 .icheck-red > input:first-child:not(:checked):not(:disabled):focus + input[type="hidden"] + label::before {
-  border-color: #dc3545;
+  border-color: #CD5C5C;
 }
 
 .icheck-red > input:first-child:checked + label::before,
 .icheck-red > input:first-child:checked + input[type="hidden"] + label::before {
-  background-color: #dc3545;
-  border-color: #dc3545;
+  background-color: #CD5C5C;
+  border-color: #CD5C5C;
 }
 
 .icheck-orange > input:first-child:not(:checked):not(:disabled):hover + label::before,
@@ -2253,8 +2253,8 @@
 }
 
 .swal2-icon.swal2-error {
-  border-color: ligthen(#dc3545, 20%);
-  color: #dc3545;
+  border-color: ligthen(#CD5C5C, 20%);
+  color: #CD5C5C;
 }
 
 .swal2-icon.swal2-question {
@@ -2284,7 +2284,7 @@
 }
 
 #toast-container .toast-error {
-  background-color: #dc3545;
+  background-color: #CD5C5C;
 }
 
 #toast-container .toast-info {
@@ -2963,7 +2963,7 @@
 }
 
 .pace-danger .pace .pace-progress {
-  background: #dc3545;
+  background: #CD5C5C;
 }
 
 .pace-barber-shop-danger .pace {
@@ -2971,7 +2971,7 @@
 }
 
 .pace-barber-shop-danger .pace .pace-progress {
-  background: #dc3545;
+  background: #CD5C5C;
 }
 
 .pace-barber-shop-danger .pace .pace-activity {
@@ -2983,7 +2983,7 @@
 }
 
 .pace-bounce-danger .pace .pace-activity {
-  background: #dc3545;
+  background: #CD5C5C;
 }
 
 .pace-center-atom-danger .pace-progress {
@@ -2992,7 +2992,7 @@
 }
 
 .pace-center-atom-danger .pace-progress::before {
-  background: #dc3545;
+  background: #CD5C5C;
   color: #ffffff;
   font-size: .8rem;
   line-height: .7rem;
@@ -3000,11 +3000,11 @@
 }
 
 .pace-center-atom-danger .pace-activity {
-  border-color: #dc3545;
+  border-color: #CD5C5C;
 }
 
 .pace-center-atom-danger .pace-activity::after, .pace-center-atom-danger .pace-activity::before {
-  border-color: #dc3545;
+  border-color: #CD5C5C;
 }
 
 .pace-center-circle-danger .pace .pace-progress {
@@ -3013,28 +3013,28 @@
 }
 
 .pace-center-radar-danger .pace .pace-activity {
-  border-color: #dc3545 transparent transparent;
+  border-color: #CD5C5C transparent transparent;
 }
 
 .pace-center-radar-danger .pace .pace-activity::before {
-  border-color: #dc3545 transparent transparent;
+  border-color: #CD5C5C transparent transparent;
 }
 
 .pace-center-simple-danger .pace {
   background: #ffffff;
-  border-color: #dc3545;
+  border-color: #CD5C5C;
 }
 
 .pace-center-simple-danger .pace .pace-progress {
-  background: #dc3545;
+  background: #CD5C5C;
 }
 
 .pace-material-danger .pace {
-  color: #dc3545;
+  color: #CD5C5C;
 }
 
 .pace-corner-indicator-danger .pace .pace-activity {
-  background: #dc3545;
+  background: #CD5C5C;
 }
 
 .pace-corner-indicator-danger .pace .pace-activity::after,
@@ -3057,31 +3057,31 @@
 }
 
 .pace-flash-danger .pace .pace-progress {
-  background: #dc3545;
+  background: #CD5C5C;
 }
 
 .pace-flash-danger .pace .pace-progress-inner {
-  box-shadow: 0 0 10px #dc3545, 0 0 5px #dc3545;
+  box-shadow: 0 0 10px #CD5C5C, 0 0 5px #CD5C5C;
 }
 
 .pace-flash-danger .pace .pace-activity {
-  border-top-color: #dc3545;
-  border-left-color: #dc3545;
+  border-top-color: #CD5C5C;
+  border-left-color: #CD5C5C;
 }
 
 .pace-loading-bar-danger .pace .pace-progress {
-  background: #dc3545;
-  color: #dc3545;
+  background: #CD5C5C;
+  color: #CD5C5C;
   box-shadow: 120px 0 #ffffff, 240px 0 #ffffff;
 }
 
 .pace-loading-bar-danger .pace .pace-activity {
-  box-shadow: inset 0 0 0 2px #dc3545, inset 0 0 0 7px #ffffff;
+  box-shadow: inset 0 0 0 2px #CD5C5C, inset 0 0 0 7px #ffffff;
 }
 
 .pace-mac-osx-danger .pace .pace-progress {
-  background-color: #dc3545;
-  box-shadow: inset -1px 0 #dc3545, inset 0 -1px #dc3545, inset 0 2px rgba(255, 255, 255, 0.5), inset 0 6px rgba(255, 255, 255, 0.3);
+  background-color: #CD5C5C;
+  box-shadow: inset -1px 0 #CD5C5C, inset 0 -1px #CD5C5C, inset 0 2px rgba(255, 255, 255, 0.5), inset 0 6px rgba(255, 255, 255, 0.3);
 }
 
 .pace-mac-osx-danger .pace .pace-activity {
@@ -3090,7 +3090,7 @@
 }
 
 .pace-progress-color-danger .pace-progress {
-  color: #dc3545;
+  color: #CD5C5C;
 }
 
 .pace-light .pace .pace-progress {
@@ -4666,7 +4666,7 @@
 }
 
 .pace-red .pace .pace-progress {
-  background: #dc3545;
+  background: #CD5C5C;
 }
 
 .pace-barber-shop-red .pace {
@@ -4674,7 +4674,7 @@
 }
 
 .pace-barber-shop-red .pace .pace-progress {
-  background: #dc3545;
+  background: #CD5C5C;
 }
 
 .pace-barber-shop-red .pace .pace-activity {
@@ -4686,7 +4686,7 @@
 }
 
 .pace-bounce-red .pace .pace-activity {
-  background: #dc3545;
+  background: #CD5C5C;
 }
 
 .pace-center-atom-red .pace-progress {
@@ -4695,7 +4695,7 @@
 }
 
 .pace-center-atom-red .pace-progress::before {
-  background: #dc3545;
+  background: #CD5C5C;
   color: #ffffff;
   font-size: .8rem;
   line-height: .7rem;
@@ -4703,11 +4703,11 @@
 }
 
 .pace-center-atom-red .pace-activity {
-  border-color: #dc3545;
+  border-color: #CD5C5C;
 }
 
 .pace-center-atom-red .pace-activity::after, .pace-center-atom-red .pace-activity::before {
-  border-color: #dc3545;
+  border-color: #CD5C5C;
 }
 
 .pace-center-circle-red .pace .pace-progress {
@@ -4716,28 +4716,28 @@
 }
 
 .pace-center-radar-red .pace .pace-activity {
-  border-color: #dc3545 transparent transparent;
+  border-color: #CD5C5C transparent transparent;
 }
 
 .pace-center-radar-red .pace .pace-activity::before {
-  border-color: #dc3545 transparent transparent;
+  border-color: #CD5C5C transparent transparent;
 }
 
 .pace-center-simple-red .pace {
   background: #ffffff;
-  border-color: #dc3545;
+  border-color: #CD5C5C;
 }
 
 .pace-center-simple-red .pace .pace-progress {
-  background: #dc3545;
+  background: #CD5C5C;
 }
 
 .pace-material-red .pace {
-  color: #dc3545;
+  color: #CD5C5C;
 }
 
 .pace-corner-indicator-red .pace .pace-activity {
-  background: #dc3545;
+  background: #CD5C5C;
 }
 
 .pace-corner-indicator-red .pace .pace-activity::after,
@@ -4760,31 +4760,31 @@
 }
 
 .pace-flash-red .pace .pace-progress {
-  background: #dc3545;
+  background: #CD5C5C;
 }
 
 .pace-flash-red .pace .pace-progress-inner {
-  box-shadow: 0 0 10px #dc3545, 0 0 5px #dc3545;
+  box-shadow: 0 0 10px #CD5C5C, 0 0 5px #CD5C5C;
 }
 
 .pace-flash-red .pace .pace-activity {
-  border-top-color: #dc3545;
-  border-left-color: #dc3545;
+  border-top-color: #CD5C5C;
+  border-left-color: #CD5C5C;
 }
 
 .pace-loading-bar-red .pace .pace-progress {
-  background: #dc3545;
-  color: #dc3545;
+  background: #CD5C5C;
+  color: #CD5C5C;
   box-shadow: 120px 0 #ffffff, 240px 0 #ffffff;
 }
 
 .pace-loading-bar-red .pace .pace-activity {
-  box-shadow: inset 0 0 0 2px #dc3545, inset 0 0 0 7px #ffffff;
+  box-shadow: inset 0 0 0 2px #CD5C5C, inset 0 0 0 7px #ffffff;
 }
 
 .pace-mac-osx-red .pace .pace-progress {
-  background-color: #dc3545;
-  box-shadow: inset -1px 0 #dc3545, inset 0 -1px #dc3545, inset 0 2px rgba(255, 255, 255, 0.5), inset 0 6px rgba(255, 255, 255, 0.3);
+  background-color: #CD5C5C;
+  box-shadow: inset -1px 0 #CD5C5C, inset 0 -1px #CD5C5C, inset 0 2px rgba(255, 255, 255, 0.5), inset 0 6px rgba(255, 255, 255, 0.3);
 }
 
 .pace-mac-osx-red .pace .pace-activity {
@@ -4793,7 +4793,7 @@
 }
 
 .pace-progress-color-red .pace-progress {
-  color: #dc3545;
+  color: #CD5C5C;
 }
 
 .pace-orange .pace .pace-progress {
@@ -5936,7 +5936,7 @@
 
 .bootstrap-switch .bootstrap-switch-handle-on.bootstrap-switch-danger,
 .bootstrap-switch .bootstrap-switch-handle-off.bootstrap-switch-danger {
-  background: #dc3545;
+  background: #CD5C5C;
   color: #ffffff;
 }
 
@@ -6014,7 +6014,7 @@
 
 .bootstrap-switch .bootstrap-switch-handle-on.bootstrap-switch-red,
 .bootstrap-switch .bootstrap-switch-handle-off.bootstrap-switch-red {
-  background: #dc3545;
+  background: #CD5C5C;
   color: #ffffff;
 }
 

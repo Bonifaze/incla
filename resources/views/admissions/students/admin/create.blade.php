@@ -8,20 +8,12 @@ exit;
 }
 @endphp  --}}
 @extends('layouts.userapp')
-<style type="text/css">
-    #sub3 {
 
-
-
-        display: none;
-    }
-</style>
 @section('content')
     <div class="row justify-content-center">
         <!-- Page Wrapper -->
         <div id="wrapper">
             @include('layouts.usersidebar')
-
 
             <!-- left column -->
             <div class="col_full col-10">
@@ -34,8 +26,6 @@ exit;
                         @endif
 
                     </div>
-                    <!-- /.card-header -->
-                    <!-- form start -->
 
                     <form method="POST" action="/students/store" enctype="multipart/form-data" class="p-3">
                         @csrf
@@ -429,10 +419,6 @@ exit;
                                     </div>
                                 </div>
 
-
-
-
-
                                 <div class="row">
                                     <div class="col-md-12 form-group">
                                         <div @if ($errors->has('eaddress')) class ='has-error form-group' @endif>
@@ -467,8 +453,8 @@ exit;
                                                 {{ $applicantsDetails->course_applied }})</label> </b>
                                         {{ Form::select('program_id', $programs, null, ['class' => 'form-control', 'id' => 'program_id', 'name' => 'program_id']) }}
                                         <span class="text-danger"> {{ $errors->first('program_id') }}</span>
-                                        <lable class="text-warning">please ensure you selected your correct course of study
-                                        </lable>
+                                        <label class="text-warning font-weight-bold">Please ensure you select your correct course of study
+                                        </label>
                                     </div>
 
 
@@ -608,18 +594,11 @@ exit;
                                         <span class="text-danger"> {{ $errors->first('entry_session_id') }}</span>
 
                                     </div>
-
-
-
-
                                 </div>
-
-
 
                                 <div class="box-header">
                                     <h3 class="box-title">&nbsp;</h3>
                                 </div>
-
 
                                 <div class="box-header">
                                     <h3 class="box-title">Medical Information</h3>
@@ -715,92 +694,65 @@ exit;
                                     </div>
 
                                 </div>
+                            </div>
 
-
-
-
+                            <div class="position-relative mt-5">
+                                <button type="button" class="btn btn-success mt-5 position-absolute bottom-0 end-0"
+                                    data-bs-toggle="modal"
+                                    data-bs-target="#myModal">{{ __('Generate Matric Number') }}</button>
+                                {{--  <button type="submit" onclick="deleteCourse()" class="btn btn-success position-absolute bottom-0 end-0" data-bs-toggle="modal" data-bs-target="#myModal">{{ __('Generate Matric Number') }}</button>  --}}
                             </div>
 
                         </div>
 
 
+                        <div class="modal" id="myModal">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
 
-
-
-                        <!-- /.card-body -->
-                        <div class="position-relative mt-5 mb-5">
-                         {{--  <button type="button" class="btn btn-success position-absolute bottom-0 end-0"
-                                data-bs-toggle="modal"
-                                data-bs-target="#myModal">{{ __('Generate Matric Number') }}</button>  --}}
-                            <button type="submit" onclick="deleteCourse()" class="btn btn-success position-absolute bottom-0 end-0" data-bs-toggle="modal" data-bs-target="#myModal">{{ __('Generate Matric Number') }}</button>
-
-                        </div>
-                        <div class="card-footer">
-
-
-                            <div class="modal" id="myModal">
-                                <div class="modal-dialog">
-                                    <div class="modal-content">
-
-                                        <!-- Modal Header -->
-                                        <div class="modal-header">
-                                            <h4 class="modal-title bold">Are you sure?</h4>
-                                            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-                                        </div>
-
-                                        <!-- Modal body -->
-                                        <div class="modal-body">
-                                            Please confirm your course of Study and information before proceeding
-                                        </div>
-
-                                        <!-- Modal footer -->
-                                        <div class="modal-footer">
-                                            <button type="button" class="btn fw-bolder text-danger"
-                                                data-bs-dismiss="modal">Go Back</button>
-                                            <button type="submit" class="btn btn-success"
-                                                data-bs-dismiss="modal">Proceed</button>
-                                        </div>
-
+                                    <!-- Modal Header -->
+                                    <div class="modal-header">
+                                        <h4 class="modal-title bold">Are you sure?</h4>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                                     </div>
+
+                                    <!-- Modal body -->
+                                    <div class="modal-body">
+                                        Please confirm your course of Study and information before proceeding
+                                    </div>
+
+                                    <!-- Modal footer -->
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn fw-bolder text-danger"
+                                            data-bs-dismiss="modal">Go Back</button>
+                                        <button type="submit" class="btn btn-success"
+                                            data-bs-dismiss="modal">Proceed</button>
+                                    </div>
+
                                 </div>
                             </div>
-
+                        </div>
                     </form>
 
-
-
-
                 </div>
-
             </div>
-            <!-- /.box-body -->
-
-
             {!! Form::close() !!}
-
-
-            <!-- /.box -->
-
         </div>
-        <!--/.col (left) -->
-
     </div>
-
-
-    <!-- /.row -->
     </section>
-    <!-- /.content -->
     </div>
 
 
     <!-- External JavaScripts
-         ============================================= -->
+                 ============================================= -->
     <script src="{{ asset('js/jquery.js') }}"></script>
 
-  //  <script>
-    //    var myModal = new bootstrap.Modal(document.getElementById('myModal'), {})
-      //  myModal.show()
-    //</script>
+    //
+    <script>
+        //    var myModal = new bootstrap.Modal(document.getElementById('myModal'), {})
+        //  myModal.show()
+        //
+    </script>
 
     <!-- bootstrap datepicker -->
     <script src="{{ asset('dist/js/components/bootstrap-datepicker.js') }}"></script>

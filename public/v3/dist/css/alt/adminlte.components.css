@@ -305,7 +305,7 @@ textarea.form-control.is-warning {
 }
 
 .custom-switch.custom-switch-off-danger .custom-control-input ~ .custom-control-label::before {
-  background: #dc3545;
+  background: #CD5C5C;
   border-color: #921925;
 }
 
@@ -318,7 +318,7 @@ textarea.form-control.is-warning {
 }
 
 .custom-switch.custom-switch-on-danger .custom-control-input:checked ~ .custom-control-label::before {
-  background: #dc3545;
+  background: #CD5C5C;
   border-color: #921925;
 }
 
@@ -643,7 +643,7 @@ textarea.form-control.is-warning {
 }
 
 .custom-switch.custom-switch-off-red .custom-control-input ~ .custom-control-label::before {
-  background: #dc3545;
+  background: #CD5C5C;
   border-color: #921925;
 }
 
@@ -656,7 +656,7 @@ textarea.form-control.is-warning {
 }
 
 .custom-switch.custom-switch-on-red .custom-control-input:checked ~ .custom-control-label::before {
-  background: #dc3545;
+  background: #CD5C5C;
   border-color: #921925;
 }
 
@@ -1093,7 +1093,7 @@ textarea.form-control.is-warning {
 }
 
 .custom-range.custom-range-danger::-webkit-slider-thumb {
-  background-color: #dc3545;
+  background-color: #CD5C5C;
 }
 
 .custom-range.custom-range-danger::-webkit-slider-thumb:active {
@@ -1101,7 +1101,7 @@ textarea.form-control.is-warning {
 }
 
 .custom-range.custom-range-danger::-moz-range-thumb {
-  background-color: #dc3545;
+  background-color: #CD5C5C;
 }
 
 .custom-range.custom-range-danger::-moz-range-thumb:active {
@@ -1109,7 +1109,7 @@ textarea.form-control.is-warning {
 }
 
 .custom-range.custom-range-danger::-ms-thumb {
-  background-color: #dc3545;
+  background-color: #CD5C5C;
 }
 
 .custom-range.custom-range-danger::-ms-thumb:active {
@@ -1613,7 +1613,7 @@ textarea.form-control.is-warning {
 }
 
 .custom-range.custom-range-red::-webkit-slider-thumb {
-  background-color: #dc3545;
+  background-color: #CD5C5C;
 }
 
 .custom-range.custom-range-red::-webkit-slider-thumb:active {
@@ -1621,7 +1621,7 @@ textarea.form-control.is-warning {
 }
 
 .custom-range.custom-range-red::-moz-range-thumb {
-  background-color: #dc3545;
+  background-color: #CD5C5C;
 }
 
 .custom-range.custom-range-red::-moz-range-thumb:active {
@@ -1629,7 +1629,7 @@ textarea.form-control.is-warning {
 }
 
 .custom-range.custom-range-red::-ms-thumb {
-  background-color: #dc3545;
+  background-color: #CD5C5C;
 }
 
 .custom-range.custom-range-red::-ms-thumb:active {
@@ -2363,7 +2363,7 @@ textarea.form-control.is-warning {
 }
 
 .card-danger:not(.card-outline) > .card-header {
-  background-color: #dc3545;
+  background-color: #CD5C5C;
 }
 
 .card-danger:not(.card-outline) > .card-header,
@@ -2376,7 +2376,7 @@ textarea.form-control.is-warning {
 }
 
 .card-danger.card-outline {
-  border-top: 3px solid #dc3545;
+  border-top: 3px solid #CD5C5C;
 }
 
 .card-danger.card-outline-tabs > .card-header a:hover {
@@ -2384,7 +2384,7 @@ textarea.form-control.is-warning {
 }
 
 .card-danger.card-outline-tabs > .card-header a.active {
-  border-top: 3px solid #dc3545;
+  border-top: 3px solid #CD5C5C;
 }
 
 .bg-danger .btn-tool,
@@ -3286,7 +3286,7 @@ textarea.form-control.is-warning {
 }
 
 .card-red:not(.card-outline) > .card-header {
-  background-color: #dc3545;
+  background-color: #CD5C5C;
 }
 
 .card-red:not(.card-outline) > .card-header,
@@ -3299,7 +3299,7 @@ textarea.form-control.is-warning {
 }
 
 .card-red.card-outline {
-  border-top: 3px solid #dc3545;
+  border-top: 3px solid #CD5C5C;
 }
 
 .card-red.card-outline-tabs > .card-header a:hover {
@@ -3307,7 +3307,7 @@ textarea.form-control.is-warning {
 }
 
 .card-red.card-outline-tabs > .card-header a.active {
-  border-top: 3px solid #dc3545;
+  border-top: 3px solid #CD5C5C;
 }
 
 .bg-red .btn-tool,
@@ -4218,7 +4218,7 @@ html.maximized-card {
 }
 
 .todo-list > li .tools {
-  color: #dc3545;
+  color: #CD5C5C;
   display: none;
   float: right;
 }
@@ -4271,7 +4271,7 @@ html.maximized-card {
 }
 
 .todo-list .danger {
-  border-left-color: #dc3545;
+  border-left-color: #CD5C5C;
 }
 
 .todo-list .light {
@@ -4323,7 +4323,7 @@ html.maximized-card {
 }
 
 .todo-list .red {
-  border-left-color: #dc3545;
+  border-left-color: #CD5C5C;
 }
 
 .todo-list .orange {
@@ -5038,7 +5038,7 @@ html.maximized-card {
 
 .alert-danger {
   color: #ffffff;
-  background: #dc3545;
+  background: #CD5C5C;
   border-color: #d32535;
 }
 
