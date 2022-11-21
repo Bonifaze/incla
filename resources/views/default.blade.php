@@ -23,7 +23,7 @@
       -ms-flex-pack: justify;
       justify-content: center;
       background:linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
-      url("{{ asset('/css/view-2.jpg') }}") center center no-repeat;
+      url("{{ asset('/css/default.jpg') }}") center center no-repeat;
       background-size: cover;
     }
 

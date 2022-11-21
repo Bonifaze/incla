@@ -76,21 +76,21 @@ class ApplicantController extends Controller
 
 
                 $signUpMsg = '<div class="alert alert-success alert-dismissible"><button type="button" class="close" data-dismiss="alert">&times;</button><strong>Success!</strong> ' . $req->surname . ' Your Registration was successful, please follow the instruction sent to your mail ' . $req->email . ' to complete the process</div>';
-                return redirect('/register')->with('signUpMsg', $signUpMsg);
+                return redirect('/admissions.register')->with('signUpMsg', $signUpMsg);
             } catch (QueryException $e) {
                 DB::rollBack();
                 $error_code = $e->errorInfo[1];
                 if ($error_code == 1062) {
                     $signUpMsg = '<div class="alert alert-danger alert-dismissible"><button type="button" class="close" data-dismiss="alert">&times;</button><strong>Error!</strong> You have registered before</div>';
-                    return redirect('/register')->with('signUpMsg', $signUpMsg);
+                    return redirect('/admissons.register')->with('signUpMsg', $signUpMsg);
                 } else {
                     $signUpMsg = '<div class="alert alert-danger alert-dismissible"><button type="button" class="close" data-dismiss="alert">&times;</button><strong>Error!</strong> Your registration was not successful, please try again later or Veritas Univeristy help line</div>';
-                    return redirect('/register')->with('signUpMsg', $signUpMsg);
+                    return redirect('/admissions.register')->with('signUpMsg', $signUpMsg);
                 }
             }
         } else {
             $signUpMsg = '<div class="alert alert-danger alert-dismissible"><button type="button" class="close" data-dismiss="alert">&times;</button><strong>Error!</strong> Password mismatched</div>';
-            return redirect('/register')->with('signUpMsg', $signUpMsg);
+            return redirect('/admissions.register')->with('signUpMsg', $signUpMsg);
         }
     }
     //Function for verifying the sent email

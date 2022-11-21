@@ -181,7 +181,7 @@ class UtilitiesController extends Controller
 <br />
 -- <br />
 Regards and stay safe. <br />
-Engr Ofor Obumneme <br />
+lawrence christopher <br />
  ICT Unit<br />
  Veritas University Abuja..<br />
 ";
@@ -224,7 +224,7 @@ Engr Ofor Obumneme <br />
 <br />
 -- <br />
 Regards and stay safe. <br />
-Engr Ofor Obumneme <br />
+lawrence christopher <br />
  ICT Unit<br />
  Veritas University Abuja<br />
 ";
@@ -287,7 +287,7 @@ dd($status);
 <br />
 -- <br />
 Regards and stay safe. <br />
-Engr Ofor Obumneme <br />
+lawrence christopher <br />
  ICT Unit<br />
  Veritas University Abuja<br />
 ";
@@ -355,10 +355,10 @@ Engr Ofor Obumneme <br />
         }
 
         $datas = collect();
-        $data->add("obumofor@yahoo.com");
         $data->add("lawrencechrisojor@gmail.com");
         $data->add("lawrencechrisojor@gmail.com");
-        $data->add("oforo@veritas.edu.ng");
+        $data->add("lawrencechrisojor@gmail.com");
+        $data->add("christopherl@veritas.edu.ng");
         $dt = $data->unique();
 
         foreach ($dt as $key => $ds)
@@ -370,7 +370,7 @@ Engr Ofor Obumneme <br />
 <br />
 -- <br />
 Regards and stay safe. <br />
-Engr Ofor Obumneme <br />
+lawrence christopher <br />
  ICT Unit<br />
  Veritas University Abuja<br />
 ";

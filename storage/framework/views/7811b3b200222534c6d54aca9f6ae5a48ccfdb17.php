@@ -13,7 +13,7 @@
 <style>
   body {
     background:linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
-    url("<?php echo e(asset('/css/view-2.jpg')); ?>") center center no-repeat;
+    url("<?php echo e(asset('/css/default.jpg')); ?>") center center no-repeat;
     background-size: cover;
     padding-top: 10px;
     display: flex;
@@ -22,7 +22,7 @@
   }
 
   .login-form {
-    background: #1a11117a;
+    background: rgba(219, 219, 219,0.6);
     box-shadow: rgba(0, 0, 0, 0.4) 0px 2px 4px 0px, rgba(0, 0, 0, 0.3) 0px 7px 13px -3px, rgba(0, 0, 0, 0.2) 0px -3px 0px 0px inset;
     padding: 70px;
     border-radius: 20px;
@@ -114,4 +114,5 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
   <?php $__env->stopSection(); ?>
+
 <?php echo $__env->make('layouts.plain', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH C:\Users\Lawrence Chris\Desktop\laraproject\resources\views/staff/auth/login.blade.php ENDPATH**/ ?>

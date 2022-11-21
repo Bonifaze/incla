@@ -16,7 +16,7 @@
 <style>
   body {
     background:linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
-    url("{{ asset('/css/view-2.jpg') }}") center center no-repeat;
+    url("{{ asset('/css/default.jpg') }}") center center no-repeat;
     background-size: cover;
     padding-top: 10px;
     display: flex;
@@ -25,7 +25,7 @@
   }
 
   .login-form {
-    background: #1a11117a;
+    background: rgba(219, 219, 219,0.6);
     box-shadow: rgba(0, 0, 0, 0.4) 0px 2px 4px 0px, rgba(0, 0, 0, 0.3) 0px 7px 13px -3px, rgba(0, 0, 0, 0.2) 0px -3px 0px 0px inset;
     padding: 70px;
     border-radius: 20px;

@@ -1,76 +1,63 @@
-@extends('layouts.plain')
+<!DOCTYPE html>
+<html lang="en">
 
- 
- @section('pagetitle')
-<!-- CSRF Token -->
-    <meta name="csrf-token" content="{{ csrf_token() }}">
-    
-<title>Veritas University Abuja</title>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
 
-@endsection
-  
-  @section('css')
-  
-   <!-- iCheck -->
-  <link rel="stylesheet" href="{{ asset('plugins/iCheck/square/blue.css')}}">
-  
-  <style>
-  
-  .loginbg {
-  	background-color: rgba(0,0,0,0.1);
-    border: 1px solid;
-    border-top-color: rgba(255,255,255,.4);
-    border-left-color: rgba(255,255,255,.4);
-    border-bottom-color: rgba(60,60,60,.4);
-    border-right-color: rgba(60,60,60,.4);
-}
+    <!-- CSS only -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
+    <title>Veritas University Admissions Portal</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.min.js" integrity="sha384-Atwg2Pkwv9vp0ygtn1JAojH0nYbwNJLPhwyoVbhoPwBhjQPR5VtM2+xf0Uwh9KtT" crossorigin="anonymous"></script></head>
+    <style>
+        @media (min-width:320px) {
+            body {
+                height: 100vh;
+                padding: 1rem;
+            }
+        }
+
+
+    </style>
+
+    <!-- Font Icon -->
+    <link rel="stylesheet" href="{{ asset('fonts/material-icon/css/material-design-iconic-font.min.css')}}">
+
+    <!-- Main css -->
+    <link rel="stylesheet" href="{{ asset('css/style.css')}}">
+     <style>
+    civ:hover{
+  opacity: 1.0;
+}"
   </style>
-  
-  
+</head>
 
-@endsection
-  
-  @section('content')
-  
-<body class="hold-transition login-page" style="background-image: url({{ asset( 'dist/img/bg-home.jpg' ) }}); background-repeat: no-repeat; background-size: cover;">
-<div  style="float:right; padding-right: 200px; padding-top: 100px;">
-<div class="login-box">
-  <div class="login-logo">
-    <a href="{{ asset( url('/') ) }}"><b>Veritas University </b>ECampus</a>
-  </div>
-  <!-- /.login-logo -->
-  <div class="login-box-body loginbg">
-  <a class="btn btn-block bg-gradient-primary" style='font-size:20px'; href="{{ route('staff.login') }}"> <i class="fa fa-user" style='font-size:36px';></i> Staff Login </a>
-   
-  </div>
-  
-  <div> <p> </p> </div>
-  
-  <div class="login-box-body loginbg">
-  <a class="btn btn-block bg-gradient-primary" href="{{ route('student.login') }}" style='font-size:20px;'> <i class="fa fa-graduation-cap" style='font-size:36px;'></i> Student Login </a>
-   
-  </div>
-  <!-- /.login-box-body -->
-</div>
-<!-- /.login-box -->
+<body style="background-image: url('../img/signup-bg.jpg'); opacity: 0.9;" >
+    <div class="">
+        <div class="signup">
 
-</div>
+            <div class="error-page">
+                <h2 class="headline text-yellow"> 419</h2>
 
-@endsection
+                <div class="error-content">
+                  <h3><i class="fa fa-warning text-yellow"></i> Sorry, your session has expired</h3>
 
-@section('pagescript')
-<!-- iCheck -->
-<script src="{{ asset('plugins/iCheck/icheck.min.js') }}"></script>
-<script>
-  $(function () {
-    $('input').iCheck({
-      checkboxClass: 'icheckbox_square-blue',
-      radioClass: 'iradio_square-blue',
-      increaseArea: '20%' // optional
-    });
-  });
-</script>
-@endsection
+                  <p>
+                   Sorry, your session has expired. Please refresh and try again
+                    Meanwhile, you may <a href="{{ url('/') }}">return to Login</a>
+                  </p>
 
 
+                </div>
+                <!-- /.error-content -->
+              </div>
+        </div>
 
+    </div>
+
+</body>
+
+</html>

@@ -34,7 +34,7 @@ Route::prefix('/admin')->group(function () {
 
 //Registration Route
 Route::get('/register', function () {
-    return view('register');
+    return view('admissions.register');
 });
 
 Route::get('/confirmation', 'App\Http\Controllers\ApplicantController@cofirmation');
@@ -52,14 +52,14 @@ Route::post('/register', 'App\Http\Controllers\ApplicantController@register');
 
 //MAINTAINCE
 Route::get('/maintane', function () {
-    return view('layouts.Maintance');
+    return view('admissions.layouts.Maintance');
 });
 
 Route::get('/forgotpassword', function () {
-    return view('forgotpassword');
+    return view('admissions.forgotpassword');
 });
 Route::get('/forgotpasswordSetNew', function () {
-    return view('forgotpasswordSetNew');
+    return view('admissons.forgotpasswordSetNew');
 });
 Route::post('/forgotpassword', 'App\Http\Controllers\ApplicantController@forgotpassword');
 
@@ -151,7 +151,7 @@ Route::get('/utmeletter', 'App\Http\Controllers\ApplicantController@generatePDF'
 
 //PASSWORD RESET
 Route::get('/forgotpassword', function () {
-    return view('forgotpassword');
+    return view('admissions.forgotpassword');
 });
 Route::Get('/resetpassword', 'App\Http\Controllers\ApplicantController@forgotpasswordSetNew');
 
@@ -202,9 +202,9 @@ Route::get('/adminLogin', function () {
 
 
 //Registration Route
-Route::get('/adminRegister', function () {
-    return view('adminRegister');
-});
+// Route::get('/adminRegister', function () {
+//     return view('adminRegister');
+// });
 
 Route::post('/admin', 'App\Http\Controllers\AdminController@login');
 Route::post('/adminRegister', 'App\Http\Controllers\AdminController@register');
@@ -216,7 +216,7 @@ Route::get('/adminRole', function () {
 });
 
 Route::get('/error', function () {
-    return view('error');
+    return view('admissions.error');
 });
 
 // Admin task to roles
