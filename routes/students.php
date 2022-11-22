@@ -1,13 +1,11 @@
 <?php
-Route::get('/students/course-registration', 'StudentsController@courseRegistration')->name('student.course-registration');
 
-Route::delete('/students/remove-course', 'StudentsController@removeRegisteredCourse')->name('student.remove-course');
 
-Route::post('/students/add-course', 'StudentsController@addCourse')->name('student.add-course');
+Route::get('/course-registration', 'StudentsController@courseRegistration')->name('student.course-registration');
+Route::post('/course-reg', 'StudentsController@course_Reg')->name('student.course_reg');;
+Route::post('/dropcourse-reg', 'StudentsController@dropcourse_Reg')->name('student.dropcourse');;
+Route::get('/courseform', 'StudentsController@courseform')->name('student.courseform');;
 
-Route::get('/students/closed-course-registration', 'StudentsController@closedCourseRegistration')->name('student.closed-course-registration');
-
-Route::get('/students/course-form/{encode}', 'StudentsController@courseForm')->name('student.course-form');
 
 Route::get('/students/profile', 'StudentsController@profile')->name('student.profile');
 
@@ -17,24 +15,33 @@ Route::post('/students/change-password', 'StudentsController@changePassword')->n
 
 Route::get('/students/debt', 'StudentsController@debt')->name('student.debt');
 
-Route::get('/students/transcript', 'StudentsController@transcript')->name('students.transcript');
+// Route::get('/students/transcript', 'StudentsController@transcript')->name('students.transcript');
 
 Route::get('/students/results', 'StudentsController@results')->name('students.results');
 
-Route::get('/students/semester-result/{encode}', 'StudentsController@semesterResult')->name('student.semester-result');
+// Route::get('/students/semester-result/{encode}', 'StudentsController@semesterResult')->name('student.semester-result');
 
-Route::get('/students/course-registration2', 'StudentsController@courseRegistration2')->name('student.course-registration2');
+// Route::get('/students/course-registration2', 'StudentsController@courseRegistration2')->name('student.course-registration2');
 
-Route::get('/students/evaluation', 'StudentsController@evaluation')->name('student.evaluation');
+// Route::get('/students/evaluation', 'StudentsController@evaluation')->name('student.evaluation');
 
-Route::get('/evaluation/students/evaluate/{result_id}', 'StudentsController@evaluateResult')->name('student.result-evaluation');
+// Route::get('/evaluation/students/evaluate/{result_id}', 'StudentsController@evaluateResult')->name('student.result-evaluation');
 
-Route::post('/evaluation/students/evaluate', 'StudentsController@storeEvaluation')->name('student.store-evaluation');
+// Route::post('/evaluation/students/evaluate', 'StudentsController@storeEvaluation')->name('student.store-evaluation');
 
 Route::get('/students/contact/edit', 'StudentsController@contactEdit')->name('student.contact-edit');
 
 Route::post('/students/contact/update', 'StudentsController@contactUpdate')->name('student.contact-update');
 
+// Route::get('/students/course-registration', 'StudentsController@courseRegistration')->name('student.course-registration');
+
+// Route::delete('/students/remove-course', 'StudentsController@removeRegisteredCourse')->name('student.remove-course');
+
+// Route::post('/students/add-course', 'StudentsController@addCourse')->name('student.add-course');
+
+// Route::get('/students/closed-course-registration', 'StudentsController@closedCourseRegistration')->name('student.closed-course-registration');
+
+// Route::get('/students/course-form/{encode}', 'StudentsController@courseForm')->name('student.course-form');
 
 
 

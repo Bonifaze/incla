@@ -1,23 +1,12 @@
 @extends('layouts.student')
 
-
-
 @section('pagetitle')  Course Registration @endsection
 
-
-
-<!-- Sidebar Links -->
-
-<!-- Treeview -->
 @section('course-open') menu-open @endsection
 
 @section('course') active @endsection
 
-<!-- Page -->
 @section('registration') active @endsection
-
-<!-- End Sidebar links -->
-
 
 
 @section('content')

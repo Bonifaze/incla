@@ -7,10 +7,6 @@
 @endsection
 
 
-
-<!-- Sidebar Links -->
-
-<!-- Treeview -->
 @section('student-open')
     menu-open
 @endsection
@@ -19,7 +15,6 @@
     active
 @endsection
 
-<!-- Page -->
 @section('home')
     active
 @endsection
@@ -29,14 +24,6 @@
 
 
 @section('content')
-    <style type="text/css">
-        #sub3 {
-
-
-
-            display: none;
-        }
-    </style>
     <div class="content-wrapper bg-white">
         <!-- Content Header (Page header) -->
 
@@ -72,7 +59,6 @@
                                             <th>Course Code</th>
                                             <th>Course Title</th>
                                             <th>Credit Unit</th>
-
                                         </tr>
                                     </thead>
 
@@ -95,12 +81,10 @@
 
                                                     @endphp
                                                     <tr>
-
-
                                                         <td> <input type="checkbox" id="{{ $course->credit_unit }}"
                                                                 name="courses[]"
                                                                 {{ $course->course_category == 1 ? 'checked ' : '' }}
-                                                                value="{{ $course->id }}"
+                                                                value="{{ $course->course_id }}"
                                                                 class="{{ $course->credit_unit }}"
                                                                 onclick="{{ $course->course_category == 1 ? 'return false' : 'totalIt()' }}">
                                                             <input type="hidden" name="course_units1[]"
@@ -119,7 +103,6 @@
                                                 <td><strong>Total Credit Unit</strong></td>
                                                 <td colspan="2"></td>
                                                 <td id="tcu" name="total"></td>
-
                                             </tr>
                                     </tbody>
 
@@ -149,15 +132,13 @@
                                             @if ($course->is_registered == 0)
                                                 @php
                                                     $tatolCredits += $course->course_category == 1 ? $course->credit_unit : 0;
-
                                                 @endphp
                                                 <tr>
-
-
                                                     <td> <input type="checkbox" id="{{ $course->credit_unit }}"
                                                             name="courses[]"
                                                             {{ $course->course_category == 1 ? 'checked ' : '' }}
-                                                            value="{{ $course->id }}" class="{{ $course->credit_unit }}"
+                                                            value="{{ $course->course_id }}"
+                                                            class="{{ $course->credit_unit }}"
                                                             onclick="{{ $course->course_category == 1 ? 'return false' : 'totalIt2()' }}">
                                                         <input type="hidden" name="course_units2[]"
                                                             value="{{ $course->credit_unit }}">
@@ -180,14 +161,11 @@
 
                                 </table>
                                 {{--  To show lower level courses  --}}
-                                <div id="sub3">
+                                {{--  <div id="sub3">
                                     <div
                                         class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
                                         <h6 class="m-0 font-weight-bold text-success">Lower Level Course </h6>
                                     </div>
-
-
-                                    {{--  First Semester lower coursess --}}
 
                                     <table class="table table-bordered table-striped" width="100%" cellspacing="0">
                                         <thead>
@@ -200,15 +178,13 @@
                                         </thead>
 
                                         <tbody>
-
-
                                             <input id="" type="hidden" name="student_id"
                                                 value="{{ Auth::guard('student')->user()->id }}">
                                             <input id="" type="hidden" name="session"
-                                                value="{{ $session->id }}">
-                                            {{--  <input id="" type="text"  name="session" value="{{ $prevsession }}" >  --}}
+                                                value="{{ $session->id }}">  --}}
+                                {{--  <input id="" type="text"  name="session" value="{{ $prevsession }}" >  --}}
 
-                                            @foreach ($lowercourseFirst as $key => $course)
+                                {{--  @foreach ($lowercourseFirst as $key => $course)
                                                 @if ($course->is_registered == 0)
                                                     <tr>
 
@@ -226,18 +202,18 @@
                                                         <td>{{ $course->credit_unit }}</td>
                                                 @endif
                                             @endforeach
-                                            </tr>
-                                            {{--  <tr>
+                                            </tr>  --}}
+                                {{--  <tr>
                                 <td>Total Credit Unit</td>
                                 <td colspan="2"></td>
                                 <td id="result" name="total"></td>
 
                                 </tr>  --}}
-                                        </tbody>
+                                </tbody>
 
-                                    </table>
-                                    {{--  Second Semester Lower Courses   --}}
-                                    <table class="table table-bordered table-striped" width="100%" cellspacing="0">
+                                </table>
+                                {{--  Second Semester Lower Courses   --}}
+                                {{--  <table class="table table-bordered table-striped" width="100%" cellspacing="0">
                                         <thead>
                                             <tr>
                                                 <th>Second Semester </th>
@@ -248,15 +224,13 @@
                                         </thead>
 
                                         <tbody>
-
-
                                             <input id="" type="hidden" name="student_id"
                                                 value="{{ Auth::guard('student')->user()->id }}">
                                             <input id="" type="hidden" name="session"
-                                                value="{{ $session->id }}">
-                                            {{--  <input id="" type="text"  name="session" value="{{ $prevsession }}" >  --}}
+                                                value="{{ $session->id }}">  --}}
+                                {{--  <input id="" type="text"  name="session" value="{{ $prevsession }}" >  --}}
 
-                                            @foreach ($lowercourseSecond as $key => $course)
+                                {{--  @foreach ($lowercourseSecond as $key => $course)
                                                 @if ($course->is_registered == 0)
                                                     <tr>
 
@@ -274,18 +248,17 @@
                                                         <td>{{ $course->credit_unit }}</td>
                                                 @endif
                                             @endforeach
-                                            </tr>
-                                            {{--  <tr>
+                                            </tr>  --}}
+                                {{--  <tr>
                                 <td>Total Credit Unit</td>
                                 <td colspan="2"></td>
                                 <td id="result" name="total"></td>
 
                                 </tr>  --}}
-                                        </tbody>
+                                {{--  </tbody>
 
                                     </table>
-                                </div>
-
+                                </div>  --}}
 
                                 {{--  <div id="limit" class="text-danger fw-bold"></div>
                         <div id="limit2" class="text-danger fw-bold"></div>  --}}
@@ -301,12 +274,12 @@
                                     Registered Courses
                                 </h1>
 
-                                    <div class="dropdown no-arrow my-3">
-                                        {{--  <input type=button class="d-none d-sm-inline-block btn btn-sm btn-success shadow-sm" name=type id='bt1' value='Show Lower Level Courses' onclick="setVisibility('sub3');";>  --}}
-                                        <a href="/courseform" class=" btn btn-sm btn-success shadow-sm"><i
-                                                class="fas fa-print text-white-50"></i> Print </a>
+                                <div class="dropdown no-arrow my-3">
+                                    {{--  <input type=button class="d-none d-sm-inline-block btn btn-sm btn-success shadow-sm" name=type id='bt1' value='Show Lower Level Courses' onclick="setVisibility('sub3');";>  --}}
+                                    <a href="/courseform" class=" btn btn-sm btn-success shadow-sm"><i
+                                            class="fas fa-print text-white-50"></i> Print </a>
 
-                                    </div>
+                                </div>
 
                                 <table class="table table-bordered table-striped" width="100%" cellspacing="0">
                                     <thead>
@@ -339,8 +312,6 @@
 
                                                 @endphp
                                                 <tr>
-
-
                                                     {{--  <td> <input class="itemcourse" type="checkbox" id="course" name="courses[]" {{$course->course_category==1?"checked ":""}} value="{{ $course->course_code }}" onclick="{{$course->course_category==1?'return false':'totalIt()'}}"> </td>  --}}
                                                     <td> <input class="itemcourse" type="checkbox" id="course"
                                                             name="courses[]"
@@ -348,7 +319,7 @@
                                                             value="{{ $course->course_id }}"
                                                             onclick="{{ $course->course_category == 1 ? 'return false' : 'totalIt()' }}">{{ $key + 1 }}
                                                     </td>
-                                                    <td>{{ $course->course_code }}</td>
+                                                    <td>{{ $course->course_code }} </td>
                                                     <td>{{ $course->course_title }}</td>
                                                     <td>{{ $course->credit_unit }}</td>
                                                     {{--  <td><a class="btn btn-danger" type="button" href="">Delete Admin</a></td>  --}}

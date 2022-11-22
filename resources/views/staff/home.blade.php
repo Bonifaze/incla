@@ -51,7 +51,7 @@
                                         <div class="row no-gutters align-items-center">
                                             <div class="col mr-2">
                                                 <div class="h4 text-success" style="text-decoration: underline;">
-                                                    <a href="{{ route('staff.courses') }}"
+                                                    <a href="#"
                                                         class="text-success @yield('staff-courses')">My Courses</a>
                                                 </div>
                                             </div>

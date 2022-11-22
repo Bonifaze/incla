@@ -497,247 +497,249 @@ DB::commit();
             ->with('success','Program Course Lecturer updated successfully');
     }
 
-
-    public function resultsExcelDownload($program_course_id)
-    {
-        $pcid = base64_decode($program_course_id);
-        $program_course = ProgramCourse::with(['results.student.academic'])->findOrFail($pcid);
-
-        //Ensure the logged in staff is the course lecturer id. Delegated Id to be decided later
-        $staff = Auth::guard('staff')->user();
-        if($program_course->lecturer_id != $staff->id)
-        {
-            return redirect()->route('program_course.result',$program_course_id)
-                ->with('error',"You do not have permission to update the selected Program Course results. Contact the Course owner.");
-        }
-
-        //Check if the department has approved the course
-        if($program_course->approval >1)
-        {
-            return redirect()->route('program_course.result',$program_course_id)
-                ->with('error',"You do not have permission to update the selected Program Course. Please check approval levels.");
-        }
-        $code = str_replace(" ","_",$program_course->course->code);
-        $prog = strtolower($program_course->program->code);
-        $fileName = $prog."-".strtolower($code)."-".$program_course->id.".xlsx";
-        return Excel::download(new ProgramCoursesExport($pcid), $fileName);
+    // LEFTOUT
 
 
-    }
+    // public function resultsExcelDownload($program_course_id)
+    // {
+    //     $pcid = base64_decode($program_course_id);
+    //     $program_course = ProgramCourse::with(['results.student.academic'])->findOrFail($pcid);
+
+    //     //Ensure the logged in staff is the course lecturer id. Delegated Id to be decided later
+    //     $staff = Auth::guard('staff')->user();
+    //     if($program_course->lecturer_id != $staff->id)
+    //     {
+    //         return redirect()->route('program_course.result',$program_course_id)
+    //             ->with('error',"You do not have permission to update the selected Program Course results. Contact the Course owner.");
+    //     }
+
+    //     //Check if the department has approved the course
+    //     if($program_course->approval >1)
+    //     {
+    //         return redirect()->route('program_course.result',$program_course_id)
+    //             ->with('error',"You do not have permission to update the selected Program Course. Please check approval levels.");
+    //     }
+    //     $code = str_replace(" ","_",$program_course->course->code);
+    //     $prog = strtolower($program_course->program->code);
+    //     $fileName = $prog."-".strtolower($code)."-".$program_course->id.".xlsx";
+    //     return Excel::download(new ProgramCoursesExport($pcid), $fileName);
+
+
+    // }
 
 
 
-    public function resultsExcelUpload(Request $request)
-    {
-        $this->validate($request, [
-            'excel' => 'required|max:500',
-            'program_course_id' => 'required|string',
-        ]);
-        //get file extension
-        $extension = pathinfo($request->excel->getClientOriginalName(), PATHINFO_EXTENSION);
+    // public function resultsExcelUpload(Request $request)
+    // {
+    //     $this->validate($request, [
+    //         'excel' => 'required|max:500',
+    //         'program_course_id' => 'required|string',
+    //     ]);
+    //     //get file extension
+    //     $extension = pathinfo($request->excel->getClientOriginalName(), PATHINFO_EXTENSION);
 
-        //check file format
-        if ($extension != "xlsx" AND $request->excel->getMimeType() != "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet")
-        {
-            return redirect()->route('program_course.results.upload_excel',$request->program_course_id)
-                ->with('error',"The file format has changed from the original template.");
-        }
-        $pcid = base64_decode($request->program_course_id);
-        $program_course = ProgramCourse::with(['results.student.academic'])->findOrFail($pcid);
+    //     //check file format
+    //     if ($extension != "xlsx" AND $request->excel->getMimeType() != "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet")
+    //     {
+    //         return redirect()->route('program_course.results.upload_excel',$request->program_course_id)
+    //             ->with('error',"The file format has changed from the original template.");
+    //     }
+    //     $pcid = base64_decode($request->program_course_id);
+    //     $program_course = ProgramCourse::with(['results.student.academic'])->findOrFail($pcid);
 
-        //Ensure the logged in staff is the course lecturer id. Delegated Id to be decided later
-        $staff = Auth::guard('staff')->user();
-        if(!$program_course->activeCourseOwner($staff->id))
-        {
-            return redirect()->route('program_course.results.upload_excel',$request->program_course_id)
-                ->with('error',"You do not have permission to update the selected Program Course. Contact the Course owner or Check approval levels.");
-        }
+    //     //Ensure the logged in staff is the course lecturer id. Delegated Id to be decided later
+    //     $staff = Auth::guard('staff')->user();
+    //     if(!$program_course->activeCourseOwner($staff->id))
+    //     {
+    //         return redirect()->route('program_course.results.upload_excel',$request->program_course_id)
+    //             ->with('error',"You do not have permission to update the selected Program Course. Contact the Course owner or Check approval levels.");
+    //     }
 
-        // Using maatwebsite plugin, convert excel sheet to array
-        $rows = Excel::toArray(new ProgramCoursesImport(), request()->file('excel'));
-        //row[0]; sheet 1
-        //row[0][0]; sheet 1, row 1
-        //row[0][3][4]; sheet 1, row 4, column 5
+    //     // Using maatwebsite plugin, convert excel sheet to array
+    //     $rows = Excel::toArray(new ProgramCoursesImport(), request()->file('excel'));
+    //     //row[0]; sheet 1
+    //     //row[0][0]; sheet 1, row 1
+    //     //row[0][3][4]; sheet 1, row 4, column 5
 
-        //confirm right file
-        $rpcid = $rows[0][0][0];
-        if($rpcid != $request->program_course_id)
-        {
-           return redirect()->route('program_course.results.upload_excel',$request->program_course_id)
-                ->with('error',"Please confirm you have the right file for this course.");
-        }
-        //confirm the file name is the same
-        $code = str_replace(" ","_",$program_course->course->code);
-        $prog = strtolower($program_course->program->code);
-        $fileName = $prog."-".strtolower($code)."-".$program_course->id.".xlsx";
-        if($request->excel->getClientOriginalName() != $fileName)
-        {
-            return redirect()->route('program_course.results.upload_excel',$request->program_course_id)
-                ->with('error',"Please confirm you have the right result file for this course.");
-        }
-       $num = count($rows[0]);
-        $track = 0;
-        DB::beginTransaction(); //Start transaction!
+    //     //confirm right file
+    //     $rpcid = $rows[0][0][0];
+    //     if($rpcid != $request->program_course_id)
+    //     {
+    //        return redirect()->route('program_course.results.upload_excel',$request->program_course_id)
+    //             ->with('error',"Please confirm you have the right file for this course.");
+    //     }
+    //     //confirm the file name is the same
+    //     $code = str_replace(" ","_",$program_course->course->code);
+    //     $prog = strtolower($program_course->program->code);
+    //     $fileName = $prog."-".strtolower($code)."-".$program_course->id.".xlsx";
+    //     if($request->excel->getClientOriginalName() != $fileName)
+    //     {
+    //         return redirect()->route('program_course.results.upload_excel',$request->program_course_id)
+    //             ->with('error',"Please confirm you have the right result file for this course.");
+    //     }
+    //    $num = count($rows[0]);
+    //     $track = 0;
+    //     DB::beginTransaction(); //Start transaction!
 
-        for ($r = 2; $r < $num; $r++)
-        {
-            $sn = $rows[0][$r][0];
-            $result_id = $rows[0][$r][1];
-            $mat_no = $rows[0][$r][2];
-            $ca1 = $rows[0][$r][3];
-            $ca2 = $rows[0][$r][4];
-            $ca3 = $rows[0][$r][5];
-            $exam = $rows[0][$r][6];
+    //     for ($r = 2; $r < $num; $r++)
+    //     {
+    //         $sn = $rows[0][$r][0];
+    //         $result_id = $rows[0][$r][1];
+    //         $mat_no = $rows[0][$r][2];
+    //         $ca1 = $rows[0][$r][3];
+    //         $ca2 = $rows[0][$r][4];
+    //         $ca3 = $rows[0][$r][5];
+    //         $exam = $rows[0][$r][6];
 
-            //ensure the data has the right accepted value
-            if($mat_no == null OR $ca1 < 0 OR $ca1 > 10 OR $ca2 < 0 OR $ca2 > 10 OR $ca3 < 0 OR $ca3 > 10 OR $exam < 0 OR $exam > 70)
-            {
-                return redirect()->route('program_course.results.upload_excel',$request->program_course_id)
-                    ->with('error',"The Excel sheet incorrect result values. Error with result for ".$mat_no);
-            }
+    //         //ensure the data has the right accepted value
+    //         if($mat_no == null OR $ca1 < 0 OR $ca1 > 10 OR $ca2 < 0 OR $ca2 > 10 OR $ca3 < 0 OR $ca3 > 10 OR $exam < 0 OR $exam > 70)
+    //         {
+    //             return redirect()->route('program_course.results.upload_excel',$request->program_course_id)
+    //                 ->with('error',"The Excel sheet incorrect result values. Error with result for ".$mat_no);
+    //         }
 
-            if($ca1 == 0 AND $ca2 == 0 AND $ca3 == 0 AND $exam > 0)
-            {
-                return redirect()->route('program_course.results.upload_excel',$request->program_course_id)
-                    ->with('error',$mat_no." has no continuous assessment provided");
-            }
+    //         if($ca1 == 0 AND $ca2 == 0 AND $ca3 == 0 AND $exam > 0)
+    //         {
+    //             return redirect()->route('program_course.results.upload_excel',$request->program_course_id)
+    //                 ->with('error',$mat_no." has no continuous assessment provided");
+    //         }
 
-           $academic = StudentAcademic::where('mat_no',$mat_no)->get()->first();
-           $results = StudentResult::where('program_course_id',$pcid)
-               ->where('student_id',$academic->student_id)
-               ->where('id',$result_id)
-                ->get();
-            if(count($results) != 1)
-            {
-                return redirect()->route('program_course.results.upload_excel',$request->program_course_id)
-                    ->with('error',"Result record not found. Error with result for ".$mat_no);
-            }
+    //        $academic = StudentAcademic::where('mat_no',$mat_no)->get()->first();
+    //        $results = StudentResult::where('program_course_id',$pcid)
+    //            ->where('student_id',$academic->student_id)
+    //            ->where('id',$result_id)
+    //             ->get();
+    //         if(count($results) != 1)
+    //         {
+    //             return redirect()->route('program_course.results.upload_excel',$request->program_course_id)
+    //                 ->with('error',"Result record not found. Error with result for ".$mat_no);
+    //         }
 
-            $result = $results->first();
-            $total = $ca1 + $ca2 + $ca3 + $exam;
-            if($total > 100 OR $total < 0)
-            {
-                return redirect()->route('program_course.results.upload_excel',$request->program_course_id)
-                    ->with('error',"Wrong result values. Error with result for ".$mat_no);
-            }
-            if($total != $result->total)
-            {
-                $result->CA1 = $ca1;
-                $result->CA2 = $ca2;
-                $result->CA3 = $ca3;
-                $result->exam = $exam;
-                $result->total = $total;
-                $result->modified_by = $staff->id;
+    //         $result = $results->first();
+    //         $total = $ca1 + $ca2 + $ca3 + $exam;
+    //         if($total > 100 OR $total < 0)
+    //         {
+    //             return redirect()->route('program_course.results.upload_excel',$request->program_course_id)
+    //                 ->with('error',"Wrong result values. Error with result for ".$mat_no);
+    //         }
+    //         if($total != $result->total)
+    //         {
+    //             $result->CA1 = $ca1;
+    //             $result->CA2 = $ca2;
+    //             $result->CA3 = $ca3;
+    //             $result->exam = $exam;
+    //             $result->total = $total;
+    //             $result->modified_by = $staff->id;
 
-                try {
-                    $result->save();
-                    $track += 1;
-                } catch (\Exception $e) {
-                    //failed logic here
-                    DB::rollback();
-                    return redirect()->route('program_course.results.upload_excel', $request->program_course_id)
-                        ->with(['error' => 'Error uploading students result. Check result for ' . $mat_no]);
-                }
-            }
+    //             try {
+    //                 $result->save();
+    //                 $track += 1;
+    //             } catch (\Exception $e) {
+    //                 //failed logic here
+    //                 DB::rollback();
+    //                 return redirect()->route('program_course.results.upload_excel', $request->program_course_id)
+    //                     ->with(['error' => 'Error uploading students result. Check result for ' . $mat_no]);
+    //             }
+    //         }
 
-        }
+    //     }
 
-        DB::commit();
-        return redirect()->route('program_course.result',$request->program_course_id)
-            ->with('success',$program_course->program->name." ".$program_course->course->code." ".$track." Results updated. Please verify.");
+    //     DB::commit();
+    //     return redirect()->route('program_course.result',$request->program_course_id)
+    //         ->with('success',$program_course->program->name." ".$program_course->course->code." ".$track." Results updated. Please verify.");
 
-    } // end resultsExcelUpload function
+    // } // end resultsExcelUpload function
 
-public function resultsUploadExcel($program_course_id)
-{
-    $program_course = ProgramCourse::findOrFail(base64_decode($program_course_id));
-    //Ensure the logged in staff is the course lecturer id. Delegated Id to be decided later
-    $staff = Auth::guard('staff')->user();
-    if(!$program_course->activeCourseOwner($staff->id))
-    {
-        return redirect()->route('program_course.results.upload_excel',$program_course_id)
-            ->with('error',"You do not have permission to update the selected Program Course. Contact the Course owner or Check approval levels.");
-    }
+// public function resultsUploadExcel($program_course_id)
+// {
+//     $program_course = ProgramCourse::findOrFail(base64_decode($program_course_id));
+//     //Ensure the logged in staff is the course lecturer id. Delegated Id to be decided later
+//     $staff = Auth::guard('staff')->user();
+//     if(!$program_course->activeCourseOwner($staff->id))
+//     {
+//         return redirect()->route('program_course.results.upload_excel',$program_course_id)
+//             ->with('error',"You do not have permission to update the selected Program Course. Contact the Course owner or Check approval levels.");
+//     }
 
-    return view('staff.academic.result_upload_excel', compact('program_course'));
+//     return view('staff.academic.result_upload_excel', compact('program_course'));
 
-}
+// }
 
-    public function VC()
-    {
-        $this->authorize('approveResult',ProgramCourse::class);
-        $programs = Program::whereHas('programCourses')->with(['department','programCourses'])
-            ->orderBy('name','ASC')
-            ->paginate(100);
-        $session = new Session();
-        return view('vc.results', compact('programs','session'));
-    }
-    public function VCLevel($level)
-    {
-        $this->authorize('approveResult',ProgramCourse::class);
-        $programs = Program::whereHas('programCourses')->with(['department','programCourses'])
-            ->orderBy('name','ASC')
-            ->paginate(100);
-        $session = new Session();
-        return view('vc.level_results', compact('programs','session', 'level'));
-    }
+    // public function VC()
+    // {
+    //     $this->authorize('approveResult',ProgramCourse::class);
+    //     $programs = Program::whereHas('programCourses')->with(['department','programCourses'])
+    //         ->orderBy('name','ASC')
+    //         ->paginate(100);
+    //     $session = new Session();
+    //     return view('vc.results', compact('programs','session'));
+    // }
+    // public function VCLevel($level)
+    // {
+    //     $this->authorize('approveResult',ProgramCourse::class);
+    //     $programs = Program::whereHas('programCourses')->with(['department','programCourses'])
+    //         ->orderBy('name','ASC')
+    //         ->paginate(100);
+    //     $session = new Session();
+    //     return view('vc.level_results', compact('programs','session', 'level'));
+    // }
 
-    public function resultsStatus()
-    {
-        $this->authorize('list',ProgramCourse::class);
-        $programs = Program::whereHas('programCourses')->with(['department','programCourses'])
-            ->orderBy('name','ASC')
-            ->paginate(100);
-        $session = new Session();
-        return view('program-courses.results_status', compact('programs','session'));
-    }
-    public function vcApproval(Request $request)
-    {
-        if(isset($request->level)){
-            $level = $request->level;
-        }
-        else{
-            $level = 1000;
-        }
-        $this->authorize('approveResult',ProgramCourse::class);
-        $program_courses = ProgramCourse::with('results')->where('program_id',$request->program_id)
-            ->where('session_id',$request->session_id)
-                ->where('semester',$request->semester)
-                ->where('approval','>=',1)
-                ->where('level','=',$level)
-                ->whereHas('results')
-                ->get();
-        $pcCount = 0;
-        $resultCount = 0;
-        DB::beginTransaction(); //Start transaction!
-      try {
-             foreach ($program_courses as $program_course)
-            {
-                $program_course->approval = 7;
-                $program_course->save();
-                $pcCount++;
-                $results = $program_course->results;
-                foreach($results as $result)
-                {
-                    $result->status = 7;
-                    $result->save();
-                    $resultCount++;
-                }
+    // public function resultsStatus()
+    // {
+    //     $this->authorize('list',ProgramCourse::class);
+    //     $programs = Program::whereHas('programCourses')->with(['department','programCourses'])
+    //         ->orderBy('name','ASC')
+    //         ->paginate(100);
+    //     $session = new Session();
+    //     return view('program-courses.results_status', compact('programs','session'));
+    // }
+    // public function vcApproval(Request $request)
+    // {
+    //     if(isset($request->level)){
+    //         $level = $request->level;
+    //     }
+    //     else{
+    //         $level = 1000;
+    //     }
+    //     $this->authorize('approveResult',ProgramCourse::class);
+    //     $program_courses = ProgramCourse::with('results')->where('program_id',$request->program_id)
+    //         ->where('session_id',$request->session_id)
+    //             ->where('semester',$request->semester)
+    //             ->where('approval','>=',1)
+    //             ->where('level','=',$level)
+    //             ->whereHas('results')
+    //             ->get();
+    //     $pcCount = 0;
+    //     $resultCount = 0;
+    //     DB::beginTransaction(); //Start transaction!
+    //   try {
+    //          foreach ($program_courses as $program_course)
+    //         {
+    //             $program_course->approval = 7;
+    //             $program_course->save();
+    //             $pcCount++;
+    //             $results = $program_course->results;
+    //             foreach($results as $result)
+    //             {
+    //                 $result->status = 7;
+    //                 $result->save();
+    //                 $resultCount++;
+    //             }
 
-            }
-        }
-        catch(\Exception $e)
-        {
-            //failed logic here
-            DB::rollback();
-            return redirect()->route('program_course.vc')
-                ->with('error',"Error approving result. Please contact ICT");
-        }
-        DB::commit();
-        return redirect()->route('program_course.vc_level',$level)
-            ->with('success',$resultCount." results approved in ".$pcCount." courses");
+    //         }
+    //     }
+    //     catch(\Exception $e)
+    //     {
+    //         //failed logic here
+    //         DB::rollback();
+    //         return redirect()->route('program_course.vc')
+    //             ->with('error',"Error approving result. Please contact ICT");
+    //     }
+    //     DB::commit();
+    //     return redirect()->route('program_course.vc_level',$level)
+    //         ->with('success',$resultCount." results approved in ".$pcCount." courses");
 
-    }
+    // }
 
 
 } // end class

@@ -357,11 +357,11 @@ Route::get('/studentsLogin', function () {
 //     return view('students.home');
 // });
 
-Route::post('/studentsLogin', 'App\Http\Controllers\StudentController@StudentLogin');
-Route::get('/course-registration', 'App\Http\Controllers\StudentsController@course_Registration');
-Route::post('/course-reg', 'App\Http\Controllers\StudentsController@course_Reg');
-Route::post('/dropcourse-reg', 'App\Http\Controllers\StudentsController@dropcourse_Reg');
-Route::get('/courseform', 'App\Http\Controllers\StudentsController@courseform');
+// Route::post('/studentsLogin', 'App\Http\Controllers\StudentController@StudentLogin');
+// Route::get('/course-registration', 'App\Http\Controllers\StudentsController@course_Registration');
+// Route::post('/course-reg', 'App\Http\Controllers\StudentsController@course_Reg');
+// Route::post('/dropcourse-reg', 'App\Http\Controllers\StudentsController@dropcourse_Reg');
+// Route::get('/courseform', 'App\Http\Controllers\StudentsController@courseform');
 
 
 // // ProgramCourses routes

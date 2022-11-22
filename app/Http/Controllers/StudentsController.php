@@ -155,17 +155,20 @@ class StudentsController extends Controller
 
             }
 
-
+// TO RETUNE COURSE courseRegistration BLADE
     public function courseRegistration()
     {
         $student = Auth::guard('student')->user();
-        $registeredcourses = DB::table('registered_courses')->get();
+        $course = new Course();
+        $registeredcourses = DB::table('registered_courses')
+        ->where('student_id', $student->id)->get();
         // foreach ($registeredcourses as $courseRegCheck){
-        //     if ($courseRegCheck->session == $this->getcurrentsession() && $courseRegCheck->student_id == $student->id ) {
-        //         return redirect('courseform');
-        //     }
-        // }
-         $prevsession = $this->getprevioussession();
+            //     if ($courseRegCheck->session == $this->getcurrentsession() && $courseRegCheck->student_id == $student->id ) {
+                //         return redirect('courseform');
+                //     }
+                // }
+                $prevsession = $this->getprevioussession();
+                // return view('staff.auth.login');
 
         $session = DB::table('sessions')->where('status', 1)
         ->select ('sessions.id')->first();
@@ -175,22 +178,27 @@ class StudentsController extends Controller
 
         $academic = $student->academic;
 
+
+        // To return courseRegistration blade for student for student in 1000L
         if ($student->academic->level ==100)
         {
             //first semester
             // $courseFirst = DB::table('courses')->where('program_id', $student->academic->program_id);
-            $courseFirst = DB::table('program_courses')->where('program_id', $student->academic->program_id)
+            $courseFirst = DB::table('program_courses')->where('program_courses.program_id', $student->academic->program_id)
+            ->leftJoin('courses', 'courses.id', '=', 'program_courses.course_id')
             ->where('level',$student->academic->level )
             ->where('semester', 1)
             ->orderBy('course_category','ASC')
-            ->select('courses.*')->get();
+            ->select('program_courses.*', 'courses.course_code', 'courses.course_title')->get();
 
             //seceond semester
-            $courseSecond = DB::table('courses')->where('program_id', $student->academic->program_id)
+            $courseSecond =DB::table('program_courses')->where('program_courses.program_id', $student->academic->program_id)
+            ->leftJoin('courses', 'courses.id', '=', 'program_courses.course_id')
             ->where('level',$student->academic->level )
             ->where('semester', 2)
             ->orderBy('course_category','ASC')
-            ->select('courses.*')->get();
+            ->select('program_courses.*', 'courses.course_code', 'courses.course_title')->get();
+
 
             $stu_reg_courses = RegisteredCourse::where('student_id', $student->id)->where('session', $session->id)->get();
             $reg_course_ids1 = [];
@@ -229,66 +237,74 @@ class StudentsController extends Controller
 
             $courseform = DB::table('registered_courses')->where('student_id',$student->id )
             ->where ('session', $this->getcurrentsession() )
-            ->leftJoin('courses', 'courses.id', '=', 'registered_courses.id')
+            ->leftJoin('courses', 'courses.id', '=', 'registered_courses.course_id')
             ->leftJoin('programs', 'programs.id', '=', 'courses.program_id')
              ->leftJoin('academic_departments', 'academic_departments.id', '=', 'programs.academic_department_id')
             ->leftJoin('colleges', 'colleges.id', '=', 'academic_departments.college_id' )
-            ->select('registered_courses.*', 'courses.program_id','courses.credit_unit', 'courses.course_title', 'courses.course_code','courses.course_category', 'programs.*', 'academic_departments.*', 'colleges.*')
-            ->get();
+            // ->where('registered_courses.semester', 1)
+            ->orderBy('level','ASC')
+            ->leftJoin('program_courses', 'program_courses.id', '=', 'courses.id')
+            ->select('registered_courses.*', 'courses.program_id','courses.credit_unit', 'courses.course_title', 'courses.course_code', 'program_courses.course_category', 'programs.*', 'academic_departments.*', 'colleges.*')
+                    ->get();
             // ->where('semester', 1)
             // ->get();
           //first semester lower course
-          $lowercourseFirst = DB::table('courses')->where('program_id', $student->academic->program_id)
-          ->where('level' ,'<', $student->academic->level )
-          ->orderBy('level','ASC')
-          ->where('semester', 1)
-          ->orderBy('course_category','ASC')
-          ->select('courses.*')->get();
-//second semester lower course
-          $lowercourseSecond = DB::table('courses')->where('program_id', $student->academic->program_id)
-          ->where('level' ,'<', $student->academic->level )
-          ->orderBy('level','ASC')
-          ->where('semester', 2)
-          ->orderBy('course_category','ASC')
-          ->select('courses.*')->get();
+        //   $lowercourseFirst = DB::table('courses')->where('program_id', $student->academic->program_id)
+        //   ->where('level' ,'<', $student->academic->level )
+        //   ->orderBy('level','ASC')
+        //   ->where('semester', 1)
+        //   ->orderBy('course_category','ASC')
+        //   ->select('courses.*')->get();
+        //         //second semester lower course
+        //   $lowercourseSecond = DB::table('courses')->where('program_id', $student->academic->program_id)
+        //   ->where('level' ,'<', $student->academic->level )
+        //   ->orderBy('level','ASC')
+        //   ->where('semester', 2)
+        //   ->orderBy('course_category','ASC')
+        //   ->select('courses.*')->get();
 
 
 
             // $prevsession = $this->getprevioussession();
-           return view('students.course_registration', compact('courseFirst','courseSecond', 'lowercourseFirst' ,'lowercourseSecond','session', 'courseform'));
+        //    return view('students.course_registration', compact('courseFirst','courseSecond', 'lowercourseFirst' ,'lowercourseSecond','session', 'courseform'));
+        return view('students.course_registration', compact('courseFirst','courseSecond','session', 'courseform'));
 
             }
+
+            // TO REVIEW courseRegistration BLADE FOR LEVEL HIGER THAT 100
             else
             {
-                $courseFirst = DB::table('courses')->where('program_id', $student->academic->program_id)
+                $courseFirst =DB::table('program_courses')->where('program_courses.program_id', $student->academic->program_id)
+                ->leftJoin('courses', 'courses.id', '=', 'program_courses.course_id')
                 ->where('level',$student->academic->level )
                 ->where('semester', 1)
                 ->orderBy('course_category','ASC')
-                ->select('courses.*')->get();
+                ->select('program_courses.*', 'courses.course_code', 'courses.course_title')->get();
                 //second sermester
-                $courseSecond = DB::table('courses')->where('program_id', $student->academic->program_id)
-                ->where('level',$student->academic->level )
-                ->where('semester', 2)
-                ->orderBy('course_category','ASC')
-                ->select('courses.*')->get();
+                $courseSecond =DB::table('program_courses')->where('program_courses.program_id', $student->academic->program_id)
+            ->leftJoin('courses', 'courses.id', '=', 'program_courses.course_id')
+            ->where('level',$student->academic->level )
+            ->where('semester', 2)
+            ->orderBy('course_category','ASC')
+            ->select('program_courses.*', 'courses.course_code', 'courses.course_title')->get();
 //first semester lower course
-                $lowercourseFirst = DB::table('courses')->where('program_id', $student->academic->program_id)
-                ->where('level' ,'<', $student->academic->level )
-                ->orderBy('level','ASC')
-                ->where('semester', 1)
-                ->orderBy('course_category','ASC')
-                ->select('courses.*')->get();
+                // $lowercourseFirst = DB::table('courses')->where('program_id', $student->academic->program_id)
+                // ->where('level' ,'<', $student->academic->level )
+                // ->orderBy('level','ASC')
+                // ->where('semester', 1)
+                // ->orderBy('course_category','ASC')
+                // ->select('courses.*')->get();
 //second semester lower course
-                $lowercourseSecond = DB::table('courses')->where('program_id', $student->academic->program_id)
-                ->where('level' ,'<', $student->academic->level )
-                ->orderBy('level','ASC')
-                ->where('semester', 2)
-                ->orderBy('course_category','ASC')
-                ->select('courses.*')->get();
+                // $lowercourseSecond = DB::table('courses')->where('program_id', $student->academic->program_id)
+                // ->where('level' ,'<', $student->academic->level )
+                // ->orderBy('level','ASC')
+                // ->where('semester', 2)
+                // ->orderBy('course_category','ASC')
+                // ->select('courses.*')->get();
 
                 $stu_reg_courses = RegisteredCourse::where('student_id', $student->id)->where('session', $session->id)->get();
-            $reg_course_ids1 = [];
-            $reg_course_ids2 = [];
+                $reg_course_ids1 = [];
+                $reg_course_ids2 = [];
 
             foreach ($stu_reg_courses as $stu_reg_course)
             {
@@ -321,45 +337,45 @@ class StudentsController extends Controller
                 }
             });
 
-            $lowercourseFirst->each(function ($first) use($reg_course_ids1) {
-                if (in_array($first->id, $reg_course_ids1))
-                {
-                    $first->is_registered = 1;
-                }else
-                {
-                    $first->is_registered = 0;
-                }
-            });
+            // $lowercourseFirst->each(function ($first) use($reg_course_ids1) {
+            //     if (in_array($first->id, $reg_course_ids1))
+            //     {
+            //         $first->is_registered = 1;
+            //     }else
+            //     {
+            //         $first->is_registered = 0;
+            //     }
+            // });
 
-            $lowercourseSecond->each(function ($second) use($reg_course_ids2) {
-                if (in_array($second->id, $reg_course_ids2))
-                {
-                    $second->is_registered = 1;
-                }else
-                {
-                    $second->is_registered = 0;
-                }
-            });
+            // $lowercourseSecond->each(function ($second) use($reg_course_ids2) {
+            //     if (in_array($second->id, $reg_course_ids2))
+            //     {
+            //         $second->is_registered = 1;
+            //     }else
+            //     {
+            //         $second->is_registered = 0;
+            //     }
+            // });
 //To view Registered Courses
-            $courseform = DB::table('registered_courses')->where('student_id',$student->id )
-            ->where ('session', $this->getcurrentsession() )
-            ->leftJoin('courses', 'courses.id', '=', 'registered_courses.course_id')
-            ->leftJoin('programs', 'programs.id', '=', 'courses.program_id')
-             ->leftJoin('academic_departments', 'academic_departments.id', '=', 'programs.academic_department_id')
-            ->leftJoin('colleges', 'colleges.id', '=', 'academic_departments.college_id' )
-            // ->where('semester', 1)
-            ->orderBy('level','ASC')
-            ->select('registered_courses.*', 'courses.program_id','courses.credit_unit', 'courses.course_title', 'courses.course_code','courses.course_category', 'programs.*', 'academic_departments.*', 'colleges.*')
-            ->get();
-
-               return view('students.course_registration', compact('courseFirst','courseSecond','session', 'lowercourseFirst' ,'lowercourseSecond' ,'courseform'));
+                $courseform = DB::table('registered_courses')->where('student_id',$student->id )
+                ->where ('session', $this->getcurrentsession() )
+                ->leftJoin('courses', 'courses.id', '=', 'registered_courses.course_id')
+                ->leftJoin('programs', 'programs.id', '=', 'courses.program_id')
+                ->leftJoin('academic_departments', 'academic_departments.id', '=', 'programs.academic_department_id')
+                ->leftJoin('colleges', 'colleges.id', '=', 'academic_departments.college_id' )
+                // ->where('registered_courses.semester', 1)
+                ->orderBy('level','ASC')
+                ->leftJoin('program_courses', 'program_courses.id', '=', 'courses.id')
+                ->select('registered_courses.*', 'courses.program_id','courses.credit_unit', 'courses.course_title', 'courses.course_code', 'program_courses.course_category', 'programs.*', 'academic_departments.*', 'colleges.*')
+                    ->get();
+               return view('students.course_registration', compact('courseFirst','courseSecond','session','courseform'));
                 }
 
     }
 
 
 
-
+// FUNCION TO REGISTER THE COURSE
 
     public function course_Reg(Request $req)
 {
@@ -486,6 +502,64 @@ public function dropcourse_Reg(Request $req)
 
 }
 
+
+public function courseform(){
+    $student = Auth::guard('student')->user();
+
+    $academic = $student->academic;
+
+    $currentsession = $this->getcurrentsession();
+    $courseform = DB::table('registered_courses')->where('student_id',$student->id )
+    ->where ('session', $this->getcurrentsession() )
+    ->leftJoin('courses', 'courses.id', '=', 'registered_courses.course_id')
+    ->leftJoin('programs', 'programs.id', '=', 'courses.program_id')
+     ->leftJoin('academic_departments', 'academic_departments.id', '=', 'programs.academic_department_id')
+    ->leftJoin('colleges', 'colleges.id', '=', 'academic_departments.college_id' )
+    ->where('registered_courses.semester', 1)
+    ->orderBy('level','ASC')
+    ->select('registered_courses.*', 'courses.program_id','courses.credit_unit', 'courses.course_title', 'courses.course_code', 'programs.*', 'academic_departments.*', 'colleges.*')
+            ->get();
+    // ->get();
+    $courseform2 = DB::table('registered_courses')->where('student_id',$student->id )
+    ->where ('session', $this->getcurrentsession() )
+    ->leftJoin('courses', 'courses.id', '=', 'registered_courses.course_id')
+    ->leftJoin('programs', 'programs.id', '=', 'courses.program_id')
+     ->leftJoin('academic_departments', 'academic_departments.id', '=', 'programs.academic_department_id')
+    ->leftJoin('colleges', 'colleges.id', '=', 'academic_departments.college_id' )
+    ->where('registered_courses.semester', 2)
+    ->orderBy('level','ASC')
+    ->select('registered_courses.*', 'courses.program_id','courses.credit_unit', 'courses.course_title', 'courses.course_code', 'programs.*', 'academic_departments.*', 'colleges.*')
+            ->get();
+    // ->get();
+    // $users = DB::table('programs')->where('id', $student->academic->program_id)
+    // ->leftJoin('student_academics', 'student_academics.student_id', '=', 'students.id')
+    // ->leftJoin('programs', 'programs.id', '=', 'student_academics.program_id')
+    // ->leftJoin('academic_departments', 'academic_departments.id', '=', 'programs.academic_department_id')
+    // ->leftJoin('colleges', 'colleges.id', '=', 'academic_departments.college_id' )
+    // ->select('students.gender', 'programs.name', 'student_academics.mat_no','academic_departments.name', 'colleges.name' )->first();
+    $session = DB::table('sessions')->where('status', 1)
+    ->select ('sessions.name')->first();
+    $facultyAndDept = array();
+    foreach ($courseform as $ca) {
+        $facultyAndDept = $this->getdptcolleg($ca->program_id);
+    }
+
+
+    return view('students.course_form', compact('student', 'academic','courseform','courseform2','currentsession','session', 'facultyAndDept'));
+
+}
+
+
+
+
+
+
+
+
+    // LEFTOUT IGNOR
+
+
+
 // public function viewRegcourses(){
 //     $registeredcourses =DB::table('registered_courses')
 //     ->where('student_id',$student->id )
@@ -511,502 +585,456 @@ private function getdptcolleg($program_id)
 
         return $deptCol;
     }
-public function courseform(){
-    $student = Auth::guard('student')->user();
-
-    $academic = $student->academic;
-
-    $currentsession = $this->getcurrentsession();
-    $courseform = DB::table('registered_courses')->where('student_id',$student->id )
-    ->where ('session', $this->getcurrentsession() )
-    ->leftJoin('courses', 'courses.id', '=', 'registered_courses.course_id')
-    ->leftJoin('programs', 'programs.id', '=', 'courses.program_id')
-     ->leftJoin('academic_departments', 'academic_departments.id', '=', 'programs.academic_department_id')
-    ->leftJoin('colleges', 'colleges.id', '=', 'academic_departments.college_id' )
-    ->where('registered_courses.semester', 1)
-    ->orderBy('level','ASC')
-    ->select('registered_courses.*', 'courses.program_id','courses.credit_unit', 'courses.course_title', 'courses.course_code','courses.course_category', 'programs.*', 'academic_departments.*', 'colleges.*')
-            ->get();
-    // ->get();
-    $courseform2 = DB::table('registered_courses')->where('student_id',$student->id )
-    ->where ('session', $this->getcurrentsession() )
-    ->leftJoin('courses', 'courses.id', '=', 'registered_courses.course_id')
-    ->leftJoin('programs', 'programs.id', '=', 'courses.program_id')
-     ->leftJoin('academic_departments', 'academic_departments.id', '=', 'programs.academic_department_id')
-    ->leftJoin('colleges', 'colleges.id', '=', 'academic_departments.college_id' )
-    ->where('registered_courses.semester', 2)
-    ->orderBy('level','ASC')
-    ->select('registered_courses.*', 'courses.program_id','courses.credit_unit', 'courses.course_title', 'courses.course_code','courses.course_category', 'programs.*', 'academic_departments.*', 'colleges.*')
-            ->get();
-    // ->get();
-    // $users = DB::table('programs')->where('id', $student->academic->program_id)
-    // ->leftJoin('student_academics', 'student_academics.student_id', '=', 'students.id')
-    // ->leftJoin('programs', 'programs.id', '=', 'student_academics.program_id')
-    // ->leftJoin('academic_departments', 'academic_departments.id', '=', 'programs.academic_department_id')
-    // ->leftJoin('colleges', 'colleges.id', '=', 'academic_departments.college_id' )
-    // ->select('students.gender', 'programs.name', 'student_academics.mat_no','academic_departments.name', 'colleges.name' )->first();
-    $session = DB::table('sessions')->where('status', 1)
-    ->select ('sessions.name')->first();
-    $facultyAndDept = array();
-    foreach ($courseform as $ca) {
-        $facultyAndDept = $this->getdptcolleg($ca->program_id);
-    }
-
-
-    return view('students.course_form', compact('student', 'academic','courseform','courseform2','currentsession','session', 'facultyAndDept'));
-
-}
-
-
-
-    public function courseRegistration3()
-    {
-        $student = Auth::guard('student')->user();
-        $course = new Course();
-        $sess = new Session();
-        $session_id = $sess->currentSession();
-        $session = Session::findOrFail($session_id);
-        $semester = $session->courseRegSemester();
-
-        //check if student has completed evaluation
-        if(!$student->semesterEvaluated())
-        {
-            return redirect()->route('student.evaluation');
-        }// end evaluated
-
-           //check if second email or phone is still null
-        // disable this
-        /*
-            if(!$student->contactUpdated())
-            {
-               return redirect()->route('student.contact-edit');
-            }
-            */
-            // continue course registration
-            if ($course->courseRegistrationEnabled($student))
-            {
-                $pcourse = new ProgramCourse();
-                $result = new StudentResult();
-                $fresh_courses = $pcourse->studentFreshCourses($student);
-                $carry_over = $pcourse->studentCarryOverCourses($student);
-                //$outstanding = $pcourse->studentOutstandingCourses($student);
-                $results = $result->studentRegisteredCourses($student->id);
-                $allowed_credits = $student->allowedCredits($session_id,$semester);
-                $total_credit = $student->totalRegisteredCredits($results);
-                //return view('students.course_registration', compact('fresh_courses', 'carry_over', 'results', 'total_credit', 'session', 'semester','allowed_credits'));
-                return view('students.CourseReg');
-            }
-            else
-                {
-                return redirect()->route('student.closed-course-registration');
-            }
-
-
-        }
-
-
-        public function evaluation()
-        {
-            //
-            $evaluation = new EvaluationResult();
-            $active = $evaluation->active();
-            $student = Auth::guard('student')->user();
-            $result = new StudentResult();
-            $results = $result->semesterRegisteredCourses($student->id,$active->session->id,$active->semester);
-            return view('students.evaluation', compact('student','results'));
-
-        }
-
-        public function debt()
-        {
-            //
-            $student = Auth::guard('student')->user();
-
-            $debt = StudentDebt::where('student_id',$student->id)->get()->first();
-
-            return view('students.debt',compact('student','debt'));
-        }
-
-
-
-        public function closedCourseRegistration()
-        {
-            //
-            $student = Auth::guard('student')->user();
-            $sess = new Session();
-            $session_id = $sess->currentSession();
-            $semester = $sess->courseRegSemester();
-            $session = Session::findOrFail($session_id);
-
-
-            //check if course was registered and show course form
-            if($student->hasSemesterRegistration($session_id,$semester))
-            {
-                $result = new StudentResult();
-                $academic = $student->academic;
-                $registration = $student->getSemesterRegistration($session->id,$semester);
-                $results = $result->semesterRegisteredCourses($student->id,$session_id,$semester);
-                $total = $student->totalRegisteredCredits($results);
-
-                return view('students.current_course_form',compact('student','session','semester','academic','registration','results','total'));
-
-            }
-
-
-            //else just show closed registration
-            return view('students.closed_registration',compact('student'));
-        }
-
-        public function courseForm2($encode)
-        {
-            //
-            $registration = SemesterRegistration::findOrFail(base64_decode($encode));
-            $result = new StudentResult();
-            $student = Student::findOrFail($registration->student_id);
-            $session = Session::findOrFail($registration->session_id);
-            $semester = $registration->semester;
-            $academic = $student->academic;
-
-            $results = $result->semesterRegisteredCourses($registration->student_id,$registration->session_id,$registration->semester);
-            $total = $student->totalRegisteredCredits($results);
-            return view('students.course_form',compact('student','session','semester','academic','results','registration','total'));
-        }
-
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function removeRegisteredCourse(Request $request)
-    {
-        //
-        $sess = new Session();
-        $session = Session::findOrFail($sess->currentSession());
-        $semester = $sess->courseRegSemester();
-        $result = StudentResult::findOrFail($request->result_id);
-        $student = Auth::guard('student')->user();
-        $balance  = count($result->studentRegisteredCourses($student));
-        if(!$result->status == 7 OR $result->total !== 0)
-        {
-            return redirect()->route('student.course-registration')
-            ->with('error',"Errors removing course. Result already available for course");
-        }
-        DB::beginTransaction(); //Start transaction!
-        try {
-        $result->delete();
-        if($balance === 1 )
-        {
-            if(!$student->removeSemesterRegistration($session,$semester))
-            {
-                return redirect()->route('result.register',[$student->id,$session->id,$semester])
-                ->with('error',"Errors removing semester registration");
-            }
-        }
-
-        }
-        catch(\Exception $e)
-        {
-            //failed logic here
-            DB::rollback();
-            return redirect()->route('student.course-registration')
-            ->with('error',"Errors removing course.");
-        }
-
-        DB::commit();
-        return redirect()->route('student.course-registration')
-        ->with('success','Course removed successfully');
-
-
-    }
-
-
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function addCourse(Request $request)
-    {
-        //
-        $session = new Session();
-        $result = new StudentResult();
-        $student = Auth::guard('student')->user();
-        if($student->hasExcessSemesterCredits($result->studentRegisteredCourses($student->id),$request->program_course_id,$session->currentSession(),$session->courseRegSemester()))
-        {
-
-        $result->program_course_id = $request->program_course_id;
-        $result->session_id = $session->currentSession();
-        $result->semester = $session->courseRegSemester();
-        $result->student_id = $student->id;
-        DB::beginTransaction(); //Start transaction!
-        try {
-            // add course
-            $result->save();
-            if(!$student->hasCurrentSemesterRegistration())
-            {
-                //register semester
-                $sem_reg = new SemesterRegistration();
-                $sem_reg->student_id = $student->id;
-                $sem_reg->session_id = $session->currentSession();
-                $sem_reg->semester = $session->courseRegSemester();
-                $sem_reg->level = $student->academic->level;
-                $sem_reg->status = 1;
-                try {
-                    $sem_reg->save();
-                   }
-                catch(\Exception $e)
-                {
-                    //failed logic here
-                    DB::rollback();
-                    return redirect()->route('student.course-registration')
-                    ->with('error',"Errors completing semester registration.");
-                }
-            }
-
-        }
-        catch(\Exception $e)
-        {
-            //failed logic here
-            DB::rollback();
-            return redirect()->route('student.course-registration')
-            ->with('error',"Errors adding course course.".$e);
-        }
-
-        DB::commit();
-        return redirect()->route('student.course-registration')
-        ->with('success','Course added successfully');
-
-        }
-        else
-        {
-            return redirect()->route('student.course-registration')
-            ->with('error',"Maximum allowed credit reached.");
-        }
-
-
-        } // end addCourse(Request $request)
-
-
-
-        public function transcript()
-        {
-            $student = Auth::guard('student')->user();
-            //check for debt
-            $access = $student->resultAccess();
-            if($access['value'] < 0)
-            {
-                return redirect()->route('student.home')
-                    ->with('error',$access['error']);
-            }
-            $academic = $student->academic;
-
-            $registrations = $student->semesterRegistrations;
-
-
-            $totalCGPA = $student->CGPA();
-            return view('students.transcript',compact('student','academic','registrations','totalCGPA'));
-        } //end show
-
-
-
-    public function results()
-        {
-            $student = Auth::guard('student')->user();
-            //check for allowed
-            // allowed is not true show error
-            $access = $student->resultAccess();
-            if($access['value'] < 0)
-            {
-                return redirect()->route('student.home')
-                    ->with('error',$access['error']);
-            }
-            $academic = $student->academic;
-
-            $registrations = $student->semesterRegistrations;
-
-            $totalCGPA = $student->CGPA();
-
-            return view('students.results',compact('student','academic','registrations','totalCGPA'));
-
-        } // end results
-
-
-        public function semesterResult($encode)
-        {
-            $registration = SemesterRegistration::findOrFail(base64_decode($encode));
-            $result = new StudentResult();
-            $student = Student::findOrFail($registration->student_id);
-
-            //check if debt exists
-            if(!isset($student->debt))
-            {
-                return redirect()->route('student.home')
-                    ->with('error',"Financial information not found. Contact ICT.");
-            }
-            //check for debt
-            if($student->debt->debt > config('app.DEBT_LIMIT'))
-            {
-                return redirect()->route('student.home')
-                    ->with('error',"This page has been disabled because of your financial status.");
-            }
-
-            $academic = $student->academic;
-            $session = Session::findOrFail($registration->session_id);
-            $semester = $registration->semester;
-            $academic = $student->academic;
-            $results =  $registration->result();
-            $gpa = $registration->gpa();
-            $cgpa = $registration->cgpa();
-
-            $totalCGPA = $student->CGPA();
-            return view('students.semester_result',compact('student','session','semester','registration','academic','results','gpa','cgpa','totalCGPA'));
-        } //end show
-
-
-    public function evaluateResult($result_id)
-    {
-        //make sure evaluation for this result id doesn't exist
-        $result = StudentResult::findOrFail(base64_decode($result_id));
-        if($result->evaluatedResult())
-        {
-            return redirect()->route('student.evaluation')
-                ->with(['error' => 'This course has been evaluated already.']);
-        }
-        //also check if question has responses attached in pivot
-        $questions = EvaluationQuestion::with('responses')->where('status',1)
-            ->whereHas('responses')
-            ->orderBy('id','ASC')
-            ->get();
-
-        return view('students.evaluate',compact('result', 'questions'));
-    }
-
-    public function storeEvaluation(Request $request)
-    {
-        //make sure evaluation for this result id doesn't exist
-        $studentResult = StudentResult::findOrFail($request->student_result_id);
-        if($studentResult->evaluatedResult())
-        {
-            return redirect()->route('student.evaluation')
-                ->with(['error' => 'This course has been evaluated already.']);
-        }
-
-        $parameters= $request->input('parameters');
-        $this->validate($request, [
-
-            'parameters.*' => 'required',
-            'student_result_id' => 'required|integer',
-
-        ],
-
-            $messages = [
-                'parameters.*'    => 'An evaluation field is empty or was not filled correctly.',
-                'student_result_id'    => 'Student identification not found.',
-            ]);
-        DB::beginTransaction(); //Start transaction!
-        try{
-
-        foreach ($parameters as $key => $parameter)
-        {
-           $question = EvaluationQuestion::findOrFail($key);
-           if($question->evaluation_response_type_id == 1)
-           {
-               //radio button
-               $result = new EvaluationResult();
-               $result->student_result_id = $request->student_result_id;
-               $result->evaluation_response_id = $parameter;
-               $result->evaluation_question_id = $question->id;
-               $result->save();
-           }
-            if($question->evaluation_response_type_id == 2)
-            {
-                //checkbox
-                foreach ($parameter as $key => $p)
-                {
-                    $result = new EvaluationResult();
-                    $result->student_result_id = $request->student_result_id;
-                    $result->evaluation_response_id = $p;
-                    $result->evaluation_question_id = $question->id;
-                    $result->save();
-                }
-            }
-            if($question->evaluation_response_type_id == 3)
-            {
-                //textarea
-                $result = new EvaluationResult();
-                $result->student_result_id = $request->student_result_id;
-                $result->evaluation_response_id = 1;
-                $result->evaluation_question_id = $question->id;
-                $result->evaluation_answer = $parameter;
-                $result->save();
-            }
-        }
-
-        } // end try
-        catch(\Exception $e)
-        {
-            //failed logic here
-            DB::rollback();
-            return redirect()->route('student.result-evaluation',base64_encode($request->student_result_id))
-                ->with(['error' => 'Error storing your Course evaluation. Ensure you answered all the questions.']);
-        }
-        DB::commit();
-        //run evaluation test
-        return redirect()->route('student.course-registration');
-
-    }
-
-    public function contactEdit()
-    {
-        $student = Auth::guard('student')->user();
-        $contact = $student->contact;
-        if($contact->email_2 == NULL OR $contact->phone_2 == NULL)
-        {
-            return view('students.contact_edit',compact('student', 'contact'));
-        }
-        else{
-            return redirect()->route('student.home');
-        }
-    }
-
-    public function contactUpdate(Request $request)
-    {
-        $this->validate($request, [
-            'email_2' => 'required|email|max:40',
-            'phone_2' => 'required|string|max:20',
-        ]);
-
-        $student = Auth::guard('student')->user();
-        $contact = $student->contact;
-        $contact->email_2 = $request->email_2;
-        $contact->phone_2 = $request->phone_2;
-
-        //ensure undergraduate students ae not using their email or phone number on record
-        if($student->academic->level < 700 AND ($contact->email_2 == $student->email OR $contact->phone_2 == $student->phone))
-        {
-            return redirect()->route('student.contact-edit')
-            ->with(['error' => 'Using your email instead of your sponsor may affect your affect future University services.']);
-        }
-        try{
-            $contact->save();
-            }
-        catch (\Exception $e)
-        {
-            return redirect()->route('student.contact-edit')
-                ->with(['error' => 'Error updating contact details.']);
-        }
-        return redirect()->route('student.course-registration');
-    }
-
-    public function course_Registration2()
-    {
-        $courses = DB::table('courses')->get();
-        return view('students.courseReg', compact('courses'));
-    }
+
+
+    // public function courseRegistration3()
+    // {
+    //     $student = Auth::guard('student')->user();
+    //     $course = new Course();
+    //     $sess = new Session();
+    //     $session_id = $sess->currentSession();
+    //     $session = Session::findOrFail($session_id);
+    //     $semester = $session->courseRegSemester();
+
+    //     //check if student has completed evaluation
+    //     if(!$student->semesterEvaluated())
+    //     {
+    //         return redirect()->route('student.evaluation');
+    //     }// end evaluated
+
+    //        //check if second email or phone is still null
+    //     // disable this
+    //     /*
+    //         if(!$student->contactUpdated())
+    //         {
+    //            return redirect()->route('student.contact-edit');
+    //         }
+    //         */
+    //         // continue course registration
+    //         if ($course->courseRegistrationEnabled($student))
+    //         {
+    //             $pcourse = new ProgramCourse();
+    //             $result = new StudentResult();
+    //             $fresh_courses = $pcourse->studentFreshCourses($student);
+    //             $carry_over = $pcourse->studentCarryOverCourses($student);
+    //             //$outstanding = $pcourse->studentOutstandingCourses($student);
+    //             $results = $result->studentRegisteredCourses($student->id);
+    //             $allowed_credits = $student->allowedCredits($session_id,$semester);
+    //             $total_credit = $student->totalRegisteredCredits($results);
+    //             //return view('students.course_registration', compact('fresh_courses', 'carry_over', 'results', 'total_credit', 'session', 'semester','allowed_credits'));
+    //             return view('students.CourseReg');
+    //         }
+    //         else
+    //             {
+    //             return redirect()->route('student.closed-course-registration');
+    //         }
+
+
+    //     }
+
+
+    //     public function evaluation()
+    //     {
+    //         //
+    //         $evaluation = new EvaluationResult();
+    //         $active = $evaluation->active();
+    //         $student = Auth::guard('student')->user();
+    //         $result = new StudentResult();
+    //         $results = $result->semesterRegisteredCourses($student->id,$active->session->id,$active->semester);
+    //         return view('students.evaluation', compact('student','results'));
+
+    //     }
+
+    //     public function debt()
+    //     {
+    //         //
+    //         $student = Auth::guard('student')->user();
+
+    //         $debt = StudentDebt::where('student_id',$student->id)->get()->first();
+
+    //         return view('students.debt',compact('student','debt'));
+    //     }
+
+
+
+    //     public function closedCourseRegistration()
+    //     {
+    //         //
+    //         $student = Auth::guard('student')->user();
+    //         $sess = new Session();
+    //         $session_id = $sess->currentSession();
+    //         $semester = $sess->courseRegSemester();
+    //         $session = Session::findOrFail($session_id);
+
+
+    //         //check if course was registered and show course form
+    //         if($student->hasSemesterRegistration($session_id,$semester))
+    //         {
+    //             $result = new StudentResult();
+    //             $academic = $student->academic;
+    //             $registration = $student->getSemesterRegistration($session->id,$semester);
+    //             $results = $result->semesterRegisteredCourses($student->id,$session_id,$semester);
+    //             $total = $student->totalRegisteredCredits($results);
+
+    //             return view('students.current_course_form',compact('student','session','semester','academic','registration','results','total'));
+
+    //         }
+
+
+    //         //else just show closed registration
+    //         return view('students.closed_registration',compact('student'));
+    //     }
+
+    //     public function courseForm2($encode)
+    //     {
+    //         //
+    //         $registration = SemesterRegistration::findOrFail(base64_decode($encode));
+    //         $result = new StudentResult();
+    //         $student = Student::findOrFail($registration->student_id);
+    //         $session = Session::findOrFail($registration->session_id);
+    //         $semester = $registration->semester;
+    //         $academic = $student->academic;
+
+    //         $results = $result->semesterRegisteredCourses($registration->student_id,$registration->session_id,$registration->semester);
+    //         $total = $student->totalRegisteredCredits($results);
+    //         return view('students.course_form',compact('student','session','semester','academic','results','registration','total'));
+    //     }
+
+
+    // /**
+    //  * Remove the specified resource from storage.
+    //  *
+    //  * @param  int  $id
+    //  * @return \Illuminate\Http\Response
+    //  */
+    // public function removeRegisteredCourse(Request $request)
+    // {
+    //     //
+    //     $sess = new Session();
+    //     $session = Session::findOrFail($sess->currentSession());
+    //     $semester = $sess->courseRegSemester();
+    //     $result = StudentResult::findOrFail($request->result_id);
+    //     $student = Auth::guard('student')->user();
+    //     $balance  = count($result->studentRegisteredCourses($student));
+    //     if(!$result->status == 7 OR $result->total !== 0)
+    //     {
+    //         return redirect()->route('student.course-registration')
+    //         ->with('error',"Errors removing course. Result already available for course");
+    //     }
+    //     DB::beginTransaction(); //Start transaction!
+    //     try {
+    //     $result->delete();
+    //     if($balance === 1 )
+    //     {
+    //         if(!$student->removeSemesterRegistration($session,$semester))
+    //         {
+    //             return redirect()->route('result.register',[$student->id,$session->id,$semester])
+    //             ->with('error',"Errors removing semester registration");
+    //         }
+    //     }
+
+    //     }
+    //     catch(\Exception $e)
+    //     {
+    //         //failed logic here
+    //         DB::rollback();
+    //         return redirect()->route('student.course-registration')
+    //         ->with('error',"Errors removing course.");
+    //     }
+
+    //     DB::commit();
+    //     return redirect()->route('student.course-registration')
+    //     ->with('success','Course removed successfully');
+
+
+    // }
+
+
+
+    // /**
+    //  * Remove the specified resource from storage.
+    //  *
+    //  * @param  int  $id
+    //  * @return \Illuminate\Http\Response
+    //  */
+    // public function addCourse(Request $request)
+    // {
+    //     //
+    //     $session = new Session();
+    //     $result = new StudentResult();
+    //     $student = Auth::guard('student')->user();
+    //     if($student->hasExcessSemesterCredits($result->studentRegisteredCourses($student->id),$request->program_course_id,$session->currentSession(),$session->courseRegSemester()))
+    //     {
+
+    //     $result->program_course_id = $request->program_course_id;
+    //     $result->session_id = $session->currentSession();
+    //     $result->semester = $session->courseRegSemester();
+    //     $result->student_id = $student->id;
+    //     DB::beginTransaction(); //Start transaction!
+    //     try {
+    //         // add course
+    //         $result->save();
+    //         if(!$student->hasCurrentSemesterRegistration())
+    //         {
+    //             //register semester
+    //             $sem_reg = new SemesterRegistration();
+    //             $sem_reg->student_id = $student->id;
+    //             $sem_reg->session_id = $session->currentSession();
+    //             $sem_reg->semester = $session->courseRegSemester();
+    //             $sem_reg->level = $student->academic->level;
+    //             $sem_reg->status = 1;
+    //             try {
+    //                 $sem_reg->save();
+    //                }
+    //             catch(\Exception $e)
+    //             {
+    //                 //failed logic here
+    //                 DB::rollback();
+    //                 return redirect()->route('student.course-registration')
+    //                 ->with('error',"Errors completing semester registration.");
+    //             }
+    //         }
+
+    //     }
+    //     catch(\Exception $e)
+    //     {
+    //         //failed logic here
+    //         DB::rollback();
+    //         return redirect()->route('student.course-registration')
+    //         ->with('error',"Errors adding course course.".$e);
+    //     }
+
+    //     DB::commit();
+    //     return redirect()->route('student.course-registration')
+    //     ->with('success','Course added successfully');
+
+    //     }
+    //     else
+    //     {
+    //         return redirect()->route('student.course-registration')
+    //         ->with('error',"Maximum allowed credit reached.");
+    //     }
+
+
+    //     } // end addCourse(Request $request)
+
+
+
+    //     public function transcript()
+    //     {
+    //         $student = Auth::guard('student')->user();
+    //         //check for debt
+    //         $access = $student->resultAccess();
+    //         if($access['value'] < 0)
+    //         {
+    //             return redirect()->route('student.home')
+    //                 ->with('error',$access['error']);
+    //         }
+    //         $academic = $student->academic;
+
+    //         $registrations = $student->semesterRegistrations;
+
+
+    //         $totalCGPA = $student->CGPA();
+    //         return view('students.transcript',compact('student','academic','registrations','totalCGPA'));
+    //     } //end show
+
+
+
+    // public function results()
+    //     {
+    //         $student = Auth::guard('student')->user();
+    //         //check for allowed
+    //         // allowed is not true show error
+    //         $access = $student->resultAccess();
+    //         if($access['value'] < 0)
+    //         {
+    //             return redirect()->route('student.home')
+    //                 ->with('error',$access['error']);
+    //         }
+    //         $academic = $student->academic;
+
+    //         $registrations = $student->semesterRegistrations;
+
+    //         $totalCGPA = $student->CGPA();
+
+    //         return view('students.results',compact('student','academic','registrations','totalCGPA'));
+
+    //     } // end results
+
+
+    //     public function semesterResult($encode)
+    //     {
+    //         $registration = SemesterRegistration::findOrFail(base64_decode($encode));
+    //         $result = new StudentResult();
+    //         $student = Student::findOrFail($registration->student_id);
+
+    //         //check if debt exists
+    //         if(!isset($student->debt))
+    //         {
+    //             return redirect()->route('student.home')
+    //                 ->with('error',"Financial information not found. Contact ICT.");
+    //         }
+    //         //check for debt
+    //         if($student->debt->debt > config('app.DEBT_LIMIT'))
+    //         {
+    //             return redirect()->route('student.home')
+    //                 ->with('error',"This page has been disabled because of your financial status.");
+    //         }
+
+    //         $academic = $student->academic;
+    //         $session = Session::findOrFail($registration->session_id);
+    //         $semester = $registration->semester;
+    //         $academic = $student->academic;
+    //         $results =  $registration->result();
+    //         $gpa = $registration->gpa();
+    //         $cgpa = $registration->cgpa();
+
+    //         $totalCGPA = $student->CGPA();
+    //         return view('students.semester_result',compact('student','session','semester','registration','academic','results','gpa','cgpa','totalCGPA'));
+    //     } //end show
+
+
+    // public function evaluateResult($result_id)
+    // {
+    //     //make sure evaluation for this result id doesn't exist
+    //     $result = StudentResult::findOrFail(base64_decode($result_id));
+    //     if($result->evaluatedResult())
+    //     {
+    //         return redirect()->route('student.evaluation')
+    //             ->with(['error' => 'This course has been evaluated already.']);
+    //     }
+    //     //also check if question has responses attached in pivot
+    //     $questions = EvaluationQuestion::with('responses')->where('status',1)
+    //         ->whereHas('responses')
+    //         ->orderBy('id','ASC')
+    //         ->get();
+
+    //     return view('students.evaluate',compact('result', 'questions'));
+    // }
+
+    // public function storeEvaluation(Request $request)
+    // {
+    //     //make sure evaluation for this result id doesn't exist
+    //     $studentResult = StudentResult::findOrFail($request->student_result_id);
+    //     if($studentResult->evaluatedResult())
+    //     {
+    //         return redirect()->route('student.evaluation')
+    //             ->with(['error' => 'This course has been evaluated already.']);
+    //     }
+
+    //     $parameters= $request->input('parameters');
+    //     $this->validate($request, [
+
+    //         'parameters.*' => 'required',
+    //         'student_result_id' => 'required|integer',
+
+    //     ],
+
+    //         $messages = [
+    //             'parameters.*'    => 'An evaluation field is empty or was not filled correctly.',
+    //             'student_result_id'    => 'Student identification not found.',
+    //         ]);
+    //     DB::beginTransaction(); //Start transaction!
+    //     try{
+
+    //     foreach ($parameters as $key => $parameter)
+    //     {
+    //        $question = EvaluationQuestion::findOrFail($key);
+    //        if($question->evaluation_response_type_id == 1)
+    //        {
+    //            //radio button
+    //            $result = new EvaluationResult();
+    //            $result->student_result_id = $request->student_result_id;
+    //            $result->evaluation_response_id = $parameter;
+    //            $result->evaluation_question_id = $question->id;
+    //            $result->save();
+    //        }
+    //         if($question->evaluation_response_type_id == 2)
+    //         {
+    //             //checkbox
+    //             foreach ($parameter as $key => $p)
+    //             {
+    //                 $result = new EvaluationResult();
+    //                 $result->student_result_id = $request->student_result_id;
+    //                 $result->evaluation_response_id = $p;
+    //                 $result->evaluation_question_id = $question->id;
+    //                 $result->save();
+    //             }
+    //         }
+    //         if($question->evaluation_response_type_id == 3)
+    //         {
+    //             //textarea
+    //             $result = new EvaluationResult();
+    //             $result->student_result_id = $request->student_result_id;
+    //             $result->evaluation_response_id = 1;
+    //             $result->evaluation_question_id = $question->id;
+    //             $result->evaluation_answer = $parameter;
+    //             $result->save();
+    //         }
+    //     }
+
+    //     } // end try
+    //     catch(\Exception $e)
+    //     {
+    //         //failed logic here
+    //         DB::rollback();
+    //         return redirect()->route('student.result-evaluation',base64_encode($request->student_result_id))
+    //             ->with(['error' => 'Error storing your Course evaluation. Ensure you answered all the questions.']);
+    //     }
+    //     DB::commit();
+    //     //run evaluation test
+    //     return redirect()->route('student.course-registration');
+
+    // }
+
+    // public function contactEdit()
+    // {
+    //     $student = Auth::guard('student')->user();
+    //     $contact = $student->contact;
+    //     if($contact->email_2 == NULL OR $contact->phone_2 == NULL)
+    //     {
+    //         return view('students.contact_edit',compact('student', 'contact'));
+    //     }
+    //     else{
+    //         return redirect()->route('student.home');
+    //     }
+    // }
+
+    // public function contactUpdate(Request $request)
+    // {
+    //     $this->validate($request, [
+    //         'email_2' => 'required|email|max:40',
+    //         'phone_2' => 'required|string|max:20',
+    //     ]);
+
+    //     $student = Auth::guard('student')->user();
+    //     $contact = $student->contact;
+    //     $contact->email_2 = $request->email_2;
+    //     $contact->phone_2 = $request->phone_2;
+
+    //     //ensure undergraduate students ae not using their email or phone number on record
+    //     if($student->academic->level < 700 AND ($contact->email_2 == $student->email OR $contact->phone_2 == $student->phone))
+    //     {
+    //         return redirect()->route('student.contact-edit')
+    //         ->with(['error' => 'Using your email instead of your sponsor may affect your affect future University services.']);
+    //     }
+    //     try{
+    //         $contact->save();
+    //         }
+    //     catch (\Exception $e)
+    //     {
+    //         return redirect()->route('student.contact-edit')
+    //             ->with(['error' => 'Error updating contact details.']);
+    //     }
+    //     return redirect()->route('student.course-registration');
+    // }
+
+    // public function course_Registration2()
+    // {
+    //     $courses = DB::table('courses')->get();
+    //     return view('students.courseReg', compact('courses'));
+    // }
 
 
 } // end Class
