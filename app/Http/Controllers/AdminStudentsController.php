@@ -284,16 +284,16 @@ class AdminStudentsController extends Controller
 
 
     } //end store
-    public function showapplicant($id)
-    {
-        // $this->authorize('show',Student::class);
-        $student = Student::findOrFail($id);
-        $contact = $student->contact;
-        $academic = $student->academic;
-        $medical = $student->medical;
+    // public function showapplicant($id)
+    // {
+    //     // $this->authorize('show',Student::class);
+    //     $student = Student::findOrFail($id);
+    //     $contact = $student->contact;
+    //     $academic = $student->academic;
+    //     $medical = $student->medical;
 
-        return view('admissions.students.admin.show',compact('student','contact','academic','medical'));
-    }
+    //     return view('admissions.students.admin.show',compact('student','contact','academic','medical'));
+    // }
 
     public function show($id)
     {
@@ -473,7 +473,7 @@ class AdminStudentsController extends Controller
 
     public function search()
     {
-        $this->authorize('search',Student::class);
+        // $this->authorize('search',Student::class);
         return view('students.admin.search');
     } //end search
 
