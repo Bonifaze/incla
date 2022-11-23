@@ -347,7 +347,14 @@ class AdminStudentsControllerApplicant extends Controller
         $sess = Session::find($entry_session_id);
         $session = $sess->getCode();
 
-        $program_students_count = MatricCount::where('program_id', $program_id)->where('session_id', $entry_session_id)->first()->count;
+        $matric_count = MatricCount::where('program_id', $program_id)->where('session_id', $entry_session_id)->first();
+        if (!is_null($matric_count))
+        {
+            $program_students_count = $matric_count->count;
+        }else 
+        {
+            $program_students_count = 0;
+        }
         
         DB::table('student_academics')->where('program_id', $program_id)
         ->where('entry_session_id', $entry_session_id)
