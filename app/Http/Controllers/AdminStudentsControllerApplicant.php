@@ -15,6 +15,7 @@ use App\StudentContact;
 use App\StudentMedical;
 use App\StudentAcademic;
 use App\Mail\PasswordReset;
+use App\Models\MatricCount;
 use Illuminate\Http\Request;
 use App\SemesterRegistration;
 use Illuminate\Validation\Rule;
@@ -228,11 +229,13 @@ class AdminStudentsControllerApplicant extends Controller
             $contact->student_id = $student->id;
             $contact->save();
 
+
             //save academic
+            $matric_count = MatricCount::where('program_id', $request->program_id)->where('session_id', $request->entry_session_id)->first();
             $academic->student_id = $student->id;
             $academic->mat_no = $this->genMatricNumber($request->only('program_id', 'entry_session_id', 'mode_of_entry'));
             $academic->save();
-
+            MatricCount::updateOrCreate(['program_id' => $request->program_id, 'session_id' => $request->entry_session_ids],['program_id' => $request->program_id, 'session_id' => $request->entry_session_id ,'count' => $matric_count->count + 1]);
             //save medical
             $medical->student_id = $student->id;
             $medical->save();
@@ -337,7 +340,9 @@ class AdminStudentsControllerApplicant extends Controller
         $sess = Session::find($entry_session_id);
         $session = $sess->getCode();
 
-        $program_students_count = DB::table('student_academics')->where('program_id', $program_id)
+        $program_students_count = MatricCount::where('program_id', $program_id)->where('session_id', $entry_session_id)->first()->count;
+        
+        DB::table('student_academics')->where('program_id', $program_id)
         ->where('entry_session_id', $entry_session_id)
         ->where('mode_of_entry', $modeOfEntry)->count();
         // ->where('program_type', $program_type)->count();
