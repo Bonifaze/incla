@@ -9,7 +9,7 @@ class RegisteredCourse extends Model
 {
     use HasFactory;
 
-    protected $appends = ['course_unit', 'course_semester'];
+    protected $appends = ['course_unit', 'course_semester', 'course_title', 'course_code'];
 
     public function getCourseUnitAttribute()
     {
@@ -20,4 +20,15 @@ class RegisteredCourse extends Model
     {
         return Course::where('id', $this->course_id)->first()->semester ?? 0;
     }
+
+    public function getCourseTitleAttribute()
+    {
+        return Course::where('id', $this->course_id)->first()->course_title ?? '';
+    }
+
+    public function getCourseCodeAttribute()
+    {
+        return Course::where('id', $this->course_id)->first()->course_code ?? '';
+    }
+
 }
