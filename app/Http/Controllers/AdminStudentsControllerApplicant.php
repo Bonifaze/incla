@@ -235,7 +235,7 @@ class AdminStudentsControllerApplicant extends Controller
             $academic->student_id = $student->id;
             $academic->mat_no = $this->genMatricNumber($request->only('program_id', 'entry_session_id', 'mode_of_entry'));
             $academic->save();
-            $matric_count->update(['count' => $matric_count->count + 1]);
+            MatricCount::updateOrCreate(['program_id' => $request->program_id, 'session_id' => $request->entry_session_ids],['program_id' => $request->program_id, 'session_id' => $request->entry_session_id ,'count' => $matric_count->count + 1]);
             //save medical
             $medical->student_id = $student->id;
             $medical->save();
