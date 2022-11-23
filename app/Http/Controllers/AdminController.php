@@ -146,7 +146,7 @@ class AdminController extends Controller
     // Login Function
     public function login(Request $request)
     {
-        $userid = DB::table('staff')->where('username', $request->email)->first();
+        $userid = DB::table('admin')->where('username', $request->email)->first();
         if ($userid->id == 'null') {
 
             $loginMsg = '<div class="alert alert-danger alert-dismissible" role="alert"> <button type="button" class="close" data-dismiss="alert"> &times; </button>  Wrong Email or Password  </div>';

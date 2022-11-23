@@ -186,16 +186,16 @@ class StudentsController extends Controller
             // $courseFirst = DB::table('courses')->where('program_id', $student->academic->program_id);
             $courseFirst = DB::table('program_courses')->where('program_courses.program_id', $student->academic->program_id)
             ->leftJoin('courses', 'courses.id', '=', 'program_courses.course_id')
-            ->where('level',$student->academic->level )
-            ->where('semester', 1)
+            ->where('program_courses.level',$student->academic->level )
+            ->where('program_courses.semester', 1)
             ->orderBy('course_category','ASC')
             ->select('program_courses.*', 'courses.course_code', 'courses.course_title')->get();
 
             //seceond semester
             $courseSecond =DB::table('program_courses')->where('program_courses.program_id', $student->academic->program_id)
             ->leftJoin('courses', 'courses.id', '=', 'program_courses.course_id')
-            ->where('level',$student->academic->level )
-            ->where('semester', 2)
+            ->where('program_courses.level',$student->academic->level )
+            ->where('program_courses.semester', 2)
             ->orderBy('course_category','ASC')
             ->select('program_courses.*', 'courses.course_code', 'courses.course_title')->get();
 
@@ -276,15 +276,15 @@ class StudentsController extends Controller
             {
                 $courseFirst =DB::table('program_courses')->where('program_courses.program_id', $student->academic->program_id)
                 ->leftJoin('courses', 'courses.id', '=', 'program_courses.course_id')
-                ->where('level',$student->academic->level )
-                ->where('semester', 1)
+                ->where('program_courses.level',$student->academic->level )
+                ->where('program_courses.semester', 1)
                 ->orderBy('course_category','ASC')
                 ->select('program_courses.*', 'courses.course_code', 'courses.course_title')->get();
                 //second sermester
                 $courseSecond =DB::table('program_courses')->where('program_courses.program_id', $student->academic->program_id)
             ->leftJoin('courses', 'courses.id', '=', 'program_courses.course_id')
-            ->where('level',$student->academic->level )
-            ->where('semester', 2)
+            ->where('program_courses.level',$student->academic->level )
+            ->where('program_courses.semester', 2)
             ->orderBy('course_category','ASC')
             ->select('program_courses.*', 'courses.course_code', 'courses.course_title')->get();
 //first semester lower course
@@ -374,6 +374,17 @@ class StudentsController extends Controller
     }
 
 
+//Function to get total credit units of selected courses
+
+protected function getUnits(array $courses)
+{
+    $total_units = 0;
+    foreach ($courses as $course_id)
+    {
+        $total_units += ProgramCourse::where('course_id', $course_id)->first()->credit_unit;
+    }
+    return $total_units;
+}
 
 // FUNCION TO REGISTER THE COURSE
 
@@ -385,12 +396,12 @@ class StudentsController extends Controller
     //  $academic = $student->academic;
 
 
-    $courses = $req->courses;
-    $num_coourses = count($courses);
-    $course_units1 = $req->course_units1 ?? [];
-    $course_units2 = $req->course_units2 ?? [];
-    $total_units1 = array_sum($course_units1);
-    $total_units2 = array_sum($course_units2);
+    $courses1 = $req->courses1;
+    $courses2 = $req->courses2;
+    $courses = array_merge($courses1, $courses2);
+    $num_courses = count($courses);
+    $total_units1 = $this->getUnits($courses1);
+    $total_units2 = $this->getUnits($courses2);
     // dd($total_units1);
     // dd($total_units2);
 
@@ -439,7 +450,7 @@ class StudentsController extends Controller
     // $lowercourses = $req->lowercourses;
     try {
 
-        for ($x= 0; $x< $num_coourses; $x++)
+        for ($x= 0; $x< $num_courses; $x++)
         {
             $student_courses[] = [
                 "course_id" => $courses[$x],
@@ -448,7 +459,6 @@ class StudentsController extends Controller
                 "program_id"=>  $student->academic->program_id,
                 "level"=>  $student->academic->level,
                 "semester"=>$req->course_semester[$x]
-
             ];
 
         }
