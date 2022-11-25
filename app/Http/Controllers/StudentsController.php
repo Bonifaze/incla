@@ -216,7 +216,7 @@ class StudentsController extends Controller
             }
 
             $courseFirst->each(function ($first) use($reg_course_ids1) {
-                if (in_array($first->id, $reg_course_ids1))
+                if (in_array($first->course_id, $reg_course_ids1))
                 {
                     $first->is_registered = 1;
                 }else
@@ -226,7 +226,7 @@ class StudentsController extends Controller
             });
 
             $courseSecond->each(function ($second) use($reg_course_ids2) {
-                if (in_array($second->id, $reg_course_ids2))
+                if (in_array($second->course_id, $reg_course_ids2))
                 {
                     $second->is_registered = 1;
                 }else
@@ -396,8 +396,8 @@ protected function getUnits(array $courses)
     //  $academic = $student->academic;
 
 
-    $courses1 = $req->courses1;
-    $courses2 = $req->courses2;
+    $courses1 = $req->courses1 ?? [];
+    $courses2 = $req->courses2 ?? [];
     $courses = array_merge($courses1, $courses2);
     $num_courses = count($courses);
     $total_units1 = $this->getUnits($courses1);
