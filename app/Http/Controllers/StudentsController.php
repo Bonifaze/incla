@@ -318,7 +318,7 @@ class StudentsController extends Controller
             }
 
             $courseFirst->each(function ($first) use($reg_course_ids1) {
-                if (in_array($first->id, $reg_course_ids1))
+                if (in_array($first->course_id, $reg_course_ids1))
                 {
                     $first->is_registered = 1;
                 }else
@@ -328,7 +328,7 @@ class StudentsController extends Controller
             });
 
             $courseSecond->each(function ($second) use($reg_course_ids2) {
-                if (in_array($second->id, $reg_course_ids2))
+                if (in_array($second->course_id, $reg_course_ids2))
                 {
                     $second->is_registered = 1;
                 }else
