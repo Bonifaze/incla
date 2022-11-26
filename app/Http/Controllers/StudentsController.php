@@ -201,22 +201,15 @@ class StudentsController extends Controller
 
 
             $stu_reg_courses = RegisteredCourse::where('student_id', $student->id)->where('session', $session->id)->get();
-            $reg_course_ids1 = [];
-            $reg_course_ids2 = [];
+            $reg_course_ids = [];
 
             foreach ($stu_reg_courses as $stu_reg_course)
             {
-                if ($stu_reg_course->course_semester == 1)
-                {
-                    $reg_course_ids1[] = $stu_reg_course->course_id;
-                }else
-                {
-                    $reg_course_ids2[] = $stu_reg_course->course_id;
-                }
+                $reg_course_ids[] = $stu_reg_course->course_id;
             }
 
-            $courseFirst->each(function ($first) use($reg_course_ids1) {
-                if (in_array($first->course_id, $reg_course_ids1))
+            $courseFirst->each(function ($first) use($reg_course_ids) {
+                if (in_array($first->course_id, $reg_course_ids))
                 {
                     $first->is_registered = 1;
                 }else
@@ -225,8 +218,8 @@ class StudentsController extends Controller
                 }
             });
 
-            $courseSecond->each(function ($second) use($reg_course_ids2) {
-                if (in_array($second->course_id, $reg_course_ids2))
+            $courseSecond->each(function ($second) use($reg_course_ids) {
+                if (in_array($second->course_id, $reg_course_ids))
                 {
                     $second->is_registered = 1;
                 }else
@@ -234,6 +227,8 @@ class StudentsController extends Controller
                     $second->is_registered = 0;
                 }
             });
+
+            //dd($stu_reg_courses->toArray(), $courseFirst->toArray(), $courseSecond->toArray());
 
             $courseform = DB::table('registered_courses')->where('student_id',$student->id )
             ->where ('session', $this->getcurrentsession() )
@@ -303,22 +298,15 @@ class StudentsController extends Controller
                 // ->select('courses.*')->get();
 
                 $stu_reg_courses = RegisteredCourse::where('student_id', $student->id)->where('session', $session->id)->get();
-                $reg_course_ids1 = [];
-                $reg_course_ids2 = [];
+                $reg_course_ids = [];
 
             foreach ($stu_reg_courses as $stu_reg_course)
             {
-                if ($stu_reg_course->course_semester == 1)
-                {
-                    $reg_course_ids1[] = $stu_reg_course->course_id;
-                }else
-                {
-                    $reg_course_ids2[] = $stu_reg_course->course_id;
-                }
+                $reg_course_ids[] = $stu_reg_course->course_id;
             }
 
-            $courseFirst->each(function ($first) use($reg_course_ids1) {
-                if (in_array($first->course_id, $reg_course_ids1))
+            $courseFirst->each(function ($first) use($reg_course_ids) {
+                if (in_array($first->course_id, $reg_course_ids))
                 {
                     $first->is_registered = 1;
                 }else
@@ -327,8 +315,8 @@ class StudentsController extends Controller
                 }
             });
 
-            $courseSecond->each(function ($second) use($reg_course_ids2) {
-                if (in_array($second->course_id, $reg_course_ids2))
+            $courseSecond->each(function ($second) use($reg_course_ids) {
+                if (in_array($second->course_id, $reg_course_ids))
                 {
                     $second->is_registered = 1;
                 }else
@@ -337,6 +325,7 @@ class StudentsController extends Controller
                 }
             });
 
+            //dd($stu_reg_courses->toArray(), $courseFirst->toArray(), $courseSecond->toArray());
             // $lowercourseFirst->each(function ($first) use($reg_course_ids1) {
             //     if (in_array($first->id, $reg_course_ids1))
             //     {
