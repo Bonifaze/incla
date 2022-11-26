@@ -1,30 +1,26 @@
-@extends('layouts.mini')
-
-
-
-@section('pagetitle')
+<?php $__env->startSection('pagetitle'); ?>
     Create New Course
-@endsection
+<?php $__env->stopSection(); ?>
 
 
 <!-- Sidebar Links -->
 
 <!-- Treeview -->
-@section('courses-open')
+<?php $__env->startSection('courses-open'); ?>
     menu-open
-@endsection
+<?php $__env->stopSection(); ?>
 
-@section('courses')
+<?php $__env->startSection('courses'); ?>
     active
-@endsection
+<?php $__env->stopSection(); ?>
 
 <!-- Page -->
-@section('create-course')
+<?php $__env->startSection('create-course'); ?>
     active
-@endsection
+<?php $__env->stopSection(); ?>
 
 
-@section('content')
+<?php $__env->startSection('content'); ?>
     <div class="content-wrapper bg-white">
         <!-- Content Header (Page header) -->
 
@@ -40,9 +36,10 @@
                     </h1>
                     <div class="card">
 
-                        @include('partialsv3.flash')
+                        <?php echo $__env->make('partialsv3.flash', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
 
-                        {!! Form::open(['route' => 'course.store', 'method' => 'POST', 'class' => 'nobottommargin']) !!}
+                        <?php echo Form::open(['route' => 'course.store', 'method' => 'POST', 'class' => 'nobottommargin']); ?>
+
                     <div class="card-body">
 
                         <div class="box-body">
@@ -51,32 +48,35 @@
 
                                 <div class="col-md-3 form-group">
                                     <label for="program_id">Program :</label>
-                                    {{ Form::select('program_id', $programs, null, ['class' => 'form-control', 'id' => 'program_id', 'name' => 'program_id']) }}
-                                    <span class="text-danger"> {{ $errors->first('program_id') }}</span>
+                                    <?php echo e(Form::select('program_id', $programs, null, ['class' => 'form-control', 'id' => 'program_id', 'name' => 'program_id'])); ?>
+
+                                    <span class="text-danger"> <?php echo e($errors->first('program_id')); ?></span>
                                 </div>
                                 <div class="col-md-3 form-group">
                                     <label for="code">Course Code :</label>
-                                    {!! Form::text('course_code', null, [
+                                    <?php echo Form::text('course_code', null, [
                                         'placeholder' => '',
                                         'class' => 'form-control',
                                         'id' => 'course_code',
                                         'name' => 'course_code',
                                         'required' => 'required',
-                                    ]) !!}
-                                    <span class="text-danger"> {{ $errors->first('course_code') }}</span>
-                                    {{--  <input type="text" placeholder="code" name="course_code" >  --}}
+                                    ]); ?>
+
+                                    <span class="text-danger"> <?php echo e($errors->first('course_code')); ?></span>
+                                    
                                 </div>
 
 
                                 <div class="col-md-6 form-group">
                                     <label for="course_title">Course Title :</label>
-                                    {!! Form::text('course_title', null, [
+                                    <?php echo Form::text('course_title', null, [
                                         'placeholder' => '',
                                         'class' => 'form-control',
                                         'id' => 'course_title',
                                         'required' => 'required',
-                                    ]) !!}
-                                    <span class="text-danger"> {{ $errors->first('course_title') }}</span>
+                                    ]); ?>
+
+                                    <span class="text-danger"> <?php echo e($errors->first('course_title')); ?></span>
                                 </div>
                             </div>
 
@@ -84,17 +84,18 @@
                             <div class="row">
                                 <div class="col-md-3 form-group">
                                     <label for="credit_load">Credit Load :</label>
-                                    {!! Form::text('credit_unit', null, [
+                                    <?php echo Form::text('credit_unit', null, [
                                         'placeholder' => '',
                                         'class' => 'form-control',
                                         'id' => 'credit_unit',
                                         'required' => 'required',
-                                    ]) !!}
-                                    <span class="text-danger"> {{ $errors->first('credit_unit') }}</span>
+                                    ]); ?>
+
+                                    <span class="text-danger"> <?php echo e($errors->first('credit_unit')); ?></span>
                                 </div>
                                 <div class="col-md-3 form-group">
                                     <label for="level">Level :</label>
-                                    {{ Form::select(
+                                    <?php echo e(Form::select(
                                         'level',
                                         [
                                             '100' => '100 Level',
@@ -109,13 +110,14 @@
                                         ],
                                         100,
                                         ['class' => 'form-control select2'],
-                                    ) }}
-                                    <span class="text-danger"> {{ $errors->first('level') }}</span>
+                                    )); ?>
+
+                                    <span class="text-danger"> <?php echo e($errors->first('level')); ?></span>
                                 </div>
 
                                 <div class="col-md-3 form-group">
                                     <label for="semester">Semester :</label>
-                                    {{ Form::select(
+                                    <?php echo e(Form::select(
                                         'semester',
                                         [
                                             '1' => 'First Semester',
@@ -123,13 +125,14 @@
                                         ],
                                         1,
                                         ['class' => 'form-control select2'],
-                                    ) }}
-                                    <span class="text-danger"> {{ $errors->first('semester') }}</span>
+                                    )); ?>
+
+                                    <span class="text-danger"> <?php echo e($errors->first('semester')); ?></span>
                                 </div>
 
                                 <div class="col-md-3 form-group">
                                     <label for="mode">Mode :</label>
-                                    {{ Form::select(
+                                    <?php echo e(Form::select(
                                         'course_category',
                                         [
                                             '1' => 'Core',
@@ -138,44 +141,23 @@
                                         ],
                                         1,
                                         ['class' => 'form-control select2'],
-                                    ) }}
-                                    <span class="text-danger"> {{ $errors->first('mode') }}</span>
+                                    )); ?>
+
+                                    <span class="text-danger"> <?php echo e($errors->first('mode')); ?></span>
                                 </div>
 
                             </div>
 
                             <div class="row">
-                                {{--  <div class="col-md-12 form-group">
-							<div  @if ($errors->has('description')) class ='has-error form-group' @endif>
-
-								<label for="description">Description :</label>
-								 {!! Form::textarea('description', null, array('placeholder' => '','rows'=>'3', 'class' => 'form-control', 'id' => 'description', 'required' => 'required')) !!}
-								<span class="text-danger"> {{ $errors->first('description') }}</span>
-								</div>
-							</div>  --}}
+                                
 
 
-                                {{--  <div class="col-md-4 form-group">
-                                    <label for="mode">Perequisite :</label>
-                                    {{ Form::select(
-                                        'mode',
-                                        [
-                                            'no' => 'No',
-                                            'yes' => 'Yes',
-                                        ],
-                                        'no',
-                                        ['class' => 'form-control select2'],
-                                    ) }}
-                                    <span class="text-danger"> {{ $errors->first('mode') }}</span>
-                                </div>  --}}
+                                
 
-                                {{--  <div class="col-md-8 form-group">
-                                    <label for="course_id">Course Title :</label>
-                                    {{ Form::select('course_id', $courses, null, ['onchange' => 'getHours()', 'class' => 'form-control select2', 'id' => 'course_id', 'name' => 'course_id']) }}
-                                    {{--  <select $courses class="form-control"  name="course_id" id="course_id" onchange="getHours()">  --}}
+                                
 
 
-                                {{--  </select>  --}}
+                                
 
                             </div>
 
@@ -196,14 +178,18 @@
                     <div class="card-footer">
 
 
-                        {{ Form::submit('Create Course', ['class' => 'btn btn-primary']) }}
+                        <?php echo e(Form::submit('Create Course', ['class' => 'btn btn-primary'])); ?>
+
 
                         </div>
 
-                        {!! Form::close() !!}
+                        <?php echo Form::close(); ?>
+
                     </div>
                 </div>
             </div>
         </section>
     </div>
-@endsection
+<?php $__env->stopSection(); ?>
+
+<?php echo $__env->make('layouts.mini', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH C:\Users\Lawrence Chris\Desktop\laraproject\resources\views/courses/create.blade.php ENDPATH**/ ?>

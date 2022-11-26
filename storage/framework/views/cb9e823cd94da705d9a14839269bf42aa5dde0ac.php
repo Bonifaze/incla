@@ -75,7 +75,7 @@
                                                     ?>
                                                     <tr>
                                                         <td> <input type="checkbox" id="<?php echo e($course->credit_unit); ?>"
-                                                                name="courses[]"
+                                                                name="courses1[]"
                                                                 <?php echo e($course->course_category == 1 ? 'checked ' : ''); ?>
 
                                                                 value="<?php echo e($course->course_id); ?>"
@@ -129,7 +129,7 @@
                                                 ?>
                                                 <tr>
                                                     <td> <input type="checkbox" id="<?php echo e($course->credit_unit); ?>"
-                                                            name="courses[]"
+                                                            name="courses2[]"
                                                             <?php echo e($course->course_category == 1 ? 'checked ' : ''); ?>
 
                                                             value="<?php echo e($course->course_id); ?>"

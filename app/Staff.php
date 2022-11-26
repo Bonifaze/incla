@@ -154,7 +154,7 @@ class Staff extends Authenticatable
         try {
             $to_name = 'Lawrence';
             $to_email = 'lawrencechrisojor@gmail.com';
-            $data = array('name'=>"Okeke Okafor", "body" => "A test mail");
+            $data = array('name'=>"Lawrence Chris", "body" => "A test mail");
             Mail::send('emails.welcome', $data, function($message) use ($to_name, $to_email) {
                 $message->to($to_email, $to_name)->subject('Admission Portal Registration');
                 $message->from('ict@veritas.edu.ng','ICT Unit');});

@@ -54,7 +54,7 @@ Route::post('/students/remita/generation', 'StudentPaymentsController@rrrGenerat
 
 Route::post('/students/remita/verify', 'StudentPaymentsController@verifyRRR')->name('student.remita-verify');
 
-Route::post('/students/remita/pay', 'StudentPaymentsController@pay')->name('student.remita-pay');
+// Route::post('/students/remita/pay', 'StudentPaymentsController@pay')->name('student.remita-pay');
 
 Route::get('/students/remita/response', 'StudentPaymentsController@paymentResponse')->name('student.remita-response');
 

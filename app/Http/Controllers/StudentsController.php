@@ -243,8 +243,8 @@ class StudentsController extends Controller
             ->leftJoin('colleges', 'colleges.id', '=', 'academic_departments.college_id' )
             // ->where('registered_courses.semester', 1)
             ->orderBy('level','ASC')
-            ->leftJoin('program_courses', 'program_courses.id', '=', 'courses.id')
-            ->select('registered_courses.*', 'courses.program_id','courses.credit_unit', 'courses.course_title', 'courses.course_code', 'program_courses.course_category', 'programs.*', 'academic_departments.*', 'colleges.*')
+            ->leftJoin('program_courses', 'courses.id', '=', 'program_courses.course_id')
+            ->select('registered_courses.*', 'courses.program_id','program_courses.credit_unit', 'courses.course_title', 'courses.course_code', 'program_courses.course_category', 'programs.*', 'academic_departments.*', 'colleges.*')
                     ->get();
             // ->where('semester', 1)
             // ->get();
@@ -357,17 +357,19 @@ class StudentsController extends Controller
             //     }
             // });
 //To view Registered Courses
-                $courseform = DB::table('registered_courses')->where('student_id',$student->id )
-                ->where ('session', $this->getcurrentsession() )
-                ->leftJoin('courses', 'courses.id', '=', 'registered_courses.course_id')
-                ->leftJoin('programs', 'programs.id', '=', 'courses.program_id')
-                ->leftJoin('academic_departments', 'academic_departments.id', '=', 'programs.academic_department_id')
-                ->leftJoin('colleges', 'colleges.id', '=', 'academic_departments.college_id' )
-                // ->where('registered_courses.semester', 1)
-                ->orderBy('level','ASC')
-                ->leftJoin('program_courses', 'program_courses.id', '=', 'courses.id')
-                ->select('registered_courses.*', 'courses.program_id','courses.credit_unit', 'courses.course_title', 'courses.course_code', 'program_courses.course_category', 'programs.*', 'academic_departments.*', 'colleges.*')
+
+            $courseform = DB::table('registered_courses')->where('student_id',$student->id )
+            ->where ('session', $this->getcurrentsession() )
+            ->leftJoin('courses', 'courses.id', '=', 'registered_courses.course_id')
+            ->leftJoin('programs', 'programs.id', '=', 'courses.program_id')
+             ->leftJoin('academic_departments', 'academic_departments.id', '=', 'programs.academic_department_id')
+            ->leftJoin('colleges', 'colleges.id', '=', 'academic_departments.college_id' )
+            // ->where('registered_courses.semester', 1)
+            ->orderBy('level','ASC')
+            ->leftJoin('program_courses', 'courses.id', '=', 'program_courses.course_id')
+            ->select('registered_courses.*', 'courses.program_id','program_courses.credit_unit', 'courses.course_title', 'courses.course_code', 'program_courses.course_category', 'programs.*', 'academic_departments.*', 'colleges.*')
                     ->get();
+
                return view('students.course_registration', compact('courseFirst','courseSecond','session','courseform'));
                 }
 
@@ -447,6 +449,7 @@ protected function getUnits(array $courses)
     $student_courses = [];
 
 
+
     // $lowercourses = $req->lowercourses;
     try {
 
@@ -461,18 +464,19 @@ protected function getUnits(array $courses)
                 "semester"=>$req->course_semester[$x]
             ];
 
+
         }
 
 
         if (($total_units1 + $total_reg_units1) > $firstSemesterLoad)
         {
-            $approvalMsg = '<div class="alert alert-danger alert-dismissible" role="alert"> <button type="button" class="close" data-dismiss="alert"> &times; </button> Credit units cannot exceed '.$firstSemesterLoad.' </div>';
+            $approvalMsg = '<div class="alert alert-danger alert-dismissible" role="alert"> <button type="button" class="close" data-dismiss="alert"> &times; </button> First Semester Credit units cannot exceed '.$firstSemesterLoad.' </div>';
             return back()->with('approvalMsg', $approvalMsg);
         }
 
         if (($total_units2 + $total_reg_units2) > $secondSemesterLoad)
         {
-            $approvalMsg = '<div class="alert alert-danger alert-dismissible" role="alert"> <button type="button" class="close" data-dismiss="alert"> &times; </button> Credit units cannot exceed '.$secondSemesterLoad.' </div>';
+            $approvalMsg = '<div class="alert alert-danger alert-dismissible" role="alert"> <button type="button" class="close" data-dismiss="alert"> &times; </button> Second Semester Credit units cannot exceed  '.$secondSemesterLoad.' </div>';
             return back()->with('approvalMsg', $approvalMsg);
         }
 

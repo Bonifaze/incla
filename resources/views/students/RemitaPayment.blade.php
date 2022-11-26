@@ -109,7 +109,7 @@
                                 <div class="form-floating mb-3 mt-3">
                                     <input type="hidden" class="form-control" id="js-email"
                                         placeholder="{{ Auth::guard('student')->user()->email }}" value="{{ Auth::guard('student')->user()->email }}" name="email"
-                                        readonly hidden>
+                                        readonly >
                                     <label for="email"></label>
                                 </div>
 

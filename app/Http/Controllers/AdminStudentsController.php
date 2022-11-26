@@ -480,7 +480,7 @@ class AdminStudentsController extends Controller
 
     public function find(Request $request)
     {
-        $this->authorize('search',Student::class);
+       // $this->authorize('search',Student::class);
         $students = Student::with(['contact', 'academic', 'medical', 'academic.program'])
         ->where('surname', 'like', '%'.$request->data.'%')
         ->whereHas('academic')
@@ -513,7 +513,7 @@ class AdminStudentsController extends Controller
     public function findMatric(Request $request)
     {
 
-        $this->authorize('search',Student::class);
+      //  $this->authorize('search',Student::class);
         // $this->validate($request, [
         //     'data' => 'required|string|max:50',
         //     ],

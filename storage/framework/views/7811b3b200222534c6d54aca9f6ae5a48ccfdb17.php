@@ -73,11 +73,11 @@
               <?php endif; ?>
               <!-- <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small> -->
             </div>
-            <div class="form-group">
+            <div class="form-group mt-3">
               <label for="exampleInputPassword1">Password</label>
               <input id="password" type="password" placeholder="Password" class="form-control<?php echo e($errors->has('password') ? ' is-invalid' : ''); ?>" name="password" required>
               <?php if($errors->has('password')): ?>
-              <span class="invalid-feedback"><strong><?php echo e($errors->first('password')); ?></strong></span>
+             <div class="alert alert-danger alert-dismissible" role="alert"> <button type="button" class="close" data-dismiss="alert"> &times; </button><?php echo e($errors->first('password')); ?></strong></div>
               <?php endif; ?>
             </div>
             <div class="form-group form-check">

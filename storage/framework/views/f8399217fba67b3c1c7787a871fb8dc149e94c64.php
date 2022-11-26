@@ -100,7 +100,7 @@
                                 <div class="form-floating mb-3 mt-3">
                                     <input type="hidden" class="form-control" id="js-email"
                                         placeholder="<?php echo e(Auth::guard('student')->user()->email); ?>" value="<?php echo e(Auth::guard('student')->user()->email); ?>" name="email"
-                                        readonly hidden>
+                                        readonly >
                                     <label for="email"></label>
                                 </div>
 

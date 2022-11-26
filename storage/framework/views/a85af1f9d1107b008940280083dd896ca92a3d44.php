@@ -1,33 +1,29 @@
-@extends('layouts.student')
-
-
-
-@section('pagetitle')
+<?php $__env->startSection('pagetitle'); ?>
     Home
-@endsection
+<?php $__env->stopSection(); ?>
 
 
 
 <!-- Sidebar Links -->
 
 <!-- Treeview -->
-@section('student-open')
+<?php $__env->startSection('student-open'); ?>
     menu-open
-@endsection
+<?php $__env->stopSection(); ?>
 
-@section('student')
+<?php $__env->startSection('student'); ?>
     active
-@endsection
+<?php $__env->stopSection(); ?>
 
 <!-- Page -->
-@section('home')
+<?php $__env->startSection('home'); ?>
     active
-@endsection
+<?php $__env->stopSection(); ?>
 
 <!-- End Sidebar links -->
 
 
-@section('content')
+<?php $__env->startSection('content'); ?>
     <div class="content-wrapper bg-white">
 
         <!-- Main content -->
@@ -51,7 +47,7 @@
                     <meta charset="UTF-8">
                     <meta http-equiv="X-UA-Compatible" content="IE=edge">
                     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-                    <meta name="csrf-token" content="{{ csrf_token() }}">
+                    <meta name="csrf-token" content="<?php echo e(csrf_token()); ?>">
                     <title>Document</title>
                     <!-- CSS only -->
                     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css"
@@ -76,17 +72,17 @@
                                         <th scope="col">Description</th>
                                         <th scope="col">Date</th>
                                         <th scope="col">Payment</th>
-                                        {{--  <th scope="col">Action</th>  --}}
+                                        
                                         <th scope="col">Verify</th>
 
                                     </tr>
                                 </thead>
                                 <tbody class="">
-                                    @foreach ($viewpayment as $key => $utm)
+                                    <?php $__currentLoopData = $viewpayment; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $key => $utm): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                         <tr></tr>
-                                            <td>{{ $key + 1 }}</td>
-                                            <td>{{ $utm->rrr }}</td>
-                                            <td>{!! $utm->status_code == '01'
+                                            <td><?php echo e($key + 1); ?></td>
+                                            <td><?php echo e($utm->rrr); ?></td>
+                                            <td><?php echo $utm->status_code == '01'
                                                 ? '<a href="/students/receipt/' .
                                                     $utm->rrr .
                                                     '" button class="btn btn-success "><i class="fas fa-print text-white-50"></i> Print Receipt</a>'
@@ -100,36 +96,28 @@
                                                     $utm->rrr .
                                                     ')" value="Pay" button class="btn btn-success"/>
                                                                                                                         </div>
-                                                                                                                    </form>' !!}</td>
-                                            <td>{{ $utm->amount }}</td>
-                                            <td>{{ $utm->status }}</td>
-                                            <td>{{ $utm->fee_type }}</td>
-                                            <td>{{ \Carbon\Carbon::parse($utm->created_at)->format('d/m/Y') }}</td>
-                                            <td>{{ $utm->status_code == '01' ? 'PAID' : 'NOT PAID' }}
+                                                                                                                    </form>'; ?></td>
+                                            <td><?php echo e($utm->amount); ?></td>
+                                            <td><?php echo e($utm->status); ?></td>
+                                            <td><?php echo e($utm->fee_type); ?></td>
+                                            <td><?php echo e(\Carbon\Carbon::parse($utm->created_at)->format('d/m/Y')); ?></td>
+                                            <td><?php echo e($utm->status_code == '01' ? 'PAID' : 'NOT PAID'); ?>
+
                                             </td>
-                                            {{--  <td>{!! $utm->status_code == '01'?'<a href="/receipt/'.$utm->rrr.'" button class="btn btn-success "><i class="fas fa-print text-white-50"></i> Print Receipt</a>':'
-                    <form onsubmit="makePayment()" id="payment-form">
-                            <div class="btn btn-success px-3"> <i class="fas fa-credit-card text-white-50"></i>
-                                <input type="hidden" class="form-control" id="js-rrr" value="'.$utm->rrr.'" name="rrr" />
-                                <input type="button" onclick="makePayment('.$utm->rrr.')" value="Pay" button class="btn btn-success"/>
-                            </div>
-                        </form>'!!}</td>  --}}
+                                            
 
 
-                                            {{--  <td> <div class="col-md-2 form-group">
-                            {!! Form::open(['method' => 'Post', 'route' => 'student.remita-verify', 'id'=>'verifyRemita'.$utm->rrr]) !!}
-                            {{ Form::hidden('remita_id', $utm->rrr) }}
-                            <button type="submit" class="{{$$utm->rrr}} btn btn-outline-warning" > Verify Payment</button>
-                            {!! Form::close() !!}
-                        </div>
-                    </td>  --}}
+                                            
                              <td>
-                                        {!! Form::open(['method' => 'Post', 'route' => 'student.remita-verify', 'id'=>'verifyRemita'.$utm->rrr]) !!}
-                                        {{ Form::hidden('remita_id', $utm->rrr) }}
-                                        <button type="submit" class="{{$utm->rrr}} btn btn-outline-primary" > Verify Payment</button>
-                                        {!! Form::close() !!}
+                                        <?php echo Form::open(['method' => 'Post', 'route' => 'student.remita-verify', 'id'=>'verifyRemita'.$utm->rrr]); ?>
+
+                                        <?php echo e(Form::hidden('remita_id', $utm->rrr)); ?>
+
+                                        <button type="submit" class="<?php echo e($utm->rrr); ?> btn btn-outline-primary" > Verify Payment</button>
+                                        <?php echo Form::close(); ?>
+
                                     </td>
-                                    @endforeach
+                                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                                     </tr>
 
                                 </tbody>
@@ -353,8 +341,10 @@
             </div>
         </section>
     </div>
-@endsection
+<?php $__env->stopSection(); ?>
 
-@section('pagescript')
+<?php $__env->startSection('pagescript'); ?>
     <script src="<?php echo asset('dist/js/bootbox.min.js'); ?>"></script>
-@endsection
+<?php $__env->stopSection(); ?>
+
+<?php echo $__env->make('layouts.student', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH C:\Users\Lawrence Chris\Desktop\laraproject\resources\views/students/paymentview.blade.php ENDPATH**/ ?>

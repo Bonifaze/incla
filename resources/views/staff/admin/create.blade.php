@@ -227,7 +227,7 @@
 							<div  @if($errors->has('address')) class ='has-error form-group' @endif>
 
 								<label for="address">Address :</label>
-								 {!! Form::textarea('address', null, array('placeholder' => '','rows'=>'3', 'class' => 'form-control', 'id' => 'address', 'required' => 'required')) !!}
+								 {!! Form::text('address', null, array('placeholder' => '','rows'=>'3', 'class' => 'form-control', 'id' => 'address', 'required' => 'required')) !!}
 								<span class="text-danger"> {{ $errors->first('address') }}</span>
 								</div>
 							</div>
@@ -255,7 +255,7 @@
 
 
 							 <div class="box-header">
-              <h3 class="box-title">Emergency Contact / Sponsor Information</h3>
+              <h3 class="box-title">Emergency Contact </h3>
             </div>
 
 

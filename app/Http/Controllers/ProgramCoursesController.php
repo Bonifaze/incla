@@ -51,7 +51,7 @@ class ProgramCoursesController extends Controller
         // ->orderBy('staff_work_profiles.admin_department_id','ASC')->get()->pluck('full_name','id');
         // dd($lecturers);
         $pcourses = ProgramCourse::with(['course','staff', 'program', 'session'])
-        ->where('semester', $session->currentSemester())
+        // ->where('semester', $session->currentSemester())
         ->where('session_id', $session->currentSession())
         ->orderBy('id','DESC')
         ->orderBy('program_id','ASC')->orderBy('level','ASC')->paginate(100);
@@ -101,9 +101,11 @@ class ProgramCoursesController extends Controller
             'level' => 'required|integer',
             'session_id' => 'required|integer',
             'semester' => 'required|integer',
-            'credit_load' => 'required|integer',
+            'credit_unit' => 'required|integer',
             'program_id' => 'required|integer',
-            'mode' => 'required|integer',
+            // 'has_perequisite' =>'required|integer',
+            // 'perequisite_id'=>'required|integer',
+            'course_category' => 'required|integer',
             'lecturer_id' => 'required|integer',
         ]);
 
@@ -114,22 +116,37 @@ class ProgramCoursesController extends Controller
         $program_course->credit_load = $request->credit_load;
         $program_course->session_id = $request->session_id;
         $program_course->semester = $request->semester;
+        $program_course->has_perequisite =$request->has_perequisite;
+        $program_course->perequisite_id=$request->perequisite_id;
         $program_course->lecturer_id = $request->lecturer_id;
-        $program_course->mode = $request->mode;
+        $program_course->course_category = $request->course_category;
         $program_course->approval = 0;
 
         $program_course_assign= new StaffCourse();
-        $program_course_assign->program_course_id = $request->program_course_id;
-        $program_course_assign->lecturer_id = $request->lecturer_id;
+        $program_course_assign->course_id = $request->course_id;
+        $program_course_assign->level = $request->level;
+        $program_course->semester_id = $request->semester;
+        $program_course_assign->session_id = $request->session_id;
+        $program_course_assign->staff_id = $request->lecturer_id;
 
+// dd( $program_course);
 
         DB::beginTransaction(); //Start transaction!
 
         try {
         $program_course->save();
 
-        $program_course_assign->program_course_id  = $program_course->id;
-        $program_course_assign->lecturer_id  = $program_course->lecturer_id;
+        // DB::table('staff_courses')
+        // ->insert([
+        //     'courses' => $request->course_id,
+        //     'staff_id' => $request->lecturer_id,
+        //     'level' => $request->level,
+        //     'semester_id' => $request->semester,
+        //     'session_id' => $request->session_id,
+
+        // ]);
+
+
 
         $program_course_assign->save();
         }
@@ -160,7 +177,7 @@ DB::commit();
         $programs = Program::orderBy('name','ASC')->pluck('name','id');
         $sessions = Session::orderBy('id','DESC')->pluck('name','id');
         $courses = Course::with('program')->where('program_id',$pcourse->course->program_id)
-        ->where('status',1)->orderBy('hours','DESC')->orderBy('code','ASC')
+        ->where('status',1)->orderBy('credit_unit','DESC')->orderBy('course_code','ASC')
         ->get()->pluck('courseDescribe','id');
         $lecturers = Staff::join('staff_work_profiles', 'staff.id', '=', 'staff_work_profiles.staff_id')
         ->where('staff.status',1)
@@ -179,21 +196,42 @@ DB::commit();
             'level' => 'required|integer',
             'session_id' => 'required|integer',
             'semester' => 'required|integer',
-            'credit_load' => 'required|integer',
+            'credit_unit' => 'required|integer',
             'program_id' => 'required|integer',
-            'mode' => 'required|integer',
+            // 'course_category' => 'required|integer',
             'lecturer_id' => 'required|integer',
         ]);
         $program_course = ProgramCourse::findOrFail($id);
         $program_course->course_id = $request->course_id;
         $program_course->level = $request->level;
         $program_course->program_id = $request->program_id;
-        $program_course->hours = $request->hours;
+        $program_course->credit_unit= $request->credit_unit;
         $program_course->session_id = $request->session_id;
         $program_course->semester = $request->semester;
         $program_course->lecturer_id = $request->lecturer_id;
-        $program_course->mode = $request->mode;
+        $program_course->course_category = $request->course_category;
+        $program_course->has_perequisite =$request->has_perequisite;
+        $program_course->perequisite_id=$request->perequisite_id;
+
+        // $program_course_assign= StaffCourse::findOrFail($id);
+        // // $program_course_assign->course_id = $request->course_id;
+        // $program_course_assign->level = $request->level;
+        // $program_course_assign->semester_id = $request->semester;
+        // $program_course_assign->session_id = $request->session_id;
+        // $program_course_assign->staff_id = $request->lecturer_id;
+
+
         $program_course->save();
+
+        DB::table('staff_courses')->where('course_id', $request->course_id)
+        ->update([
+            'staff_id' => $request->lecturer_id,
+            'level' => $request->level,
+            'semester_id' => $request->semester,
+            'session_id' => $request->session_id,
+
+        ]);
+        // $program_course_assign->save();
 
         return redirect()->route('program_course.list')
         ->with('success','Program Course edited successfully');

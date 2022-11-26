@@ -126,90 +126,90 @@ class StudentPaymentsController extends Controller
 
 
 
-    public function remita()
-    {
-     $student = Auth::guard('student')->user();
-     //enable for a particular student for testing
-        /*
-     if($student->id != 4127)
-        {
-            return redirect()->route('student.home')
-                ->with('error',"Remita payment will go live soon. Kindly check back later.");
-        }
-     */
-     $remitas = $student->remitas;
-        $unpaid = $student->remitas->where('status_code','>',1)->count();
-     return view('students.remita',compact('student','remitas','unpaid'));
-    }
+    // public function remita()
+    // {
+    //  $student = Auth::guard('student')->user();
+    //  //enable for a particular student for testing
+    //     /*
+    //  if($student->id != 4127)
+    //     {
+    //         return redirect()->route('student.home')
+    //             ->with('error',"Remita payment will go live soon. Kindly check back later.");
+    //     }
+    //  */
+    //  $remitas = $student->remitas;
+    //     $unpaid = $student->remitas->where('status_code','>',1)->count();
+    //  return view('students.remita',compact('student','remitas','unpaid'));
+    // }
 
-    public function generateRRR()
-    {
-        $student = Auth::guard('student')->user();
-        $feeTypes = FeeType::where('status',1)->get()->pluck('fees','id');
-        $unpaid = $student->remitas->where('status_code','>',1)->count();
-        if($unpaid > 10)
-        {
-            return redirect()->route('student.home')
-                ->with('error',"you have too many unpaid reference numbers. Visit ICT department");
-        }
-        return view('students.generate_rrr',compact('student','feeTypes'));
-    }
+    // public function generateRRR()
+    // {
+    //     $student = Auth::guard('student')->user();
+    //     $feeTypes = FeeType::where('status',1)->get()->pluck('fees','id');
+    //     $unpaid = $student->remitas->where('status_code','>',1)->count();
+    //     if($unpaid > 10)
+    //     {
+    //         return redirect()->route('student.home')
+    //             ->with('error',"you have too many unpaid reference numbers. Visit ICT department");
+    //     }
+    //     return view('students.generate_rrr',compact('student','feeTypes'));
+    // }
 
-    public function rrrGeneration(Request $request)
-    {
-        $this->validate($request, [
-            'fee_type_id' => 'required|integer',
-            'student_id' => 'required|integer',
-        ]);
-        $feeType = FeeType::findOrFail($request->fee_type_id);
-        $student = Student::findOrFail($request->student_id);
-        $data = collect();
-       //initialize variables
-        $data->serviceTypeId = $feeType->provider_code;
-        $data->amount = $feeType->amount;
-        $data->payerName = $student->full_name;
-        $data->payerEmail = $student->email;
-        $data->payerPhone = $student->phone;
-        $data->description = $feeType->name;
-        $data->orderId = round(microtime(true) * 1000);
+    // public function rrrGeneration(Request $request)
+    // {
+    //     $this->validate($request, [
+    //         'fee_type_id' => 'required|integer',
+    //         'student_id' => 'required|integer',
+    //     ]);
+    //     $feeType = FeeType::findOrFail($request->fee_type_id);
+    //     $student = Student::findOrFail($request->student_id);
+    //     $data = collect();
+    //    //initialize variables
+    //     $data->serviceTypeId = $feeType->provider_code;
+    //     $data->amount = $feeType->amount;
+    //     $data->payerName = $student->full_name;
+    //     $data->payerEmail = $student->email;
+    //     $data->payerPhone = $student->phone;
+    //     $data->description = $feeType->name;
+    //     $data->orderId = round(microtime(true) * 1000);
 
-        $customField = collect();
-        $customField->name = "Student ID";
-        $customField->value = $student->id;
-        $customField->type = "ALL";
+    //     $customField = collect();
+    //     $customField->name = "Student ID";
+    //     $customField->value = $student->id;
+    //     $customField->type = "ALL";
 
-        $remita = new Remita();
-        $response = $remita->generateRRR($data,$customField);
-        if($response->statuscode == "025")
-        {
-            //save rrr and return
-            $remita->student_id = $student->id;
-            $remita->rrr = $response->RRR;
-            $remita->order_id = $data->orderId;
-            $remita->fee_type_id = $feeType->id;
-            $remita->service_type_id = $data->serviceTypeId;
-            $remita->amount = $data->amount;
-            $remita->status_code = $response->statuscode;
+    //     $remita = new Remita();
+    //     $response = $remita->generateRRR($data,$customField);
+    //     if($response->statuscode == "025")
+    //     {
+    //         //save rrr and return
+    //         $remita->student_id = $student->id;
+    //         $remita->rrr = $response->RRR;
+    //         $remita->order_id = $data->orderId;
+    //         $remita->fee_type_id = $feeType->id;
+    //         $remita->service_type_id = $data->serviceTypeId;
+    //         $remita->amount = $data->amount;
+    //         $remita->status_code = $response->statuscode;
 
-            try{
-               $remita->save();
-                   return redirect()->route('student.remita')
-                       ->with('update',"Generated RRR: ".$response->RRR);
-            }
-            catch (\Exception $e)
-            {
-                return redirect()->route('student.remita')
-                    ->with('error',"Error saving Remita information. Please contact ICT.".$e->getMessage());
-            }
-        }
-        else
-        {
-            //return with error
-            return redirect()->route('student.remita')
-                ->with('error',"Error from remita server generating RRR");
-        }
+    //         try{
+    //            $remita->save();
+    //                return redirect()->route('student.remita')
+    //                    ->with('update',"Generated RRR: ".$response->RRR);
+    //         }
+    //         catch (\Exception $e)
+    //         {
+    //             return redirect()->route('student.remita')
+    //                 ->with('error',"Error saving Remita information. Please contact ICT.".$e->getMessage());
+    //         }
+    //     }
+    //     else
+    //     {
+    //         //return with error
+    //         return redirect()->route('student.remita')
+    //             ->with('error',"Error from remita server generating RRR");
+    //     }
 
-    }// end rrrGeneration
+    // }// end rrrGeneration
 
 
     public function verifyRRR(Request $request)
@@ -217,7 +217,7 @@ class StudentPaymentsController extends Controller
         $this->validate($request, [
             'remita_id' => 'required|integer',
         ]);
-        $remita = Remita::findOrFail($request->remita_id);
+        $remita = Remita::findOrFail($request->rrr);
         $response = $remita->verifyRRR();
         if($response->status == "01")
         {
@@ -232,35 +232,35 @@ class StudentPaymentsController extends Controller
         }
         try{
             $remita->save();
-            return redirect()->route('student.remita')
+            return redirect()->route('students.paymentview')
                 ->with('update',$update);
         }
         catch (\Exception $e)
         {
             $error = "Error saving Remita information. Please contact ICT.".$e->getMessage();
-            return redirect()->route('student.remita')
+            return redirect()->route('students.paymentview')
                 ->with('error',$error);
         }
 
     }// end verifyRRR
 
-    public function pay2(Request $request)
-    {
-        $this->validate($request, [
-            'remita_id' => 'required|integer',
-        ]);
+    // public function pay2(Request $request)
+    // {
+    //     $this->validate($request, [
+    //         'remita_id' => 'required|integer',
+    //     ]);
 
-        $remita = Remita::findOrFail($request->remita_id);
-        return view('students.remita_pay',compact('remita'));
+    //     $remita = Remita::findOrFail($request->remita_id);
+    //     return view('students.remita_pay',compact('remita'));
 
-    }// end pay
+    // }// end pay
 
 
-    public function pay(Request $request)
-    {
-        //
+    // public function pay(Request $request)
+    // {
+    //     //
 
-    }// makePay
+    // }// makePay
 
 //public function paymentResponse($rrr,$orderId)
     public function paymentResponse(Request $request)
@@ -290,102 +290,102 @@ class StudentPaymentsController extends Controller
         }
         try{
             $remita->save();
-            return redirect()->route('student.remita')
+            return redirect()->route('students.paymentview')
                 ->with('update',$update);
         }
         catch (\Exception $e)
         {
             $error = "Error saving Remita information. Please contact ICT.".$e->getMessage();
-            return redirect()->route('student.remita')
+            return redirect()->route('students.paymentview')
                 ->with('error',$error);
         }
     }
    }
 
 
-    public function paymentConfirmation(Request $request)
-    {
-        $this->validate($request, [
-            'fee_type_id' => 'required|integer',
-            'student_id' => 'required|integer',
-        ]);
-        $student = Student::findOrFail($request->student_id);
-        if($student->id != 4127)
-        {
-            return redirect()->route('student.home')
-                ->with('error',"Remita payment will go live soon. Kindly check back later.");
-        }
-        $data = collect();
-        //initialize variables
-        $data->serviceTypeId = "4430731";
-        $data->amount = $request->fee_type_id;
-        $data->payerName = $student->full_name;
-        $data->payerEmail = $student->email;
-        $data->payerPhone = $student->phone;
-        $data->description = "Student Fees";
-        $data->orderId = round(microtime(true) * 1000);
+    // public function paymentConfirmation(Request $request)
+    // {
+    //     $this->validate($request, [
+    //         'fee_type_id' => 'required|integer',
+    //         'student_id' => 'required|integer',
+    //     ]);
+    //     $student = Student::findOrFail($request->student_id);
+    //     if($student->id != 4127)
+    //     {
+    //         return redirect()->route('student.home')
+    //             ->with('error',"Remita payment will go live soon. Kindly check back later.");
+    //     }
+    //     $data = collect();
+    //     //initialize variables
+    //     $data->serviceTypeId = "4430731";
+    //     $data->amount = $request->fee_type_id;
+    //     $data->payerName = $student->full_name;
+    //     $data->payerEmail = $student->email;
+    //     $data->payerPhone = $student->phone;
+    //     $data->description = "Student Fees";
+    //     $data->orderId = round(microtime(true) * 1000);
 
 
-        $customField = collect();
-        $customField->name = "Student ID";
-        $customField->value = $student->id;
-        $customField->type = "ALL";
+    //     $customField = collect();
+    //     $customField->name = "Student ID";
+    //     $customField->value = $student->id;
+    //     $customField->type = "ALL";
 
-        $remita = new Remita();
-        $response = $remita->generateRRR($data,$customField);
-        if($response->statuscode == "025")
-        {
-            //save rrr and return
-            $remita->student_id = $student->id;
-            $remita->rrr = $response->RRR;
-            $remita->order_id = $data->orderId;
-            $remita->fee_type_id = $request->fee_type_id;
-            $remita->service_type_id = $data->serviceTypeId;
-            $remita->amount = $data->amount;
-            $remita->status_code = $response->statuscode;
+    //     $remita = new Remita();
+    //     $response = $remita->generateRRR($data,$customField);
+    //     if($response->statuscode == "025")
+    //     {
+    //         //save rrr and return
+    //         $remita->student_id = $student->id;
+    //         $remita->rrr = $response->RRR;
+    //         $remita->order_id = $data->orderId;
+    //         $remita->fee_type_id = $request->fee_type_id;
+    //         $remita->service_type_id = $data->serviceTypeId;
+    //         $remita->amount = $data->amount;
+    //         $remita->status_code = $response->statuscode;
 
-            try{
-                $remita->save();
-                return redirect()->route('student.remita')
-                    ->with('update',"Generated RRR: ".$response->RRR);
-            }
-            catch (\Exception $e)
-            {
-                $error = "Error saving Remita information. Please contact ICT.".$e->getMessage();
-                return redirect()->route('student.remita')
-                    ->with('error',$error);
-            }
-        }
-        else
-        {
-            //return with error
-            return redirect()->route('student.remita')
-                ->with('error',$response->error);
-        }
+    //         try{
+    //             $remita->save();
+    //             return redirect()->route('student.remita')
+    //                 ->with('update',"Generated RRR: ".$response->RRR);
+    //         }
+    //         catch (\Exception $e)
+    //         {
+    //             $error = "Error saving Remita information. Please contact ICT.".$e->getMessage();
+    //             return redirect()->route('student.remita')
+    //                 ->with('error',$error);
+    //         }
+    //     }
+    //     else
+    //     {
+    //         //return with error
+    //         return redirect()->route('student.remita')
+    //             ->with('error',$response->error);
+    //     }
 
-    }// end payementConfirmation
-
-
-    public function confirmationNotification(Request $request)
-    {
-
-       $data = '{"rrr":"110002071256","channnel":"CARDPAYMENT","billerName":"SYSTEMSPECS","channel":"CARDPAYMENT","amount":200.0,"transactiondate":"2020-12-20 00:00:00", "debitdate":"2020-12-20 11:17:03", "bank":"232","branch":"","serviceTypeId":"2020978", "orderRef":"6954148807", "orderId":"6954148807", "payerName":"Test Test", "payerPhoneNumber":"07055542122",
-       "payeremail":"test@test.com.ng", "type":"PY", "customFieldData":[{ "DESCRIPTION":"Name On Account", "PIVAL":"Test Test" },  { "DESCRIPTION":"Walletid", "PIVAL":"1234567" } ],  "parentRRRDetails":{}, "chargeFee":101.61, "paymentDescription":"SYSTEMSPECS WALLET", "integratorsEmail":"", "integratorsPhonenumber":"" }]}';
-
-       //if($request->json())
-        //{
-            //mail response
-            try {
-
-                //Mail::to('lawrencechrisojor@gmail.com')->send(new ExceptionOccured($request->toJson()));
+    // }// end payementConfirmation
 
 
-            } catch (Exception $ex) {
+    // public function confirmationNotification(Request $request)
+    // {
 
-            }
-        //}
+    //    $data = '{"rrr":"110002071256","channnel":"CARDPAYMENT","billerName":"SYSTEMSPECS","channel":"CARDPAYMENT","amount":200.0,"transactiondate":"2020-12-20 00:00:00", "debitdate":"2020-12-20 11:17:03", "bank":"232","branch":"","serviceTypeId":"2020978", "orderRef":"6954148807", "orderId":"6954148807", "payerName":"Test Test", "payerPhoneNumber":"07055542122",
+    //    "payeremail":"test@test.com.ng", "type":"PY", "customFieldData":[{ "DESCRIPTION":"Name On Account", "PIVAL":"Test Test" },  { "DESCRIPTION":"Walletid", "PIVAL":"1234567" } ],  "parentRRRDetails":{}, "chargeFee":101.61, "paymentDescription":"SYSTEMSPECS WALLET", "integratorsEmail":"", "integratorsPhonenumber":"" }]}';
 
-    }
+    //    //if($request->json())
+    //     //{
+    //         //mail response
+    //         try {
+
+    //             //Mail::to('lawrencechrisojor@gmail.com')->send(new ExceptionOccured($request->toJson()));
+
+
+    //         } catch (Exception $ex) {
+
+    //         }
+    //     //}
+
+    // }
 
     public function remitaPrint($id){
         //get instance

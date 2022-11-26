@@ -70,9 +70,9 @@
 							  <td>{{ $pcourse->course->courseDescribe }}</td>
 							   <td>{{ $pcourse->program->name }}</td>
 							   <td>{{ $pcourse->level }}</td>
-							 <td>{{ $pcourse->credit_load }}</td>
+							 <td>{{ $pcourse->credit_unit }}</td>
 							 <td>{{ $pcourse->session->name }}</td>
-							 <td>{{ $pcourse->staff->FullName }}</td>
+							 <td>{{ $pcourse->lecturer->FullName }}</td>
 							<td><a href="{{ route('program_course.edit',$pcourse->id) }}"> Edit </td>
 
 							    <td>
