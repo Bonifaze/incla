@@ -9,6 +9,7 @@ use App\Session;
 use App\Student;
 use App\StudentDebt;
 use App\ProgramCourse;
+
 // use Nette\Utils\Image;
 use App\StudentResult;
 use App\StudentContact;
@@ -22,9 +23,9 @@ use App\Models\StudentCreditLoad;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
+
 use Illuminate\Support\Facades\Hash;
 use Intervention\Image\Facades\Image;
-// use Intervention\Image\Facades\Image;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Redirect;
@@ -42,18 +43,15 @@ class AdminStudentsController extends Controller
     public function __construct()
     {
         $this->middleware('auth:staff');
-        //$this->middleware('auth:student');
     }
-
-   /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+    public function authorize()
+    {
+        return true;
+    }
 
     public function create()
     {
-        // $this->authorize('create',Student::class);
+        $this->authorize('create',Student::class);
         $programs = Program::orderBy('name','ASC')->pluck('name','id');
         // dd($programs);
         $sessions = Session::where('status',1)->pluck('name','id');
@@ -473,14 +471,14 @@ class AdminStudentsController extends Controller
 
     public function search()
     {
-        // $this->authorize('search',Student::class);
+        $this->authorize('search', Student::class);
         return view('students.admin.search');
     } //end search
 
 
     public function find(Request $request)
     {
-       // $this->authorize('search',Student::class);
+       $this->authorize('search', Student::class);
         $students = Student::with(['contact', 'academic', 'medical', 'academic.program'])
         ->where('surname', 'like', '%'.$request->data.'%')
         ->whereHas('academic')
@@ -513,7 +511,7 @@ class AdminStudentsController extends Controller
     public function findMatric(Request $request)
     {
 
-      //  $this->authorize('search',Student::class);
+       $this->authorize('search',Student::class);
         // $this->validate($request, [
         //     'data' => 'required|string|max:50',
         //     ],

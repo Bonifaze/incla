@@ -217,6 +217,7 @@ class BursaryController extends Controller
         return view('bursary.search');
     } //end search
 
+
     public function find(Request $request)
     {
 
@@ -254,6 +255,7 @@ class BursaryController extends Controller
         }
 
     } // end find matric
+    
 
 
 } // end Bursary Controller Class

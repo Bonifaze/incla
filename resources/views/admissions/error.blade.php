@@ -1,12 +1,4 @@
-@php
 
-if(!session('adminId'))
-{
-
-  header('location: /adminLogin');
-  exit;
-}
-@endphp
 @extends('layouts.mini')
 
 
@@ -57,7 +49,7 @@ if(!session('adminId'))
 
             <div class="card shadow-lg border-danger p-5">
                 <div class="card-body p-5 alert alert-danger alert-dismissible" role="alert">
-                    <button type="button" class="close" data-dismiss="alert"> &times; </button> You don not have access to this task, please contact the ICT Unit
+                    <button type="button" class="close" data-dismiss="alert"> &times; </button> You don not have Authorization to access this page or Perform this Task, Please contact the ICT Unit
                 </div>
 
 

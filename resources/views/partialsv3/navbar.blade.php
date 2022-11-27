@@ -139,7 +139,7 @@
             <ul aria-labelledby="dropdownSubMenu1" class="dropdown-menu border-0 shadow">
 
                 <!-- Level two dropdown-->
-                 <li><a href="/adminRole" class="dropdown-item">Create Role</a></li>
+                 <li><a href="{{ route('rbac.create-role') }}" class="dropdown-item">Create Role</a></li>
 
                 <li class="dropdown-submenu dropdown-hover">
                     <a id="dropdownSubMenu2" href="#" role="button" data-toggle="dropdown" aria-haspopup="true"
@@ -171,7 +171,7 @@
                     </ul>
                 </li>
 
-                    <li><a href="{{ route('staff.roles') }}" class="dropdown-item">View Roles </a></li>
+                    {{--  <li><a href="{{ route('staff.roles') }}" class="dropdown-item">View Roles </a></li>  --}}
                 <!-- End Level two -->
             </ul>
         </li>
@@ -180,8 +180,8 @@
             <a id="dropdownSubMenu1"style="color: #218c74;" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
                 class="nav-link dropdown-toggle">HR</a>
             <ul aria-labelledby="dropdownSubMenu1" class="dropdown-menu border-0 shadow">
-                <li><a href="{{ route('admin.department.create') }}" class="dropdown-item">New Admin Dept </a></li>
-                <li><a href="{{ route('admin.department.list') }}" class="dropdown-item">List Admin Depts</a></li>
+                {{--  <li><a href="{{ route('admin.department.create') }}" class="dropdown-item">New Admin Dept </a></li>
+                <li><a href="{{ route('admin.department.list') }}" class="dropdown-item">List Admin Depts</a></li>  --}}
                 {{--  <li><a href="#" class="dropdown-item">Assign Head*</a></li>
                 <li><a href="#" class="dropdown-item">New Staff Position*</a></li>
                 <li><a href="#" class="dropdown-item">List Staff Positions*</a></li>

@@ -1,4 +1,4 @@
-@php
+{{--  @php
 
 if(!session('adminId'))
 {
@@ -6,7 +6,7 @@ if(!session('adminId'))
   header('location: /adminLogin');
   exit;
 }
-@endphp
+@endphp  --}}
 
 @extends('layouts.mini')
 

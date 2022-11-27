@@ -1,16 +1,19 @@
 <?php
 
 namespace App\Http\Controllers;
+use App\users;
 use App\Remita;
 use App\FeeType;
 use App\Student;
+use Carbon\Carbon;
 use App\StudentDebt;
-use App\users;
 use App\StudentAcademic;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Database\QueryException;
+use Illuminate\Support\Facades\Redirect;
 
 class RemitaController extends Controller
 {
@@ -72,6 +75,74 @@ class RemitaController extends Controller
                 ->with('error',$error);
         }
     } // end find rrr
+
+
+//VERIFY PAYMENT FUNCTION
+
+public function verifypayment(Request $req)
+{
+    $staff = Auth::guard('staff')->user();
+    if ($this->hasPriviledge("verifyPayment",  $staff->id)) {
+
+    try {
+        DB::table('remitas')->where('rrr', $req->rrr)
+            ->update([
+                'status_code' => "01",
+                'status' => "Payment Successful",
+                'channel' => "Remita Online",
+                'transaction_id' =>  Carbon::now(),
+                'transaction_date' => Carbon::now(),
+                'channel' => "Remita Online",
+                'updated_at' => Carbon::now()
+            ]);
+            $approvalMsg = '<div class="alert alert-primary alert-dismissible" role="alert"> <button type="button" class="close" data-dismiss="alert"> &times; </button> Your Verification was successful  </div>';
+            return redirect('/bursary/remita/searchA')->with('approvalMsg', $approvalMsg);
+           // return redirect('/adminAllPayments')->with('approvalMsg', $approvalMsg);
+        // return redirect('adminAllPayments');
+    } catch (QueryException $e) {
+        $approvalMsg = '<div class="alert alert-danger alert-dismissible" role="alert"> <button type="button" class="close" data-dismiss="alert"> &times; </button> Your Verification was not successful'.$e->getMessage();' </div>';
+        return redirect('/bursary/remita/searchA')->with('approvalMsg', $approvalMsg);
+        //return redirect('adminAllPayments')->with('approvalMsg', $approvalMsg);
+        // return redirect('/newPayment/')->with('mgs',$statusMsg);
+    }
+}
+else {
+$loginMsg = '<div class="alert alert-danger alert-dismissible" role="alert"> <button type="button" class="close" data-dismiss="alert"> &times; </button> You dont\'t have access to this task, please see the ICT</div>';
+return view('admissions.error', compact('loginMsg'));
+}
+}
+
+    public function searchApplicant()
+    {
+        // $this->authorize('remitaSearch',Remita::class);
+        return view('bursary.remita_searchA');
+    } //end search
+
+    public function findapplicant(Request $request)
+    {
+
+        // $this->authorize('remitaSearch',Remita::class);
+        $this->validate($request, [
+            'data' => 'required|string|max:50',
+        ],
+            $messages = [
+                'data'    => 'Please provide a Remita RRR.',
+            ]);
+        $rrr = $request->data;
+        $remita = Remita::where('rrr',$rrr)->first();
+        if($remita){
+            $users = $remita->users;
+            // $academic = $student->academic;
+            $feeType = $remita->feeType;
+            return view('bursary.remita_showA',compact('remita','users','feeType'));
+        }
+        else {
+            $error = "Requested Remita record not found. Please check your input or contact ICT.";
+            return redirect()->route('remita.search-rrrA')
+                ->with('error',$error);
+        }
+    } // end find rrr
+
 
     public function printRRR($id){
         // $this->authorize('remitaSearch',Remita::class);

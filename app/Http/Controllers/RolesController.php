@@ -10,7 +10,7 @@ use Illuminate\Validation\Rule;
 
 class RolesController extends Controller
 {
-    
+
 	/**
 	 * Create a new controller instance.
 	 *
@@ -56,10 +56,12 @@ class RolesController extends Controller
         $this->validate($request, [
     			'name' => 'required|string|max:255|unique:roles',
     			'description' => 'required|string|max:255',
+
     	]);
     	$role = new Role();
     		$role->name = $request->name;
     		$role->description = $request->description;
+            $role->role = $request->name;
     		$role->save();
 
     	return redirect()->to('/rbac/list-roles')
@@ -79,7 +81,7 @@ class RolesController extends Controller
     	$permission = new Permission();
     	$permissions = $permission->rolePermissions($role->id);
     	$perms = $permission->availablePermissions($role->id);
-    	 
+
     	return view('/rbac/show-role', array('role' => $role, 'permissions' => $permissions, 'perms' => $perms));
     }
 
@@ -148,20 +150,20 @@ class RolesController extends Controller
         $this->authorize('rbac','App\Staff');
     	$role = Role::find($request->role_id);
     	$role->permissions()->attach($request->perm_id);
-    	 
+
     	return redirect()->route('rbac.show-role', $role->id)
     	->with('success','permission added successfully');
     }
-    
+
     public function removePermission(Request $request)
     {
         $this->authorize('rbac','App\Staff');
     	$role = Role::find($request->role_id);
     	$role->permissions()->detach($request->perm_id);
-    
+
     	return redirect()->route('rbac.show-role', $role->id)
     	->with('success','permission removed successfully');
     }
-    
+
 
 } // end Class

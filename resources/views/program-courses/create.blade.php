@@ -148,7 +148,7 @@
 
                                 <div class="col-md-3 form-group">
                                     <label for="semester">prerequisite Course :</label>
-                                     {{ Form::select('perequisite_id', $courses, null, ['placeholder'=> '', 'class' => 'form-control select2', 'id' => 'course_id', 'name' => 'perequisite_id']) }}
+                                     {{ Form::select('perequisite_id', $courses, null, ['placeholder'=> '', 'class' => 'form-control select2', 'id' => 'perequisite_id', 'name' => 'perequisite_id']) }}
 
                                     <span class="text-danger"> {{ $errors->first('semester') }}</span>
                                 </div>
@@ -167,6 +167,7 @@
                                     {{--  </select>  --}}
                                     <span class="text-danger"> {{ $errors->first('course_id') }}</span>
                                 </div>
+
 
                                 <div class="col-md-4 form-group">
                                     <label for="hours">Credit Load :</label>

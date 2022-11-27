@@ -52,7 +52,7 @@
 
                                     <span class="text-danger"> <?php echo e($errors->first('program_id')); ?></span>
                                 </div>
-                                <div class="col-md-3 form-group">
+                                <div class="col-md-2 form-group">
                                     <label for="code">Course Code :</label>
                                     <?php echo Form::text('course_code', null, [
                                         'placeholder' => '',
@@ -67,7 +67,7 @@
                                 </div>
 
 
-                                <div class="col-md-6 form-group">
+                                <div class="col-md-5 form-group">
                                     <label for="course_title">Course Title :</label>
                                     <?php echo Form::text('course_title', null, [
                                         'placeholder' => '',
@@ -78,11 +78,8 @@
 
                                     <span class="text-danger"> <?php echo e($errors->first('course_title')); ?></span>
                                 </div>
-                            </div>
 
-
-                            <div class="row">
-                                <div class="col-md-3 form-group">
+                                <div class="col-md-2 form-group">
                                     <label for="credit_load">Credit Load :</label>
                                     <?php echo Form::text('credit_unit', null, [
                                         'placeholder' => '',
@@ -93,58 +90,16 @@
 
                                     <span class="text-danger"> <?php echo e($errors->first('credit_unit')); ?></span>
                                 </div>
-                                <div class="col-md-3 form-group">
-                                    <label for="level">Level :</label>
-                                    <?php echo e(Form::select(
-                                        'level',
-                                        [
-                                            '100' => '100 Level',
-                                            '200' => '200 Level',
-                                            '300' => '300 Level',
-                                            '400' => '400 Level',
-                                            '500' => '500 Level',
-                                            '600' => '600 Level',
-                                            '700' => 'PGD',
-                                            '800' => 'MSc',
-                                            '900' => 'PhD',
-                                        ],
-                                        100,
-                                        ['class' => 'form-control select2'],
-                                    )); ?>
+                            </div>
 
-                                    <span class="text-danger"> <?php echo e($errors->first('level')); ?></span>
-                                </div>
 
-                                <div class="col-md-3 form-group">
-                                    <label for="semester">Semester :</label>
-                                    <?php echo e(Form::select(
-                                        'semester',
-                                        [
-                                            '1' => 'First Semester',
-                                            '2' => 'Second Semester',
-                                        ],
-                                        1,
-                                        ['class' => 'form-control select2'],
-                                    )); ?>
+                            <div class="row">
 
-                                    <span class="text-danger"> <?php echo e($errors->first('semester')); ?></span>
-                                </div>
+                                
 
-                                <div class="col-md-3 form-group">
-                                    <label for="mode">Mode :</label>
-                                    <?php echo e(Form::select(
-                                        'course_category',
-                                        [
-                                            '1' => 'Core',
-                                            '2' => 'Compulsory',
-                                            '3' => 'Elective',
-                                        ],
-                                        1,
-                                        ['class' => 'form-control select2'],
-                                    )); ?>
+                                
 
-                                    <span class="text-danger"> <?php echo e($errors->first('mode')); ?></span>
-                                </div>
+                                
 
                             </div>
 

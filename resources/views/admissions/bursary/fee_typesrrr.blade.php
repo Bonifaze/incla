@@ -1,10 +1,12 @@
-@php
-    
-    if (!session('adminId')) {
-        header('location: /adminLogin');
-        exit();
-    }
-@endphp
+{{--  @php
+
+if(!session('adminId'))
+{
+
+  header('location: /adminLogin');
+  exit;
+}
+@endphp  --}}
 @extends('layouts.mini')
 
 
@@ -56,7 +58,7 @@
                     <div class=" ">
 
 
-                   
+
                 <div class="row">
                     <!-- Area Chart -->
                     <div class="col-xl-12 col-lg-12">

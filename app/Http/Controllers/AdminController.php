@@ -16,6 +16,7 @@ use App\Models\GradeSetting;
 use Illuminate\Http\Request;
 use App\Models\RegisteredCourse;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
 use App\Computations\ResultComputation;
@@ -24,28 +25,46 @@ use Illuminate\Support\Facades\Redirect;
 
 class AdminController extends Controller
 {
+  //
+
     protected $resultComputation;
 
     public function __construct(ResultComputation $resultComputation)
     {
+        $this->middleware('auth:staff');
         $this->resultComputation = $resultComputation;
     }
 
     public function courseUpload()
     {
+    $staff = Auth::guard('staff')->user();
+        if ($this->hasPriviledge("allApplicants",   $staff->id)) {
+
         $staff_courses = StaffCourse::all();
         return view('results.course_upload', ['staff_courses' => $staff_courses]);
+    } else {
+        $loginMsg = '<div class="alert alert-danger alert-dismissible" role="alert"> <button type="button" class="close" data-dismiss="alert"> &times; </button> You dont\'t have access to this task, please see the ICT</div>';
+       return view('admissions.error', compact('loginMsg'));
+    }
     }
 
     public function scoresupload($course_id)
     {
+        $staff = Auth::guard('staff')->user();
+        if ($this->hasPriviledge("allApplicants",   $staff->id)) {
+
         $course = StaffCourse::where('id', $course_id)->first();
         $student_registered_courses = RegisteredCourse::where('course_id', $course_id)
         ->where('level', $course->level)
         ->where('session', $this->getCurrentSession())
         ->get();
         return view('results.scores_upload', ['student_registered_courses' => $student_registered_courses, 'course' => $course]);
+    } else {
+        $loginMsg = '<div class="alert alert-danger alert-dismissible" role="alert"> <button type="button" class="close" data-dismiss="alert"> &times; </button> You dont\'t have access to this task, please see the ICT</div>';
+       return view('admissions.error', compact('loginMsg'));
     }
+    }
+
 
     public function uploadScores(Request $request)
     {
@@ -78,8 +97,16 @@ class AdminController extends Controller
 
     public function approveScores()
     {
+        $staff = Auth::guard('staff')->user();
+        if ($this->hasPriviledge("allApplicants",  $staff->id)) {
+
+
         $staff_courses = StaffCourse::where('upload_status', 'uploaded')->where('approval_status', 'pending')->get();
         return view('results.approve_scores', ['staff_courses' => $staff_courses]);
+    } else {
+        $loginMsg = '<div class="alert alert-danger alert-dismissible" role="alert"> <button type="button" class="close" data-dismiss="alert"> &times; </button> You dont\'t have access to this task, please see the ICT</div>';
+       return view('admissions.error', compact('loginMsg'));
+    }
     }
 
     public function viewScores($course_id)
@@ -109,9 +136,16 @@ class AdminController extends Controller
 
     public function showCompute()
     {
+        $staff = Auth::guard('staff')->user();
+        if ($this->hasPriviledge("allApplicants",  $staff->id)) {
+
         $programmes = Program::all();
         $sessions = Session::all();
         return view('results.compute', ['programs' => $programmes, 'sessions' => $sessions]);
+    } else {
+        $loginMsg = '<div class="alert alert-danger alert-dismissible" role="alert"> <button type="button" class="close" data-dismiss="alert"> &times; </button> You dont\'t have access to this task, please see the ICT</div>';
+       return view('admissions.error', compact('loginMsg'));
+    }
     }
 
     public function compute(Request $request)
@@ -191,8 +225,9 @@ class AdminController extends Controller
 
     // Registeration Function
     public function register(Request $req)
-    {
-        if ($this->hasPriviledge("register",  session('adminId'))) {
+    {  $staff = Auth::guard('staff')->user();
+
+        if ($this->hasPriviledge("register",  $staff->id)) {
             //Comfirm password verification
             if ($req->password == $req->password_confirmation) {
                 $jsonstring = "";
@@ -252,7 +287,9 @@ class AdminController extends Controller
     // View All Applicants
     public function allApplicants()
     {
-        if ($this->hasPriviledge("allApplicants",  session('adminId'))) {
+        $staff = Auth::guard('staff')->user();
+
+        if ($this->hasPriviledge("allApplicants",   $staff->id)) {
             $allAppli = array();
             $allApplicants = DB::table('approved_applicants')->get();
             $approvedArr = array();
@@ -305,7 +342,8 @@ class AdminController extends Controller
 
     public function verifypayment(Request $req)
     {
-        if ($this->hasPriviledge("verifyPayment",  session('adminId'))) {
+        $staff = Auth::guard('staff')->user();
+        if ($this->hasPriviledge("verifyPayment",  $staff->id)) {
 
         try {
             DB::table('remitas')->where('rrr', $req->rrr)
@@ -339,7 +377,7 @@ class AdminController extends Controller
     // View All Applicant Payments
     // public function adminAllPayments()
     // {
-    //     if ($this->hasPriviledge("adminAllPayments",  session('adminId'))) {
+    //     if ($this->hasPriviledge("adminAllPayments",  $staff->id)) {
 
     //          $allAppli = array();
     //         $allApplicants = DB::table('approved_applicants')->get();
@@ -392,7 +430,8 @@ class AdminController extends Controller
     //All registered applicants
     public function adminAllUsers()
     {
-         if ($this->hasPriviledge("adminAllPayments",  session('adminId'))) {
+        $staff = Auth::guard('staff')->user();
+         if ($this->hasPriviledge("adminAllPayments",  $staff->id)) {
             // $allAppli = array();
             // $allApplicants = DB::table('users')->get();
             // $approvedArr = array();
@@ -416,7 +455,8 @@ class AdminController extends Controller
     //To view all Payment from Remita
     public function adminAllPayments()
     {
-        if ($this->hasPriviledge("adminAllPayments",  session('adminId'))) {
+        $staff = Auth::guard('staff')->user();
+        if ($this->hasPriviledge("adminAllPayments",  $staff->id)) {
             // $allAppli = array();
             // $allApplicants = DB::table('users')->get();
             // $approvedArr = array();
@@ -441,7 +481,8 @@ class AdminController extends Controller
 
     public function allApprovedApplicants($user_type)
     {
-        if ($this->hasPriviledge("allApprovedApplicants",  session('adminId'))) {
+        $staff = Auth::guard('staff')->user();
+        if ($this->hasPriviledge("allApprovedApplicants",  $staff->id)) {
             $allApplicants = "";
             if ($user_type == "UTME") {
                 $allApplicants = DB::table('approved_applicants')
@@ -483,7 +524,8 @@ class AdminController extends Controller
 
     public function DE()
     {
-        if ($this->hasPriviledge("DE",  session('adminId'))) {
+        $staff = Auth::guard('staff')->user();
+        if ($this->hasPriviledge("DE",  $staff->id)) {
             $deApplicants = DB::table('approved_applicants')->get();
             $approvedArr = array();
             $counter = 0;
@@ -507,7 +549,8 @@ class AdminController extends Controller
 
     public function PG()
     {
-        if ($this->hasPriviledge("PG",  session('adminId'))) {
+        $staff = Auth::guard('staff')->user();
+        if ($this->hasPriviledge("PG",  $staff->id)) {
             $pgApplicants = DB::table('approved_applicants')->get();
             $approvedArr = array();
             $counter = 0;
@@ -531,7 +574,8 @@ class AdminController extends Controller
 
     public function transfer()
     {
-        if ($this->hasPriviledge("transfer",  session('adminId'))) {
+        $staff = Auth::guard('staff')->user();
+        if ($this->hasPriviledge("transfer",  $staff->id)) {
             $transferApplicants = DB::table('approved_applicants')->get();
             $approvedArr = array();
             $counter = 0;
@@ -555,7 +599,8 @@ class AdminController extends Controller
 
     public function utme()
     {
-        if ($this->hasPriviledge("utme",  session('adminId'))) {
+        $staff = Auth::guard('staff')->user();
+        if ($this->hasPriviledge("utme",  $staff->id)) {
             $utmeApplicants = DB::table('approved_applicants')->get();
             $approvedArr = array();
             $counter = 0;
@@ -582,7 +627,8 @@ class AdminController extends Controller
     // View paymnets for UTME Applicants
     public function utmePayment()
     {
-        if ($this->hasPriviledge("utmePayment",  session('adminId'))) {
+        $staff = Auth::guard('staff')->user();
+        if ($this->hasPriviledge("utmePayment",  $staff->id)) {
             // $utmePayments = DB::table('approved_applicants')->get();
             // $approvedArr = array();
             // $counter = 0;
@@ -613,7 +659,8 @@ class AdminController extends Controller
     // View paymnets for DE Applicants
     public function dePayment()
     {
-        if ($this->hasPriviledge("dePayment",  session('adminId'))) {
+        $staff = Auth::guard('staff')->user();
+        if ($this->hasPriviledge("dePayment",  $staff->id)) {
             $dePayments = DB::table('approved_applicants')->get();
             $approvedArr = array();
             $counter = 0;
@@ -639,7 +686,8 @@ class AdminController extends Controller
     // View paymnets for Transfer Applicants
     public function transferPayment()
     {
-        if ($this->hasPriviledge("transferPayment",  session('adminId'))) {
+        $staff = Auth::guard('staff')->user();
+        if ($this->hasPriviledge("transferPayment",  $staff->id)) {
             $transferPayments = DB::table('approved_applicants')->get();
             $approvedArr = array();
             $counter = 0;
@@ -665,7 +713,8 @@ class AdminController extends Controller
     // View paymnets for PG Applicants
     public function pgPayment()
     {
-        if ($this->hasPriviledge("pgPayment",  session('adminId'))) {
+        $staff = Auth::guard('staff')->user();
+        if ($this->hasPriviledge("pgPayment",  $staff->id)) {
             $pgPayments = DB::table('approved_applicants')->get();
             $approvedArr = array();
             $counter = 0;
@@ -691,14 +740,15 @@ class AdminController extends Controller
     // Approval of Applicants
      public function approved($pageLink, Request $req, $id)
     {
-        if ($this->hasPriviledge("approved",  session('adminId'))) {
+        $staff = Auth::guard('staff')->user();
+        if ($this->hasPriviledge("approved",  $staff->id)) {
             $app_id = base64_decode(urldecode($id));
 
             try {
                 DB::table('approved_applicants')->insert([
                     'user_id' => $app_id,
                     // 'approval_date' => Carbon::now(),
-                    'approved_by' => session('adminId'),
+                    'approved_by' => $staff->id,
                     'comment' => $req->comment,
                 ]);
 
@@ -723,14 +773,15 @@ class AdminController extends Controller
 
     public function recommend($pageLink, $id)
     {
-        if ($this->hasPriviledge("recommend",  session('adminId'))) {
+        $staff = Auth::guard('staff')->user();
+        if ($this->hasPriviledge("recommend",  $staff->id)) {
             $app_id = base64_decode(urldecode($id));
 
             try {
                 DB::table('recommended_applicants')->insert([
                     'user_id' => $app_id,
                     'recommendation_date' => today(),
-                    'recommended_by' => session('adminId'),
+                    'recommended_by' => $staff->id,
                 ]);
 
                 $approvalMsg = '<div class="alert alert-success alert-dismissible" role="alert"> <button type="button" class="close" data-dismiss="alert"> &times; </button> Student has been recommended </div>';
@@ -756,14 +807,15 @@ class AdminController extends Controller
     // Force Approval of Applicants
     public function forceApproved($pageLink, $id)
     {
-        if ($this->hasPriviledge("forceApproved",  session('adminId'))) {
+        $staff = Auth::guard('staff')->user();
+        if ($this->hasPriviledge("forceApproved",  $staff->id)) {
             $app_id = base64_decode(urldecode($id));
 
             try {
                 DB::table('approved_applicants')->insert([
                     'user_id' => $app_id,
                     'approval_date' => today(),
-                    'approved_by' => session('adminId'),
+                    'approved_by' => $staff->id,
                 ]);
 
                 $approvalMsg = '<div class="alert alert-success alert-dismissible" role="alert"> <button type="button" class="close" data-dismiss="alert"> &times; </button> Student has been approved </div>';
@@ -787,14 +839,15 @@ class AdminController extends Controller
     // Rejection of Applications
     public function rejection($pageLink, Request $req, $id)
     {
-        if ($this->hasPriviledge("rejection",  session('adminId'))) {
+        $staff = Auth::guard('staff')->user();
+        if ($this->hasPriviledge("rejection",  $staff->id)) {
             $app_id = base64_decode(urldecode($id));
 
             try {
                 DB::table('rejected_applicants')->insert([
                     'user_id' => $app_id,
                    // 'rejection_date' => today(),
-                    'rejected_by' => session('adminId'),
+                    'rejected_by' => $staff->id,
                     'comment' => $req->comment,
 
                 ]);
@@ -821,7 +874,8 @@ class AdminController extends Controller
     //View applicant's full details
     public function viewApplicants($applicantType, $id)
     {
-        if ($this->hasPriviledge("viewApplicants",  session('adminId'))) {
+        $staff = Auth::guard('staff')->user();
+        if ($this->hasPriviledge("viewApplicants",  $staff->id)) {
             $app_id = base64_decode(urldecode($id));
             $applicantsDetails = "";
             if ($applicantType ==  'UTME') {
@@ -887,7 +941,8 @@ class AdminController extends Controller
 //To chanage applicant course of study
  public function changecourse(Request $req)
     {
-        if ($this->hasPriviledge("changecourse",  session('adminId'))) {
+        $staff = Auth::guard('staff')->user();
+        if ($this->hasPriviledge("changecourse",  $staff->id)) {
 
         try {
             DB::table('utme')->where('jamb_reg_no', $req->jamb_reg_no)
@@ -912,7 +967,8 @@ $approvalMsg = '<div class="alert alert-success alert-dismissible" role="alert">
 
         public function changecourseDE(Request $req)
     {
-        if ($this->hasPriviledge("changecourse",  session('adminId'))) {
+        $staff = Auth::guard('staff')->user();
+        if ($this->hasPriviledge("changecourse",  $staff->id)) {
 
         try {
             DB::table('de')->where('jamb_de_no', $req->jamb_de_no)
@@ -936,7 +992,8 @@ $approvalMsg = '<div class="alert alert-success alert-dismissible" role="alert">
     }
 public function changecourseTransfer(Request $req)
     {
-        if ($this->hasPriviledge("changecourse",  session('adminId'))) {
+        $staff = Auth::guard('staff')->user();
+        if ($this->hasPriviledge("changecourse",  $staff->id)) {
 
         try {
             DB::table('transfers')->where('matric_no', $req->matric_no)
@@ -963,6 +1020,7 @@ public function changecourseTransfer(Request $req)
     // Get applicants application type
     private function getApplicantType($id, $table_name)
     {
+        $staff = Auth::guard('staff')->user();
         $course_selected = DB::table($table_name)->where('user_id', $id)->first();
         if ($course_selected) {
             return ($course_selected->course_applied);
@@ -975,7 +1033,8 @@ public function changecourseTransfer(Request $req)
     // View all qualified applicants
     public function viewQualifiedApplicants($user_type)
     {
-        if ($this->hasPriviledge("viewQualifiedApplicants",  session('adminId'))) {
+        $staff = Auth::guard('staff')->user();
+        if ($this->hasPriviledge("viewQualifiedApplicants",  $staff->id)) {
             $allAppli = array();
             $utmeApplicants = DB::table('approved_applicants')->get();
             $approvedArr = array();
@@ -1031,7 +1090,8 @@ public function changecourseTransfer(Request $req)
 
     //View Recommended Applicants
     public function viewRecommendedApplicants($user_type){
-        if ($this->hasPriviledge("allApprovedApplicants",  session('adminId'))) {
+        $staff = Auth::guard('staff')->user();
+        if ($this->hasPriviledge("allApprovedApplicants",  $staff->id)) {
             $allApplicants = "";
             if ($user_type == "UTME") {
                 $allApplicants = DB::table('recommended_applicants')
@@ -1075,7 +1135,8 @@ public function changecourseTransfer(Request $req)
     // Approve All Qualified Applicants
     public function approveAllQualifiedApplicants($user_type)
     {
-        if ($this->hasPriviledge("approveAllQualifiedApplicants",  session('adminId'))) {
+        $staff = Auth::guard('staff')->user();
+        if ($this->hasPriviledge("approveAllQualifiedApplicants",  $staff->id)) {
             $allAppli = array();
             $utmeApplicants = DB::table('approved_applicants')->get();
             $approvedArr = array();
@@ -1128,7 +1189,7 @@ public function changecourseTransfer(Request $req)
                     DB::table('approved_applicants')->insert([
                         'user_id' => $Allapp['id'],
                         'approval_date' => today(),
-                        'approved_by' => session('adminId'),
+                        'approved_by' => $staff->id,
                     ]);
                 } catch (QueryException $e) {
                     $error_code = $e->errorInfo[1];
@@ -1152,7 +1213,8 @@ public function changecourseTransfer(Request $req)
     // View all Unqualified Applicants
     public function viewAllUnqualifiedApplicants($user_type)
     {
-        if ($this->hasPriviledge("viewAllUnqualifiedApplicants",  session('adminId'))) {
+        $staff = Auth::guard('staff')->user();
+        if ($this->hasPriviledge("viewAllUnqualifiedApplicants",  $staff->id)) {
             $allAppli = array();
             $utmeApplicants = DB::table('rejected_applicants')->get();
             $utmeApprovedApplicants = DB::table('approved_applicants')->get();
@@ -1214,7 +1276,8 @@ public function changecourseTransfer(Request $req)
     // Reject All Unqualified Applicants
     public function rejectAllUnqualifiedApplicants($user_type)
     {
-        if ($this->hasPriviledge("rejectAllUnqualifiedApplicants",  session('adminId'))) {
+        $staff = Auth::guard('staff')->user();
+        if ($this->hasPriviledge("rejectAllUnqualifiedApplicants",  $staff->id)) {
             $allAppli = array();
             $utmeApplicants = DB::table('rejected_applicants')->get();
             $approvedArr = array();
@@ -1267,7 +1330,7 @@ public function changecourseTransfer(Request $req)
                     DB::table('rejected_applicants')->insert([
                         'user_id' => $Allapp['id'],
                         'rejection_date' => today(),
-                        'rejected_by' => session('adminId'),
+                        'rejected_by' => $staff->id,
                     ]);
                 } catch (QueryException $e) {
                     $error_code = $e->errorInfo[1];
@@ -1336,7 +1399,8 @@ public function changecourseTransfer(Request $req)
 
     public function filterPgApplicants(Request $request)
     {
-        if ($this->hasPriviledge("filterPgApplicants",  session('adminId'))) {
+        $staff = Auth::guard('staff')->user();
+        if ($this->hasPriviledge("filterPgApplicants",  $staff->id)) {
             $pgApplicants = DB::table('approved_applicants')->get();
             $approvedArr = array();
             $counter = 0;
@@ -1361,7 +1425,8 @@ public function changecourseTransfer(Request $req)
 
     public function filterUtmeApplicants(Request $request)
     {
-        if ($this->hasPriviledge("filterUtmeApplicants",  session('adminId'))) {
+        $staff = Auth::guard('staff')->user();
+        if ($this->hasPriviledge("filterUtmeApplicants",  $staff->id)) {
             $utmeApplicants = DB::table('approved_applicants')->get();
             $approvedArr = array();
             $counter = 0;
@@ -1387,7 +1452,8 @@ public function changecourseTransfer(Request $req)
 
     public function filterDeApplicants(Request $request)
     {
-        if ($this->hasPriviledge("filterDeApplicants",  session('adminId'))) {
+        $staff = Auth::guard('staff')->user();
+        if ($this->hasPriviledge("filterDeApplicants",  $staff->id)) {
             $deApplicants = DB::table('approved_applicants')->get();
             $approvedArr = array();
             $counter = 0;
@@ -1413,7 +1479,8 @@ public function changecourseTransfer(Request $req)
 
     public function filterTransferApplicants(Request $request)
     {
-        if ($this->hasPriviledge("filterTransferApplicants",  session('adminId'))) {
+        $staff = Auth::guard('staff')->user();
+        if ($this->hasPriviledge("filterTransferApplicants",  $staff->id)) {
 
             $transferApplicants = DB::table('approved_applicants')->get();
             $approvedArr = array();
@@ -1440,7 +1507,8 @@ public function changecourseTransfer(Request $req)
 
     public function adminRole(Request $req)
     {
-        if ($this->hasPriviledge("adminRole ",  session('adminId'))) {
+        $staff = Auth::guard('staff')->user();
+        if ($this->hasPriviledge("adminRole ",  $staff->id)) {
 
             try {
                 $idcard = DB::table('roles')->insertGetId([
@@ -1475,7 +1543,8 @@ public function changecourseTransfer(Request $req)
     // Add tasks to role for Admins
     public function adminTaskToRole()
     {
-        if ($this->hasPriviledge("adminTaskToRole",  session('adminId'))) {
+        $staff = Auth::guard('staff')->user();
+        if ($this->hasPriviledge("adminTaskToRole",  $staff->id)) {
             $roles = DB::table('roles')->get();
             $tasks = DB::table('tasks')->get();
           return view('admissions.addTaskToRole', compact('tasks', 'roles'));
@@ -1488,7 +1557,8 @@ public function changecourseTransfer(Request $req)
     //Submit addition of roles
     public function submitTaskToRole(Request $req)
     {
-        if ($this->hasPriviledge("submitTaskToRole",  session('adminId'))) {
+        $staff = Auth::guard('staff')->user();
+        if ($this->hasPriviledge("submitTaskToRole",  $staff->id)) {
             $allTasks = $req->tasks;
             try {
                 foreach ($allTasks as $allTask) {
@@ -1511,6 +1581,7 @@ public function changecourseTransfer(Request $req)
 
     public function getRoleTasks(Request $req)
     {
+        $staff = Auth::guard('staff')->user();
         $allAppli = array();
         $alltasks = DB::table('task_to_role')->where('role_id', $req->roleid)->get();
         $assignedTaskArr = array();
@@ -1535,7 +1606,8 @@ public function changecourseTransfer(Request $req)
     // Remove Tasks from Role
     public function adminRemoveTaskFromRole()
     {
-        if ($this->hasPriviledge("adminRemoveTaskFromRole",  session('adminId'))) {
+        $staff = Auth::guard('staff')->user();
+        if ($this->hasPriviledge("adminRemoveTaskFromRole",  $staff->id)) {
             $roles = DB::table('roles')->get();
             $tasks = DB::table('tasks')->get();
            return view('admissions.removeTaskFromRole', compact('tasks', 'roles'));
@@ -1548,6 +1620,7 @@ public function changecourseTransfer(Request $req)
     // Get tasks assigned to a particular role
     public function getTaskToRole(Request $req)
     {
+        $staff = Auth::guard('staff')->user();
         $allAppli = array();
         $alltasks = DB::table('task_to_role')->where('role_id', $req->roleid)->get();
         $assignedTaskArr = array();
@@ -1572,7 +1645,8 @@ public function changecourseTransfer(Request $req)
     // Submit removal of roles
     public function submitRemoveTaskFromRole(Request $req)
     {
-        if ($this->hasPriviledge("submitRemoveTaskFromRole",  session('adminId'))) {
+        $staff = Auth::guard('staff')->user();
+        if ($this->hasPriviledge("submitRemoveTaskFromRole",  $staff->id)) {
             $allTasks = $req->tasks;
             try {
                 foreach ($allTasks as $allTask) {
@@ -1596,7 +1670,9 @@ public function changecourseTransfer(Request $req)
     //Add Role to Admin
     public function roleToAdmin()
     {
-        if ($this->hasPriviledge("roleToAdmin",  session('adminId'))) {
+        $staff = Auth::guard('staff')->user();
+        if ($this->hasPriviledge("roleToAdmin",  $staff->id)) {
+
             $roles = DB::table('roles')->get();
             $admin = DB::table('staff')->get();
             $fullName = session('adminFirstName') . " " . session('adminsurname');
@@ -1632,7 +1708,8 @@ public function changecourseTransfer(Request $req)
 
     public function submitRoleToAdmin(Request $req)
     {
-        if ($this->hasPriviledge("submitRoleToAdmin",  session('adminId'))) {
+        $staff = Auth::guard('staff')->user();
+        if ($this->hasPriviledge("submitRoleToAdmin",  $staff->id)) {
             $allRoles = $req->roles;
             try {
                 foreach ($allRoles as $allRole) {
@@ -1655,7 +1732,8 @@ public function changecourseTransfer(Request $req)
 
     public function removeRoleFromAdmin()
     {
-        if ($this->hasPriviledge("removeRoleFromAdmin",  session('adminId'))) {
+        $staff = Auth::guard('staff')->user();
+        if ($this->hasPriviledge("removeRoleFromAdmin",  $staff->id)) {
             $roles = DB::table('roles')->get();
             $admin = DB::table('staff')->get();
           return view('admissions.removeRoleFromAdmin', compact('admin', 'roles'));
@@ -1667,7 +1745,8 @@ public function changecourseTransfer(Request $req)
 
     public function submitRemoveRoleFromAdmin(Request $req)
     {
-        if ($this->hasPriviledge("submitRemoveRoleFromAdmin",  session('adminId'))) {
+        $staff = Auth::guard('staff')->user();
+        if ($this->hasPriviledge("submitRemoveRoleFromAdmin",  $staff->id)) {
             $allRoles = $req->roles;
             try {
                 foreach ($allRoles as $allRole) {
@@ -1715,7 +1794,8 @@ public function changecourseTransfer(Request $req)
     // View all Admins
     public function viewAdmins()
     {
-        if ($this->hasPriviledge("viewAdmins",  session('adminId'))) {
+        $staff = Auth::guard('staff')->user();
+        if ($this->hasPriviledge("viewAdmins",  $staff->id)) {
             $allAdmins = DB::table('admin')->get();
             $fullName = session('adminFirstName') . " " . session('adminsurname');
            return view('admissions.viewAdmins', compact('allAdmins', 'fullName'));
@@ -1728,7 +1808,8 @@ public function changecourseTransfer(Request $req)
     //Delete Admin
     public function deleteAdmin($adminID)
     {
-        if ($this->hasPriviledge("deleteAdmin",  session('adminId'))) {
+        $staff = Auth::guard('staff')->user();
+        if ($this->hasPriviledge("deleteAdmin",  $staff->id)) {
 
             try {
                 DB::table('role_to_admin')
@@ -1772,7 +1853,8 @@ public function changecourseTransfer(Request $req)
 
  public function editusers($id)
     {
-        if ($this->hasPriviledge("editusersinfo",  session('adminId'))) {
+        $staff = Auth::guard('staff')->user();
+        if ($this->hasPriviledge("editusersinfo",  $staff->id)) {
             // $allAppli = array();
             // $allApplicants = DB::table('users')->get();
             // $approvedArr = array();
@@ -1797,7 +1879,8 @@ public function changecourseTransfer(Request $req)
     }
 
     public function editusersinfo(Request $req){
-        if ($this->hasPriviledge("editusersinfo",  session('adminId'))) {
+        $staff = Auth::guard('staff')->user();
+        if ($this->hasPriviledge("editusersinfo",  $staff->id)) {
 
         try {
             DB::table('users')->where('email', $req->email)
@@ -1828,7 +1911,8 @@ public function changecourseTransfer(Request $req)
 
     public function resetuserspassword(Request $req)
     {
-        if ($this->hasPriviledge("resetuserpassword",  session('adminId'))) {
+        $staff = Auth::guard('staff')->user();
+        if ($this->hasPriviledge("resetuserpassword",  $staff->id)) {
 
         try {
             $newpass='welcome';
@@ -1856,7 +1940,8 @@ public function changecourseTransfer(Request $req)
  }
  public function resetadminpassword(Request $req)
  {
-     if ($this->hasPriviledge("resetadminpassword",  session('adminId'))) {
+    $staff = Auth::guard('staff')->user();
+     if ($this->hasPriviledge("resetadminpassword",  $staff->id)) {
 
      try {
          $newpass='welcome@123';
@@ -1885,7 +1970,8 @@ return view('admissions.error', compact('loginMsg'));
 
     // ADD REMITA SERVICE TYPE
 public function viewaddRemitasServiceType(){
-        if ($this->hasPriviledge("addRemitaServiceType",  session('adminId'))) {
+    $staff = Auth::guard('staff')->user();
+        if ($this->hasPriviledge("addRemitaServiceType",  $staff->id)) {
            return view('admissions.addRemitaServiceType');
         }
         else {
@@ -1894,7 +1980,8 @@ public function viewaddRemitasServiceType(){
         }
     }
     public function addRemitaServiceType(Request $req){
-        if ($this->hasPriviledge("addRemitaServiceType",  session('adminId'))) {
+        $staff = Auth::guard('staff')->user();
+        if ($this->hasPriviledge("addRemitaServiceType",  $staff->id)) {
 
 
             // dd($req);
@@ -1943,7 +2030,8 @@ public function viewaddRemitasServiceType(){
         }
         }
     public function viewRemitaServiceType(){
-        if ($this->hasPriviledge("viewRemitaServiceType",  session('adminId'))) {
+        $staff = Auth::guard('staff')->user();
+        if ($this->hasPriviledge("viewRemitaServiceType",  $staff->id)) {
         $fee_types = fee_types::orderBy('status', 'ASC')
         ->where('status', 1)
         ->get();
@@ -1959,7 +2047,8 @@ public function viewaddRemitasServiceType(){
     }
 
     public function editRemitaServiceType(Request $req, $id){
-        if ($this->hasPriviledge("editRemitaServiceType",  session('adminId'))) {
+        $staff = Auth::guard('staff')->user();
+        if ($this->hasPriviledge("editRemitaServiceType",  $staff->id)) {
         $fee_types = DB::table('fee_types')
         ->where('provider_code', $id)
         ->select('fee_types.*')
@@ -1973,7 +2062,8 @@ public function viewaddRemitasServiceType(){
     }
 
     public function editRemitaServiceTypefee(Request $req){
-        if ($this->hasPriviledge("editRemitaServiceType",  session('adminId'))) {
+        $staff = Auth::guard('staff')->user();
+        if ($this->hasPriviledge("editRemitaServiceType",  $staff->id)) {
         try {
 
             DB::table('fee_types')->where('provider_code', $req->provider_code)
@@ -2001,7 +2091,8 @@ public function viewaddRemitasServiceType(){
 
 
    public function suspendRemitaServiceType(Request $req){
-    if ($this->hasPriviledge("suspendRemitaServiceType",  session('adminId'))) {
+    $staff = Auth::guard('staff')->user();
+    if ($this->hasPriviledge("suspendRemitaServiceType",  $staff->id)) {
     try {
         DB::table('fee_types')->where('provider_code', $req->provider_code)
             ->update([
@@ -2028,7 +2119,8 @@ else {
 
 
    public function activeRemitaServiceType(Request $req){
-    if ($this->hasPriviledge("activeRemitaServiceType",  session('adminId'))) {
+    $staff = Auth::guard('staff')->user();
+    if ($this->hasPriviledge("activeRemitaServiceType",  $staff->id)) {
     try {
         DB::table('fee_types')->where('provider_code', $req->provider_code)
             ->update([

@@ -81,9 +81,9 @@ class CoursesController extends Controller
         $course->course_title = $request->course_title;
         $course->program_id = $request->program_id;
         $course->credit_unit = $request->credit_unit;
-        $course->semester = $request->semester;
-        $course->level = $request->level;
-        $course->course_category = $request->course_category;
+        // $course->semester = $request->semester;
+        // $course->level = $request->level;
+        // $course->course_category = $request->course_category;
         // $course->status = 1;
         $course->save();
 
@@ -111,7 +111,7 @@ class CoursesController extends Controller
         $course->course_title = $request->course_title;
         $course->program_id = $request->program_id;
         $course->credit_unit = $request->credit_unit;
-        $course->level = $request->level;
+        // $course->level = $request->level;
         // $course->status = $request->status;
         $course->save();
         return redirect()->route('course.list')

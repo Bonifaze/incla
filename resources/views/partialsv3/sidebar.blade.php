@@ -8,6 +8,7 @@
     </div>
 
     <div class="sidebar">
+     {{--  <a class="navbar-brand" href="{{ route('staff.profile') }}">  --}}
         <div class="user-panel mt-3 pb-3 mb-3 d-flex">
             <div class="image">
                 <img src="data:image/png;base64,{{ Auth::guard('staff')->user()->passport }}"
@@ -15,9 +16,10 @@
             </div>
 
             <div class="info text-wrap">
-                <a href="#" class="d-block">{{ Auth::guard('staff')->user()->full_name }}</a>
+                <a href="{{ route('staff.profile') }}" class="d-block">{{ Auth::guard('staff')->user()->full_name }}</a>
             </div>
         </div>
+        {{--  </a>  --}}
 
         <nav class="mt-2">
 
@@ -87,7 +89,7 @@
                         </li>  --}}
 
                         <li class="nav-item has-treeview @yield('exam-officers-open') ml-4">
-                            <a href="#" class="nav-link @yield('results')">
+                            {{--  <a href="#" class="nav-link @yield('results')">
                                 <i class="nav-icon fas fa-graduation-cap"></i>
                                 <p>
                                     Establishment
@@ -131,7 +133,7 @@
                                     </a>
                                 </li>
 
-                            </ul>
+                            </ul>  --}}
                         </li>
 
                         <li class="nav-item has-treeview @yield('exam-officers-open') ml-4">
@@ -161,6 +163,12 @@
                                         <p>Assign Course to Staff </p>
                                     </a>
                                 </li>  --}}
+                                 <li class="nav-item">
+                                    <a href="{{ route('program_course.list') }}" class="nav-link @yield('exam-remark')">
+                                        <i class="fa fa-plus nav-icon"></i>
+                                        <p>Allocted Courses  </p>
+                                    </a>
+                                </li>
                                 <li class="nav-item">
                                     <a href="{{ route('course.search') }}" class="nav-link @yield('exam-remark')">
                                         <i class="fa fa-search nav-icon"></i>
@@ -303,12 +311,12 @@
                         </p>
                     </a>
                     <ul class="nav nav-treeview ml-4">
-                        <li class="nav-item">
+                        {{--  <li class="nav-item">
                             <a href="{{ route('student.search') }}" class="nav-link @yield('faculties')">
                                 <i class="fa fa-search nav-icon"></i>
                                 <p>Search</p>
                             </a>
-                        </li>
+                        </li>  --}}
                         <li class="nav-item">
                             <a href="#" class="nav-link @yield('departments')">
                                 <i class="fas fa-list-alt nav-icon"></i>
@@ -332,7 +340,7 @@
                                         <p>100 L</p>
                                     </a>
                                 </li>
-                                <li class="nav-item">
+                                {{--  <li class="nav-item">
                                     <a href="{{ route('student.list_level', 200) }}"
                                         class="nav-link @yield('exam-remark')">
                                         <i class="fas fa-list-alt nav-icon"></i>
@@ -387,7 +395,7 @@
                                         <i class="fas fa-list-alt nav-icon"></i>
                                         <p>PhD</p>
                                     </a>
-                                </li>
+                                </li>  --}}
                             </ul>
                         </li>
                     </ul>
@@ -395,13 +403,13 @@
 
 
                 <li class="nav-item has-treeview @yield('results-open')">
-                    <a href="#" class="nav-link @yield('results')">
+                    {{--  <a href="#" class="nav-link @yield('results')">
                         <i class="nav-icon fas fa-graduation-cap"></i>
                         <p>
                             Staff
                             <i class="right fas fa-angle-right"></i>
                         </p>
-                    </a>
+                    </a>  --}}
                     <ul class="nav nav-treeview ml-4">
                         <li class="nav-item">
                             <a href="{{ route('staff.create') }}" class="nav-link @yield('faculties')">
@@ -484,23 +492,23 @@
               </li>  --}}
 
                         <li class="nav-item">
-                            <a href="{{ route('bursary.search') }}" class="nav-link @yield('bursary-search')">
+                            {{--  <a href="{{ route('bursary.search') }}" class="nav-link @yield('bursary-search')">
                                 <i class="fas fa-search nav-icon"></i>
                                 <p>Search Student</p>
-                            </a>
+                            </a>  --}}
                         </li>
-                        <li class="nav-item">
-                            <a href="#" class="nav-link @yield('bursary-search')">
+                        {{--  <li class="nav-item">
+                            <a href="{{ route('remita.search-rrrA') }}" class="nav-link @yield('bursary-search')">
                                 <i class="fas fa-search nav-icon"></i>
-                                <p>Search Applicant</p>
+                                <p>Applicant RRR Search</p>
                             </a>
-                        </li>
-                        <li class="nav-item">
+                        </li>  --}}
+                        {{--  <li class="nav-item">
                             <a href="/bursary/remita/fee-typesrrr" class="nav-link @yield('bursary-search')">
                                 <i class="fa fa-eye nav-icon"></i>
                                 <p>Applicant RRR Payments</p>
                             </a>
-                        </li>
+                        </li>  --}}
                         <li class="nav-item">
                             <a href="{{ route('remita.search-rrr') }}" class="nav-link @yield('remita-search')">
                                 <i class="fas fa-search nav-icon"></i>

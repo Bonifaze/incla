@@ -87,6 +87,7 @@
 
 							  <th>S/N</th>
 							  <th>Name</th>
+                              <th>Role</th>
 							 <th>Description</th>
 
 
@@ -100,6 +101,7 @@
 							<tr>
 							  <td>{{ $loop->iteration }}</td>
 							  <td>{{ $role->name }}</td>
+                               <td>{{ $role->role }}</td>
 							 <td>{{ $role->description }}</td>
 
 

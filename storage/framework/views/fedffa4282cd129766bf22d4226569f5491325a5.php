@@ -1,14 +1,3 @@
-<?php
-    
-    if (!session('adminId')) {
-        header('location: /adminLogin');
-        exit();
-    }
-?>
-
-
-
-
 <?php $__env->startSection('pagetitle'); ?>
     List of Students
 <?php $__env->stopSection(); ?>
@@ -61,13 +50,7 @@
             <!-- Begin Page Content -->
             <div class="container-fluid ">
 
-                <!-- Page Heading -->
 
-                <div class="d-sm-flex align-items-center justify-content-between mb-4">
-                    
-
-                    <br>
-                </div>
 
                 <div class="row">
                     <!-- Area Chart -->

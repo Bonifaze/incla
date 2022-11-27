@@ -1,10 +1,12 @@
-@php
-    
-    if (!session('adminId')) {
-        header('location: /adminLogin');
-        exit();
-    }
-@endphp
+{{--  @php
+
+if(!session('adminId'))
+{
+
+  header('location: /adminLogin');
+  exit;
+}
+@endphp  --}}
 @extends('layouts.mini')
 
 
@@ -61,13 +63,7 @@
             <!-- Begin Page Content -->
             <div class="container-fluid ">
 
-                <!-- Page Heading -->
 
-                <div class="d-sm-flex align-items-center justify-content-between mb-4">
-                    {{--  <h1 class="h5 mb-2 p-2 text-success fw-bold text-capitalize"> {{ $fullName }}: Admininstrator Dashboard</h1>  --}}
-
-                    <br>
-                </div>
 
                 <div class="row">
                     <!-- Area Chart -->

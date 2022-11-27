@@ -22,7 +22,7 @@ class Remita extends Model
 
     public function users()
     {
-        return $this->belongsTo('App\users', 'user_id');
+        return $this->belongsTo('App\Models\users', 'user_id');
     }
 
     public function generateRRR($data,$customField)

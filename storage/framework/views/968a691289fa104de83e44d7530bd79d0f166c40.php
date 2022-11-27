@@ -80,7 +80,7 @@
 
 
                                 <div class="row">
-                                    <div class="col-md-3 form-group">
+                                    <div class="col-md-4 form-group">
                                         <label for="hours">Credit Load :</label>
                                         <?php echo Form::text('credit_unit', null, [
                                             'placeholder' => '',
@@ -94,34 +94,13 @@
 
                                     
 
-                                    <div class="col-md-6 form-group">
+                                    <div class="col-md-8 form-group">
                                         <label for="program_id">Program :</label>
                                         <?php echo e(Form::select('program_id', $programs, null, ['class' => 'form-control', 'id' => 'program_id', 'name' => 'program_id'])); ?>
 
                                         <span class="text-danger"> <?php echo e($errors->first('program_id')); ?></span>
                                     </div>
 
-                                    <div class="col-md-3 form-group">
-                                        <label for="level">Level :</label>
-                                        <?php echo e(Form::select(
-                                            'level',
-                                            [
-                                                '100' => '100 Level',
-                                                '200' => '200 Level',
-                                                '300' => '300 Level',
-                                                '400' => '400 Level',
-                                                '500' => '500 Level',
-                                                '600' => '600 Level',
-                                                '700' => 'PGD',
-                                                '800' => 'MSc',
-                                                '900' => 'PhD',
-                                            ],
-                                            $course->level,
-                                            ['class' => 'form-control select2'],
-                                        )); ?>
-
-                                        <span class="text-danger"> <?php echo e($errors->first('level')); ?></span>
-                                    </div>
                                 </div>
 
                                 <div class="row">

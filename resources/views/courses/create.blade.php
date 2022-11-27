@@ -54,7 +54,7 @@
                                     {{ Form::select('program_id', $programs, null, ['class' => 'form-control', 'id' => 'program_id', 'name' => 'program_id']) }}
                                     <span class="text-danger"> {{ $errors->first('program_id') }}</span>
                                 </div>
-                                <div class="col-md-3 form-group">
+                                <div class="col-md-2 form-group">
                                     <label for="code">Course Code :</label>
                                     {!! Form::text('course_code', null, [
                                         'placeholder' => '',
@@ -68,7 +68,7 @@
                                 </div>
 
 
-                                <div class="col-md-6 form-group">
+                                <div class="col-md-5 form-group">
                                     <label for="course_title">Course Title :</label>
                                     {!! Form::text('course_title', null, [
                                         'placeholder' => '',
@@ -78,11 +78,8 @@
                                     ]) !!}
                                     <span class="text-danger"> {{ $errors->first('course_title') }}</span>
                                 </div>
-                            </div>
 
-
-                            <div class="row">
-                                <div class="col-md-3 form-group">
+                                <div class="col-md-2 form-group">
                                     <label for="credit_load">Credit Load :</label>
                                     {!! Form::text('credit_unit', null, [
                                         'placeholder' => '',
@@ -92,7 +89,12 @@
                                     ]) !!}
                                     <span class="text-danger"> {{ $errors->first('credit_unit') }}</span>
                                 </div>
-                                <div class="col-md-3 form-group">
+                            </div>
+
+
+                            <div class="row">
+
+                                {{--  <div class="col-md-3 form-group">
                                     <label for="level">Level :</label>
                                     {{ Form::select(
                                         'level',
@@ -111,9 +113,9 @@
                                         ['class' => 'form-control select2'],
                                     ) }}
                                     <span class="text-danger"> {{ $errors->first('level') }}</span>
-                                </div>
+                                </div>  --}}
 
-                                <div class="col-md-3 form-group">
+                                {{--  <div class="col-md-3 form-group">
                                     <label for="semester">Semester :</label>
                                     {{ Form::select(
                                         'semester',
@@ -125,9 +127,9 @@
                                         ['class' => 'form-control select2'],
                                     ) }}
                                     <span class="text-danger"> {{ $errors->first('semester') }}</span>
-                                </div>
+                                </div>  --}}
 
-                                <div class="col-md-3 form-group">
+                                {{--  <div class="col-md-3 form-group">
                                     <label for="mode">Mode :</label>
                                     {{ Form::select(
                                         'course_category',
@@ -140,7 +142,7 @@
                                         ['class' => 'form-control select2'],
                                     ) }}
                                     <span class="text-danger"> {{ $errors->first('mode') }}</span>
-                                </div>
+                                </div>  --}}
 
                             </div>
 

@@ -70,11 +70,12 @@ class ProgramCoursesController extends Controller
         $this->authorize('create',ProgramCourse::class);
         $programs = Program::orderBy('name','ASC')->pluck('name','id');
         $sessions = Session::orderBy('id','DESC')->pluck('name','id');
+        $course= DB::table('courses')->get();
         $courses = Course::orderBy('course_code', 'ASC')->get()->pluck('courseDescribe','id');
         $lecturers = Staff::join('staff_work_profiles', 'staff.id', '=', 'staff_work_profiles.staff_id')
         ->orderBy('staff_work_profiles.staff_type_id','ASC')
         ->orderBy('staff_work_profiles.admin_department_id','ASC')->get()->pluck('full_name','id');
-        return view('/program-courses/create',compact('courses','programs','sessions', 'lecturers'));
+        return view('/program-courses/create',compact('courses','programs','sessions', 'lecturers', 'course'));
     }
 
 
@@ -113,7 +114,7 @@ class ProgramCoursesController extends Controller
         $program_course->course_id = $request->course_id;
         $program_course->level = $request->level;
         $program_course->program_id = $request->program_id;
-        $program_course->credit_load = $request->credit_load;
+        $program_course->credit_unit = $request->credit_unit;
         $program_course->session_id = $request->session_id;
         $program_course->semester = $request->semester;
         $program_course->has_perequisite =$request->has_perequisite;
@@ -125,7 +126,7 @@ class ProgramCoursesController extends Controller
         $program_course_assign= new StaffCourse();
         $program_course_assign->course_id = $request->course_id;
         $program_course_assign->level = $request->level;
-        $program_course->semester_id = $request->semester;
+        $program_course_assign->semester_id = $request->semester;
         $program_course_assign->session_id = $request->session_id;
         $program_course_assign->staff_id = $request->lecturer_id;
 
@@ -154,7 +155,9 @@ class ProgramCoursesController extends Controller
         catch(Exception $e)
         {
 
- DB::rollback();
+            return redirect()->route('program_course.list')
+            ->with('success','New Program Course not created successfully' .$e->getMessage());
+//  DB::rollback();
 
 }
 

@@ -73,7 +73,7 @@
 							 <td>{{ $pcourse->credit_unit }}</td>
 							 <td>{{ $pcourse->session->name }}</td>
 							 <td>{{ $pcourse->lecturer->FullName }}</td>
-							<td><a href="{{ route('program_course.edit',$pcourse->id) }}"> Edit </td>
+							<td><a href="{{ route('program_course.edit',$pcourse->id) }}" class="btn btn-warning"> Edit </td>
 
 							    <td>
 							    {!! Form::open(['method' => 'Delete', 'route' => 'program_course.delete', 'id'=>'deletePCourseForm'.$pcourse->id]) !!}

@@ -1,16 +1,3 @@
-<?php
-
-if(!session('adminId'))
-{
-
-  header('location: /adminLogin');
-  exit;
-}
-?>
-
-
-
-
 <?php $__env->startSection('pagetitle'); ?>
     List of Students
 <?php $__env->stopSection(); ?>

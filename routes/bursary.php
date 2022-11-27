@@ -11,9 +11,17 @@ Route::post('/bursary/find', 'BursaryController@find')->name('bursary.find');
 
 
 //Remita routes
+Route::get('/bursary/remita/searchA', 'RemitaController@searchApplicant')->name('remita.search-rrrA');
+
+Route::post('/bursary/remita/findA', 'RemitaController@findApplicant')->name('remita.find-rrrA');
+
+//applcant
 Route::get('/bursary/remita/search', 'RemitaController@search')->name('remita.search-rrr');
 
 Route::post('/bursary/remita/find', 'RemitaController@find')->name('remita.find-rrr');
+
+Route::post('/bursary/remita/verifypayment', 'RemitaController@verifypayment')->name('remita.verifypayment-rrr');
+
 
 Route::get('/bursary/remita/print/{id}', 'RemitaController@printRRR')->name('remita.print-rrr');
 

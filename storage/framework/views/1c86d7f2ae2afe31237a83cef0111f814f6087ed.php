@@ -84,6 +84,7 @@
 
 							  <th>S/N</th>
 							  <th>Name</th>
+                              <th>Role</th>
 							 <th>Description</th>
 
 
@@ -97,6 +98,7 @@
 							<tr>
 							  <td><?php echo e($loop->iteration); ?></td>
 							  <td><?php echo e($role->name); ?></td>
+                               <td><?php echo e($role->role); ?></td>
 							 <td><?php echo e($role->description); ?></td>
 
 

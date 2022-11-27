@@ -1,4 +1,4 @@
-@php
+{{--  @php
 
 if(!session('adminId'))
 {
@@ -6,7 +6,7 @@ if(!session('adminId'))
   header('location: /adminLogin');
   exit;
 }
-@endphp
+@endphp  --}}
 @extends('layouts.app')
 
 @section('content')
@@ -28,7 +28,7 @@ if(!session('adminId'))
                         <h1 class="h3 mb-1 p-2 text-black-800 fw-bold text-capitalize"> Profile</h1> <br>
                         <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-success shadow-sm"><i class="fas fa-download fa-sm text-white-50"></i> Admission Status</a>
                     </div>
-                  
+
                 </div>
                 <!-- /.container-fluid -->
 

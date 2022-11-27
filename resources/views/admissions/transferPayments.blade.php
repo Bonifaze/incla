@@ -1,5 +1,5 @@
 
-@php
+{{--  @php
 
 if(!session('adminId'))
 {
@@ -7,7 +7,7 @@ if(!session('adminId'))
   header('location: /adminLogin');
   exit;
 }
-@endphp
+@endphp  --}}
 @extends('layouts.app')
 
 @section('content')
@@ -39,7 +39,7 @@ if(!session('adminId'))
                         <div class="card-header py-3">
                             <h6 class="m-0 font-weight-bold text-success mb-3">Transfer Applicants Payments</h6>
                             <hr class="sidebar-divider">
-     
+
                             @if (session('approvalMsg'))
                             {!! session('approvalMsg') !!}
                             @endif
@@ -60,7 +60,7 @@ if(!session('adminId'))
                                 <table class="table table-bordered table-striped" id="dataTable" width="100%" cellspacing="0">
                                     <thead>
                                         <tr>
-                                       
+
                                             <th>First Name</th>
                                             <th>Surname</th>
                                             <th>Phone Number</th>
@@ -68,7 +68,7 @@ if(!session('adminId'))
                                             <th>Fee Type</th>
                                             <th>Amount</th>
                                             <th>Transaction Date</th>
-                                        
+
                                         </tr>
                                     </thead>
 

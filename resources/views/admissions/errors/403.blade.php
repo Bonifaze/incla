@@ -1,38 +1,69 @@
+
 @extends('layouts.mini')
 
 
 
-@section('pagetitle')Unauthorized Access @endsection
+@section('pagetitle')
+    Staff Home
+@endsection
+
+
+
+<!-- Sidebar Links -->
+
+<!-- Treeview -->
+@section('staff-open')
+    menu-open
+@endsection
+
+@section('staff')
+    active
+@endsection
+
+<!-- Page -->
+@section('staff-home')
+    active
+@endsection
+
+<!-- End Sidebar links -->
+
+
 
 @section('content')
-<div class="content-wrapper">
-    <!-- Content Header (Page header) -->
-    <section class="content-header">
-      <h1>
-        <i class="fa fa-warning text-yellow"></i>You are not authorized to access this page or perform this action !!!
-      </h1>
-      
-    </section>
+    <div class="content-wrapper bg-white">
 
-    <!-- Main content -->
-    <section class="content">
-      <div class="error-page">
-        <h2 class="headline text-yellow"> Access or Action Restricted</h2>
+        <!-- Main content -->
+        <section class="content">
+            <div class="container-fluid">
+                <!-- left column -->
+                <div class="col_full">
+                    <h1
+                        class="app-page-title text-uppercase h5 font-weight-bold p-2 mb-2 shadow-sm text-center text-success border">
+                        Authorization Retricted
+                    </h1>
 
-        
-        <!-- /.error-content -->
-      </div>
-      <!-- /.error-page -->
-    </section>
-    <!-- /.content -->
-  </div>
 
+
+
+
+
+            <div class="card shadow-lg border-danger p-5">
+                <div class="card-body p-5 alert alert-danger alert-dismissible" role="alert">
+                    <button type="button" class="close" data-dismiss="alert"> &times; </button> You don not have Authorization to access this page or Perform this Task, Please contact the ICT Unit
+                </div>
+
+
+
+
+
+                    </div>
+                </div>
+
+            </div>
+        </section>
+    </div>
 @endsection
-
-
 
 @section('pagescript')
-
-
+    <script src="<?php echo asset('dist/js/bootbox.min.js'); ?>"></script>
 @endsection
-

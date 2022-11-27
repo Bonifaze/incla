@@ -1,4 +1,4 @@
-@php
+{{--  @php
 
 if(!session('adminId'))
 {
@@ -6,7 +6,7 @@ if(!session('adminId'))
   header('location: /adminLogin');
   exit;
 }
-@endphp
+@endphp  --}}
 @extends('layouts.app')
 
 @section('content')
@@ -51,7 +51,7 @@ if(!session('adminId'))
                                 <table class="table table-bordered table-striped" id="dataTable" width="100%" cellspacing="0">
                                     <thead>
                                         <tr>
-                                          
+
                                             <th>First Name</th>
                                             <th>Surname</th>
                                             <th>Phone Number</th>

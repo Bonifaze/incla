@@ -81,7 +81,7 @@
 
 
                                 <div class="row">
-                                    <div class="col-md-3 form-group">
+                                    <div class="col-md-4 form-group">
                                         <label for="hours">Credit Load :</label>
                                         {!! Form::text('credit_unit', null, [
                                             'placeholder' => '',
@@ -103,12 +103,12 @@
 	                    			<span class="text-danger"> {{ $errors->first('status') }}</span>
 							</div>  --}}
 
-                                    <div class="col-md-6 form-group">
+                                    <div class="col-md-8 form-group">
                                         <label for="program_id">Program :</label>
                                         {{ Form::select('program_id', $programs, null, ['class' => 'form-control', 'id' => 'program_id', 'name' => 'program_id']) }}
                                         <span class="text-danger"> {{ $errors->first('program_id') }}</span>
                                     </div>
-
+{{--
                                     <div class="col-md-3 form-group">
                                         <label for="level">Level :</label>
                                         {{ Form::select(
@@ -128,7 +128,7 @@
                                             ['class' => 'form-control select2'],
                                         ) }}
                                         <span class="text-danger"> {{ $errors->first('level') }}</span>
-                                    </div>
+                                    </div>  --}}
                                 </div>
 
                                 <div class="row">

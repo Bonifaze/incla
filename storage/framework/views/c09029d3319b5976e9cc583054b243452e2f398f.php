@@ -146,7 +146,7 @@
 
                                 <div class="col-md-3 form-group">
                                     <label for="semester">prerequisite Course :</label>
-                                     <?php echo e(Form::select('perequisite_id', $courses, null, ['placeholder'=> '', 'class' => 'form-control select2', 'id' => 'course_id', 'name' => 'perequisite_id'])); ?>
+                                     <?php echo e(Form::select('perequisite_id', $courses, null, ['placeholder'=> '', 'class' => 'form-control select2', 'id' => 'perequisite_id', 'name' => 'perequisite_id'])); ?>
 
 
                                     <span class="text-danger"> <?php echo e($errors->first('semester')); ?></span>
@@ -167,6 +167,7 @@
                                     
                                     <span class="text-danger"> <?php echo e($errors->first('course_id')); ?></span>
                                 </div>
+
 
                                 <div class="col-md-4 form-group">
                                     <label for="hours">Credit Load :</label>

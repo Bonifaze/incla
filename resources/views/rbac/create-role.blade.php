@@ -56,6 +56,11 @@
 								{!! Form::text('name', null, array( 'placeholder' => '','class' => 'form-control', 'id' => 'name')) !!}
 							 <span class="text-danger"> {{ $errors->first('name') }}</span>
 							</div>
+                            {{--  <div class="col-md-6 form-group">
+								<label for="description">Role :</label>
+								{!! Form::text('description', null, array( 'placeholder' => '','class' => 'form-control', 'id' => 'description')) !!}
+							 <span class="text-danger"> {{ $errors->first('description') }}</span>
+							</div>  --}}
 
 							<div class="col-md-6 form-group">
 								<label for="description">Description :</label>

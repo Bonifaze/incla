@@ -1,3 +1,6 @@
+
+
+
 <?php $__env->startSection('pagetitle'); ?>
 <!-- CSRF Token -->
 <meta name="csrf-token" content="<?php echo e(csrf_token()); ?>">
@@ -77,7 +80,7 @@
               <label for="exampleInputPassword1">Password</label>
               <input id="password" type="password" placeholder="Password" class="form-control<?php echo e($errors->has('password') ? ' is-invalid' : ''); ?>" name="password" required>
               <?php if($errors->has('password')): ?>
-              <span class="invalid-feedback"><strong><?php echo e($errors->first('password')); ?></strong></span>
+             div class="alert alert-danger alert-dismissible" role="alert"> <button type="button" class="close" data-dismiss="alert"> &times; </button><strong><?php echo e($errors->first('password')); ?></strong></div>
               <?php endif; ?>
             </div>
             <div class="form-group form-check">
@@ -114,4 +117,5 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
   <?php $__env->stopSection(); ?>
+
 <?php echo $__env->make('layouts.plain', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH C:\Users\Lawrence Chris\Desktop\laraproject\resources\views/students/auth/login.blade.php ENDPATH**/ ?>
