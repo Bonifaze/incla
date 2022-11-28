@@ -40,7 +40,7 @@ class AdminController extends Controller
     $staff = Auth::guard('staff')->user();
         if ($this->hasPriviledge("allApplicants",   $staff->id)) {
 
-        $staff_courses = StaffCourse::all();
+        $staff_courses = StaffCourse::where('session', $this->getCurrentSession());
         return view('results.course_upload', ['staff_courses' => $staff_courses]);
     } else {
         $loginMsg = '<div class="alert alert-danger alert-dismissible" role="alert"> <button type="button" class="close" data-dismiss="alert"> &times; </button> You dont\'t have access to this task, please see the ICT</div>';

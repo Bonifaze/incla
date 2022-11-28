@@ -55,7 +55,7 @@
                                 <table class="table table-bordered table-striped" width="100%" cellspacing="0">
                                     <thead>
                                         <tr>
-                                            <th>First Semester </th>
+                                            <th col-span="1">First Semester </th>
                                             <th>Course Code</th>
                                             <th>Course Title</th>
                                             <th>Credit Unit</th>
@@ -111,7 +111,7 @@
                                 <table class="table table-bordered table-striped" width="100%" cellspacing="0">
                                     <thead>
                                         <tr>
-                                            <th>Second Semester </th>
+                                            <th col-span="1">Second Semester </th>
                                             <th>Course Code</th>
                                             <th>Course Title</th>
                                             <th>Credit Unit</th>
@@ -158,6 +158,8 @@
 
                                         </tr>
                                     </tbody>
+
+                                    <h4 id="limit" class=" font-weight-bold text-danger fw-bold"></h4>
 
                                 </table>
                                 {{--  To show lower level courses  --}}
@@ -209,6 +211,7 @@
                                 <td id="result" name="total"></td>
 
                                 </tr>  --}}
+                                <h4 id="limit2" class="font-weight-bold text-danger fw-bold"></h4>
                                 </tbody>
 
                                 </table>
@@ -260,13 +263,12 @@
                                     </table>
                                 </div>  --}}
 
-                                {{--  <div id="limit" class="text-danger fw-bold"></div>
-                        <div id="limit2" class="text-danger fw-bold"></div>  --}}
+
                                 <button type="submit" class="btn btn-success">
                                     {{ __('Register Course') }}
                                 </button>
                                 {{--  <div> <a href="#" class="btn btn-primary" id="btn" onClick="getCheckboxValue()" > Register </a>
-                        </div>  --}}
+                                    </div>  --}}
 
                                 </form><br><br>
                                 <h1
@@ -386,16 +388,16 @@
         function totalIt() {
             let sum = 0;
             frm = document.getElementById("form-1"),
-                cbs = frm["courses[]"]
+                cbs = frm["courses1[]"]
             for (i = 0; i < cbs.length; i++) {
                 if (cbs[i].checked) {
                     sum += parseInt(cbs[i].id);
                 }
             }
             document.getElementById("tcu").innerHTML = sum;
-            if (sum > 11) {
+            if (sum > 24) {
                 document.getElementById("limit").innerHTML =
-                    "Total credit load should not exceed 11 for First Semester Courses";
+                    "Total credit load should not exceed 24 unit for First Semester Courses";
                 frm.cbs[j].checked = false;
                 // let unmarkedBoxCount = document.querySelectorAll('input[type="checkbox"]:not(:checked)');
                 //  unmarkedBoxCount.disabled = true
@@ -404,19 +406,19 @@
         }
         //Second seasemter total credit limit
         function totalIt2() {
-            let sum = 0;
-            frm = document.getElementById("form-1"),
-                cbs = frm["courses[]"]
-            for (i = 0; i < cbs.length; i++) {
-                if (cbs[i].checked) {
-                    sum += parseInt(cbs[i].id);
+            let sum1 = 0;
+            frm1 = document.getElementById("form-1"),
+                cbs1 = frm1["courses2[]"]
+            for (i = 0; i < cbs1.length; i++) {
+                if (cbs1[i].checked) {
+                    sum1 += parseInt(cbs1[i].id);
                 }
             }
-            document.getElementById("tcu2").innerHTML = sum;
-            if (sum > 11) {
+            document.getElementById("tcu2").innerHTML = sum1;
+            if (sum1 > 24) {
                 document.getElementById("limit2").innerHTML =
-                    "Total credit load should not exceed 11 For Second Semester Courses";
-                frm.cbs[j].checked = false;
+                    "Total credit load should not exceed 24 unit For Second Semester Courses";
+                frm.cbs1[j].checked = false;
                 // let unmarkedBoxCount = document.querySelectorAll('input[type="checkbox"]:not(:checked)');
                 //  unmarkedBoxCount.disabled = true
             }

@@ -188,6 +188,7 @@ class StudentsController extends Controller
             ->leftJoin('courses', 'courses.id', '=', 'program_courses.course_id')
             ->where('program_courses.level',$student->academic->level )
             ->where('program_courses.semester', 1)
+            ->where('session_id',$this->getcurrentsession() )
             ->orderBy('course_category','ASC')
             ->select('program_courses.*', 'courses.course_code', 'courses.course_title')->get();
 
@@ -196,6 +197,7 @@ class StudentsController extends Controller
             ->leftJoin('courses', 'courses.id', '=', 'program_courses.course_id')
             ->where('program_courses.level',$student->academic->level )
             ->where('program_courses.semester', 2)
+            ->where('session_id',$this->getcurrentsession() )
             ->orderBy('course_category','ASC')
             ->select('program_courses.*', 'courses.course_code', 'courses.course_title')->get();
 

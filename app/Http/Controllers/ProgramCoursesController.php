@@ -51,7 +51,7 @@ class ProgramCoursesController extends Controller
         // ->orderBy('staff_work_profiles.admin_department_id','ASC')->get()->pluck('full_name','id');
         // dd($lecturers);
         $pcourses = ProgramCourse::with(['course','staff', 'program', 'session'])
-        // ->where('semester', $session->currentSemester())
+        ->where('semester', $session->currentSemester())
         ->where('session_id', $session->currentSession())
         ->orderBy('id','DESC')
         ->orderBy('program_id','ASC')->orderBy('level','ASC')->paginate(100);

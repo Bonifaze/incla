@@ -175,13 +175,13 @@
                                         <p>Search Course</p>
                                     </a>
                                 </li>
-                                {{--  <li class="nav-item">
+                                <li class="nav-item">
                                     <a href="{{ route('program_course.search') }}"
                                         class="nav-link @yield('exam-remark')">
                                         <i class="fa fa-search nav-icon"></i>
                                         <p>List Program Course</p>
                                     </a>
-                                </li>  --}}
+                                </li>
 
                             </ul>
                         </li>
@@ -311,12 +311,12 @@
                         </p>
                     </a>
                     <ul class="nav nav-treeview ml-4">
-                        {{--  <li class="nav-item">
+                        <li class="nav-item">
                             <a href="{{ route('student.search') }}" class="nav-link @yield('faculties')">
                                 <i class="fa fa-search nav-icon"></i>
                                 <p>Search</p>
                             </a>
-                        </li>  --}}
+                        </li>
                         <li class="nav-item">
                             <a href="#" class="nav-link @yield('departments')">
                                 <i class="fas fa-list-alt nav-icon"></i>
