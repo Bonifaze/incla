@@ -7,11 +7,11 @@
 <title> Course Form</title>
 
 @endsection
- <script>
+ {{--  <script>
       window.onload = function() {
             window.print();
         }
-    </script>
+    </script>  --}}
 @section('content')
 <body>
 <table width="650" border="0" cellspacing="0" cellpadding="0">

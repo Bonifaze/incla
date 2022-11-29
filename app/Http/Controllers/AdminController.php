@@ -139,7 +139,7 @@ class AdminController extends Controller
         $staff = Auth::guard('staff')->user();
         if ($this->hasPriviledge("allApplicants",  $staff->id)) {
 
-        $programmes = Program::all();
+        $programmes = Program::orderBy('name')->get();
         $sessions = Session::all();
         return view('results.compute', ['programs' => $programmes, 'sessions' => $sessions]);
     } else {

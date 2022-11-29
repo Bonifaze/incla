@@ -1,6 +1,3 @@
-
-
-
 <?php $__env->startSection('content'); ?>
     <div class="row justify-content-center">
         <!-- Page Wrapper -->
@@ -30,6 +27,18 @@
                             <div class="box-body">
                                 <div class="">
                                     <h3 class="box-title">Bio-Data</h3>
+                                </div>
+                                    <div class="row">
+                                    <div class="col-md-12 form-group">
+                                        <b> <label for="program_id" class="text-danger"> Course of Study : <span
+                                                    class=text-warning> </span>
+                                               </label> </b>
+                                        <?php echo e(Form::select('program_id', $programs, null, ['placeholder'=>'SELECT COURSE OF STUDY', 'class' => 'form-control', 'id' => 'program_id', 'name' => 'program_id'])); ?>
+
+                                        <span class="text-danger"> <?php echo e($errors->first('program_id')); ?></span>
+                                        <label class="text-warning font-weight-bold">Please ensure you select your correct course of study
+                                        </label>
+                                    </div>
                                 </div>
                                 <div class="row">
                                     <div class="col-md-4 form-group">
@@ -437,21 +446,7 @@
                                 <div class="box-header">
                                     <h3 class="box-title">Academic Information</h3>
                                 </div>
-                                <div class="row">
-                                    <div class="col-md-12 form-group">
-                                        <b> <label for="program_id" class="text-danger"> Program : (<span
-                                                    class=text-warning> </span> Course of Study
-                                                <?php echo e($applicantsDetails->course_applied); ?>)</label> </b>
-                                        <?php echo e(Form::select('program_id', $programs, null, ['class' => 'form-control', 'id' => 'program_id', 'name' => 'program_id'])); ?>
 
-                                        <span class="text-danger"> <?php echo e($errors->first('program_id')); ?></span>
-                                        <label class="text-warning font-weight-bold">Please ensure you select your correct course of study
-                                        </label>
-                                    </div>
-
-
-
-                                </div>
 
 
                                 <div class="row">

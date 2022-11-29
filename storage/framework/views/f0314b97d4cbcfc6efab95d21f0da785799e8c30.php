@@ -5,11 +5,7 @@
 <title> Course Form</title>
 
 <?php $__env->stopSection(); ?>
- <script>
-      window.onload = function() {
-            window.print();
-        }
-    </script>
+ 
 <?php $__env->startSection('content'); ?>
 <body>
 <table width="650" border="0" cellspacing="0" cellpadding="0">

@@ -38,6 +38,17 @@ exit;
                                 <div class="">
                                     <h3 class="box-title">Bio-Data</h3>
                                 </div>
+                                    <div class="row">
+                                    <div class="col-md-12 form-group">
+                                        <b> <label for="program_id" class="text-danger"> Course of Study : <span
+                                                    class=text-warning> </span>
+                                               </label> </b>
+                                        {{ Form::select('program_id', $programs, null, ['placeholder'=>'SELECT COURSE OF STUDY', 'class' => 'form-control', 'id' => 'program_id', 'name' => 'program_id']) }}
+                                        <span class="text-danger"> {{ $errors->first('program_id') }}</span>
+                                        <label class="text-warning font-weight-bold">Please ensure you select your correct course of study
+                                        </label>
+                                    </div>
+                                </div>
                                 <div class="row">
                                     <div class="col-md-4 form-group">
                                         <div @if ($errors->has('title')) class ='has-error form-group' @endif>
@@ -446,20 +457,7 @@ exit;
                                 <div class="box-header">
                                     <h3 class="box-title">Academic Information</h3>
                                 </div>
-                                <div class="row">
-                                    <div class="col-md-12 form-group">
-                                        <b> <label for="program_id" class="text-danger"> Program : (<span
-                                                    class=text-warning> </span> Course of Study
-                                                {{ $applicantsDetails->course_applied }})</label> </b>
-                                        {{ Form::select('program_id', $programs, null, ['class' => 'form-control', 'id' => 'program_id', 'name' => 'program_id']) }}
-                                        <span class="text-danger"> {{ $errors->first('program_id') }}</span>
-                                        <label class="text-warning font-weight-bold">Please ensure you select your correct course of study
-                                        </label>
-                                    </div>
 
-
-
-                                </div>
 
 
                                 <div class="row">

@@ -233,16 +233,17 @@ class StudentsController extends Controller
             //dd($stu_reg_courses->toArray(), $courseFirst->toArray(), $courseSecond->toArray());
 
             $courseform = DB::table('registered_courses')->where('student_id',$student->id )
-            ->where ('session', $this->getcurrentsession() )
+            ->where ('session', $this->getcurrentsession())
             ->leftJoin('courses', 'courses.id', '=', 'registered_courses.course_id')
             ->leftJoin('programs', 'programs.id', '=', 'courses.program_id')
              ->leftJoin('academic_departments', 'academic_departments.id', '=', 'programs.academic_department_id')
             ->leftJoin('colleges', 'colleges.id', '=', 'academic_departments.college_id' )
             // ->where('registered_courses.semester', 1)
             ->orderBy('level','ASC')
-            ->leftJoin('program_courses', 'courses.id', '=', 'program_courses.course_id')
+            ->join('program_courses', 'program_courses.id', '=', 'courses.id')
             ->select('registered_courses.*', 'courses.program_id','program_courses.credit_unit', 'courses.course_title', 'courses.course_code', 'program_courses.course_category', 'programs.*', 'academic_departments.*', 'colleges.*')
                     ->get();
+
             // ->where('semester', 1)
             // ->get();
           //first semester lower course
@@ -264,7 +265,7 @@ class StudentsController extends Controller
 
             // $prevsession = $this->getprevioussession();
         //    return view('students.course_registration', compact('courseFirst','courseSecond', 'lowercourseFirst' ,'lowercourseSecond','session', 'courseform'));
-        return view('students.course_registration', compact('courseFirst','courseSecond','session', 'courseform'));
+                 return view('students.course_registration', compact('courseFirst','courseSecond','session', 'courseform'));
 
             }
 
@@ -522,8 +523,11 @@ public function courseform(){
     ->leftJoin('colleges', 'colleges.id', '=', 'academic_departments.college_id' )
     ->where('registered_courses.semester', 1)
     ->orderBy('level','ASC')
+    ->join('program_courses', 'program_courses.id', '=', 'courses.id')
     ->select('registered_courses.*', 'courses.program_id','courses.credit_unit', 'courses.course_title', 'courses.course_code', 'programs.*', 'academic_departments.*', 'colleges.*')
-            ->get();
+    ->get();
+
+
     // ->get();
     $courseform2 = DB::table('registered_courses')->where('student_id',$student->id )
     ->where ('session', $this->getcurrentsession() )
@@ -533,6 +537,7 @@ public function courseform(){
     ->leftJoin('colleges', 'colleges.id', '=', 'academic_departments.college_id' )
     ->where('registered_courses.semester', 2)
     ->orderBy('level','ASC')
+    ->join('program_courses', 'program_courses.id', '=', 'courses.id')
     ->select('registered_courses.*', 'courses.program_id','courses.credit_unit', 'courses.course_title', 'courses.course_code', 'programs.*', 'academic_departments.*', 'colleges.*')
             ->get();
     // ->get();
