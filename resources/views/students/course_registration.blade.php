@@ -81,7 +81,7 @@
 
                                                     @endphp
                                                     <tr>
-                                                        <td> <input type="checkbox" id="{{ $course->credit_unit }}"
+                                                        <td> {{ $key+1 }}. <input type="checkbox" id="{{ $course->credit_unit }}"
                                                                 name="courses1[]"
                                                                 {{ $course->course_category == 1 ? 'checked ' : '' }}
                                                                 value="{{ $course->course_id }}"
@@ -134,7 +134,7 @@
                                                     $tatolCredits += $course->course_category == 1 ? $course->credit_unit : 0;
                                                 @endphp
                                                 <tr>
-                                                    <td> <input type="checkbox" id="{{ $course->credit_unit }}"
+                                                    <td> {{ $key+1 }}.  <input type="checkbox" id="{{ $course->credit_unit }}"
                                                             name="courses2[]"
                                                             {{ $course->course_category == 1 ? 'checked ' : '' }}
                                                             value="{{ $course->course_id }}"

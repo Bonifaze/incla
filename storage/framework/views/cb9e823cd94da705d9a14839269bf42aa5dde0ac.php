@@ -74,7 +74,7 @@
 
                                                     ?>
                                                     <tr>
-                                                        <td> <input type="checkbox" id="<?php echo e($course->credit_unit); ?>"
+                                                        <td> <?php echo e($key+1); ?>. <input type="checkbox" id="<?php echo e($course->credit_unit); ?>"
                                                                 name="courses1[]"
                                                                 <?php echo e($course->course_category == 1 ? 'checked ' : ''); ?>
 
@@ -128,7 +128,7 @@
                                                     $tatolCredits += $course->course_category == 1 ? $course->credit_unit : 0;
                                                 ?>
                                                 <tr>
-                                                    <td> <input type="checkbox" id="<?php echo e($course->credit_unit); ?>"
+                                                    <td> <?php echo e($key+1); ?>.  <input type="checkbox" id="<?php echo e($course->credit_unit); ?>"
                                                             name="courses2[]"
                                                             <?php echo e($course->course_category == 1 ? 'checked ' : ''); ?>
 
