@@ -16,6 +16,10 @@ class Course extends Model
     {
         return $this->hasMany('App\ProgramCourse');
     }
+    // public function registerCourses()
+    // {
+    //     return $this->hasMany('App\Models\RegisteredCourses');
+    // }
 
     public function outstandings()
     {

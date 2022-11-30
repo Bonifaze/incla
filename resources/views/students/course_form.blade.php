@@ -69,14 +69,14 @@
 
                                @foreach ($courseform as $key => $course)
                                        @php
-                                      $tatolCredits += $course->credit_unit;
+                                      $tatolCredits += $course->course_unit;
 
                                    @endphp
 						 <tr>
                             <td width="5%"><div align="center"><span style="font-weight: bold">{{ $key+1 }}</span></div></td>
                             <td width="15%"><div align="center"><span style="font-weight: bold">{{ $course->course_code }} </span></div></td>
                             <td width="50%"><div align="center"><span style="font-weight: bold"> {{ $course->course_title }}</span></div></td>
-                            <td width="10%"><div align="center"><span style="font-weight: bold">{{ $course->credit_unit }} </span></div></td>
+                            <td width="10%"><div align="center"><span style="font-weight: bold">{{ $course->course_unit }} </span></div></td>
                             <td width="20%"><div align="center"><span style="font-weight: bold"> </span></div></td>
                           </tr>
 
@@ -112,14 +112,14 @@
 
                                @foreach ($courseform2 as $key => $course)
                                        @php
-                                      $tatolCredits += $course->credit_unit;
+                                      $tatolCredits += $course->course_unit;
 
                                    @endphp
 						 <tr>
                             <td width="5%"><div align="center"><span style="font-weight: bold">{{ $key+1 }}</span></div></td>
                             <td width="15%"><div align="center"><span style="font-weight: bold">{{ $course->course_code }} </span></div></td>
                             <td width="50%"><div align="center"><span style="font-weight: bold"> {{ $course->course_title }}</span></div></td>
-                            <td width="10%"><div align="center"><span style="font-weight: bold">{{ $course->credit_unit }} </span></div></td>
+                            <td width="10%"><div align="center"><span style="font-weight: bold">{{ $course->course_unit }} </span></div></td>
                             <td width="20%"><div align="center"><span style="font-weight: bold"> </span></div></td>
                           </tr>
 

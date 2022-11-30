@@ -16,6 +16,10 @@ class ProgramCourse extends Model
     {
         return $this->belongsTo('App\Course', 'course_id');
     }
+    // public function programcourse()
+    // {
+    //     return $this->belongsTo('App\ProgramCourse', 'course_id');
+    // }
 
     public function session()
     {

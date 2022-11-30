@@ -63,14 +63,14 @@
 
                                <?php $__currentLoopData = $courseform; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $key => $course): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                        <?php
-                                      $tatolCredits += $course->credit_unit;
+                                      $tatolCredits += $course->course_unit;
 
                                    ?>
 						 <tr>
                             <td width="5%"><div align="center"><span style="font-weight: bold"><?php echo e($key+1); ?></span></div></td>
                             <td width="15%"><div align="center"><span style="font-weight: bold"><?php echo e($course->course_code); ?> </span></div></td>
                             <td width="50%"><div align="center"><span style="font-weight: bold"> <?php echo e($course->course_title); ?></span></div></td>
-                            <td width="10%"><div align="center"><span style="font-weight: bold"><?php echo e($course->credit_unit); ?> </span></div></td>
+                            <td width="10%"><div align="center"><span style="font-weight: bold"><?php echo e($course->course_unit); ?> </span></div></td>
                             <td width="20%"><div align="center"><span style="font-weight: bold"> </span></div></td>
                           </tr>
 
@@ -106,14 +106,14 @@
 
                                <?php $__currentLoopData = $courseform2; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $key => $course): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                        <?php
-                                      $tatolCredits += $course->credit_unit;
+                                      $tatolCredits += $course->course_unit;
 
                                    ?>
 						 <tr>
                             <td width="5%"><div align="center"><span style="font-weight: bold"><?php echo e($key+1); ?></span></div></td>
                             <td width="15%"><div align="center"><span style="font-weight: bold"><?php echo e($course->course_code); ?> </span></div></td>
                             <td width="50%"><div align="center"><span style="font-weight: bold"> <?php echo e($course->course_title); ?></span></div></td>
-                            <td width="10%"><div align="center"><span style="font-weight: bold"><?php echo e($course->credit_unit); ?> </span></div></td>
+                            <td width="10%"><div align="center"><span style="font-weight: bold"><?php echo e($course->course_unit); ?> </span></div></td>
                             <td width="20%"><div align="center"><span style="font-weight: bold"> </span></div></td>
                           </tr>
 

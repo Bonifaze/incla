@@ -86,7 +86,7 @@
                                                                 {{ $course->course_category == 1 ? 'checked ' : '' }}
                                                                 value="{{ $course->course_id }}"
                                                                 class="{{ $course->credit_unit }}"
-                                                                onclick="{{ $course->course_category == 1 ? 'return false' : 'totalIt()' }}">
+                                                                onclick="{{ $course->course_category == 1 ? '' : 'totalIt()' }}">
                                                             <input type="hidden" name="course_units1[]"
                                                                 value="{{ $course->credit_unit }}">
                                                             <input type="hidden" name="course_semester[]"
@@ -139,7 +139,7 @@
                                                             {{ $course->course_category == 1 ? 'checked ' : '' }}
                                                             value="{{ $course->course_id }}"
                                                             class="{{ $course->credit_unit }}"
-                                                            onclick="{{ $course->course_category == 1 ? 'return false' : 'totalIt2()' }}">
+                                                            onclick="{{ $course->course_category == 1 ? '' : 'totalIt2()' }}">
                                                         <input type="hidden" name="course_units2[]"
                                                             value="{{ $course->credit_unit }}">
                                                         <input type="hidden" name="course_semester[]"
@@ -310,7 +310,7 @@
 
                                             @foreach ($courseform as $key => $course)
                                                 @php
-                                                    $tatolCredits += $course->credit_unit;
+                                                    $tatolCredits += $course->course_unit;
 
                                                 @endphp
                                                 <tr>
@@ -323,7 +323,7 @@
                                                     </td>
                                                     <td>{{ $course->course_code }} </td>
                                                     <td>{{ $course->course_title }}</td>
-                                                    <td>{{ $course->credit_unit }}</td>
+                                                    <td>{{ $course->course_unit }}</td>
                                                     {{--  <td><a class="btn btn-danger" type="button" href="">Delete Admin</a></td>  --}}
                                                     {{--  <td>{!! $course->course_category == 1 ?'':'
                         <form method=post action=/dropcourse">

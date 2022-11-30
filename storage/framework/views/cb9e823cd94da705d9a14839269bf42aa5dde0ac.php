@@ -80,7 +80,7 @@
 
                                                                 value="<?php echo e($course->course_id); ?>"
                                                                 class="<?php echo e($course->credit_unit); ?>"
-                                                                onclick="<?php echo e($course->course_category == 1 ? 'return false' : 'totalIt()'); ?>">
+                                                                onclick="<?php echo e($course->course_category == 1 ? '' : 'totalIt()'); ?>">
                                                             <input type="hidden" name="course_units1[]"
                                                                 value="<?php echo e($course->credit_unit); ?>">
                                                             <input type="hidden" name="course_semester[]"
@@ -134,7 +134,7 @@
 
                                                             value="<?php echo e($course->course_id); ?>"
                                                             class="<?php echo e($course->credit_unit); ?>"
-                                                            onclick="<?php echo e($course->course_category == 1 ? 'return false' : 'totalIt2()'); ?>">
+                                                            onclick="<?php echo e($course->course_category == 1 ? '' : 'totalIt2()'); ?>">
                                                         <input type="hidden" name="course_units2[]"
                                                             value="<?php echo e($course->credit_unit); ?>">
                                                         <input type="hidden" name="course_semester[]"
@@ -222,7 +222,7 @@
 
                                             <?php $__currentLoopData = $courseform; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $key => $course): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                                 <?php
-                                                    $tatolCredits += $course->credit_unit;
+                                                    $tatolCredits += $course->course_unit;
 
                                                 ?>
                                                 <tr>
@@ -237,7 +237,7 @@
                                                     </td>
                                                     <td><?php echo e($course->course_code); ?> </td>
                                                     <td><?php echo e($course->course_title); ?></td>
-                                                    <td><?php echo e($course->credit_unit); ?></td>
+                                                    <td><?php echo e($course->course_unit); ?></td>
                                                     
                                                     
                                                     
