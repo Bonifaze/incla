@@ -13,10 +13,10 @@ class Student extends Authenticatable
     use Notifiable;
 
 
-    
+
     protected $guard = 'student';
-    
-    
+
+
     /**
      * The attributes that are mass assignable.
      *
@@ -25,7 +25,7 @@ class Student extends Authenticatable
     protected $fillable = [
         'surname', 'other_names', 'type', 'email', 'password',
     ];
-    
+
     /**
      * The attributes that should be hidden for arrays.
      *
@@ -34,23 +34,23 @@ class Student extends Authenticatable
     protected $hidden = [
         'password', 'remember_token',
     ];
-    
-    
+
+
     public function academic()
     {
         return $this->hasOne('App\StudentAcademic');
     }
-    
+
     public function contact()
     {
         return $this->hasOne('App\StudentContact');
     }
-    
+
     public function medical()
     {
         return $this->hasOne('App\StudentMedical');
     }
-    
+
     public function semesterRegistrations()
     {
         return $this->hasMany('App\SemesterRegistration')
@@ -58,7 +58,7 @@ class Student extends Authenticatable
         ->orderBy('semester','ASC')
         ->orderBy('session_id','ASC');
     }
-    
+
     public function debt()
     {
         return $this->hasOne('App\StudentDebt');
@@ -86,19 +86,19 @@ class Student extends Authenticatable
     public function setFirstNameAttribute($value) {
         $this->attributes['first_name'] = ucwords(strtolower($value));
     }
-    
+
     public function setMiddleNameAttribute($value) {
         $this->attributes['middle_name'] = ucwords(strtolower($value));
     }
-    
+
     public function setSurnameAttribute($value) {
         $this->attributes['surname'] = ucwords(strtolower($value));
     }
-    
+
     public function setEmailAttribute($value) {
         $this->attributes['email'] = strtolower($value);
     }
-    
+
     /**
      * Get the user's full name.
      *
@@ -117,13 +117,13 @@ class Student extends Authenticatable
     //     return $date;
     // }
 
-    
+
     /**
      * Create Matriculation Number based on Program, Year and Id
      *
      * @return boolean True for success and False for failure
      */
-    
+
     function setMatNo($program_id, $session_id, $studentId, $modeOfEntry)
     {
         $program = Program::findOrFail($program_id);
@@ -135,7 +135,7 @@ class Student extends Authenticatable
         $deg = str_replace("(","",$deg);
         $deg = str_replace(" ","",$deg);
         $session = $sess->getCode();
-        
+
         switch ($modeOfEntry) {
             case "UTME":
                 $reg = "VUG/".$code."/".$session."/".$studentId;
@@ -155,50 +155,50 @@ class Student extends Authenticatable
             default:
                 $reg = "VUG/".$code."/".$session."/".$studentId;
         }
-        
+
         return $reg;
-        
-        
+
+
     } // end setMatNo($prog, $session, $studentId)
-    
-    
-   
+
+
+
     public function checkSerial($serial_no)
     {
         if (Student::where('id', '=', $serial_no)->exists())
         {
             return true;
         }
-        else 
+        else
         {
             return false;
         }
     } // end checkSerial
-        
+
         public function setVunaMail()
       {
-          
+
           $college = $this->academic->program->department->college;
           $col = $college->code;
           $mat_no = $this->academic->mat_no;
           $email = $mat_no.'@'.$col.'.veritas.edu.ng';
           $email = strtolower($email);
           return $email;
-          
-          
+
+
       }
-   
-    
-    
-      
-      
+
+
+
+
+
       public function hasSemesterResults($session_id,$semester)
       {
          $results = StudentResult::where('student_id',$this->id)
           ->where('session_id', $session_id)
           ->where('semester', $semester)
           ->get();
-          
+
           if(count($results) > 0)
           {
               return true;
@@ -225,7 +225,7 @@ class Student extends Authenticatable
           ->where('session_id', $session_id)
           ->where('semester', $semester)
           ->get();
-          
+
           if(count($sem_reg) > 0)
           {
               return true;
@@ -235,8 +235,8 @@ class Student extends Authenticatable
               return false;
           }
       }// end hasSemesterResults($session_id,$semester)
-      
-      
+
+
       public function hasCurrentSemesterRegistration()
       {
           $session = new Session();
@@ -244,7 +244,7 @@ class Student extends Authenticatable
           ->where('session_id', $session->currentSession())
           ->where('semester', $session->courseRegSemester())
           ->get();
-          
+
           if(count($sem_reg) > 0)
           {
               return true;
@@ -271,28 +271,28 @@ class Student extends Authenticatable
             return true;
         }
     }// end hasNoEvaluationRegistration($session_id,$semester)
-      
-      
+
+
       public function getSemesterRegistration($session_id,$semester)
       {
           $sem_reg = SemesterRegistration::where('student_id',$this->id)
           ->where('session_id', $session_id)
           ->where('semester', $semester)
           ->get();
-          
+
           return $sem_reg->first();
-          
+
       }// end getSemesterResults($session_id,$semester)
-      
-      
-      
+
+
+
       public function removeSemesterRegistration($session_id,$semester)
       {
           $sem_reg = SemesterRegistration::where('student_id',$this->id)
           ->where('session_id', $session_id)
           ->where('semester', $semester)
           ->get();
-         
+
           if(count($sem_reg) > 0)
           {
               try {
@@ -310,9 +310,9 @@ class Student extends Authenticatable
               return false;
           }
       }// end removeSemesterRegistration()
-      
-      
-      
+
+
+
       public function registerSemester()
       {
           $session = new Session();
@@ -322,7 +322,7 @@ class Student extends Authenticatable
           $sem_reg->semester = $session->courseRegSemester();
           $sem_reg->level = $this->academic->level;
           $sem_reg->status = 1;
-          
+
            try {
                   $sem_reg->save();
                   return true;
@@ -333,22 +333,22 @@ class Student extends Authenticatable
                   return redirect()->route('student.course-registration')
                   ->with('error',"Errors completing semester registration.");
               }
-         
+
       }// end registerSemester()
-    
-      
+
+
       public function totalRegisteredCredits($registered_courses)
       {
         $total = 0;
         foreach ($registered_courses as $key => $rc)
         {
             if($rc->programCourse) {
-                $total += $rc->programCourse->hours;
+                $total += $rc->programCourse->credit_unit;
             }
         }
         return $total;
       } // end totalRegisteredCredits($registered_courses)
-      
+
       // make sure toal credit is not exceeded
       public function hasSemesterCredits($registered_courses,$program_course_id)
       {
@@ -383,7 +383,7 @@ class Student extends Authenticatable
             return false;
         }
     }// end hasSemesterCredits()
-      
+
       public function allowedCredits($session_id=0,$semester)
       {
           $total = 24;
@@ -402,7 +402,7 @@ class Student extends Authenticatable
           }
         return $total;
       } // end allowedCredits()
-      
+
     public function unApprovedGPA()
     {
         $session = new Session();
@@ -413,22 +413,22 @@ class Student extends Authenticatable
        return $gpa;
     }
 
-      
+
       public function CGPA()
       {
           $regs = SemesterRegistration::where('student_id',$this->id)->get();
-          
+
           $hours = 0;
           $units = 0;
-          
-          
+
+
           foreach($regs as $key => $reg)
           {
               $result = $reg->results();
               $hours += $result->gpa->hours;
               $units += $result->gpa->units;
           }
-          
+
           if($hours !== 0)
           {
               $value = $units / $hours;
@@ -437,17 +437,17 @@ class Student extends Authenticatable
           {
               $value = 0.00;
           }
-          
+
           $value = number_format(round($value,2),2,'.', '');
-          
+
           $cgpa = collect([]);
           $cgpa->value = $value;
           $cgpa->hours = $hours;
           $cgpa->units= $units;
-          
+
           return $cgpa;
-          
-          
+
+
       } // end CGPA
 
     public function excelCGPA()

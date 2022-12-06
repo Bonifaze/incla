@@ -1,22 +1,18 @@
-@extends('layouts.mini')
-
-
-
-@section('pagetitle')
+<?php $__env->startSection('pagetitle'); ?>
     Student Result Management
-@endsection
+<?php $__env->stopSection(); ?>
 
 <!-- Treeview -->
-@section('results-open')
+<?php $__env->startSection('results-open'); ?>
     menu-open
-@endsection
+<?php $__env->stopSection(); ?>
 
-@section('results')
+<?php $__env->startSection('results'); ?>
     active
-@endsection
+<?php $__env->stopSection(); ?>
 
 
-@section('content')
+<?php $__env->startSection('content'); ?>
     <div class="content-wrapper">
         <!-- Content Header (Page header) -->
 
@@ -27,28 +23,29 @@
                 <div class="col_full">
                     <h1
                         class="app-page-title text-uppercase h5 font-weight-bold p-2 mb-2 shadow-sm text-center text-success border">
-                        Course Registration for {{ $student->full_name }}
+                        Course Registration for <?php echo e($student->full_name); ?>
+
                     </h1>
                     <h5 class="app-page-title text-uppercase h5 font-weight p-2 mb-2 shadow-sm text-center text">
-                        {{ $session->semesterName($semester) }} {{ $session->name }} Academic Session
+                        <?php echo e($session->semesterName($semester)); ?> <?php echo e($session->name); ?> Academic Session
                     </h5>
 
 
-                    @include('partialsv3.flash')
+                    <?php echo $__env->make('partialsv3.flash', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
 
 
 
                     <h1 class=" text-uppercase h5 font-weight-bold p-2 mb-2 shadow-sm text-left text-success border">
                         Registered Courses
-                        {{--  @if ($student->hasSemesterRegistration($session->id, $semester))  --}}
-                        {{--  @php $registration = $student->getSemesterRegistration($session->id,$semester) @endphp  --}}
-                        @php
+                        
+                        
+                        <?php
                             $student_id = 0;
-                        @endphp
+                        ?>
 
-                        <a class="btn btn-info" href="{{ route('semester.registration', base64_encode($student->id)) }}"
+                        <a class="btn btn-info" href="<?php echo e(route('semester.registration', base64_encode($student->id))); ?>"
                             target="_blank"> <i class="fa fa-eye"></i> Print Form </a>
-                        {{--  <a class="btn btn-default" href="{{ route('semester.registration.modify-excess',base64_encode($registration->id)) }}" > <i class="fa fa-eye"></i> Modify Excess Credit </a>  --}}
+                        
 
 
 
@@ -61,62 +58,53 @@
                                 <th>Course Code</th>
                                 <th>Course Title</th>
                                 <th>Credit Unit</th>
-                                {{--  <th> Action</th>  --}}
+                                
                             </tr>
                         </thead>
 
                         <tbody>
                             <form name=form1 method=post action="/results/dropcourse-reg">
-                                @csrf
+                                <?php echo csrf_field(); ?>
 
 
-                                {{--  <input id="" type="text"  name="session" value="{{ $prevsession }}" >  --}}
+                                
 
-                                @php
+                                <?php
                                     $tatolCredits = 0;
-                                @endphp
+                                ?>
 
-                                @foreach ($courseform as $key => $course)
-                                    @php
+                                <?php $__currentLoopData = $courseform; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $key => $course): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                    <?php
                                         $tatolCredits += $course->course_unit;
                                         
-                                    @endphp
+                                    ?>
                                     <tr>
-                                        {{--  <td> <input class="itemcourse" type="checkbox" id="course" name="courses[]" {{$course->course_category==1?"checked ":""}} value="{{ $course->course_code }}" onclick="{{$course->course_category==1?'return false':'totalIt()'}}"> </td>  --}}
+                                        
                                         <td> <input class="itemcourse" type="checkbox" id="course" name="courses[]"
-                                                {{ $course->course_category == 1 ? 'disabled ' : '' }}
-                                                value="{{ $course->course_id }}"
-                                                onclick="{{ $course->course_category == 1 ? 'return false' : 'totalIt()' }}">{{ $key + 1 }}
-                                        </td>
-                                        <td>{{ $course->course_code }} </td>
-                                        <td>{{ $course->course_title }}</td>
-                                        <td>{{ $course->course_unit }}</td>
-                                        {{--  <td>
-                                            {!! Form::open(['method' => 'Delete', 'route' => 'result.remove-course', 'id' => 'removeRCourse' . $course->id]) !!}
-                                            {{ Form::text('course_id', $course->course_id) }}
-                                            {{ Form::hidden('student_id', $student->id) }}
-                                            {{ Form::hidden('session_id', $session->id) }}
-                                            {{ Form::hidden('semester', $semester) }}
-                                            {{ Form::hidden('level', $level) }}
+                                                <?php echo e($course->course_category == 1 ? 'disabled ' : ''); ?>
 
-                                            <button onclick="removeRCForm({{ $course->id }})" type="button"
-                                                class="{{ $course->id }} btn btn-danger"><span
-                                                    class="icon-line2-trash"></span> Drop</button>
-                                            {!! Form::close() !!}
-                                        </td>  --}}
-                                @endforeach
+                                                value="<?php echo e($course->course_id); ?>"
+                                                onclick="<?php echo e($course->course_category == 1 ? 'return false' : 'totalIt()'); ?>"><?php echo e($key + 1); ?>
+
+                                        </td>
+                                        <td><?php echo e($course->course_code); ?> </td>
+                                        <td><?php echo e($course->course_title); ?></td>
+                                        <td><?php echo e($course->course_unit); ?></td>
+                                        
+                                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                                 </tr>
                                 <tr>
                                     <td><strong>Total Credit Unit</strong> </td>
                                     <td colspan="2"></td>
-                                    <td id="result" name="total">{{ $tatolCredits }}</td>
+                                    <td id="result" name="total"><?php echo e($tatolCredits); ?></td>
 
                                 </tr>
                         </tbody>
 
                     </table>
                     <button type="submit" class="btn btn-danger">
-                        {{ __('Drop course') }}
+                        <?php echo e(__('Drop course')); ?>
+
                     </button>
                     </form>
 
@@ -138,36 +126,43 @@
 
                             <tbody>
 
-                                @foreach ($results as $key => $res)
+                                <?php $__currentLoopData = $results; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $key => $res): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                     <tr>
 
-                                        <td>{{ $loop->iteration }} <input type="checkbox"></td>
-                                        <td>{{ $res->course_code }}</td>
-                                        <td>{{ $res->course_title }}</td>
-                                        <td>{{ $res->level }}</td>
-                                        <td>{{ $res->course_unit }}</td>
+                                        <td><?php echo e($loop->iteration); ?> <input type="checkbox"></td>
+                                        <td><?php echo e($res->course_code); ?></td>
+                                        <td><?php echo e($res->course_title); ?></td>
+                                        <td><?php echo e($res->level); ?></td>
+                                        <td><?php echo e($res->course_unit); ?></td>
                                         <td>
-                                            {!! Form::open(['method' => 'Delete', 'route' => 'result.remove-course', 'id' => 'removeRCourse' . $res->id]) !!}
-                                            {{ Form::hidden('result_id', $res->id) }}
-                                            {{ Form::hidden('student_id', $student->id) }}
-                                            {{ Form::hidden('session_id', $session->id) }}
-                                            {{ Form::hidden('semester', $semester) }}
-                                            {{ Form::hidden('level', $level) }}
+                                            <?php echo Form::open(['method' => 'Delete', 'route' => 'result.remove-course', 'id' => 'removeRCourse' . $res->id]); ?>
 
-                                            <button onclick="removeRCForm({{ $res->id }})" type="button"
-                                                class="{{ $res->id }} btn btn-danger"><span
+                                            <?php echo e(Form::hidden('result_id', $res->id)); ?>
+
+                                            <?php echo e(Form::hidden('student_id', $student->id)); ?>
+
+                                            <?php echo e(Form::hidden('session_id', $session->id)); ?>
+
+                                            <?php echo e(Form::hidden('semester', $semester)); ?>
+
+                                            <?php echo e(Form::hidden('level', $level)); ?>
+
+
+                                            <button onclick="removeRCForm(<?php echo e($res->id); ?>)" type="button"
+                                                class="<?php echo e($res->id); ?> btn btn-danger"><span
                                                     class="icon-line2-trash"></span> Drop</button>
-                                            {!! Form::close() !!}
+                                            <?php echo Form::close(); ?>
+
                                         </td>
                                     </tr>
-                                @endforeach
+                                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
 
                                 <tr>
                                     <td><strong> Registered Credits </strong></td>
                                     <td></td>
                                     <td></td>
                                     <td></td>
-                                    <td> <strong> {{ $total_credit }} </strong></td>
+                                    <td> <strong> <?php echo e($total_credit); ?> </strong></td>
                                     <td> </td>
 
                                 </tr>
@@ -176,7 +171,7 @@
                                     <td></td>
                                     <td></td>
                                     <td></td>
-                                    <td> <strong> {{ $allowed_credits }} </strong></td>
+                                    <td> <strong> <?php echo e($allowed_credits); ?> </strong></td>
                                     <td> </td>
 
                                 </tr>
@@ -187,22 +182,23 @@
 
                         </table>
                         <button type="submit" class="btn btn-danger">
-                            {{ __('Drop courses') }}
+                            <?php echo e(__('Drop courses')); ?>
+
                         </button>
 
 
                     </div>
 
-                    @php $registration = $student->getSemesterRegistration($session->id,$semester) @endphp
+                    <?php $registration = $student->getSemesterRegistration($session->id,$semester) ?>
 
                     <div class="card-footer">
 
-                        {{--  <a class="btn btn-info" href="{{ route('semester.registration',base64_encode($registration->id)) }}" target="_blank"> <i class="fa fa-eye"></i> Print Form </a>  --}}
-                        {{--  <a class="btn btn-default" href="{{ route('semester.registration.modify-excess',base64_encode($registration->id)) }}" > <i class="fa fa-eye"></i> Modify Excess Credit </a>  --}}
+                        
+                        
 
                     </div>
 
-                    {{--  @endif  --}}
+                    
 
                     <p> <br /></p>
 
@@ -227,30 +223,38 @@
 
                             <tbody>
 
-                                @foreach ($fresh_courses as $key => $fcourse)
+                                <?php $__currentLoopData = $fresh_courses; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $key => $fcourse): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                     <tr>
-                                        <td>{{ $loop->iteration }} <input type="checkbox"></td>
-                                        <td>{{ $fcourse->course->course_code }}</td>
-                                        <td>{{ $fcourse->course->course_title }}</td>
-                                        <td>{{ $fcourse->level }}</td>
-                                        <td>{{ $fcourse->credit_unit }}</td>
+                                        <td><?php echo e($loop->iteration); ?> <input type="checkbox"></td>
+                                        <td><?php echo e($fcourse->course->course_code); ?></td>
+                                        <td><?php echo e($fcourse->course->course_title); ?></td>
+                                        <td><?php echo e($fcourse->level); ?></td>
+                                        <td><?php echo e($fcourse->credit_unit); ?></td>
                                         <td>
-                                            {!! Form::open(['method' => 'Post', 'route' => 'result.add-course', 'id' => 'addFCForm' . $fcourse->id]) !!}
-                                            {{ Form::text('course_id', $fcourse->course->id) }}
-                                            {{ Form::hidden('student_id', $student->id) }}
-                                            {{ Form::hidden('session_id', $session->id) }}
-                                            {{ Form::hidden('semester', $semester) }}
-                                            {{ Form::hidden('level', $level) }}
-                                            {{ Form::text('program_id', $student->academic->program_id) }}
+                                            <?php echo Form::open(['method' => 'Post', 'route' => 'result.add-course', 'id' => 'addFCForm' . $fcourse->id]); ?>
+
+                                            <?php echo e(Form::text('course_id', $fcourse->course->id)); ?>
+
+                                            <?php echo e(Form::hidden('student_id', $student->id)); ?>
+
+                                            <?php echo e(Form::hidden('session_id', $session->id)); ?>
+
+                                            <?php echo e(Form::hidden('semester', $semester)); ?>
+
+                                            <?php echo e(Form::hidden('level', $level)); ?>
+
+                                            <?php echo e(Form::text('program_id', $student->academic->program_id)); ?>
 
 
-                                            <button onclick="addFCourse({{ $fcourse->id }})" type="button"
-                                                class="{{ $fcourse->id }} btn btn-success"><span class="icon-plus"></span>
+
+                                            <button onclick="addFCourse(<?php echo e($fcourse->id); ?>)" type="button"
+                                                class="<?php echo e($fcourse->id); ?> btn btn-success"><span class="icon-plus"></span>
                                                 Add</button>
-                                            {!! Form::close() !!}
+                                            <?php echo Form::close(); ?>
+
                                         </td>
                                     </tr>
-                                @endforeach
+                                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
 
                             </tbody>
 
@@ -258,7 +262,8 @@
 
                         </table>
                         <button type="submit" class="btn btn-info">
-                            {{ __('Add courses') }}
+                            <?php echo e(__('Add courses')); ?>
+
                         </button>
 
                     </div>
@@ -286,28 +291,35 @@
 
                             <tbody>
 
-                                @foreach ($carry_over as $key => $co)
+                                <?php $__currentLoopData = $carry_over; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $key => $co): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                     <tr>
-                                        <td> {{ $loop->iteration }} <input type="checkbox"></td>
-                                        <td>{{ $co->course->course_code }}</td>
-                                        <td>{{ $co->course->course_title }}</td>
-                                        <td>{{ $co->level }}</td>
-                                        <td>{{ $co->credit_unit }}</td>
+                                        <td> <?php echo e($loop->iteration); ?> <input type="checkbox"></td>
+                                        <td><?php echo e($co->course->course_code); ?></td>
+                                        <td><?php echo e($co->course->course_title); ?></td>
+                                        <td><?php echo e($co->level); ?></td>
+                                        <td><?php echo e($co->credit_unit); ?></td>
                                         <td>
-                                            {!! Form::open(['method' => 'Post', 'route' => 'result.add-course', 'id' => 'addCOForm' . $co->id]) !!}
-                                            {{ Form::hidden('program_course_id', $co->id) }}
-                                            {{ Form::hidden('student_id', $student->id) }}
-                                            {{ Form::hidden('session_id', $session->id) }}
-                                            {{ Form::hidden('semester', $semester) }}
-                                            {{ Form::hidden('level', $level) }}
+                                            <?php echo Form::open(['method' => 'Post', 'route' => 'result.add-course', 'id' => 'addCOForm' . $co->id]); ?>
 
-                                            <button onclick="addCOver({{ $co->id }})" type="button"
-                                                class="{{ $co->id }} btn btn-success"><span class="icon-plus"></span>
+                                            <?php echo e(Form::hidden('program_course_id', $co->id)); ?>
+
+                                            <?php echo e(Form::hidden('student_id', $student->id)); ?>
+
+                                            <?php echo e(Form::hidden('session_id', $session->id)); ?>
+
+                                            <?php echo e(Form::hidden('semester', $semester)); ?>
+
+                                            <?php echo e(Form::hidden('level', $level)); ?>
+
+
+                                            <button onclick="addCOver(<?php echo e($co->id); ?>)" type="button"
+                                                class="<?php echo e($co->id); ?> btn btn-success"><span class="icon-plus"></span>
                                                 Add</button>
-                                            {!! Form::close() !!}
+                                            <?php echo Form::close(); ?>
+
                                         </td>
                                     </tr>
-                                @endforeach
+                                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
 
                             </tbody>
 
@@ -315,7 +327,8 @@
 
                         </table>
                         <button type="submit" class="btn btn-info">
-                            {{ __('Add courses') }}
+                            <?php echo e(__('Add courses')); ?>
+
                         </button>
 
 
@@ -354,9 +367,9 @@
     </section>
     <!-- /.content -->
     </div>
-@endsection
+<?php $__env->stopSection(); ?>
 
-@section('pagescript')
+<?php $__env->startSection('pagescript'); ?>
     <script src="<?php echo asset('dist/js/bootbox.min.js'); ?>"></script>
 
 
@@ -364,7 +377,7 @@
     <script>
         function removeRCForm(id) {
             bootbox.dialog({
-                message: "<h4>Are you Sure want to Drop this course for {{ $student->full_name }}</h4>",
+                message: "<h4>Are you Sure want to Drop this course for <?php echo e($student->full_name); ?></h4>",
                 buttons: {
                     confirm: {
                         label: 'Yes',
@@ -387,7 +400,7 @@
 
         function addOut(id) {
             bootbox.dialog({
-                message: "<h4>Are you Sure want to Add this course for {{ $student->full_name }}</h4>",
+                message: "<h4>Are you Sure want to Add this course for <?php echo e($student->full_name); ?></h4>",
                 buttons: {
                     confirm: {
                         label: 'Yes',
@@ -410,7 +423,7 @@
 
         function addFCourse(id) {
             bootbox.dialog({
-                message: "<h4>Are you Sure want to Add this course for {{ $student->full_name }}</h4>",
+                message: "<h4>Are you Sure want to Add this course for <?php echo e($student->full_name); ?></h4>",
                 buttons: {
                     confirm: {
                         label: 'Yes',
@@ -433,7 +446,7 @@
 
         function addCOver(id) {
             bootbox.dialog({
-                message: "<h4>Are you Sure want toAdd  this course for {{ $student->full_name }}</h4>",
+                message: "<h4>Are you Sure want toAdd  this course for <?php echo e($student->full_name); ?></h4>",
                 buttons: {
                     confirm: {
                         label: 'Yes',
@@ -453,4 +466,6 @@
             // e.preventDefault(); // avoid to execute the actual submit of the form if onsubmit is used.
         }
     </script>
-@endsection
+<?php $__env->stopSection(); ?>
+
+<?php echo $__env->make('layouts.mini', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH C:\Users\Lawrence Chris\Desktop\laraproject\resources\views/results/course_registration.blade.php ENDPATH**/ ?>

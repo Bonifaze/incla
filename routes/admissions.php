@@ -74,6 +74,12 @@ Route::get('/generatematricnumber', 'App\Http\Controllers\AdminstudentsControlle
 Route::post('/students/store', 'App\Http\Controllers\AdminStudentsControllerApplicant@store')->name('student.store');
 // Route::get('/students/search', 'App\Http\Controllers\AdminStudentsControllerApplicant@search')->name('student.search');
 Route::get('/admissions/students/show/{id}', 'App\Http\Controllers\AdminStudentsControllerApplicant@showapplicant')->name('admissions.student.show');
+//Route for ApplicanT Search
+Route::get('/admissions/students/list', 'App\Http\Controllers\AdminController@list')->name('admissions.student.list');
+
+Route::get('/admissons/students/search', 'App\Http\Controllers\AdminController@search')->name('admissions.student.search');
+
+Route::post('/admissions/students/find', 'App\Http\Controllers\AdminController@find')->name('admissions.student.find');
 // require_once "admin_students.php";
 
 // HOME ROUTE

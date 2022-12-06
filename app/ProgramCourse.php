@@ -16,10 +16,10 @@ class ProgramCourse extends Model
     {
         return $this->belongsTo('App\Course', 'course_id');
     }
-    // public function programcourse()
-    // {
-    //     return $this->belongsTo('App\ProgramCourse', 'course_id');
-    // }
+    public function programcourse()
+    {
+        return $this->belongsTo('App\ProgramCourse', 'course_id');
+    }
 
     public function session()
     {
@@ -38,7 +38,7 @@ class ProgramCourse extends Model
 
     public function results()
     {
-        return $this->hasMany('App\StudentResult')
+        return $this->hasMany('App\Course')
             ->orderBy('student_id','ASC');
     }
 
@@ -53,7 +53,7 @@ class ProgramCourse extends Model
         ->where('semester', $semester)
         ->where('program_id',$student->academic->program_id)
         ->where('level',$student->academic->level)
-        ->whereDoesntHave('results', function ($query) use($session,$student,$semester) {
+        ->whereDoesntHave('programCourse', function ($query) use($session,$student,$semester) {
             $query->where('session_id', $session->currentSession())
             ->where('semester', $semester)
             ->where('student_id', $student->id);
@@ -182,11 +182,7 @@ class ProgramCourse extends Model
         ->where('semester', $semester)
         ->where('program_id',$student->academic->program_id)
         ->where('level',$level)
-        ->whereDoesntHave('results', function ($query) use($semester,$session,$student) {
-            $query->where('session_id', $session->id)
-            ->where('semester', $semester)
-            ->where('student_id', $student->id);
-        })
+
         ->get();
         return $program_courses;
 
@@ -202,11 +198,7 @@ class ProgramCourse extends Model
         ->where('program_id',$student->academic->program_id)
         ->where('level','<',$level)
         ->orderBy('level','DESC')
-        ->whereDoesntHave('results', function ($query) use($semester,$session,$student) {
-            $query->where('session_id', $session->id)
-            ->where('semester', $semester)
-            ->where('student_id', $student->id);
-        })
+      
         ->get();
 
         // join table to ensure the program course id doesn't exist

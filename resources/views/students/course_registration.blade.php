@@ -45,11 +45,11 @@
                             <div class="container">
                                 <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
                                     <h6 class="m-0 font-weight-bold text-success">Current Level Course </h6>
-                                    {{--  <div class="dropdown no-arrow">
+                                    <div class="dropdown no-arrow">
                                         <input type=button class=" btn btn-sm btn-success shadow-sm" name=type
                                             id='bt1' value='Show Lower Level Courses'
                                             onclick="setVisibility('sub3');";>
-                                    </div>  --}}
+                                    </div>
 
                                 </div>
                                 <table class="table table-bordered table-striped" width="100%" cellspacing="0">
@@ -78,11 +78,11 @@
                                                 @if ($course->is_registered == 0)
                                                     @php
                                                         $tatolCredits += $course->course_category == 1 ? $course->credit_unit : 0;
-
+                                                        
                                                     @endphp
                                                     <tr>
-                                                        <td> {{ $key+1 }}. <input type="checkbox" id="{{ $course->credit_unit }}"
-                                                                name="courses1[]"
+                                                        <td> {{ $key + 1 }}. <input type="checkbox"
+                                                                id="{{ $course->credit_unit }}" name="courses1[]"
                                                                 {{ $course->course_category == 1 ? 'checked ' : '' }}
                                                                 value="{{ $course->course_id }}"
                                                                 class="{{ $course->credit_unit }}"
@@ -134,8 +134,8 @@
                                                     $tatolCredits += $course->course_category == 1 ? $course->credit_unit : 0;
                                                 @endphp
                                                 <tr>
-                                                    <td> {{ $key+1 }}.  <input type="checkbox" id="{{ $course->credit_unit }}"
-                                                            name="courses2[]"
+                                                    <td> {{ $key + 1 }}. <input type="checkbox"
+                                                            id="{{ $course->credit_unit }}" name="courses2[]"
                                                             {{ $course->course_category == 1 ? 'checked ' : '' }}
                                                             value="{{ $course->course_id }}"
                                                             class="{{ $course->credit_unit }}"
@@ -162,11 +162,11 @@
                                     <h4 id="limit" class=" font-weight-bold text-danger fw-bold"></h4>
 
                                 </table>
-                                {{--  To show lower level courses  --}}
-                                {{--  <div id="sub3">
+                                {{--  To show First  lower level courses  --}}
+                                <div id="sub3">
                                     <div
                                         class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                                        <h6 class="m-0 font-weight-bold text-success">Lower Level Course </h6>
+                                        <h6 class="m-0 font-weight-bold text-success">Lower First Level Course </h6>
                                     </div>
 
                                     <table class="table table-bordered table-striped" width="100%" cellspacing="0">
@@ -183,40 +183,39 @@
                                             <input id="" type="hidden" name="student_id"
                                                 value="{{ Auth::guard('student')->user()->id }}">
                                             <input id="" type="hidden" name="session"
-                                                value="{{ $session->id }}">  --}}
-                                {{--  <input id="" type="text"  name="session" value="{{ $prevsession }}" >  --}}
+                                                value="{{ $session->id }}">
+                                            {{--  <input id="" type="text"  name="session" value="{{ $prevsession }}" >  --}}
 
-                                {{--  @foreach ($lowercourseFirst as $key => $course)
-                                                @if ($course->is_registered == 0)
-                                                    <tr>
-
-
-                                                        <td> <input type="checkbox" id="{{ $course->credit_unit }}"
-                                                                name="courses[]" class="{{ $course->credit_unit }}"
-                                                                value="{{ $course->id }}" onclick=totalIt()>
-                                                            <input type="hidden" name="course_units1[]"
-                                                                value="{{ $course->credit_unit }}">
-                                                            <input type="hidden" name="course_semester[]"
-                                                                value="{{ $course->semester }}">
-                                                        </td>
-                                                        <td>{{ $course->course_code }}</td>
-                                                        <td>{{ $course->course_title }}</td>
-                                                        <td>{{ $course->credit_unit }}</td>
-                                                @endif
+                                            @foreach ($lowercourseFirst as $key => $course)
+                                                <tr>
+                                                    <td> {{ $key + 1 }}. <input type="checkbox"
+                                                            id="{{ $course->credit_unit }}" name="courses1[]"
+                                                            {{ $course->course_category == 1 ? ' ' : '' }}
+                                                            value="{{ $course->course_id }}"
+                                                            class="{{ $course->credit_unit }}"
+                                                            onclick="{{ $course->course_category == 1 ? '' : 'totalIt2()' }}">
+                                                        <input type="hidden" name="course_units2[]"
+                                                            value="{{ $course->credit_unit }}">
+                                                        <input type="hidden" name="course_semester[]"
+                                                            value="{{ $course->semester }}">
+                                                    </td>
+                                                    <td>{{ $course->course_code }}</td>
+                                                    <td>{{ $course->course_title }}</td>
+                                                    <td>{{ $course->credit_unit }}</td>
                                             @endforeach
-                                            </tr>  --}}
-                                {{--  <tr>
+                                            </tr>
+                                            {{--  <tr>
                                 <td>Total Credit Unit</td>
                                 <td colspan="2"></td>
                                 <td id="result" name="total"></td>
 
                                 </tr>  --}}
-                                <h4 id="limit2" class="font-weight-bold text-danger fw-bold"></h4>
-                                </tbody>
+                                            <h4 id="limit2" class="font-weight-bold text-danger fw-bold"></h4>
+                                        </tbody>
 
-                                </table>
-                                {{--  Second Semester Lower Courses   --}}
-                                {{--  <table class="table table-bordered table-striped" width="100%" cellspacing="0">
+                                    </table>
+                                    {{-- Second Semester Lower Courses   --}}
+                                    <table class="table table-bordered table-striped" width="100%" cellspacing="0">
                                         <thead>
                                             <tr>
                                                 <th>Second Semester </th>
@@ -230,38 +229,37 @@
                                             <input id="" type="hidden" name="student_id"
                                                 value="{{ Auth::guard('student')->user()->id }}">
                                             <input id="" type="hidden" name="session"
-                                                value="{{ $session->id }}">  --}}
-                                {{--  <input id="" type="text"  name="session" value="{{ $prevsession }}" >  --}}
+                                                value="{{ $session->id }}">
+                                            {{--  <input id="" type="text"  name="session" value="{{ $prevsession }}" >  --}}
 
-                                {{--  @foreach ($lowercourseSecond as $key => $course)
-                                                @if ($course->is_registered == 0)
-                                                    <tr>
-
-
-                                                        <td> <input type="checkbox" id="{{ $course->credit_unit }}"
-                                                                name="courses[]" class="{{ $course->credit_unit }}"
-                                                                value="{{ $course->id }}" onclick=totalIt2()>
-                                                            <input type="hidden" name="course_units2 []"
-                                                                value="{{ $course->credit_unit }}">
-                                                            <input type="hidden" name="course_semester[]"
-                                                                value="{{ $course->semester }}">
-                                                        </td>
-                                                        <td>{{ $course->course_code }}</td>
-                                                        <td>{{ $course->course_title }}</td>
-                                                        <td>{{ $course->credit_unit }}</td>
-                                                @endif
+                                            @foreach ($lowercourseSecond as $key => $course)
+                                                <tr>
+                                                    <td> {{ $key + 1 }}. <input type="checkbox"
+                                                            id="{{ $course->credit_unit }}" name="courses2[]"
+                                                            {{ $course->course_category == 1 ? ' ' : '' }}
+                                                            value="{{ $course->course_id }}"
+                                                            class="{{ $course->credit_unit }}"
+                                                            onclick="{{ $course->course_category == 1 ? '' : 'totalIt2()' }}">
+                                                        <input type="hidden" name="course_units2[]"
+                                                            value="{{ $course->credit_unit }}">
+                                                        <input type="hidden" name="course_semester[]"
+                                                            value="{{ $course->semester }}">
+                                                    </td>
+                                                    <td>{{ $course->course_code }}</td>
+                                                    <td>{{ $course->course_title }}</td>
+                                                    <td>{{ $course->credit_unit }}</td>
                                             @endforeach
-                                            </tr>  --}}
-                                {{--  <tr>
+                                            </tr>
+                                            {{--  <tr>
                                 <td>Total Credit Unit</td>
                                 <td colspan="2"></td>
                                 <td id="result" name="total"></td>
 
                                 </tr>  --}}
-                                {{--  </tbody>
+                                        </tbody>
 
                                     </table>
-                                </div>  --}}
+                                </div>
 
 
                                 <button type="submit" class="btn btn-success">
@@ -311,7 +309,7 @@
                                             @foreach ($courseform as $key => $course)
                                                 @php
                                                     $tatolCredits += $course->course_unit;
-
+                                                    
                                                 @endphp
                                                 <tr>
                                                     {{--  <td> <input class="itemcourse" type="checkbox" id="course" name="courses[]" {{$course->course_category==1?"checked ":""}} value="{{ $course->course_code }}" onclick="{{$course->course_category==1?'return false':'totalIt()'}}"> </td>  --}}

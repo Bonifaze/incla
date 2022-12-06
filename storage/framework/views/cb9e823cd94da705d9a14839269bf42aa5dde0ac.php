@@ -42,7 +42,11 @@
                             <div class="container">
                                 <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
                                     <h6 class="m-0 font-weight-bold text-success">Current Level Course </h6>
-                                    
+                                    <div class="dropdown no-arrow">
+                                        <input type=button class=" btn btn-sm btn-success shadow-sm" name=type
+                                            id='bt1' value='Show Lower Level Courses'
+                                            onclick="setVisibility('sub3');";>
+                                    </div>
 
                                 </div>
                                 <table class="table table-bordered table-striped" width="100%" cellspacing="0">
@@ -158,22 +162,101 @@
 
                                 </table>
                                 
-                                
+                                 <div id="sub3">
+                                    <div
+                                        class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                                        <h6 class="m-0 font-weight-bold text-success">Lower  First Level Course </h6>
+                                    </div>
+
+                                    <table class="table table-bordered table-striped" width="100%" cellspacing="0">
+                                        <thead>
+                                            <tr>
+                                                <th>First Semester </th>
+                                                <th>Course Code</th>
+                                                <th>Course Title</th>
+                                                <th>Credit Unit</th>
+                                            </tr>
+                                        </thead>
+
+                                        <tbody>
+                                            <input id="" type="hidden" name="student_id"
+                                                value="<?php echo e(Auth::guard('student')->user()->id); ?>">
+                                            <input id="" type="hidden" name="session"
+                                                value="<?php echo e($session->id); ?>">
                                 
 
-                                
+                                 <?php $__currentLoopData = $lowercourseFirst; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $key => $course): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+
+
+                                                <tr>
+                                                    <td> <?php echo e($key+1); ?>.  <input type="checkbox" id="<?php echo e($course->credit_unit); ?>"
+                                                            name="courses1[]"
+                                                            <?php echo e($course->course_category == 1 ? ' ' : ''); ?>
+
+                                                            value="<?php echo e($course->course_id); ?>"
+                                                            class="<?php echo e($course->credit_unit); ?>"
+                                                            onclick="<?php echo e($course->course_category == 1 ? '' : 'totalIt2()'); ?>">
+                                                        <input type="hidden" name="course_units2[]"
+                                                            value="<?php echo e($course->credit_unit); ?>">
+                                                        <input type="hidden" name="course_semester[]"
+                                                            value="<?php echo e($course->semester); ?>">
+                                                    </td>
+                                                    <td><?php echo e($course->course_code); ?></td>
+                                                    <td><?php echo e($course->course_title); ?></td>
+                                                    <td><?php echo e($course->credit_unit); ?></td>
+
+                                            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                                            </tr>
                                 
                                 <h4 id="limit2" class="font-weight-bold text-danger fw-bold"></h4>
                                 </tbody>
 
                                 </table>
                                 
-                                
+                                <table class="table table-bordered table-striped" width="100%" cellspacing="0">
+                                        <thead>
+                                            <tr>
+                                                <th>Second Semester </th>
+                                                <th>Course Code</th>
+                                                <th>Course Title</th>
+                                                <th>Credit Unit</th>
+                                            </tr>
+                                        </thead>
+
+                                        <tbody>
+                                            <input id="" type="hidden" name="student_id"
+                                                value="<?php echo e(Auth::guard('student')->user()->id); ?>">
+                                            <input id="" type="hidden" name="session"
+                                                value="<?php echo e($session->id); ?>">
                                 
 
+                                  <?php $__currentLoopData = $lowercourseSecond; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $key => $course): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+
+
+                                                <tr>
+                                                    <td> <?php echo e($key+1); ?>.  <input type="checkbox" id="<?php echo e($course->credit_unit); ?>"
+                                                            name="courses2[]"
+                                                            <?php echo e($course->course_category == 1 ? ' ' : ''); ?>
+
+                                                            value="<?php echo e($course->course_id); ?>"
+                                                            class="<?php echo e($course->credit_unit); ?>"
+                                                            onclick="<?php echo e($course->course_category == 1 ? '' : 'totalIt2()'); ?>">
+                                                        <input type="hidden" name="course_units2[]"
+                                                            value="<?php echo e($course->credit_unit); ?>">
+                                                        <input type="hidden" name="course_semester[]"
+                                                            value="<?php echo e($course->semester); ?>">
+                                                    </td>
+                                                    <td><?php echo e($course->course_code); ?></td>
+                                                    <td><?php echo e($course->course_title); ?></td>
+                                                    <td><?php echo e($course->credit_unit); ?></td>
+
+                                            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                                            </tr>
                                 
-                                
-                                
+                              </tbody>
+
+                                    </table>
+                                </div>
 
 
                                 <button type="submit" class="btn btn-success">

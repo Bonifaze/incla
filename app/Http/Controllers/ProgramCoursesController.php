@@ -246,16 +246,9 @@ DB::commit();
         $this->authorize('delete',ProgramCourse::class);
         $pcourse = ProgramCourse::find($request->id);
 
-        if(!$pcourse->results()->exists())
-        {
         $pcourse->delete();
         return redirect()->route('program_course.list')
         ->with('success','Program Course deleted successfully');
-        }
-        else {
-            return redirect()->route('program_course.list')
-            ->with('error','Program Course has registered students and cannot be deleted');
-        }
 
     } // end delete
 

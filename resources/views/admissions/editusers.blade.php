@@ -1,17 +1,45 @@
-@php
+@extends('layouts.mini')
 
-if (!session('adminId')) {
-    header('location: /adminLogin');
-    exit();
-}
-@endphp
-@extends('layouts.app')
+
+
+@section('pagetitle')
+    Staff Home
+@endsection
+
+
+
+<!-- Sidebar Links -->
+
+<!-- Treeview -->
+@section('staff-open')
+    menu-open
+@endsection
+
+@section('staff')
+    active
+@endsection
+
+<!-- Page -->
+@section('staff-home')
+    active
+@endsection
+
+<!-- End Sidebar links -->
+
+
 
 @section('content')
-    <!-- Page Wrapper -->
-    <div id="wrapper">
+    <div class="content-wrapper bg-white">
 
-        @include('layouts.sidebar')
+        <!-- Main content -->
+        <section class="content">
+            <div class="container-fluid">
+                <!-- left column -->
+                <div class="col_full">
+                    <h1
+                        class="app-page-title text-uppercase h5 font-weight-bold p-2 mb-2 shadow-sm text-center text-success border">
+                      Edit Applicant
+                    </h1>
 
 
         <div class="container">
@@ -21,7 +49,7 @@ if (!session('adminId')) {
                 @endif
                 <form method="POST" action="/editusersinfo" id="signup-form" class="shadow p-4">
                     @csrf
-                    <h2 class="form-title text-success mx-3 text-uppercase">Edit User</h2>
+
                     <div class="form-group">
 
                         <div class="form-group">
@@ -44,16 +72,17 @@ if (!session('adminId')) {
 
                             <label for="firstname">Applicant Type:  <strong> {{ $allApp->applicant_type }}
                                 </strong></label>
-                            <input id="name" type="text" class="form-input form-control m-3" name="applicant_type"
-                                value="{{ $allApp->applicant_type }}" placeholder="Allicant Type" autofocus>
-                            {{-- <select class="form-input form-control m-3" name="category">
-                                <option >{{ $fee_types->category }}</option>
-                                <option value="1"> Application Fee</option>
-                                <option value="2">Acceptance Fee</option>
-                                <option value="3">School Fee</option>
-                                <option value="4">Other Fee</option>
+                            {{--  <input id="name" type="text" class="form-input form-control m-3" name="applicant_type"
+                                value="{{ $allApp->applicant_type }}" placeholder="Allicant Type" autofocus>  --}}
+                            <select class="form-input form-control m-3" name="applicant_type">
+                                <option value="{{ $allApp->applicant_type }}" >{{ $allApp->applicant_type }}</option>
+                                <option value="DE"> DE</option>
+                                <option value="Transfer">Transfer</option>
+                                <option value="PG">PG</option>
+                                <option Value="UTME">UTME</option>
 
-                            </select> --}}
+
+                            </select>
                             <button type="submit" class=" btn text-white fw-bold bg-success bg-gradient mx-3 px-4">
                                 {{ __('Edit') }}
                             </button>
@@ -64,4 +93,8 @@ if (!session('adminId')) {
             </div>
         </div>
     </div>
+@endsection
+
+@section('pagescript')
+    <script src="<?php echo asset('dist/js/bootbox.min.js'); ?>"></script>
 @endsection

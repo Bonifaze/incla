@@ -21,6 +21,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
 use App\Computations\ResultComputation;
 use Illuminate\Database\QueryException;
+use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Redirect;
 
 class AdminController extends Controller
@@ -1891,15 +1892,15 @@ public function changecourseTransfer(Request $req)
                     'email' => $req->email,
                     'phone' => $req->phone,
                     'applicant_type' =>$req->applicant_type,
-                    'email_verified_at' =>$req->email_verified_at
+                    'email_verified_at' =>Carbon::now()
 
                 ]);
-                $approvalMsg = '<div class="alert alert-success alert-dismissible" role="alert"> <button type="button" class="close" data-dismiss="alert"> &times; </button> You have successful Edited the User </div>';
-                return redirect('/admissions.adminallUsers')->with('approvalMsg', $approvalMsg);
+                $approvalMsg = '<div class="alert alert-success alert-dismissible" role="alert"> <button type="button" class="close" data-dismiss="alert"> &times; </button> You have successful Edited the User '.$req->first_name.'  '.$req->surname.' </div>';
+                return redirect('/admissons/students/search')->with('approvalMsg', $approvalMsg);
 
         } catch (QueryException $e) {
             $approvalMsg = '<div class="alert alert-danger alert-dismissible" role="alert"> <button type="button" class="close" data-dismiss="alert"> &times; </button> Your Edit was not successful'.$e->getMessage();' </div>';
-            return redirect('/admissions.adminallUsers')->with('approvalMsg', $approvalMsg);
+            return redirect('/admissons/students/search')->with('approvalMsg', $approvalMsg);
             // return redirect('/newPayment/')->with('mgs',$statusMsg);
         }
     }
@@ -1916,6 +1917,7 @@ public function changecourseTransfer(Request $req)
 
         try {
             $newpass='welcome';
+            // dd($newpass);
             DB::table('users')->where('email', $req->email)
             ->update([
 
@@ -1924,12 +1926,13 @@ public function changecourseTransfer(Request $req)
                 'password' => Hash::make($newpass)
 
             ]);
-                $approvalMsg = '<div class="alert alert-success alert-dismissible" role="alert"> <button type="button" class="close" data-dismiss="alert"> &times; </button> User Password has been Reset to <strong>welcome</strong> </div>';
-                return redirect('/adminallUsers')->with('approvalMsg', $approvalMsg);
+
+                $approvalMsg = '<div class="alert alert-success alert-dismissible" role="alert"> <button type="button" class="close" data-dismiss="alert"> &times; </button> '. $req->email.' Password has been Reset to <strong>welcome</strong> </div>';
+                return redirect('/admissons/students/search')->with('approvalMsg', $approvalMsg);
                 // return redirect('allUsers');
         } catch (QueryException $e) {
             $approvalMsg = '<div class="alert alert-danger alert-dismissible" role="alert"> <button type="button" class="close" data-dismiss="alert"> &times; </button> Your Verification was not successful'.$e->getMessage();' </div>';
-            return redirect('/adminallUsers')->with('approvalMsg', $approvalMsg);
+            return redirect('/admissons/students/search')->with('approvalMsg', $approvalMsg);
             // return redirect('/newPayment/')->with('mgs',$statusMsg);
         }
     }
@@ -1938,6 +1941,7 @@ public function changecourseTransfer(Request $req)
    return view('admissions.error', compact('loginMsg'));
  }
  }
+
  public function resetadminpassword(Request $req)
  {
     $staff = Auth::guard('staff')->user();
@@ -1998,7 +2002,9 @@ public function viewaddRemitasServiceType(){
                     'gender_code' => 1,
                     'provider_code' => $req->provider_code,
                     'status' => 1,
-                    'category' => $req->category
+                    'category' => $req->category,
+                    'installment'=>$req->installment,
+                    'college_id'=> 0
 
                 ]);
 
@@ -2018,8 +2024,8 @@ public function viewaddRemitasServiceType(){
                     $signUpMsg = '<div class="alert alert-danger alert-dismissible"><button type="button" class="close" data-dismiss="alert">&times;</button><strong>Error!</strong> You cant add Thesame Serice Type Twice </div>';
                     return redirect('/addRemitaServiceType')->with('signUpMsg', $signUpMsg);
                 } else {
-                    $signUpMsg = '<div class="alert alert-danger alert-dismissible"><button type="button" class="close" data-dismiss="alert">&times;</button><strong>Error!</strong>  Try again /div>';
-                    //   $signUpMsg = '<div class="alert alert-danger alert-dismissible"><button type="button" class="close" data-dismiss="alert">&times;</button><strong>Error!</strong>  please try again later or call Veritas University help line'.$e->getMessage().'</div>';
+                    // $signUpMsg = '<div class="alert alert-danger alert-dismissible"><button type="button" class="close" data-dismiss="alert">&times;</button><strong>Error!</strong>  Try again </div>';
+                      $signUpMsg = '<div class="alert alert-danger alert-dismissible"><button type="button" class="close" data-dismiss="alert">&times;</button><strong>Error!</strong>  please try again'.$e->getMessage().'</div>';
                     return redirect('/addRemitaServiceType')->with('signUpMsg', $signUpMsg);
                 }
             }
@@ -2144,6 +2150,44 @@ else {
 
 
    }
+
+
+   public function search()
+    {
+        // $this->authorize('search', Student::class);
+        return view('admissions.students.admin.search');
+    } //end search
+
+
+    public function find(Request $request)
+    {
+    //    $this->authorize('search', Student::class);
+        $users = DB::table('users')
+        ->where('surname', 'like', '%'.$request->data.'%')
+        ->orWhere('id', $request->data)
+        ->orWhere('first_name', 'like', '%'.$request->data.'%')
+        ->orWhere('phone', 'like', '%'.$request->data.'%')
+        ->orWhere('email', 'like', '%'.$request->data.'%')
+        //add full matric search
+        //->orWhereHas('academic', function ($query) use ($request){
+            //$query->where('mat_no', '=', $request->data);
+        //})
+        ->orderBy('id')
+        ->orderBy('surname')
+        ->paginate(50);
+        if(count($users) > 0)
+        {
+            $request->session()->flash('message', '');
+            return view('admissions.students.admin.list',compact('users'));
+        }
+        else
+        {
+            $request->session()->flash('message', 'No Matching Applicants record found. Try to search again !');
+            return view ('admissions.students.admin.search');
+        }
+
+    } // end find
+
 
 }
 

@@ -43,6 +43,23 @@ class RegisteredCourse extends Model
     {
         return ProgramCourse::where('id', $this->course_id)->first()->course_category ?? '';
     }
+    public function programCourse()
+    {
+        return $this->belongsTo('App\ProgramCourse', 'course_id');
+    }
+
+    public function RegisteredCourse($student_id, $session, $semester)
+       {
+
+          $results = $this::with(['ProgramCourse','programCourse.course'])
+           ->where('session', $session)
+           ->where('semester', $semester)
+           ->where('student_id', $student_id)
+              ->whereHas('ProgramCourse')
+           ->get();
+           return $results;
+
+       }
 
 
 }

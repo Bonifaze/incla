@@ -81,7 +81,8 @@
 
                          <li><a href="<?php echo e(route('admin.show_compute')); ?>" class="dropdown-item">Compute Result
                         </a></li>
-                
+                <li><a href="<?php echo e(route('result.search_student')); ?>" class="dropdown-item">ICT Upload Results </a></li>
+               
 
 
             </ul>

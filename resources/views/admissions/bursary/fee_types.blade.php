@@ -80,7 +80,7 @@ if(!session('adminId'))
                             <div class="card-body">
                                 <div class="table-responsive card-body">
 
-                                    {{--  @include('partialsv3.flash')  --}}
+                                    @include('partialsv3.flash')
 
 
                                     <table class="table table-striped">
@@ -92,6 +92,7 @@ if(!session('adminId'))
                                             <th>Provider Code</th>
                                             <th>Provider</th>
                                             <th>Total</th>
+                                            <th>Balance</th>
                                             <th>Action</th>
 
 
@@ -104,7 +105,15 @@ if(!session('adminId'))
 
 
                                         <tbody>
+                                        @php
+                                $tatolAmount = 0;
+                                      $tatolAmount1 = 0;
+                                      $totalBal =0;
+                            @endphp
                                             @foreach ($feeTypes as $key => $fee)
+                                                  @php
+                                      $tatolAmount += $fee->paidRemitas->sum('amount');
+                                   @endphp
                                                 <tr>
                                                     <td>{{ $key + 1 }}</td>
                                                     <td>{{ $fee->name }}</td>
@@ -112,12 +121,34 @@ if(!session('adminId'))
                                                     <td>{{ $fee->provider_code }}</td>
                                                     <td>{{ $fee->provider }}</td>
                                                     <td> &#8358;{{ number_format($fee->paidRemitas->sum('amount')) }}</td>
+                                                      @if($fee->installment == 1)
+                                                    <td>&#8358;0</td>
+                                                       @else
+                                                                 @php
+                                      $tatolAmount1 += $fee->paidRemitas->sum('amount');
+                                   @endphp
+                                                    <td>&#8358;{{ number_format($fee->paidRemitas->sum('amount')) }}</td>
+                                                      @endif
                                                     <td> <a class="btn btn-success" target="_blank"
                                                             href="{{ route('remita.fee-type', $fee->id) }}"> Show </a></td>
 
                                                 </tr>
                                             @endforeach
+                                     <tr>
+                                        <td></td>
+                                        <td><strong>Total </strong></td>
+                                        <td></td>
+                                        <td ></td>
+                                        <td></td>
+                                       <td><strong>&#8358;{{ number_format(  $tatolAmount)}} </strong></td>
+                                        <td><strong>&#8358;{{ number_format(  $tatolAmount1)}} </strong></td>
+                                                     @php
+                                      $tatolBal =$tatolAmount - $tatolAmount1;
+                                   @endphp
+                                   <td></td>
+                                        {{--  <td>&#8358;{{ number_format( $tatolBal) }}</td>  --}}
 
+                                    </tr>
                                         </tbody>
 
 

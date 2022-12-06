@@ -18,6 +18,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use App\Mail\forgotpassword;
+use App\Models\users;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Database\QueryException;
@@ -109,8 +110,16 @@ class ApplicantController extends Controller
     // Begin of Login function
     public function login(Request $request)
     {
+        $userid = DB::table('users')->where('email', $request->email)->first();
+        if ($userid->id == 'null') {
+
+            $loginMsg = '<div class="alert alert-danger alert-dismissible" role="alert"> <button type="button" class="close" data-dismiss="alert"> &times; </button>  Wrong Email or Password  </div>';
+            return redirect('/admissions/login')->with('loginMsg', $loginMsg);
+        }
+
         $users = DB::table('users')->where('email', $request->email)
         ->leftJoin('usersbiodata', 'usersbiodata.user_id', '=', 'users.id')
+        // ->leftJoin('students', 'students.user_id', '=', 'users.id')
         ->leftJoin('remitas', 'remitas.user_id', '=', 'users.id')
         ->select('users.*', 'usersbiodata.status', 'usersbiodata.user_id', 'remitas.status_code', 'remitas.fee_type', 'remitas.amount')
         ->get();
@@ -186,19 +195,19 @@ class ApplicantController extends Controller
                         return redirect('/admission');
                     }
                     // return redirect('/adminHome') ->with ('name', $fullName);
-                    return view('admissions./home', compact('fullName'));
+                    return view('admissions/home', compact('fullName'));
                 } else {
                     $loginMsg = '<div class="alert alert-danger alert-dismissible" role="alert"> <button type="button" class="close" data-dismiss="alert"> &times; </button>  Your Acount have not been Activated, Kindly Check your Mail to Verify your Account </div>';
 
-                    return redirect('/')->with('loginMsg', $loginMsg);
+                    return redirect('/admissions/login')->with('loginMsg', $loginMsg);
                 }
             } else {
                 $loginMsg = '<div class="alert alert-danger alert-dismissible" role="alert"> <button type="button" class="close" data-dismiss="alert"> &times; </button>  Wrong Email or Password </div>';
-                return redirect('/')->with('loginMsg', $loginMsg);
+                return redirect('/admissions/login')->with('loginMsg', $loginMsg);
             }
         } {
             $loginMsg = '<div class="alert alert-danger alert-dismissible"><button type="button" class="close" data-dismiss="alert">&times;</button><strong>Error!</strong> Wrong email or password</div>';
-            return redirect('/')->with('loginMsg', $loginMsg);
+            return redirect('/admissions.login')->with('loginMsg', $loginMsg);
         }
         //echo $jsonstring;
     }
@@ -244,7 +253,7 @@ class ApplicantController extends Controller
         $uid = base64_decode($req->uid);
         $myLink = DB::table('password_resets')->where('email', $uid)->where('token', $pwrc)->first();
         if ($myLink) {
-            return view('admissions./forgotpasswordSetNew', compact('uid'));
+            return view('admissions/forgotpasswordSetNew', compact('uid'));
         } else {
             echo "This Link does not exist";
             return false;
@@ -290,6 +299,12 @@ class ApplicantController extends Controller
             ->leftJoin('remitas', 'remitas.user_id', '=', 'users.id')
             // ->select('remitas.status_code', 'remitas.fee_type', 'remitas.fee_type_id', 'remitas.created_at')
             ->get();
+            $generate =DB::table('students')->where('user_id', session('userid'))
+            ->first();
+
+            if ($generate->user_id == session('userid')){
+            return redirect()->route('admissions.student.show',$generate->id);
+            }
   foreach ($payment as $utm){
                 if ($utm->status_code == '01' && $utm->amount >=200000) {
                     return redirect('completeadmissions');          }
@@ -305,8 +320,10 @@ class ApplicantController extends Controller
 
             return redirect('/admission');
         }
-        return view('admissions.home', compact('paymen'));
+
+
     }
+
 
     // END OF HOME FUNCTION PASSING PARAMETER USEFUL FOR THE BLADE
 
@@ -2732,15 +2749,15 @@ function editutmejamb(Request $req)
                     'email' => $req->email,
                     'phone' => $req->phone,
                     'applicant_type' =>$req->applicant_type,
-                    'email_verified_at' =>$req->email_verified_at
+                    'email_verified_at' =>Carbon::now()
 
                 ]);
                 $approvalMsg = '<div class="alert alert-success alert-dismissible" role="alert"> <button type="button" class="close" data-dismiss="alert"> &times; </button> You have successful Edited the User </div>';
-                return redirect('/admissions.adminallUsers')->with('approvalMsg', $approvalMsg);
+               return redirect()->route('admissions/students/search')->with('approvalMsg', $approvalMsg);
 
         } catch (QueryException $e) {
             $approvalMsg = '<div class="alert alert-danger alert-dismissible" role="alert"> <button type="button" class="close" data-dismiss="alert"> &times; </button> Your Edit was not successful'.$e->getMessage();' </div>';
-            return redirect('/admissions.adminallUsers')->with('approvalMsg', $approvalMsg);
+            return view('admissions.students.admin.search')->with('approvalMsg', $approvalMsg);
             // return redirect('/newPayment/')->with('mgs',$statusMsg);
         }
     }
@@ -2765,7 +2782,7 @@ function editutmejamb(Request $req)
 
             ]);
                 $approvalMsg = '<div class="alert alert-success alert-dismissible" role="alert"> <button type="button" class="close" data-dismiss="alert"> &times; </button> User Password has been Reset to <strong>welcome</strong> </div>';
-                return redirect('/adminallUsers')->with('approvalMsg', $approvalMsg);
+                return redirect('/admissons/students/search')->with('approvalMsg', $approvalMsg);
                 // return redirect('allUsers');
         } catch (QueryException $e) {
             $approvalMsg = '<div class="alert alert-danger alert-dismissible" role="alert"> <button type="button" class="close" data-dismiss="alert"> &times; </button> Your Verification was not successful'.$e->getMessage();' </div>';
@@ -2968,5 +2985,41 @@ else {
 
    }
 
+
+//    public function search()
+//     {
+//         // $this->authorize('search', Student::class);
+//         return view('admissions.students.admin.search');
+//     } //end search
+
+
+//     public function find(Request $request)
+//     {
+//     //    $this->authorize('search', Student::class);
+//         $users = DB::table('users')
+//         ->where('surname', 'like', '%'.$request->data.'%')
+//         ->orWhere('id', $request->data)
+//         ->orWhere('first_name', 'like', '%'.$request->data.'%')
+//         ->orWhere('phone', 'like', '%'.$request->data.'%')
+//         ->orWhere('email', 'like', '%'.$request->data.'%')
+//         //add full matric search
+//         //->orWhereHas('academic', function ($query) use ($request){
+//             //$query->where('mat_no', '=', $request->data);
+//         //})
+//         ->orderBy('id')
+//         ->orderBy('surname')
+//         ->paginate(50);
+//         if(count($users) > 0)
+//         {
+//             $request->session()->flash('message', '');
+//             return view('admissions.students.admin.list',compact('users'));
+//         }
+//         else
+//         {
+//             $request->session()->flash('message', 'No Matching Applicants record found. Try to search again !');
+//             return view ('admissions.students.admin.search');
+//         }
+
+//     } // end find
 
 }

@@ -639,9 +639,9 @@ class AdminStudentsController extends Controller
     public function reset(Request $request)
     {
         $this->authorize('reset',Student::class);
-        $this->validate($request, [
-            'id' => 'required|integer',
-        ]);
+        // $this->validate($request, [
+        //     'id' => 'required|integer',
+        // ]);
         $student = Student::findOrFail($request->id);
         $student->password = Hash::make("welcome");
         $student->save();
@@ -666,8 +666,8 @@ ICT Unit<br />
         }
 
 
-        return redirect()->route('staff.home', $student->id)
-            ->with('success',$student->full_name.' password changed to welcome successfully');
+        return redirect()->route('student.show', $student->id)
+            ->with('success','You have Successfully Reset '.$student->full_name.' password to  " welcome " ');
     } // end reset
 
     public function emailList($level)

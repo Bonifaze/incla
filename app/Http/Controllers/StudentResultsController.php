@@ -2,36 +2,39 @@
 
 namespace App\Http\Controllers;
 
-use App\SemesterResultOutstanding;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Auth;
-use App\Program;
 use App\Course;
+use App\Program;
 use App\Session;
 use App\Student;
-use App\StudentAcademic;
-use App\StudentResult;
-use App\SemesterRegistration;
 use App\ProgramCourse;
+use App\StudentResult;
+use App\StudentAcademic;
+use Illuminate\Http\Request;
+use App\SemesterRegistration;
+use App\Models\RegisteredCourse;
+use App\SemesterResultOutstanding;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Database\QueryException;
+use Illuminate\Support\Facades\Redirect;
 
 class StudentResultsController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('auth:staff');  
-     
+        $this->middleware('auth:staff');
+
     }
-    
-    
-    
+
+
+
     public function searchStudent()
     {
         $this->authorize('manage', StudentResult::class);
         $programs = Program::orderBy('name','ASC')->pluck('name','id');
         return view('results.search-student',compact('programs'));
     }
-    
+
     public function findStudent(Request $request)
     {
         $this->authorize('manage', StudentResult::class);
@@ -63,8 +66,8 @@ class StudentResultsController extends Controller
             ->with(['programs' => $programs, 'error' => 'No Student was found']);
         }
     } // end find
-    
-    
+
+
     public function manageStudent($id)
     {
         $this->authorize('manage', StudentResult::class);
@@ -94,10 +97,10 @@ class StudentResultsController extends Controller
             return redirect()->route('result.manage_student',$student->id)
             ->with(['error' => 'No Course Registration found.']);
         }
-      
+
     } // end programResultUpload
-    
-    
+
+
     public function store(Request $request)
     {
         $this->authorize('upload', StudentResult::class);
@@ -261,7 +264,7 @@ class StudentResultsController extends Controller
             return redirect()->route('result.manage_student',$student_id)
             ->with(['error' => 'No Semester Registration.']);
         }
-        
+
         $results = StudentResult::with(['programCourse','programCourse.course'])->where('student_id',$student_id)
         ->where('session_id',$session_id)
         ->where('semester',$semester)
@@ -277,25 +280,34 @@ class StudentResultsController extends Controller
         $this->authorize('register', StudentResult::class);
        return redirect()->route('result.register',[$request->student_id,$request->session_id,$request->semester,$request->level]);
     } // end registration
-    
-   
+
+
     public function register($student_id,$session_id,$semester,$level)
     {
         $this->authorize('register', StudentResult::class);
         $student = Student::findOrFail($student_id);
+     
         $session = Session::findOrFail($session_id);
         $course = new Course();
             $pcourse = new ProgramCourse();
-            $result = new StudentResult();
+            $result = new RegisteredCourse();
+            $results=RegisteredCourse::where('student_id',  $student->id)
+            ->where('registered_courses.semester', $semester)
+            ->where('session',  $session->id)
+            ->get();
             $fresh_courses = $pcourse->oldStudentFreshCourses($student, $session,$semester,$level);
             $carry_over = $pcourse->oldStudentCarryOverCourses($student, $session,$semester,$level);
-            $results = $result->semesterRegisteredCourses($student->id,$session_id,$semester);
+            // $results = $result->RegisteredCourse($student->id,$session,$semester);
             $total_credit = $student->totalRegisteredCredits($results);
             $allowed_credits = $student->allowedCredits($session_id,$semester);
             $registration = $student->hasSemesterRegistration($session->id,$semester);
-            return view('results.course_registration',compact('student','fresh_courses', 'carry_over', 'results', 'total_credit','session','semester','level', 'allowed_credits'));
+            $courseform = RegisteredCourse::where('student_id',  $student->id)
+            ->where('registered_courses.semester', $semester)
+            ->where('session',  $session->id)
+            ->get();
+            return view('results.course_registration',compact('courseform','student','fresh_courses', 'carry_over', 'results', 'total_credit','session','semester','level', 'allowed_credits'));
     } // end register
-    
+
     /**
      * Remove the specified resource from storage.
      *
@@ -305,43 +317,77 @@ class StudentResultsController extends Controller
     public function removeRegisteredCourse(Request $request)
     {
         $this->authorize('register', StudentResult::class);
-        $result = StudentResult::findOrFail($request->result_id);
+        // $result = RegisteredCourse::findOrFail($request->course_id);
+       
         $session = Session::findorFail($request->session_id);
         $student = Student::findOrFail($request->student_id);
         $semester = $request->semester;
         $level = $request->level;
-        $results  = $result->semesterRegisteredCourses($student->id,$session->id,$semester);
+        $results  = RegisteredCourse::where('student_id',  $student->id)
+        ->where('registered_courses.semester', $semester)
+        ->where('session',  $session->id)
+        ->get();
+        // dd($results);
+    
         $balance = count($results);
         //if($result->status == 7 OR $result->total !== 0)
-        if($result->total !== 0)
-        {
-            return redirect()->route('result.register',[$student->id,$session->id,$semester,$level])
-            ->with('error',"Errors removing course. Result already available for course");
-        }
+        // if($result->total !== 0)
+        // {
+        //     return redirect()->route('result.register',[$student->id,$session->id,$semester,$level])
+        //     ->with('error',"Errors removing course. Result already available for course");
+        // }
         DB::beginTransaction(); //Start transaction!
         try {
-            $result->delete();
-            if($balance === 1 )
-            {
-                if(!$student->removeSemesterRegistration($session->id,$semester))
-                {
+            $results->delete();
+            
+            
+               
                     return redirect()->route('result.register',[$student->id,$session->id,$semester,$level])
                     ->with('error',"Errors removing semester registration");
-                }
-            }
+            
+            
         }
         catch(\Exception $e)
         {
             //failed logic here
             DB::rollback();
             return redirect()->route('result.register',[$student->id,$session->id,$semester,$level])
-            ->with('error',"Errors removing course.");
+            ->with('error',"Errors removing course.".$e->getMessage());
         }
         DB::commit();
         return redirect()->route('result.register',[$student->id,$session->id,$semester,$level])
         ->with('success','Course removed successfully');
     } // removeRegisteredCourse
 
+    public function dropcourse_Reg(Request $request)
+{
+    // $student = Auth::guard('student')->user();
+    $courses = $request->courses;
+    $session = Session::findorFail($request->session_id);
+    $student = Student::findOrFail($request->student_id);
+    $semester = $request->semester;
+    $level = $request->level;
+        // dd($courses);
+    try {
+
+        foreach ($courses as $course) {
+            DB::table('registered_courses')
+            ->where('course_id',  $course)
+            ->where ('session', $this->getcurrentsession() )
+                    ->where('student_id', $student->id)
+
+            ->delete();
+                // 'status' => 0
+
+        }
+        return redirect()->route('result.register',[$student->id,$session->id,$semester,$level])
+        ->with('success','Course removed successfully');
+    } catch (QueryException $e) {
+        return redirect()->route('result.register',[$student->id,$session->id,$semester,$level])
+            ->with('error',"Errors removing course.".$e->getMessage());
+    }
+
+}
     /**
      * Add the specified resource to storage.
      *
@@ -356,9 +402,12 @@ class StudentResultsController extends Controller
         $student = Student::findOrFail($request->student_id);
         $semester = $request->semester;
         $level = $request->level;
-        if($student->hasExcessSemesterCredits($result->semesterRegisteredCourses($student->id,$session->id,$semester),$request->program_course_id,$request->session_id,$request->semester))
-        {
-            $result->program_course_id = $request->program_course_id;
+        $program_id =$request->program_id;
+        $fcourse =$request->course_id;
+        // dd( $program_id =$request->program_id);
+        // if($student->hasExcessSemesterCredits($result->semesterRegisteredCourses($student->id,$session->id,$semester),$request->course_id,$request->session_id,$request->semester))
+        // {
+            $result->program_course_id = $request->course_id;
             $result->session_id = $session->id;
             $result->semester = $semester;
             $result->student_id = $student->id;
@@ -369,12 +418,15 @@ class StudentResultsController extends Controller
                 if(!$student->hasSemesterRegistration($session->id,$semester))
                 {
                     //register semester
-                    $sem_reg = new SemesterRegistration();
+                    $sem_reg = new RegisteredCourse();
                     $sem_reg->student_id = $student->id;
-                    $sem_reg->session_id = $session->id;
+                    $sem_reg->session = $session->id;
                     $sem_reg->semester = $semester;
                     $sem_reg->level = $level;
-                    $sem_reg->status = 1;
+                    $sem_reg->program_id = $program_id;
+                    $sem_reg->course_id = $fcourse;
+
+                    // $sem_reg->status = 1;
                     try {
                         $sem_reg->save();
                     }
@@ -383,7 +435,7 @@ class StudentResultsController extends Controller
                         //failed logic here
                         DB::rollback();
                         return redirect()->route('result.register',[$student->id,$session->id,$semester,$level])
-                       ->with('error',"Errors completing semester registration.");
+                       ->with('error',"Errors completing semester registration.".$e->getMessage());
                     }
                 }
             }
@@ -397,12 +449,12 @@ class StudentResultsController extends Controller
             DB::commit();
             return redirect()->route('result.register',[$student->id,$session->id,$semester,$level])
             ->with('success','Course added successfully');
-        }
-        else
-        {
-            return redirect()->route('result.register',[$student->id,$session->id,$semester,$level])
-            ->with('error',"Maximum allowed credit reached.");
-        }
+        // }
+        // else
+        // {
+        //     return redirect()->route('result.register',[$student->id,$session->id,$semester,$level])
+        //     ->with('error',"Maximum allowed credit reached.");
+        // }
     } // end addCourse(Request $request)
 
 

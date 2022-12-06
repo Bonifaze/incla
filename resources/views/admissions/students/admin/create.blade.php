@@ -755,7 +755,7 @@ exit;
     <!-- bootstrap datepicker -->
     <script src="{{ asset('dist/js/components/bootstrap-datepicker.js') }}"></script>
     <!-- Bootstrap File Upload Plugin -->
-    <script src="{{ asset('dist/js/components/bs-filestyle.js') }}"></script> --}}
+    <script src="{{ asset('dist/js/components/bs-filestyle.js') }}"></script>
 
     <script type="text/javascript">
         //Date picker

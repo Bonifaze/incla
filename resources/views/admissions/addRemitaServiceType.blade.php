@@ -83,13 +83,30 @@
 
 
                             <select class="form-input form-control m-3" name="category">
-                                <option>Service Type Category</option>
+                                <option>FEE Type Category</option>
                                 <option value="1"> Application Fee</option>
                                 <option value="2">Acceptance Fee</option>
                                 <option value="3">School Fee</option>
                                 <option value="4">Other Fee</option>
 
                             </select>
+
+                              <select class="form-input form-control m-3" name="installment">
+                                <option>Payment Type Instalment</option>
+                                <option value="1"> Full Payment </option>
+                                <option value="2">Part Payment</option>
+
+
+                            </select>
+
+                                <select class="form-input form-control m-3" name="college_id">
+                                <option>College </option>
+                                <option value="1"> Full Payment </option>
+                                <option value="2">Part Payment</option>
+
+
+                            </select>
+
 
                             <button type="submit" class=" btn text-white fw-bold bg-success bg-gradient mx-3 px-4">
                                 {{ __('Add Service Type') }}

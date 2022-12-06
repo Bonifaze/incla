@@ -250,6 +250,12 @@
                         </p>
                     </a>
                     <ul class="nav nav-treeview ml-4">
+                           <li class="nav-item">
+                            <a href="{{ route('admissions.student.search') }}" class="nav-link @yield('faculties')">
+                                <i class="fa fa-search nav-icon"></i>
+                                <p>Search</p>
+                            </a>
+                        </li>
                         <li class="nav-item">
                             <a href="/adminallUsers" class="nav-link @yield('faculties')">
                                 <i class="fa fa-eye nav-icon"></i>

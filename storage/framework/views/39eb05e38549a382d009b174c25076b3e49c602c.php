@@ -18,14 +18,34 @@
                 <h1 class="app-page-title text-uppercase h5 font-weight-bold p-2 mb-2 shadow-sm text-center text-success border">
                     Students Information
                 </h1>
+ <div class="row ">
+ <div class="col-4"></div>
+ <div class="col-4"></div>
+                                        <div class="col-4">
+						  <?php echo Form::open(['method' => 'Patch', 'route' => 'student.reset', 'id'=>'resetPasswordForm'.$student->id]); ?>
+
+						  <?php echo e(Form::hidden('id', $student->id)); ?>
+
+
+
+						  <button onclick="resetPassword(<?php echo e($student->id); ?>)" type="button" class="<?php echo e($student->id); ?> btn btn-danger" ><span class="icon-line2-trash"></span> Reset Password</button>
+						  <?php echo Form::close(); ?>
+
+					  </div>
+                           </div>
                 <div class="row py-4">
+
+
+
                     <div class="col-12 col-lg-6">
+
                         <div class="app-card app-card-account shadow d-flex flex-column align-items-start ">
 
                             <div class="app-card-header p-3 border-bottom-0">
                                 <div class="row align-items-center gx-3">
                                     <div class="col-auto">
                                         <h4 class="app-card-title">Bio Data     <a class="btn btn-info" href="<?php echo e(route('student.edit',$student->id)); ?>"> <i class="fa fa-edit"></i> Edit </a></h4>
+
                                     </div>
                                 </div>
                             </div>
@@ -527,6 +547,8 @@
                         </div>
                     </div>
                 </div>
+
+
             </div>
         </section>
         <!-- /.content -->

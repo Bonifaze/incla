@@ -200,8 +200,8 @@
 
                          <li><a href="{{ route('admin.show_compute') }}" class="dropdown-item">Compute Result
                         </a></li>
-                {{--  <li><a href="{{ route('result.search_student') }}" class="dropdown-item">ICT Upload Results </a></li>
-                <li><a href="{{ route('program_course.results_status') }}" class="dropdown-item">Program Result
+                <li><a href="{{ route('result.search_student') }}" class="dropdown-item">ICT Upload Results </a></li>
+               {{--   <li><a href="{{ route('program_course.results_status') }}" class="dropdown-item">Program Result
                         Status</a></li>
                 <li><a href="{{ route('result.program_search_student') }}" class="dropdown-item">Manage All
                         Results</a></li>

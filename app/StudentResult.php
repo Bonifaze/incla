@@ -8,23 +8,23 @@ use Illuminate\Support\Facades\DB;
 class StudentResult extends Model
 {
     //
-    
+
     //
     public function student()
     {
         return $this->belongsTo('App\Student', 'student_id');
     }
-    
+
     //
     public function session()
     {
         return $this->hasMany('App\Session', 'session_id');
     }
-    
+
     //
     public function programCourse()
     {
-        return $this->belongsTo('App\ProgramCourse', 'program_course_id');
+        return $this->belongsTo('App\ProgramCourse', 'course_id');
     }
 
     public function evaluations()
@@ -49,13 +49,13 @@ class StudentResult extends Model
     }
     public function getGradeAttribute()
     {
-        
+
         $session = $this->session_id;
         $score = $this->total;
         // for session before 2013 / 2014
         if($session < 6)
         {
-            
+
             if($score >= 70)
             {
                 $gp = "A";
@@ -84,9 +84,9 @@ class StudentResult extends Model
             {
                 $gp = "-";
             }
-            
+
             return $gp;
-            
+
         } // end if($session < 6)
 
 
@@ -118,53 +118,53 @@ class StudentResult extends Model
                 $gp = "-";
             }
             return $gp;
-            
+
         } // end else
     } // end grade attribute
-    
+
     public function getPassStatusAttribute()
     {
-        
+
         $session = $this->session_id;
         $score = $this->total;
-        
+
         // for session before 2013 / 2014
         if($session < 6)
         {
-            
+
             if($score >= 40)
             {
                 $status = "Pass";
             }
-            
+
             else
             {
                 $status = "Fail";
             }
-            
+
             return $status;
-            
+
         } // end if($session < 6)
-        
-        
+
+
         //for session from 2013 / 2014
         else
         {
-            
+
             if($score >= 45)
             {
                 $status = "Pass";
             }
-            
+
             else
             {
                 $status = "Fail";
             } // end else
-            
+
             return $status;
-            
+
         } // end else
-        
+
     } // end getPassStatusAttribute()
 
 
@@ -190,8 +190,8 @@ class StudentResult extends Model
         });
        return $passed;
     }
-    
-    
+
+
     public function getFailedCourses($student)
     {
         $failed = \Cache::remember('get_failed_courses', env("CACHE_TIME", "360"), function () use ($student) {
@@ -199,11 +199,11 @@ class StudentResult extends Model
         ->where('total','<',45)
         ->get();
         });
-        
+
         return $failed;
     }
-    
-    
+
+
     public function checkResit($passed)
     {
         //check if course id is the same
@@ -214,14 +214,14 @@ class StudentResult extends Model
             return true;
             }
          }
-        
+
       }
-      
+
       public function checkRegistered($student)
       {
           //get all courses taken by student with a pass
           $registered = $this->studentRegisteredCourses($student);
-          
+
           //check if course id is the same
           foreach ($registered as $key => $r)
           {
@@ -230,10 +230,10 @@ class StudentResult extends Model
                   return true;
               }
           }
-          
+
       }
-    
-    
+
+
       public function freshCourse($fresh_courses)
     {
          //check if course id is the same
@@ -244,9 +244,9 @@ class StudentResult extends Model
                 return $pc;
             }
         }
-        
+
        }
-       
+
        public function studentRegisteredCourses($student_id)
        {
           $session = new Session();
@@ -264,7 +264,7 @@ class StudentResult extends Model
 
        public function semesterRegisteredCourses($student_id, $session_id, $semester)
        {
-           
+
           $results = $this::with(['programCourse','programCourse.course'])
            ->where('session_id', $session_id)
            ->where('semester', $semester)
@@ -286,7 +286,7 @@ class StudentResult extends Model
                ->whereHas('programCourse')->get();
            $hours = 0;
            $units = 0;
-           
+
            foreach ($results as $result)
            {
               // if($results->programCourse) {
@@ -295,7 +295,7 @@ class StudentResult extends Model
                    $units += ($unit_value * $result->programCourse->hours);
                //}
            } // end foreach
-           
+
            if($hours != 0)
            {
                $value = $units / $hours;
@@ -304,15 +304,15 @@ class StudentResult extends Model
            {
                $value = 0.00;
            }
-           
+
            $value = round($value,2);
            $value = number_format(round($value,2),2,'.', '');
-           
+
            $gpa = collect([]);
            $gpa->value = $value;
            $gpa->hours = $hours;
            $gpa->units= $units;
-           
+
            return $gpa;
        } // gpa
 
@@ -364,19 +364,19 @@ class StudentResult extends Model
            ->where('session_id',$session_id)
            ->where('status',7)
            ->get();
-           
+
            $hours = 0;
            $units = 0;
-           
+
            foreach ($results as $result)
            {
-               
+
                $hours += $result->programCourse->hours;
                $unit_value = $this->getUnitValue($result->total, $session_id);
                $units += ($unit_value * $result->programCourse->hours);
-               
+
            } // end foreach
-           
+
            if($hours != 0)
            {
                $value = $units / $hours;
@@ -385,30 +385,30 @@ class StudentResult extends Model
            {
                $value = 0.00;
            }
-           
+
            $value = number_format(round($value,4),4,'.', '');
-            
+
            $cgpa = collect([]);
            $cgpa->value = $value;
            $cgpa->hours = $hours;
            $cgpa->units= $units;
-           
+
            return $cgpa;
-           
-           
-           
+
+
+
        } // cgpa
-       
-       
-       
-       
+
+
+
+
        function getUnitValue($score, $session_id)
        {
-           
+
            // for session before 2013 / 2014
            if($session_id < 6)
            {
-               
+
                if($score >= 70)
                {
                    $gp = 5;
@@ -433,17 +433,17 @@ class StudentResult extends Model
                {
                    $gp = 0;
                }
-               
+
                return $gp;
-               
+
            } // end if($session < 6)
-           
-           
+
+
            //for session from 2013 / 2014
            else
            {
-               
-               
+
+
                if($score >= 70)
                {
                    $gp = 5;
@@ -464,43 +464,43 @@ class StudentResult extends Model
                {
                    $gp = 0;
                }
-               
+
                return $gp;
-               
-               
+
+
            } // else
-           
+
        } // end getUnitValue($score)
-       
-       
-       
-       
+
+
+
+
        public function currentCGPA($student_id,$session_id,$semester)
        {
-           
+
            $level = SemesterRegistration::where('student_id',$student_id)
            ->where('session_id',$session_id)->where('semester',$semester)
            ->get()->first()->level;
-           
+
            //get registrations done below the level
-           
+
            $formerReg = SemesterRegistration::where('student_id',$student_id)
            ->where('level','<',$level)->get();
-           
-           
-           
+
+
+
            $hours = 0;
            $units = 0;
-           
-           
+
+
            foreach($formerReg as $key => $reg)
            {
                $gpa = $reg->gpa();
                $hours += $gpa->hours;
                $units += $gpa->units;
            }
-           
-          
+
+
            if($semester == 1)
            {
                $gpa = $this->gpa($student_id, $session_id, 1);
@@ -514,8 +514,8 @@ class StudentResult extends Model
                $hours += $gpa1->hours + $gpa2->hours;
                $units += $gpa1->units + $gpa2->units;
           }
-           
-           
+
+
            if($hours !== 0)
            {
                $value = $units / $hours;
@@ -524,16 +524,16 @@ class StudentResult extends Model
            {
                $value = 0.00;
            }
-           
+
            $value = number_format(round($value,2),2,'.', '');
-           
+
            $cgpa = collect([]);
            $cgpa->value = $value;
            $cgpa->hours = $hours;
            $cgpa->units= $units;
-           
+
            return $cgpa;
-           
+
        } // currentCGPA
 
 
@@ -566,9 +566,9 @@ class StudentResult extends Model
         }
 
     }
-       
-       
-      
-       
-    
+
+
+
+
+
 } // end class
