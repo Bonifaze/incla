@@ -27,7 +27,10 @@ Route::get('/results/register/{student_id}/{session_id}/{semester}/{level}', 'St
 
 Route::delete('/results/remove-course', 'StudentResultsController@removeRegisteredCourse')->name('result.remove-course');
 
-Route::post('/results/dropcourse-reg', 'StudentResultsController@dropcourse_Reg')->name('result.Adropcourse');;
+Route::post('/results/admindropcourse-reg', 'StudentResultsController@admindropcourse_Reg')->name('result.admindropcourse');
+
+Route::delete('/results/delete', 'StudentResultsController@delete')->name('result.delete');
+
 
 Route::post('/results/add-course', 'StudentResultsController@addCourse')->name('result.add-course');
 

@@ -179,9 +179,10 @@ DB::commit();
         $pcourse = ProgramCourse::findOrFail($id);
         $programs = Program::orderBy('name','ASC')->pluck('name','id');
         $sessions = Session::orderBy('id','DESC')->pluck('name','id');
-        $courses = Course::with('program')->where('program_id',$pcourse->course->program_id)
-        ->where('status',1)->orderBy('credit_unit','DESC')->orderBy('course_code','ASC')
-        ->get()->pluck('courseDescribe','id');
+        // $courses = Course::with('program')->where('program_id',$pcourse->course->program_id)
+        // ->where('status',1)->orderBy('credit_unit','DESC')->orderBy('course_code','ASC')
+        // ->get()->pluck('courseDescribe','id');
+        $courses = Course::orderBy('course_code', 'ASC')->get()->pluck('courseDescribe','id');
         $lecturers = Staff::join('staff_work_profiles', 'staff.id', '=', 'staff_work_profiles.staff_id')
         ->where('staff.status',1)
         ->orderBy('staff.first_name','ASC')

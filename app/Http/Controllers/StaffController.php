@@ -560,7 +560,7 @@ class StaffController extends Controller
                 }
             }
         }
-$data  =  $emails;
+        $data  =  $emails;
         return view('students.admin.plain',compact('data'));
 
     }

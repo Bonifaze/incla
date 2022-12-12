@@ -63,9 +63,12 @@
                         </thead>
 
                         <tbody>
-                            <form name=form1 method=post action="/results/dropcourse-reg">
-                                <?php echo csrf_field(); ?>
+                             <?php echo Form::open(['route' => 'result.admindropcourse', 'method' => 'POST', 'class' => 'nobottommargin']); ?>
 
+                       
+                                
+
+                                            
 
                                 
 
@@ -76,21 +79,48 @@
                                 <?php $__currentLoopData = $courseform; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $key => $course): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                     <?php
                                         $tatolCredits += $course->course_unit;
-                                        
+
                                     ?>
                                     <tr>
                                         
                                         <td> <input class="itemcourse" type="checkbox" id="course" name="courses[]"
-                                                <?php echo e($course->course_category == 1 ? 'disabled ' : ''); ?>
-
-                                                value="<?php echo e($course->course_id); ?>"
-                                                onclick="<?php echo e($course->course_category == 1 ? 'return false' : 'totalIt()'); ?>"><?php echo e($key + 1); ?>
+                                                ><?php echo e($key + 1); ?>
 
                                         </td>
                                         <td><?php echo e($course->course_code); ?> </td>
                                         <td><?php echo e($course->course_title); ?></td>
                                         <td><?php echo e($course->course_unit); ?></td>
-                                        
+                                        <input >
+                                        <td>
+                                            <?php echo Form::open(['method' => 'Delete', 'route' => 'program_course.delete', 'id'=>'deletePCourseForm'.$course->id]); ?>
+
+				    		<?php echo e(Form::text('id', $course->id)); ?>
+
+
+
+				    		<button onclick="deletePCourse(<?php echo e($course->id); ?>)" type="button" class="<?php echo e($course->id); ?> btn btn-danger" ><span class="icon-line2-trash"></span> Delete</button>
+				    		<?php echo Form::close(); ?>
+
+
+                                            <?php echo Form::open(['method' => 'Delete', 'route' => 'result.remove-course', 'id' => 'removeRCourse' . $course->id]); ?>
+
+                                            <?php echo e(Form::text('course_id', $course->course_id)); ?>
+
+                                            <?php echo e(Form::hidden('student_id', $student->id)); ?>
+
+                                            <?php echo e(Form::hidden('session_id', $session->id)); ?>
+
+                                            <?php echo e(Form::hidden('semester', $semester)); ?>
+
+                                            <?php echo e(Form::hidden('level', $level)); ?>
+
+
+                                            <button onclick="removeRCForm(<?php echo e($course->id); ?>)" type="button"
+                                                class="<?php echo e($course->id); ?> btn btn-danger"><span
+                                                    class="icon-line2-trash"></span> Drop</button>
+                                            <?php echo Form::close(); ?>
+
+                                        </td>
                                 <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                                 </tr>
                                 <tr>
@@ -102,11 +132,14 @@
                         </tbody>
 
                     </table>
-                    <button type="submit" class="btn btn-danger">
-                        <?php echo e(__('Drop course')); ?>
+                    
+                         <?php echo e(Form::submit('Drop Course', ['class' => 'btn btn-primary'])); ?>
 
-                    </button>
-                    </form>
+                        
+
+                        <?php echo Form::close(); ?>
+
+                    
 
 
                     <div class="table-responsive">
@@ -135,24 +168,16 @@
                                         <td><?php echo e($res->level); ?></td>
                                         <td><?php echo e($res->course_unit); ?></td>
                                         <td>
-                                            <?php echo Form::open(['method' => 'Delete', 'route' => 'result.remove-course', 'id' => 'removeRCourse' . $res->id]); ?>
+                                               <?php echo Form::open(['method' => 'post', 'route' => 'result.remove-course', 'id'=>'removeRCourse'.$res->id]); ?>
 
-                                            <?php echo e(Form::hidden('result_id', $res->id)); ?>
+				    		
+                             <input id="" type="text" name="id"
+                                                value="<?php echo e($res->id); ?>">
 
-                                            <?php echo e(Form::hidden('student_id', $student->id)); ?>
+				    		<button onclick="removeRCForm(<?php echo e($res->id); ?>)" type="button" class="<?php echo e($res->id); ?> btn btn-danger" ><span class="icon-line2-trash"></span> Delete</button>
+				    		<?php echo Form::close(); ?>
 
-                                            <?php echo e(Form::hidden('session_id', $session->id)); ?>
-
-                                            <?php echo e(Form::hidden('semester', $semester)); ?>
-
-                                            <?php echo e(Form::hidden('level', $level)); ?>
-
-
-                                            <button onclick="removeRCForm(<?php echo e($res->id); ?>)" type="button"
-                                                class="<?php echo e($res->id); ?> btn btn-danger"><span
-                                                    class="icon-line2-trash"></span> Drop</button>
-                                            <?php echo Form::close(); ?>
-
+                                            
                                         </td>
                                     </tr>
                                 <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>

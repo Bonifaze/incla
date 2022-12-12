@@ -1,19 +1,15 @@
-@extends('layouts.mini')
-
-
-
-@section('pagetitle') Edit Program Course @endsection
+<?php $__env->startSection('pagetitle'); ?> Edit Program Course <?php $__env->stopSection(); ?>
 
 
 <!-- Sidebar Links -->
 
 <!-- Treeview -->
-@section('courses-open') menu-open @endsection
+<?php $__env->startSection('courses-open'); ?> menu-open <?php $__env->stopSection(); ?>
 
-@section('courses') active @endsection
+<?php $__env->startSection('courses'); ?> active <?php $__env->stopSection(); ?>
 
 <!-- Page -->
- @section('create-course') active @endsection
+ <?php $__env->startSection('create-course'); ?> active <?php $__env->stopSection(); ?>
 
  <!-- End Sidebar links -->
 
@@ -21,7 +17,7 @@
 
 
 
-@section('content')
+<?php $__env->startSection('content'); ?>
 
 
 <div class="content-wrapper">
@@ -42,30 +38,28 @@
 
               <!-- /.card-header -->
               <!-- form start -->
-            @include('partialsv3.flash')
+            <?php echo $__env->make('partialsv3.flash', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
 
-						{!! Form::model($pcourse, ['method' => 'PATCH','route' => ['program_course.update', $pcourse->id]]) !!}
+						<?php echo Form::model($pcourse, ['method' => 'PATCH','route' => ['program_course.update', $pcourse->id]]); ?>
+
 
  			<div class="card-body">
 
               <div class="box-body">
 
               			<div class="row">
-              			{{--  <div class="col-md-5 form-group">
-								<label for="host_program_id">Host Program :</label>
-								{{ Form::select('host_program_id', $programs, $pcourse->course->program_id,['class' => 'form-control', 'id' => 'host_program_id', 'name' => 'host_program_id', 'onchange' =>'getCourses()']) }}
-							<span class="text-danger"> {{ $errors->first('host_program_id') }}</span>
-							</div>  --}}
+              			
 
 							<div class="col-md-4 form-group">
 								<label for="program_id">Program :</label>
-								{{ Form::select('program_id', $programs, null,['class' => 'form-control', 'id' => 'program_id', 'name' => 'program_id']) }}
-							<span class="text-danger"> {{ $errors->first('program_id') }}</span>
+								<?php echo e(Form::select('program_id', $programs, null,['class' => 'form-control', 'id' => 'program_id', 'name' => 'program_id'])); ?>
+
+							<span class="text-danger"> <?php echo e($errors->first('program_id')); ?></span>
 							</div>
 
 							<div class="col-md-4 form-group">
 								<label for="level">Level :</label>
-								{{ Form::select('level', [
+								<?php echo e(Form::select('level', [
 	                        		'100' => '100 Level',
 	                        		'200' => '200 Level',
 	                        		'300' => '300 Level',
@@ -77,14 +71,16 @@
 	                        		'900' => 'PhD'],
 	                        		$pcourse->level,
 	                       			 ['class' => 'form-control select2']
-	                    			) }}
-	                    			<span class="text-danger"> {{ $errors->first('level') }}</span>
+	                    			)); ?>
+
+	                    			<span class="text-danger"> <?php echo e($errors->first('level')); ?></span>
 							</div>
 
                             <div class="col-md-4 form-group">
 								<label for="session_id">Session :</label>
-								{{ Form::select('session_id', $sessions, null,['class' => 'form-control', 'id' => 'session_id', 'name' => 'session_id']) }}
-							<span class="text-danger"> {{ $errors->first('session_id') }}</span>
+								<?php echo e(Form::select('session_id', $sessions, null,['class' => 'form-control', 'id' => 'session_id', 'name' => 'session_id'])); ?>
+
+							<span class="text-danger"> <?php echo e($errors->first('session_id')); ?></span>
 							</div>
 							</div>
 
@@ -94,30 +90,32 @@
 
 							<div class="col-md-3 form-group">
 								<label for="semester">Semester :</label>
-								{{ Form::select('semester', [
+								<?php echo e(Form::select('semester', [
 	                        		'1' => 'First Semester',
 	                        		'2' => 'Second Semester',
 	                        		],
 	                        		$pcourse->semester,
 	                       			 ['class' => 'form-control select2']
-	                    			) }}
-	                    			<span class="text-danger"> {{ $errors->first('semester') }}</span>
+	                    			)); ?>
+
+	                    			<span class="text-danger"> <?php echo e($errors->first('semester')); ?></span>
 							</div>
 
 							<div class="col-md-3 form-group">
 								<label for="mode">Mode :</label>
-								{{ Form::select('course_category', [
+								<?php echo e(Form::select('course_category', [
 	                        		'1' => 'Core',
 	                        		'2' => 'Elective'],
 	                        		$pcourse->course_category,
 	                       			 ['class' => 'form-control select2']
-	                    			) }}
-	                    			<span class="text-danger"> {{ $errors->first('mode') }}</span>
+	                    			)); ?>
+
+	                    			<span class="text-danger"> <?php echo e($errors->first('mode')); ?></span>
 							</div>
 
                              <div class="col-md-3 form-group">
                                     <label for="semester">prerequisite  :</label>
-                                    {{ Form::select(
+                                    <?php echo e(Form::select(
                                         'has_perequisite',
                                         [
                                             'no' => 'No',
@@ -125,15 +123,17 @@
                                         ],
                                      $pcourse->has_perequisite,
                                         ['class' => 'form-control select2'],
-                                    ) }}
-                                    <span class="text-danger"> {{ $errors->first('semester') }}</span>
+                                    )); ?>
+
+                                    <span class="text-danger"> <?php echo e($errors->first('semester')); ?></span>
                                 </div>
 
                                 <div class="col-md-3 form-group">
                                     <label for="semester">prerequisite Course :</label>
-                                     {{ Form::select('perequisite_id', $courses, null, ['placeholder'=> 'null', 'class' => 'form-control select2', 'id' => 'course_id', 'name' => 'perequisite_id']) }}
+                                     <?php echo e(Form::select('perequisite_id', $courses, null, ['placeholder'=> 'null', 'class' => 'form-control select2', 'id' => 'course_id', 'name' => 'perequisite_id'])); ?>
 
-                                    <span class="text-danger"> {{ $errors->first('semester') }}</span>
+
+                                    <span class="text-danger"> <?php echo e($errors->first('semester')); ?></span>
                                 </div>
 
 							</div>
@@ -143,23 +143,26 @@
 							<div class="row">
               			<div class="col-md-5 form-group">
 								<label for="course_id">Course Describe :</label>
-								{{ Form::select('course_id', $courses, null,['class' => 'form-control', 'id' => 'course_id', 'name' => 'course_id', 'onchange' =>'getHours()']) }}
-                                    {{--  {{ Form::select('course_id', $courses, null, ['onchange' => 'getHours()', 'class' => 'form-control select2', 'id' => 'course_id', 'name' => 'course_id']) }}  --}}
+								<?php echo e(Form::select('course_id', $courses, null,['class' => 'form-control', 'id' => 'course_id', 'name' => 'course_id', 'onchange' =>'getHours()'])); ?>
+
+                                    
 
 
-							<span class="text-danger"> {{ $errors->first('course_id') }}</span>
+							<span class="text-danger"> <?php echo e($errors->first('course_id')); ?></span>
 							</div>
 
 							<div class="col-md-4 form-group">
 								<label for="hours">Credit Load :</label>
-								{!! Form::text('credit_unit', $pcourse->credit_unit, array( 'placeholder' => '','class' => 'form-control', 'id' => 'credit_unit', 'required' => 'required')) !!}
-	                    			<span class="text-danger"> {{ $errors->first('hours') }}</span>
+								<?php echo Form::text('credit_unit', $pcourse->credit_unit, array( 'placeholder' => '','class' => 'form-control', 'id' => 'credit_unit', 'required' => 'required')); ?>
+
+	                    			<span class="text-danger"> <?php echo e($errors->first('hours')); ?></span>
 							</div>
 
 							<div class="col-md-3 form-group">
 								<label for="lecturer_id">Lecturer :</label>
-								{!! Form::select('lecturer_id', $lecturers, null,['class' => 'form-control', 'id' => 'lecturer_id', 'name' => 'lecturer_id', 'required' => 'required']) !!}
-	                    			<span class="text-danger"> {{ $errors->first('lecturer_id') }}</span>
+								<?php echo Form::select('lecturer_id', $lecturers, null,['class' => 'form-control', 'id' => 'lecturer_id', 'name' => 'lecturer_id', 'required' => 'required']); ?>
+
+	                    			<span class="text-danger"> <?php echo e($errors->first('lecturer_id')); ?></span>
 							</div>
 							</div>
 
@@ -173,14 +176,16 @@
                 <div class="card-footer">
 
 
-							{{ Form::submit('Edit Program Course', array('class' => 'btn btn-primary')) }}
+							<?php echo e(Form::submit('Edit Program Course', array('class' => 'btn btn-primary'))); ?>
+
 
 
                 </div>
               <!-- /.box-body -->
 
 
-            {!! Form::close() !!}
+            <?php echo Form::close(); ?>
+
 
 
 
@@ -195,9 +200,9 @@
     </section>
     <!-- /.content -->
   </div>
-@endsection
+<?php $__env->stopSection(); ?>
 
-@section('pagescript')
+<?php $__env->startSection('pagescript'); ?>
 <script type="text/javascript">
 
 $.ajaxSetup({
@@ -215,7 +220,7 @@ function getCourses()
 	 program_id = document.getElementById("host_program_id").value;
 	 $.ajax({
             type: 'post',
-            url: "{{route('course.program_course_get_courses')}}",
+            url: "<?php echo e(route('course.program_course_get_courses')); ?>",
             data: {
                 '_token': $('input[name=_token]').val(),
                 'program_id': program_id
@@ -251,7 +256,7 @@ function getHours()
 	 course_id = document.getElementById("course_id").value;
 	 $.ajax({
             type: 'post',
-            url: "{{route('course.program_course_get_course_hours')}}",
+            url: "<?php echo e(route('course.program_course_get_course_hours')); ?>",
             data: {
                 '_token': $('input[name=_token]').val(),
                 'course_id': course_id
@@ -281,7 +286,7 @@ function getLecturers(program_id)
 
 	 $.ajax({
             type: 'post',
-            url: "{{route('staff.program_course_get_lecturers')}}",
+            url: "<?php echo e(route('staff.program_course_get_lecturers')); ?>",
             data: {
                 '_token': $('input[name=_token]').val(),
                 'program_id': program_id
@@ -315,4 +320,6 @@ function getLecturers(program_id)
 	</script>
 
 
-@endsection
+<?php $__env->stopSection(); ?>
+
+<?php echo $__env->make('layouts.mini', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH C:\Users\Lawrence Chris\Desktop\laraproject\resources\views//program-courses/edit.blade.php ENDPATH**/ ?>

@@ -66,9 +66,18 @@
                         </thead>
 
                         <tbody>
-                            <form name=form1 method=post action="/results/dropcourse-reg">
-                                @csrf
+                             {!! Form::open(['route' => 'result.admindropcourse', 'method' => 'POST', 'class' => 'nobottommargin']) !!}
+                       {{--  ?    <form name=form1 method=post action="/results/admindropcourse-reg">  --}}
+                                {{--  @csrf  --}}
 
+                                            {{--  <input id="" type="hidden" name="student_id"
+                                                value="{{  $student->id}}">
+                                            <input id="" type="hidden" name="session"
+                                                value="{{ $session->id }}">
+                                                  <input id="" type="hidden" name="semester"
+                                                value="{{  $semester }}">
+                                                 <input id="" type="hidden" name="level"
+                                                value="{{ $level }}">  --}}
 
                                 {{--  <input id="" type="text"  name="session" value="{{ $prevsession }}" >  --}}
 
@@ -79,19 +88,25 @@
                                 @foreach ($courseform as $key => $course)
                                     @php
                                         $tatolCredits += $course->course_unit;
-                                        
+
                                     @endphp
                                     <tr>
                                         {{--  <td> <input class="itemcourse" type="checkbox" id="course" name="courses[]" {{$course->course_category==1?"checked ":""}} value="{{ $course->course_code }}" onclick="{{$course->course_category==1?'return false':'totalIt()'}}"> </td>  --}}
                                         <td> <input class="itemcourse" type="checkbox" id="course" name="courses[]"
-                                                {{ $course->course_category == 1 ? 'disabled ' : '' }}
-                                                value="{{ $course->course_id }}"
-                                                onclick="{{ $course->course_category == 1 ? 'return false' : 'totalIt()' }}">{{ $key + 1 }}
+                                                >{{ $key + 1 }}
                                         </td>
                                         <td>{{ $course->course_code }} </td>
                                         <td>{{ $course->course_title }}</td>
                                         <td>{{ $course->course_unit }}</td>
-                                        {{--  <td>
+                                        <input >
+                                        <td>
+                                            {!! Form::open(['method' => 'Delete', 'route' => 'program_course.delete', 'id'=>'deletePCourseForm'.$course->id]) !!}
+				    		{{ Form::text('id', $course->id) }}
+
+
+				    		<button onclick="deletePCourse({{$course->id}})" type="button" class="{{$course->id}} btn btn-danger" ><span class="icon-line2-trash"></span> Delete</button>
+				    		{!! Form::close() !!}
+
                                             {!! Form::open(['method' => 'Delete', 'route' => 'result.remove-course', 'id' => 'removeRCourse' . $course->id]) !!}
                                             {{ Form::text('course_id', $course->course_id) }}
                                             {{ Form::hidden('student_id', $student->id) }}
@@ -103,7 +118,7 @@
                                                 class="{{ $course->id }} btn btn-danger"><span
                                                     class="icon-line2-trash"></span> Drop</button>
                                             {!! Form::close() !!}
-                                        </td>  --}}
+                                        </td>
                                 @endforeach
                                 </tr>
                                 <tr>
@@ -115,10 +130,14 @@
                         </tbody>
 
                     </table>
-                    <button type="submit" class="btn btn-danger">
+                    {{--  <button type="submit" class="btn btn-danger">
                         {{ __('Drop course') }}
-                    </button>
-                    </form>
+                    </button>  --}}
+                         {{ Form::submit('Drop Course', ['class' => 'btn btn-primary']) }}
+                        {{--  </div>  --}}
+
+                        {!! Form::close() !!}
+                    {{--  </form>  --}}
 
 
                     <div class="table-responsive">
@@ -147,8 +166,15 @@
                                         <td>{{ $res->level }}</td>
                                         <td>{{ $res->course_unit }}</td>
                                         <td>
-                                            {!! Form::open(['method' => 'Delete', 'route' => 'result.remove-course', 'id' => 'removeRCourse' . $res->id]) !!}
-                                            {{ Form::hidden('result_id', $res->id) }}
+                                               {!! Form::open(['method' => 'post', 'route' => 'result.remove-course', 'id'=>'removeRCourse'.$res->id]) !!}
+				    		{{--  {{ Form::text('id', $res->id) }}  --}}
+                             <input id="" type="text" name="i d"
+                                                value="{{ $res->id}}">
+
+				    		<button onclick="removeRCForm({{ $res->id }})" type="button" class="{{$res->id}} btn btn-danger" ><span class="icon-line2-trash"></span> Delete</button>
+				    		{!! Form::close() !!}
+                                            {{--  {!! Form::open(['method' => 'Delete', 'route' => 'result.remove-course', 'id' => 'removeRCourse' . $res->id]) !!}
+                                            {{ Form::text('id', $res->id) }}
                                             {{ Form::hidden('student_id', $student->id) }}
                                             {{ Form::hidden('session_id', $session->id) }}
                                             {{ Form::hidden('semester', $semester) }}
@@ -157,7 +183,7 @@
                                             <button onclick="removeRCForm({{ $res->id }})" type="button"
                                                 class="{{ $res->id }} btn btn-danger"><span
                                                     class="icon-line2-trash"></span> Drop</button>
-                                            {!! Form::close() !!}
+                                            {!! Form::close() !!}  --}}
                                         </td>
                                     </tr>
                                 @endforeach

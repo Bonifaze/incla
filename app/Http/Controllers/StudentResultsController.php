@@ -286,7 +286,7 @@ class StudentResultsController extends Controller
     {
         $this->authorize('register', StudentResult::class);
         $student = Student::findOrFail($student_id);
-     
+
         $session = Session::findOrFail($session_id);
         $course = new Course();
             $pcourse = new ProgramCourse();
@@ -308,17 +308,23 @@ class StudentResultsController extends Controller
             return view('results.course_registration',compact('courseform','student','fresh_courses', 'carry_over', 'results', 'total_credit','session','semester','level', 'allowed_credits'));
     } // end register
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+
     public function removeRegisteredCourse(Request $request)
     {
+        // $ress=$request->test;
+        // dd($ress);
+        $res =DB::table('users')->where('id', $request->id);
+        dd($request->id);
+
+        $res->delete();
+        return redirect()->route('program_course.list')
+        ->with('success','Program Course deleted successfully');
+
         $this->authorize('register', StudentResult::class);
-        // $result = RegisteredCourse::findOrFail($request->course_id);
-       
+        // dd($request->);
+        $result = DB::table('registered_courses')->where('id', $request->id);
+        dd($result);
+        $result = $request->course_id;
         $session = Session::findorFail($request->session_id);
         $student = Student::findOrFail($request->student_id);
         $semester = $request->semester;
@@ -326,9 +332,10 @@ class StudentResultsController extends Controller
         $results  = RegisteredCourse::where('student_id',  $student->id)
         ->where('registered_courses.semester', $semester)
         ->where('session',  $session->id)
+        ->where('course_id', $result)
         ->get();
         // dd($results);
-    
+
         $balance = count($results);
         //if($result->status == 7 OR $result->total !== 0)
         // if($result->total !== 0)
@@ -339,13 +346,13 @@ class StudentResultsController extends Controller
         DB::beginTransaction(); //Start transaction!
         try {
             $results->delete();
-            
-            
-               
+
+
+
                     return redirect()->route('result.register',[$student->id,$session->id,$semester,$level])
                     ->with('error',"Errors removing semester registration");
-            
-            
+
+
         }
         catch(\Exception $e)
         {
@@ -359,27 +366,45 @@ class StudentResultsController extends Controller
         ->with('success','Course removed successfully');
     } // removeRegisteredCourse
 
-    public function dropcourse_Reg(Request $request)
+    public function delete(Request $request)
+    {
+        $this->authorize('delete',ProgramCourse::class);
+        $pcourse = RegisteredCourse::find($request->id);
+        dd($pcourse);
+        $pcourse->delete();
+        return redirect()->route('program_course.list')
+        ->with('success','Program Course deleted successfully');
+
+    } // end delete
+
+
+    public function admindropcourse_Reg(Request $request)
 {
-    // $student = Auth::guard('student')->user();
+
+    $student = Auth::guard('student')->user();
     $courses = $request->courses;
-    $session = Session::findorFail($request->session_id);
+
+    // $session = Session::findorFail($request->session_id);
+
     $student = Student::findOrFail($request->student_id);
     $semester = $request->semester;
+    // return view ('');
     $level = $request->level;
-        // dd($courses);
+
     try {
 
         foreach ($courses as $course) {
             DB::table('registered_courses')
             ->where('course_id',  $course)
-            ->where ('session', $this->getcurrentsession() )
-                    ->where('student_id', $student->id)
+            ->where ('session', 16 )
+                    ->where('student_id', 2033)
 
             ->delete();
                 // 'status' => 0
 
         }
+          $loginMsg = '<div class="alert alert-danger alert-dismissible" role="alert"> <button type="button" class="close" data-dismiss="alert"> &times; </button> You dont\'t have access to this task, please see the ICT</div>';
+//   return view('admissions.error', compact('loginMsg'));
         return redirect()->route('result.register',[$student->id,$session->id,$semester,$level])
         ->with('success','Course removed successfully');
     } catch (QueryException $e) {
