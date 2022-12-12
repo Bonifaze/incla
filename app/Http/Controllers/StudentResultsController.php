@@ -313,17 +313,17 @@ class StudentResultsController extends Controller
     {
         // $ress=$request->test;
         // dd($ress);
-        $res =DB::table('users')->where('id', $request->id);
-        dd($request->id);
+        // $res =DB::table('users')->where('id', $request->id);
+        // dd($request->id);
 
-        $res->delete();
-        return redirect()->route('program_course.list')
-        ->with('success','Program Course deleted successfully');
+        // $res->delete();
+        // return redirect()->route('program_course.list')
+        // ->with('success','Program Course deleted successfully');
 
-        $this->authorize('register', StudentResult::class);
-        // dd($request->);
+        // $this->authorize('register', StudentResult::class);
+        // // dd($request->);
         $result = DB::table('registered_courses')->where('id', $request->id);
-        dd($result);
+        // dd($result);
         $result = $request->course_id;
         $session = Session::findorFail($request->session_id);
         $student = Student::findOrFail($request->student_id);
@@ -336,7 +336,7 @@ class StudentResultsController extends Controller
         ->get();
         // dd($results);
 
-        $balance = count($results);
+        // $balance = count($results);
         //if($result->status == 7 OR $result->total !== 0)
         // if($result->total !== 0)
         // {
@@ -372,8 +372,8 @@ class StudentResultsController extends Controller
         $pcourse = RegisteredCourse::find($request->id);
         dd($pcourse);
         $pcourse->delete();
-        return redirect()->route('program_course.list')
-        ->with('success','Program Course deleted successfully');
+        return redirect()->route('program_course.list') //testing route
+        ->with('success','Course deleted successfully');
 
     } // end delete
 
@@ -384,7 +384,7 @@ class StudentResultsController extends Controller
     $student = Auth::guard('student')->user();
     $courses = $request->courses;
 
-    // $session = Session::findorFail($request->session_id);
+     $session = Session::findorFail($request->session_id);
 
     $student = Student::findOrFail($request->student_id);
     $semester = $request->semester;
@@ -396,8 +396,8 @@ class StudentResultsController extends Controller
         foreach ($courses as $course) {
             DB::table('registered_courses')
             ->where('course_id',  $course)
-            ->where ('session', 16 )
-                    ->where('student_id', 2033)
+            ->where ('session', $session)
+                    ->where('student_id', $student)
 
             ->delete();
                 // 'status' => 0
@@ -474,132 +474,8 @@ class StudentResultsController extends Controller
             DB::commit();
             return redirect()->route('result.register',[$student->id,$session->id,$semester,$level])
             ->with('success','Course added successfully');
-        // }
-        // else
-        // {
-        //     return redirect()->route('result.register',[$student->id,$session->id,$semester,$level])
-        //     ->with('error',"Maximum allowed credit reached.");
-        // }
+
     } // end addCourse(Request $request)
-
-
-    public function semesterRemark($student_id_encoded)
-    {
-        //
-        $student = Student::findOrFail(base64_decode($student_id_encoded));
-        $sess = new Session();
-        $session_id = $sess->currentSession();
-        $semester = $sess->currentSemester();
-        $session = Session::findOrFail($session_id);
-        $registration = $student->getSemesterRegistration($session_id,$semester);
-        $academic = $student->academic;
-
-        //Showing courses ever offered by the program
-        $coursesb = Course::with(['program','programCourses'])
-            ->whereHas('programCourses', function ($query) use ($academic)
-            {
-                return $query->where('program_id', $academic->program_id)
-                    ->where('level','<=', $academic->level)
-                    ->orderBy('level','ASC');
-            })
-            ->whereDoesntHave('outstandings', function ($query) use ($registration,$student)
-            {
-                return $query->where('student_id',$student->id);
-                    //->where('semester_registration_id',$registration->id);
-            })
-            ->orderBy('code','ASC')
-            ->get()->pluck('courseDescribe','id');
-
-        $courses = $coursesb->unique();
-
-        $outstandings = Course::whereHas('outstandings', function ($query) use ($registration,$student)
-        {
-            return $query->where('student_id',$student->id);
-               // ->where('semester_registration_id',$registration->id);
-            })
-            ->get();
-
-        if($student->hasSemesterRegistration($session_id,$semester)) {
-            return view('results.semester_remark',compact('student','courses','session','outstandings','registration'));
-        }// end evaluated
-        else
-        {
-            return redirect()->route('result.program_search_student');
-        }
-
-    }// end semesterRemark()
-
-
-
-    public function addSemesterRemark(Request $request)
-    {
-        //get request variables
-        $this->validate($request, [
-            'course_id' => 'required|int',
-            'type' => 'required|int|max:255',
-            'student_id' => 'required|int',
-        ]);
-        $session = new Session();
-        $student = Student::findOrFail($request->student_id);
-        $course = Course::findOrFail($request->course_id);
-        //get semester registration id
-        $registration = $student->getSemesterRegistration($session->currentSession(),$session->currentSemester());
-        //check if course is already added
-        if($course->outstandingExists($student->id,$registration->id))
-        {
-          return redirect()->route('result.semester.remark',base64_encode($student->id))
-              ->with('error',"Course already exists for this semester.");
-        }
-        else{
-            $outstanding = new SemesterResultOutstanding();
-            $outstanding->student_id = $student->id;
-            $outstanding->course_id = $course->id;
-            $outstanding->semester_registration_id = $registration->id;
-            $outstanding->type = $request->type;
-            try{
-              $outstanding->save();
-                return redirect()->route('result.semester.remark',base64_encode($student->id))
-                    ->with('success',"Course added.");
-            }
-            catch (\Exception $e)
-            {
-                return redirect()->route('result.semester.remark',base64_encode($student->id))
-                    ->with('error',"Error adding course to outstanding.");
-            }
-        }
-
-    } // end addSemesterRemark
-
-
-    public function removeSemesterRemark(Request $request)
-    {
-        $outstanding = SemesterResultOutstanding::where('course_id',$request->id)
-            ->where('student_id',$request->student_id)
-            //->where('semester_registration_id',$request->semester_registration_id)
-            ->get()->first();
-       try {
-            $outstanding->delete();
-            }
-        catch (\Exception $e)
-        {
-             return redirect()->route('result.semester.remark',base64_encode($request->student_id))
-                ->with('error',"Error removing outstanding course");
-        }
-        return redirect()->route('result.semester.remark',base64_encode($request->student_id))
-            ->with('success',"Course removed.");
-    } // removeRegisteredCourse
-
-
-
-    public function history($encode)
-    {
-        $student = Student::with(['academic','contact'])->findOrFail(base64_decode($encode));
-        $academic = $student->academic;
-        $registrations = $student->semesterRegistrations;
-        $totalCGPA = $student->CGPA();
-        return view('students.admin.result_history',compact('student','academic','registrations','totalCGPA'));
-    } //end show
-
 
 
 
