@@ -41,7 +41,8 @@ class StudentResultsController extends Controller
         $students = StudentAcademic::
         where(function($q) use ($request) {
             $q->where('mat_no', $request->mat_no)
-            ->where('program_id', $request->program);
+            // ->where('program_id', $request->program)
+            ;
         })
         ->orWhere(function($query) use ($request) {
             $query->orWhere('student_id',$request->mat_no)
@@ -292,7 +293,8 @@ class StudentResultsController extends Controller
             $pcourse = new ProgramCourse();
             $result = new RegisteredCourse();
             $results=RegisteredCourse::where('student_id',  $student->id)
-            ->where('registered_courses.semester', $semester)
+            // ->where('registered_courses.semester', $semester)
+            ->orderBy('registered_courses.semester','ASC')
             ->where('session',  $session->id)
             ->get();
             $fresh_courses = $pcourse->oldStudentFreshCourses($student, $session,$semester,$level);
@@ -301,69 +303,46 @@ class StudentResultsController extends Controller
             $total_credit = $student->totalRegisteredCredits($results);
             $allowed_credits = $student->allowedCredits($session_id,$semester);
             $registration = $student->hasSemesterRegistration($session->id,$semester);
-            $courseform = RegisteredCourse::where('student_id',  $student->id)
-            ->where('registered_courses.semester', $semester)
-            ->where('session',  $session->id)
-            ->get();
-            return view('results.course_registration',compact('courseform','student','fresh_courses', 'carry_over', 'results', 'total_credit','session','semester','level', 'allowed_credits'));
+
+            return view('results.course_registration',compact('student','fresh_courses', 'carry_over', 'results', 'total_credit','session','semester','level', 'allowed_credits'));
     } // end register
 
 
     public function removeRegisteredCourse(Request $request)
     {
-        // $ress=$request->test;
-        // dd($ress);
-        // $res =DB::table('users')->where('id', $request->id);
-        // dd($request->id);
 
-        // $res->delete();
-        // return redirect()->route('program_course.list')
-        // ->with('success','Program Course deleted successfully');
-
-        // $this->authorize('register', StudentResult::class);
-        // // dd($request->);
-        $result = DB::table('registered_courses')->where('id', $request->id);
-        // dd($result);
-        $result = $request->course_id;
+        // $result = DB::table('registered_courses')->where('id', $request->id);
+        // // dd($result);
+        // $result = $request->course_id;
         $session = Session::findorFail($request->session_id);
         $student = Student::findOrFail($request->student_id);
         $semester = $request->semester;
         $level = $request->level;
-        $results  = RegisteredCourse::where('student_id',  $student->id)
-        ->where('registered_courses.semester', $semester)
-        ->where('session',  $session->id)
-        ->where('course_id', $result)
-        ->get();
-        // dd($results);
-
-        // $balance = count($results);
-        //if($result->status == 7 OR $result->total !== 0)
-        // if($result->total !== 0)
-        // {
-        //     return redirect()->route('result.register',[$student->id,$session->id,$semester,$level])
-        //     ->with('error',"Errors removing course. Result already available for course");
-        // }
-        DB::beginTransaction(); //Start transaction!
-        try {
-            $results->delete();
-
-
-
-                    return redirect()->route('result.register',[$student->id,$session->id,$semester,$level])
-                    ->with('error',"Errors removing semester registration");
-
-
-        }
-        catch(\Exception $e)
-        {
-            //failed logic here
-            DB::rollback();
-            return redirect()->route('result.register',[$student->id,$session->id,$semester,$level])
-            ->with('error',"Errors removing course.".$e->getMessage());
-        }
-        DB::commit();
+        // $results  = RegisteredCourse::where('student_id',  $student->id)
+        // ->where('registered_courses.semester', $semester)
+        // ->where('session',  $session->id)
+        // ->where('course_id', $result)
+        // ->get();
+        RegisteredCourse::where('id', $request->id)->delete();
         return redirect()->route('result.register',[$student->id,$session->id,$semester,$level])
         ->with('success','Course removed successfully');
+        // DB::beginTransaction(); //Start transaction!
+        // try {
+        //     // $results->delete();
+        //      return redirect()->route('result.register',[$student->id,$session->id,$semester,$level])
+        //      ->with('error',"Errors removing semester registration");
+
+        // }
+        // catch(\Exception $e)
+        // {
+        //     //failed logic here
+        //     DB::rollback();
+        //     return redirect()->route('result.register',[$student->id,$session->id,$semester,$level])
+        //     ->with('error',"Errors removing course.".$e->getMessage());
+        // }
+        // DB::commit();
+        // return redirect()->route('result.register',[$student->id,$session->id,$semester,$level])
+        // ->with('success','Course removed successfully');
     } // removeRegisteredCourse
 
     public function delete(Request $request)

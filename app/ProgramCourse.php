@@ -198,7 +198,7 @@ class ProgramCourse extends Model
         ->where('program_id',$student->academic->program_id)
         ->where('level','<',$level)
         ->orderBy('level','DESC')
-      
+
         ->get();
 
         // join table to ensure the program course id doesn't exist

@@ -30,7 +30,7 @@
                         Course Registration for {{ $student->full_name }}
                     </h1>
                     <h5 class="app-page-title text-uppercase h5 font-weight p-2 mb-2 shadow-sm text-center text">
-                        {{ $session->semesterName($semester) }} {{ $session->name }} Academic Session
+                         {{ $session->name }} Academic Session
                     </h5>
 
 
@@ -156,14 +156,26 @@
 
 
                             <tbody>
-
+@php
+                                    $tatolCredits = 0;
+                                @endphp
                                 @foreach ($results as $key => $res)
+                                      @php
+                                        $tatolCredits += $res->course_unit;
+
+                                    @endphp
                                     <tr>
 
                                         <td>{{ $loop->iteration }} <input type="checkbox"></td>
                                         <td>{{ $res->course_code }}</td>
                                         <td>{{ $res->course_title }}</td>
                                         <td>{{ $res->level }}</td>
+                                        @if($res->semester==1)
+                                        <td>First</td>
+                                        @else
+                                        <td>Second</td>
+                                        @endif
+                                        {{--  <td>{{ $res->semester }}</td>  --}}
                                         <td>{{ $res->course_unit }}</td>
                                         <td>
                                                {{--  {!! Form::open(['method' => 'post', 'route' => 'result.remove-course', 'id'=>'removeRCourse'.$res->id]) !!}
@@ -174,7 +186,7 @@
 				    		<button onclick="removeRCForm({{ $res->id }})" type="button" class="{{$res->id}} btn btn-danger" ><span class="icon-line2-trash"></span> Delete</button>
 				    		{!! Form::close() !!}  --}}
                                             {!! Form::open(['method' => 'post', 'route' => 'result.remove-course', 'id' => 'removeRCourse' . $res->id]) !!}
-                                            {{ Form::text('id', $res->id) }}
+                                            {{ Form::hidden('id', $res->id) }}
                                             {{ Form::hidden('student_id', $student->id) }}
                                             {{ Form::hidden('session_id', $session->id) }}
                                             {{ Form::hidden('semester', $semester) }}
@@ -193,7 +205,8 @@
                                     <td></td>
                                     <td></td>
                                     <td></td>
-                                    <td> <strong> {{ $total_credit }} </strong></td>
+                                    {{--  <td> <strong> {{ $total_credit }} </strong></td>  --}}
+                                     <td> <strong> {{ $tatolCredits }} </strong></td>
                                     <td> </td>
 
                                 </tr>
@@ -233,7 +246,7 @@
                     <p> <br /></p>
 
                     <h1 class=" text-uppercase h5 font-weight-bold p-2 mb-2 shadow-sm text-left text-success border">
-                        Cuurent Level Courses
+                      {{ $session->semesterName($semester) }}  Cuurent Level Courses
                     </h1>
 
                     <div class="table-responsive">
@@ -245,6 +258,7 @@
                                 <th>Course Code</th>
                                 <th>Course Title</th>
                                 <th>Level</th>
+                                <th>Semester</th>
                                 <th>Credit Unit</th>
                                 <th>Action</th>
 
@@ -259,15 +273,20 @@
                                         <td>{{ $fcourse->course->course_code }}</td>
                                         <td>{{ $fcourse->course->course_title }}</td>
                                         <td>{{ $fcourse->level }}</td>
+                                         @if($fcourse->semester==1)
+                                        <td>First</td>
+                                        @else
+                                        <td>Second</td>
+                                        @endif
                                         <td>{{ $fcourse->credit_unit }}</td>
                                         <td>
                                             {!! Form::open(['method' => 'Post', 'route' => 'result.add-course', 'id' => 'addFCForm' . $fcourse->id]) !!}
-                                            {{ Form::text('course_id', $fcourse->course->id) }}
+                                            {{ Form::hidden('course_id', $fcourse->course->id) }}
                                             {{ Form::hidden('student_id', $student->id) }}
                                             {{ Form::hidden('session_id', $session->id) }}
                                             {{ Form::hidden('semester', $semester) }}
                                             {{ Form::hidden('level', $level) }}
-                                            {{ Form::text('program_id', $student->academic->program_id) }}
+                                            {{ Form::hidden('program_id', $student->academic->program_id) }}
 
 
                                             <button onclick="addFCourse({{ $fcourse->id }})" type="button"

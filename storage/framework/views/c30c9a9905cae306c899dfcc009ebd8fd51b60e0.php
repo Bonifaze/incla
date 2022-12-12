@@ -27,7 +27,7 @@
 
                     </h1>
                     <h5 class="app-page-title text-uppercase h5 font-weight p-2 mb-2 shadow-sm text-center text">
-                        <?php echo e($session->semesterName($semester)); ?> <?php echo e($session->name); ?> Academic Session
+                         <?php echo e($session->name); ?> Academic Session
                     </h5>
 
 
@@ -91,20 +91,32 @@
 
 
                             <tbody>
-
+<?php
+                                    $tatolCredits = 0;
+                                ?>
                                 <?php $__currentLoopData = $results; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $key => $res): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                      <?php
+                                        $tatolCredits += $res->course_unit;
+
+                                    ?>
                                     <tr>
 
                                         <td><?php echo e($loop->iteration); ?> <input type="checkbox"></td>
                                         <td><?php echo e($res->course_code); ?></td>
                                         <td><?php echo e($res->course_title); ?></td>
                                         <td><?php echo e($res->level); ?></td>
+                                        <?php if($res->semester==1): ?>
+                                        <td>First</td>
+                                        <?php else: ?>
+                                        <td>Second</td>
+                                        <?php endif; ?>
+                                        
                                         <td><?php echo e($res->course_unit); ?></td>
                                         <td>
                                                
                                             <?php echo Form::open(['method' => 'post', 'route' => 'result.remove-course', 'id' => 'removeRCourse' . $res->id]); ?>
 
-                                            <?php echo e(Form::text('id', $res->id)); ?>
+                                            <?php echo e(Form::hidden('id', $res->id)); ?>
 
                                             <?php echo e(Form::hidden('student_id', $student->id)); ?>
 
@@ -129,7 +141,8 @@
                                     <td></td>
                                     <td></td>
                                     <td></td>
-                                    <td> <strong> <?php echo e($total_credit); ?> </strong></td>
+                                    
+                                     <td> <strong> <?php echo e($tatolCredits); ?> </strong></td>
                                     <td> </td>
 
                                 </tr>
@@ -170,7 +183,7 @@
                     <p> <br /></p>
 
                     <h1 class=" text-uppercase h5 font-weight-bold p-2 mb-2 shadow-sm text-left text-success border">
-                        Cuurent Level Courses
+                      <?php echo e($session->semesterName($semester)); ?>  Cuurent Level Courses
                     </h1>
 
                     <div class="table-responsive">
@@ -182,6 +195,7 @@
                                 <th>Course Code</th>
                                 <th>Course Title</th>
                                 <th>Level</th>
+                                <th>Semester</th>
                                 <th>Credit Unit</th>
                                 <th>Action</th>
 
@@ -196,11 +210,16 @@
                                         <td><?php echo e($fcourse->course->course_code); ?></td>
                                         <td><?php echo e($fcourse->course->course_title); ?></td>
                                         <td><?php echo e($fcourse->level); ?></td>
+                                         <?php if($fcourse->semester==1): ?>
+                                        <td>First</td>
+                                        <?php else: ?>
+                                        <td>Second</td>
+                                        <?php endif; ?>
                                         <td><?php echo e($fcourse->credit_unit); ?></td>
                                         <td>
                                             <?php echo Form::open(['method' => 'Post', 'route' => 'result.add-course', 'id' => 'addFCForm' . $fcourse->id]); ?>
 
-                                            <?php echo e(Form::text('course_id', $fcourse->course->id)); ?>
+                                            <?php echo e(Form::hidden('course_id', $fcourse->course->id)); ?>
 
                                             <?php echo e(Form::hidden('student_id', $student->id)); ?>
 
@@ -210,7 +229,7 @@
 
                                             <?php echo e(Form::hidden('level', $level)); ?>
 
-                                            <?php echo e(Form::text('program_id', $student->academic->program_id)); ?>
+                                            <?php echo e(Form::hidden('program_id', $student->academic->program_id)); ?>
 
 
 
