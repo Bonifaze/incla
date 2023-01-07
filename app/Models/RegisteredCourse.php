@@ -2,7 +2,9 @@
 
 namespace App\Models;
 
+use App\Student;
 use App\ProgramCourse;
+use App\StudentAcademic;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
@@ -10,12 +12,56 @@ class RegisteredCourse extends Model
 {
     use HasFactory;
 
+    protected $fillable = [
+        'program_id',
+        'student_id',
+        'session',
+        'level',
+        'semester',
+        'course_id',
+        'ca_score',
+        'exam_score',
+        'grade_id',
+        'grade_status',
+        'status'
+    ];
+
     protected $appends = ['course_unit', 'course_semester', 'course_title', 'course_code'];
 
     // public function getCourseUnitAttribute()
     // {
     //     return Course::where('id', $this->course_id)->first()->credit_unit ?? 0;
     // }
+    public function getStudentNameAttribute()
+    {
+        $student = Student::where('id', $this->student_id)->first();
+        return "{$student->first_name} {$student->middle_name} {$student->surname}";
+    }
+
+    public function getStudentMatricAttribute()
+    {
+        return StudentAcademic::where('student_id', $this->student_id)->first()->mat_no ?? '';
+    }
+
+    // public function getCourseTitleAttribute()
+    // {
+    //     return Course::where('id', $this->course_id)->first()->course_title;
+    // }
+
+    // public function getCourseCodeAttribute()
+    // {
+    //     return Course::where('id', $this->course_id)->first()->course_code;
+    // }
+
+    public function getGradeAttribute()
+    {
+        return GradeSetting::where('id', $this->grade_id)->first()->grade ?? 'NA';
+    }
+
+    public function getGradePointAttribute()
+    {
+        return GradeSetting::where('id', $this->grade_id)->first()->point ?? 0;
+    }
 
     public function getCourseUnitAttribute()
     {

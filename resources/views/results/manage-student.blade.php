@@ -178,9 +178,12 @@
 
 
 
-                    {{--  <div class="card card-primary">
-                        <div class="card-header">
-                            <h3 class="card-title"> Result Upload for {{ $student->full_name }} </h3>
+
+                         <div class="card card-primary">
+                             <h1
+                        class="app-page-title text-uppercase h5 font-weight-bold p-2 mb-2 shadow-sm text-center text-success border">
+                        Result Upload  for {{ $student->full_name }} <span class="text-primary">  {{ $academic->mat_no }} </span>
+                    </h1>
                         </div>
                         @include('partialsv3.flash')
                         <div class="table-responsive">
@@ -192,7 +195,7 @@
                                 <div class="box-body">
 
                                     <div class="row">
-                                        <div class="col-md-5 form-group">
+                                        <div class="col-md-4 form-group">
                                             <label for="session_id">Session :</label>
                                             {{ Form::select('session_id', $sessions, null, ['class' => 'form-control', 'id' => 'session_id', 'name' => 'session_id']) }}
                                             <span class="text-danger"> {{ $errors->first('session_id') }}</span>
@@ -212,7 +215,7 @@
                                             <span class="text-danger"> {{ $errors->first('semester') }}</span>
                                         </div>
 
-                                        <div class="col-md-2 form-group">
+                                        <div class="col-md-4 form-group">
                                             <label for="level">Level :</label>
                                             {{ Form::select(
                                                 'level',
@@ -255,14 +258,14 @@
 
                         {!! Form::close() !!}
 
-                    </div>  --}}
+                    </div>
 
 
                     @can('register', 'App\StudentResult')
                         <div class="card card-primary">
                              <h1
                         class="app-page-title text-uppercase h5 font-weight-bold p-2 mb-2 shadow-sm text-center text-success border">
-                        Course Registration for {{ $student->full_name }}
+                        Course Registration for {{ $student->full_name }} <span class="text-primary">  {{ $academic->mat_no }} </span>
                     </h1>
 
                             <div class="table-responsive">

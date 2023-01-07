@@ -874,24 +874,37 @@ private function getdptcolleg($program_id)
 
 
 
-    //     public function transcript()
-    //     {
-    //         $student = Auth::guard('student')->user();
-    //         //check for debt
-    //         $access = $student->resultAccess();
-    //         if($access['value'] < 0)
-    //         {
-    //             return redirect()->route('student.home')
-    //                 ->with('error',$access['error']);
-    //         }
-    //         $academic = $student->academic;
+        // public function transcript()
+        // {
+        //     $student = Auth::guard('student')->user();
+        //     //check for debt
+        //     $access = $student->resultAccess();
+        //     if($access['value'] < 0)
+        //     {
+        //         return redirect()->route('student.home')
+        //             ->with('error',$access['error']);
+        //     }
+        //     $academic = $student->academic;
 
-    //         $registrations = $student->semesterRegistrations;
+        //     $registrations = $student->semesterRegistrations;
 
 
-    //         $totalCGPA = $student->CGPA();
-    //         return view('students.transcript',compact('student','academic','registrations','totalCGPA'));
-    //     } //end show
+        //     $totalCGPA = $student->CGPA();
+        //     return view('students.transcript',compact('student','academic','registrations','totalCGPA'));
+        // } //end show
+
+        public function transcript()
+        {
+            $student = Auth::guard('student')->user();
+
+            $academic = $student->academic;
+
+            $registrations = $student->semesterRegistrations;
+
+            // $totalCGPA = $student->CGPA();
+
+            return view('students.transcript',compact('student','academic','registrations'));
+        }
 
 
 

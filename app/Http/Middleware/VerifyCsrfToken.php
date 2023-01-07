@@ -15,6 +15,9 @@ class VerifyCsrfToken extends Middleware
         //
         '/api/students/remita/confirm',
         '/students/remita/confirm',
-        '/api/test'
+        '/api/test',
+        '/payremi',
+        '/logpay',
+        '/payremi1'
     ];
 }

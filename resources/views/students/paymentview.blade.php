@@ -320,7 +320,7 @@
 
                                 }
                             });
-                            xhr.open("POST", "/logpay", true);
+                            xhr.open("POST", "/students/logpay", true);
                             xhr.setRequestHeader("Content-Type", "application/json; charset=utf-8");
                             //xhr.setRequestHeader("Authorization", 'remitaConsumerKey=' + merchantId + ',remitaConsumerToken=' + apiHash)
 

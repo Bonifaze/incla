@@ -454,6 +454,16 @@ class AdminStudentsController extends Controller
         return view('students.admin.plain_list',compact('students'));
     } //end list
 
+    public function listSession($level)
+    {
+        $students = Student::with(['contact', 'academic', 'medical', 'academic.program'])
+            ->whereHas('academic', function ($query) use ($level)
+        {
+            $query->where('entry_session_id', '=', $level)->orderBy('program_id');
+        })->orderBy('id')->orderBy('surname')->paginate(5000);
+        return view('students.admin.plain_list_session',compact('students'));
+    } //end list
+
 
     public function listLevelRegistered($level)
     {

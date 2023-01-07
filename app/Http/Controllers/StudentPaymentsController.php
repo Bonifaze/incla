@@ -63,7 +63,7 @@ class StudentPaymentsController extends Controller
         return view('students.Remitapayment', compact('payment'),['fee_types' => $fee_types, 'fee_typess' => $fee_typess]);
     }
 
-   public function payremi(Request $req)
+   public function payremi1(Request $req)
     {
         // DB::beginTransaction();
         try {

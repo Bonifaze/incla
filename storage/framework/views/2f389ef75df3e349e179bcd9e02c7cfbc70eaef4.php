@@ -1,16 +1,12 @@
-@extends('layouts.mini')
+<?php $__env->startSection('pagetitle'); ?> List Students  <?php $__env->stopSection(); ?>
 
-
-
-@section('pagetitle') List Students  @endsection
-
-@section('css')
+<?php $__env->startSection('css'); ?>
 <!-- Ekko Lightbox -->
-  <link rel="stylesheet" href="{{asset('v3/plugins/ekko-lightbox/ekko-lightbox.css')}}">
-@endsection
+  <link rel="stylesheet" href="<?php echo e(asset('v3/plugins/ekko-lightbox/ekko-lightbox.css')); ?>">
+<?php $__env->stopSection(); ?>
 
 
-@section('content')
+<?php $__env->startSection('content'); ?>
 
 <div class="content-wrapper">
     <!-- Content Header (Page header) -->
@@ -23,7 +19,7 @@
 
               <h1
                         class="app-page-title text-uppercase h5 font-weight-bold p-2 mb-2 shadow-sm text-center text-success border">
-                        List Students
+                        List Students Entery Session
                     </h1>
             <div class="card ">
 
@@ -34,13 +30,13 @@
 						  <thead>
 
 							  <th>S/N</th>
-							  <th>Name</th>
-							 <th>Phone</th>
+							  <th>Surname</th>
+							 <th>Other Name</th>
                               <th>Matric No</th>
-                              <th>Parents Name</th>
-                              <th>Parents Email</th>
-                              <th>Parents Phone</th>
-
+                              <th>Department</th>
+                              <th>Degree & Program Name</th>
+                              <th>Blood Group</th>
+                              <th>year of Entry</th>
 
 
 						  </thead>
@@ -48,29 +44,32 @@
 
 						  <tbody>
 
-						  @foreach ($students as $key => $student)
+						  <?php $__currentLoopData = $students; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $key => $student): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
 
 
 							<tr>
-							  <td>{{ $key + $students->firstItem() }}.</td>
-							  <td>{{ $student->full_name }}</td>
-							 <td>{{ $student->phone }}</td>
-                                @if($student->academic)
-                               <td>{{ $student->academic->mat_no }}</td>
-                                @endif
-                                <td>{{  $student->contact->surname }} {{  $student->contact->other_names }}</td>
-                                <td>{{ $student->contact->email }}</td>
-                                <td>{{  $student->contact->phone   }}</td>
+							  <td><?php echo e($key + $students->firstItem()); ?>.</td>
+							  <td><?php echo e($student->surname); ?></td>
+							 <td><?php echo e($student->first_name); ?>  <?php echo e($student->middle_name); ?></td>
+                                <?php if($student->academic): ?>
+                               <td><?php echo e($student->academic->mat_no); ?></td>
+                                <?php endif; ?>
+        <td><?php echo e($student->academic->program->department->name); ?></td>
+         <td> ( <?php echo e($student->academic->program->degree); ?> ) <?php echo e($student->academic->program->name); ?></td>
+         <td><?php echo e($student->medical->blood_group); ?></td>
+         <td><?php echo e($student->academic->session->name); ?></td>
+
 							</tr>
 
-							@endforeach
+							<?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
 
 						  </tbody>
 
 
 
 						</table>
-						 {!! $students->render() !!}
+						 <?php echo $students->render(); ?>
+
 
 
             </div>
@@ -86,14 +85,14 @@
     </section>
     <!-- /.content -->
   </div>
-@endsection
+<?php $__env->stopSection(); ?>
 
-@section('pagescript')
+<?php $__env->startSection('pagescript'); ?>
 
 <script src="<?php echo asset('js/bootbox.min.js')?>"></script>
 
 <!-- Ekko Lightbox -->
-<script src="{{asset('v3/plugins/ekko-lightbox/ekko-lightbox.min.js')}}"></script>
+<script src="<?php echo e(asset('v3/plugins/ekko-lightbox/ekko-lightbox.min.js')); ?>"></script>
 
  <script>
 
@@ -143,5 +142,7 @@
   })
 </script>
 
-@endsection
+<?php $__env->stopSection(); ?>
 
+
+<?php echo $__env->make('layouts.mini', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH C:\Users\Lawrence Chris\Desktop\laraproject\resources\views/students/admin/plain_list_session.blade.php ENDPATH**/ ?>

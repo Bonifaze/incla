@@ -25,6 +25,8 @@ Route::patch('/students/reset', 'AdminStudentsController@reset')->name('student.
 
 Route::get('/students/list-level/{level}', 'AdminStudentsController@listLevel')->name('student.list_level');
 
+Route::get('/students/list-session/{level}', 'AdminStudentsController@listSession')->name('student.list_session');
+
 Route::get('/students/list-level-registered/{level}', 'AdminStudentsController@listLevelRegistered')->name('student.list_level_registered');
 
 Route::get('/students/email/{level}', 'AdminStudentsController@emailList')->name('student.email.level');

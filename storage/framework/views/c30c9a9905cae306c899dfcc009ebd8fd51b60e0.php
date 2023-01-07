@@ -151,7 +151,9 @@
                                     <td></td>
                                     <td></td>
                                     <td></td>
-                                    <td> <strong> <?php echo e($allowed_credits); ?> </strong></td>
+                                    
+                                    <td> <strong> 48 </strong></td>
+
                                     <td> </td>
 
                                 </tr>
@@ -287,7 +289,7 @@
                                         <td>
                                             <?php echo Form::open(['method' => 'Post', 'route' => 'result.add-course', 'id' => 'addCOForm' . $co->id]); ?>
 
-                                            <?php echo e(Form::hidden('program_course_id', $co->id)); ?>
+                                            <?php echo e(Form::hidden('course_id', $co->course->id)); ?>
 
                                             <?php echo e(Form::hidden('student_id', $student->id)); ?>
 
@@ -296,6 +298,8 @@
                                             <?php echo e(Form::hidden('semester', $semester)); ?>
 
                                             <?php echo e(Form::hidden('level', $level)); ?>
+
+                                            <?php echo e(Form::hidden('program_id', $student->academic->program_id)); ?>
 
 
                                             <button onclick="addCOver(<?php echo e($co->id); ?>)" type="button"

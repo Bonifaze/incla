@@ -23,7 +23,7 @@
 
               <h1
                         class="app-page-title text-uppercase h5 font-weight-bold p-2 mb-2 shadow-sm text-center text-success border">
-                        List Students
+                        List Students Entery Session
                     </h1>
             <div class="card ">
 
@@ -34,13 +34,13 @@
 						  <thead>
 
 							  <th>S/N</th>
-							  <th>Name</th>
-							 <th>Phone</th>
+							  <th>Surname</th>
+							 <th>Other Name</th>
                               <th>Matric No</th>
-                              <th>Parents Name</th>
-                              <th>Parents Email</th>
-                              <th>Parents Phone</th>
-
+                              <th>Department</th>
+                              <th>Degree & Program Name</th>
+                              <th>Blood Group</th>
+                              <th>year of Entry</th>
 
 
 						  </thead>
@@ -53,14 +53,16 @@
 
 							<tr>
 							  <td>{{ $key + $students->firstItem() }}.</td>
-							  <td>{{ $student->full_name }}</td>
-							 <td>{{ $student->phone }}</td>
+							  <td>{{ $student->surname }}</td>
+							 <td>{{ $student->first_name }}  {{ $student->middle_name }}</td>
                                 @if($student->academic)
                                <td>{{ $student->academic->mat_no }}</td>
                                 @endif
-                                <td>{{  $student->contact->surname }} {{  $student->contact->other_names }}</td>
-                                <td>{{ $student->contact->email }}</td>
-                                <td>{{  $student->contact->phone   }}</td>
+        <td>{{ $student->academic->program->department->name }}</td>
+         <td> ( {{ $student->academic->program->degree }} ) {{ $student->academic->program->name }}</td>
+         <td>{{ $student->medical->blood_group }}</td>
+         <td>{{ $student->academic->session->name}}</td>
+
 							</tr>
 
 							@endforeach

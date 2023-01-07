@@ -215,7 +215,9 @@
                                     <td></td>
                                     <td></td>
                                     <td></td>
-                                    <td> <strong> {{ $allowed_credits }} </strong></td>
+                                    {{--  <td> <strong> {{ $allowed_credits }} </strong></td>  --}}
+                                    <td> <strong> 48 </strong></td>
+
                                     <td> </td>
 
                                 </tr>
@@ -340,11 +342,12 @@
                                         <td>{{ $co->credit_unit }}</td>
                                         <td>
                                             {!! Form::open(['method' => 'Post', 'route' => 'result.add-course', 'id' => 'addCOForm' . $co->id]) !!}
-                                            {{ Form::hidden('program_course_id', $co->id) }}
+                                            {{ Form::hidden('course_id', $co->course->id) }}
                                             {{ Form::hidden('student_id', $student->id) }}
                                             {{ Form::hidden('session_id', $session->id) }}
                                             {{ Form::hidden('semester', $semester) }}
                                             {{ Form::hidden('level', $level) }}
+                                            {{ Form::hidden('program_id', $student->academic->program_id) }}
 
                                             <button onclick="addCOver({{ $co->id }})" type="button"
                                                 class="{{ $co->id }} btn btn-success"><span class="icon-plus"></span>

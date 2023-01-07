@@ -41,7 +41,15 @@ class AdminController extends Controller
     $staff = Auth::guard('staff')->user();
         if ($this->hasPriviledge("allApplicants",   $staff->id)) {
 
-        $staff_courses = StaffCourse::where('session', $this->getCurrentSession());
+        // $staff_courses = StaffCourse::where('session_id', $this->getCurrentSession());
+
+        $staff_courses=DB::table('staff_courses')->where('session_id', $this->getCurrentSession())->where('staff_id', $staff->id )
+        ->leftJoin('courses', 'staff_courses.course_id', '=', 'courses.id')
+        ->select('staff_courses.*','courses.course_title', 'courses.course_code')
+        ->get();
+        // ->where('staff_id', $staff->id )
+        // ->select('staff_courses.*')
+        // ->get();
         return view('results.course_upload', ['staff_courses' => $staff_courses]);
     } else {
         $loginMsg = '<div class="alert alert-danger alert-dismissible" role="alert"> <button type="button" class="close" data-dismiss="alert"> &times; </button> You dont\'t have access to this task, please see the ICT</div>';
@@ -102,7 +110,7 @@ class AdminController extends Controller
         if ($this->hasPriviledge("allApplicants",  $staff->id)) {
 
 
-        $staff_courses = StaffCourse::where('upload_status', 'uploaded')->where('approval_status', 'pending')->get();
+        $staff_courses = StaffCourse::where('upload_status', 'uploaded')->where('approval_status', 'pending')->where('session_id', $this->getCurrentSession())->get();
         return view('results.approve_scores', ['staff_courses' => $staff_courses]);
     } else {
         $loginMsg = '<div class="alert alert-danger alert-dismissible" role="alert"> <button type="button" class="close" data-dismiss="alert"> &times; </button> You dont\'t have access to this task, please see the ICT</div>';

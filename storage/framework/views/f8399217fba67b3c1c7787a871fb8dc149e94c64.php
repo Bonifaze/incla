@@ -1,42 +1,30 @@
-{{--  @php
-
-    if (!session('userid')) {
-        header('location: /');
-        exit();
-    }
-@endphp  --}}
-
-@extends('layouts.student')
-
-
-
-@section('pagetitle')
+<?php $__env->startSection('pagetitle'); ?>
     Home
-@endsection
+<?php $__env->stopSection(); ?>
 
 
 
 <!-- Sidebar Links -->
 
 <!-- Treeview -->
-@section('student-open')
+<?php $__env->startSection('student-open'); ?>
     menu-open
-@endsection
+<?php $__env->stopSection(); ?>
 
-@section('student')
+<?php $__env->startSection('student'); ?>
     active
-@endsection
+<?php $__env->stopSection(); ?>
 
 <!-- Page -->
-@section('home')
+<?php $__env->startSection('home'); ?>
     active
-@endsection
+<?php $__env->stopSection(); ?>
 
 <!-- End Sidebar links -->
 
 
 
-@section('content')
+<?php $__env->startSection('content'); ?>
     <div class="content-wrapper bg-white">
         <!-- Content Header (Page header) -->
 
@@ -57,7 +45,7 @@
                     <meta charset="UTF-8">
                     <meta http-equiv="X-UA-Compatible" content="IE=edge">
                     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-                    <meta name="csrf-token" content="{{ csrf_token() }}">
+                    <meta name="csrf-token" content="<?php echo e(csrf_token()); ?>">
                     <title></title>
                     <!-- CSS only -->
                     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css"
@@ -69,26 +57,29 @@
 
                 <body>
 
-                    @if (session('statusMsg'))
-                        {!! session('statusMsg') !!}
-                    @endif
-                    @if (session('signUpMsg'))
-                        {!! session('signUpMsg') !!}
-                    @endif
+                    <?php if(session('statusMsg')): ?>
+                        <?php echo session('statusMsg'); ?>
+
+                    <?php endif; ?>
+                    <?php if(session('signUpMsg')): ?>
+                        <?php echo session('signUpMsg'); ?>
+
+                    <?php endif; ?>
                     <form action="" method="POST" onsubmit="event.preventDefault();" class="p-5">
-                        @csrf
+                        <?php echo csrf_field(); ?>
                         <div
                             class="form-group container-fluid mt-5 p-5 border border-success shadow shadow-lg rounded rounded-lg">
                             <label for="exampleFormControlSelect1" class="text-success fw-bold mb-2">Types</label>
 
                             <select class="form-select" id="pmtype" onChange="update()">
-                                @foreach ($fee_types as $fee_types)
-                                    <option value="{{ $fee_types->provider_code }}, {{ $fee_types->id }}"
-                                        id="{{ $fee_types->amount }}">
+                                <?php $__currentLoopData = $fee_types; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $fee_types): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                    <option value="<?php echo e($fee_types->provider_code); ?>, <?php echo e($fee_types->id); ?>"
+                                        id="<?php echo e($fee_types->amount); ?>">
 
-                                        {{ $fee_types->name }}
+                                        <?php echo e($fee_types->name); ?>
+
                                     </option>
-                                @endforeach
+                                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
 
                             </select>
 
@@ -97,42 +88,39 @@
                             <input type="hidden" class="form-control mt-2" id="provider_code" readonly>
                             <input type="hidden" class="form-control mt-2" id="fee_type_id" readonly>
                             <input type="text" class="form-control mt-2" id="id" readonly>
-                            {{--  @foreach ($payment as $utm)  --}}
+                            
                                 <div class="form-floating mb-3 mt-3">
                                     <input type="hidden" class="form-control" id="js-firstName"
-                                        placeholder="{{ Auth::guard('student')->user()->full_name }}"
-                                        value="{{ Auth::guard('student')->user()->full_name }}"
+                                        placeholder="<?php echo e(Auth::guard('student')->user()->full_name); ?>"
+                                        value="<?php echo e(Auth::guard('student')->user()->full_name); ?>"
                                         name="firstName" readonly>
                                     <label for="email"></label>
                                 </div>
 
                                 <div class="form-floating mb-3 mt-3">
                                     <input type="hidden" class="form-control" id="js-email"
-                                        placeholder="{{ Auth::guard('student')->user()->email }}" value="{{ Auth::guard('student')->user()->email }}" name="email"
+                                        placeholder="<?php echo e(Auth::guard('student')->user()->email); ?>" value="<?php echo e(Auth::guard('student')->user()->email); ?>" name="email"
                                         readonly >
                                     <label for="email"></label>
                                 </div>
 
                                 <div class="form-floating mb-3 mt-3">
                                     <input type="hidden" class="form-control" id="js-phone"
-                                        placeholder="{{ Auth::guard('student')->user()->phone }}" value="{{ Auth::guard('student')->user()->phone }}" name="email"
+                                        placeholder="<?php echo e(Auth::guard('student')->user()->phone); ?>" value="<?php echo e(Auth::guard('student')->user()->phone); ?>" name="email"
                                         readonly>
                                     <label for="email"></label>
                                 </div>
                                  <div class="form-floating mb-3 mt-3">
                                     <input type="hidden" class="form-control" id="js-id"
-                                        placeholder="{{ Auth::guard('student')->user()->id }}" value="{{ Auth::guard('student')->user()->id }}" name="email"
+                                        placeholder="<?php echo e(Auth::guard('student')->user()->id); ?>" value="<?php echo e(Auth::guard('student')->user()->id); ?>" name="email"
                                         readonly>
                                     <label for="email"></label>
                                 </div>
 
-                                 {{--  <input type="text" placeholder="{{ Auth::guard('student')->user()->id }}">  --}}
-                            {{--  @endforeach  --}}
+                                 
+                            
 
-                            {{--  <div class="form-floating mt-3 mb-3">
-                            <input type="text" class="form-control" id="value" placeholder="Enter Amount" name="amount" readonly>
-                            <label for="pwd">Amount</label>
-                        </div>  --}}
+                            
                         <!-- <div class="form-floating mt-3 mb-3">
                             <input type="text" class="form-control" id="js-amount" placeholder="Enter Amount" name="amount" readonly>
                             <label for="pwd">Amount</label>
@@ -141,8 +129,7 @@
                         <button type="submit" onClick="makePayment()" class="btn btn-success mt-3" id="rrrbtn">Generate RRR</button>
                     </div>
                 </form>
-                            @endsection
-@section('pagescript')
+
                 <!-- JavaScript Bundle with Popper -->
                 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
                 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2" crossorigin="anonymous">
@@ -161,9 +148,10 @@
 
                         */
                           //e.preventDefault();
-                            var merchantId = "8434377560";
-                            var apiKey = "154279";
-
+                             //var merchantId = "8434377560";
+                            //var apiKey = "154279";
+                             var merchantId = "2547916";
+                             var apiKey = "1946";
                       //  var serviceTypeId = document.getElementById("pmtype").options[document.getElementById("pmtype").selectedIndex].value;
                          var serviceTypeId =document.getElementById("provider_code").value;
                         var d = new Date();
@@ -220,10 +208,10 @@
                                 jsonp(this.responseText);
                             }
                         });
-                        //  xhr.open("POST", "https://login.remita.net/");
-                         xhr.open("POST", "https://login.remita.net/remita/exapp/api/v1/send/api/echannelsvc/merchant/api/paymentinit");
-                        //xhr.open("POST", "https://remitademo.net");
-                      // xhr.open("POST", "https://remitademo.net/remita/exapp/api/v1/send/api/echannelsvc/merchant/api/paymentinit");
+                        // xhr.open("POST", "https://login.remita.net/");
+                        // xhr.open("POST", "https://login.remita.net/remita/exapp/api/v1/send/api/echannelsvc/merchant/api/paymentinit");
+                        //xhr.open("POST", "https://remitademo.net/remita/exapp/api/v1/send/api");
+                       xhr.open("POST", "https://remitademo.net/remita/exapp/api/v1/send/api/echannelsvc/merchant/api/paymentinit");
                         xhr.setRequestHeader("Content-Type", "application/json");
                         xhr.setRequestHeader("Authorization", 'remitaConsumerKey=' + merchantId + ',remitaConsumerToken=' + apiHash)
 
@@ -325,25 +313,15 @@
 
                             }
                         });
-                        xhr.open("POST", "/students/payremi", true);
+                        xhr.open("POST", "/payremi1", true);
                         xhr.setRequestHeader("Content-Type", "application/json; charset=utf-8");
-                     //   xhr.setRequestHeader("Authorization", 'remitaConsumerKey=' + merchantId + ',remitaConsumerToken=' + apiHash)
+                        xhr.setRequestHeader("Authorization", 'remitaConsumerKey=' + merchantId + ',remitaConsumerToken=' + apiHash)
 
                         xhr.send(data);
 
                     }
                 </script>
-                {{--  <script>
-                    $("#pmtype").change(function(e) {
-                        let narate = $("#pmtype").val();
-                        if (narate == "4430731") {
-                            $('#js-amount').val(4500);
-                        } else if (narate == "PG") {
-
-                            $('#js-amount').val(80000);
-                        }
-                    });
-                </script>  --}}
+                
                 <script type="text/javascript">
                     function update() {
                         var select = document.getElementById('pmtype');
@@ -363,4 +341,6 @@
             </body>
 
             </html>
-@endsection
+            <?php $__env->stopSection(); ?>
+
+<?php echo $__env->make('layouts.student', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH C:\Users\Lawrence Chris\Desktop\laraproject\resources\views/students/Remitapayment.blade.php ENDPATH**/ ?>

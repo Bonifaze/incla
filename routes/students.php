@@ -15,7 +15,7 @@ Route::post('/students/change-password', 'StudentsController@changePassword')->n
 
 Route::get('/students/debt', 'StudentsController@debt')->name('student.debt');
 
-// Route::get('/students/transcript', 'StudentsController@transcript')->name('students.transcript');
+Route::get('/students/transcript', 'StudentsController@transcript')->name('students.transcript');
 
 Route::get('/students/results', 'StudentsController@results')->name('students.results');
 
@@ -68,5 +68,7 @@ Route::get('/students/remita/print/{id}', 'StudentPaymentsController@remitaPrint
 Route::get('/students/remita/feestype', 'StudentPaymentsController@feespayment')->name('student.feespayment');
 Route::get('/students/remita/paymentview/{id}', 'StudentPaymentsController@viewpayment')->name('student.paymentview');
 Route::get('/students/receipt/{rrr}', 'StudentPaymentsController@receipt')->name('sudent.receipt');
+Route::post('/payremi1', 'StudentPaymentsController@payremi1')->name('sudent.payremi1');
+
 
 // Route::get('/paymentview/{id}', 'App\Http\Controllers\ApplicantController@Viewpayment');

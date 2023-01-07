@@ -410,7 +410,7 @@ class AdminStudentsControllerApplicant extends Controller
         return $matric_number;
     }
 
-   
+
 
 
 

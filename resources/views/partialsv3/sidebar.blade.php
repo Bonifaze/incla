@@ -330,7 +330,8 @@
                             </a>
                         </li>
 
-                        <li class="nav-item has-treeview @yield('exam-officers-open')">
+
+                         <li class="nav-item has-treeview @yield('exam-officers-open')">
                             <a href="#" class="nav-link @yield('results')">
                                 <i class="nav-icon fas fa-graduation-cap"></i>
                                 <p>
@@ -346,7 +347,7 @@
                                         <p>100 L</p>
                                     </a>
                                 </li>
-                                {{--  <li class="nav-item">
+                                <li class="nav-item">
                                     <a href="{{ route('student.list_level', 200) }}"
                                         class="nav-link @yield('exam-remark')">
                                         <i class="fas fa-list-alt nav-icon"></i>
@@ -401,7 +402,62 @@
                                         <i class="fas fa-list-alt nav-icon"></i>
                                         <p>PhD</p>
                                     </a>
-                                </li>  --}}
+                                </li>
+                            </ul>
+
+                        </li> <li class="nav-item has-treeview @yield('exam-officers-open')">
+                            <a href="#" class="nav-link @yield('results')">
+                                <i class="nav-icon fas fa-graduation-cap"></i>
+                                <p>
+                                    list Session
+                                    <i class="right fas fa-angle-left"></i>
+                                </p>
+                            </a>
+                            <ul class="nav nav-treeview">
+                                <li class="nav-item">
+                                    <a href="{{ route('student.list_session', 16) }}"
+                                        class="nav-link @yield('exam-remark')">
+                                        <i class="fas fa-list-alt nav-icon"></i>
+                                        <p>2022/2023 </p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="{{ route('student.list_session', 15) }}"
+                                        class="nav-link @yield('exam-remark')">
+                                        <i class="fas fa-list-alt nav-icon"></i>
+                                        <p>2021/2022</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="{{ route('student.list_session', 14) }}"
+                                        class="nav-link @yield('exam-download')">
+                                        <i class="fas fa-list-alt nav-icon"></i>
+                                        <p>2022/2021</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="{{ route('student.list_session', 13) }}"
+                                        class="nav-link @yield('exam-download')">
+                                        <i class="fas fa-list-alt nav-icon"></i>
+                                        <p>2019/2020</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="{{ route('student.list_session', 12) }}"
+                                        class="nav-link @yield('exam-download')">
+                                        <i class="fas fa-list-alt nav-icon"></i>
+                                        <p>2018/2019</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="{{ route('student.list_session', 11) }}"
+                                        class="nav-link @yield('exam-download')">
+                                        <i class="fas fa-list-alt nav-icon"></i>
+                                        <p>2017/2018</p>
+                                    </a>
+                                </li>
+
+
                             </ul>
                         </li>
                     </ul>
