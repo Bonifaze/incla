@@ -38,7 +38,7 @@
 
               			<div class="col-md-6 form-group">
 								<label for="mat_no"> Matric Number :</label>
-								<?php echo Form::text('mat_no', null, array( 'placeholder' => '','class' => 'form-control', 'id' => 'mat_no', 'required' => 'required')); ?>
+								<?php echo Form::text('mat_no', null, array( 'placeholder' => 'VUG/CSC/17/2033 or VUG/22/ACC0001','class' => 'form-control', 'id' => 'mat_no', 'required' => 'required')); ?>
 
 	                    			<span class="text-danger"> <?php echo e($errors->first('mat_no')); ?></span>
 							</div>
@@ -86,7 +86,7 @@
 
               			<div class="col-md-6 form-group">
 								<label for="mat_no"> Student ID :</label>
-								<?php echo Form::text('mat_no', null, array( 'placeholder' => '','class' => 'form-control', 'id' => 'mat_no', 'required' => 'required')); ?>
+								<?php echo Form::text('mat_no', null, array( 'placeholder' => '2055 or ACC0001','class' => 'form-control', 'id' => 'mat_no', 'required' => 'required')); ?>
 
 	                    			<span class="text-danger"> <?php echo e($errors->first('mat_no')); ?></span>
 							</div>
