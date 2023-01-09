@@ -50,6 +50,7 @@
 
 
 
+
               </div>
              </div>
 
@@ -74,6 +75,56 @@
 
 
 
+	<!-- form start -->
+
+						<?php echo Form::open(array('route' => 'result.find_student', 'method'=>'POST', 'class' => 'nobottommargin')); ?>
+
+			<div class="card-body">
+              <div class="box-body">
+
+              		<div class="row">
+
+              			<div class="col-md-6 form-group">
+								<label for="mat_no"> Student ID :</label>
+								<?php echo Form::text('mat_no', null, array( 'placeholder' => '','class' => 'form-control', 'id' => 'mat_no', 'required' => 'required')); ?>
+
+	                    			<span class="text-danger"> <?php echo e($errors->first('mat_no')); ?></span>
+							</div>
+
+              			<div class="col-md-6 form-group">
+								<label for="program">Program :</label>
+								<?php echo e(Form::select('program', $programs, null,['class' => 'form-control', 'id' => 'program', 'name' => 'program'])); ?>
+
+							<span class="text-danger"> <?php echo e($errors->first('program')); ?></span>
+						</div>
+
+
+					</div>
+
+
+
+
+              </div>
+             </div>
+
+
+                <!-- /.card-body -->
+
+                <div class="card-footer">
+
+								<?php echo e(Form::submit('Search', array('class' => 'btn btn-success'))); ?>
+
+
+                </div>
+
+                 </div>
+               <!-- /.box-body -->
+
+
+            <?php echo Form::close(); ?>
+
+
+            </div>
 
 
 

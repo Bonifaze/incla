@@ -127,8 +127,7 @@
                         <div class="card card-primary">
                              <h1
                         class="app-page-title text-uppercase h5 font-weight-bold p-2 mb-2 shadow-sm text-center text-success border">
-                        Course Registration for <?php echo e($student->full_name); ?>  <?php echo e($academic->mat_no); ?>
-
+                        Course Registration for <?php echo e($student->full_name); ?> <span class="text-primary">  <?php echo e($academic->mat_no); ?> </span>
                     </h1>
 
                             <div class="table-responsive">
