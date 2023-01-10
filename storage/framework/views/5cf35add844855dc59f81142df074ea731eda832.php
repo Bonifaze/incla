@@ -361,7 +361,13 @@
 
 
                 <li class="nav-item has-treeview <?php echo $__env->yieldContent('results-open'); ?>">
-                    
+                    <a href="#" class="nav-link <?php echo $__env->yieldContent('results'); ?>">
+                        <i class="nav-icon fas fa-graduation-cap"></i>
+                        <p>
+                            Staff
+                            <i class="right fas fa-angle-right"></i>
+                        </p>
+                    </a>
                     <ul class="nav nav-treeview ml-4">
                         <li class="nav-item">
                             <a href="<?php echo e(route('staff.create')); ?>" class="nav-link <?php echo $__env->yieldContent('faculties'); ?>">

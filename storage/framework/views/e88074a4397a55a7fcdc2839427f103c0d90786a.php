@@ -80,11 +80,11 @@
                                                 </thead>
                                                 <tbody>
                                                     <input type="hidden" name="session"
-                                                        value="<?php echo e($student_registered_courses[0]->session); ?>">
+                                                        value="<?php echo e($student_registered_courses[0]->session ?? ''); ?> ">
                                                     <input type="hidden" name="level"
-                                                        value="<?php echo e($student_registered_courses[0]->level); ?>">
+                                                        value="<?php echo e($student_registered_courses[0]->level  ?? ''); ?>">
                                                     <input type="hidden" name="semester"
-                                                        value="<?php echo e($student_registered_courses[0]->semester); ?>">
+                                                        value="<?php echo e($student_registered_courses[0]->semester  ?? ''); ?>">
                                                     <input type="hidden" name="course_id" value="<?php echo e($course->id); ?>">
                                                     <?php $__currentLoopData = $student_registered_courses; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $student_course): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                                         <tr>

@@ -91,11 +91,11 @@ if(!session('adminId'))
                                                 </thead>
                                                 <tbody>
                                                     <input type="hidden" name="session"
-                                                        value="{{ $student_registered_courses[0]->session }}">
+                                                        value="{{ $student_registered_courses[0]->session ?? ''}} ">
                                                     <input type="hidden" name="level"
-                                                        value="{{ $student_registered_courses[0]->level }}">
+                                                        value="{{ $student_registered_courses[0]->level  ?? ''  }}">
                                                     <input type="hidden" name="semester"
-                                                        value="{{ $student_registered_courses[0]->semester }}">
+                                                        value="{{ $student_registered_courses[0]->semester  ?? '' }}">
                                                     <input type="hidden" name="course_id" value="{{ $course->id }}">
                                                     @foreach ($student_registered_courses as $student_course)
                                                         <tr>

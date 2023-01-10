@@ -1,13 +1,9 @@
-@extends('layouts.mini')
-
-
-
-@section('pagetitle') Search Staff  @endsection
+<?php $__env->startSection('pagetitle'); ?> Search Staff  <?php $__env->stopSection(); ?>
 
 
 
 
-@section('content')
+<?php $__env->startSection('content'); ?>
 
 <div class="content-wrapper">
     <!-- Content Header (Page header) -->
@@ -24,20 +20,22 @@
 
             <div class="card ">
 
-             @include("partialsv3.flash")
+             <?php echo $__env->make("partialsv3.flash", \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
              <div class="table-responsive">
 
 				<!-- form start -->
 
-						{!! Form::open(array('route' => 'staff.find', 'method'=>'POST', 'class' => 'nobottommargin')) !!}
+						<?php echo Form::open(array('route' => 'staff.find', 'method'=>'POST', 'class' => 'nobottommargin')); ?>
+
 			<div class="card-body">
               <div class="box-body">
 
               			<div class="row">
               			<div class="col-md-6 form-group">
-              			<div  @if($errors->has('data')) class ='has-error form-group' @endif>
+              			<div  <?php if($errors->has('data')): ?> class ='has-error form-group' <?php endif; ?>>
 								<label for="data">Surname, First Name, ID, Staff No, Email or Phone Number:</label>
-								{!! Form::search('data', null, array( 'placeholder' => '','class' => 'form-control', 'id' => 'data', 'required' => 'required')) !!}
+								<?php echo Form::search('data', null, array( 'placeholder' => '','class' => 'form-control', 'id' => 'data', 'required' => 'required')); ?>
+
 
 								</div>
 								</div>
@@ -50,7 +48,8 @@
 
                 <div class="card-footer">
 
-								{{ Form::submit('Search', array('class' => 'btn btn-primary')) }}
+								<?php echo e(Form::submit('Search', array('class' => 'btn btn-primary'))); ?>
+
 
                 </div>
 
@@ -58,7 +57,8 @@
                <!-- /.box-body -->
 
 
-            {!! Form::close() !!}
+            <?php echo Form::close(); ?>
+
 
             </div>
 
@@ -98,4 +98,6 @@
     </section>
     <!-- /.content -->
   </div>
-@endsection
+<?php $__env->stopSection(); ?>
+
+<?php echo $__env->make('layouts.mini', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH C:\Users\Lawrence Chris\Desktop\laraproject\resources\views/staff/admin/search.blade.php ENDPATH**/ ?>

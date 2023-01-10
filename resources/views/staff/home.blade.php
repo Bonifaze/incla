@@ -51,7 +51,7 @@
                                         <div class="row no-gutters align-items-center">
                                             <div class="col mr-2">
                                                 <div class="h4 text-success" style="text-decoration: underline;">
-                                                    <a href="#"
+                                                    <a href="/admin/upload"
                                                         class="text-success @yield('staff-courses')">My Courses</a>
                                                 </div>
                                             </div>
@@ -101,6 +101,26 @@
                                     </div>
                                 </div>
                             </div>
+
+  <div class="col-xl-6 col-md-6">
+                                <div class="card border-left-success shadow h-100 py-3">
+                                    <div class="card-body">
+                                        <div class="row no-gutters align-items-center">
+                                            <div class="col mr-2">
+                                                <div class="h4 text-success" style="text-decoration: underline;">
+                                                    <a href="{{ route('staff.search') }}"
+                                                        class="text-success @yield('registration')">Search Staff</a>
+                                                </div>
+                                            </div>
+                                            <div class="col-auto">
+                                                <i class="fa fa-search fa-3x text-success"></i>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                        </div>
+
+
 
                         </div>
 
