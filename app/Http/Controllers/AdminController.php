@@ -39,7 +39,7 @@ class AdminController extends Controller
     public function courseUpload()
     {
     $staff = Auth::guard('staff')->user();
-        if ($this->hasPriviledge("allApplicants",   $staff->id)) {
+        // if ($this->hasPriviledge("allApplicants",   $staff->id)) {
 
         // $staff_courses = StaffCourse::where('session_id', $this->getCurrentSession());
 
@@ -51,16 +51,16 @@ class AdminController extends Controller
         // ->select('staff_courses.*')
         // ->get();
         return view('results.course_upload', ['staff_courses' => $staff_courses]);
-    } else {
-        $loginMsg = '<div class="alert alert-danger alert-dismissible" role="alert"> <button type="button" class="close" data-dismiss="alert"> &times; </button> You dont\'t have access to this task, please see the ICT</div>';
-       return view('admissions.error', compact('loginMsg'));
-    }
+    // } else {
+    //     $loginMsg = '<div class="alert alert-danger alert-dismissible" role="alert"> <button type="button" class="close" data-dismiss="alert"> &times; </button> You dont\'t have access to this task, please see the ICT</div>';
+    //    return view('admissions.error', compact('loginMsg'));
+    // }
     }
 
     public function scoresupload($course_id)
     {
         $staff = Auth::guard('staff')->user();
-        if ($this->hasPriviledge("allApplicants",   $staff->id)) {
+        // if ($this->hasPriviledge("allApplicants",   $staff->id)) {
 
         $course = StaffCourse::where('id', $course_id)->first();
         $student_registered_courses = RegisteredCourse::where('course_id', $course_id)
@@ -68,10 +68,10 @@ class AdminController extends Controller
         ->where('session', $this->getCurrentSession())
         ->get();
         return view('results.scores_upload', ['student_registered_courses' => $student_registered_courses, 'course' => $course]);
-    } else {
-        $loginMsg = '<div class="alert alert-danger alert-dismissible" role="alert"> <button type="button" class="close" data-dismiss="alert"> &times; </button> You dont\'t have access to this task, please see the ICT</div>';
-       return view('admissions.error', compact('loginMsg'));
-    }
+    // } else {
+    //     $loginMsg = '<div class="alert alert-danger alert-dismissible" role="alert"> <button type="button" class="close" data-dismiss="alert"> &times; </button> You dont\'t have access to this task, please see the ICT</div>';
+    //    return view('admissions.error', compact('loginMsg'));
+    // }
     }
 
 
@@ -107,7 +107,7 @@ class AdminController extends Controller
     public function approveScores()
     {
         $staff = Auth::guard('staff')->user();
-        if ($this->hasPriviledge("allApplicants",  $staff->id)) {
+        if ($this->hasPriviledge("approveScores",  $staff->id)) {
 
 
         $staff_courses = StaffCourse::where('upload_status', 'uploaded')->where('approval_status', 'pending')->where('session_id', $this->getCurrentSession())->get();

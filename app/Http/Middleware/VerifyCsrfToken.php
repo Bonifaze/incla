@@ -18,6 +18,7 @@ class VerifyCsrfToken extends Middleware
         '/api/test',
         '/payremi',
         '/logpay',
-        '/payremi1'
+       ' /students/payremi',
+        '/students/logpay'
     ];
 }

@@ -13,6 +13,7 @@ use App\Student;
 use App\StudentDebt;
 use Remita\HTTPUtil;
 use App\ProgramCourse;
+use Carbon\Carbon
 use App\StudentResult;
 use App\StudentAcademic;
 use App\Models\fee_types;
@@ -60,10 +61,10 @@ class StudentPaymentsController extends Controller
         ->where('category',4)
         ->get();
 
-        return view('students.Remitapayment', compact('payment'),['fee_types' => $fee_types, 'fee_typess' => $fee_typess]);
+        return view('students.RemitaPayment', compact('payment'),['fee_types' => $fee_types, 'fee_typess' => $fee_typess]);
     }
 
-   public function payremi1(Request $req)
+   public function payremi(Request $req)
     {
         // DB::beginTransaction();
         try {
@@ -89,7 +90,7 @@ class StudentPaymentsController extends Controller
             // //  Mail::to($req->email)->send(new Confirmsignup($mailData));
             // DB::commit();
             // $json = array('success' => true, 'route' => '/paymentview/', 'id' => session('userid'));
-            $json = array('success' => true, 'route' => '/paymentview/', 'id' => Auth::guard('student')->user()->id);
+            $json = array('success' => true, 'route' => '/students/remita/paymentview/', 'id' => Auth::guard('student')->user()->id);
             $jsonstring = json_encode($json, JSON_HEX_TAG);
             echo $jsonstring;
             //return redirect('/paymentview/'.session('userid'));
@@ -97,12 +98,43 @@ class StudentPaymentsController extends Controller
          // $statusMsg = '<div class="alert alert-danger alert-dismissible"><button type="button" class="close" data-dismiss="alert">&times;</button><strong>Error!</strong> RRR not generated successfuly, please try again ' . $e->getMessage() . "###" . $req->rrr . '</div>';
              $statusMsg = 'RRR not generated successfuly, please try again or contact ICT';
 
-            $json = array('success' => false, 'route' => '/home', 'msg' => $statusMsg);
+            $json = array('success' => false, 'route' => '/students/remita/feestype', 'msg' => $statusMsg);
             $jsonstring = json_encode($json, JSON_HEX_TAG);
             echo $jsonstring;
             // return redirect('/newPayment/')->with('mgs',$statusMsg);
         }
     }
+
+
+//LOG PAYMENT
+    public function logpay(Request $req)
+    {
+        try {
+            DB::table('remitas')->where('rrr', $req->rrr)
+                ->update([
+                    'status_code' => $req->statuscode,
+                    'status' => $req->status,
+                    'request_ip' => $_SERVER['REMOTE_ADDR'],
+                    'order_ref' => $req->orderRef,
+                    'transaction_id' => $req->transaction_id,
+                    'transaction_date' => Carbon::now(),
+                    'channel' => "Remita Online",
+                    'updated_at' => Carbon::now()
+
+                ]);
+            $json = array('success' => true, 'route' => '/students/remita/paymentview/', 'id' => Auth::guard('student')->user()->id);
+            $jsonstring = json_encode($json, JSON_HEX_TAG);
+            echo $jsonstring;
+        } catch (QueryException $e) {
+            $statusMsg = '<div class="alert alert-danger alert-dismissible"><button type="button" class="close" data-dismiss="alert">&times;</button><strong>Error!</strong> RRR not generated successfuly, please try again ' . $e->getMessage() . "###" . $req->rrr . '</div>';
+
+            $json = array('success' => false, 'route' => '/students/remita/feestype', 'msg' => $statusMsg);
+            $jsonstring = json_encode($json, JSON_HEX_TAG);
+            echo $jsonstring;
+            // return redirect('/newPayment/')->with('mgs',$statusMsg);
+        }
+    }
+
 
     public function viewpayment($id)
     {
