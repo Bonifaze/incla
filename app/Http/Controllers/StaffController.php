@@ -89,6 +89,7 @@ class StaffController extends Controller
         $roles = $role->staffRoles($staff->id);
         $rls = $role->availableRoles($staff->id);
         $perms = $staff->permissions();
+        // $alltasks = DB::table('task_to_role')->where('role_id', $rls = $role->availableRoles)->get();
         return view('staff.security', compact('staff','roles','rls','perms'));
     }
 
