@@ -75,11 +75,11 @@
                                                 <?php if($course->is_registered == 0): ?>
                                                     <?php
                                                         $tatolCredits += $course->course_category == 1 ? $course->credit_unit : 0;
-
+                                                        
                                                     ?>
                                                     <tr>
-                                                        <td> <?php echo e($key+1); ?>. <input type="checkbox" id="<?php echo e($course->credit_unit); ?>"
-                                                                name="courses1[]"
+                                                        <td> <?php echo e($key + 1); ?>. <input type="checkbox"
+                                                                id="<?php echo e($course->credit_unit); ?>" name="courses1[]"
                                                                 <?php echo e($course->course_category == 1 ? 'checked ' : ''); ?>
 
                                                                 value="<?php echo e($course->course_id); ?>"
@@ -132,8 +132,8 @@
                                                     $tatolCredits += $course->course_category == 1 ? $course->credit_unit : 0;
                                                 ?>
                                                 <tr>
-                                                    <td> <?php echo e($key+1); ?>.  <input type="checkbox" id="<?php echo e($course->credit_unit); ?>"
-                                                            name="courses2[]"
+                                                    <td> <?php echo e($key + 1); ?>. <input type="checkbox"
+                                                            id="<?php echo e($course->credit_unit); ?>" name="courses2[]"
                                                             <?php echo e($course->course_category == 1 ? 'checked ' : ''); ?>
 
                                                             value="<?php echo e($course->course_id); ?>"
@@ -162,10 +162,10 @@
 
                                 </table>
                                 
-                                 <div id="sub3">
+                                <div id="sub3">
                                     <div
                                         class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                                        <h6 class="m-0 font-weight-bold text-success">Lower  First Level Course </h6>
+                                        <h6 class="m-0 font-weight-bold text-success">Lower First Level Course </h6>
                                     </div>
 
                                     <table class="table table-bordered table-striped" width="100%" cellspacing="0">
@@ -183,14 +183,12 @@
                                                 value="<?php echo e(Auth::guard('student')->user()->id); ?>">
                                             <input id="" type="hidden" name="session"
                                                 value="<?php echo e($session->id); ?>">
-                                
+                                            
 
-                                 <?php $__currentLoopData = $lowercourseFirst; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $key => $course): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-
-
+                                            <?php $__currentLoopData = $lowercourseFirst; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $key => $course): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                                 <tr>
-                                                    <td> <?php echo e($key+1); ?>.  <input type="checkbox" id="<?php echo e($course->credit_unit); ?>"
-                                                            name="courses1[]"
+                                                    <td> <?php echo e($key + 1); ?>. <input type="checkbox"
+                                                            id="<?php echo e($course->credit_unit); ?>" name="courses1[]"
                                                             <?php echo e($course->course_category == 1 ? ' ' : ''); ?>
 
                                                             value="<?php echo e($course->course_id); ?>"
@@ -204,16 +202,15 @@
                                                     <td><?php echo e($course->course_code); ?></td>
                                                     <td><?php echo e($course->course_title); ?></td>
                                                     <td><?php echo e($course->credit_unit); ?></td>
-
                                             <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                                             </tr>
-                                
-                                <h4 id="limit2" class="font-weight-bold text-danger fw-bold"></h4>
-                                </tbody>
+                                            
+                                            <h4 id="limit2" class="font-weight-bold text-danger fw-bold"></h4>
+                                        </tbody>
 
-                                </table>
-                                
-                                <table class="table table-bordered table-striped" width="100%" cellspacing="0">
+                                    </table>
+                                    
+                                    <table class="table table-bordered table-striped" width="100%" cellspacing="0">
                                         <thead>
                                             <tr>
                                                 <th>Second Semester </th>
@@ -228,14 +225,12 @@
                                                 value="<?php echo e(Auth::guard('student')->user()->id); ?>">
                                             <input id="" type="hidden" name="session"
                                                 value="<?php echo e($session->id); ?>">
-                                
+                                            
 
-                                  <?php $__currentLoopData = $lowercourseSecond; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $key => $course): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-
-
+                                            <?php $__currentLoopData = $lowercourseSecond; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $key => $course): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                                 <tr>
-                                                    <td> <?php echo e($key+1); ?>.  <input type="checkbox" id="<?php echo e($course->credit_unit); ?>"
-                                                            name="courses2[]"
+                                                    <td> <?php echo e($key + 1); ?>. <input type="checkbox"
+                                                            id="<?php echo e($course->credit_unit); ?>" name="courses2[]"
                                                             <?php echo e($course->course_category == 1 ? ' ' : ''); ?>
 
                                                             value="<?php echo e($course->course_id); ?>"
@@ -249,11 +244,10 @@
                                                     <td><?php echo e($course->course_code); ?></td>
                                                     <td><?php echo e($course->course_title); ?></td>
                                                     <td><?php echo e($course->credit_unit); ?></td>
-
                                             <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                                             </tr>
-                                
-                              </tbody>
+                                            
+                                        </tbody>
 
                                     </table>
                                 </div>
@@ -306,7 +300,7 @@
                                             <?php $__currentLoopData = $courseform; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $key => $course): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                                 <?php
                                                     $tatolCredits += $course->course_unit;
-
+                                                    
                                                 ?>
                                                 <tr>
                                                     

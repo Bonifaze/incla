@@ -10,7 +10,7 @@
 <body>
 <table width="650" border="0" cellspacing="0" cellpadding="0">
   <tr>
-    <td height="650" valign="top"><table width="100%" height="174" border="0" cellpadding="0" cellspacing="0">
+    <td height="650" valign="top"><table width="100%" height="100" border="0" cellpadding="0" cellspacing="0">
 
       <tr>
         <td align="center" valign="top"><h1><strong> Course Form </strong></h1></td>
