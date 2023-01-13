@@ -43,7 +43,7 @@
 							  <th colspan="2">Action</th>
 
                               {{--  <th>Action</th>  --}}
-							  {{--  <th>Transcript</th>  --}}
+							  <th>Transcript</th>
 
 						  </thead>
 
@@ -77,7 +77,7 @@
                                     <td></td>
                                 @endcan
                                     @can('transcript', 'App\Student')
-                               {{--  <td><a class="btn btn-info" href="{{ route('student.transcript',base64_encode($student->id)) }}" target="_blank"> <i class="fa fa-eye"></i> Transcript</a></td>  --}}
+                               <td><a class="btn btn-info" href="{{ route('student.transcript',base64_encode($student->id)) }}" target="_blank"> <i class="fa fa-eye"></i> Transcript</a></td>
                                 @else
                                     <td></td>
                                 @endcan

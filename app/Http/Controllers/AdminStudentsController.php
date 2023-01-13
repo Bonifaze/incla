@@ -4,13 +4,14 @@ namespace App\Http\Controllers;
 
 use PDF;
 use Mail;
+use Exception;
 use App\Program;
 use App\Session;
 use App\Student;
 use App\StudentDebt;
-use App\ProgramCourse;
 
 // use Nette\Utils\Image;
+use App\ProgramCourse;
 use App\StudentResult;
 use App\StudentContact;
 use App\StudentMedical;
@@ -19,17 +20,17 @@ use App\Mail\PasswordReset;
 use Illuminate\Http\Request;
 use App\SemesterRegistration;
 use Illuminate\Validation\Rule;
+use App\Models\RegisteredCourse;
 use App\Models\StudentCreditLoad;
 use Illuminate\Routing\Controller;
+
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
-
 use Illuminate\Support\Facades\Hash;
 use Intervention\Image\Facades\Image;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Redirect;
-use Exception;
 
 class AdminStudentsController extends Controller
 {
@@ -828,9 +829,14 @@ ICT Unit<br />
         $this->authorize('transcript',Student::class);
         $student = Student::with(['academic','contact'])->findOrFail(base64_decode($encode));
         $academic = $student->academic;
-        $registrations = $student->semesterRegistrations;
-        $totalCGPA = $student->CGPA();
-        return view('students.admin.transcript',compact('student','academic','registrations','totalCGPA'));
+        $registrations = RegisteredCourse::where('student_id', $student)
+        // ->where('level', $course->level)
+        // ->where('session', $this->getCurrentSession())
+        ->get();
+        // $registrations = $student->semesterRegistrations;
+        // $totalCGPA = $student->CGPA();
+        // return view('students.admin.transcript',compact('student','academic','registrations','totalCGPA'));
+        return view('students.admin.transcript',compact('student','academic','registrations'));
     } //end show
 
 
