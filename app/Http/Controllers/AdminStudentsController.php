@@ -827,12 +827,16 @@ ICT Unit<br />
     public function transcript($encode)
     {
         $this->authorize('transcript',Student::class);
-        $student = Student::with(['academic','contact'])->findOrFail(base64_decode($encode));
+        $student = Student::with(['academic','contact', 'registered_courses' => function ($qr) {
+            $qr->where('status', 'published');
+        } , 'results' => function ($q)
+        {
+            $q->where('status', 'published');
+        }])->findOrFail(base64_decode($encode));
         $academic = $student->academic;
-        $registrations = RegisteredCourse::where('student_id', $student)
+        $registrations = $student->registered_courses;
         // ->where('level', $course->level)
         // ->where('session', $this->getCurrentSession())
-        ->get();
         // $registrations = $student->semesterRegistrations;
         // $totalCGPA = $student->CGPA();
         // return view('students.admin.transcript',compact('student','academic','registrations','totalCGPA'));

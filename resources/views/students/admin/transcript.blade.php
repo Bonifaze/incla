@@ -73,7 +73,7 @@
                             <td width="17%"><div align="center"><span style="font-weight: bold">Grade</span></div></td>
                             <td width="13%"><div align="center"><span style="font-weight: bold">Pass / Fail</span></div></td>
                           </tr>
-                            @foreach ($registrations as $key => $result)
+                            @foreach ($registrations as $result)
 
 						 <tr>
                             <td width="5%"><div align="center"><span style="font-weight: bold">{{ $loop->iteration }} </span></div></td>

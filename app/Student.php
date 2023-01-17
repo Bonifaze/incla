@@ -7,6 +7,8 @@ use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use App\Models\Result;
+use App\Models\RegisteredCourse;
 
 class Student extends Authenticatable
 {
@@ -66,7 +68,12 @@ class Student extends Authenticatable
 
     public function results()
     {
-        return $this->hasMany('App\StudentResult');
+        return $this->hasMany(Result::class);
+    }
+
+    public function registered_courses()
+    {
+        return $this->hasMany(RegisteredCourse::class);
     }
 
     public function remitas()
