@@ -10,6 +10,8 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class RegisteredCourse extends Model
 {
+
+
     use HasFactory;
 
     protected $fillable = [
@@ -32,11 +34,23 @@ class RegisteredCourse extends Model
     // {
     //     return Course::where('id', $this->course_id)->first()->credit_unit ?? 0;
     // }
+//testing stufss
+    public function student()
+    {
+        return $this->belongsTo('App\Student');
+    }
+
+    public function session()
+    {
+        return $this->belongsTo('App\Session');
+    }
+
     public function getStudentNameAttribute()
     {
         $student = Student::where('id', $this->student_id)->first();
         return "{$student->first_name} {$student->middle_name} {$student->surname}";
     }
+//end of testing stuff
 
     public function getStudentMatricAttribute()
     {

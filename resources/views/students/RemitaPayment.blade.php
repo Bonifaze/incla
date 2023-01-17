@@ -197,7 +197,7 @@
                             "payerName": name,
                             "payerEmail": email,
                             "payerPhone": phone,
-                            "description": "ACCPTANCE"
+                            "description": "VERITAS UNIVERSITY FEES"
                             //"expiryDate": "05/09/2021"
                         }))
 
