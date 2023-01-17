@@ -828,10 +828,12 @@ ICT Unit<br />
     {
         $this->authorize('transcript',Student::class);
         $student = Student::with(['academic','contact'])->findOrFail(base64_decode($encode));
+       // dd($student->id);
         $academic = $student->academic;
-        $registrations = RegisteredCourse::where('student_id', $student)
+        $registrations = RegisteredCourse::where('student_id', $student->id)
         // ->where('level', $course->level)
         // ->where('session', $this->getCurrentSession())
+        
         ->get();
         // $registrations = $student->semesterRegistrations;
         // $totalCGPA = $student->CGPA();

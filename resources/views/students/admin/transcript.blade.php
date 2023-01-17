@@ -75,14 +75,14 @@
                           </tr>
                             @foreach ($registrations as $key => $result)
 
-						 <tr>
+						<tr>
                             <td width="5%"><div align="center"><span style="font-weight: bold">{{ $loop->iteration }} </span></div></td>
                             <td width="15%"><div align="center"><span style="font-weight: bold">{{ $result->course_code }} </span></div></td>
-                            {{--  <td width="23%"><div align="center"><span style="font-weight: bold">{{ $result->programCourse->course->title }} </span></div></td>
-                            <td width="14%"><div align="center"><span style="font-weight: bold">{{ $result->programCourse->hours }} </span></div></td>
+                             <td width="23%"><div align="center"><span style="font-weight: bold">{{ $result->course_title }} </span></div></td>
+                           <td width="14%"><div align="center"><span style="font-weight: bold">{{ $result->course_unit }} </span></div></td>
                             <td width="13%"><div align="center"><span style="font-weight: bold">{{ $result->total }}</span></div></td>
                             <td width="17%"><div align="center"><span style="font-weight: bold">{{ $result->grade }}</span></div></td>
-                            <td width="13%"><div align="center"><span style="font-weight: bold">{{ $result->pass_status }}</span></div></td>  --}}
+                            <td width="13%"><div align="center"><span style="font-weight: bold">{{ $result->grade_status }}</span></div></td>
                           </tr>
                          @endforeach
 
