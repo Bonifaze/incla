@@ -55,13 +55,13 @@
         <table width="100%" height="87" border="1" cellpadding="0" cellspacing="0">
                           <tr>
                             <td colspan="3"><strong>ACADEMIC SESSION</strong>:
-                             {{ $reg->session }}
+                             {{  $reg->session->name }}
                              </td>
                             <td colspan="2" align="center"><strong>LEVEL</strong>:
                              {{ $reg->level }}
                              </td>
                             <td colspan="2"><strong>SEMESTER</strong>:
-                             {{--  {{ $reg->session->semesterName($reg->semester) }}  --}}
+                             {{ $reg->session->semesterName($reg->semester) }}
                              </td>
                           </tr>
                           <tr>

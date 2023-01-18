@@ -49,7 +49,7 @@
         <table width="100%" height="87" border="1" cellpadding="0" cellspacing="0">
                           <tr>
                             <td colspan="3"><strong>ACADEMIC SESSION</strong>:
-                             <?php echo e($reg->session); ?>
+                             <?php echo e($reg->session->name); ?>
 
                              </td>
                             <td colspan="2" align="center"><strong>LEVEL</strong>:
@@ -57,7 +57,8 @@
 
                              </td>
                             <td colspan="2"><strong>SEMESTER</strong>:
-                             
+                             <?php echo e($reg->session->semesterName($reg->semester)); ?>
+
                              </td>
                           </tr>
                           <tr>
@@ -69,7 +70,7 @@
                             <td width="17%"><div align="center"><span style="font-weight: bold">Grade</span></div></td>
                             <td width="13%"><div align="center"><span style="font-weight: bold">Pass / Fail</span></div></td>
                           </tr>
-                            <?php $__currentLoopData = $registrations; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $key => $result): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                            <?php $__currentLoopData = $registrations; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $result): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
 
 						<tr>
                             <td width="5%"><div align="center"><span style="font-weight: bold"><?php echo e($loop->iteration); ?> </span></div></td>

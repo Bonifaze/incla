@@ -837,7 +837,7 @@ ICT Unit<br />
         $registrations = $student->registered_courses;
         // ->where('level', $course->level)
         // ->where('session', $this->getCurrentSession())
-        // $registrations = $student->semesterRegistrations;
+        $registrations = $student->semesterRegistrations;
         // $totalCGPA = $student->CGPA();
         // return view('students.admin.transcript',compact('student','academic','registrations','totalCGPA'));
         return view('students.admin.transcript',compact('student','academic','registrations'));
