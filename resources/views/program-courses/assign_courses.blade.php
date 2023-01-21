@@ -107,7 +107,9 @@
                             </div>
                         </div>
                         <!-- /.card-body -->
-
+{{--  @if(session()->has('success'))
+<div class="alert alert-success">{{   session()->get('success') }}</div>
+@endif  --}}
                         <div class="card-footer">
 
 
@@ -147,7 +149,9 @@
     <script>
 
         $('#program').change(function () {
-            let program_id = $(this),val()
+            let program_id = $(this).val()
+            $('#course').html('')
+            $('#staff').html('')
             $.ajax({
                 url: "{{ route('get_program_courses_and_staff') }}",
                 type: 'POST',
@@ -159,9 +163,9 @@
                         $('#course').append(`<option value="${course.course_id}">${course.course_code} - ${course.course_title}</option>`)
                     })
                     staffs.forEach(staff => {
-                        $('#staff').append(`<option value="${staff.id}">${staff.full_name}</option>`)
+                        $('#staff').append(`<option value="${staff.staff.id}">${staff.staff.full_name}</option>`)
                     })
-                    
+
                 }
             })
         })

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\AdminDepartment;
 use PDF;
 use App\Staff;
 use Exception;
@@ -20,6 +21,7 @@ use Maatwebsite\Excel\Facades\Excel;
 use App\Exports\ProgramCoursesExport;
 // use Exception;
 use App\Imports\ProgramCoursesImport;
+use App\StaffWorkProfile;
 
 class ProgramCoursesController extends Controller
 {
@@ -58,7 +60,7 @@ class ProgramCoursesController extends Controller
 
         return view('/program-courses/list',compact('pcourses'));
     }
-
+//esting
 
     /**
      * Display a listing of the resource.
@@ -273,22 +275,29 @@ DB::commit();
 
     public function store2(Request $request)
     {
+        $session = new Session();
         $this->authorize('create',ProgramCourse::class);
         $this->validate($request, [
-            'program_course_id' => 'required|integer',
+            'program_id' => 'required|integer',
 
-            'lecturer_id' => 'required|integer',
+            'staff_id' => 'required|integer',
+            'course_id' => 'required|integer'
         ]);
+        $program_course= ProgramCourse::where('course_id', $request->course_id )->first();
+        StaffCourse::updateOrcreate(['staff_id'=>$request->staff_id, 'program_id'=>$request->program_id, 'session_id'=>$session->currentSession(), 'semester_id'=>$session->currentSemester(), 'course_id'=>$request->course_id, 'level'=>$program_course->level],['staff_id'=>$request->staff_id, 'program_id'=>$request->program_id,  'session_id'=>$session->currentSession(), 'semester_id'=>$session->currentSemester(), 'course_id'=>$request->course_id, 'level'=>$program_course->level]);
+        // $program_course_assign= new StaffCourse();
+        // $program_course_assign->course_id = $request->course_id;
 
-        $program_course_assign= new StaffCourse();
-        $program_course_assign->program_course_id = $request->program_course_id;
+        // $program_course_assign->staff_id = $request->staff_id;
+        // $program_course_assign->semester_id = $session->currentSemester();
+        // $program_course_assign->session_id = $session->currentSession();
+        // $program_course_assign->level = $program_course->level;
 
-        $program_course_assign->lecturer_id = $request->lecturer_id;
 
-        $program_course_assign->save();
+        // $program_course_assign->save();
 
-        return redirect()->route('program_course.list_assign_courses')
-        ->with('success','New Program Course created successfully');
+        return back()
+        ->with('success','Course Assigned Successfully ');
     }  // end store
 
 //
@@ -529,9 +538,13 @@ DB::commit();
 
     public function getCoursesAndStaff(Request $request)
     {
+        $session = new Session();
         $program_id = $request->program_id;
-        $courses = ProgramCourse::where('program_id', $program_id)->get();
-        $staffs = Staff::where('program_id', $program_id)->get();
+        $program = Program::find($program_id);
+        // dd($program);
+        $admin_department = AdminDepartment::where('academic_department_id' , $program->academic_department_id)->first();
+        $courses = ProgramCourse::where('program_id', $program_id)->where('session_id', $session->currentSession())->get();
+        $staffs = StaffWorkProfile::where('admin_department_id', $admin_department->id)->with('Staff')->get();
 
         return response(['courses' => $courses, 'staffs' => $staffs], 200);
     }
