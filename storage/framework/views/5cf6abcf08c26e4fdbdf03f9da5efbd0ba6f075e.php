@@ -1,19 +1,19 @@
-@extends('layouts.mini')
 
 
 
-@section('pagetitle') Edit Program Course @endsection
+
+<?php $__env->startSection('pagetitle'); ?> Edit Program Course <?php $__env->stopSection(); ?>
 
 
 <!-- Sidebar Links -->
 
 <!-- Treeview -->
-@section('courses-open') menu-open @endsection
+<?php $__env->startSection('courses-open'); ?> menu-open <?php $__env->stopSection(); ?>
 
-@section('courses') active @endsection
+<?php $__env->startSection('courses'); ?> active <?php $__env->stopSection(); ?>
 
 <!-- Page -->
- @section('create-course') active @endsection
+ <?php $__env->startSection('create-course'); ?> active <?php $__env->stopSection(); ?>
 
  <!-- End Sidebar links -->
 
@@ -21,7 +21,7 @@
 
 
 
-@section('content')
+<?php $__env->startSection('content'); ?>
 
 
 <div class="content-wrapper">
@@ -42,35 +42,32 @@
 
               <!-- /.card-header -->
               <!-- form start -->
-            @include('partialsv3.flash')
+            <?php echo $__env->make('partialsv3.flash', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
 
-						{!! Form::model($pcourse, ['method' => 'PATCH','route' => ['program_course.update', $pcourse->id]]) !!}
+						<?php echo Form::model($pcourse, ['method' => 'PATCH','route' => ['program_course.update', $pcourse->id]]); ?>
+
 
  			<div class="card-body">
 
               <div class="box-body">
 
               			<div class="row">
-              			{{--  <div class="col-md-5 form-group">
-								<label for="host_program_id">Host Program :</label>
-								{{ Form::select('host_program_id', $programs, $pcourse->course->program_id,['class' => 'form-control', 'id' => 'host_program_id', 'name' => 'host_program_id', 'onchange' =>'getCourses()']) }}
-							<span class="text-danger"> {{ $errors->first('host_program_id') }}</span>
-							</div>  --}}
+              			
 
 							<div class="col-md-4 form-group">
 								<label for="program_id">Program :</label>
 								<select name="program_id" id="program_id" class="form-control">
 									<option value="">Select Program</option>
-									@foreach ($programs as $id => $name)
-										<option value="{{ $id }}" {{ $pcourse->program_id == $id ? 'selected' : '' }}>{{ $name }}</option>
-									@endforeach
+									<?php $__currentLoopData = $programs; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $id => $name): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+										<option value="<?php echo e($id); ?>" <?php echo e($pcourse->program_id == $id ? 'selected' : ''); ?>><?php echo e($name); ?></option>
+									<?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
 								</select>
-							<span class="text-danger"> {{ $errors->first('program_id') }}</span>
+							<span class="text-danger"> <?php echo e($errors->first('program_id')); ?></span>
 							</div>
 
 							<div class="col-md-4 form-group">
 								<label for="level">Level :</label>
-								{{ Form::select('level', [
+								<?php echo e(Form::select('level', [
 	                        		'100' => '100 Level',
 	                        		'200' => '200 Level',
 	                        		'300' => '300 Level',
@@ -82,14 +79,16 @@
 	                        		'900' => 'PhD'],
 	                        		$pcourse->level,
 	                       			 ['class' => 'form-control select2']
-	                    			) }}
-	                    			<span class="text-danger"> {{ $errors->first('level') }}</span>
+	                    			)); ?>
+
+	                    			<span class="text-danger"> <?php echo e($errors->first('level')); ?></span>
 							</div>
 
                             <div class="col-md-4 form-group">
 								<label for="session_id">Session :</label>
-								{{ Form::select('session_id', $sessions, null,['class' => 'form-control', 'id' => 'session_id', 'name' => 'session_id']) }}
-							<span class="text-danger"> {{ $errors->first('session_id') }}</span>
+								<?php echo e(Form::select('session_id', $sessions, null,['class' => 'form-control', 'id' => 'session_id', 'name' => 'session_id'])); ?>
+
+							<span class="text-danger"> <?php echo e($errors->first('session_id')); ?></span>
 							</div>
 							</div>
 
@@ -99,30 +98,32 @@
 
 							<div class="col-md-3 form-group">
 								<label for="semester">Semester :</label>
-								{{ Form::select('semester', [
+								<?php echo e(Form::select('semester', [
 	                        		'1' => 'First Semester',
 	                        		'2' => 'Second Semester',
 	                        		],
 	                        		$pcourse->semester,
 	                       			 ['class' => 'form-control select2']
-	                    			) }}
-	                    			<span class="text-danger"> {{ $errors->first('semester') }}</span>
+	                    			)); ?>
+
+	                    			<span class="text-danger"> <?php echo e($errors->first('semester')); ?></span>
 							</div>
 
 							<div class="col-md-3 form-group">
 								<label for="mode">Mode :</label>
-								{{ Form::select('course_category', [
+								<?php echo e(Form::select('course_category', [
 	                        		'1' => 'Core',
 	                        		'2' => 'Elective'],
 	                        		$pcourse->course_category,
 	                       			 ['class' => 'form-control select2']
-	                    			) }}
-	                    			<span class="text-danger"> {{ $errors->first('mode') }}</span>
+	                    			)); ?>
+
+	                    			<span class="text-danger"> <?php echo e($errors->first('mode')); ?></span>
 							</div>
 
                              <div class="col-md-3 form-group">
                                     <label for="semester">prerequisite  :</label>
-                                    {{ Form::select(
+                                    <?php echo e(Form::select(
                                         'has_perequisite',
                                         [
                                             'no' => 'No',
@@ -130,15 +131,17 @@
                                         ],
                                      $pcourse->has_perequisite,
                                         ['class' => 'form-control select2'],
-                                    ) }}
-                                    <span class="text-danger"> {{ $errors->first('semester') }}</span>
+                                    )); ?>
+
+                                    <span class="text-danger"> <?php echo e($errors->first('semester')); ?></span>
                                 </div>
 
                                 <div class="col-md-3 form-group">
                                     <label for="semester">prerequisite Course :</label>
-                                     {{ Form::select('perequisite_id', $courses, null, ['placeholder'=> 'null', 'class' => 'form-control select2', 'id' => 'prerequisite_id', 'name' => 'perequisite_id']) }}
+                                     <?php echo e(Form::select('perequisite_id', $courses, null, ['placeholder'=> 'null', 'class' => 'form-control select2', 'id' => 'prerequisite_id', 'name' => 'perequisite_id'])); ?>
 
-                                    <span class="text-danger"> {{ $errors->first('semester') }}</span>
+
+                                    <span class="text-danger"> <?php echo e($errors->first('semester')); ?></span>
                                 </div>
 
 							</div>
@@ -149,19 +152,20 @@
               			<div class="col-md-5 form-group">
 								<label for="course_id">Course Describe :</label>
 								<select name="course_id" id="course_id" class="form-control">
-									@foreach ($courses as $id => $name)
-									<option value="{{ $id }}" {{ $pcourse->course_id == $id ? 'selected' : '' }}>{{ $name }}</option>
-									@endforeach
+									<?php $__currentLoopData = $courses; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $id => $name): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+									<option value="<?php echo e($id); ?>" <?php echo e($pcourse->course_id == $id ? 'selected' : ''); ?>><?php echo e($name); ?></option>
+									<?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
 								</select>
 
 
-							<span class="text-danger"> {{ $errors->first('course_id') }}</span>
+							<span class="text-danger"> <?php echo e($errors->first('course_id')); ?></span>
 							</div>
 
 							<div class="col-md-4 form-group">
 								<label for="hours">Credit Load :</label>
-								{!! Form::text('credit_unit', $pcourse->credit_unit, array( 'placeholder' => '','class' => 'form-control', 'id' => 'credit_unit', 'required' => 'required')) !!}
-	                    			<span class="text-danger"> {{ $errors->first('hours') }}</span>
+								<?php echo Form::text('credit_unit', $pcourse->credit_unit, array( 'placeholder' => '','class' => 'form-control', 'id' => 'credit_unit', 'required' => 'required')); ?>
+
+	                    			<span class="text-danger"> <?php echo e($errors->first('hours')); ?></span>
 							</div>
 
 							</div>
@@ -176,14 +180,16 @@
                 <div class="card-footer">
 
 
-							{{ Form::submit('Edit Program Course', array('class' => 'btn btn-primary')) }}
+							<?php echo e(Form::submit('Edit Program Course', array('class' => 'btn btn-primary'))); ?>
+
 
 
                 </div>
               <!-- /.box-body -->
 
 
-            {!! Form::close() !!}
+            <?php echo Form::close(); ?>
+
 
 
 
@@ -198,9 +204,9 @@
 						Staff Allocation
 					</h4>
 					<div class="mt-4">
-						@if (session()->has('msg'))
-							<div class="alert alert-danger">{{ session()->get('msg') }}</div>
-						@endif
+						<?php if(session()->has('msg')): ?>
+							<div class="alert alert-danger"><?php echo e(session()->get('msg')); ?></div>
+						<?php endif; ?>
 						<div class="table-responsive">
 							<table class="table table-hover table-striped">
 								<thead>
@@ -213,15 +219,15 @@
 									</tr>
 								</thead>
 								<tbody>
-									@foreach ($staff_courses as $staff_course)
+									<?php $__currentLoopData = $staff_courses; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $staff_course): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
 										<tr>
-											<td>{{ $loop->iteration }}</td>
-											<td>{{ $staff_course->course_code }}</td>
-											<td>{{ $staff_course->course_title }}</td>
-											<td>{{ $staff_course->staff_name }}</td>
-											<td><a href="{{ route('drop_staff_course', $staff_course->id) }}" class="btn btn-danger" onclick="return confirm('are you sure you want to drop this course?')">Drop</a></td>
+											<td><?php echo e($loop->iteration); ?></td>
+											<td><?php echo e($staff_course->course_code); ?></td>
+											<td><?php echo e($staff_course->course_title); ?></td>
+											<td><?php echo e($staff_course->staff_name); ?></td>
+											<td><a href="<?php echo e(route('drop_staff_course', $staff_course->id)); ?>" class="btn btn-danger" onclick="return confirm('are you sure you want to drop this course?')">Drop</a></td>
 										</tr>
-									@endforeach
+									<?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
 								</tbody>
 							</table>
 						</div>
@@ -236,9 +242,9 @@
     </section>
     <!-- /.content -->
   </div>
-@endsection
+<?php $__env->stopSection(); ?>
 
-@section('pagescript')
+<?php $__env->startSection('pagescript'); ?>
 <script type="text/javascript">
 
 $.ajaxSetup({
@@ -255,7 +261,7 @@ function getHours()
 	 course_id = document.getElementById("course_id").value;
 	 $.ajax({
             type: 'post',
-            url: "{{route('course.program_course_get_course_hours')}}",
+            url: "<?php echo e(route('course.program_course_get_course_hours')); ?>",
             data: {
                 '_token': $('input[name=_token]').val(),
                 'course_id': course_id
@@ -285,7 +291,7 @@ function getLecturers(program_id)
 
 	 $.ajax({
             type: 'post',
-            url: "{{route('staff.program_course_get_lecturers')}}",
+            url: "<?php echo e(route('staff.program_course_get_lecturers')); ?>",
             data: {
                 '_token': $('input[name=_token]').val(),
                 'program_id': program_id
@@ -319,4 +325,6 @@ function getLecturers(program_id)
 	</script>
 
 
-@endsection
+<?php $__env->stopSection(); ?>
+
+<?php echo $__env->make('layouts.mini', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH C:\Users\abdul\OneDrive\Documents\workspace\laravel\laraproject\resources\views//program-courses/edit.blade.php ENDPATH**/ ?>

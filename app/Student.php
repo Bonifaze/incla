@@ -129,44 +129,7 @@ class Student extends Authenticatable
      * Create Matriculation Number based on Program, Year and Id
      *
      * @return boolean True for success and False for failure
-     */
-
-    function setMatNo($program_id, $session_id, $studentId, $modeOfEntry)
-    {
-        $program = Program::findOrFail($program_id);
-        $sess = Session::findOrFail($session_id);
-        $code = $program->code;
-        $deg = $program->masters;
-        $deg = str_replace(".","",$deg);
-        $deg = str_replace(")","",$deg);
-        $deg = str_replace("(","",$deg);
-        $deg = str_replace(" ","",$deg);
-        $session = $sess->getCode();
-
-        switch ($modeOfEntry) {
-            case "UTME":
-                $reg = "VUG/".$code."/".$session."/".$studentId;
-                break;
-            case "DE":
-                $reg = "VUG/".$code."/".$session."/".$studentId;
-                break;
-            case "PGD":
-                $reg = "VPG/PGD/".$code."/".$session."/".$studentId;
-                break;
-            case "MSc":
-                $reg = "VPG/".$deg."/".$code."/".$session."/".$studentId;
-                break;
-            case "PhD":
-                $reg = "VPG/PHD/".$code."/".$session."/".$studentId;
-                break;
-            default:
-                $reg = "VUG/".$code."/".$session."/".$studentId;
-        }
-
-        return $reg;
-
-
-    } // end setMatNo($prog, $session, $studentId)
+     */ // end setMatNo($prog, $session, $studentId)
 
 
 

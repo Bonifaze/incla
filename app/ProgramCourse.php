@@ -340,6 +340,4 @@ public function getActionAttribute()
     protected $appends = ['course_title', 'course_code', 'staff_name'];
 
 
-
-
 } // end class

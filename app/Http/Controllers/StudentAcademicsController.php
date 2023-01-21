@@ -43,6 +43,7 @@ class StudentAcademicsController extends Controller
             'level' => 'required|integer',
             ]);
 
+        $student_aca = StudentAcademic::where('id', $id)->first();
         $academic = StudentAcademic::findOrFail($id);
         $academic->mode_of_entry = $request->mode_of_entry;
         $academic->mode_of_study = $request->mode_of_study;
@@ -53,11 +54,15 @@ class StudentAcademicsController extends Controller
         $academic->level = $request->level;
         $student = $academic->student;
         // dd( $academic->entry_session_id = $request->entry_session_id);
-        if( $academic->entry_session_id = $request->entry_session_id<=15){
+        if( $academic->entry_session_id <= 15){
         DB::beginTransaction(); //Start transaction!
         try {
-            $academic->mat_no = $student->setMatNo($academic->program_id, $academic->entry_session_id, $academic->student_id, $academic->mode_of_entry);
-
+            $matricNo = $academic->mat_no;
+            if ($request->program_id != $student_aca->program_id)
+            {
+                $matricNo = $this->setMatNo($request->program_id, $academic->entry_session_id, $academic->student_id, $academic->mode_of_entry);
+            }
+            $academic->mat_no = $matricNo;
             $academic->save();
             $student->username = $student->setVunaMail();
             $student->save();
@@ -68,6 +73,7 @@ class StudentAcademicsController extends Controller
         {
             //failed logic here
             DB::rollback();
+            throw $e;
             return redirect()->route('student-academic.edit', $id)
             ->with('error',"Errors in updating Student academic information.");
         }
@@ -79,7 +85,12 @@ class StudentAcademicsController extends Controller
     DB::beginTransaction(); //Start transaction!
     try {
         $matric_count = MatricCount::where('program_id', $request->program_id)->where('session_id', $request->entry_session_id)->first();
-        $academic->mat_no = $this->genMatricNumber($request->only('program_id', 'entry_session_id', 'mode_of_entry'));
+        $matricNo = $academic->mat_no;
+        if ($student_aca->program_id != $request->program_id)
+        {
+             $matricNo = $this->genMatricNumber($request->only('program_id', 'entry_session_id', 'mode_of_entry'));
+        }
+        $academic->mat_no = $matricNo;
         $academic->save();
         // if (!is_null($matric_count))
         // {
@@ -107,10 +118,44 @@ class StudentAcademicsController extends Controller
      return redirect()->route('student.show', $academic->student_id)
     ->with('success','Student academic information updated successfully');
 } //end update
-
-
-
 }
+
+protected function setMatNo($program_id, $session_id, $studentId, $modeOfEntry)
+    {
+        $program = Program::findOrFail($program_id);
+        $sess = Session::findOrFail($session_id);
+        $code = $program->code;
+        $deg = $program->masters;
+        $deg = str_replace(".","",$deg);
+        $deg = str_replace(")","",$deg);
+        $deg = str_replace("(","",$deg);
+        $deg = str_replace(" ","",$deg);
+        $session = $sess->getCode();
+
+        switch ($modeOfEntry) {
+            case "UTME":
+                $reg = "VUG/".$code."/".$session."/".$studentId;
+                break;
+            case "DE":
+                $reg = "VUG/".$code."/".$session."/".$studentId;
+                break;
+            case "PGD":
+                $reg = "VPG/PGD/".$code."/".$session."/".$studentId;
+                break;
+            case "MSc":
+                $reg = "VPG/".$deg."/".$code."/".$session."/".$studentId;
+                break;
+            case "PhD":
+                $reg = "VPG/PHD/".$code."/".$session."/".$studentId;
+                break;
+            default:
+                $reg = "VUG/".$code."/".$session."/".$studentId;
+        }
+
+        return $reg;
+
+
+    }
 
 
 protected function genMatricNumber(array $fields)
@@ -131,11 +176,6 @@ protected function genMatricNumber(array $fields)
     {
         $program_students_count = 0;
     }
-
-    DB::table('student_academics')->where('program_id', $program_id)
-    ->where('entry_session_id', $entry_session_id)
-    ->where('mode_of_entry', $modeOfEntry)->count();
-    // ->where('program_type', $program_type)->count();
 
     $new_number = $program_students_count + 1;
 

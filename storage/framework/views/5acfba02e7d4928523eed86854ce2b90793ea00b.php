@@ -1,34 +1,34 @@
-@extends('layouts.mini')
 
 
 
-@section('pagetitle')
+
+<?php $__env->startSection('pagetitle'); ?>
     Staff Home
-@endsection
+<?php $__env->stopSection(); ?>
 
 
 
 <!-- Sidebar Links -->
 
 <!-- Treeview -->
-@section('staff-open')
+<?php $__env->startSection('staff-open'); ?>
     menu-open
-@endsection
+<?php $__env->stopSection(); ?>
 
-@section('staff')
+<?php $__env->startSection('staff'); ?>
     active
-@endsection
+<?php $__env->stopSection(); ?>
 
 <!-- Page -->
-@section('staff-home')
+<?php $__env->startSection('staff-home'); ?>
     active
-@endsection
+<?php $__env->stopSection(); ?>
 
 <!-- End Sidebar links -->
 
 
 
-@section('content')
+<?php $__env->startSection('content'); ?>
     <div class="content-wrapper bg-white">
 
         <!-- Main content -->
@@ -49,9 +49,7 @@
                         <div class="card">
                             <div class="card-body">
                                 <div class="body">
-                                    {{--  <h4 class="card-title">
-                                        Staff Course
-                                    </h4>  --}}
+                                    
                                     <div class="table-responsive mt-5">
                                         <table class="table table-bordered table-striped table-hover tbl">
                                             <thead>
@@ -66,18 +64,18 @@
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                @foreach ($staff_courses as $staff_course)
+                                                <?php $__currentLoopData = $staff_courses; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $staff_course): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                                     <tr>
-                                                        <td>{{ $loop->iteration }}</td>
-                                                        <td>{{ $staff_course->course_title }}</td>
-                                                        <td>{{ $staff_course->course_code }}</td>
-                                                        <th>{{ $staff_course->total_students }}</th>
-                                                        <td>{{ $staff_course->upload_status }}</td>
-                                                        <td>{{ $staff_course->approval_status }}</td>
-                                                        <td><a href="{{ route('admin.scores_upload', $staff_course->id) }}"
+                                                        <td><?php echo e($loop->iteration); ?></td>
+                                                        <td><?php echo e($staff_course->course_title); ?></td>
+                                                        <td><?php echo e($staff_course->course_code); ?></td>
+                                                        <th><?php echo e($staff_course->total_students); ?></th>
+                                                        <td><?php echo e($staff_course->upload_status); ?></td>
+                                                        <td><?php echo e($staff_course->approval_status); ?></td>
+                                                        <td><a href="<?php echo e(route('admin.scores_upload', $staff_course->id)); ?>"
                                                                 class="btn btn-primary">Upload Scores</a></td>
                                                     </tr>
-                                                @endforeach
+                                                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                                             </tbody>
                                         </table>
                                     </div>
@@ -93,8 +91,10 @@
             </div>
         </section>
     </div>
-@endsection
+<?php $__env->stopSection(); ?>
 
-@section('pagescript')
+<?php $__env->startSection('pagescript'); ?>
     <script src="<?php echo asset('dist/js/bootbox.min.js'); ?>"></script>
-@endsection
+<?php $__env->stopSection(); ?>
+
+<?php echo $__env->make('layouts.mini', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH C:\Users\abdul\OneDrive\Documents\workspace\laravel\laraproject\resources\views/results/course_upload.blade.php ENDPATH**/ ?>

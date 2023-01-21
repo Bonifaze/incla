@@ -25,9 +25,16 @@ class StaffCourse extends Model
     {
         return Staff::find($this->staff_id)?->full_name;
     }
+
+    public function getTotalStudentsAttribute()
+    {
+        return RegisteredCourse::where('session', $this->session_id)->where('course_id', $this->course_id)->where('program_id', $this->program_id)->count();
+    }
+
     protected $appends = [
         'course_title',
         'course_code',
-        'staff_name'
+        'staff_name',
+        'total_students'
     ];
 }
