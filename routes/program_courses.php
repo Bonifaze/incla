@@ -1,6 +1,9 @@
 <?php
 
 // Program Courses routes
+
+use App\Http\Controllers\ProgramCoursesController;
+
 Route::get('/program-courses/create', 'ProgramCoursesController@create')->name('program_course.create');
 
 Route::post('/program-courses/store', 'ProgramCoursesController@store')->name('program_course.store');
@@ -52,4 +55,6 @@ Route::post('/program-courses/results/vc/approval', 'ProgramCoursesController@vc
 Route::get('/program-courses/students-download/{program_course_id}', 'ProgramCoursesController@studentsDownload')->name('program_course.students_download');
 
 Route::get('/program-courses/results/status', 'ProgramCoursesController@resultsStatus')->name('program_course.results_status');
+
+Route::post('/program-courses/get-by-id', [ProgramCoursesController::class, 'getCoursesAndStaff'])->name('get_program_courses_and_staff');
 

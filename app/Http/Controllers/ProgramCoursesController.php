@@ -260,14 +260,9 @@ DB::commit();
         // $sessions = Session::orderBy('id','DESC')->pluck('name','id');
         // $courses = Course::orderBy('course_code', 'ASC')->get()->pluck('courseDescribe','id');
 
-        $pcourses = ProgramCourse::with('course')->get()->pluck('course_id','id');
-        $lecturers = Staff::join('staff_work_profiles', 'staff.id', '=', 'staff_work_profiles.staff_id')
-        ->orderBy('staff_work_profiles.staff_type_id','ASC')
-        ->orderBy('staff_work_profiles.admin_department_id','ASC')->get()->pluck('full_name','id');
-        // $pcourse = ProgramCourse::orderBy();
-        // $program = Program::findOrFail($pcourse->course->program_id);
+        $programs = Program::where('status', 1)->get();
 
-        return view('/program-courses/assign_courses',compact('pcourses','lecturers'));
+        return view('/program-courses/assign_courses',compact('programs'));
 
         // $courses = Course::orderBy('course_code', 'ASC')->get()->pluck('courseDescribe','id');
         // $lecturers = Staff::join('staff_work_profiles', 'staff.id', '=', 'staff_work_profiles.staff_id')
@@ -530,6 +525,15 @@ DB::commit();
 
         return redirect()->route('staff.home')
             ->with('success','Program Course Lecturer updated successfully');
+    }
+
+    public function getCoursesAndStaff(Request $request)
+    {
+        $program_id = $request->program_id;
+        $courses = ProgramCourse::where('program_id', $program_id)->get();
+        $staffs = Staff::where('program_id', $program_id)->get();
+
+        return response(['courses' => $courses, 'staffs' => $staffs], 200);
     }
 
     // LEFTOUT

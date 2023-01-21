@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\Models\Course;
 use Illuminate\Database\Eloquent\Model;
 
 class ProgramCourse extends Model
@@ -318,5 +319,17 @@ public function getActionAttribute()
 
         return $color;
     }
+
+    public function getCourseTitleAttribute()
+    {
+        return Course::find($this->course_id)?->courses_title;
+    }
+
+    public function getCourseCodeAttribute()
+    {
+        return Course::find($this->course_id)?->course_code;
+    }
+
+    protected $appends = ['course_title', 'course_code'];
 
 } // end class

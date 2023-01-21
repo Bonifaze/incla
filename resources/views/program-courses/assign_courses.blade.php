@@ -66,9 +66,25 @@
 
 
                                 <div class="row">
-                                    <div class="col-md-8 form-group">
-                                        <label for="program_course_id">Course Code & Course Title :</label>
-                                        {{ Form::select('program_course_id', $pcourses, null, [ 'class' => 'form-control select2', 'id' => 'program_course_id', 'name' => 'program_course_id']) }}
+                                    <div class="col-md-4 form-group">
+                                        <label for="program">Program :</label>
+                                        <select name="program_id" id="program" class="form-control">
+                                            <option value="">Select Program</option>
+                                            @foreach ($programs as $program)
+                                                <option value="{{ $program->id }}">{{ $program->name }}</option>
+                                            @endforeach
+                                        </select>
+                                        {{--  <select $courses class="form-control"  name="course_id" id="course_id" onchange="getHours()">  --}}
+
+
+                                        {{--  </select>  --}}
+                                        <span class="text-danger"> {{ $errors->first('program_id') }}</span>
+                                    </div>
+                                    <div class="col-md-4 form-group">
+                                        <label for="course">Course Code & Course Title :</label>
+                                        <select name="course_id" id="course" class="form-control">
+                                            <option value="">Select Course</option>
+                                        </select>
                                         {{--  <select $courses class="form-control"  name="course_id" id="course_id" onchange="getHours()">  --}}
 
 
@@ -79,14 +95,9 @@
 
 
                                     <div class="col-md-3 form-group">
-                                    <label for="lecturer_id">Lecturer :</label>
-                                    {!! Form::select('lecturer_id', $lecturers, null, [
-                                        'class' => 'form-control',
-                                        'id' => 'lecturer_id',
-                                        'name' => 'lecturer_id',
-                                        'required' => 'required',
-                                    ]) !!}
-                                    <span class="text-danger"> {{ $errors->first('lecturer_id') }}</span>
+                                    <label for="staff">Lecturer :</label>
+                                    <select name="staff_id" id="staff" class="form-control"></select>
+                                    <span class="text-danger"> {{ $errors->first('staff_id') }}</span>
                                 </div>
                                 </div>
 
@@ -100,7 +111,7 @@
                         <div class="card-footer">
 
 
-                            {{ Form::submit('Create Program Course', ['class' => 'btn btn-primary']) }}
+                            {{ Form::submit('Assign Course', ['class' => 'btn btn-primary']) }}
                         </div>
                         <!-- /.box-body -->
 
@@ -134,6 +145,26 @@
         $('#host_program_id').select2();
     </script>
     <script>
+
+        $('#program').change(function () {
+            let program_id = $(this),val()
+            $.ajax({
+                url: "{{ route('get_program_courses_and_staff') }}",
+                type: 'POST',
+                data: {program_id: program_id},
+                success: res => {
+                    let staffs = res.staffs
+                    let courses = res.courses
+                    courses.forEach(course => {
+                        $('#course').append(`<option value="${course.course_id}">${course.course_code} - ${course.course_title}</option>`)
+                    })
+                    staffs.forEach(staff => {
+                        $('#staff').append(`<option value="${staff.id}">${staff.full_name}</option>`)
+                    })
+                    
+                }
+            })
+        })
         function getCourses() {
 
             program_id = document.getElementById("host_program_id").value;

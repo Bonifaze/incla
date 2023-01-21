@@ -31,6 +31,8 @@ class Staff extends Authenticatable
         'password', 'remember_token',
     ];
 
+    protected $appends = ['full_name'];
+
 
 
     public function workProfile()
