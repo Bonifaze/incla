@@ -2012,7 +2012,7 @@ public function viewaddRemitasServiceType(){
                     'status' => 1,
                     'category' => $req->category,
                     'installment'=>$req->installment,
-                    'college_id'=> 0
+                    'college_id'=> $req->college_id
 
                 ]);
 
