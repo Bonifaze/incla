@@ -72,7 +72,7 @@
 							   <td>{{ $pcourse->level }}</td>
 							 <td>{{ $pcourse->credit_unit }}</td>
 							 <td>{{ $pcourse->session->name }}</td>
-							 <td>{{ $pcourse->lecturer->FullName  ?? ' '}}</td>
+							 <td>{{ $pcourse->staff_name  ?? ' '}}</td>
 							<td><a href="{{ route('program_course.edit',$pcourse->id) }}" class="btn btn-warning"> Edit </td>
 
 							    <td>

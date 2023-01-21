@@ -3,6 +3,7 @@
 namespace App;
 
 use App\Models\Course;
+use App\Models\StaffCourse;
 use Illuminate\Database\Eloquent\Model;
 
 class ProgramCourse extends Model
@@ -322,7 +323,7 @@ public function getActionAttribute()
 
     public function getCourseTitleAttribute()
     {
-        return Course::find($this->course_id)?->courses_title;
+        return Course::find($this->course_id)?->course_title;
     }
 
     public function getCourseCodeAttribute()
@@ -330,6 +331,15 @@ public function getActionAttribute()
         return Course::find($this->course_id)?->course_code;
     }
 
-    protected $appends = ['course_title', 'course_code'];
+
+    public function getStaffNameAttribute()
+    {
+        return StaffCourse::where('program_id', $this->program_id)->where('course_id', $this->course_id)->first()?->staff_name;
+    }
+
+    protected $appends = ['course_title', 'course_code', 'staff_name'];
+
+
+
 
 } // end class
