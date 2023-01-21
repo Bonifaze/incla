@@ -80,7 +80,7 @@
 
                                     <div class="col-md-6 form-group">
                                         <label for="entry_session_id">Entry Session :</label>
-                                        {{ Form::select('entry_session_id', $sessions, null, ['class' => 'form-control', 'id' => 'entry_session_id', 'name' => 'entry_session_id']) }}
+                                        {{ Form::select('entry_session_id', $sessions, null, ['class' => 'form-control', 'id' => 'entry_session_id', 'name' => 'entry_session_id', 'disabled'=>true]) }}
                                         <span class="text-danger"> {{ $errors->first('entry_session_id') }}</span>
 
                                     </div>
