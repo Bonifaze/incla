@@ -834,7 +834,18 @@ ICT Unit<br />
             $q->where('status', 'published');
         }])->findOrFail(base64_decode($encode));
         $academic = $student->academic;
+        //dd($student->id);
         $registrations = $student->registered_courses;
+    //     $registrations = DB::table('registered_courses')->where('registered_courses.student_id',  $student->id)
+    //     ->where('registered_courses.status', 'published')
+    //     ->join('courses', 'courses.id', '=', 'registered_courses.course_id')
+    //     // ->join('program_courses', 'program_courses.course_id', '=', 'registered_courses.course_id')
+    //    ->limit(200)
+    //     ->get();
+
+        // ->join('student_academics', 'student_academics.id', '=', 'registered_courses.id')
+        // ->join('sessions', 'sessions.id', '=', 'student_academics.id')
+        // ->orderBy('sessions.id')
         // ->where('level', $course->level)
         // ->where('session', $this->getCurrentSession())
        // $registrations = $student->semesterRegistrations;

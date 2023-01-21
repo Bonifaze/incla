@@ -3,7 +3,7 @@
 @section('pagetitle')
 <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    
+
 <title>{{ $student->full_name }} Transcript</title>
 
 @endsection
@@ -21,7 +21,7 @@
       </tr>
     </table>
       <table width="100%" border="0">
-      
+
         <tr>
           <td><strong>Name of Student: {{ $student->full_name }} </strong></td>
           <td><strong>  Matric. No.: {{ $academic->mat_no }} </strong></td>
@@ -43,20 +43,26 @@
           <td>&nbsp;</td>
         </tr>
       </table>
-      
+
 	 @foreach ($registrations as $key => $reg)
-	
+
 	@php $results = $reg->result(); @endphp
-	
+
 	@php $gpa = $reg->gpa(); @endphp
-	
+
 	@php $cgpa = $reg->cgpa(); @endphp
-  
+
         <table width="100%" height="87" border="1" cellpadding="0" cellspacing="0">
                           <tr>
-                            <td colspan="3"><strong>ACADEMIC SESSION</strong>: {{ $reg->session->name }}</td>
-                            <td colspan="2" align="center"><strong>LEVEL</strong>: {{ $reg->level }} </td>
-                            <td colspan="2"><strong>SEMESTER</strong>: {{ $reg->session->semesterName($reg->semester) }}</td>
+                            <td colspan="3"><strong>ACADEMIC SESSION</strong>:
+                            {{ $reg->session }}
+                            </td>
+                            <td colspan="2" align="center"><strong>LEVEL</strong>:
+                             {{ $reg->level }}
+                             </td>
+                            <td colspan="2"><strong>SEMESTER</strong>:
+                            {{ $reg->session->semesterName($reg->semester) }}
+                            </td>
                           </tr>
                           <tr>
                             <td width="5%"><div align="center"><span style="font-weight: bold">S/N</span></div></td>
@@ -68,7 +74,7 @@
                             <td width="13%"><div align="center"><span style="font-weight: bold">Pass / Fail</span></div></td>
                           </tr>
                             @foreach ($results as $key => $result)
-                           
+
 						 <tr>
                             <td width="5%"><div align="center"><span style="font-weight: bold">{{ $loop->iteration }} </span></div></td>
                             <td width="15%"><div align="center"><span style="font-weight: bold">{{ $result->programCourse->course->code }} </span></div></td>
@@ -78,15 +84,15 @@
                             <td width="17%"><div align="center"><span style="font-weight: bold">{{ $result->grade }}</span></div></td>
                             <td width="13%"><div align="center"><span style="font-weight: bold">{{ $result->pass_status }}</span></div></td>
                           </tr>
-                         @endforeach	
-                          
-                        
+                         @endforeach
+
+
                          </table>
       <table width="100%" border="1" cellpadding="0" cellspacing="0">
                           <tr>
                             <td  colspan="7">&nbsp;</td>
                             </tr>
-                            
+
                           <tr>
                             <td width="2%">&nbsp;</td>
                             <td colspan="2" align="center"><strong>Total Credit Load</strong></td>
@@ -108,7 +114,7 @@
                             <td><strong> {{ $cgpa->hours }}</strong></td>
                             <td>&nbsp;</td>
                           </tr>
-                          
+
                            <tr>
                             <td>&nbsp;</td>
                             <td colspan="3" align="right"><strong>TGP</strong></td>
@@ -123,15 +129,15 @@
                             <td><span style="font-weight: bold">CGPA : {{ $cgpa->value }}</span></td>
                             <td>&nbsp; </td>
                           </tr>
-                          
-                          
+
+
                         </table>
                         <br />
 <br />
 
 
-     @endforeach	 
-                        
+     @endforeach
+
       <table width="100%" border="0">
         <tr>
           <td width="46%"><strong>Total Credit Load : </strong> {{ $totalCGPA->hours }}</td>
