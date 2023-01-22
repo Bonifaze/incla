@@ -190,7 +190,7 @@
 
                             <!-- form start -->
 
-                            {!! Form::open(['route' => 'result.upload', 'method' => 'POST', 'class' => 'nobottommargin']) !!}
+                            {!! Form::open(['route' => 'result.modify', 'method' => 'GET', 'class' => 'nobottommargin']) !!}
                             <div class="card-body">
                                 <div class="box-body">
 

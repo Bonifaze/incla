@@ -1,36 +1,44 @@
+{{--  @php
+
+if(!session('adminId'))
+{
+
+  header('location: /adminLogin');
+  exit;
+}
+@endphp  --}}
+
+@extends('layouts.mini')
 
 
 
-
-
-
-<?php $__env->startSection('pagetitle'); ?>
+@section('pagetitle')
     Staff Home
-<?php $__env->stopSection(); ?>
+@endsection
 
 
 
 <!-- Sidebar Links -->
 
 <!-- Treeview -->
-<?php $__env->startSection('staff-open'); ?>
+@section('staff-open')
     menu-open
-<?php $__env->stopSection(); ?>
+@endsection
 
-<?php $__env->startSection('staff'); ?>
+@section('staff')
     active
-<?php $__env->stopSection(); ?>
+@endsection
 
 <!-- Page -->
-<?php $__env->startSection('staff-home'); ?>
+@section('staff-home')
     active
-<?php $__env->stopSection(); ?>
+@endsection
 
 <!-- End Sidebar links -->
 
 
 
-<?php $__env->startSection('content'); ?>
+@section('content')
     <div class="content-wrapper bg-white">
 
         <!-- Main content -->
@@ -50,38 +58,31 @@
                         <div class="card">
                             <div class="card-header">
                                 <h4 class="card-title mb-4">
-                                    <?php echo e($course->course_title); ?> (<?php echo e($course->course_code); ?>)
+                                    Student Result
                                 </h4>
                             </div>
                             <div class="card-body">
                                 <div class="body">
-                                    <?php if($errors->any()): ?>
-                                        <?php $__currentLoopData = $errors->all(); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $error): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                    @if ($errors->any())
+                                        @foreach ($errors->all() as $error)
                                             <div class="alert alert-danger">
-                                                <?php echo e($error); ?>
-
+                                                {{ $error }}
                                             </div>
-                                        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-                                    <?php endif; ?>
-                                    <?php if(session()->has('success')): ?>
+                                        @endforeach
+                                    @endif
+                                    @if (session()->has('success'))
                                         <div class="alert alert-success">
-                                            <?php echo e(session()->get('success')); ?>
-
+                                            {{ session()->get('success') }}
                                         </div>
-                                    <?php endif; ?>
-                                    <form method="post" action="/admin/upload">
-                                        <?php echo csrf_field(); ?>
-                                        <div class="mb-4">
-                                            <a href="/admin/download/<?php echo e($course->id); ?>" class="btn btn-primary">Download as CSV</a>
-                                            <a href="javascript:void" class="btn btn-success" data-toggle="modal" data-target="#uploadModal">Upload Scores CSV</a>
-                                        </div>
+                                    @endif
+                                    <form method="POST" action="/results/update">
+                                        @csrf
                                         <div class="table-responsive mt-5 mb-4">
                                             <table class="table table-bordered table-striped table-hover">
                                                 <thead>
                                                     <tr>
                                                         <th>S/N</th>
-                                                        <th>Student Name</th>
-                                                        <th>Matric Number</th>
+                                                        <th>Course Title</th>
                                                         <th>Course Code</th>
                                                         <th>CA1 Score</th>
                                                         <th>CA2 Score</th>
@@ -92,48 +93,39 @@
                                                     </tr>
                                                 </thead>
                                                 <tbody>
-                                                    <input type="hidden" name="session"
-                                                        value="<?php echo e($student_registered_courses[0]->session ?? ''); ?> ">
-                                                    <input type="hidden" name="level"
-                                                        value="<?php echo e($student_registered_courses[0]->level  ?? ''); ?>">
-                                                    <input type="hidden" name="semester"
-                                                        value="<?php echo e($student_registered_courses[0]->semester  ?? ''); ?>">
-                                                    <input type="hidden" name="course_id" value="<?php echo e($course->id); ?>">
-                                                    <?php $__currentLoopData = $student_registered_courses; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $student_course): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                                    @foreach ($registered_courses as $student_course)
+                                                    <input type="hidden" name="reg_ids[]" value="{{ $student_course->id }}">
                                                         <tr>
-                                                            <td><?php echo e($loop->iteration); ?></td>
-                                                            <td><?php echo e($student_course->student_name); ?> <input type="hidden"
-                                                                    name="reg_ids[]" value="<?php echo e($student_course->id); ?>"></td>
-                                                            <td><?php echo e($student_course->student_matric); ?></td>
-                                                            <td><?php echo e($student_course->course_code); ?></td>
+                                                            <td>{{ $loop->iteration }}</td>
+                                                            <td>{{ $student_course->course_title }}</td>
+                                                            <td>{{ $student_course->course_code }}</td>
                                                             <td><input type="number" name="ca1_scores[]"
-                                                                    value="<?php echo e($student_course->ca1_score); ?>"
-                                                                    id="<?php echo e('ca1' . $student_course->student_id); ?>"
+                                                                    value="{{ $student_course->ca1_score }}"
+                                                                    id="{{ 'ca1' . $student_course->student_id }}"
                                                                     class="form-control ca"></td>
                                                             <td><input type="number" name="ca2_scores[]"
-                                                                value="<?php echo e($student_course->ca2_score); ?>"
-                                                                id="<?php echo e('ca2' . $student_course->student_id); ?>"
+                                                                value="{{ $student_course->ca2_score }}"
+                                                                id="{{ 'ca2' . $student_course->student_id }}"
                                                                 class="form-control ca"></td>
                                                             <td><input type="number" name="ca3_scores[]"
-                                                                value="<?php echo e($student_course->ca3_score); ?>"
-                                                                id="<?php echo e('ca3' . $student_course->student_id); ?>"
+                                                                value="{{ $student_course->ca3_score }}"
+                                                                id="{{ 'ca3' . $student_course->student_id }}"
                                                                 class="form-control ca"></td>
                                                             <td><input type="number" name="exam_scores[]"
-                                                                    value="<?php echo e($student_course->exam_score); ?>"
-                                                                    id="<?php echo e('exam' . $student_course->student_id); ?>"
+                                                                    value="{{ $student_course->exam_score }}"
+                                                                    id="{{ 'exam' . $student_course->student_id }}"
                                                                     class="form-control exam"></td>
                                                             <td><input type="number" name="total_scores[]"
-                                                                    value="<?php echo e($student_course->total); ?>"
+                                                                    value="{{ $student_course->total }}"
                                                                     class="form-control" readonly></td>
-                                                            <td><?php echo e($student_course->grade); ?></td>
+                                                            <td>{{ $student_course->grade }}</td>
                                                         </tr>
-                                                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                                                    @endforeach
                                                 </tbody>
                                             </table>
                                         </div>
                                         <div class="mb-4">
-                                            <button type="submit" name="button" class="btn btn-success">Save & submit for
-                                                approval</button>
+                                            <button type="submit" name="button" class="btn btn-success">Update Scores</button>
                                         </div>
                                     </form>
                                 </div>
@@ -151,7 +143,7 @@
     </div>
 
 
-    <div class="modal fade" id="uploadModal">
+    <!--<div class="modal fade" id="uploadModal">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
@@ -160,7 +152,7 @@
                 </div>
                 <div class="modal-body">
                     <form action="/admin/upload-scores" enctype="multipart/form-data" method="post">
-                        <?php echo csrf_field(); ?>
+                        @csrf
                         <div class="form-group">
                             <label for="file">Scoresheet</label>
                             <input type="file" name="file" id="file" class="form-control" accept=".csv">
@@ -172,10 +164,10 @@
                 </div>
             </div>
         </div>
-    </div>
-<?php $__env->stopSection(); ?>
+    </div>-->
+@endsection
 
-<?php $__env->startSection('pagescript'); ?>
+@section('pagescript')
     <script src="<?php echo asset('dist/js/bootbox.min.js'); ?>"></script>
     <script>
         $('body').on('keyup', '.ca', function () {
@@ -199,6 +191,4 @@
             }
         })
     </script>
-<?php $__env->stopSection(); ?>
-
-<?php echo $__env->make('layouts.mini', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH C:\Users\abdul\OneDrive\Documents\workspace\laravel\laraproject\resources\views/results/scores_upload.blade.php ENDPATH**/ ?>
+@endsection

@@ -243,7 +243,7 @@ class AdminStudentsControllerApplicant extends Controller
             ]);
 
             //save academic
-            $matric_count = MatricCount::where('program_id', $request->program_id)->where('session_id', $request->entry_session_id)->first();
+            $matric_count = MatricCount::where('program_id', $request->program_id)->where('program_type', $request->mode_of_entry)->where('session_id', $request->entry_session_id)->first();
             $academic->student_id = $student->id;
             $academic->mat_no = $this->genMatricNumber($request->only('program_id', 'entry_session_id', 'mode_of_entry'));
             $academic->save();
@@ -254,7 +254,7 @@ class AdminStudentsControllerApplicant extends Controller
             }else
             {
                 $count = 0;
-                MatricCount::create(['program_id' => $request->program_id, 'session_id' => $request->entry_session_id, 'count' => $count + 1]);
+                MatricCount::create(['program_id' => $request->program_id, 'program_type' => $request->mode_of_entry, 'session_id' => $request->entry_session_id, 'count' => $count + 1]);
             }
             //save medical
             $medical->student_id = $student->id;
@@ -353,7 +353,7 @@ class AdminStudentsControllerApplicant extends Controller
         $sess = Session::find($entry_session_id);
         $session = $sess->getCode();
 
-        $matric_count = MatricCount::where('program_id', $program_id)->where('session_id', $entry_session_id)->first();
+        $matric_count = MatricCount::where('program_id', $program_id)->where('program_type', $modeOfEntry)->where('session_id', $entry_session_id)->first();
         if (!is_null($matric_count))
         {
             $program_students_count = $matric_count->count;

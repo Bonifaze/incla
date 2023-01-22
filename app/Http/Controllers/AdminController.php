@@ -20,9 +20,12 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
 use App\Computations\ResultComputation;
+use App\Exports\RegisteredCourseExport;
+use App\Imports\RegisteredCourseImport;
 use Illuminate\Database\QueryException;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Redirect;
+use Maatwebsite\Excel\Facades\Excel;
 
 class AdminController extends Controller
 {
@@ -75,24 +78,46 @@ class AdminController extends Controller
     // }
     }
 
+    public function downloadResultCsv($staff_course_id)
+    {
+        $course = StaffCourse::where('id', $staff_course_id)->first();
+        return Excel::download(new RegisteredCourseExport(new RegisteredCourse, $course->session_id, $course->course_id, $course->program_id), $course->course_title.'_sheet.csv');
+    }
+
+    public function uploadResultCsv(Request $request)
+    {
+        $request->validate(['file' => 'required']);
+
+        Excel::import(new RegisteredCourseImport, $request->file);
+        return back()->with('success', 'Scores Uploaded!');
+    }
 
     public function uploadScores(Request $request)
     {
         $reg_ids = $request->reg_ids;
-        $ca_scores = $request->ca_scores;
+        $ca1_scores = $request->ca1_scores;
+        $ca2_scores = $request->ca2_scores;
+        $ca3_scores = $request->ca3_scores;
         $exam_scores = $request->exam_scores;
 
         for ($i=0; $i < count($reg_ids); $i++) {
-            $total_score = $ca_scores[$i] + $exam_scores[$i];
+            $total_score = $ca1_scores[$i] + $ca2_scores[$i] + $ca3_scores[$i] + $exam_scores[$i];
             $grade_setting = GradeSetting::where('min_score', '<=', $total_score)->where('max_score', '>=', $total_score)->first();
             $grade_id = $grade_setting->id;
-            if ($ca_scores[$i] > 30)
+            if ($ca1_scores[$i] > 10 || $ca2_scores[$i] > 10 || $ca3_scores[$i] > 10)
             {
                 return redirect()->back()->withErrors(['error' => 'CA score cannot be more than 30']);
             }
+            if ($exam_scores[$i] > 70)
+            {
+                return redirect()->back()->withErrors(['error' => 'Exam score cannot be more than 70']);
+            }
             RegisteredCourse::where('id', $reg_ids[$i])->update([
-                'ca_score' => $ca_scores[$i],
+                'ca1_score' => $ca1_scores[$i],
+                'ca2_score' => $ca2_scores[$i],
+                'ca3_score' => $ca3_scores[$i],
                 'exam_score' => $exam_scores[$i],
+                'total' => $total_score,
                 'grade_id' => $grade_id,
                 'grade_status' => $grade_setting->status,
                 'status' => 'unpublished'
@@ -100,7 +125,7 @@ class AdminController extends Controller
         }
         StaffCourse::where('course_id', $request->course_id)->update([
             'upload_status' => 'uploaded',
-            'approval_status' => 'pending'
+            'hod_approval' => 'pending'
         ]);
         return redirect()->back()->with('success', 'Scores uploaded successfully');
     }
@@ -111,7 +136,7 @@ class AdminController extends Controller
         if ($this->hasPriviledge("approveScores",  $staff->id)) {
 
 
-        $staff_courses = StaffCourse::where('upload_status', 'uploaded')->where('approval_status', 'pending')->where('session_id', $this->getCurrentSession())->get();
+        $staff_courses = StaffCourse::where('upload_status', 'uploaded')->where('session_id', $this->getCurrentSession())->get();
         return view('results.approve_scores', ['staff_courses' => $staff_courses]);
     } else {
         $loginMsg = '<div class="alert alert-danger alert-dismissible" role="alert"> <button type="button" class="close" data-dismiss="alert"> &times; </button> You dont\'t have access to this task, please see the ICT</div>';
@@ -138,9 +163,10 @@ class AdminController extends Controller
                 'status' => 'published'
             ]);
         }
-        StaffCourse::where('id', $staff_course_id)->update([
-            'approval_status' => 'approved'
-        ]);
+        $approval = [
+            'hod_approval' => 'approved'
+        ];
+        StaffCourse::where('id', $staff_course_id)->update($approval);
         return redirect()->back()->with('success', 'Scores approved successfully');
     }
 

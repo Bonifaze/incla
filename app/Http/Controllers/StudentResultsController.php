@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Course;
+use App\Models\GradeSetting;
 use App\Program;
 use App\Session;
 use App\Student;
@@ -68,6 +69,58 @@ class StudentResultsController extends Controller
         }
     } // end find
 
+    public function modifyResult(Request $request)
+    {
+        $request->validate([
+            'session_id' => 'required',
+            'semester' => 'required',
+            'level' => 'required'
+        ]);
+
+        $registered_courses = RegisteredCourse::where('student_id', $request->student_id)
+        ->where('session', $request->session_id)
+        ->where('semester', $request->semester)
+        ->get();
+        return view('results.modify', ['registered_courses' => $registered_courses]);
+    }
+
+    public function updateResult(Request $request)
+    {
+        $reg_ids = $request->reg_ids;
+        $ca1_scores = $request->ca1_scores;
+        $ca2_scores = $request->ca2_scores;
+        $ca3_scores = $request->ca3_scores;
+        $exam_scores = $request->exam_scores;
+        
+        for ($i=0; $i < count($reg_ids); $i++) {
+            $total_score = $ca1_scores[$i] + $ca2_scores[$i] + $ca3_scores[$i] + $exam_scores[$i];
+            $grade_setting = GradeSetting::where('min_score', '<=', $total_score)->where('max_score', '>=', $total_score)->first();
+            $grade_id = $grade_setting->id;
+            $course_reg = RegisteredCourse::find($reg_ids[$i]);
+            if ($ca1_scores[$i] > 10 || $ca2_scores[$i] > 10 || $ca3_scores[$i] > 10)
+            {
+                return redirect()->back()->withErrors(['error' => 'CA score cannot be more than 30']);
+            }
+            if ($exam_scores[$i] > 70)
+            {
+                return redirect()->back()->withErrors(['error' => 'Exam score cannot be more than 70']);
+            }
+            if ($grade_setting->status != 'fail')
+            {
+                RegisteredCourse::where('student_id', $course_reg->student_id)->where('course_id', $course_reg->course_id)->where('session', '>', $course_reg->session)->delete();
+            }
+            RegisteredCourse::where('id', $reg_ids[$i])->update([
+                'ca1_score' => $ca1_scores[$i],
+                'ca2_score' => $ca2_scores[$i],
+                'ca3_score' => $ca3_scores[$i],
+                'exam_score' => $exam_scores[$i],
+                'total' => $total_score,
+                'grade_id' => $grade_id,
+                'grade_status' => $grade_setting->status,
+            ]);
+        }
+        return redirect()->back()->with('success', 'Scores uploaded successfully');
+    }
 
     public function manageStudent($id)
     {
@@ -293,6 +346,7 @@ class StudentResultsController extends Controller
             $pcourse = new ProgramCourse();
             $result = new RegisteredCourse();
             $results=RegisteredCourse::where('student_id',  $student->id)
+            ->where('semester', $semester)
             // ->where('registered_courses.semester', $semester)
             ->orderBy('registered_courses.semester','ASC')
             ->where('session',  $session->id)

@@ -46,7 +46,7 @@
                             $student_id = 0;
                         @endphp
 
-                        <a class="btn btn-info" href="{{ route('semester.registration', base64_encode($student->id)) }}"
+                        <a class="btn btn-info" href="{{ route('semester.registration', [base64_encode($student->id), $session]) }}"
                             target="_blank"> <i class="fa fa-eye"></i> Print Form </a>
                         {{--  <a class="btn btn-default" href="{{ route('semester.registration.modify-excess',base64_encode($registration->id)) }}" > <i class="fa fa-eye"></i> Modify Excess Credit </a>  --}}
 
@@ -216,7 +216,7 @@
                                     <td></td>
                                     <td></td>
                                     {{--  <td> <strong> {{ $allowed_credits }} </strong></td>  --}}
-                                    <td> <strong> 48 </strong></td>
+                                    <td> <strong> 24 </strong></td>
 
                                     <td> </td>
 

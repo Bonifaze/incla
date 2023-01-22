@@ -56,7 +56,7 @@
                                                     <th>#</th>
                                                     <th>Course Title</th>
                                                     <th>Course Code</th>
-                                                    <th>Approval Status</th>
+                                                    <th>HOD's Approval</th>
                                                     <th>Action</th>
                                                 </tr>
                                             </thead>
@@ -66,7 +66,7 @@
                                                         <td>{{ $loop->iteration }}</td>
                                                         <td>{{ $staff_course->course_title }}</td>
                                                         <td>{{ $staff_course->course_code }}</td>
-                                                        <td>{{ $staff_course->approval_status }}</td>
+                                                        <td>{{ $staff_course->hod_approval }}</td>
                                                         <td><a href="{{ route('admin.view_scores', $staff_course->course_id) }}"
                                                                 class="btn btn-primary">View Scores</a></td>
                                                     </tr>

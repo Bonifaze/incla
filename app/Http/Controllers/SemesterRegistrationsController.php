@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\RegisteredCourse;
 use Illuminate\Http\Request;
 use App\SemesterRegistration;
 use App\StudentResult;
@@ -11,19 +12,16 @@ use App\Session;
 class SemesterRegistrationsController extends Controller
 {
     //
-    public function registration($encode)
+    public function registration($encode, $session)
     {
         //
-        $registration = SemesterRegistration::findOrFail(base64_decode($encode));
-        $result = new StudentResult();
-        $student = Student::findOrFail($registration->student_id);
-        $session = Session::findOrFail($registration->session_id);
-        $semester = $registration->semester;
+        $student_id = base64_decode($encode);
+        $student = Student::findOrFail($student_id);
+        $session = Session::findOrFail($session);
         $academic = $student->academic;
         
-        $results = $result->semesterRegisteredCourses($registration->student_id,$registration->session_id,$registration->semester);
-        $total = $student->totalRegisteredCredits($results);
-        return view('results.course_form',compact('student','session','semester','academic','results','registration','total'));
+        $results = RegisteredCourse::where('student_id', $student_id)->where('session', $session->id)->get();
+        return view('results.course_form',compact('student','session','academic','results'));
     }
 
 

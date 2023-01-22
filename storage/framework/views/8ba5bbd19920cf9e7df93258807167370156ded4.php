@@ -38,13 +38,10 @@
                 <div class="col_full">
                     <h1
                         class="app-page-title text-uppercase h5 font-weight-bold p-2 mb-2 shadow-sm text-center text-success border">
-                        Staff Courses
+               Staff Courses Result
                     </h1>
 
-                    <div class="card shadow border border-success">
-
-
-                      <div class="row mb-4">
+                <div class="row mb-4">
                     <div class="col-12">
                         <div class="card">
                             <div class="card-body">
@@ -54,11 +51,9 @@
                                         <table class="table table-bordered table-striped table-hover tbl">
                                             <thead>
                                                 <tr>
-                                                    <th>S/N</th>
+                                                    <th>#</th>
                                                     <th>Course Title</th>
                                                     <th>Course Code</th>
-                                                    <th>Total Students</th>
-                                                    <th>Upload Status</th>
                                                     <th>HOD's Approval</th>
                                                     <th>Action</th>
                                                 </tr>
@@ -69,11 +64,9 @@
                                                         <td><?php echo e($loop->iteration); ?></td>
                                                         <td><?php echo e($staff_course->course_title); ?></td>
                                                         <td><?php echo e($staff_course->course_code); ?></td>
-                                                        <th><?php echo e($staff_course->total_students); ?></th>
-                                                        <td><?php echo e($staff_course->upload_status); ?></td>
                                                         <td><?php echo e($staff_course->hod_approval); ?></td>
-                                                        <td><?php if($staff_course->hod_approval != 'approved'): ?> <a href="<?php echo e(route('admin.scores_upload', $staff_course->id)); ?>"
-                                                                class="btn btn-primary">Upload Scores</a> <?php else: ?> No Action <?php endif; ?></td>
+                                                        <td><a href="<?php echo e(route('admin.view_scores', $staff_course->course_id)); ?>"
+                                                                class="btn btn-primary">View Scores</a></td>
                                                     </tr>
                                                 <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                                             </tbody>
@@ -85,7 +78,8 @@
                     </div>
                 </div>
 
-                    </div>
+
+
                 </div>
 
             </div>
@@ -97,4 +91,4 @@
     <script src="<?php echo asset('dist/js/bootbox.min.js'); ?>"></script>
 <?php $__env->stopSection(); ?>
 
-<?php echo $__env->make('layouts.mini', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH C:\Users\abdul\OneDrive\Documents\workspace\laravel\laraproject\resources\views/results/course_upload.blade.php ENDPATH**/ ?>
+<?php echo $__env->make('layouts.mini', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH C:\Users\abdul\OneDrive\Documents\workspace\laravel\laraproject\resources\views/results/approve_scores.blade.php ENDPATH**/ ?>

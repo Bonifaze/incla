@@ -50,7 +50,7 @@
                         <div class="card">
                             <div class="card-header">
                                 <h4 class="card-title mb-4">
-                                    <?php echo e($course->course_title); ?> (<?php echo e($course->course_code); ?>)
+                                    Student Result
                                 </h4>
                             </div>
                             <div class="card-body">
@@ -69,19 +69,14 @@
 
                                         </div>
                                     <?php endif; ?>
-                                    <form method="post" action="/admin/upload">
+                                    <form method="POST" action="/results/update">
                                         <?php echo csrf_field(); ?>
-                                        <div class="mb-4">
-                                            <a href="/admin/download/<?php echo e($course->id); ?>" class="btn btn-primary">Download as CSV</a>
-                                            <a href="javascript:void" class="btn btn-success" data-toggle="modal" data-target="#uploadModal">Upload Scores CSV</a>
-                                        </div>
                                         <div class="table-responsive mt-5 mb-4">
                                             <table class="table table-bordered table-striped table-hover">
                                                 <thead>
                                                     <tr>
                                                         <th>S/N</th>
-                                                        <th>Student Name</th>
-                                                        <th>Matric Number</th>
+                                                        <th>Course Title</th>
                                                         <th>Course Code</th>
                                                         <th>CA1 Score</th>
                                                         <th>CA2 Score</th>
@@ -92,19 +87,11 @@
                                                     </tr>
                                                 </thead>
                                                 <tbody>
-                                                    <input type="hidden" name="session"
-                                                        value="<?php echo e($student_registered_courses[0]->session ?? ''); ?> ">
-                                                    <input type="hidden" name="level"
-                                                        value="<?php echo e($student_registered_courses[0]->level  ?? ''); ?>">
-                                                    <input type="hidden" name="semester"
-                                                        value="<?php echo e($student_registered_courses[0]->semester  ?? ''); ?>">
-                                                    <input type="hidden" name="course_id" value="<?php echo e($course->id); ?>">
-                                                    <?php $__currentLoopData = $student_registered_courses; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $student_course): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                                    <?php $__currentLoopData = $registered_courses; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $student_course): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                                    <input type="hidden" name="reg_ids[]" value="<?php echo e($student_course->id); ?>">
                                                         <tr>
                                                             <td><?php echo e($loop->iteration); ?></td>
-                                                            <td><?php echo e($student_course->student_name); ?> <input type="hidden"
-                                                                    name="reg_ids[]" value="<?php echo e($student_course->id); ?>"></td>
-                                                            <td><?php echo e($student_course->student_matric); ?></td>
+                                                            <td><?php echo e($student_course->course_title); ?></td>
                                                             <td><?php echo e($student_course->course_code); ?></td>
                                                             <td><input type="number" name="ca1_scores[]"
                                                                     value="<?php echo e($student_course->ca1_score); ?>"
@@ -132,8 +119,7 @@
                                             </table>
                                         </div>
                                         <div class="mb-4">
-                                            <button type="submit" name="button" class="btn btn-success">Save & submit for
-                                                approval</button>
+                                            <button type="submit" name="button" class="btn btn-success">Update Scores</button>
                                         </div>
                                     </form>
                                 </div>
@@ -151,7 +137,7 @@
     </div>
 
 
-    <div class="modal fade" id="uploadModal">
+    <!--<div class="modal fade" id="uploadModal">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
@@ -172,7 +158,7 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div>-->
 <?php $__env->stopSection(); ?>
 
 <?php $__env->startSection('pagescript'); ?>
@@ -201,4 +187,4 @@
     </script>
 <?php $__env->stopSection(); ?>
 
-<?php echo $__env->make('layouts.mini', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH C:\Users\abdul\OneDrive\Documents\workspace\laravel\laraproject\resources\views/results/scores_upload.blade.php ENDPATH**/ ?>
+<?php echo $__env->make('layouts.mini', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH C:\Users\abdul\OneDrive\Documents\workspace\laravel\laraproject\resources\views/results/modify.blade.php ENDPATH**/ ?>

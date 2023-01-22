@@ -71,7 +71,9 @@
                                                         <th>Student Name</th>
                                                         <th>Matric Number</th>
                                                         <th>Course Code</th>
-                                                        <th>CA Score</th>
+                                                        <th>CA1 Score</th>
+                                                        <th>CA2 Score</th>
+                                                        <th>CA3 Score</th>
                                                         <th>Exam Score</th>
                                                         <th>Total Score</th>
                                                         <th>Grade</th>
@@ -92,7 +94,9 @@
                                                                     name="reg_ids[]" value="{{ $student_course->id }}"></td>
                                                             <td>{{ $student_course->student_matric }}</td>
                                                             <td>{{ $student_course->course_code }}</td>
-                                                            <td>{{ $student_course->ca_score }}</td>
+                                                            <td>{{ $student_course->ca1_score }}</td>
+                                                            <td>{{ $student_course->ca2_score }}</td>
+                                                            <td>{{ $student_course->ca3_score }}</td>
                                                             <td>{{ $student_course->exam_score }}</td>
                                                             <td>{{ $student_course->ca_score + $student_course->exam_score }}
                                                             </td>

@@ -372,12 +372,15 @@ class StudentsController extends Controller
 
 //Function to get total credit units of selected courses
 
-protected function getUnits(array $courses)
+protected function getUnits(array $courses, $aca, $session)
 {
     $total_units = 0;
     foreach ($courses as $course_id)
     {
-        $total_units += ProgramCourse::where('course_id', $course_id)->first()->credit_unit;
+        $total_units += ProgramCourse::where('course_id', $course_id)
+        ->where('program_id', $aca->program_id)
+        ->where('session_id', $session)
+        ->first()->credit_unit;
     }
     return $total_units;
 }
@@ -410,8 +413,9 @@ protected function getCourseSemester($course_id)
     $courses2 = $req->courses2 ?? [];
     $courses = array_merge($courses1, $courses2);
     $num_courses = count($courses);
-    $total_units1 = $this->getUnits($courses1);
-    $total_units2 = $this->getUnits($courses2);
+    $student_aca = StudentAcademic::where('student_id', $student->id)->first();
+    $total_units1 = $this->getUnits($courses1, $student_aca, $req->session);
+    $total_units2 = $this->getUnits($courses2, $student_aca, $req->session);
     // dd($total_units1);
     // dd($total_units2);
 
@@ -431,29 +435,27 @@ protected function getCourseSemester($course_id)
     //     }
     // }
 
-    $student_aca = StudentAcademic::where('student_id', $student->id)->first();
     // $student_aca = StudentAcademic::where('student_id', session('userid'))->first();
     $firstSemesterLoad = $student_aca->first_semester_load;
     $secondSemesterLoad = $student_aca->second_semester_load;
 
     $student_registered_courses = RegisteredCourse::where('student_id', $req->student_id)
     ->where('session', $req->session)->get();
-    $total_reg_units1 = [];
-    $total_reg_units2 = [];
+    $total_reg_units1 = 0;
+    $total_reg_units2 = 0;
     // dd($total_reg_units1);
 
     foreach ($student_registered_courses as $student_registered_course)
     {
-        if ($student_registered_course->course_semester == 1)
+        if ($student_registered_course->semester == 1)
         {
-            $total_reg_units1[] = $student_registered_course->course_unit;
+            $total_reg_units1 += $student_registered_course->course_unit;
         }
         else{
-            $total_reg_units2[] = $student_registered_course->course_unit;
+            $total_reg_units2 += $student_registered_course->course_unit;
         }
     }
-    $total_reg_units1 = array_sum($total_reg_units1);
-    $total_reg_units2 = array_sum($total_reg_units2);
+   
     $student_courses = [];
 
 

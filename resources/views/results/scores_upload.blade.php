@@ -56,11 +56,13 @@ if(!session('adminId'))
      <div class="row mb-4">
                     <div class="col-12">
                         <div class="card">
+                            <div class="card-header">
+                                <h4 class="card-title mb-4">
+                                    {{ $course->course_title }} ({{ $course->course_code }})
+                                </h4>
+                            </div>
                             <div class="card-body">
                                 <div class="body">
-                                    <h4 class="card-title mb-4">
-                                        {{ $course->course_title }} ({{ $course->course_code }})
-                                    </h4>
                                     @if ($errors->any())
                                         @foreach ($errors->all() as $error)
                                             <div class="alert alert-danger">
@@ -75,6 +77,10 @@ if(!session('adminId'))
                                     @endif
                                     <form method="post" action="/admin/upload">
                                         @csrf
+                                        <div class="mb-4">
+                                            <a href="/admin/download/{{ $course->id }}" class="btn btn-primary">Download as CSV</a>
+                                            <a href="javascript:void" class="btn btn-success" data-toggle="modal" data-target="#uploadModal">Upload Scores CSV</a>
+                                        </div>
                                         <div class="table-responsive mt-5 mb-4">
                                             <table class="table table-bordered table-striped table-hover">
                                                 <thead>
@@ -83,7 +89,9 @@ if(!session('adminId'))
                                                         <th>Student Name</th>
                                                         <th>Matric Number</th>
                                                         <th>Course Code</th>
-                                                        <th>CA Score</th>
+                                                        <th>CA1 Score</th>
+                                                        <th>CA2 Score</th>
+                                                        <th>CA3 Score</th>
                                                         <th>Exam Score</th>
                                                         <th>Total Score</th>
                                                         <th>Grade</th>
@@ -104,16 +112,24 @@ if(!session('adminId'))
                                                                     name="reg_ids[]" value="{{ $student_course->id }}"></td>
                                                             <td>{{ $student_course->student_matric }}</td>
                                                             <td>{{ $student_course->course_code }}</td>
-                                                            <td><input type="number" name="ca_scores[]"
-                                                                    value="{{ $student_course->ca_score }}"
-                                                                    id="{{ 'ca' . $student_course->student_id }}"
-                                                                    class="form-control"></td>
+                                                            <td><input type="number" name="ca1_scores[]"
+                                                                    value="{{ $student_course->ca1_score }}"
+                                                                    id="{{ 'ca1' . $student_course->student_id }}"
+                                                                    class="form-control ca"></td>
+                                                            <td><input type="number" name="ca2_scores[]"
+                                                                value="{{ $student_course->ca2_score }}"
+                                                                id="{{ 'ca2' . $student_course->student_id }}"
+                                                                class="form-control ca"></td>
+                                                            <td><input type="number" name="ca3_scores[]"
+                                                                value="{{ $student_course->ca3_score }}"
+                                                                id="{{ 'ca3' . $student_course->student_id }}"
+                                                                class="form-control ca"></td>
                                                             <td><input type="number" name="exam_scores[]"
                                                                     value="{{ $student_course->exam_score }}"
                                                                     id="{{ 'exam' . $student_course->student_id }}"
-                                                                    class="form-control"></td>
+                                                                    class="form-control exam"></td>
                                                             <td><input type="number" name="total_scores[]"
-                                                                    value="{{ $student_course->ca_score + $student_course->exam_score }}"
+                                                                    value="{{ $student_course->total }}"
                                                                     class="form-control" readonly></td>
                                                             <td>{{ $student_course->grade }}</td>
                                                         </tr>
@@ -139,8 +155,54 @@ if(!session('adminId'))
             </div>
         </section>
     </div>
+
+
+    <div class="modal fade" id="uploadModal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Upload Scoresheet</h4>
+                    <a href="#" class="close" data-dismiss="modal">&times;</a>
+                </div>
+                <div class="modal-body">
+                    <form action="/admin/upload-scores" enctype="multipart/form-data" method="post">
+                        @csrf
+                        <div class="form-group">
+                            <label for="file">Scoresheet</label>
+                            <input type="file" name="file" id="file" class="form-control" accept=".csv">
+                        </div>
+                        <div class="form-group">
+                            <button type="submit" class="btn btn-success">Upload</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
 @endsection
 
 @section('pagescript')
     <script src="<?php echo asset('dist/js/bootbox.min.js'); ?>"></script>
+    <script>
+        $('body').on('keyup', '.ca', function () {
+            let input = $(this)
+            input.parent().find($('.xs')).remove()
+            if (input.val() > 10)
+            {
+                input.parent().append(`<span class="text-danger text-small text-sm xs">The input value should be less than or equals 10</span>`);
+            }else{
+                input.parent().find($('.xs')).remove()
+            }
+        })
+        $('body').on('keyup', '.exam', function () {
+            let input = $(this)
+            input.parent().find($('.ex')).remove()
+            if (input.val() > 70)
+            {
+                input.parent().append(`<span class="text-danger text-small text-sm ex">The input value should be less than or equals 70</span>`);
+            }else{
+                input.parent().find($('.ex')).remove()
+            }
+        })
+    </script>
 @endsection

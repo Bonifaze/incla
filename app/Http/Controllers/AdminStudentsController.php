@@ -827,15 +827,22 @@ ICT Unit<br />
     public function transcript($encode)
     {
         $this->authorize('transcript',Student::class);
-        $student = Student::with(['academic','contact', 'registered_courses' => function ($qr) {
-            $qr->where('status', 'published');
-        } , 'results' => function ($q)
-        {
-            $q->where('status', 'published');
-        }])->findOrFail(base64_decode($encode));
+        
+        $student_id = base64_decode($encode);
+        $student = Student::with('academic')->find($student_id);
         $academic = $student->academic;
-        //dd($student->id);
-        $registrations = $student->registered_courses;
+        $session_ids = RegisteredCourse::where('student_id', $student_id)->distinct('session')->pluck('session');
+        $session_ids = $session_ids->toArray();
+        $sessions = Session::wherein('id', $session_ids)->with(['registered_courses1' => function ($query) use ($student_id) {
+            $query->where('student_id', $student_id);
+            $query->where('semester', '1');
+        }, 'registered_courses2' => function ($query) use ($student_id) {
+            $query->where('student_id', $student_id);
+            $query->where('semester', '2');
+        }])->get();
+
+        //dd($sessions);
+
     //     $registrations = DB::table('registered_courses')->where('registered_courses.student_id',  $student->id)
     //     ->where('registered_courses.status', 'published')
     //     ->join('courses', 'courses.id', '=', 'registered_courses.course_id')
@@ -851,7 +858,7 @@ ICT Unit<br />
        // $registrations = $student->semesterRegistrations;
         // $totalCGPA = $student->CGPA();
         // return view('students.admin.transcript',compact('student','academic','registrations','totalCGPA'));
-        return view('students.admin.transcript',compact('student','academic','registrations'));
+        return view('students.admin.transcript',compact('student','academic','sessions'));
     } //end show
 
 

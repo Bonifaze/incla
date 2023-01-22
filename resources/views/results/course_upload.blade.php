@@ -61,7 +61,7 @@
                                                     <th>Course Code</th>
                                                     <th>Total Students</th>
                                                     <th>Upload Status</th>
-                                                    <th>Approval Status</th>
+                                                    <th>HOD's Approval</th>
                                                     <th>Action</th>
                                                 </tr>
                                             </thead>
@@ -73,9 +73,9 @@
                                                         <td>{{ $staff_course->course_code }}</td>
                                                         <th>{{ $staff_course->total_students }}</th>
                                                         <td>{{ $staff_course->upload_status }}</td>
-                                                        <td>{{ $staff_course->approval_status }}</td>
-                                                        <td><a href="{{ route('admin.scores_upload', $staff_course->id) }}"
-                                                                class="btn btn-primary">Upload Scores</a></td>
+                                                        <td>{{ $staff_course->hod_approval }}</td>
+                                                        <td>@if ($staff_course->hod_approval != 'approved') <a href="{{ route('admin.scores_upload', $staff_course->id) }}"
+                                                                class="btn btn-primary">Upload Scores</a> @else No Action @endif</td>
                                                     </tr>
                                                 @endforeach
                                             </tbody>

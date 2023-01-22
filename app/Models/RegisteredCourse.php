@@ -21,14 +21,17 @@ class RegisteredCourse extends Model
         'level',
         'semester',
         'course_id',
-        'ca_score',
+        'ca1_score',
+        'ca2_score',
+        'ca3_score',
         'exam_score',
+        'total',
         'grade_id',
         'grade_status',
         'status'
     ];
 
-    protected $appends = ['course_unit', 'course_semester', 'course_title', 'course_code'];
+    protected $appends = ['course_unit', 'course_semester', 'course_title', 'course_code', 'matric_number', 'full_name','result'];
 
     // public function getCourseUnitAttribute()
     // {
@@ -38,6 +41,16 @@ class RegisteredCourse extends Model
     public function student()
     {
         return $this->belongsTo('App\Student');
+    }
+
+    public function getMatricNumberAttribute()
+    {
+        return StudentAcademic::where('student_id', $this->student_id)->first()?->mat_no;
+    }
+
+    public function getFullNameAttribute()
+    {
+        return Student::find($this->student_id)?->full_name;
     }
 
     public function session()
@@ -120,6 +133,5 @@ class RegisteredCourse extends Model
            return $results;
 
        }
-
 
 }

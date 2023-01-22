@@ -5,6 +5,9 @@
 Route::get('/results/search-student', 'StudentResultsController@searchStudent')->name('result.search_student');
 
 Route::post('/results/find-student', 'StudentResultsController@findStudent')->name('result.find_student');
+Route::get('/results/modify', 'StudentResultsController@modifyResult')->name('result.modify');
+
+Route::post('/results/update', 'StudentResultsController@updateResult')->name('result.update');
 
 Route::get('/results/manage-student/{id}', 'StudentResultsController@manageStudent')->name('result.manage_student');
 
@@ -38,7 +41,7 @@ Route::get('/results/course-form', 'StudentResultsController@courseForm')->name(
 
 
 // Semester Registration routes
-Route::get('/semester/registration/{encode}', 'SemesterRegistrationsController@registration')->name('semester.registration');
+Route::get('/semester/registration/{encode}/{session}', 'SemesterRegistrationsController@registration')->name('semester.registration');
 
 Route::get('/results/excess/{encode}', 'SemesterRegistrationsController@modifyExcess')->name('semester.registration.modify-excess');
 
