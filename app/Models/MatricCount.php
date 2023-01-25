@@ -8,6 +8,6 @@ use Illuminate\Database\Eloquent\Model;
 class MatricCount extends Model
 {
     use HasFactory;
-    
-    protected $fillable = ['program_id', 'session_id', 'count'];
+
+    protected $fillable = ['program_id', 'session_id', 'count', 'program_type'];
 }

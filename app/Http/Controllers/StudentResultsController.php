@@ -71,17 +71,20 @@ class StudentResultsController extends Controller
 
     public function modifyResult(Request $request)
     {
+        $session = Session::findOrFail($request->session_id);
+         $semester = $request->semester;
         $request->validate([
             'session_id' => 'required',
             'semester' => 'required',
             'level' => 'required'
         ]);
 
+
         $registered_courses = RegisteredCourse::where('student_id', $request->student_id)
         ->where('session', $request->session_id)
         ->where('semester', $request->semester)
         ->get();
-        return view('results.modify', ['registered_courses' => $registered_courses]);
+        return view('results.modify', compact('registered_courses' ,'session', 'semester'));
     }
 
     public function updateResult(Request $request)
@@ -91,17 +94,17 @@ class StudentResultsController extends Controller
         $ca2_scores = $request->ca2_scores;
         $ca3_scores = $request->ca3_scores;
         $exam_scores = $request->exam_scores;
-        
+
         for ($i=0; $i < count($reg_ids); $i++) {
             $total_score = $ca1_scores[$i] + $ca2_scores[$i] + $ca3_scores[$i] + $exam_scores[$i];
             $grade_setting = GradeSetting::where('min_score', '<=', $total_score)->where('max_score', '>=', $total_score)->first();
             $grade_id = $grade_setting->id;
             $course_reg = RegisteredCourse::find($reg_ids[$i]);
-            if ($ca1_scores[$i] > 10 || $ca2_scores[$i] > 10 || $ca3_scores[$i] > 10)
+            if ($ca1_scores[$i] > 100 || $ca2_scores[$i] > 100 || $ca3_scores[$i] > 100)
             {
                 return redirect()->back()->withErrors(['error' => 'CA score cannot be more than 30']);
             }
-            if ($exam_scores[$i] > 70)
+            if ($exam_scores[$i] > 100)
             {
                 return redirect()->back()->withErrors(['error' => 'Exam score cannot be more than 70']);
             }

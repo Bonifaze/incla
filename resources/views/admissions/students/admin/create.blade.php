@@ -497,7 +497,7 @@ exit;
                                                 '100' => '100',
                                                 '200' => '200',
                                                 '700' => 'PGD',
-                                                '800' => 'MSc',
+                                                '800' => 'MSc/MBA/MPA',
                                                 '900' => 'PhD',
                                             ],
                                             '100',
@@ -511,11 +511,12 @@ exit;
                                         {{ Form::select(
                                             'mode_of_entry',
                                             [
-                                                'UTME' => 'UTME',
-                                                'DE' => 'Direct Entry',
-                                                'TRANSFER' => 'Transfer',
+
+                                                'UTME' => 'Undergraduate',
                                                 'PGD' => 'PGD',
                                                 'MSc' => 'Masters',
+                                                'MPA' => 'MPA',
+                                                'MBA' => 'MBA',
                                                 'PhD' => 'PhD',
                                             ],
                                             'UTME',

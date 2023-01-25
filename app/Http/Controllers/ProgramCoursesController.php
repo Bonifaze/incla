@@ -128,7 +128,7 @@ class ProgramCoursesController extends Controller
         try {
         $program_course->save();
 
-        
+
         }
 
         catch(Exception $e)
@@ -485,12 +485,15 @@ class ProgramCoursesController extends Controller
 
     public function updateLecturer(Request $request, $id)
     {
+        $session = new Session();
         $this->authorize('changeLecturer',ProgramCourse::class);
         $this->validate($request, [
             'lecturer_id' => 'required|integer',
         ]);
         $program_course = ProgramCourse::findOrFail(base64_decode($id));
-        $program_course->lecturer_id = $request->lecturer_id;
+        // $program_course->lecturer_id = $request->lecturer_id;
+        $program_course= ProgramCourse::where('course_id', $request->course_id )->first();
+        StaffCourse::updateOrcreate(['staff_id'=>$request->staff_id, 'program_id'=>$request->program_id, 'session_id'=>$session->currentSession(), 'semester_id'=>$session->currentSemester(), 'course_id'=>$request->course_id, 'level'=>$program_course->level],['staff_id'=>$request->staff_id, 'program_id'=>$request->program_id,  'session_id'=>$session->currentSession(), 'semester_id'=>$session->currentSemester(), 'course_id'=>$request->course_id, 'level'=>$program_course->level]);
         try {
             $program_course->save();
         }

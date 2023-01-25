@@ -33,7 +33,6 @@
 
 
 
-
                          <div class="card card-primary">
                              <h1
                         class="app-page-title text-uppercase h5 font-weight-bold p-2 mb-2 shadow-sm text-center text-success border">
@@ -45,7 +44,7 @@
 
                             <!-- form start -->
 
-                            <?php echo Form::open(['route' => 'result.upload', 'method' => 'POST', 'class' => 'nobottommargin']); ?>
+                            <?php echo Form::open(['route' => 'result.modify', 'method' => 'GET', 'class' => 'nobottommargin']); ?>
 
                             <div class="card-body">
                                 <div class="box-body">

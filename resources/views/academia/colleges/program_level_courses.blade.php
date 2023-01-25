@@ -27,11 +27,11 @@
                                     <th>S/N</th>
                                     <th>Code</th>
                                     <th>Title</th>
-                                    <th>Hours</th>
-                                    <th>Host</th>
+                                    <th>Unit</th>
+                                    {{--  <th>Host</th>  --}}
                                     <th>Lecturer</th>
                                     <th>Contact</th>
-                                    <th>Students</th>
+                                    <th>Students Registered</th>
                                     <th>Status</th>
                                     <th>Action</th>
                                 </thead>
@@ -40,10 +40,10 @@
                                     @foreach ($program_courses as $key => $program_course)
                                         <tr>
                                             <td> {{ $loop->iteration }}</td>
-                                            <td> {{ $program_course->course->code }}</td>
-                                            <td> {{ $program_course->course->title }}</td>
-                                            <td> {{ $program_course->hours }}</td>
-                                            <td> {{ $program_course->course->program->name }}</td>
+                                            <td> {{ $program_course->course->course_code }}</td>
+                                            <td> {{ $program_course->course->course_title }}</td>
+                                            <td> {{ $program_course->credit_unit }}</td>
+                                            {{--  <td> {{ $program_course->course->program->name }}</td>  --}}
                                             <td> {{ $program_course->lecturer->full_name }}</td>
                                             <td> {{ $program_course->lecturer->phone }}</td>
                                             <td><a class="btn btn-primary" target="_blank"

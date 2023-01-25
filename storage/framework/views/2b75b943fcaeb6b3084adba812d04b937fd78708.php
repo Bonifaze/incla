@@ -42,22 +42,22 @@
         </tr>
       </table>
 
-	 <?php $__currentLoopData = $registrations; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $key => $reg): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+	 <?php $__currentLoopData = $sessions; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $session): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
 
 	
 
         <table width="100%" height="87" border="1" cellpadding="0" cellspacing="0">
                           <tr>
                             <td colspan="3"><strong>ACADEMIC SESSION</strong>:
-                             <?php echo e($reg->session); ?>
+                             <?php echo e($session->name); ?>
 
                              </td>
                             <td colspan="2" align="center"><strong>LEVEL</strong>:
-                             <?php echo e($reg->level); ?>
+                             <?php echo e($session->registered_courses1->first()?->level); ?>
 
                              </td>
                             <td colspan="2"><strong>SEMESTER</strong>:
-                             <?php echo e($reg->semester); ?>
+                             <?php echo e($session->registered_courses1->first()?->semester); ?>
 
                              </td>
                           </tr>
@@ -70,19 +70,28 @@
                             <td width="17%"><div align="center"><span style="font-weight: bold">Grade</span></div></td>
                             <td width="13%"><div align="center"><span style="font-weight: bold">Pass / Fail</span></div></td>
                           </tr>
-                            <?php $__currentLoopData = $registrations; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $result): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                          <?php
+                            $tc1 = 0;
+                            $tc2 = 0;
+                            $tgp1 = 0;
+                            $tgp2 = 0;
+                          ?> 
+                            <?php $__currentLoopData = $session->registered_courses1; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $result): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                            <?php 
+                              $tc1 += $result->course_unit;
+                              $tgp1 += $result->grade_point * $result->course_unit;
+                            ?>
 
 						<tr>
                             <td width="5%"><div align="center"><span style="font-weight: bold"><?php echo e($loop->iteration); ?> </span></div></td>
                             <td width="15%"><div align="center"><span style="font-weight: bold"><?php echo e($result->course_code); ?> </span></div></td>
                              <td width="23%"><div align="center"><span style="font-weight: bold"><?php echo e($result->course_title); ?> </span></div></td>
-                           <td width="14%"><div align="center"><span style="font-weight: bold"><?php echo e($result->credit_unit); ?> </span></div></td>
+                           <td width="14%"><div align="center"><span style="font-weight: bold"><?php echo e($result->course_unit); ?> </span></div></td>
                             <td width="13%"><div align="center"><span style="font-weight: bold"><?php echo e($result->total); ?></span></div></td>
-                            <td width="17%"><div align="center"><span style="font-weight: bold"><?php echo e($result->grade_id); ?></span></div></td>
+                            <td width="17%"><div align="center"><span style="font-weight: bold"><?php echo e($result->grade); ?></span></div></td>
                             <td width="13%"><div align="center"><span style="font-weight: bold"><?php echo e($result->grade_status); ?></span></div></td>
                           </tr>
                          <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-
 
                          </table>
       <table width="100%" border="1" cellpadding="0" cellspacing="0">
@@ -93,22 +102,22 @@
                           <tr>
                             <td width="2%">&nbsp;</td>
                             <td colspan="2" align="center"><strong>Total Credit Load</strong></td>
-                            
+                            <td colspan="2" align="left"><strong> <?php echo e($tc1); ?></strong></td>
                             <td width="30%" align="left"><strong>Total Credit Unit Value</strong></td>
-                            
+                            <td width="10%" align="left"><strong> <?php echo e($tgp1); ?></strong></td>
                           </tr>
                           <tr>
                             <td>&nbsp;</td>
                             <td colspan="3" align="right"><strong>Grade Points Average (GPA)</strong></td>
                             <td width="13%">&nbsp;</td>
-                            
+                            <td><span style="font-weight: bold">GPA : <?php echo e($tgp1 > 0 && $tc1 > 0 ? number_format($tgp1/$tc1,2) : '0.00'); ?> </span></td>
                             <td>&nbsp;</td>
                           </tr>
                           <tr>
                             <td>&nbsp;</td>
                             <td colspan="3" align="right"><strong>TC</strong></td>
                            <td>&nbsp;</td>
-                            
+                            <td><strong> <?php echo e($tc1); ?></strong></td>
                             <td>&nbsp;</td>
                           </tr>
 
@@ -116,20 +125,109 @@
                             <td>&nbsp;</td>
                             <td colspan="3" align="right"><strong>TGP</strong></td>
                             <td>&nbsp;</td>
-                            
+                            <td><strong> <?php echo e($tgp1); ?></strong></td>
                             <td>&nbsp;</td>
                           </tr>
                           <tr>
                             <td>&nbsp;</td>
                             <td colspan="3" align="right"><strong>Cumulative Grade Points Average (CGPA) </strong></td>
                             <td>&nbsp;</td>
-                            
+                            <td><span style="font-weight: bold">CGPA : <?php echo e('0'); ?></span></td>
                             <td>&nbsp; </td>
                           </tr>
 
 
                         </table>
                         <br />
+<br />
+
+<table width="100%" height="87" border="1" cellpadding="0" cellspacing="0">
+  <tr>
+    <td colspan="3"><strong>ACADEMIC SESSION</strong>:
+     <?php echo e($session->name); ?>
+
+     </td>
+    <td colspan="2" align="center"><strong>LEVEL</strong>:
+     <?php echo e($session->registered_courses2->first()?->level); ?>
+
+     </td>
+    <td colspan="2"><strong>SEMESTER</strong>:
+     <?php echo e($session->registered_courses2->first()?->semester); ?>
+
+     </td>
+  </tr>
+  <tr>
+    <td width="5%"><div align="center"><span style="font-weight: bold">S/N</span></div></td>
+    <td width="15%"><div align="center"><span style="font-weight: bold">Course Code </span></div></td>
+    <td width="23%"><div align="center"><span style="font-weight: bold">Course Title </span></div></td>
+    <td width="14%"><div align="center"><span style="font-weight: bold">Credit Unit </span></div></td>
+    <td width="13%"><div align="center"><span style="font-weight: bold">Score</span></div></td>
+    <td width="17%"><div align="center"><span style="font-weight: bold">Grade</span></div></td>
+    <td width="13%"><div align="center"><span style="font-weight: bold">Pass / Fail</span></div></td>
+  </tr>
+    <?php $__currentLoopData = $session->registered_courses2; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $result2): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+    <?php
+      $tc2 += $result2->course_unit;
+      $tgp2 += $result2->grade_point * $result2->course_unit;
+    ?>
+<tr>
+    <td width="5%"><div align="center"><span style="font-weight: bold"><?php echo e($loop->iteration); ?> </span></div></td>
+    <td width="15%"><div align="center"><span style="font-weight: bold"><?php echo e($result2->course_code); ?> </span></div></td>
+     <td width="23%"><div align="center"><span style="font-weight: bold"><?php echo e($result2->course_title); ?> </span></div></td>
+   <td width="14%"><div align="center"><span style="font-weight: bold"><?php echo e($result2->course_unit); ?> </span></div></td>
+    <td width="13%"><div align="center"><span style="font-weight: bold"><?php echo e($result2->total); ?></span></div></td>
+    <td width="17%"><div align="center"><span style="font-weight: bold"><?php echo e($result2->grade); ?></span></div></td>
+    <td width="13%"><div align="center"><span style="font-weight: bold"><?php echo e($result2->grade_status); ?></span></div></td>
+  </tr>
+ <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+
+
+ </table>
+<table width="100%" border="1" cellpadding="0" cellspacing="0">
+  <tr>
+    <td  colspan="7">&nbsp;</td>
+    </tr>
+
+  <tr>
+    <td width="2%">&nbsp;</td>
+    <td colspan="2" align="center"><strong>Total Credit Load</strong></td>
+    <td colspan="2" align="left"><strong> <?php echo e($tc2); ?></strong></td>
+    <td width="30%" align="left"><strong>Total Credit Unit Value</strong></td>
+    <td width="10%" align="left"><strong> <?php echo e($tgp2); ?></strong></td>
+  </tr>
+  <tr>
+    <td>&nbsp;</td>
+    <td colspan="3" align="right"><strong>Grade Points Average (GPA)</strong></td>
+    <td width="13%">&nbsp;</td>
+    <td><span style="font-weight: bold">GPA : <?php echo e($tgp2 > 0 && $tc2 > 0 ? number_format($tgp2/$tc2, 2) : '0.00'); ?> </span></td>
+    <td>&nbsp;</td>
+  </tr>
+  <tr>
+    <td>&nbsp;</td>
+    <td colspan="3" align="right"><strong>TC</strong></td>
+   <td>&nbsp;</td>
+    <td><strong> <?php echo e($tc1+$tc2); ?></strong></td>
+    <td>&nbsp;</td>
+  </tr>
+
+   <tr>
+    <td>&nbsp;</td>
+    <td colspan="3" align="right"><strong>TGP</strong></td>
+    <td>&nbsp;</td>
+    <td><strong> <?php echo e($tgp1 + $tgp2); ?></strong></td>
+    <td>&nbsp;</td>
+  </tr>
+  <tr>
+    <td>&nbsp;</td>
+    <td colspan="3" align="right"><strong>Cumulative Grade Points Average (CGPA) </strong></td>
+    <td>&nbsp;</td>
+    <td><span style="font-weight: bold">CGPA : <?php echo e(0); ?></span></td>
+    <td>&nbsp; </td>
+  </tr>
+
+
+</table>
+<br />
 <br />
 
 

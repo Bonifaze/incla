@@ -43,7 +43,7 @@
                             $student_id = 0;
                         ?>
 
-                        <a class="btn btn-info" href="<?php echo e(route('semester.registration', base64_encode($student->id))); ?>"
+                        <a class="btn btn-info" href="<?php echo e(route('semester.registration', [base64_encode($student->id), $session])); ?>"
                             target="_blank"> <i class="fa fa-eye"></i> Print Form </a>
                         
 
@@ -152,7 +152,7 @@
                                     <td></td>
                                     <td></td>
                                     
-                                    <td> <strong> 48 </strong></td>
+                                    <td> <strong> 24 </strong></td>
 
                                     <td> </td>
 

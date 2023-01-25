@@ -399,6 +399,12 @@ class AdminStudentsControllerApplicant extends Controller
             case "PhD":
                 $matric_number = "VPG/PHD/".$session.'/'.$program_code.''.$formatted_num;
                 break;
+            case "MBA":
+                    $matric_number = "VPG/MBA/".$session.'/'.$program_code.''.$formatted_num;
+                break;
+            case "MPA":
+                    $matric_number = "VPG/MPA/".$session.'/'.$program_code.''.$formatted_num;
+                    break;
             default:
              $matric_number= 'VUG/'.$session.'/'.$program_code.''.$formatted_num;
         }

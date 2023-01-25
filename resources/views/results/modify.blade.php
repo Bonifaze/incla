@@ -57,9 +57,11 @@ if(!session('adminId'))
                     <div class="col-12">
                         <div class="card">
                             <div class="card-header">
-                                <h4 class="card-title mb-4">
-                                    Student Result
-                                </h4>
+
+                                 <h5 class="app-page-title text-uppercase h5 font-weight p-2 mb-2 shadow-sm text-center text">
+                         {{ $session->name }} Academic Session {{ $session->semesterName($semester) }}
+                    </h5>
+
                             </div>
                             <div class="card-body">
                                 <div class="body">
@@ -87,7 +89,7 @@ if(!session('adminId'))
                                                         <th>CA1 Score</th>
                                                         <th>CA2 Score</th>
                                                         <th>CA3 Score</th>
-                                                        <th>Exam Score</th>
+                                                        <th>Total Score</th>
                                                         <th>Total Score</th>
                                                         <th>Grade</th>
                                                     </tr>
@@ -102,15 +104,15 @@ if(!session('adminId'))
                                                             <td><input type="number" name="ca1_scores[]"
                                                                     value="{{ $student_course->ca1_score }}"
                                                                     id="{{ 'ca1' . $student_course->student_id }}"
-                                                                    class="form-control ca"></td>
+                                                                    class="form-control ca" readonly></td>
                                                             <td><input type="number" name="ca2_scores[]"
                                                                 value="{{ $student_course->ca2_score }}"
                                                                 id="{{ 'ca2' . $student_course->student_id }}"
-                                                                class="form-control ca"></td>
+                                                                class="form-control ca" readonly></td>
                                                             <td><input type="number" name="ca3_scores[]"
                                                                 value="{{ $student_course->ca3_score }}"
                                                                 id="{{ 'ca3' . $student_course->student_id }}"
-                                                                class="form-control ca"></td>
+                                                                class="form-control ca" readonly></td>
                                                             <td><input type="number" name="exam_scores[]"
                                                                     value="{{ $student_course->exam_score }}"
                                                                     id="{{ 'exam' . $student_course->student_id }}"
@@ -183,9 +185,9 @@ if(!session('adminId'))
         $('body').on('keyup', '.exam', function () {
             let input = $(this)
             input.parent().find($('.ex')).remove()
-            if (input.val() > 70)
+            if (input.val() > 100)
             {
-                input.parent().append(`<span class="text-danger text-small text-sm ex">The input value should be less than or equals 70</span>`);
+                input.parent().append(`<span class="text-danger text-small text-sm ex">The input value should be less than or equals 100</span>`);
             }else{
                 input.parent().find($('.ex')).remove()
             }

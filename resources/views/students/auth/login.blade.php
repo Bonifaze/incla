@@ -79,7 +79,7 @@
               <label for="exampleInputPassword1">Password</label>
               <input id="password" type="password" placeholder="Password" class="form-control{{ $errors->has('password') ? ' is-invalid' : '' }}" name="password" required>
               @if ($errors->has('password'))
-             div class="alert alert-danger alert-dismissible" role="alert"> <button type="button" class="close" data-dismiss="alert"> &times; </button><strong>{{ $errors->first('password') }}</strong></div>
+             <div class="alert alert-danger alert-dismissible" role="alert"> <button type="button" class="close" data-dismiss="alert"> &times; </button><strong>{{ $errors->first('password') }}</strong></div>
               @endif
             </div>
             <div class="form-group form-check">

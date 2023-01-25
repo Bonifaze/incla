@@ -223,6 +223,7 @@ class AcademicDepartmentsController extends Controller
         $this->authorize('programLevelCourses',AcademicDepartment::class);
         $session = new Session();
         $program = Program::findOrFail(base64_decode($id));
+        // $pcourses = ProgramCourse::with(['course', 'program', 'lecturer', 'session']);
         $program_courses = ProgramCourse::with(['course','program','course.program','lecturer'])->where('program_id',$program->id)
             ->where('level',$level)
             ->where('session_id',$session->currentSession())

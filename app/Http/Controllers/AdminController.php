@@ -49,6 +49,7 @@ class AdminController extends Controller
         $staff_courses = StaffCourse::where('session_id', $this->getCurrentSession())->where('staff_id', $staff->id )
         ->leftJoin('courses', 'staff_courses.course_id', '=', 'courses.id')
         ->select('staff_courses.*','courses.course_title', 'courses.course_code')
+        ->orderBy('course_code', 'ASC')
         ->get();
         // ->where('staff_id', $staff->id )
         // ->select('staff_courses.*')
@@ -67,9 +68,10 @@ class AdminController extends Controller
 
         $course = StaffCourse::where('id', $staff_course_id)->first();
         $student_registered_courses = RegisteredCourse::where('course_id', $course->course_id)
-        ->where('level', $course->level)
+       // ->where('level', $course->level)
         ->where('session', $course->session_id)
         ->where('program_id', $course->program_id)
+        ->orderBy('student_id', 'ASC')
         ->get();
         return view('results.scores_upload', ['student_registered_courses' => $student_registered_courses, 'course' => $course]);
     // } else {

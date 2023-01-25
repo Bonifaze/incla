@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Program extends Model
 {
     //
-    
+
     public function department()
     {
         return $this->belongsTo('App\AcademicDepartment', 'academic_department_id');
@@ -28,13 +28,13 @@ class Program extends Model
         return $this->hasMany('App\StudentAcademic', 'program_id')
         ->where('level','<',700)->where('status',1);
    }
-   
+
    public function postgraduates()
    {
        return $this->hasMany('App\StudentAcademic', 'program_id')
        ->where('level','>',600)->where('status',1);
    }
-    
+
     public function students($level)
     {
        $students = Student::with('academic')->withCount('academic')
@@ -65,9 +65,9 @@ class Program extends Model
         {
             $students = Student::distinct('students.id')
                 ->join('student_academics', 'students.id', '=', 'student_academics.student_id')
-                ->join('semester_registrations', 'student_academics.student_id', '=', 'semester_registrations.student_id')
-                ->where('semester_registrations.session_id',$session->currentSession())
-                ->where('semester_registrations.semester', $session->currentSemester())
+                ->join('registered_courses', 'student_academics.student_id', '=', 'registered_courses.student_id')
+                ->where('registered_courses.session',$session->currentSession())
+              //  ->where('registered_courses.semester', $session->currentSemester())
                 ->where('student_academics.program_id',$this->id)
                 ->where('student_academics.level','<',$level)
                 ->count();
@@ -77,9 +77,9 @@ class Program extends Model
         {
             $students = Student::distinct('students.id')
                 ->join('student_academics', 'students.id', '=', 'student_academics.student_id')
-                ->join('semester_registrations', 'student_academics.student_id', '=', 'semester_registrations.student_id')
-                ->where('semester_registrations.session_id',$session->currentSession())
-                ->where('semester_registrations.semester', $session->currentSemester())
+                ->join('registered_courses', 'student_academics.student_id', '=', 'registered_courses.student_id')
+                ->where('registered_courses.session',$session->currentSession())
+              //  ->where('registered_courses.semester', $session->currentSemester())
                 ->where('student_academics.program_id',$this->id)
                 ->where('student_academics.level',$level)
                 ->count();
@@ -94,9 +94,9 @@ class Program extends Model
         $session = new Session();
         $students = Student::distinct('students.id')->with(['contact','academic'])
             ->join('student_academics', 'students.id', '=', 'student_academics.student_id')
-            ->join('semester_registrations', 'student_academics.student_id', '=', 'semester_registrations.student_id')
-            ->where('semester_registrations.session_id',$session->currentSession())
-            ->where('semester_registrations.semester', $session->currentSemester())
+            ->join('registered_courses', 'student_academics.student_id', '=', 'registered_courses.student_id')
+            ->where('registered_courses.session',$session->currentSession())
+            ->where('registered_courses.semester', $session->currentSemester())
             ->where('student_academics.program_id',$this->id)
             ->where('student_academics.level',$level)
             ->orderBy('students.id','DESC')
@@ -110,7 +110,7 @@ class Program extends Model
         $session = new Session();
         $courses = ProgramCourse::where('program_id',$this->id)
             ->where('session_id', $session->currentSession())
-            ->where('semester',$session->currentSemester())
+          // ->where('semester',$session->currentSemester())
             ->where('level',$level)
             ->count();
 
@@ -124,9 +124,9 @@ class Program extends Model
 
     }
 
-    public function vcReadyProgramCourses($session_id,$semester, $level = 1000)
+    public function vcReadyProgramCourses($session,$semester, $level = 1000)
     {
-        $query = ProgramCourse::where('session_id',$session_id)
+        $query = ProgramCourse::where('session',$session)
             ->where('semester',$semester)
             ->where('program_id',$this->id)
             ->where('approval','>=',2)
@@ -143,9 +143,9 @@ class Program extends Model
         return $program_courses->count();
     }
 
-    public function vcNotReadyProgramCourses($session_id,$semester, $level = 1000)
+    public function vcNotReadyProgramCourses($session,$semester, $level = 1000)
     {
-        $query = ProgramCourse::where('session_id',$session_id)
+        $query = ProgramCourse::where('session',$session)
             ->where('semester',$semester)
             ->where('program_id',$this->id)
             ->where('approval','<',2)
@@ -160,9 +160,9 @@ class Program extends Model
         return $program_courses->count();
     }
 
-    public function vcApprovedProgramCourses($session_id,$semester, $level = 1000)
+    public function vcApprovedProgramCourses($session,$semester, $level = 1000)
     {
-        $query = ProgramCourse::where('session_id',$session_id)
+        $query = ProgramCourse::where('session',$session)
             ->where('semester',$semester)
             ->where('program_id',$this->id)
             ->where('approval',7)
@@ -177,13 +177,13 @@ class Program extends Model
         return $program_courses->count();
     }
 
-    public function allregisteredStudentsCount($session_id,$semester, $level = 1000)
+    public function allregisteredStudentsCount($session,$semester, $level = 1000)
     {
         $query = Student::distinct('students.id')->with(['contact','academic'])
             ->join('student_academics', 'students.id', '=', 'student_academics.student_id')
-            ->join('semester_registrations', 'student_academics.student_id', '=', 'semester_registrations.student_id')
-            ->where('semester_registrations.session_id',$session_id)
-            ->where('semester_registrations.semester', $semester)
+            ->join('registered_courses', 'student_academics.student_id', '=', 'registered_courses.student_id')
+            ->where('registered_courses.session',$session)
+            ->where('registered_courses.semester', $semester)
             ->where('student_academics.program_id',$this->id)
             ->orderBy('students.id','DESC');
              if($level == 1000){

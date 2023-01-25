@@ -46,9 +46,10 @@
                                 <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
                                     <h6 class="m-0 font-weight-bold text-success">Current Level Course </h6>
                                     <div class="dropdown no-arrow">
-                                        <input type=button class=" btn btn-sm btn-success shadow-sm" name=type
+                                        {{--  <input type=button class=" btn btn-sm btn-success shadow-sm" name=type
                                             id='bt1' value='Show Lower Level Courses'
-                                            onclick="setVisibility('sub3');";>
+                                            onclick="setVisibility('sub3');">  --}}
+                                        <button onclick="setVisibility()" class="btn btn-sm btn-success shadow-sm" id="myButton"> Show Lower Level Courses </button>
                                     </div>
 
                                 </div>
@@ -78,7 +79,7 @@
                                                 @if ($course->is_registered == 0)
                                                     @php
                                                         $tatolCredits += $course->course_category == 1 ? $course->credit_unit : 0;
-                                                        
+
                                                     @endphp
                                                     <tr>
                                                         <td> {{ $key + 1 }}. <input type="checkbox"
@@ -163,7 +164,7 @@
 
                                 </table>
                                 {{--  To show First  lower level courses  --}}
-                                <div id="sub3">
+                                <div id="sub3" style="display: none">
                                     <div
                                         class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
                                         <h6 class="m-0 font-weight-bold text-success">Lower First Level Course </h6>
@@ -309,7 +310,7 @@
                                             @foreach ($courseform as $key => $course)
                                                 @php
                                                     $tatolCredits += $course->course_unit;
-                                                    
+
                                                 @endphp
                                                 <tr>
                                                     {{--  <td> <input class="itemcourse" type="checkbox" id="course" name="courses[]" {{$course->course_category==1?"checked ":""}} value="{{ $course->course_code }}" onclick="{{$course->course_category==1?'return false':'totalIt()'}}"> </td>  --}}
@@ -371,14 +372,15 @@
 
 
     <script language="JavaScript">
-        function setVisibility(id) {
-            if (document.getElementById('bt1').value == 'Hide Lower Lvevel Courses') {
-                document.getElementById('bt1').value = 'Show Lower vevel Courses';
-                document.getElementById(id).style.display = 'none';
-            } else {
-                document.getElementById('bt1').value = 'Hide Lower Lvevel Courses';
-                document.getElementById(id).style.display = 'inline';
-            }
+        function setVisibility() {
+             let x = document.getElementById("sub3");
+  if (x.style.display === "none") {
+    x.style.display = "block";
+    document.getElementById("myButton").innerHTML = "Hide Lower Level Courses";
+  } else {
+    x.style.display = "none";
+    document.getElementById("myButton").innerHTML = "Show Lower Level Courses";
+  }
         }
     </script>
 
