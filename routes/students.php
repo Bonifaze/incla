@@ -19,7 +19,7 @@ Route::get('/students/transcript', 'StudentsController@transcript')->name('stude
 
 Route::get('/students/results', 'StudentsController@results')->name('students.results');
 
-// Route::get('/students/semester-result/{encode}', 'StudentsController@semesterResult')->name('student.semester-result');
+Route::get('/students/semester-result/{encode}', 'StudentsController@semesterResult')->name('student.semester-result');
 
 // Route::get('/students/course-registration2', 'StudentsController@courseRegistration2')->name('student.course-registration2');
 

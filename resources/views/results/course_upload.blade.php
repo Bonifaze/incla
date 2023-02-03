@@ -62,7 +62,7 @@
 
                                                     <th>Total Students</th>
                                                     <th>Upload Status</th>
-                                                    <th>HOD's Approval</th>
+                                                    <th>HODs Approval</th>
                                                     <th>Action</th>
                                                 </tr>
                                             </thead>
@@ -70,7 +70,7 @@
                                                 @foreach ($staff_courses as $staff_course)
                                                     <tr>
                                                         <td>{{ $loop->iteration }}</td>
-                                                        <td>{{ $staff_course->course_code }}</td>
+                                                        <td>{{ $staff_course->course_code  ?? ' ' }}</td>
                                                         <td>{{ $staff_course->course_title }}</td>
 
                                                         <th>{{ $staff_course->total_students }}</th>

@@ -46,10 +46,12 @@ class AdminController extends Controller
 
         // $staff_courses = StaffCourse::where('session_id', $this->getCurrentSession());
 
-        $staff_courses = StaffCourse::where('session_id', $this->getCurrentSession())->where('staff_id', $staff->id )
+        $staff_courses = StaffCourse::distinct()->where('session_id', $this->getCurrentSession())->where('staff_id', $staff->id )
         ->leftJoin('courses', 'staff_courses.course_id', '=', 'courses.id')
+        ->distinct()
         ->select('staff_courses.*','courses.course_title', 'courses.course_code')
         ->orderBy('course_code', 'ASC')
+
         ->get();
         // ->where('staff_id', $staff->id )
         // ->select('staff_courses.*')

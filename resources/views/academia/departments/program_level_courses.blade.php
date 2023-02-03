@@ -54,12 +54,13 @@
                           @foreach ($program_courses as $key => $program_course)
 						 <tr>
                              <td> {{$loop->iteration}}</td>
-                             <td> {{$program_course->course->course_code}}</td>
+                             <td> {{$program_course->course->course_code}} {{  $program_course->course_id}}</td>
                              <td> {{$program_course->course->course_title}}</td>
                              <td> {{$program_course->credit_unit}}</td>
                              {{--  <td> {{$program_course->course->program->name}}</td>  --}}
-                             {{--  <td> {{$program_course->lecturer->full_name}}  --}}
-                                  <td> {{$program_course->staff_name  ?? ' '}}
+                             {{--  <td> {{$program_course->staff_name  ?? ' '}}{{$program_course->lecturer->full_name}}  --}}
+                                  <td>  {{$program_course->staff_name  ?? ' '}}
+                                  {{--  {{$program_course->lecturer->full_name}}  --}}
 
                                  @if ($program_course->approval < 1 )
                                  <a target="_blank" class="btn btn-outline-warning" href="{{ route('program_course.change-lecturer',base64_encode($program_course->id)) }}"> Change </a>

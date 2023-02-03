@@ -10,6 +10,7 @@ class StaffCourse extends Model
 {
     use HasFactory;
 
+    protected $fillable = ['staff_id', 'program_id', 'course_id', 'session_id', 'semester_id', 'level'];
 
     public function getCourseTitleAttribute()
     {
@@ -25,6 +26,7 @@ class StaffCourse extends Model
     {
         return Staff::find($this->staff_id)?->full_name;
     }
+
 
     public function getTotalStudentsAttribute()
     {

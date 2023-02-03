@@ -4,6 +4,7 @@ namespace App;
 
 use App\Models\Course;
 use App\Models\StaffCourse;
+use App\Models\RegisteredCourse;
 use Illuminate\Database\Eloquent\Model;
 
 class ProgramCourse extends Model
@@ -42,6 +43,13 @@ class ProgramCourse extends Model
     {
         return $this->hasMany('App\Course')
             ->orderBy('student_id','ASC');
+    }
+
+    public function registeredCourse()
+    {
+        return $this->hasMany('App\Models\RegisteredCourse', 'student_id')
+         ->orderBy('student_id','ASC');
+
     }
 
 

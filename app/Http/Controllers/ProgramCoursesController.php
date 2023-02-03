@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\AdminDepartment;
 use PDF;
 use App\Staff;
 use Exception;
@@ -12,16 +11,19 @@ use App\Program;
 use App\Session;
 use App\ProgramCourse;
 use App\StudentResult;
+use App\AdminDepartment;
 use App\StudentAcademic;
+use App\StaffWorkProfile;
 use App\Models\StaffCourse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Maatwebsite\Excel\Facades\Excel;
-use App\Exports\ProgramCoursesExport;
+
 // use Exception;
+use App\Exports\ProgramCoursesExport;
 use App\Imports\ProgramCoursesImport;
-use App\StaffWorkProfile;
+use Illuminate\Support\Facades\Redirect;
 
 class ProgramCoursesController extends Controller
 {
@@ -423,18 +425,19 @@ class ProgramCoursesController extends Controller
     public function students($program_course_id)
     {
         $pcid = base64_decode($program_course_id);
-        $program_course = ProgramCourse::with(['results.student','results.student.contact','results.student.academic'])->findOrFail($pcid);
-        $results = $program_course->results;
+        $program_course = ProgramCourse::with(['registeredCourse.student','registeredCourse.student.contact','registeredCourse.student.academic'])->findOrFail($pcid);
+        $results = $program_course->registeredCourse;
+     ///  dd($results);
         return view('staff.academic.program_course_students', compact('results','program_course'));
     }
 
     public function studentsDownload($program_course_id)
     {
         $pcid = base64_decode($program_course_id);
-        $program_course = ProgramCourse::with(['results.student','results.student.contact','results.student.academic'])->findOrFail($pcid);
+        $program_course = ProgramCourse::with(['registeredCourse.student','registeredCourse.student.contact','registeredCourse.student.academic'])->findOrFail($pcid);
         //$results = $program_course->results;
 
-        $raw = "select student_results.id, concat(students.surname, ' ',students.middle_name,' ', students.first_name) as full_name,student_academics.mat_no FROM student_results,student_academics, students where student_results.program_course_id in (:pcid) AND student_results.student_id = students.id AND student_results.student_id = student_academics.student_id";
+        $raw = "select registered_courses.id, concat(students.surname, ' ',students.middle_name,' ', students.first_name) as full_name,student_academics.mat_no FROM registered_courses,student_academics, students where registered_courses.course_id in (:pcid) AND registered_courses.student_id = students.id AND registered_courses.student_id = student_academics.student_id";
         $results = DB::select($raw, ['pcid' => $pcid]);
 
         $title = $program_course->course->code." Students";
@@ -483,27 +486,45 @@ class ProgramCoursesController extends Controller
         return view('/program-courses/change_lecturer',compact('pcourse','lecturers'));
     }
 
-    public function updateLecturer(Request $request, $id)
+    public function updateLecturer(Request $request)
     {
         $session = new Session();
         $this->authorize('changeLecturer',ProgramCourse::class);
         $this->validate($request, [
-            'lecturer_id' => 'required|integer',
+            'staff_id' => 'required|integer',
         ]);
-        $program_course = ProgramCourse::findOrFail(base64_decode($id));
+       //dd($request);
+        //$program_course = ProgramCourse::findOrFail(base64_decode($id));
         // $program_course->lecturer_id = $request->lecturer_id;
         $program_course= ProgramCourse::where('course_id', $request->course_id )->first();
-        StaffCourse::updateOrcreate(['staff_id'=>$request->staff_id, 'program_id'=>$request->program_id, 'session_id'=>$session->currentSession(), 'semester_id'=>$session->currentSemester(), 'course_id'=>$request->course_id, 'level'=>$program_course->level],['staff_id'=>$request->staff_id, 'program_id'=>$request->program_id,  'session_id'=>$session->currentSession(), 'semester_id'=>$session->currentSemester(), 'course_id'=>$request->course_id, 'level'=>$program_course->level]);
+        // StaffCourse::updateOrcreate(['staff_id'=>$request->staff_id, 'program_id'=>$request->program_id, 'session_id'=>$session->currentSession(), 'semester_id'=>$session->currentSemester(), 'course_id'=>$request->course_id, 'level'=>$program_course->level],['staff_id'=>$request->staff_id, 'program_id'=>$request->program_id,  'session_id'=>$session->currentSession(), 'semester_id'=>$session->currentSemester(), 'course_id'=>$request->course_id, 'level'=>$program_course->level]);
+        StaffCourse::where('course_id' ,$request->course_id)
+        ->where('program_id', $request->program_id)
+        ->where('level', $request->level )
+        ->where('session_id', $session->currentSession())
+        ->update([
+            'staff_id' => $request->staff_id,
+            'course_id' => $request->course_id,
+            'session_id' => $session->currentSession(),
+            'program_id' => $request->program_id,
+
+
+
+        ]);
+
         try {
             $program_course->save();
         }
         catch(\Exception $e)
         {
+
         return redirect()->route('program_course.change-lecturer',$id)
         ->with(['error' => 'Error updating program course lecturer.']);
         }
-
-        return redirect()->route('staff.home')
+       // return Redirect::to(url('/academia/departments/program-level-courses/{id}/{level}')->previous())
+       // return redirect()->route('/academia/departments/program-level-courses/{id}/{level}')
+        return redirect()->back()
+        // return redirect()->route('staff.home')
             ->with('success','Program Course Lecturer updated successfully');
     }
 

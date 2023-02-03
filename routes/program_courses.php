@@ -38,7 +38,9 @@ Route::get('/program-courses/students/{program_course_id}', 'ProgramCoursesContr
 
 Route::get('/program-courses/change-lecturer/{id}', 'ProgramCoursesController@changeLecturer')->name('program_course.change-lecturer');
 
-Route::patch('/program-courses/change-lecturer/{id}', 'ProgramCoursesController@updateLecturer')->name('program_course.update-lecturer');
+Route::post('/program-courses/change-lecturer', 'ProgramCoursesController@updateLecturer')->name('program_course.update-lecturer');
+
+//Route::patch('/program-courses/change-lecturer/{id}', 'ProgramCoursesController@updateLecturer')->name('program_course.update-lecturer');
 
 Route::get('/program-courses/results/excel-download/{program_course_id}', 'ProgramCoursesController@resultsExcelDownload')->name('program_course.results.excel_download');
 

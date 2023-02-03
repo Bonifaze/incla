@@ -15,7 +15,7 @@
 
 <!-- Page -->
  @section('staff-courses') active @endsection
- 
+
  <!-- End Sidebar links -->
 
 
@@ -25,26 +25,28 @@
 
 <div class="content-wrapper">
     <!-- Content Header (Page header) -->
-    
+
     <!-- Main content -->
     <section class="content">
       <div class="container-fluid">
         <!-- left column -->
         <div class="col_full">
-         
-            
+
+
             <div class="card card-primary">
-              <div class="card-header">
-                <h3 class="card-title">{{ $program_course->program->name }} {{$program_course->course->code}} Student List</h3>
-				</div>
-            
+                   <h1
+                        class="app-page-title text-uppercase h5 font-weight-bold p-2 mb-2 shadow-sm text-center text-success border">
+                       {{ $program_course->program->name }} {{$program_course->course->code}} Student List
+                    </h1>
+
+
             @include('partialsv3.flash')
-            
+
              <div class="table-responsive card-body">
-  
+
 						<table class="table table-striped">
 						  <thead>
-							
+
 							  <th>Id</th>
 							  <th>Name</th>
 							  <th>Mat No</th>
@@ -53,14 +55,14 @@
 							  <th>Guardian Contact</th>
 							  <th>Guardian Phone</th>
 
-							   
-							
+
+
 						  </thead>
 
 							<tbody>
-						  
+
 						  @foreach ($results as $key => $result)
-						  
+
 							<tr>
 							  <td>{{ $loop->iteration }}</td>
 								<td>{{ $result->student->full_name }}</td>
@@ -74,15 +76,15 @@
 
 							</tr>
 							@endforeach
-							
+
 						  </tbody>
-						  
-						  
-						  
+
+
+
 						</table>
 
-						 
-						
+
+
             </div>
 
 				<!-- /.card-body -->
@@ -93,7 +95,7 @@
 
         </div>
         <!--/.col (left) -->
-        
+
       </div>
       <!-- /.row -->
     </section>

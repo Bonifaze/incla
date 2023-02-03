@@ -84,7 +84,30 @@
                     </li>
 
 
-                    
+                    <li class="nav-item has-treeview <?php echo $__env->yieldContent('result-open'); ?>">
+                    <a href="#" class="nav-link <?php echo $__env->yieldContent('result'); ?>">
+                        <i class="nav-icon fas fa-book"></i>
+                        <p>
+                            Results
+                            <i class="right fas fa-angle-right"></i>
+                        </p>
+                    </a>
+                    <ul class="nav nav-treeview">
+                        <li class="nav-item">
+                            <a href="<?php echo e(route('students.results')); ?>" class="nav-link <?php echo $__env->yieldContent('results'); ?>">
+                                <i class="fa fa-eye nav-icon"></i>
+                                <p>Level Results</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="<?php echo e(route('students.transcript')); ?>" class="nav-link <?php echo $__env->yieldContent('transcript'); ?>">
+                                <i class="fa fa-eye nav-icon"></i>
+                                <p>Unofficial Transcript</p>
+                            </a>
+                        </li>
+
+                    </ul>
+                </li>
 
                     <li class="nav-item has-treeview <?php echo $__env->yieldContent('fees-open'); ?>">
                         <a href="#" class="nav-link <?php echo $__env->yieldContent('fees'); ?>">

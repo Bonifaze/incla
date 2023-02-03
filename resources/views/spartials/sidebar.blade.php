@@ -89,7 +89,7 @@
                     </li>
 
 
-                    {{--  <li class="nav-item has-treeview @yield('result-open')">
+                    <li class="nav-item has-treeview @yield('result-open')">
                     <a href="#" class="nav-link @yield('result')">
                         <i class="nav-icon fas fa-book"></i>
                         <p>
@@ -112,7 +112,7 @@
                         </li>
 
                     </ul>
-                </li>  --}}
+                </li>
 
                     <li class="nav-item has-treeview @yield('fees-open')">
                         <a href="#" class="nav-link @yield('fees')">

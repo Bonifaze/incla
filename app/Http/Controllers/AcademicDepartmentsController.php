@@ -227,7 +227,7 @@ class AcademicDepartmentsController extends Controller
         $program_courses = ProgramCourse::with(['course','program','course.program','lecturer'])->where('program_id',$program->id)
             ->where('level',$level)
             ->where('session_id',$session->currentSession())
-            ->where('semester',$session->currentSemester())
+           // ->where('semester',$session->currentSemester())
             ->whereHas('lecturer')
             ->get();
         return view('academia.departments.program_level_courses',compact('program','program_courses','level'));
