@@ -180,12 +180,12 @@
             <a id="dropdownSubMenu1"style="color: #218c74;" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
                 class="nav-link dropdown-toggle">HR</a>
             <ul aria-labelledby="dropdownSubMenu1" class="dropdown-menu border-0 shadow">
-                {{--  <li><a href="{{ route('admin.department.create') }}" class="dropdown-item">New Admin Dept </a></li>
-                <li><a href="{{ route('admin.department.list') }}" class="dropdown-item">List Admin Depts</a></li>  --}}
-                {{--  <li><a href="#" class="dropdown-item">Assign Head*</a></li>
-                <li><a href="#" class="dropdown-item">New Staff Position*</a></li>
-                <li><a href="#" class="dropdown-item">List Staff Positions*</a></li>
-                <li><a href="#" class="dropdown-item">New Grade Scales*</a></li>
+                <li><a href="{{ route('admin.department.create') }}" class="dropdown-item">New Admin Dept </a></li>
+                <li><a href="{{ route('admin.department.list') }}" class="dropdown-item">List Admin Depts</a></li>
+                 {{--  <li><a href="#" class="dropdown-item">Assign Head*</a></li>  --}}
+                {{--  <li><a href="#" class="dropdown-item">New Staff Position*</a></li>
+                <li><a href="#" class="dropdown-item">List Staff Positions*</a></li>  --}}
+             {{--    <li><a href="#" class="dropdown-item">New Grade Scales*</a></li>
                 <li><a href="#" class="dropdown-item">List Grade Scales*</a></li>  --}}
             </ul>
         </li>
@@ -201,6 +201,8 @@
                          <li><a href="{{ route('admin.show_compute') }}" class="dropdown-item">Compute Result
                         </a></li>
                 <li><a href="{{ route('result.search_student') }}" class="dropdown-item">ICT Upload Results </a></li>
+                  {{--  <li><a href="{{ route('result.program_search_student') }}" class="dropdown-item">ICT Manage All
+                        Results</a></li>  --}}
                {{--   <li><a href="{{ route('program_course.results_status') }}" class="dropdown-item">Program Result
                         Status</a></li>
                 <li><a href="{{ route('result.program_search_student') }}" class="dropdown-item">Manage All

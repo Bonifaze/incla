@@ -71,6 +71,7 @@ class StudentResultsController extends Controller
 
     public function modifyResult(Request $request)
     {
+        $this->authorize('ictUpload', StudentResult::class);
         $session = Session::findOrFail($request->session_id);
          $semester = $request->semester;
         $request->validate([
@@ -512,6 +513,37 @@ class StudentResultsController extends Controller
             ->with('success','Course added successfully');
 
     } // end addCourse(Request $request)
+
+    public function history($encode)
+    {
+        // $student = Student::with(['academic','contact'])->findOrFail(base64_decode($encode));
+        // $academic = $student->academic;
+        // // dd($student);
+        // $session_ids = RegisteredCourse::where('student_id', $student)->distinct('session')->pluck('session');
+        // $session_ids = $session_ids->toArray();
+        // $sessions = Session::wherein('id', $session_ids)->with(['registered_courses1' => function ($query) use ($student) {
+        //     $query->where('student_id', $student);
+        //     $query->where('semester', '1');
+        // }, 'registered_courses2' => function ($query) use ($student) {
+        //     $query->where('student_id', $student);
+        //     $query->where('semester', '2');
+        // }])->get();
+        $student_id = base64_decode($encode);
+        $student = Student::with('academic')->find($student_id);
+        $academic = $student->academic;
+        $session_ids = RegisteredCourse::where('student_id', $student_id)->distinct('session')->pluck('session');
+        $session_ids = $session_ids->toArray();
+        $sessions = Session::wherein('id', $session_ids)->with(['registered_courses1' => function ($query) use ($student_id) {
+            $query->where('student_id', $student_id);
+            $query->where('semester', '1');
+        }, 'registered_courses2' => function ($query) use ($student_id) {
+            $query->where('student_id', $student_id);
+            $query->where('semester', '2');
+        }])->get();
+        // $registrations = $student->semesterRegistrations;
+        // $totalCGPA = $student->CGPA();
+        return view('students.admin.result_history',compact('student','academic','sessions'));
+    } //end show
 
 
 

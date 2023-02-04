@@ -63,7 +63,7 @@
                                   {{--  {{$program_course->lecturer->full_name}}  --}}
 
                                  @if ($program_course->approval < 1 )
-                                 <a target="_blank" class="btn btn-outline-warning" href="{{ route('program_course.change-lecturer',base64_encode($program_course->id)) }}"> Change </a>
+                                 <a class="btn btn-outline-warning" href="{{ route('program_course.change-lecturer',base64_encode($program_course->id)) }}"> Change </a>
                                  @endif
                              </td>
                              <td> {{$program_course->lecturer->phone}}</td>

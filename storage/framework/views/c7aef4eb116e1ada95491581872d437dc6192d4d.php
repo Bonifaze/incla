@@ -66,8 +66,11 @@
             <a id="dropdownSubMenu1"style="color: #218c74;" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
                 class="nav-link dropdown-toggle">HR</a>
             <ul aria-labelledby="dropdownSubMenu1" class="dropdown-menu border-0 shadow">
+                <li><a href="<?php echo e(route('admin.department.create')); ?>" class="dropdown-item">New Admin Dept </a></li>
+                <li><a href="<?php echo e(route('admin.department.list')); ?>" class="dropdown-item">List Admin Depts</a></li>
+                 
                 
-                
+             
             </ul>
         </li>
 
@@ -82,6 +85,7 @@
                          <li><a href="<?php echo e(route('admin.show_compute')); ?>" class="dropdown-item">Compute Result
                         </a></li>
                 <li><a href="<?php echo e(route('result.search_student')); ?>" class="dropdown-item">ICT Upload Results </a></li>
+                  
                
 
 
