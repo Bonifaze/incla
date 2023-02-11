@@ -24,6 +24,7 @@ use App\Exports\RegisteredCourseExport;
 use App\Imports\RegisteredCourseImport;
 use Illuminate\Database\QueryException;
 use Illuminate\Routing\Controller;
+use Illuminate\Support\Facades\Bus;
 use Illuminate\Support\Facades\Redirect;
 use Maatwebsite\Excel\Facades\Excel;
 
@@ -158,22 +159,6 @@ class AdminController extends Controller
         return view('results.view_scores', ['student_registered_courses' => $student_registered_courses, 'course' => $course]);
     }
 
-    public function approve(Request $request)
-    {
-        $staff_course_id = $request->course_id;
-        $reg_ids = $request->reg_ids;
-        for ($i = 0; $i < count($reg_ids); $i++) {
-            RegisteredCourse::where('id', $reg_ids[$i])->update([
-                'status' => 'published'
-            ]);
-        }
-        $approval = [
-            'hod_approval' => 'approved'
-        ];
-        StaffCourse::where('id', $staff_course_id)->update($approval);
-        return redirect()->back()->with('success', 'Scores approved successfully');
-    }
-
     public function showCompute()
     {
         $staff = Auth::guard('staff')->user();
@@ -196,8 +181,15 @@ class AdminController extends Controller
             'level' => 'required',
             'semester' => 'required',
         ]);
-        $this->resultComputation->computeResult($request);
-        return redirect()->back()->with('success', 'Result Computed');
+        $batch_id = $this->resultComputation->computeResult($request);
+        return response(['batch_id' => $batch_id]);
+    }
+
+    public function batchProgress(Request $request)
+    {
+        $batch_id = $request->batch_id;
+        $batch = Bus::findBatch($batch_id);
+        return response(['progress' => $batch->progress()]);
     }
 
     public function decline($staff_course_id)
@@ -215,6 +207,74 @@ class AdminController extends Controller
         $ses = $session->id;
         $currentsession = $ses;
         return $currentsession;
+    }
+
+    protected function getCurrentSemester()
+    {
+        $session = DB::table('sessions')->where('status', 1)->first();
+        return $session->semester;
+    }
+
+    public function approve(Request $request)
+    {
+        $by = $request->by;
+        $program_id = $request->program_id;
+        $session = $this->getCurrentSession();
+        $semester = $this->getCurrentSemester();
+
+        switch ($by) {
+            case 'hod':
+                $course_id = $request->course_id;
+                StaffCourse::where('course_id', $course_id)->where('program_id', $program_id)->where('session_id', $session)->where('semester_id', $semester)->update(['hod_approval' => 'approved']);
+                break;
+            case 'dean':
+                $level = $request->level;
+                StaffCourse::where('level', $level)->where('program_id', $program_id)->where('session_id', $session)->where('semester_id', $semester)->update(['dean_approval' => 'approved']);
+                break;
+            case 'sbc':
+                //StaffCourse::where('course_id', $course_id)->where('program_id', $program_id)->where('session_id', $session)->update(['sbc_approval' => 'approved']);
+                break;
+            case 'vc_senate':
+                //StaffCourse::where('course_id', $course_id)->where('program_id', $program_id)->where('session_id', $session)->update(['vc_senate_approval' => 'approved']);
+                break;
+            default:
+                $course_id = $request->course_id;
+                StaffCourse::where('course_id', $course_id)->where('program_id', $program_id)->where('session_id', $session)->where('semester_id', $semester)->update(['hod_approval' => 'approved']);
+                break;
+        }
+        
+        return back()->with('message', 'Course(s) approved!');
+    }
+
+    public function revoke(Request $request)
+    {
+        $by = $request->by;
+        $semester = $this->getCurrentSemester();
+        $program_id = $request->program_id;
+        $session = $this->getCurrentSession();
+
+        switch ($by) {
+            case 'hod':
+                $course_id = $request->course_id;
+                StaffCourse::where('course_id', $course_id)->where('program_id', $program_id)->where('session_id', $session)->where('semester_id', $semester)->update(['hod_approval' => 'pending']);
+                break;
+            case 'dean':
+                $level = $request->level;
+                StaffCourse::where('level', $level)->where('program_id', $program_id)->where('session_id', $session)->where('semester_id', $semester)->update(['dean_approval' => 'pending']);
+                break;
+            case 'sbc':
+                //StaffCourse::where('course_id', $course_id)->where('program_id', $program_id)->where('session_id', $session)->update(['sbc_approval' => 'pending']);
+                break;
+            case 'vc_senate':
+                //StaffCourse::where('course_id', $course_id)->where('program_id', $program_id)->where('session_id', $session)->update(['vc_senate_approval' => 'pending']);
+                break;
+            default:
+                $course_id = $request->course_id;
+                StaffCourse::where('course_id', $course_id)->where('program_id', $program_id)->where('session_id', $session)->where('semester_id', $semester)->update(['hod_approval' => 'pending']);
+                break;
+        }
+        
+        return back()->with('message', 'Course(s) approval revoked!');
     }
 
     // Login Function

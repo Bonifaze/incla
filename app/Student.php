@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use App\Models\Result;
 use App\Models\RegisteredCourse;
+use Illuminate\Auth\Events\Registered;
 
 class Student extends Authenticatable
 {
@@ -715,7 +716,7 @@ Call Bursary on ".config('app.BURSARY_PHONE');
         }
 
        return $status;
-    }// end resultAccess
+    }// end resultAccessf
 
 
 } // end Class Student

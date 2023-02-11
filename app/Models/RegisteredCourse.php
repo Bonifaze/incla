@@ -32,7 +32,7 @@ class RegisteredCourse extends Model
         'status'
     ];
 
-    protected $appends = ['course_unit', 'course_semester', 'course_title', 'course_code', 'matric_number', 'full_name','result'];
+    protected $appends = ['course_unit', 'course_semester', 'course_title', 'course_code', 'matric_number', 'full_name','result', 'grade_point'];
 
     // public function getCourseUnitAttribute()
     // {

@@ -829,10 +829,12 @@ ICT Unit<br />
         $this->authorize('transcript',Student::class);
         
         $student_id = base64_decode($encode);
-        $student = Student::with('academic')->find($student_id);
+        $student = Student::with('academic')->with('registered_courses')->find($student_id);
         $academic = $student->academic;
         $session_ids = RegisteredCourse::where('student_id', $student_id)->distinct('session')->pluck('session');
         $session_ids = $session_ids->toArray();
+        $registered_courses = RegisteredCourse::where('student_id', $student_id)->get();
+        //dd($registered_courses->where('session', 15));
         $sessions = Session::wherein('id', $session_ids)->with(['registered_courses1' => function ($query) use ($student_id) {
             $query->where('student_id', $student_id);
             $query->where('semester', '1');
@@ -858,7 +860,7 @@ ICT Unit<br />
        // $registrations = $student->semesterRegistrations;
         // $totalCGPA = $student->CGPA();
         // return view('students.admin.transcript',compact('student','academic','registrations','totalCGPA'));
-        return view('students.admin.transcript',compact('student','academic','sessions'));
+        return view('students.admin.transcript',compact('student','academic','sessions', 'registered_courses'));
     } //end show
 
 

@@ -10,7 +10,7 @@ class StaffCourse extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['staff_id', 'program_id', 'course_id', 'session_id', 'semester_id', 'level'];
+    protected $fillable = ['staff_id', 'program_id', 'course_id', 'session_id', 'semester_id', 'level', 'hod_approval', 'dean_approval', 'sbc_approval', 'vc_senate_approval'];
 
     public function getCourseTitleAttribute()
     {

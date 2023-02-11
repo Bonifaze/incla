@@ -99,10 +99,4 @@ class Session extends Model
     {
         return $this->hasMany(RegisteredCourse::class, 'session');
     }
-    
-    public function registered_courses($student_id)
-    {
-        return RegisteredCourse::where('student_id', $student_id)->where('session', '<=', $this->session)->get();
-    }
-    
 }  // end class

@@ -65,7 +65,7 @@
 
                                                 </div>
                                             <?php endif; ?>
-                                            <form action="" method="post">
+                                            <form action="" method="post" id="compute-form">
                                                 <?php echo csrf_field(); ?>
                                                 <div class="form-group">
                                                     <label for="program">Program</label>
@@ -111,8 +111,11 @@
                                                         <?php endfor; ?>
                                                     </select>
                                                 </div>
+                                                <div class="text-center">
+                                                    <p class="text-center compute-progress"></p>
+                                                </div>
                                                 <div class="form-group">
-                                                    <button type="submit" class="btn btn-success">Compute</button>
+                                                    <button type="submit"  class="btn btn-success compute-btn">Compute</button>
                                                 </div>
                                             </form>
                                         </div>
@@ -131,6 +134,42 @@
 <?php $__env->stopSection(); ?>
 
 <?php $__env->startSection('pagescript'); ?>
+<script>
+    $('#compute-form').submit(function (e) {
+        e.preventDefault()
+        let data = $(this).serialize()
+        let btn = $('.compute-btn')
+        $.ajax({
+            url: "<?php echo e(route('admin.compute')); ?>",
+            type: "POST",
+            data: data,
+            beforeSend: () => {
+                btn.html('computing..')
+                btn.attr('disabled', 'true')
+            },
+            success: res => 
+            {
+                let batch_id = res.batch_id
+                const interval = setInterval(() => {
+                    $.ajax({
+                        url: "<?php echo e(route('admin.show_progress')); ?>",
+                        type: "post",
+                        data: {batch_id: batch_id},
+                        success: resp => {
+                            if (resp.progress < 100)
+                            {
+                                $('.compute-progress').html(resp.progress + '%');
+                            }else
+                            {
+                                clearInterval(interval)
+                            }
+                        }
+                    })
+                }, 3000);
+            }
+        })
+    })
+</script>
     <script src="<?php echo asset('dist/js/bootbox.min.js'); ?>"></script>
 <?php $__env->stopSection(); ?>
 

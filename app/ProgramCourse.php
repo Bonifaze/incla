@@ -5,6 +5,7 @@ namespace App;
 use App\Models\Course;
 use App\Models\StaffCourse;
 use App\Models\RegisteredCourse;
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Model;
 
 class ProgramCourse extends Model
@@ -343,6 +344,13 @@ public function getActionAttribute()
     public function getStaffNameAttribute()
     {
         return StaffCourse::where('program_id', $this->program_id)->where('course_id', $this->course_id)->first()?->staff_name;
+    }
+
+    public function isApproved(): Attribute
+    {
+        return Attribute::make(
+            get: fn ($value, $attributes) => StaffCourse::where('course_id', $attributes['course_id'])->where('program_id', $attributes['program_id'])->where('session_id', $attributes['session_id'])->where('hod_approval', 'approved')->exists()
+        );
     }
 
     protected $appends = ['course_title', 'course_code', 'staff_name'];

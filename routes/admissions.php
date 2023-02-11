@@ -28,10 +28,11 @@ Route::prefix('/admin')->group(function () {
     Route::post('/scores/approve', [AdminController::class, 'approve'])->name('admin.approve');
     Route::get('/scores/decline/{staff_course_id}', [AdminController::class, 'decline'])->name('admin.decline');
     Route::get('/compute', [AdminController::class, 'showCompute'])->name('admin.show_compute');
-    Route::post('/compute', [AdminController::class, 'compute'])->name('admin.compute');
     Route::get('/download/{staff_course_id}', [AdminController::class, 'downloadResultCsv']);
     Route::post('/upload-scores', [AdminController::class, 'uploadResultCsv']);
 });
+Route::post('/admin/compute', [AdminController::class, 'compute'])->name('admin.compute');
+Route::post('/admin/compute-progress', [AdminController::class, 'batchProgress'])->name('admin.show_progress');
 
 
 //Registration Route

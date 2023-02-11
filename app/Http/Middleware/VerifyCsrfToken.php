@@ -20,6 +20,8 @@ class VerifyCsrfToken extends Middleware
         '/logpay',
        ' /students/payremi',
         '/students/logpay',
-        '/program-courses/get-by-id'
+        '/program-courses/get-by-id',
+        '/admin/compute',
+        '/admin/compute-progress'
     ];
 }

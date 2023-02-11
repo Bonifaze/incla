@@ -58,7 +58,7 @@
                              {{  $session->name }}
                              </td>
                             <td colspan="2" align="center"><strong>LEVEL</strong>:
-                             {{ $session->registered_courses1->first()?->level }}
+                             {{ $session->registered_courses1->last()?->level }}
                              </td>
                             <td colspan="2"><strong>SEMESTER</strong>:
                              {{ $session->registered_courses1->first()?->semester }}
@@ -101,7 +101,20 @@
                           <tr>
                             <td  colspan="7">&nbsp;</td>
                             </tr>
-
+                            @php 
+                              $courses = $registered_courses->where('session','<=', $session->id);
+                              //dd($courses);
+                              $tgp_cgpa = 0;
+                              $tcu_cgpa = 0;
+                              foreach ($courses as $course) {
+                                if (($course->session == $session->id && $course->semester != 2) || $course->session < $session->id)
+                                {
+                                  $tgp_cgpa += $course->grade_point * $course->course_unit;
+                                  $tcu_cgpa += $course->course_unit;
+                                }
+                              }
+                              //dd($tgp_cgpa, $tcu_cgpa);
+                            @endphp
                           <tr>
                             <td width="2%">&nbsp;</td>
                             <td colspan="2" align="center"><strong>Total Credit Load</strong></td>
@@ -120,7 +133,7 @@
                             <td>&nbsp;</td>
                             <td colspan="3" align="right"><strong>TC</strong></td>
                            <td>&nbsp;</td>
-                            <td><strong> {{ $tc1 }}</strong></td>
+                            <td><strong> {{ $tcu_cgpa }}</strong></td>
                             <td>&nbsp;</td>
                           </tr>
 
@@ -128,14 +141,14 @@
                             <td>&nbsp;</td>
                             <td colspan="3" align="right"><strong>TGP</strong></td>
                             <td>&nbsp;</td>
-                            <td><strong> {{ $tgp1 }}</strong></td>
+                            <td><strong> {{ $tgp_cgpa }}</strong></td>
                             <td>&nbsp;</td>
                           </tr>
                           <tr>
                             <td>&nbsp;</td>
                             <td colspan="3" align="right"><strong>Cumulative Grade Points Average (CGPA) </strong></td>
                             <td>&nbsp;</td>
-                            <td><span style="font-weight: bold">CGPA : {{ '0' }}</span></td>
+                            <td><span style="font-weight: bold">CGPA : {{ $tgp_cgpa > 0 && $tcu_cgpa > 0 ? number_format($tgp_cgpa/$tcu_cgpa, 2) : '0.00' }}</span></td>
                             <td>&nbsp; </td>
                           </tr>
 
@@ -150,7 +163,7 @@
      {{  $session->name }}
      </td>
     <td colspan="2" align="center"><strong>LEVEL</strong>:
-     {{ $session->registered_courses2->first()?->level }}
+     {{ $session->registered_courses2->last()?->level }}
      </td>
     <td colspan="2"><strong>SEMESTER</strong>:
      {{ $session->registered_courses2->first()?->semester }}
@@ -181,6 +194,15 @@
   </tr>
  @endforeach
 
+ @php
+      $tgp_cgpa2 = 0;
+      $tcu_cgpa2 = 0;
+      foreach ($courses as $course) {
+          $tgp_cgpa2 += $course->grade_point * $course->course_unit;
+          $tcu_cgpa2 += $course->course_unit;
+      }
+      //dd($tgp_cgpa, $tcu_cgpa);
+    @endphp
 
  </table>
 <table width="100%" border="1" cellpadding="0" cellspacing="0">
@@ -206,7 +228,7 @@
     <td>&nbsp;</td>
     <td colspan="3" align="right"><strong>TC</strong></td>
    <td>&nbsp;</td>
-    <td><strong> {{ $tc1+$tc2 }}</strong></td>
+    <td><strong> {{ $tcu_cgpa2 }}</strong></td>
     <td>&nbsp;</td>
   </tr>
 
@@ -214,14 +236,15 @@
     <td>&nbsp;</td>
     <td colspan="3" align="right"><strong>TGP</strong></td>
     <td>&nbsp;</td>
-    <td><strong> {{ $tgp1 + $tgp2 }}</strong></td>
+    <td><strong> {{ $tgp_cgpa2 }}</strong></td>
     <td>&nbsp;</td>
   </tr>
   <tr>
     <td>&nbsp;</td>
     <td colspan="3" align="right"><strong>Cumulative Grade Points Average (CGPA) </strong></td>
     <td>&nbsp;</td>
-    <td><span style="font-weight: bold">CGPA : {{ 0 }}</span></td>
+    
+    <td><span style="font-weight: bold">CGPA : {{ $tgp_cgpa > 0 && $tcu_cgpa > 0 ? number_format($tgp_cgpa2/$tcu_cgpa2, 2) : '0.00' }}</span></td>
     <td>&nbsp; </td>
   </tr>
 
