@@ -92,7 +92,10 @@
 
                                     <div class="col-md-3 form-group">
                                     <label for="staff">Lecturer :</label>
-                                    <select name="staff_id" id="staff" class="form-control"></select>
+                                    
+								<?php echo Form::select('staff_id', $lecturers, null,['class' => 'form-control', 'id' => 'lecturer_id', 'name' => 'staff_id', 'required' => 'required']); ?>
+
+
                                     <span class="text-danger"> <?php echo e($errors->first('staff_id')); ?></span>
                                 </div>
                                 </div>

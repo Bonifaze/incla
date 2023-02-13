@@ -3,7 +3,7 @@
 
 						  </thead>
 
-						  
+
 						  <tbody>
                           <tr>
                               <td colspan="4"> </td>
@@ -69,7 +69,7 @@
                           <td>Gender</td>
                           <?php $__currentLoopData = $program_courses; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $key => $program_course): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
 
-                              <td><?php echo e($program_course->course->code); ?> <br /> <?php echo e($program_course->hours); ?></td>
+                              <td><?php echo e($program_course->course->course_code); ?> <br /> <?php echo e($program_course->credit_unit); ?></td>
 
 
                           <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
@@ -85,7 +85,7 @@
                           </tr>
                           <?php $__currentLoopData = $students; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $key => $student): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                               <?php
-                                  //$gpa = $student->unApprovedGPA();
+
                               $cgpa = $student->excelCGPA();
                               ?>
                               <tr>
@@ -98,12 +98,12 @@
                                       <td><?php echo $student->programCourseResult($program_course->id); ?></td>
 
                                   <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-                                  <td><?php echo e($cgpa->currenthours); ?></td>
+                                  <td><?php echo e($cgpa->currentcredit_unit); ?></td>
                                   <td><?php echo e($cgpa->currentunits); ?></td>
                                   <td><?php echo e($cgpa->currentgpa); ?></td>
-                                  <td><?php echo e($cgpa->bfhours); ?></td>
+                                  <td><?php echo e($cgpa->bfcredit_unit); ?></td>
                                   <td><?php echo e($cgpa->bfunits); ?></td>
-                                  <td><?php echo e($cgpa->hours); ?></td>
+                                  <td><?php echo e($cgpa->credit_unit); ?></td>
                                   <td><?php echo e($cgpa->units); ?></td>
                                   <td><?php echo e($cgpa->value); ?></td>
                                   <td> <?php echo e($student->semesterResultRemark()); ?> </td>
@@ -111,10 +111,10 @@
                               </tr>
                           <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
 						  </tbody>
-						  
-						  
-						  
+
+
+
 						</table>
 
-						
+
 <?php /**PATH /Users/lifeofrence/Documents/laraproject/resources/views/academia/departments/program_level_results_export.blade.php ENDPATH**/ ?>

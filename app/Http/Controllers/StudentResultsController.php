@@ -139,7 +139,7 @@ class StudentResultsController extends Controller
         $this->authorize('upload', StudentResult::class);
         //ensure program course selected has a corresponding course
         //also check in front end
-        $results = StudentResult::with(['programCourse.course'])->where('student_id',$request->student_id)
+        $results = RegisteredCourse::with(['programCourse.course'])->where('student_id',$request->student_id)
         ->where('session_id',$request->session_id)
         ->where('semester',$request->semester)
         ->get();
@@ -179,7 +179,7 @@ class StudentResultsController extends Controller
             //saving logic here
             foreach ($parameters as $parameter)
             {
-               $result = StudentResult::find($parameter['id']);
+               $result = RegisteredCourse::find($parameter['id']);
                 if($result->total != $parameter['result'])
                 {
                     $result->total = $parameter['result'];
@@ -189,7 +189,7 @@ class StudentResultsController extends Controller
                         $result->status = 7;
                     }
                     //all those with ICT Approval permission should upload approved results.
-                    if (Auth::guard('staff')->user()->can('ictUpload',StudentResult::class)) {
+                    if (Auth::guard('staff')->user()->can('ictUpload',RegisteredCourse::class)) {
                         $result->status = 7;
                     }
 
@@ -231,7 +231,7 @@ class StudentResultsController extends Controller
             //saving logic here
             foreach ($parameters as $parameter)
             {
-                $result = StudentResult::find($parameter['id']);
+                $result = RegisteredCourse::find($parameter['id']);
                 if($result->total != $parameter['result'])
                 {
                     $result->total = $parameter['result'];
@@ -323,11 +323,11 @@ class StudentResultsController extends Controller
             ->with(['error' => 'No Semester Registration.']);
         }
 
-        $results = StudentResult::with(['programCourse','programCourse.course'])->where('student_id',$student_id)
+        $results = RegisteredCourse::with(['programCourse','programCourse.course'])->where('student_id',$student_id)
         ->where('session_id',$session_id)
         ->where('semester',$semester)
         ->get();
-        $rs = new StudentResult();
+        $rs = new RegisteredCourse();
         $gpa = $rs->gpa($student_id, $session_id, $semester);
         $cgpa = $rs->currentCGPA($student_id,$session_id,$semester);
         return view('results.semester-result',compact('results','student','session','semester','gpa','cgpa'));
@@ -460,7 +460,7 @@ class StudentResultsController extends Controller
     {
         $this->authorize('register', StudentResult::class);
         $session = Session::findorFail($request->session_id);
-        $result = new StudentResult();
+        $result = new RegisteredCourset();
         $student = Student::findOrFail($request->student_id);
         $semester = $request->semester;
         $level = $request->level;

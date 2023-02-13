@@ -21,4 +21,14 @@ class Result extends Model
         'cgpa',
         'status'
     ];
+
+    public function programCourse()
+    {
+        return $this->belongsTo('App\ProgramCourse', 'course_id');
+    }
+
+    public function RegisteredCourse()
+    {
+        return $this->belongsTo('App\Models\RegisteredCourse', 'course_id');
+    }
 }

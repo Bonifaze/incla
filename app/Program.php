@@ -23,6 +23,26 @@ class Program extends Model
         return $this->hasMany('App\ProgramCourse');
     }
 
+    public function VcApproval()
+    {
+        return $this->hasMany('App\Models\StaffCourse', 'program_id')
+
+        ->where('sbc_approval', 'approved');
+    }
+
+    public function SbcApproval()
+    {
+        return $this->hasMany('App\Models\StaffCourse', 'program_id')
+        ->where('dean_approval', 'approved');
+    }
+
+    public function DeanApproval()
+    {
+        return $this->hasMany('App\Models\StaffCourse', 'program_id')
+        ->where('hod_approval', 'approved');
+
+    }
+
     public function undergraduates()
     {
         return $this->hasMany('App\StudentAcademic', 'program_id')
@@ -126,7 +146,7 @@ class Program extends Model
 
     public function vcReadyProgramCourses($session,$semester, $level = 1000)
     {
-        $query = ProgramCourse::where('session',$session)
+        $query = ProgramCourse::where('session_id',$session)
             ->where('semester',$semester)
             ->where('program_id',$this->id)
             ->where('approval','>=',2)
@@ -145,12 +165,12 @@ class Program extends Model
 
     public function vcNotReadyProgramCourses($session,$semester, $level = 1000)
     {
-        $query = ProgramCourse::where('session',$session)
+        $query = ProgramCourse::where('session_id',$session)
             ->where('semester',$semester)
             ->where('program_id',$this->id)
-            ->where('approval','<',2)
+            ->where('approval','<',2);
             //->where('level','<',700)
-            ->whereHas('results');
+            // ->whereHas('results');
              if($level == 1000){
                  $program_courses = $query->get();
              }

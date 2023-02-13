@@ -131,6 +131,68 @@
 
 
           </div>
+
+               <div class="card ">
+
+                @include("partialsv3.flash")
+                <div class="table-responsive">
+
+                    <!-- form start -->
+
+                    {!! Form::open(array('route' => 'student.findprogram', 'method'=>'POST', 'class' => 'nobottommargin')) !!}
+                    <div class="card-body">
+                        <div class="box-body">
+
+                            <div class="row">
+
+                                <div class="col-md-6 form-group">
+								<label for="program">Program :</label>
+					                                        {{--  {{ Form::select('program_id', $programs, null, [ 'class' => 'form-control', 'id' => 'program_id', 'name' => 'program_id']) }}  --}}
+
+							      <span class="text-danger"> {{ $errors->first('program') }}</span>
+						        </div>
+                     <div class="col-md-4 form-group">
+                                            <label for="level">Level :</label>
+                                            {{ Form::select(
+                                                'level',
+                                                [
+                                                    '100' => '100 Level',
+                                                    '200' => '200 Level',
+                                                    '300' => '300 Level',
+                                                    '400' => '400 Level',
+                                                    '500' => '500 Level',
+                                                    '600' => '600 Level',
+                                                    '700' => 'PGD',
+                                                    '800' => 'MSc',
+                                                    '900' => 'PhD',
+                                                    '1000' => 'Graduate',
+                                                ],
+                                                100,
+                                                ['class' => 'form-control select2'],
+                                            ) }}
+                                            <span class="text-danger"> {{ $errors->first('level') }}</span>
+                                        </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <!-- /.card-body -->
+
+                    <div class="card-footer">
+
+                        {{ Form::submit('Search', array('class' => 'btn btn-primary')) }}
+
+                    </div>
+
+                </div>
+                <!-- /.box-body -->
+
+
+                {!! Form::close() !!}
+
+            </div>
+
           <!-- /.box -->
 
         </div>

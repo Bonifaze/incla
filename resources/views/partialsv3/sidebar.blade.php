@@ -157,6 +157,7 @@
                                         <p>Assign Course to Program </p>
                                     </a>
                                 </li>
+
                                 <li class="nav-item">
                                     <a href="{{ route('program_course.assign') }}"
                                         class="nav-link @yield('exam-remark')">
@@ -170,6 +171,12 @@
                                         <p>Allocted Courses </p>
                                     </a>
                                 </li>
+                                  {{--  <li class="nav-item">
+                                    <a href="{{ route('program_course.list_assign_courses') }}" class="nav-link @yield('exam-remark')">
+                                        <i class="fa fa-plus nav-icon"></i>
+                                        <p>Allocted Courses to staff </p>
+                                    </a>
+                                </li>  --}}
                                 <li class="nav-item">
                                     <a href="{{ route('course.search') }}" class="nav-link @yield('exam-remark')">
                                         <i class="fa fa-search nav-icon"></i>

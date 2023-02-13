@@ -48,5 +48,9 @@ class ProgramCoursePolicy
     {
         return $staff->hasPermission(69);
     }
+    public function gstallocate(Staff $staff)
+    {
+        return $staff->hasPermission(75);
+    }
 
 } // end Policy

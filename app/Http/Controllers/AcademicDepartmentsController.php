@@ -13,6 +13,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 use App\AcademicDepartment;
 use App\College;
+use App\Models\RegisteredCourse;
 use Illuminate\Support\Facades\Auth;
 use Maatwebsite\Excel\Facades\Excel;
 
@@ -229,6 +230,7 @@ class AcademicDepartmentsController extends Controller
             ->where('session_id',$session->currentSession())
            // ->where('semester',$session->currentSemester())
             ->whereHas('lecturer')
+            ->orderBy('semester','ASC')
             ->get();
         return view('academia.departments.program_level_courses',compact('program','program_courses','level'));
     }
@@ -251,7 +253,7 @@ class AcademicDepartmentsController extends Controller
         {
             $student = Student::findOrFail($std->student_id);
             $students->prepend($student);
-            $results = StudentResult::where('student_id',$std->student_id)
+            $results = RegisteredCourse::where('student_id',$std->student_id)
                 ->where('session_id', $session_id)
                 ->where('semester', $semester)
                 ->get();

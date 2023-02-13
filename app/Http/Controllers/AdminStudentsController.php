@@ -455,6 +455,8 @@ class AdminStudentsController extends Controller
         return view('students.admin.plain_list',compact('students'));
     } //end list
 
+
+
     public function listSession($level)
     {
         $students = Student::with(['contact', 'academic', 'medical', 'academic.program'])
@@ -483,7 +485,8 @@ class AdminStudentsController extends Controller
     public function search()
     {
         $this->authorize('search', Student::class);
-        return view('students.admin.search');
+        $programs = Program::orderBy('name','ASC')->pluck('name','id');
+        return view('students.admin.search',compact('programs'));
     } //end search
 
 
@@ -548,6 +551,30 @@ class AdminStudentsController extends Controller
         }
 
     } // end find matric
+
+    public function findprogram(Request $request)
+    {
+       $this->authorize('search', Student::class);
+    //  dd($request->program_id,$request->level );
+      $program_id = $request->program_id;
+      $level =$request->level;
+       {
+        $students = Student::with(['contact', 'academic', 'medical', 'academic.program'])
+            ->whereHas('academic', function ($query) use ($request)
+        {
+            $query
+            ->Where ('level', '=', $request->level)
+            ->where('program_id', '=', $request->program_id )
+
+            ->orderBy('program_id');
+
+        })->orderBy('id')->orderBy('surname')->paginate(2000);
+        return view('students.admin.plain_list',compact('students'));
+    }
+}//end list
+
+
+
 
 
     public function edit($id)
@@ -827,7 +854,7 @@ ICT Unit<br />
     public function transcript($encode)
     {
         $this->authorize('transcript',Student::class);
-        
+
         $student_id = base64_decode($encode);
         $student = Student::with('academic')->with('registered_courses')->find($student_id);
         $academic = $student->academic;

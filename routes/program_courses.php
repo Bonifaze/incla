@@ -50,7 +50,11 @@ Route::get('/program-courses/results/excel-upload/{program_course_id}', 'Program
 
 Route::get('/program-courses/results/vc', 'ProgramCoursesController@VC')->name('program_course.vc');
 
+Route::get('/program-courses/results/sbc', 'ProgramCoursesController@SBC')->name('program_course.sbc');
+
 Route::get('/program-courses/results/vc/{level}', 'ProgramCoursesController@VCLevel')->name('program_course.vc_level');
+
+Route::get('/program-courses/results/sbc/{level}', 'ProgramCoursesController@SBCLevel')->name('program_course.sbc_level');
 
 Route::post('/program-courses/results/vc/approval', 'ProgramCoursesController@vcApproval')->name('program_course.vc_approval');
 

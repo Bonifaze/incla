@@ -152,6 +152,7 @@
                                         <p>Assign Course to Program </p>
                                     </a>
                                 </li>
+
                                 <li class="nav-item">
                                     <a href="<?php echo e(route('program_course.assign')); ?>"
                                         class="nav-link <?php echo $__env->yieldContent('exam-remark'); ?>">
@@ -165,6 +166,7 @@
                                         <p>Allocted Courses </p>
                                     </a>
                                 </li>
+                                  
                                 <li class="nav-item">
                                     <a href="<?php echo e(route('course.search')); ?>" class="nav-link <?php echo $__env->yieldContent('exam-remark'); ?>">
                                         <i class="fa fa-search nav-icon"></i>

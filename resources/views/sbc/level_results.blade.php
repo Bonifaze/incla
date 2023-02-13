@@ -39,7 +39,7 @@
             <div class="card card-primary">
                     <h1
                         class="app-page-title text-uppercase h5 font-weight-bold p-2 mb-2 shadow-sm text-center text-success border">
-                      {{$semesterName}} {{$level}} Level {{$session->currentSessionName()}} Result status VC Approval
+                      {{$semesterName}} {{$level}} Level {{$session->currentSessionName()}} Result status SBC Approval
                     </h1>
 
             @include('partialsv3.flash')
@@ -79,7 +79,7 @@
 							  {{--  <td> {{ $notReady }} </td>  --}}
 							  {{--  <td> {{ $approved }} </td>  --}}
 							  <td> {{ $students}} </td>
-                               <td><a href="/staff-course/approve?by=vc&level={{ $level}}&program_id={{ $program->id }}" class="btn btn-outline-success" onclick="return confirm('are you sure you want to proceed with this action?')">Approve</a><a href="/staff-course/revoke?by=vc&level={{ $level}}&program_id={{ $program->id }}" class="btn btn-outline-danger" onclick="return confirm('are you sure you want to proceed with this action?')">Revoke</a></td>
+                               <td><a href="/staff-course/approve?by=sbc&level={{$level}} &program_id={{ $program->id }}" class="btn btn-outline-success" onclick="return confirm('are you sure you want to proceed with this action?')">Approve</a><a href="/staff-course/revoke?by=sbc&level={{$level}} &program_id={{ $program->id }}" class="btn btn-outline-danger" onclick="return confirm('are you sure you want to proceed with this action?')">Revoke</a></td>
 
 
 

@@ -14,26 +14,27 @@
 
 <div class="content-wrapper">
     <!-- Content Header (Page header) -->
-    
+
     <!-- Main content -->
     <section class="content">
       <div class="container-fluid">
         <!-- left column -->
         <div class="col_full">
-         
-             @include('partialsv3.flash')
-            
-            <div class="card card-primary">
-              <div class="card-header">
-                <h3 class="card-title">{{ $program->name }} </h3>
 
-				</div>
-            
+             @include('partialsv3.flash')
+
+            <div class="card card-primary">
+    <h1
+                        class="app-page-title text-uppercase h5 font-weight-bold p-2 mb-2 shadow-sm text-center text-success border">
+                       {{ $program->name }}
+                    </h1>
+
+
              <div class="table-responsive card-body">
-  
+
 						<table class="table table-striped">
 						  <thead>
-							
+
 							  <th>Level</th>
                               <th>100L</th>
 							 <th>200L</th>
@@ -45,12 +46,12 @@
                               <th>PhD</th>
 
 
-							  
-							   
-							
+
+
+
 						  </thead>
-						  
-						  
+
+
 						  <tbody>
                           <tr>
                               <td> Courses</td>
@@ -78,22 +79,22 @@
 
 
 
-							
+
 						  </tbody>
-						  
-						  
-						  
+
+
+
 						</table>
 
-						
+
             </div>
-            
+
           </div>
           <!-- /.box -->
 
         </div>
         <!--/.col (left) -->
-        
+
       </div>
       <!-- /.row -->
     </section>

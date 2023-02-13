@@ -203,7 +203,7 @@
                 <li><a href="{{ route('result.search_student') }}" class="dropdown-item">ICT Upload Results </a></li>
                   {{--  <li><a href="{{ route('result.program_search_student') }}" class="dropdown-item">ICT Manage All
                         Results</a></li>  --}}
-               {{--   <li><a href="{{ route('program_course.results_status') }}" class="dropdown-item">Program Result
+                {{--  <li><a href="{{ route('program_course.results_status') }}" class="dropdown-item">Program Result
                         Status</a></li>
                 <li><a href="{{ route('result.program_search_student') }}" class="dropdown-item">Manage All
                         Results</a></li>
@@ -214,7 +214,15 @@
                 <li><a href="{{ route('utility.result.status', 2) }}" class="dropdown-item" target="_blank">Awaiting
                         Faculty</a></li>
                 <li><a href="{{ route('utility.result.status', 3) }}" class="dropdown-item" target="_blank">Awaiting
-                        VC</a></li>
+                        VC</a></li>  --}}
+                          <li><a href="{{ route('program_course.sbc_level', 100) }}" class="dropdown-item">100L SBC Approval</a>
+                </li>
+                <li><a href="{{ route('program_course.sbc_level', 200) }}" class="dropdown-item">200L SBC Approval</a>
+                </li>
+                <li><a href="{{ route('program_course.sbc_level', 300) }}" class="dropdown-item">300L SBC Approval</a>
+                </li>
+                <li><a href="{{ route('program_course.sbc_level', 400) }}" class="dropdown-item">400L SBC Approval</a>
+                </li>
                 <li><a href="{{ route('program_course.vc_level', 100) }}" class="dropdown-item">100L VC Approval</a>
                 </li>
                 <li><a href="{{ route('program_course.vc_level', 200) }}" class="dropdown-item">200L VC Approval</a>
@@ -223,7 +231,7 @@
                 </li>
                 <li><a href="{{ route('program_course.vc_level', 400) }}" class="dropdown-item">400L VC Approval</a>
                 </li>
-  --}}
+
 
 
             </ul>

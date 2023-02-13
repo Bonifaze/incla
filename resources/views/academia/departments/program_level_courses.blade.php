@@ -36,10 +36,11 @@
 							 <th>Unit</th>
 							 {{--  <th>Host</th>  --}}
                               <th>Lecturer</th>
+                              <th>Semester</th>
                               <th>Contact</th>
                               <th>Students Registered</th>
-                              <th>Status</th>
-                              <th>Action</th>
+                              {{--  <th>Status</th>
+                              <th>Action</th>  --}}
 
 
 
@@ -52,7 +53,7 @@
                           @foreach ($program_courses as $key => $program_course)
 						 <tr>
                              <td> {{$loop->iteration}}</td>
-                             <td> {{$program_course->course->course_code}} {{  $program_course->course_id}}</td>
+                             <td> {{$program_course->course->course_code}} </td>
                              <td> {{$program_course->course->course_title}}</td>
                              <td> {{$program_course->credit_unit}}</td>
                              {{--  <td> {{$program_course->course->program->name}}</td>  --}}
@@ -64,10 +65,18 @@
                                  <a class="btn btn-outline-warning" href="{{ route('program_course.change-lecturer',base64_encode($program_course->id)) }}"> Change </a>
                                  @endif
                              </td>
+                             @if ( $program_course->semester == 1)
+                             <td> First </td>
+                             @else ( $program_course->semester == 2)
+                             <td>Second </td>
+                             @endif
+
                              <td> {{$program_course->lecturer->phone}}</td>
                              <td>
                                  <a class="btn btn-primary" target="_blank" href="{{ route('program_course.students',base64_encode($program_course->id)) }}">  List </a>
-                                 <a class="btn btn-info" target="_blank" href="{{ route('program_course.students_download',base64_encode($program_course->id)) }}">  Download </a>
+                                 {{--  <a class="btn btn-info" target="_blank" href="{{ route('program_course.students_download',base64_encode($program_course->id)) }}">  Download </a>  --}}
+                                 <a class="btn btn-info" target="_blank" href="/admin/download/{{$program_course->course->id }}">  Download </a>
+
                                  @if(!$program_course->is_approved)
                                  <a href="/staff-course/approve?course_id={{ $program_course->course_id }}&program_id={{ $program_course->program_id }}&by=hod" class="btn btn-outline-success" onclick="return confirm('Are you sure you want to approve this course?')">Approve</a>
                                  @else
@@ -75,7 +84,7 @@
                                  @endif
                              </td>
 
-                             @if ($program_course->approval == 1)
+                             {{--  @if ($program_course->approval == 1)
                                  <td> <a target="_blank" href="{{ route('program_course.result',base64_encode($program_course->id)) }}"> View Result </a> </td>
                                  <td>
                                      {!! Form::open(['method' => 'patch', 'route' => 'program_course.approval', 'id'=>'approvePCourseForm'.$program_course->id]) !!}
@@ -99,7 +108,7 @@
                              @else
                                  <td> {{ $program_course->action }} </td>
                                  <td> {{ $program_course->status }}</td>
-                             @endif
+                             @endif  --}}
                          </tr>
                           @endforeach
 

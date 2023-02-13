@@ -5,13 +5,13 @@
 
 
             <div class="card card-primary">
-              <div class="card-header">
-                <h3 class="card-title">{{ $level }} Level1 Students </h3>
-
-				</div>
+               <h1
+                        class="app-page-title text-uppercase h5 font-weight-bold p-2 mb-2 shadow-sm text-center text-success border">
+                       {{ $level }} Level Courses
+                    </h1>
 
              <div class="table-responsive card-body">
-  
+
 						<table class="table table-striped">
 						  <thead>
                           <th>S/N</th>
@@ -25,7 +25,7 @@
                           <th>Remark</th>
 						  </thead>
 
-						  
+
 						  <tbody>
                           @foreach($students as $key => $student)
                               @php $gpa = $student->unApprovedGPA() @endphp
@@ -42,14 +42,14 @@
                               </tr>
                           @endforeach
 						  </tbody>
-						  
-						  
-						  
+
+
+
 						</table>
 
-						
+
             </div>
-            
+
           </div>
           <!-- /.box -->
 

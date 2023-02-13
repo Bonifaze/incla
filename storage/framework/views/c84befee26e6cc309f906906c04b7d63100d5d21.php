@@ -1,11 +1,7 @@
-@extends('layouts.mini')
+<?php $__env->startSection('pagetitle'); ?> <?php echo e($level); ?> Level Courses <?php $__env->stopSection(); ?>
 
 
-
-@section('pagetitle') {{ $level }} Level Courses @endsection
-
-
-@section('content')
+<?php $__env->startSection('content'); ?>
 
 <div class="content-wrapper">
     <!-- Content Header (Page header) -->
@@ -16,12 +12,12 @@
         <!-- left column -->
         <div class="col_full">
 
-             @include('partialsv3.flash')
+             <?php echo $__env->make('partialsv3.flash', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
 
             <div class="card card-primary">
                  <h1
                         class="app-page-title text-uppercase h5 font-weight-bold p-2 mb-2 shadow-sm text-center text-success border">
-                       {{ $level }} Level Courses
+                       <?php echo e($level); ?> Level Courses
                     </h1>
 
              <div class="table-responsive card-body">
@@ -33,7 +29,7 @@
                               <th>Code</th>
 							 <th>Title</th>
 							 <th>Credit</th>
-							 {{--  <th>Host</th>  --}}
+							 
                               <th>Students</th>
                               <th>Lecturer</th>
                               <th>Contact</th>
@@ -46,28 +42,28 @@
 
 
 						  <tbody>
-                          @foreach ($program_courses as $key => $program_course)
+                          <?php $__currentLoopData = $program_courses; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $key => $program_course): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
 						 <tr>
-                             <td> {{$loop->iteration}}</td>
-                             <td> {{$program_course->course->course_code}}</td>
-                             <td> {{$program_course->course->course_title}}</td>
-                             <td> {{$program_course->credit_unit}}</td>
-                             {{--  <td> {{$program_course->course->program->name}}</td>  --}}
-                             <td><a class="btn btn-info" target="_blank" href="{{ route('program_course.students_download',base64_encode($program_course->id)) }}">  Download </a></td>
-                             <td> {{$program_course->lecturer->full_name}} </td>
-                             <td> {{$program_course->lecturer->phone}}</td>
-                             @if ($program_course->approval == 1)
-                                 <td> <a target="_blank" href="{{ route('program_course.result',base64_encode($program_course->id)) }}"> View Result </a> </td>
+                             <td> <?php echo e($loop->iteration); ?></td>
+                             <td> <?php echo e($program_course->course->course_code); ?></td>
+                             <td> <?php echo e($program_course->course->course_title); ?></td>
+                             <td> <?php echo e($program_course->credit_unit); ?></td>
+                             
+                             <td><a class="btn btn-info" target="_blank" href="<?php echo e(route('program_course.students_download',base64_encode($program_course->id))); ?>">  Download </a></td>
+                             <td> <?php echo e($program_course->lecturer->full_name); ?> </td>
+                             <td> <?php echo e($program_course->lecturer->phone); ?></td>
+                             <?php if($program_course->approval == 1): ?>
+                                 <td> <a target="_blank" href="<?php echo e(route('program_course.result',base64_encode($program_course->id))); ?>"> View Result </a> </td>
 
-                             @elseif ($program_course->approval == 2)
-                                 <td> <a target="_blank" href="{{ route('program_course.result',base64_encode($program_course->id)) }}"> View Result </a> </td>
+                             <?php elseif($program_course->approval == 2): ?>
+                                 <td> <a target="_blank" href="<?php echo e(route('program_course.result',base64_encode($program_course->id))); ?>"> View Result </a> </td>
 
-                             @else
-                                 <td> {{ $program_course->action }} </td>
+                             <?php else: ?>
+                                 <td> <?php echo e($program_course->action); ?> </td>
 
-                             @endif
+                             <?php endif; ?>
                          </tr>
-                          @endforeach
+                          <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
 
 						  </tbody>
 
@@ -89,9 +85,9 @@
     </section>
     <!-- /.content -->
   </div>
-@endsection
-@section('pagescript')
-<script src="{{ asset('dist/js/bootbox.min.js')}}"></script>
+<?php $__env->stopSection(); ?>
+<?php $__env->startSection('pagescript'); ?>
+<script src="<?php echo e(asset('dist/js/bootbox.min.js')); ?>"></script>
 
  <script>
      function approvePCourse(id)
@@ -142,6 +138,8 @@
         // e.preventDefault(); // avoid to execute the actual submit of the form if onsubmit is used.
     }
 </script>
-    @endsection
+    <?php $__env->stopSection(); ?>
 
 
+
+<?php echo $__env->make('layouts.mini', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH /Users/lifeofrence/Documents/laraproject/resources/views/academia/exam-officers/program_level_courses.blade.php ENDPATH**/ ?>

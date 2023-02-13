@@ -10,7 +10,7 @@ use App\College;
 use App\Program;
 use App\Session;
 use App\ProgramCourse;
-use App\StudentResult;
+use App\RegisteredCourse;
 use App\AdminDepartment;
 use App\StudentAcademic;
 use App\StaffWorkProfile;
@@ -58,7 +58,9 @@ class ProgramCoursesController extends Controller
         ->where('semester', $session->currentSemester())
         ->where('session_id', $session->currentSession())
         ->orderBy('id','DESC')
-        ->orderBy('program_id','ASC')->orderBy('level','ASC')->paginate(100);
+        // ->orderBy('program_id','ASC')
+        // ->orderBy('level','ASC')
+        ->paginate(100);
 
         return view('/program-courses/list',compact('pcourses'));
     }
@@ -92,6 +94,7 @@ class ProgramCoursesController extends Controller
         // ->where('session_id', $session->currentSession())
         ->orderBy('id','DESC')
         ->orderBy('program_id','ASC')->orderBy('level','ASC')->paginate(100);
+
 
         return view('/program-courses/list_assign_courses',compact('pcourses'));
     }
@@ -227,19 +230,21 @@ class ProgramCoursesController extends Controller
 
     public function assign()
     {
-        $this->authorize('create',ProgramCourse::class);
+        $this->authorize('gstallocate',ProgramCourse::class);
         // $programs = Program::orderBy('name','ASC')->pluck('name','id');
         // $sessions = Session::orderBy('id','DESC')->pluck('name','id');
         // $courses = Course::orderBy('course_code', 'ASC')->get()->pluck('courseDescribe','id');
 
-        $programs = Program::where('status', 1)->get();
+        $programs = Program::orderBy('name', 'ASC')->where('status', 1)->get();
 
-        return view('/program-courses/assign_courses',compact('programs'));
+        $lecturers = Staff::where('staff.status',1)
+        ->orderBy('first_name','ASC')
+        ->get()->pluck('full_name','id');
+
+        return view('/program-courses/assign_courses',compact('programs', 'lecturers'));
 
         // $courses = Course::orderBy('course_code', 'ASC')->get()->pluck('courseDescribe','id');
-        // $lecturers = Staff::join('staff_work_profiles', 'staff.id', '=', 'staff_work_profiles.staff_id')
-        // ->orderBy('staff_work_profiles.staff_type_id','ASC')
-        // ->orderBy('staff_work_profiles.admin_department_id','ASC')->get()->pluck('full_name','id');
+
         // return view('/program-courses/create',compact('courses','programs','sessions', 'lecturers'));
     }
 
@@ -297,7 +302,7 @@ class ProgramCoursesController extends Controller
     } // end find
 
 
-    public function studentResults($program_course_id)
+    public function RegisteredCourses($program_course_id)
     {
         $pcid = base64_decode($program_course_id);
         $program_course = ProgramCourse::with(['results.student.academic'])->findOrFail($pcid);
@@ -361,7 +366,7 @@ class ProgramCoursesController extends Controller
        try{
            foreach ($parameters as $parameter)
            {
-               $result = StudentResult::find($parameter['id']);
+               $result = RegisteredCourse::find($parameter['id']);
                    $total = $parameter['ca1'] + $parameter['ca2']+ $parameter['ca3'] + $parameter['exam'];
                    if($total <= 100 AND $total >=0)
                    {
@@ -649,7 +654,7 @@ class ProgramCoursesController extends Controller
     //         }
 
     //        $academic = StudentAcademic::where('mat_no',$mat_no)->get()->first();
-    //        $results = StudentResult::where('program_course_id',$pcid)
+    //        $results = RegisteredCourse::where('program_course_id',$pcid)
     //            ->where('student_id',$academic->student_id)
     //            ->where('id',$result_id)
     //             ->get();
@@ -709,24 +714,46 @@ class ProgramCoursesController extends Controller
 
 // }
 
-    // public function VC()
-    // {
-    //     $this->authorize('approveResult',ProgramCourse::class);
-    //     $programs = Program::whereHas('programCourses')->with(['department','programCourses'])
-    //         ->orderBy('name','ASC')
-    //         ->paginate(100);
-    //     $session = new Session();
-    //     return view('vc.results', compact('programs','session'));
-    // }
-    // public function VCLevel($level)
-    // {
-    //     $this->authorize('approveResult',ProgramCourse::class);
-    //     $programs = Program::whereHas('programCourses')->with(['department','programCourses'])
-    //         ->orderBy('name','ASC')
-    //         ->paginate(100);
-    //     $session = new Session();
-    //     return view('vc.level_results', compact('programs','session', 'level'));
-    // }
+    public function VC()
+    {
+        $this->authorize('approveResult',ProgramCourse::class);
+        // $programs = Program::whereHas('programCourses')->with(['department','programCourses'])
+        //     ->orderBy('name','ASC')
+        //     ->paginate(100);
+        $program = Program::orderBy('name','ASC')->get();
+        $session = new Session();
+
+        return view('vc.results', compact('programs','session'));
+    }
+    public function VCLevel($level)
+    {
+        $this->authorize('approveResult',ProgramCourse::class);
+        // $programs = Program::whereHas('StaffCourse')->with(['department','programCourses','StaffCourse'])
+
+        // ->where('sbc_approval', 'approved')
+        //     ->orderBy('name','ASC')
+        //     ->paginate(100);
+
+         $programs = Program::whereHas('VcApproval')->with(['department','programCourses','VcApproval'])
+
+        // ->where('sbc_approval', 'approved')
+            ->orderBy('name','ASC')
+            ->paginate(100);
+        $session = new Session();
+        return view('vc.level_results', compact('programs','session', 'level'));
+    }
+
+    public function SBCLevel($level)
+    {
+        $this->authorize('approveResult',ProgramCourse::class);
+        $programs = Program::whereHas('SbcApproval')->with(['department','programCourses','SbcApproval'])
+            ->orderBy('name','ASC')
+            ->paginate(100);
+
+        // $programs = Program::orderBy('name','ASC')->get();
+        $session = new Session();
+        return view('sbc.level_results', compact('programs','session', 'level'));
+    }
 
     // public function resultsStatus()
     // {

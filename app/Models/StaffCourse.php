@@ -33,6 +33,11 @@ class StaffCourse extends Model
         return RegisteredCourse::where('session', $this->session_id)->where('course_id', $this->course_id)->where('program_id', $this->program_id)->count();
     }
 
+    public function Program()
+    {
+        return $this->hasMany('App\Program');
+    }
+
     protected $appends = [
         'course_title',
         'course_code',

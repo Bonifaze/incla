@@ -86,7 +86,24 @@
                         </a></li>
                 <li><a href="<?php echo e(route('result.search_student')); ?>" class="dropdown-item">ICT Upload Results </a></li>
                   
-               
+                
+                          <li><a href="<?php echo e(route('program_course.sbc_level', 100)); ?>" class="dropdown-item">100L SBC Approval</a>
+                </li>
+                <li><a href="<?php echo e(route('program_course.sbc_level', 200)); ?>" class="dropdown-item">200L SBC Approval</a>
+                </li>
+                <li><a href="<?php echo e(route('program_course.sbc_level', 300)); ?>" class="dropdown-item">300L SBC Approval</a>
+                </li>
+                <li><a href="<?php echo e(route('program_course.sbc_level', 400)); ?>" class="dropdown-item">400L SBC Approval</a>
+                </li>
+                <li><a href="<?php echo e(route('program_course.vc_level', 100)); ?>" class="dropdown-item">100L VC Approval</a>
+                </li>
+                <li><a href="<?php echo e(route('program_course.vc_level', 200)); ?>" class="dropdown-item">200L VC Approval</a>
+                </li>
+                <li><a href="<?php echo e(route('program_course.vc_level', 300)); ?>" class="dropdown-item">300L VC Approval</a>
+                </li>
+                <li><a href="<?php echo e(route('program_course.vc_level', 400)); ?>" class="dropdown-item">400L VC Approval</a>
+                </li>
+
 
 
             </ul>

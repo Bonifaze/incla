@@ -3,7 +3,7 @@
 
 						  </thead>
 
-						  
+
 						  <tbody>
                           <tr>
                               <td colspan="4"> </td>
@@ -69,7 +69,7 @@
                           <td>Gender</td>
                           @foreach ($program_courses as $key => $program_course)
 
-                              <td>{{$program_course->course->code}} <br /> {{$program_course->hours}}</td>
+                              <td>{{$program_course->course->course_code}} <br /> {{$program_course->credit_unit}}</td>
 
 
                           @endforeach
@@ -85,7 +85,7 @@
                           </tr>
                           @foreach($students as $key => $student)
                               @php
-                                  //$gpa = $student->unApprovedGPA();
+
                               $cgpa = $student->excelCGPA();
                               @endphp
                               <tr>
@@ -98,12 +98,12 @@
                                       <td>{!! $student->programCourseResult($program_course->id)!!}</td>
 
                                   @endforeach
-                                  <td>{{$cgpa->currenthours}}</td>
+                                  <td>{{$cgpa->currentcredit_unit}}</td>
                                   <td>{{$cgpa->currentunits}}</td>
                                   <td>{{$cgpa->currentgpa}}</td>
-                                  <td>{{$cgpa->bfhours}}</td>
+                                  <td>{{$cgpa->bfcredit_unit}}</td>
                                   <td>{{$cgpa->bfunits}}</td>
-                                  <td>{{$cgpa->hours}}</td>
+                                  <td>{{$cgpa->credit_unit}}</td>
                                   <td>{{$cgpa->units}}</td>
                                   <td>{{$cgpa->value}}</td>
                                   <td> {{$student->semesterResultRemark()}} </td>
@@ -111,9 +111,9 @@
                               </tr>
                           @endforeach
 						  </tbody>
-						  
-						  
-						  
+
+
+
 						</table>
 
-						
+

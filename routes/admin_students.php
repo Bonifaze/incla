@@ -19,11 +19,16 @@ Route::post('/students/find', 'AdminStudentsController@find')->name('student.fin
 
 Route::post('/students/find-matric', 'AdminStudentsController@findMatric')->name('student.find_matric');
 
+
 Route::get('/students/transcript/{encode}', 'AdminStudentsController@transcript')->name('student.transcript');
 
 Route::patch('/students/reset', 'AdminStudentsController@reset')->name('student.reset');
 
 Route::get('/students/list-level/{level}', 'AdminStudentsController@listLevel')->name('student.list_level');
+
+Route::get('/students/list-level/{level}', 'AdminStudentsController@listLevel')->name('student.list_level');
+
+Route::POST('/students/findprogram', 'AdminStudentsController@findprogram')->name('student.findprogram');
 
 Route::get('/students/list-session/{level}', 'AdminStudentsController@listSession')->name('student.list_session');
 

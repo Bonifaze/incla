@@ -131,6 +131,72 @@
 
 
           </div>
+
+               <div class="card ">
+
+                <?php echo $__env->make("partialsv3.flash", \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
+                <div class="table-responsive">
+
+                    <!-- form start -->
+
+                    <?php echo Form::open(array('route' => 'student.findprogram', 'method'=>'POST', 'class' => 'nobottommargin')); ?>
+
+                    <div class="card-body">
+                        <div class="box-body">
+
+                            <div class="row">
+
+                                <div class="col-md-6 form-group">
+								<label for="program">Program :</label>
+					                                        
+
+							      <span class="text-danger"> <?php echo e($errors->first('program')); ?></span>
+						        </div>
+                     <div class="col-md-4 form-group">
+                                            <label for="level">Level :</label>
+                                            <?php echo e(Form::select(
+                                                'level',
+                                                [
+                                                    '100' => '100 Level',
+                                                    '200' => '200 Level',
+                                                    '300' => '300 Level',
+                                                    '400' => '400 Level',
+                                                    '500' => '500 Level',
+                                                    '600' => '600 Level',
+                                                    '700' => 'PGD',
+                                                    '800' => 'MSc',
+                                                    '900' => 'PhD',
+                                                    '1000' => 'Graduate',
+                                                ],
+                                                100,
+                                                ['class' => 'form-control select2'],
+                                            )); ?>
+
+                                            <span class="text-danger"> <?php echo e($errors->first('level')); ?></span>
+                                        </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <!-- /.card-body -->
+
+                    <div class="card-footer">
+
+                        <?php echo e(Form::submit('Search', array('class' => 'btn btn-primary'))); ?>
+
+
+                    </div>
+
+                </div>
+                <!-- /.box-body -->
+
+
+                <?php echo Form::close(); ?>
+
+
+            </div>
+
           <!-- /.box -->
 
         </div>

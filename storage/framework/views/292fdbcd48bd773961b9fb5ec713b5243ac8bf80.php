@@ -8,11 +8,11 @@
 
 <?php $__env->startSection('content'); ?>
 <body>
-<table width="650" border="0" cellspacing="0" cellpadding="0">
+<table width="650" border="0" cellspacing="0" cellpadding="0"  style="margin:auto;" >
   <tr>
     <td height="650" valign="top"><table width="100%" height="174" border="0" cellpadding="0" cellspacing="0">
       <tr>
-        <td height="138" valign="top"><h1>&nbsp;&nbsp;&nbsp;&nbsp;</h1></td>
+        <td height="58" valign="top"><h1>&nbsp;&nbsp;&nbsp;&nbsp;</h1></td>
         </tr>
       <tr>
         <td align="center" valign="top"><h1><strong>Unofficial Academic  Transcript </strong></h1></td>
@@ -113,27 +113,7 @@
                             <td><span style="font-weight: bold">GPA : <?php echo e($tgp1 > 0 && $tc1 > 0 ? number_format($tgp1/$tc1,2) : '0.00'); ?> </span></td>
                             <td>&nbsp;</td>
                           </tr>
-                          <tr>
-                            <td>&nbsp;</td>
-                            <td colspan="3" align="right"><strong>TC</strong></td>
-                           <td>&nbsp;</td>
-                            <td><strong> <?php echo e($tc1); ?></strong></td>
-                            <td>&nbsp;</td>
-                          </tr>
 
-                           <tr>
-                            <td>&nbsp;</td>
-                            <td colspan="3" align="right"><strong>TGP</strong></td>
-                            <td>&nbsp;</td>
-                            <td><strong> <?php echo e($tgp1); ?></strong></td>
-                            <td>&nbsp;</td>
-                          </tr>
-                          <tr>
-                            <td>&nbsp;</td>
-                            <td colspan="3" align="right"><strong>Cumulative Grade Points Average (CGPA) </strong></td>
-                            <td>&nbsp;</td>
-                            <td><span style="font-weight: bold">CGPA : <?php echo e($tgp2 > 0 && $tc2 > 0 ? number_format($tgp2/$tc2, 2) : '0.00'); ?></span></td>
-                            <td>&nbsp; </td>
                           </tr>
 
 
@@ -202,28 +182,7 @@
     <td><span style="font-weight: bold">GPA : <?php echo e($tgp2 > 0 && $tc2 > 0 ? number_format($tgp2/$tc2, 2) : '0.00'); ?> </span></td>
     <td>&nbsp;</td>
   </tr>
-  <tr>
-    <td>&nbsp;</td>
-    <td colspan="3" align="right"><strong>TC</strong></td>
-   <td>&nbsp;</td>
-    <td><strong> <?php echo e($tc1+$tc2); ?></strong></td>
-    <td>&nbsp;</td>
-  </tr>
 
-   <tr>
-    <td>&nbsp;</td>
-    <td colspan="3" align="right"><strong>TGP</strong></td>
-    <td>&nbsp;</td>
-    <td><strong> <?php echo e($tgp1 + $tgp2); ?></strong></td>
-    <td>&nbsp;</td>
-  </tr>
-  <tr>
-    <td>&nbsp;</td>
-    <td colspan="3" align="right"><strong>Cumulative Grade Points Average (CGPA) </strong></td>
-    <td>&nbsp;</td>
-    <td><span style="font-weight: bold">CGPA : <?php echo e($tgp2 > 0 && $tc2 > 0 ? number_format($tgp2/$tc2, 2) : '0.00'); ?></span></td>
-    <td>&nbsp; </td>
-  </tr>
 
 
 </table>

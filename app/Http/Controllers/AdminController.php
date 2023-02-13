@@ -85,6 +85,7 @@ class AdminController extends Controller
 
     public function downloadResultCsv($staff_course_id)
     {
+        dd($staff_course_id);
         $course = StaffCourse::where('id', $staff_course_id)->first();
         return Excel::download(new RegisteredCourseExport(new RegisteredCourse, $course->session_id, $course->course_id, $course->program_id), $course->course_title.'_sheet.csv');
     }
@@ -217,6 +218,7 @@ class AdminController extends Controller
 
     public function approve(Request $request)
     {
+        // dd($request);
         $by = $request->by;
         $program_id = $request->program_id;
         $session = $this->getCurrentSession();
@@ -232,17 +234,19 @@ class AdminController extends Controller
                 StaffCourse::where('level', $level)->where('program_id', $program_id)->where('session_id', $session)->where('semester_id', $semester)->update(['dean_approval' => 'approved']);
                 break;
             case 'sbc':
-                //StaffCourse::where('course_id', $course_id)->where('program_id', $program_id)->where('session_id', $session)->update(['sbc_approval' => 'approved']);
+                $level = $request->level;
+                StaffCourse::where('level', $level)->where('program_id', $program_id)->where('session_id', $session)->where('semester_id', $semester)->update(['sbc_approval' => 'approved']);
                 break;
-            case 'vc_senate':
-                //StaffCourse::where('course_id', $course_id)->where('program_id', $program_id)->where('session_id', $session)->update(['vc_senate_approval' => 'approved']);
+            case 'vc':
+                $level = $request->level;
+                StaffCourse::where('level', $level)->where('program_id', $program_id)->where('session_id', $session)->where('semester_id', $semester)->update(['vc_senate_approval' => 'approved']);
                 break;
             default:
                 $course_id = $request->course_id;
                 StaffCourse::where('course_id', $course_id)->where('program_id', $program_id)->where('session_id', $session)->where('semester_id', $semester)->update(['hod_approval' => 'approved']);
                 break;
         }
-        
+
         return back()->with('message', 'Course(s) approved!');
     }
 
@@ -262,18 +266,20 @@ class AdminController extends Controller
                 $level = $request->level;
                 StaffCourse::where('level', $level)->where('program_id', $program_id)->where('session_id', $session)->where('semester_id', $semester)->update(['dean_approval' => 'pending']);
                 break;
-            case 'sbc':
-                //StaffCourse::where('course_id', $course_id)->where('program_id', $program_id)->where('session_id', $session)->update(['sbc_approval' => 'pending']);
-                break;
-            case 'vc_senate':
-                //StaffCourse::where('course_id', $course_id)->where('program_id', $program_id)->where('session_id', $session)->update(['vc_senate_approval' => 'pending']);
-                break;
+                case 'sbc':
+                    $level = $request->level;
+                    StaffCourse::where('level', $level)->where('program_id', $program_id)->where('session_id', $session)->where('semester_id', $semester)->update(['sbc_approval' => 'pending']);
+                    break;
+                case 'vc':
+                    $level = $request->level;
+                    StaffCourse::where('level', $level)->where('program_id', $program_id)->where('session_id', $session)->where('semester_id', $semester)->update(['vc_senate_approval' => 'pending']);
+                    break;
             default:
                 $course_id = $request->course_id;
                 StaffCourse::where('course_id', $course_id)->where('program_id', $program_id)->where('session_id', $session)->where('semester_id', $semester)->update(['hod_approval' => 'pending']);
                 break;
         }
-        
+
         return back()->with('message', 'Course(s) approval revoked!');
     }
 

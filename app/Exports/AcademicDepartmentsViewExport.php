@@ -3,6 +3,7 @@
 namespace App\Exports;
 
 use App\AcademicDepartment;
+use App\Models\RegisteredCourse;
 use App\Program;
 use App\Session;
 use App\Student;
@@ -38,12 +39,10 @@ class AcademicDepartmentsViewExport implements FromView
         {
             $student = Student::findOrFail($std->student_id);
             $students->prepend($student);
-            $results = StudentResult::with('programCourse')->where('student_id',$std->student_id)
-                ->where('session_id', $session_id)
+            $results = RegisteredCourse::with('ProgramCourse')->where('student_id',$std->student_id)
+                ->where('session', $session_id)
                 ->where('semester', $semester)
-                ->whereHas('programCourse', function ($query) {
-                    return $query->where('approval', '>', 0);
-                })
+
 
                 ->get();
             foreach ($results as $key => $result)
