@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\DB;
 use App\Models\Result;
 use App\Models\RegisteredCourse;
 use Illuminate\Auth\Events\Registered;
+use Illuminate\Database\Eloquent\Casts\Attribute;
 
 class Student extends Authenticatable
 {
@@ -718,5 +719,10 @@ class Student extends Authenticatable
 //        return $status;
 //     }// end resultAccessf
 
-
+public function matricNumber(): Attribute
+{
+    return Attribute::make(
+        get: fn ($value, $attributes) => StudentAcademic::where('student_id', $attributes['id'])->first()?->mat_no
+    );
+}
 } // end Class Student

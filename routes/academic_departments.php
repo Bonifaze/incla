@@ -29,5 +29,5 @@ Route::get('/academia/departments/program/result/download/{id}/{level}', 'Academ
 
 Route::get('/academia/departments/export', 'AcademicDepartmentsController@export')->name('academia.department.export');
 
-Route::get('/academia/departments/export-view/{id}/{level}', 'AcademicDepartmentsController@exportView')->name('academia.department.export_view');
+Route::get('/academia/departments/export-view/{id}/{level}/{semester}', 'AcademicDepartmentsController@exportView')->name('academia.department.export_view');
 

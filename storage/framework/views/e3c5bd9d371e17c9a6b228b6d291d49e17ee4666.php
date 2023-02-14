@@ -99,28 +99,30 @@
                                     <tr>
                                         <td> Results</td>
                                         <td><a class="btn btn-outline-dark"
-                                                href="<?php echo e(route('academia.department.export_view', [$program->id, 100])); ?>">
-                                                Download (<?php echo e($program->levelCoursesCount(100)); ?>)</a></td>
+                                                href="<?php echo e(route('academia.department.export_view', [$program->id, 100, 1])); ?>">
+                                                Download First Semester (<?php echo e($program->levelCoursesCount(100)); ?>)</a><a class="btn btn-outline-primary"
+                                                href="<?php echo e(route('academia.department.export_view', [$program->id, 100, 2])); ?>">
+                                                Download second Semester (<?php echo e($program->levelCoursesCount(100)); ?>)</a></td>
                                         <td><a class="btn btn-outline-dark"
-                                                href="<?php echo e(route('academia.department.export_view', [$program->id, 200])); ?>">
+                                                href="<?php echo e(route('academia.department.export_view', [$program->id, 200, 1])); ?>">
                                                 Download (<?php echo e($program->levelCoursesCount(200)); ?>)</a></td>
                                         <td><a class="btn btn-outline-dark"
-                                                href="<?php echo e(route('academia.department.export_view', [$program->id, 300])); ?>">
+                                                href="<?php echo e(route('academia.department.export_view', [$program->id, 300, 1])); ?>">
                                                 Download (<?php echo e($program->levelCoursesCount(300)); ?>)</a></td>
                                         <td><a class="btn btn-outline-dark"
-                                                href="<?php echo e(route('academia.department.export_view', [$program->id, 400])); ?>">
+                                                href="<?php echo e(route('academia.department.export_view', [$program->id, 400, 1])); ?>">
                                                 Download (<?php echo e($program->levelCoursesCount(400)); ?>)</a></td>
                                         <td><a class="btn btn-outline-dark"
-                                                href="<?php echo e(route('academia.department.export_view', [$program->id, 500])); ?>">
+                                                href="<?php echo e(route('academia.department.export_view', [$program->id, 500, 1])); ?>">
                                                 Download (<?php echo e($program->levelCoursesCount(500)); ?>)</a></td>
                                         <td><a class="btn btn-outline-dark"
-                                                href="<?php echo e(route('academia.department.export_view', [$program->id, 700])); ?>">
+                                                href="<?php echo e(route('academia.department.export_view', [$program->id, 700, 1])); ?>">
                                                 Download (<?php echo e($program->levelCoursesCount(700)); ?>)</a></td>
                                         <td><a class="btn btn-outline-dark"
-                                                href="<?php echo e(route('academia.department.export_view', [$program->id, 800])); ?>">
+                                                href="<?php echo e(route('academia.department.export_view', [$program->id, 800, 1])); ?>">
                                                 Download (<?php echo e($program->levelCoursesCount(800)); ?>)</a></td>
                                         <td><a class="btn btn-outline-dark"
-                                                href="<?php echo e(route('academia.department.export_view', [$program->id, 900])); ?>">
+                                                href="<?php echo e(route('academia.department.export_view', [$program->id, 900, 1])); ?>">
                                                 Download (<?php echo e($program->levelCoursesCount(900)); ?>)</a></td>
                                     </tr>
                                 </tbody>

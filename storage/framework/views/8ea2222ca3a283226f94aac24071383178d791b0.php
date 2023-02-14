@@ -36,10 +36,10 @@
 							 <th>Unit</th>
 							 
                               <th>Lecturer</th>
+                              <th>Semester</th>
                               <th>Contact</th>
                               <th>Students Registered</th>
-                              <th>Status</th>
-                              <th>Action</th>
+                              
 
 
 
@@ -52,7 +52,7 @@
                           <?php $__currentLoopData = $program_courses; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $key => $program_course): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
 						 <tr>
                              <td> <?php echo e($loop->iteration); ?></td>
-                             <td> <?php echo e($program_course->course->course_code); ?> <?php echo e($program_course->course_id); ?></td>
+                             <td> <?php echo e($program_course->course->course_code); ?> </td>
                              <td> <?php echo e($program_course->course->course_title); ?></td>
                              <td> <?php echo e($program_course->credit_unit); ?></td>
                              
@@ -65,10 +65,18 @@
                                  <a class="btn btn-outline-warning" href="<?php echo e(route('program_course.change-lecturer',base64_encode($program_course->id))); ?>"> Change </a>
                                  <?php endif; ?>
                              </td>
+                             <?php if( $program_course->semester == 1): ?>
+                             <td> First </td>
+                             <?php else: ?>
+                             <td>Second </td>
+                             <?php endif; ?>
+
                              <td> <?php echo e($program_course->lecturer->phone); ?></td>
                              <td>
                                  <a class="btn btn-primary" target="_blank" href="<?php echo e(route('program_course.students',base64_encode($program_course->id))); ?>">  List </a>
-                                 <a class="btn btn-info" target="_blank" href="<?php echo e(route('program_course.students_download',base64_encode($program_course->id))); ?>">  Download </a>
+                                 
+                                 <a class="btn btn-info" href="/admin/download/<?php echo e($program_course->staff_course_id); ?>">  Download </a>
+
                                  <?php if(!$program_course->is_approved): ?>
                                  <a href="/staff-course/approve?course_id=<?php echo e($program_course->course_id); ?>&program_id=<?php echo e($program_course->program_id); ?>&by=hod" class="btn btn-outline-success" onclick="return confirm('Are you sure you want to approve this course?')">Approve</a>
                                  <?php else: ?>
@@ -76,41 +84,7 @@
                                  <?php endif; ?>
                              </td>
 
-                             <?php if($program_course->approval == 1): ?>
-                                 <td> <a target="_blank" href="<?php echo e(route('program_course.result',base64_encode($program_course->id))); ?>"> View Result </a> </td>
-                                 <td>
-                                     <?php echo Form::open(['method' => 'patch', 'route' => 'program_course.approval', 'id'=>'approvePCourseForm'.$program_course->id]); ?>
-
-                                     <?php echo e(Form::hidden('program_course_id', $program_course->id)); ?>
-
-                                     <?php echo e(Form::hidden('approval', "2")); ?>
-
-                                     <?php echo e(Form::hidden('current', $program_course->approval)); ?>
-
-                                     <button onclick="approvePCourse(<?php echo e($program_course->id); ?>)" type="button" class="<?php echo e($program_course->id); ?> btn btn-outline-success" > Approve </button>
-                                     <?php echo Form::close(); ?>
-
-                                 </td>
-
-                             <?php elseif($program_course->approval == 2): ?>
-                                 <td> <a target="_blank" href="<?php echo e(route('program_course.result',base64_encode($program_course->id))); ?>"> View Result </a> </td>
-                                 <td>
-                                     <?php echo Form::open(['method' => 'patch', 'route' => 'program_course.approval', 'id'=>'revokePCourseForm'.$program_course->id]); ?>
-
-                                     <?php echo e(Form::hidden('program_course_id', $program_course->id)); ?>
-
-                                     <?php echo e(Form::hidden('approval', "1")); ?>
-
-                                     <?php echo e(Form::hidden('current', $program_course->approval)); ?>
-
-                                     <button onclick="revokePCourse(<?php echo e($program_course->id); ?>)" type="button" class="<?php echo e($program_course->id); ?> btn btn-outline-warning" > Revoke </button>
-                                     <?php echo Form::close(); ?>
-
-                                 </td>
-                             <?php else: ?>
-                                 <td> <?php echo e($program_course->action); ?> </td>
-                                 <td> <?php echo e($program_course->status); ?></td>
-                             <?php endif; ?>
+                             
                          </tr>
                           <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
 

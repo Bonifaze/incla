@@ -353,6 +353,13 @@ public function getActionAttribute()
         );
     }
 
+    public function staffCourseId(): Attribute
+    {
+        return Attribute::make(
+            get: fn ($value, $attributes) => StaffCourse::where('course_id', $attributes['course_id'])->where('program_id', $attributes['program_id'])->where('session_id', $attributes['session_id'])->first()?->id ?? 0
+        );
+    }
+
     protected $appends = ['course_title', 'course_code', 'staff_name'];
 
 

@@ -85,7 +85,7 @@ class AdminController extends Controller
 
     public function downloadResultCsv($staff_course_id)
     {
-        dd($staff_course_id);
+        //dd($staff_course_id);
         $course = StaffCourse::where('id', $staff_course_id)->first();
         return Excel::download(new RegisteredCourseExport(new RegisteredCourse, $course->session_id, $course->course_id, $course->program_id), $course->course_title.'_sheet.csv');
     }

@@ -12,17 +12,17 @@
     integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous">
 
 </head>
-@php 
+<?php 
     $course_ids = [];
-@endphp
+?>
 <body>
   <div class="row justify-content-center mb-4">
     <div class="col-md-5">
         <h1 class="text-center">Veritas University</h1>
         <h4 class="text-center">Faculty</h4>
         <h4 class="text-center">Department</h4>
-        <h5 class="text-center">{{ $meta['session']->name }} Academic Session</h5>
-        <h5 class="text-center">{{ $meta['level'] }} Level, Semester {{ $meta['semester'] }} Result</h5>
+        <h5 class="text-center"><?php echo e($meta['session']->name); ?> Academic Session</h5>
+        <h5 class="text-center"><?php echo e($meta['level']); ?> Level, Semester <?php echo e($meta['semester']); ?> Result</h5>
     </div>
   </div>
   <div class="row mb-4">
@@ -30,58 +30,59 @@
         <table class="table table-bordered">
             <thead class="text-center">
                 <tr>
-                    <th colspan="{{ 8 + $program_courses->count() }}"></th>
+                    <th colspan="<?php echo e(8 + $program_courses->count()); ?>"></th>
                 </tr>
                 <tr>
                     <th rowspan="2">S/N</th>
                     <th rowspan="2">MATRIC NUMBER</th>
                     <th rowspan="2">NAME</th>
                     <th rowspan="2">Gender</th>
-                    <th colspan="{{ $program_courses->count() }}">Courses, Credit, Scores, Grades, GP</th>
+                    <th colspan="<?php echo e($program_courses->count()); ?>">Courses, Credit, Scores, Grades, GP</th>
                     <th rowspan="2">TC</th>
                     <th rowspan="2">TGP</th>
                     <th rowspan="2">GPA</th>
                     <th rowspan="2">Remark</th>
                 </tr>
                 <tr>
-                    @foreach ($program_courses as $program_course)
-                        @php
+                    <?php $__currentLoopData = $program_courses; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $program_course): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                        <?php
                             $course_ids[] = $program_course->course_id;
-                        @endphp
-                        <th>{{ $program_course->course_code }} <br> {{ $program_course->credit_unit }}</th>
-                    @endforeach
+                        ?>
+                        <th><?php echo e($program_course->course_code); ?> <br> <?php echo e($program_course->credit_unit); ?></th>
+                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                 </tr>
             </thead>
             <tbody>
-                @foreach ($students as $student)
-                    @php
+                <?php $__currentLoopData = $students; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $student): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                    <?php
                         $tc = 0;
                         $tgp = 0;
                         $gpa = 0.00;
-                    @endphp
+                    ?>
                     <tr>
-                        <td>{{ $loop->iteration }}</td>
-                        <td>{{ $student->matric_number }}</td>
-                        <td>{{ $student->full_name }}</td>
-                        <td>{{ $student->gender[0] }}</td>
-                        @for ($x = 0; $x < $program_courses->count(); $x++)
+                        <td><?php echo e($loop->iteration); ?></td>
+                        <td><?php echo e($student->matric_number); ?></td>
+                        <td><?php echo e($student->full_name); ?></td>
+                        <td><?php echo e($student->gender[0]); ?></td>
+                        <?php for($x = 0; $x < $program_courses->count(); $x++): ?>
                         <td>
-                            @php 
+                            <?php 
                                 $student_course = $student->registered_courses->where('course_id', $course_ids[$x])->first();
                                 $tc += $student_course?->course_unit;
                                 $tgp += $student_course?->course_unit * $student_course?->grade_point;
-                            @endphp
-                            {{ $student_course?->total }} <br>
-                            {{ $student_course?->grade }} <br>
-                            {{ $student_course ? $student_course?->course_unit * $student_course?->grade_point : '' }}
+                            ?>
+                            <?php echo e($student_course?->total); ?> <br>
+                            <?php echo e($student_course?->grade); ?> <br>
+                            <?php echo e($student_course ? $student_course?->course_unit * $student_course?->grade_point : ''); ?>
+
                         </td>
-                        @endfor
-                        <td>{{ $tc }}</td>
-                        <td>{{ $tgp }}</td>
-                        <td>{{ $tc > 0 && $tgp > 0 ? number_format($tgp/$tc, 2) : '0.00' }}</td>
+                        <?php endfor; ?>
+                        <td><?php echo e($tc); ?></td>
+                        <td><?php echo e($tgp); ?></td>
+                        <td><?php echo e($tc > 0 && $tgp > 0 ? number_format($tgp/$tc, 2) : '0.00'); ?></td>
                         <td>Remark</td>
                     </tr>
-                @endforeach
+                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
             </tbody>
         </table>
     </div>
@@ -96,4 +97,4 @@
   </script>
 </body>
 
-</html>
+</html><?php /**PATH C:\Users\abdul\OneDrive\Documents\workspace\laravel\laraproject\resources\views/academia/departments/program_level_results_export.blade.php ENDPATH**/ ?>

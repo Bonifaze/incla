@@ -55,11 +55,12 @@
                                             <thead>
                                                 <tr>
                                                     <th>S/N</th>
+                                                     <th>Course Code</th>
                                                     <th>Course Title</th>
-                                                    <th>Course Code</th>
+
                                                     <th>Total Students</th>
                                                     <th>Upload Status</th>
-                                                    <th>HOD's Approval</th>
+                                                    <th>HODs Approval</th>
                                                     <th>Action</th>
                                                 </tr>
                                             </thead>
@@ -67,8 +68,9 @@
                                                 <?php $__currentLoopData = $staff_courses; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $staff_course): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                                     <tr>
                                                         <td><?php echo e($loop->iteration); ?></td>
+                                                        <td><?php echo e($staff_course->course_code  ?? ' '); ?></td>
                                                         <td><?php echo e($staff_course->course_title); ?></td>
-                                                        <td><?php echo e($staff_course->course_code); ?></td>
+
                                                         <th><?php echo e($staff_course->total_students); ?></th>
                                                         <td><?php echo e($staff_course->upload_status); ?></td>
                                                         <td><?php echo e($staff_course->hod_approval); ?></td>

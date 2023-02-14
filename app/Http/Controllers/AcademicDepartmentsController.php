@@ -15,6 +15,7 @@ use App\AcademicDepartment;
 use App\College;
 use App\Models\RegisteredCourse;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Maatwebsite\Excel\Facades\Excel;
 
 class AcademicDepartmentsController extends Controller
@@ -279,11 +280,40 @@ class AcademicDepartmentsController extends Controller
         return Excel::download(new AcademicDepartmentsExport(), 'academia.xlsx');
     }
 
-    public function exportView($id,$level)
+    protected function getCurrentSession()
     {
-        $program = Program::findOrFail($id);
-        $fileName = strtolower($program->code)."-".$level."level-result.xlsx";
-        return Excel::download(new AcademicDepartmentsViewExport($id,$level), $fileName);
+        $session = DB::table('sessions')->where('status', 1)
+            ->select('sessions.id')->first();
+        $ses = $session->id;
+        $currentsession = $ses;
+        return $currentsession;
+    }
+
+    public function exportView($id,$level, $semester)
+    {
+        //$program = Program::findOrFail($id);
+        //$fileName = strtolower($program->code)."-".$level."level-result.xlsx";
+        //return Excel::download(new AcademicDepartmentsViewExport($id,$level), $fileName);
+        $session = $this->getCurrentSession();
+        $student_ids = RegisteredCourse::distinct('student_id')->where('program_id', $id)->where('level', $level)->where('semester', $semester)->where('session', $session)->pluck('student_id');
+        $student_ids_arr = $student_ids->toArray();
+        $students = Student::wherein('id', $student_ids_arr)->with(['registered_courses' => function ($q) use ($level, $semester, $session) {
+            $q->where('session', $session);
+            $q->where('level', $level);
+            $q->where('semester', $semester);
+            $q->orderBy('course_id', 'ASC');
+
+        }])->get();
+        $program_courses = ProgramCourse::where('program_id', $id)->where('session_id', $session)->where('level', $level)->where('semester', $semester)->orderBy('course_id', 'ASC')->get();
+        $meta = [
+            'program' => Program::find($id),
+            'session' => Session::find($session),
+            'level' => $level,
+            'semester' => $semester
+        ];
+
+        //dd($students);
+        return view('academia.departments.program_level_results_export', ['program_courses' => $program_courses, 'students' => $students,'meta' => $meta]);
     }
 
 
