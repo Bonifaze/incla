@@ -29,11 +29,13 @@
                                     <th>Title</th>
                                     <th>Unit</th>
                                     {{--  <th>Host</th>  --}}
-                                    <th>Lecturer</th>
-                                    <th>Contact</th>
+                                    {{--  <th>Lecturer</th>  --}}
+                                    {{--  <th>Contact</th>  --}}
                                     <th>Students Registered</th>
+
+                                             <th>Action</th>
                                     <th>Status</th>
-                                    <th>Action</th>
+
                                 </thead>
 
                                 <tbody>
@@ -44,9 +46,21 @@
                                             <td> {{ $program_course->course->course_title }}</td>
                                             <td> {{ $program_course->credit_unit }}</td>
                                             {{--  <td> {{ $program_course->course->program->name }}</td>  --}}
-                                            <td> {{ $program_course->lecturer->full_name }}</td>
-                                            <td> {{ $program_course->lecturer->phone }}</td>
-                                            <td><a class="btn btn-primary" target="_blank"
+                                            {{--  <td> {{ $program_course->lecturer->full_name }}</td>
+                                            <td> {{ $program_course->lecturer->phone }}</td>  --}}
+                                            <td>
+                                 <a class="btn btn-primary" target="_blank" href="{{ route('program_course.students',base64_encode($program_course->id)) }}">  List </a>
+                                 {{--  <a class="btn btn-info" target="_blank" href="{{ route('program_course.students_download',base64_encode($program_course->id)) }}">  Download </a>  --}}
+                                 <a class="btn btn-info" href="/admin/download/{{ $program_course->staff_course_id }}">  Download </a>
+<td>
+                                 @if(!$program_course->is_approved)
+                                 <a href="/staff-course/approve?course_id={{ $program_course->course_id }}&program_id={{ $program_course->program_id }}&by=dean" class="btn btn-outline-success" onclick="return confirm('Are you sure you want to approve this course?')">Approve</a>
+                                 @else
+                                 <a href="/staff-course/revoke?course_id={{ $program_course->course_id }}&program_id={{ $program_course->program_id }}&by=dean" class="btn btn-outline-danger" onclick="return confirm('Are you sure you want to revoke approval for this course?')">Revoke Approval</a>
+                                 @endif
+                                 </td>
+                             </td>
+                                            {{--  <td><a class="btn btn-primary" target="_blank"
                                                     href="{{ route('program_course.students', base64_encode($program_course->id)) }}">
                                                     List </a></td>
 
@@ -87,11 +101,11 @@
                                                         class="{{ $program_course->id }} btn btn-outline-warning"> Revoke
                                                     </button>
                                                     {!! Form::close() !!}
-                                                </td>
-                                            @else
-                                                <td> {{ $program_course->action }} </td>
-                                                <td> {{ $program_course->status }}</td>
-                                            @endif
+                                                </td>  --}}
+                                            {{--  @else  --}}
+                                                {{--  <td> {{ $program_course->action }} </td>  --}}
+                                                <td> {{$program_course->uploadStatus->upload_status}} </td>
+                                            {{--  @endif  --}}
                                         </tr>
                                     @endforeach
 

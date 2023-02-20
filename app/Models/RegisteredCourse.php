@@ -59,6 +59,11 @@ class RegisteredCourse extends Model
         return $this->belongsTo('App\Session');
     }
 
+    public function course()
+    {
+        return $this->belongsTo('App\Course');
+    }
+
     public function getStudentNameAttribute()
     {
         $student = Student::where('id', $this->student_id)->first();
@@ -117,10 +122,18 @@ class RegisteredCourse extends Model
     {
         return ProgramCourse::where('id', $this->course_id)->first()->course_category ?? '';
     }
+
+    public function getStatusAttribute()
+    {
+        return RegisteredCourse::where('course_id', $this->course_id)->first()->status ?? '';
+    }
+
+
     public function programCourse()
     {
         return $this->belongsTo('App\ProgramCourse', 'course_id');
     }
+
 
     public function RegisteredCourse($student_id, $session, $semester)
        {

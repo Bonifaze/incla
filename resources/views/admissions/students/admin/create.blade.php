@@ -494,13 +494,14 @@ exit;
                                         {{ Form::select(
                                             'level',
                                             [
+                                                ' '=> 'Select Level',
                                                 '100' => '100',
                                                 '200' => '200',
                                                 '700' => 'PGD',
                                                 '800' => 'MSc/MBA/MPA',
                                                 '900' => 'PhD',
                                             ],
-                                            '100',
+                                            ' ',
                                             ['class' => 'form-control select2'],
                                         ) }}
 
@@ -511,7 +512,7 @@ exit;
                                         {{ Form::select(
                                             'mode_of_entry',
                                             [
-
+                                                 ' ' => 'Select Mode of Entry',
                                                 'UTME' => 'Undergraduate',
                                                 'PGD' => 'PGD',
                                                 'MSc' => 'Masters',
@@ -519,7 +520,7 @@ exit;
                                                 'MBA' => 'MBA',
                                                 'PhD' => 'PhD',
                                             ],
-                                            'UTME',
+                                            ' ',
                                             ['class' => 'form-control select2'],
                                         ) }}
 

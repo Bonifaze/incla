@@ -248,7 +248,7 @@ class Student extends Authenticatable
       public function getSemesterRegistration($session_id,$semester)
       {
           $sem_reg = RegisteredCourse::where('student_id',$this->id)
-          ->where('session_id', $session_id)
+          ->where('session', $session_id)
           ->where('semester', $semester)
           ->get();
 
@@ -591,7 +591,7 @@ class Student extends Authenticatable
             }
             else if($outstanding->grade_status == "fail")
             {
-                $out .= $outstanding->course->code . ", ";
+                $out .= $outstanding->course->course_code . ", ";
             }
         }
         if($co != "")

@@ -863,6 +863,7 @@ ICT Unit<br />
         $registered_courses = RegisteredCourse::where('student_id', $student_id)->get();
         //dd($registered_courses->where('session', 15));
         $sessions = Session::wherein('id', $session_ids)->with(['registered_courses1' => function ($query) use ($student_id) {
+
             $query->where('student_id', $student_id);
             $query->where('semester', '1');
         }, 'registered_courses2' => function ($query) use ($student_id) {

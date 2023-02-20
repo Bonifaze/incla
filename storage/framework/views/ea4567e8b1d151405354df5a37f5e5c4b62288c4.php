@@ -33,8 +33,9 @@
 							 
                               <th>Lecturer</th>
                               <th>Semester</th>
-                              <th>Contact</th>
-                              <th>Students Registered</th>
+                              <th>Action</th>
+                              <th>Action</th>
+                              <th>Status</th>
                               
 
 
@@ -53,12 +54,13 @@
                              <td> <?php echo e($program_course->credit_unit); ?></td>
                              
                              
-                                  <td>  <?php echo e($program_course->staff_name  ?? ' '); ?>
-
+                                  <td>
+                                  
+                                   
                                   
 
                                  <?php if($program_course->approval < 1 ): ?>
-                                 <a class="btn btn-outline-warning" href="<?php echo e(route('program_course.change-lecturer',base64_encode($program_course->id))); ?>"> Change </a>
+                                 <a class="btn btn-outline-warning" href="<?php echo e(route('program_course.change-lecturer',base64_encode($program_course->id))); ?>"> Show </a>
                                  <?php endif; ?>
                              </td>
                              <?php if( $program_course->semester == 1): ?>
@@ -67,20 +69,22 @@
                              <td>Second </td>
                              <?php endif; ?>
 
-                             <td> <?php echo e($program_course->lecturer->phone); ?></td>
+                             
                              <td>
                                  <a class="btn btn-primary" target="_blank" href="<?php echo e(route('program_course.students',base64_encode($program_course->id))); ?>">  List </a>
-                                 <a class="btn btn-info" target="_blank" href="<?php echo e(route('program_course.students_download',base64_encode($program_course->id))); ?>">  Download </a>
                                  
-
+                                 <a class="btn btn-info" href="/admin/download/<?php echo e($program_course->staff_course_id); ?>">  Download </a>
+<td>
                                  <?php if(!$program_course->is_approved): ?>
                                  <a href="/staff-course/approve?course_id=<?php echo e($program_course->course_id); ?>&program_id=<?php echo e($program_course->program_id); ?>&by=hod" class="btn btn-outline-success" onclick="return confirm('Are you sure you want to approve this course?')">Approve</a>
                                  <?php else: ?>
                                  <a href="/staff-course/revoke?course_id=<?php echo e($program_course->course_id); ?>&program_id=<?php echo e($program_course->program_id); ?>&by=hod" class="btn btn-outline-danger" onclick="return confirm('Are you sure you want to revoke approval for this course?')">Revoke Approval</a>
                                  <?php endif; ?>
+                                 </td>
                              </td>
 
                              
+                          <td> <?php echo e($program_course->uploadStatus->upload_status); ?> </td>
                          </tr>
                           <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
 

@@ -31,8 +31,8 @@
 							 <th>Credit</th>
 							 
                               <th>Students</th>
-                              <th>Lecturer</th>
-                              <th>Contact</th>
+                              
+                              
                               <th>Status</th>
 
 
@@ -49,19 +49,12 @@
                              <td> <?php echo e($program_course->course->course_title); ?></td>
                              <td> <?php echo e($program_course->credit_unit); ?></td>
                              
-                             <td><a class="btn btn-info" target="_blank" href="<?php echo e(route('program_course.students_download',base64_encode($program_course->id))); ?>">  Download </a></td>
-                             <td> <?php echo e($program_course->lecturer->full_name); ?> </td>
-                             <td> <?php echo e($program_course->lecturer->phone); ?></td>
-                             <?php if($program_course->approval == 1): ?>
-                                 <td> <a target="_blank" href="<?php echo e(route('program_course.result',base64_encode($program_course->id))); ?>"> View Result </a> </td>
-
-                             <?php elseif($program_course->approval == 2): ?>
-                                 <td> <a target="_blank" href="<?php echo e(route('program_course.result',base64_encode($program_course->id))); ?>"> View Result </a> </td>
-
-                             <?php else: ?>
-                                 <td> <?php echo e($program_course->action); ?> </td>
-
-                             <?php endif; ?>
+                             
+                              <td><a class="btn btn-info" href="/admin/download/<?php echo e($program_course->staff_course_id); ?>">  Download </a> </td>
+                             
+                             
+                             <td> <?php echo e($program_course->staff->upload_status); ?> </td>
+                             
                          </tr>
                           <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
 

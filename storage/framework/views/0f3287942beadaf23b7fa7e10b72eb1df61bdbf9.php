@@ -93,31 +93,70 @@
                                     </tr>
 
                                     <tr>
-                                        <td> Results</td>
+                                        <td> Results <br> Download</td>
+                                        <td>
+                                                <a class="btn btn-outline-dark"
+                                                href="<?php echo e(route('academia.department.export_view', [$program->id, 100, 1])); ?>">
+                                                 First Semester </a>
+                                                 <br><br>
+                                                <a class="btn btn-outline-primary"
+                                                href="<?php echo e(route('academia.department.export_view', [$program->id, 100, 2])); ?>">
+                                                 Second Semester </a></td>
                                         <td><a class="btn btn-outline-dark"
-                                                href="<?php echo e(route('academia.department.export_view', [$program->id, 100])); ?>">
-                                                Download (<?php echo e($program->levelCoursesCount(100)); ?>)</a></td>
+                                                href="<?php echo e(route('academia.department.export_view', [$program->id, 200, 1])); ?>">
+                                                First Semester </a>
+                                                   <br><br>
+                                                <a class="btn btn-outline-primary"
+                                                href="<?php echo e(route('academia.department.export_view', [$program->id, 200, 2])); ?>">
+                                                 Second Semester </a></td>
                                         <td><a class="btn btn-outline-dark"
-                                                href="<?php echo e(route('academia.department.export_view', [$program->id, 200])); ?>">
-                                                Download (<?php echo e($program->levelCoursesCount(200)); ?>)</a></td>
+                                                href="<?php echo e(route('academia.department.export_view', [$program->id, 300, 1])); ?>">
+                                                First Semester </a>
+                                                   <br><br>
+                                                <a class="btn btn-outline-primary"
+                                                href="<?php echo e(route('academia.department.export_view', [$program->id, 300, 2])); ?>">
+                                                 Second Semester </a>
+                                                 </td>
                                         <td><a class="btn btn-outline-dark"
-                                                href="<?php echo e(route('academia.department.export_view', [$program->id, 300])); ?>">
-                                                Download (<?php echo e($program->levelCoursesCount(300)); ?>)</a></td>
+                                                href="<?php echo e(route('academia.department.export_view', [$program->id, 400, 1])); ?>">
+                                                First Semester </a>
+                                                   <br><br>
+                                                <a class="btn btn-outline-primary"
+                                                href="<?php echo e(route('academia.department.export_view', [$program->id, 400, 2])); ?>">
+                                                 Second Semester </a>
+                                                 </td>
                                         <td><a class="btn btn-outline-dark"
-                                                href="<?php echo e(route('academia.department.export_view', [$program->id, 400])); ?>">
-                                                Download (<?php echo e($program->levelCoursesCount(400)); ?>)</a></td>
+                                                href="<?php echo e(route('academia.department.export_view', [$program->id, 500, 1])); ?>">
+                                                 First Semester</a>
+                                                   <br><br>
+                                                <a class="btn btn-outline-primary"
+                                                href="<?php echo e(route('academia.department.export_view', [$program->id, 500, 2])); ?>">
+                                                 Second Semester </a>
+                                                 </td>
                                         <td><a class="btn btn-outline-dark"
-                                                href="<?php echo e(route('academia.department.export_view', [$program->id, 500])); ?>">
-                                                Download (<?php echo e($program->levelCoursesCount(500)); ?>)</a></td>
+                                                href="<?php echo e(route('academia.department.export_view', [$program->id, 700, 1])); ?>">
+                                                First Semester </a>
+                                                   <br><br>
+                                                <a class="btn btn-outline-primary"
+                                                href="<?php echo e(route('academia.department.export_view', [$program->id, 700, 2])); ?>">
+                                                 Second Semester </a>
+                                                 </td>
                                         <td><a class="btn btn-outline-dark"
-                                                href="<?php echo e(route('academia.department.export_view', [$program->id, 700])); ?>">
-                                                Download (<?php echo e($program->levelCoursesCount(700)); ?>)</a></td>
+                                                href="<?php echo e(route('academia.department.export_view', [$program->id, 800, 1])); ?>">
+                                                 First Semester</a>
+                                                   <br><br>
+                                                <a class="btn btn-outline-primary"
+                                                href="<?php echo e(route('academia.department.export_view', [$program->id, 800, 2])); ?>">
+                                                 Second Semester </a>
+                                                 </td>
                                         <td><a class="btn btn-outline-dark"
-                                                href="<?php echo e(route('academia.department.export_view', [$program->id, 800])); ?>">
-                                                Download (<?php echo e($program->levelCoursesCount(800)); ?>)</a></td>
-                                        <td><a class="btn btn-outline-dark"
-                                                href="<?php echo e(route('academia.department.export_view', [$program->id, 900])); ?>">
-                                                Download (<?php echo e($program->levelCoursesCount(900)); ?>)</a></td>
+                                                href="<?php echo e(route('academia.department.export_view', [$program->id, 900, 1])); ?>">
+                                               First Semester  </a>
+                                                   <br><br>
+                                                <a class="btn btn-outline-primary"
+                                                href="<?php echo e(route('academia.department.export_view', [$program->id, 900, 2])); ?>">
+                                                 Second Semester)</a>
+                                                 </td>
                                     </tr>
                                 </tbody>
                             </table>

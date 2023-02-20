@@ -16,6 +16,11 @@ class ProgramCourse extends Model
         return $this->belongsTo('App\Program', 'program_id');
     }
 
+    public function college()
+    {
+        return $this->belongsTo('App\College', 'college_id');
+    }
+
     public function course()
     {
         return $this->belongsTo('App\Course', 'course_id');
@@ -37,7 +42,7 @@ class ProgramCourse extends Model
 
     public function staff()
     {
-        return $this->belongsTo('App\Staff', 'staff_id');
+        return $this->belongsTo('App\Models\StaffCourse', 'course_id');
     }
 
     public function results()
@@ -52,6 +57,15 @@ class ProgramCourse extends Model
          ->orderBy('student_id','ASC');
 
     }
+
+    public function uploadStatus()
+    {
+        return $this->belongsTo('App\Models\StaffCourse', 'course_id');
+
+        //  ->where('vc_senate_approval', 'approved');
+    }
+
+
 
 
     public function studentFreshCourses($student)

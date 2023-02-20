@@ -2,21 +2,22 @@
 
 namespace App\Http\Controllers;
 
-use App\Exports\AcademicDepartmentsExport;
-use App\Exports\AcademicDepartmentsViewExport;
+use App\College;
 use App\Program;
-use App\ProgramCourse;
 use App\Session;
 use App\Student;
+use App\ProgramCourse;
 use App\StudentResult;
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Http\Request;
 use App\AcademicDepartment;
-use App\College;
+use App\Models\StaffCourse;
+use Illuminate\Http\Request;
 use App\Models\RegisteredCourse;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
 use Maatwebsite\Excel\Facades\Excel;
+use Illuminate\Database\Eloquent\Model;
+use App\Exports\AcademicDepartmentsExport;
+use App\Exports\AcademicDepartmentsViewExport;
 
 class AcademicDepartmentsController extends Controller
 {
@@ -222,18 +223,22 @@ class AcademicDepartmentsController extends Controller
 
     public function programLevelCourses($id,$level)
     {
+
         $this->authorize('programLevelCourses',AcademicDepartment::class);
         $session = new Session();
         $program = Program::findOrFail(base64_decode($id));
         // $pcourses = ProgramCourse::with(['course', 'program', 'lecturer', 'session']);
-        $program_courses = ProgramCourse::with(['course','program','course.program','lecturer'])->where('program_id',$program->id)
+        $program_courses = ProgramCourse::with(['course','program','course.program','lecturer','staff'])->where('program_id',$program->id)
             ->where('level',$level)
             ->where('session_id',$session->currentSession())
            // ->where('semester',$session->currentSemester())
-            ->whereHas('lecturer')
+            ->whereHas('staff')
             ->orderBy('semester','ASC')
             ->get();
-        return view('academia.departments.program_level_courses',compact('program','program_courses','level'));
+            $staff_courses = StaffCourse::where('program_id', $program->id)->where('session_id', $session->currentSession())->first();
+
+
+        return view('academia.departments.program_level_courses',compact('program','program_courses','level','staff_courses'));
     }
 
 
@@ -304,15 +309,16 @@ class AcademicDepartmentsController extends Controller
             $q->orderBy('course_id', 'ASC');
 
         }])->get();
-        $program_courses = ProgramCourse::where('program_id', $id)->where('session_id', $session)->where('level', $level)->where('semester', $semester)->orderBy('course_id', 'ASC')->get();
+        $program_courses = ProgramCourse::where('program_id', $id)->with(['program'])->where('session_id', $session)->where('level', $level)->where('semester', $semester)->orderBy('course_id', 'ASC')->get();
         $meta = [
-            'program' => Program::find($id),
+            'program' => Program::find($id)
+           ,
             'session' => Session::find($session),
             'level' => $level,
             'semester' => $semester
         ];
 
-        //dd($students);
+    //    dd( $meta['program']->degree );
         return view('academia.departments.program_level_results_export', ['program_courses' => $program_courses, 'students' => $students,'meta' => $meta]);
     }
 

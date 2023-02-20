@@ -100,6 +100,7 @@ class AdminController extends Controller
 
     public function uploadScores(Request $request)
     {
+        // dd($request);
         $reg_ids = $request->reg_ids;
         $ca1_scores = $request->ca1_scores;
         $ca2_scores = $request->ca2_scores;
@@ -129,7 +130,7 @@ class AdminController extends Controller
                 'status' => 'unpublished'
             ]);
         }
-        StaffCourse::where('course_id', $request->course_id)->update([
+        StaffCourse::where('id', $request->course_id)->update([
             'upload_status' => 'uploaded',
             'hod_approval' => 'pending'
         ]);

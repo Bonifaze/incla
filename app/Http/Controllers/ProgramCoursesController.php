@@ -486,9 +486,11 @@ class ProgramCoursesController extends Controller
         $lecturers = Staff::where('staff.status',1)
             ->orderBy('first_name','ASC')
             ->get()->pluck('full_name','id');
+        $staff_courses = StaffCourse::where('program_id', $pcourse->program_id)->where('course_id', $pcourse->course_id)->where('session_id', $pcourse->session_id)->get();
+
 
        // $lecturers = $programLecturers->concat($lecturersAll);
-        return view('/program-courses/change_lecturer',compact('pcourse','lecturers'));
+        return view('/program-courses/change_lecturer',compact('pcourse','lecturers', 'staff_courses'));
     }
 
     public function updateLecturer(Request $request)

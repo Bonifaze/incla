@@ -37,8 +37,9 @@
 							 {{--  <th>Host</th>  --}}
                               <th>Lecturer</th>
                               <th>Semester</th>
-                              <th>Contact</th>
-                              <th>Students Registered</th>
+                              <th>Action</th>
+                              <th>Action</th>
+                              <th>Status</th>
                               {{--  <th>Status</th>
                               <th>Action</th>  --}}
 
@@ -58,11 +59,13 @@
                              <td> {{$program_course->credit_unit}}</td>
                              {{--  <td> {{$program_course->course->program->name}}</td>  --}}
                              {{--  <td> {{$program_course->staff_name  ?? ' '}}{{$program_course->lecturer->full_name}}  --}}
-                                  <td>  {{$program_course->staff_name  ?? ' '}}
+                                  <td>
+                                  {{--  {{ $staff_courses->staff_name ?? null }}  --}}
+                                   {{--  {{$program_course->staff_name  ?? ' '}}  --}}
                                   {{--  {{$program_course->lecturer->full_name}}  --}}
 
                                  @if ($program_course->approval < 1 )
-                                 <a class="btn btn-outline-warning" href="{{ route('program_course.change-lecturer',base64_encode($program_course->id)) }}"> Change </a>
+                                 <a class="btn btn-outline-warning" href="{{ route('program_course.change-lecturer',base64_encode($program_course->id)) }}"> Show </a>
                                  @endif
                              </td>
                              @if ( $program_course->semester == 1)
@@ -71,17 +74,18 @@
                              <td>Second </td>
                              @endif
 
-                             <td> {{$program_course->lecturer->phone}}</td>
+                             {{--  <td> {{$program_course->lecturer->phone}}</td>  --}}
                              <td>
                                  <a class="btn btn-primary" target="_blank" href="{{ route('program_course.students',base64_encode($program_course->id)) }}">  List </a>
                                  {{--  <a class="btn btn-info" target="_blank" href="{{ route('program_course.students_download',base64_encode($program_course->id)) }}">  Download </a>  --}}
                                  <a class="btn btn-info" href="/admin/download/{{ $program_course->staff_course_id }}">  Download </a>
-
+<td>
                                  @if(!$program_course->is_approved)
                                  <a href="/staff-course/approve?course_id={{ $program_course->course_id }}&program_id={{ $program_course->program_id }}&by=hod" class="btn btn-outline-success" onclick="return confirm('Are you sure you want to approve this course?')">Approve</a>
                                  @else
                                  <a href="/staff-course/revoke?course_id={{ $program_course->course_id }}&program_id={{ $program_course->program_id }}&by=hod" class="btn btn-outline-danger" onclick="return confirm('Are you sure you want to revoke approval for this course?')">Revoke Approval</a>
                                  @endif
+                                 </td>
                              </td>
 
                              {{--  @if ($program_course->approval == 1)
@@ -109,6 +113,7 @@
                                  <td> {{ $program_course->action }} </td>
                                  <td> {{ $program_course->status }}</td>
                              @endif  --}}
+                          <td> {{$program_course->uploadStatus->upload_status}} </td>
                          </tr>
                           @endforeach
 

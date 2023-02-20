@@ -96,33 +96,70 @@
                                     </tr>
 
                                     <tr>
-                                        <td> Results</td>
-                                        <td><a class="btn btn-outline-dark"
+                                        <td> Results <br> Download</td>
+                                        <td>
+                                                <a class="btn btn-outline-dark"
                                                 href="{{ route('academia.department.export_view', [$program->id, 100, 1]) }}">
-                                                Download First Semester ({{ $program->levelCoursesCount(100) }})</a><a class="btn btn-outline-primary"
+                                                 First Semester </a>
+                                                 <br><br>
+                                                <a class="btn btn-outline-primary"
                                                 href="{{ route('academia.department.export_view', [$program->id, 100, 2]) }}">
-                                                Download second Semester ({{ $program->levelCoursesCount(100) }})</a></td>
+                                                 Second Semester </a></td>
                                         <td><a class="btn btn-outline-dark"
                                                 href="{{ route('academia.department.export_view', [$program->id, 200, 1]) }}">
-                                                Download ({{ $program->levelCoursesCount(200) }})</a></td>
+                                                First Semester </a>
+                                                   <br><br>
+                                                <a class="btn btn-outline-primary"
+                                                href="{{ route('academia.department.export_view', [$program->id, 200, 2]) }}">
+                                                 Second Semester </a></td>
                                         <td><a class="btn btn-outline-dark"
                                                 href="{{ route('academia.department.export_view', [$program->id, 300, 1]) }}">
-                                                Download ({{ $program->levelCoursesCount(300) }})</a></td>
+                                                First Semester </a>
+                                                   <br><br>
+                                                <a class="btn btn-outline-primary"
+                                                href="{{ route('academia.department.export_view', [$program->id, 300, 2]) }}">
+                                                 Second Semester </a>
+                                                 </td>
                                         <td><a class="btn btn-outline-dark"
                                                 href="{{ route('academia.department.export_view', [$program->id, 400, 1]) }}">
-                                                Download ({{ $program->levelCoursesCount(400) }})</a></td>
+                                                First Semester </a>
+                                                   <br><br>
+                                                <a class="btn btn-outline-primary"
+                                                href="{{ route('academia.department.export_view', [$program->id, 400, 2]) }}">
+                                                 Second Semester </a>
+                                                 </td>
                                         <td><a class="btn btn-outline-dark"
                                                 href="{{ route('academia.department.export_view', [$program->id, 500, 1]) }}">
-                                                Download ({{ $program->levelCoursesCount(500) }})</a></td>
+                                                 First Semester</a>
+                                                   <br><br>
+                                                <a class="btn btn-outline-primary"
+                                                href="{{ route('academia.department.export_view', [$program->id, 500, 2]) }}">
+                                                 Second Semester </a>
+                                                 </td>
                                         <td><a class="btn btn-outline-dark"
                                                 href="{{ route('academia.department.export_view', [$program->id, 700, 1]) }}">
-                                                Download ({{ $program->levelCoursesCount(700) }})</a></td>
+                                                First Semester </a>
+                                                   <br><br>
+                                                <a class="btn btn-outline-primary"
+                                                href="{{ route('academia.department.export_view', [$program->id, 700, 2]) }}">
+                                                 Second Semester </a>
+                                                 </td>
                                         <td><a class="btn btn-outline-dark"
                                                 href="{{ route('academia.department.export_view', [$program->id, 800, 1]) }}">
-                                                Download ({{ $program->levelCoursesCount(800) }})</a></td>
+                                                 First Semester</a>
+                                                   <br><br>
+                                                <a class="btn btn-outline-primary"
+                                                href="{{ route('academia.department.export_view', [$program->id, 800, 2]) }}">
+                                                 Second Semester </a>
+                                                 </td>
                                         <td><a class="btn btn-outline-dark"
                                                 href="{{ route('academia.department.export_view', [$program->id, 900, 1]) }}">
-                                                Download ({{ $program->levelCoursesCount(900) }})</a></td>
+                                               First Semester  </a>
+                                                   <br><br>
+                                                <a class="btn btn-outline-primary"
+                                                href="{{ route('academia.department.export_view', [$program->id, 900, 2]) }}">
+                                                 Second Semester)</a>
+                                                 </td>
                                     </tr>
                                 </tbody>
                             </table>

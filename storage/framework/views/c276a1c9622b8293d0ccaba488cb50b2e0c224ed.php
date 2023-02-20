@@ -1,4 +1,31 @@
-						<table class="table table-striped">
+<!doctype html>
+<html lang="en">
+
+<head>
+<title><?php echo e($meta['session']->name); ?>  <?php echo e($meta['program']->name); ?> Exmination Report </title>
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  <!-- Bootstrap CSS v5.2.1 -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous">
+
+</head>
+<?php
+    $course_ids = [];
+?>
+<body>
+ <div class="row justify-content-center mb-4">
+    <div class="col-md-5">
+        <h1 class="text-center text-capitalize">VERITAS UNIVERSITY ABUJA</h1>
+           <h4 class="text-center">(The Catholic Univeristy of Nigeria)</h4>
+            <h4 class="text-center">Bwari Area Council, FCT</h4>
+             <h2 class="text-center text-bold">EXMINATION REPORTING SHEET</h2>
+    </div>
+  </div>
+<div>
+<table class="table table-borderless">
 						  <thead>
 
 						  </thead>
@@ -7,114 +34,151 @@
 						  <tbody>
                           <tr>
                               <td colspan="4"> </td>
-                              <?php $__currentLoopData = $program_courses; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $key => $program_course): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                              
 
                                   <td> </td>
 
 
-                              <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                              
                               <td colspan="4"> </td>
                           </tr>
 
                           <tr>
-                              <td colspan="4">Faculty: <?php echo e($program->department->college->name); ?></td>
-                              <?php $__currentLoopData = $program_courses; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $key => $program_course): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                              <td colspan="4">Collect:  <?php echo e($meta['program']->department->college->name); ?> (<?php echo e($meta['program']->department->college->code); ?>)</td>
+                              
 
                                   <td> </td>
 
 
-                              <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-                              <td colspan="4">Session: <?php echo e($session->currentSessionName()); ?></td>
+                              
+                              <td colspan="4">Session: <?php echo e($meta['session']->name); ?> </td>
                           </tr>
 
                           <tr>
-                              <td colspan="4">Department: <?php echo e($program->department->name); ?></td>
-                              <?php $__currentLoopData = $program_courses; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $key => $program_course): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                              <td colspan="4">Department: <?php echo e($meta['program']->department->name); ?> </td>
+                              
 
                                   <td> </td>
 
 
-                              <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-                              <td colspan="4">Semester: <?php echo e($session->semesterName($session->currentSemester())); ?></td>
+                              
+                              <td colspan="4">Semester:
+                                <?php if( $meta['semester']  == 1): ?>
+                              First
+                             <?php else: ?>
+                             Second
+                             <?php endif; ?>
+                              </td>
                           </tr>
 
 
                           <tr>
-                              <td colspan="4">Program: <?php echo e($program->name); ?> </td>
-                              <?php $__currentLoopData = $program_courses; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $key => $program_course): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                              <td colspan="4">Program:
+                                <?php if( $meta['level'] <= 600): ?>
+                                <?php echo e($meta['program']->degree); ?>
+
+                                <?php else: ?>
+                                  <?php echo e($meta['program']->masters); ?>
+
+                                  <?php endif; ?>
+                                 <?php echo e($meta['program']->name); ?>  </td>
+                              
 
                                   <td> </td>
 
 
-                              <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-                              <td colspan="4">Level: <?php echo e($level); ?></td>
+                              
+                              <td colspan="4">Level: <?php echo e($meta['level']); ?></td>
                           </tr>
 
                           <tr>
                               <td colspan="4"> </td>
-                              <?php $__currentLoopData = $program_courses; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $key => $program_course): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                              
 
                                   <td> </td>
 
 
-                              <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                              
                               <td colspan="4"> </td>
                           </tr>
+</div>
 
+  <div class="row justify-content-cente mb-4">
+    <div class="col-md-12">
+        <table class="table table-bordered">
+            <thead class="text-center">
+                <tr>
+                    <th colspan="<?php echo e(8 + $program_courses->count()); ?>"></th>
+                </tr>
+                <tr>
+                    <th rowspan="2">S/N</th>
+                    <th rowspan="2">MATRIC NUMBER</th>
+                    <th rowspan="2">NAME</th>
+                    <th rowspan="2">Gender</th>
+                    <th colspan="<?php echo e($program_courses->count()); ?>">Courses, Credit, Scores, Grades, GP</th>
+                    <th rowspan="2">TC</th>
+                    <th rowspan="2">TGP</th>
+                    <th rowspan="2">GPA</th>
+                    <th rowspan="2">Remark</th>
+                </tr>
+                <tr>
+                    <?php $__currentLoopData = $program_courses; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $program_course): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                        <?php
+                            $course_ids[] = $program_course->course_id;
+                        ?>
+                        <th><?php echo e($program_course->course_code); ?> <br> <?php echo e($program_course->credit_unit); ?></th>
+                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                </tr>
+            </thead>
+            <tbody>
+                <?php $__currentLoopData = $students; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $student): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                    <?php
+                        $tc = 0;
+                        $tgp = 0;
+                        $gpa = 0.00;
+                    ?>
+                    <tr>
+                        <td><?php echo e($loop->iteration); ?></td>
+                        <td><?php echo e($student->matric_number); ?></td>
+                        <td><?php echo e($student->full_name); ?></td>
+                        <td><?php echo e($student->gender[0]); ?></td>
+                        <?php for($x = 0; $x < $program_courses->count(); $x++): ?>
+                        <td>
+                            <?php
+                                $student_course = $student->registered_courses->where('course_id', $course_ids[$x])->first();
+                                $tc += $student_course?->course_unit;
+                                $tgp += $student_course?->course_unit * $student_course?->grade_point;
+                            ?>
+                            <?php echo e($student_course?->total); ?> <br>
+                            <?php echo e($student_course?->grade); ?> <br>
+                            <?php echo e($student_course ? $student_course?->course_unit * $student_course?->grade_point : ''); ?>
 
-                          <tr>
-                          <td>S/N</td>
-                          <td>Name</td>
-                          <td>Mat No</td>
-                          <td>Gender</td>
-                          <?php $__currentLoopData = $program_courses; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $key => $program_course): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                        </td>
+                        <?php endfor; ?>
+                        <td><?php echo e($tc); ?></td>
+                        <td><?php echo e($tgp); ?></td>
+                        <td><?php echo e($tc > 0 && $tgp > 0 ? number_format($tgp/$tc, 2) : '0.00'); ?></td>
+                        <td>
+                         
 
-                              <td><?php echo e($program_course->course->course_code); ?> <br /> <?php echo e($program_course->credit_unit); ?></td>
+                                  <?php echo e($student->semesterResultRemark()); ?>
 
+                        </td>
+                    </tr>
+                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+            </tbody>
+        </table>
+    </div>
+  </div>
+  <!-- Bootstrap JavaScript Libraries -->
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"
+    integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3" crossorigin="anonymous">
+  </script>
 
-                          <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-                          <td>TC</td>
-                              <td>GP</td>
-                              <td>GPA</td>
-                              <td>TC (BF)</td>
-                              <td>TGP (BF)</td>
-                              <td>TC (Total)</td>
-                              <td>TGP (Total)</td>
-                              <td>CGPA</td>
-                              <td>Remarks</td>
-                          </tr>
-                          <?php $__currentLoopData = $students; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $key => $student): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                              <?php
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.min.js"
+    integrity="sha384-7VPbUDkoPSGFnVtYi0QogXtr74QeVeeIs99Qfg5YCF+TidwNdjvaKZX19NZ/e6oz" crossorigin="anonymous">
+  </script>
+</body>
 
-                              $cgpa = $student->excelCGPA();
-                              ?>
-                              <tr>
-                                  <td><?php echo e($loop->iteration); ?></td>
-                                  <td><?php echo e($student->fullName); ?></td>
-                                  <td><?php echo e($student->academic->mat_no); ?></td>
-                                  <td><?php echo e($student->gender); ?></td>
-                                  <?php $__currentLoopData = $program_courses; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $key => $program_course): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-
-                                      <td><?php echo $student->programCourseResult($program_course->id); ?></td>
-
-                                  <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-                                  <td><?php echo e($cgpa->currentcredit_unit); ?></td>
-                                  <td><?php echo e($cgpa->currentunits); ?></td>
-                                  <td><?php echo e($cgpa->currentgpa); ?></td>
-                                  <td><?php echo e($cgpa->bfcredit_unit); ?></td>
-                                  <td><?php echo e($cgpa->bfunits); ?></td>
-                                  <td><?php echo e($cgpa->credit_unit); ?></td>
-                                  <td><?php echo e($cgpa->units); ?></td>
-                                  <td><?php echo e($cgpa->value); ?></td>
-                                  <td> <?php echo e($student->semesterResultRemark()); ?> </td>
-
-                              </tr>
-                          <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-						  </tbody>
-
-
-
-						</table>
-
-
+</html>
 <?php /**PATH /Users/lifeofrence/Documents/laraproject/resources/views/academia/departments/program_level_results_export.blade.php ENDPATH**/ ?>

@@ -49,6 +49,7 @@
 							  <th>Program</th>
 							  
 							   <th>Students Total</th>
+                               <th>Result Download</th>
 							 <th>Action</th>
 
 
@@ -73,12 +74,25 @@
 							  
 							  
 							  <td> <?php echo e($students); ?> </td>
+                                <td>
+                                                <a class="btn btn-outline-dark"
+                                                href="<?php echo e(route('academia.department.export_view', [$program->id, $level, 1])); ?>">
+                                                 First Semester </a>
+
+                                                <a class="btn btn-outline-primary"
+                                                href="<?php echo e(route('academia.department.export_view', [$program->id, $level, 2])); ?>">
+                                                 Second Semester </a></td>
+
                                <td><a href="/staff-course/approve?by=sbc&level=<?php echo e($level); ?> &program_id=<?php echo e($program->id); ?>" class="btn btn-outline-success" onclick="return confirm('are you sure you want to proceed with this action?')">Approve</a><a href="/staff-course/revoke?by=sbc&level=<?php echo e($level); ?> &program_id=<?php echo e($program->id); ?>" class="btn btn-outline-danger" onclick="return confirm('are you sure you want to proceed with this action?')">Revoke</a></td>
 
 
 
 
 							</tr>
+
+
+
+
 
 							<?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
 

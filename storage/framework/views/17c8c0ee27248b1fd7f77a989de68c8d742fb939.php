@@ -59,7 +59,7 @@
               <div class="col-md-6 form-group">
 
 								<label for="lecturer_id">Lecturer :</label>
-								<?php echo Form::select('staff_id', $lecturers, $pcourse->lecturer_id,['class' => 'form-control', 'id' => 'lecturer_id', 'name' => 'staff_id', 'required' => 'required']); ?>
+								<?php echo Form::select('staff_id', $lecturers, $pcourse->lecturer_id,['placeholder'=>'Select Lecturer','class' => 'form-control', 'id' => 'lecturer_id', 'name' => 'staff_id', 'required' => 'required']); ?>
 
 	                    			<span class="text-danger"> <?php echo e($errors->first('lecturer_id')); ?></span>
 							</div>
@@ -127,7 +127,56 @@
 
 
 
+	<div class="col-xl-12">
+			<div class="card">
+				<div class="card-body">
+					<h4 class="card-title">
+						Staff Allocation
+					</h4>
+					<div class="mt-4">
+						<?php if(session()->has('msg')): ?>
+							<div class="alert alert-danger"><?php echo e(session()->get('msg')); ?></div>
+						<?php endif; ?>
+						<div class="table-responsive">
+							<table class="table table-hover table-striped">
+								<thead>
+									<tr>
+										<th>S/N</th>
+										<th>Course Code</th>
+										<th>Course Title</th>
+										<th>Staff Name</th>
+										<th>Action</th>
+									</tr>
+								</thead>
+								<tbody>
+									<?php $__currentLoopData = $staff_courses; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $staff_course): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+										<tr>
+											<td><?php echo e($loop->iteration); ?></td>
+											<td><?php echo e($staff_course->course_code); ?></td>
+											<td><?php echo e($staff_course->course_title); ?></td>
+											<td><?php echo e($staff_course->staff_name); ?></td>
+											<td><a href="<?php echo e(route('drop_staff_course', $staff_course->id)); ?>" class="btn btn-danger" onclick="return confirm('are you sure you want to drop this course?')">Drop</a></td>
+										</tr>
+									<?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+								</tbody>
 
+
+							</table>
+
+						</div>
+					</div>
+				</div>
+			</div>
+      <div class="card-footer"> if the course has not been allocated to a staff please click here
+  <a href="<?php echo e(route('program_course.assign')); ?>"
+                                        class="btn btn-primary">
+
+                                        <p>Allocate Course to Staff </p>
+                                    </a>
+
+
+                </div>
+		</div>
           </div>
           <!-- /.box -->
 
