@@ -53,7 +53,8 @@
                              <td> <?php echo e($program_course->course->course_title); ?></td>
                              <td> <?php echo e($program_course->credit_unit); ?></td>
                              
-                             
+                             <td> <?php echo e($program_course->staff_name  ?? ' '); ?>
+
                                   <td>
                                   
                                    
@@ -84,7 +85,7 @@
                              </td>
 
                              
-                          <td> <?php echo e($program_course->uploadStatus->upload_status); ?> </td>
+                          <td> <?php echo e($program_course->uploadStatus->upload_status ?? null); ?> </td>
                          </tr>
                           <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
 

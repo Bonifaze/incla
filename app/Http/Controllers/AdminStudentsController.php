@@ -860,7 +860,8 @@ ICT Unit<br />
         $academic = $student->academic;
         $session_ids = RegisteredCourse::where('student_id', $student_id)->distinct('session')->pluck('session');
         $session_ids = $session_ids->toArray();
-        $registered_courses = RegisteredCourse::where('student_id', $student_id)->get();
+        $registered_courses = RegisteredCourse::where('student_id', $student_id)->
+        where('status' , 'published')->get();
         //dd($registered_courses->where('session', 15));
         $sessions = Session::wherein('id', $session_ids)->with(['registered_courses1' => function ($query) use ($student_id) {
 

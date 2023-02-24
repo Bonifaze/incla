@@ -42,7 +42,9 @@ class ProgramCourse extends Model
 
     public function staff()
     {
-        return $this->belongsTo('App\Models\StaffCourse', 'course_id');
+        $session = new Session();
+        return $this->belongsTo('App\Models\StaffCourse', 'program_id','course_id');
+
     }
 
     public function results()

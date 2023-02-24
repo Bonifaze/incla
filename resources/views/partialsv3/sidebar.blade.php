@@ -49,12 +49,12 @@
                             </a>
                         </li>
 
-                        <li class="nav-item">
+                        {{--  <li class="nav-item">
                             <a href="{{ route('staff.roles') }}" class="nav-link @yield('list-staff')">
                                 <i class="fas fa-list-alt nav-icon"></i>
                                 <p>List Roles</p>
                             </a>
-                        </li>
+                        </li>  --}}
 
                         <li class="nav-item">
                             <a href="{{ route('staff.password') }}" class="nav-link @yield('staff-password')">

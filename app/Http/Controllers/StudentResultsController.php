@@ -90,6 +90,7 @@ class StudentResultsController extends Controller
 
     public function updateResult(Request $request)
     {
+        $staff = Auth::guard('staff')->user();
         $reg_ids = $request->reg_ids;
         $ca1_scores = $request->ca1_scores;
         $ca2_scores = $request->ca2_scores;
@@ -121,6 +122,7 @@ class StudentResultsController extends Controller
                 'total' => $total_score,
                 'grade_id' => $grade_id,
                 'grade_status' => $grade_setting->status,
+                'modify_by' =>$staff->id,
             ]);
         }
         return redirect()->back()->with('success', 'Scores uploaded successfully');

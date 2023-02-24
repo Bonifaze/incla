@@ -239,8 +239,11 @@ class AdminController extends Controller
                 StaffCourse::where('level', $level)->where('program_id', $program_id)->where('session_id', $session)->where('semester_id', $semester)->update(['sbc_approval' => 'approved']);
                 break;
             case 'vc':
+                $course_id = $request->course_id;
                 $level = $request->level;
                 StaffCourse::where('level', $level)->where('program_id', $program_id)->where('session_id', $session)->where('semester_id', $semester)->update(['vc_senate_approval' => 'approved']);
+                 RegisteredCourse::where('program_id', $program_id)->where('session', $session)->where('semester', $semester)->update(['status' => 'published']);
+
                 break;
             default:
                 $course_id = $request->course_id;
@@ -274,6 +277,8 @@ class AdminController extends Controller
                 case 'vc':
                     $level = $request->level;
                     StaffCourse::where('level', $level)->where('program_id', $program_id)->where('session_id', $session)->where('semester_id', $semester)->update(['vc_senate_approval' => 'pending']);
+                    RegisteredCourse::where('program_id', $program_id)->where('session', $session)->where('semester', $semester)->update(['status' => 'unpublished']);
+
                     break;
             default:
                 $course_id = $request->course_id;
@@ -461,7 +466,8 @@ class AdminController extends Controller
                     'transaction_id' =>  Carbon::now(),
                     'transaction_date' => Carbon::now(),
                     'channel' => "Remita Online",
-                    'updated_at' => Carbon::now()
+                    'updated_at' => Carbon::now(),
+                    'verify_by' => $staff->id
                 ]);
                 $approvalMsg = '<div class="alert alert-success alert-dismissible" role="alert"> <button type="button" class="close" data-dismiss="alert"> &times; </button> Your Verification was successful  </div>';
                 return Redirect::back()->with('approvalMsg', $approvalMsg);

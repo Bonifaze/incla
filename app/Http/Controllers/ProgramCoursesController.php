@@ -251,7 +251,7 @@ class ProgramCoursesController extends Controller
     public function store2(Request $request)
     {
         $session = new Session();
-        $this->authorize('create',ProgramCourse::class);
+        $this->authorize('gstallocate',ProgramCourse::class);
         $this->validate($request, [
             'program_id' => 'required|integer',
 

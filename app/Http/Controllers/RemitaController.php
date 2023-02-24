@@ -93,7 +93,8 @@ public function verifypayment(Request $req)
                 'transaction_id' =>  Carbon::now(),
                 'transaction_date' => Carbon::now(),
                 'channel' => "Remita Online",
-                'updated_at' => Carbon::now()
+                'updated_at' => Carbon::now(),
+                'verify_by' => $staff->id
             ]);
             $approvalMsg = '<div class="alert alert-primary alert-dismissible" role="alert"> <button type="button" class="close" data-dismiss="alert"> &times; </button> Your Verification was successful  </div>';
             return redirect('/bursary/remita/searchA')->with('approvalMsg', $approvalMsg);

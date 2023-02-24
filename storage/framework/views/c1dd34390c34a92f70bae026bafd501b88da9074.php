@@ -49,12 +49,7 @@
                             </a>
                         </li>
 
-                        <li class="nav-item">
-                            <a href="<?php echo e(route('staff.roles')); ?>" class="nav-link <?php echo $__env->yieldContent('list-staff'); ?>">
-                                <i class="fas fa-list-alt nav-icon"></i>
-                                <p>List Roles</p>
-                            </a>
-                        </li>
+                        
 
                         <li class="nav-item">
                             <a href="<?php echo e(route('staff.password')); ?>" class="nav-link <?php echo $__env->yieldContent('staff-password'); ?>">

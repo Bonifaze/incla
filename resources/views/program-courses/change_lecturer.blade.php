@@ -62,8 +62,8 @@
               <div class="box-body">
               <div class="col-md-6 form-group">
 
-								<label for="lecturer_id">Lecturer :</label>
-								{!! Form::select('staff_id', $lecturers, $pcourse->lecturer_id,['placeholder'=>'Select Lecturer','class' => 'form-control', 'id' => 'lecturer_id', 'name' => 'staff_id', 'required' => 'required']) !!}
+								<label for="lecturer_id">Select Lecturer :</label>
+								{!! Form::select('staff_id', $lecturers, $pcourse->lecturer_id,['class' => 'form-control', 'id' => 'lecturer_id', 'name' => 'staff_id', 'required' => 'required']) !!}
 	                    			<span class="text-danger"> {{ $errors->first('lecturer_id') }}</span>
 							</div>
 

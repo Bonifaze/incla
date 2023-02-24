@@ -9,8 +9,8 @@
 @endsection
 
 @section('content')
-<body>
-<table width="650" border="0" cellspacing="0" cellpadding="0">
+<body >
+<table width="650" border="0" cellspacing="0" cellpadding="0" style="margin:auto" >
   <tr>
     <td height="650" valign="top"><table width="100%" height="174" border="0" cellpadding="0" cellspacing="0">
       <tr>
@@ -61,7 +61,8 @@
                              {{ $session->registered_courses1->last()?->level }}
                              </td>
                             <td colspan="2"><strong>SEMESTER</strong>:
-                             {{ $session->registered_courses1->first()?->semester }}
+                        {{--  {{ $session->registered_courses1->first()?->semester }}  --}}
+                             FIRST
                              </td>
                           </tr>
                           <tr>
@@ -78,9 +79,9 @@
                             $tc2 = 0;
                             $tgp1 = 0;
                             $tgp2 = 0;
-                          @endphp 
+                          @endphp
                             @foreach ($session->registered_courses1 as $result)
-                            @php 
+                            @php
                               $tc1 += $result->course_unit;
                               $tgp1 += $result->grade_point * $result->course_unit;
                             @endphp
@@ -101,7 +102,7 @@
                           <tr>
                             <td  colspan="7">&nbsp;</td>
                             </tr>
-                            @php 
+                            @php
                               $courses = $registered_courses->where('session','<=', $session->id);
                               //dd($courses);
                               $tgp_cgpa = 0;
@@ -166,7 +167,8 @@
      {{ $session->registered_courses2->last()?->level }}
      </td>
     <td colspan="2"><strong>SEMESTER</strong>:
-     {{ $session->registered_courses2->first()?->semester }}
+ {{--   {{ $session->registered_courses2->first()?->semester }} --}}
+ SECOND
      </td>
   </tr>
   <tr>
@@ -243,7 +245,7 @@
     <td>&nbsp;</td>
     <td colspan="3" align="right"><strong>Cumulative Grade Points Average (CGPA) </strong></td>
     <td>&nbsp;</td>
-    
+
     <td><span style="font-weight: bold">CGPA : {{ $tgp_cgpa > 0 && $tcu_cgpa > 0 ? number_format($tgp_cgpa2/$tcu_cgpa2, 2) : '0.00' }}</span></td>
     <td>&nbsp; </td>
   </tr>
