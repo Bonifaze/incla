@@ -90,7 +90,7 @@ class StudentResultsController extends Controller
 
     public function updateResult(Request $request)
     {
-        $staff = Auth::guard('staff')->user();
+         $staff = Auth::guard('staff')->user();
         $reg_ids = $request->reg_ids;
         $ca1_scores = $request->ca1_scores;
         $ca2_scores = $request->ca2_scores;
@@ -114,17 +114,19 @@ class StudentResultsController extends Controller
             {
                 RegisteredCourse::where('student_id', $course_reg->student_id)->where('course_id', $course_reg->course_id)->where('session', '>', $course_reg->session)->delete();
             }
-            RegisteredCourse::where('id', $reg_ids[$i])->update([
-                'ca1_score' => $ca1_scores[$i],
-                'ca2_score' => $ca2_scores[$i],
-                'ca3_score' => $ca3_scores[$i],
-                'exam_score' => $exam_scores[$i],
-                'total' => $total_score,
-                'grade_id' => $grade_id,
-                'grade_status' => $grade_setting->status,
-                'modify_by' =>$staff->id,
-            ]);
-        }
+            $registeredCourse = RegisteredCourse::findOrFail($reg_ids[$i]);
+            $registeredCourse-> ca1_score = $ca1_scores[$i];
+            $registeredCourse->ca2_score = $ca2_scores[$i];
+            $registeredCourse->ca3_score = $ca3_scores[$i];
+            $registeredCourse->exam_score = $exam_scores[$i];
+            $registeredCourse->total = $total_score;
+            $registeredCourse->grade_id = $grade_id;
+            $registeredCourse->grade_status = $grade_setting->status;
+            $registeredCourse->staff_id =$staff->id;
+
+        $registeredCourse->save();
+
+    }
         return redirect()->back()->with('success', 'Scores uploaded successfully');
     }
 
@@ -141,7 +143,7 @@ class StudentResultsController extends Controller
         $this->authorize('upload', StudentResult::class);
         //ensure program course selected has a corresponding course
         //also check in front end
-        $results = RegisteredCourse::with(['programCourse.course'])->where('student_id',$request->student_id)
+        $results = StudentResult::with(['programCourse.course'])->where('student_id',$request->student_id)
         ->where('session_id',$request->session_id)
         ->where('semester',$request->semester)
         ->get();
@@ -181,7 +183,7 @@ class StudentResultsController extends Controller
             //saving logic here
             foreach ($parameters as $parameter)
             {
-               $result = RegisteredCourse::find($parameter['id']);
+               $result = StudentResult::find($parameter['id']);
                 if($result->total != $parameter['result'])
                 {
                     $result->total = $parameter['result'];
@@ -191,7 +193,7 @@ class StudentResultsController extends Controller
                         $result->status = 7;
                     }
                     //all those with ICT Approval permission should upload approved results.
-                    if (Auth::guard('staff')->user()->can('ictUpload',RegisteredCourse::class)) {
+                    if (Auth::guard('staff')->user()->can('ictUpload',StudentResult::class)) {
                         $result->status = 7;
                     }
 
@@ -233,7 +235,7 @@ class StudentResultsController extends Controller
             //saving logic here
             foreach ($parameters as $parameter)
             {
-                $result = RegisteredCourse::find($parameter['id']);
+                $result = StudentResult::find($parameter['id']);
                 if($result->total != $parameter['result'])
                 {
                     $result->total = $parameter['result'];
@@ -325,11 +327,11 @@ class StudentResultsController extends Controller
             ->with(['error' => 'No Semester Registration.']);
         }
 
-        $results = RegisteredCourse::with(['programCourse','programCourse.course'])->where('student_id',$student_id)
+        $results = StudentResult::with(['programCourse','programCourse.course'])->where('student_id',$student_id)
         ->where('session_id',$session_id)
         ->where('semester',$semester)
         ->get();
-        $rs = new RegisteredCourse();
+        $rs = new StudentResult();
         $gpa = $rs->gpa($student_id, $session_id, $semester);
         $cgpa = $rs->currentCGPA($student_id,$session_id,$semester);
         return view('results.semester-result',compact('results','student','session','semester','gpa','cgpa'));
@@ -360,11 +362,11 @@ class StudentResultsController extends Controller
             $fresh_courses = $pcourse->oldStudentFreshCourses($student, $session,$semester,$level);
             $carry_over = $pcourse->oldStudentCarryOverCourses($student, $session,$semester,$level);
             // $results = $result->RegisteredCourse($student->id,$session,$semester);
-            $total_credit = $student->totalRegisteredCredits($results);
-            $allowed_credits = $student->allowedCredits($session_id,$semester);
+         //   $total_credit = $student->totalRegisteredCredits($results);
+            //$allowed_credits = $student->allowedCredits($session_id,$semester);
             $registration = $student->hasSemesterRegistration($session->id,$semester);
 
-            return view('results.course_registration',compact('student','fresh_courses', 'carry_over', 'results', 'total_credit','session','semester','level', 'allowed_credits'));
+            return view('results.course_registration',compact('student','fresh_courses', 'carry_over', 'results', 'session','semester','level'));
     } // end register
 
 
@@ -460,9 +462,11 @@ class StudentResultsController extends Controller
      */
     public function addCourse(Request $request)
     {
+
+      //  dd($request);
         $this->authorize('register', StudentResult::class);
         $session = Session::findorFail($request->session_id);
-        $result = new RegisteredCourset();
+        $result = new StudentResult();
         $student = Student::findOrFail($request->student_id);
         $semester = $request->semester;
         $level = $request->level;
@@ -479,8 +483,7 @@ class StudentResultsController extends Controller
             try {
                 // add course
                 $result->save();
-                if(!$student->hasSemesterRegistration($session->id,$semester))
-                {
+
                     //register semester
                     $sem_reg = new RegisteredCourse();
                     $sem_reg->student_id = $student->id;
@@ -502,7 +505,7 @@ class StudentResultsController extends Controller
                        ->with('error',"Errors completing semester registration.".$e->getMessage());
                     }
                 }
-            }
+
             catch(\Exception $e)
             {
                 //failed logic here

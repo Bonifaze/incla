@@ -67,7 +67,7 @@
 							  <td>{{ $role->name }}</td>
                               <td>{{ $role->role }}</td>
 							 <td>{{ $role->description }}</td>
-							 <td><a href="{{ route('rbac.show-role',$role->id) }}" class="btn btn-default"> Show </td>
+							 <td><a href="{{ route('rbac.show-role',$role->id) }}" class="btn btn-default"> Assign Permission </td>
 
 							 <td><a href="{{ route('rbac.edit-role',$role->id) }}" class="btn btn-default"> Edit </td>
 

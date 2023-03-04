@@ -1,39 +1,34 @@
-
-@extends('layouts.mini')
-
-
-
-@section('pagetitle')
+<?php $__env->startSection('pagetitle'); ?>
     List of Students
-@endsection
+<?php $__env->stopSection(); ?>
 
-@section('css')
+<?php $__env->startSection('css'); ?>
     <!-- Ekko Lightbox -->
-    <link rel="stylesheet" href="{{ asset('v3/plugins/ekko-lightbox/ekko-lightbox.css') }}">
-@endsection
+    <link rel="stylesheet" href="<?php echo e(asset('v3/plugins/ekko-lightbox/ekko-lightbox.css')); ?>">
+<?php $__env->stopSection(); ?>
 
 
 <!-- Sidebar Links -->
 
 <!-- Treeview -->
-@section('bursary-open')
+<?php $__env->startSection('bursary-open'); ?>
     menu-open
-@endsection
+<?php $__env->stopSection(); ?>
 
-@section('bursary')
+<?php $__env->startSection('bursary'); ?>
     active
-@endsection
+<?php $__env->stopSection(); ?>
 
 <!-- Page -->
-@section('bursary-search')
+<?php $__env->startSection('bursary-search'); ?>
     active
-@endsection
+<?php $__env->stopSection(); ?>
 
 <!-- End Sidebar links -->
 
 
 
-@section('content')
+<?php $__env->startSection('content'); ?>
     <div class="content-wrapper">
         <!-- Content Header (Page header) -->
 
@@ -52,11 +47,12 @@
 
 <div class="container">
             <div class="signup-content">
-                @if (session('signUpMsg'))
-                    {!! session('signUpMsg') !!}
-                @endif
+                <?php if(session('signUpMsg')): ?>
+                    <?php echo session('signUpMsg'); ?>
+
+                <?php endif; ?>
                 <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                    {{--  <h6 class="m-0 font-weight-bold text-success">Add Remita Service Type </h6>  --}}
+                    
                     <div class="dropdown no-arrow">
 
                         <a href="/viewRemitaServiceType" class="d-none d-sm-inline-block btn btn-sm btn-success shadow-sm"><i
@@ -66,7 +62,7 @@
 
                 </div>
                 <form method="POST" action="/addRemitaServiceType" id="signup-form" class="shadow p-4">
-                    @csrf
+                    <?php echo csrf_field(); ?>
 
                     <div class="form-group">
 
@@ -118,7 +114,8 @@
 
 
                             <button type="submit" class=" btn text-white fw-bold bg-success bg-gradient mx-3 px-4">
-                                {{ __('Add Service Type') }}
+                                <?php echo e(__('Add Service Type')); ?>
+
                             </button>
                         </div>
                     </div>
@@ -138,15 +135,17 @@
         </section>
         <!-- /.content -->
     </div>
-@endsection
+<?php $__env->stopSection(); ?>
 
-@section('pagescript')
-    <script src="{{ asset('js/bootbox.min.js') }}"></script>
+<?php $__env->startSection('pagescript'); ?>
+    <script src="<?php echo e(asset('js/bootbox.min.js')); ?>"></script>
 
 
 
     <!-- jQuery UI -->
-    <script src="{{ asset('v3/plugins/jquery-ui/jquery-ui.min.js') }}"></script>
+    <script src="<?php echo e(asset('v3/plugins/jquery-ui/jquery-ui.min.js')); ?>"></script>
     <!-- Ekko Lightbox -->
-    <script src="{{ asset('v3/plugins/ekko-lightbox/ekko-lightbox.min.js') }}"></script>
-@endsection
+    <script src="<?php echo e(asset('v3/plugins/ekko-lightbox/ekko-lightbox.min.js')); ?>"></script>
+<?php $__env->stopSection(); ?>
+
+<?php echo $__env->make('layouts.mini', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH /Users/lifeofrence/Documents/laraproject/resources/views/admissions/addRemitaServiceType.blade.php ENDPATH**/ ?>

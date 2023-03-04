@@ -11,6 +11,8 @@ Route::get('/staff/view/{id}', 'StaffController@view')->name('staff.view');
 
 Route::get('/staff/security/{id}', 'StaffController@security')->name('staff.security');
 
+Route::get('/staff/securitylist', 'StaffController@securitylist')->name('staff.securitylist');
+
 Route::get('/staff/edit/{id}', 'StaffController@edit')->name('staff.edit');
 
 Route::patch('/staff/edit/{id}', 'StaffController@update')->name('staff.update');

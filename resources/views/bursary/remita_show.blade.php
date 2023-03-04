@@ -88,6 +88,7 @@
                                 <th>Channel</th>
                                 <th>Ip Address</th>
                                 <th>Action</th>
+                                <th>Verify_by</th>
                             </tr>
                             <tr>
                                 <td>{{$remita->transaction_date}}</td>
@@ -96,8 +97,9 @@
                                 <td>{{$remita->updated_at->format('d-M-Y')}}</td>
                                 <td>{{$remita->channel}}</td>
                                 <td>{{$remita->request_ip}}</td>
-                                <td> <a class="btn btn-info" target="_blank" > Print Receipt </a></td>
-                                {{--  <td> <a class="btn btn-info" target="_blank" href="{{route("remita.print-rrr",$remita->id)}}" > Print Receipt </a></td>  --}}
+
+                                <td> <a class="btn btn-info" target="_blank" href="{{route("remita.print-rrr",$remita->id)}}" ><i class="fas fa-print text-white-50"></i> Print Receipt </a></td>
+                              <td>{{ $staff->full_name ?? null }}</td>
                             </tr>
                             @endif
 

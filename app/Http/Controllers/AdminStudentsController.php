@@ -515,8 +515,10 @@ class AdminStudentsController extends Controller
         }
         else
         {
-            $request->session()->flash('message', 'No Matching student record found. Try to search again !');
-            return view ('students.admin.search');
+            return redirect()->back()
+            ->with('error','No Matching student record found. Try to search again !');
+            // $request->session()->flash('message', 'No Matching student record found. Try to search again !');
+            // return view ('students.admin.search');
         }
 
     } // end find
@@ -546,8 +548,8 @@ class AdminStudentsController extends Controller
 
         else
         {
-            $request->session()->flash('message', 'No Matching student record found. Try to search again !');
-            return view ('students.admin.search');
+            return redirect()->back()
+            ->with('error','No Matching student record found. Try to search again !');
         }
 
     } // end find matric

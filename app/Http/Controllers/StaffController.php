@@ -2,25 +2,27 @@
 
 namespace App\Http\Controllers;
 
-use App\ProgramCourse;
-use App\Session;
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Http\Request;
+use PDF;
+use App\Role;
 use App\Staff;
 use App\Program;
-use Illuminate\Support\Facades\Auth;
-use App\Role;
-use Illuminate\Support\Facades\Hash;
-use Intervention\Image\ImageManagerStatic as Image;
-use Illuminate\Validation\Rule;
-use Illuminate\Support\Facades\DB;
-use PDF;
-use Illuminate\Support\Facades\Storage;
+use App\Session;
+use App\StaffRole;
+use App\StaffContact;
+use App\ProgramCourse;
 use App\StaffPosition;
 use App\EmploymentType;
 use App\AdminDepartment;
-use App\StaffContact;
+use App\Models\RoleStaff;
 use App\StaffWorkProfile;
+use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Storage;
+use Intervention\Image\ImageManagerStatic as Image;
 
 
 
@@ -93,6 +95,21 @@ class StaffController extends Controller
         return view('staff.security', compact('staff','roles','rls','perms'));
     }
 
+    public function securitylist()
+    {
+        $this->authorize('rbac', Staff::class);
+        $roles = Role::get();
+        $staff = Staff::get();
+        // $staff = Auth::guard('staff')->user();
+        // dd($staff);
+        // $roles = $role->staffRoles();
+        // $rls = $role->availableRoles();
+        // $perms = $staff->permissions();
+        // $roles=RoleStaff::get();
+        // $alltasks = DB::table('task_to_role')->where('role_id', $rls = $role->availableRoles)->get();
+        return view('staff.securitylist', compact('roles','staff'));
+    }
+
     public function assignRole(Request $request)
     {
         $this->authorize('rbac', Staff::class);
@@ -104,10 +121,11 @@ class StaffController extends Controller
 
     public function removeRole(Request $request)
     {
+        dd($request);
         $this->authorize('rbac', Staff::class);
         $staff = Staff::find($request->staff_id);
         $staff->roles()->detach($request->role_id);
-        return redirect()->route('staff.security', $staff->id)
+        return redirect()->back()
         ->with('success','Staff role removed successfully');
     } // end removeRole
 
@@ -391,7 +409,7 @@ class StaffController extends Controller
         $name = $staff->fullName;
         $staff->status = $request->status;
         $staff->save();
-        return redirect()->route('staff.list')
+        return redirect()->back()
         ->with('success', $name.' '.$request->action.' successfully');
     }
 

@@ -60,13 +60,14 @@
 							   <th>Generated On</th>
                                <th>Staus</th>
                                 <th>Action</th>
+
 						  </tr>
                             <tr>
 
-                                <td>{{$users->first_name}}  {{$users->surname}}</td>
-                                <td>{{$users->phone}}</td>
-                                <td>{{$feeType->name}}</td>
-                                <td>N{{$remita->amount}}</td>
+                                <td>{{$users->first_name ?? null}}  {{$users->surname ?? null}}</td>
+                                <td>{{$users->phone ?? null}}</td>
+                                <td>{{$feeType->name ?? null}}</td>
+                                <td>N{{$remita->amount ?? null}}</td>
                                 <td>{{$remita->rrr}}</td>
                                 <td>{{$remita->created_at->format('d-M-Y')}}</td>
                                  <td>{{$remita->status}}</td>
@@ -90,6 +91,7 @@
                                 <th>Channel</th>
                                 <th>Ip Address</th>
                                 <th>Action</td>
+                                  <th>Verify_by</th>
                             </tr>
                             <tr>
                                 <td>{{$remita->transaction_date}}</td>
@@ -98,8 +100,9 @@
                                 <td>{{$remita->updated_at->format('d-M-Y')}}</td>
                                 <td>{{$remita->channel}}</td>
                                 <td>{{$remita->request_ip}}</td>
-                                <td> <a class="btn btn-info" target="_blank" > Print Receipt </a></td>
-                                {{--  <td> <a class="btn btn-info" target="_blank" href="{{route("remita.print-rrr",$remita->id)}}" > Print Receipt </a></td>  --}}
+
+                                <td> <a class="btn btn-info" target="_blank" href="{{route("remita.print-rrr",$remita->id)}}" ><i class="fas fa-print text-white-50"></i> Print Receipt </a></td>
+                                  <td>{{ $staff->full_name ?? null }}</td>
                             </tr>
                             @endif
 

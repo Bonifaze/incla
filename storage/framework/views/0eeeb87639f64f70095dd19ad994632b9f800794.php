@@ -32,17 +32,19 @@
         <div class="col_full">
 
 
-            <div class="card card-primary">
-              <div class="card-header">
-                <h3 class="card-title">
-                    <?php if(isset($sum)): ?>
+             <h1
+                        class="app-page-title text-uppercase h5 font-weight-bold p-2 mb-2 shadow-sm text-center text-success border">
+<?php echo e($academic->student->full_name); ?> (<?php echo e($academic->mat_no); ?>)
+<br><br>
+                     <?php if(isset($sum)): ?>
                         <?php echo e("Total: N".number_format($sum)); ?>
 
                     <?php else: ?>
                         Remita Details
                     <?php endif; ?>
-                </h3>
-				</div>
+                    </h1>
+
+
 
              <div class="table-responsive card-body">
 
@@ -53,7 +55,7 @@
                               <th>RRR</th>
                               
 							  
-                              
+                              <th>Service Type</th>
 							   <th>Amount</th>
 							   <th>Generated</th>
                               <th>Action</th>
@@ -63,12 +65,12 @@
                                 <td><?php echo e($remita->rrr); ?></td>
                                 
                                 
-                                
+                                <td><?php echo e($remita->feeType->name); ?></td>
                                 <td>&#8358;<?php echo e(number_format($remita->amount)); ?></td>
                                 <td><?php echo e($remita->created_at->format('d-M-Y')); ?></td>
                                 <td>
                                     <?php if($remita->status_code == 1): ?>
-                                        <a class="btn btn-info" target="_blank" href="<?php echo e(route("remita.print-rrr",$remita->id)); ?>" > Print Receipt </a>
+                                        <a class="btn btn-info" target="_blank" href="<?php echo e(route("remita.print-rrr",$remita->id)); ?>" ><i class="fas fa-print text-white-50"></i> Print Receipt </a>
                                     <?php else: ?>
                                         <?php echo e($remita->status); ?>
 

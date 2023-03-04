@@ -747,7 +747,7 @@ class ProgramCoursesController extends Controller
 
     public function SBCLevel($level)
     {
-        $this->authorize('approveResult',ProgramCourse::class);
+        $this->authorize('approveResultSBC',ProgramCourse::class);
         $programs = Program::whereHas('SbcApproval')->with(['department','programCourses','SbcApproval'])
             ->orderBy('name','ASC')
             ->paginate(100);

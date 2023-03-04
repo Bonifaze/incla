@@ -47,14 +47,14 @@ class RemitaController extends Controller
 
     public function search()
     {
-        // $this->authorize('remitaSearch',Remita::class);
+        $this->authorize('remitaSearch',Remita::class);
         return view('bursary.remita_search');
     } //end search
 
     public function find(Request $request)
     {
 
-        // $this->authorize('remitaSearch',Remita::class);
+        $this->authorize('remitaSearch',Remita::class);
         $this->validate($request, [
             'data' => 'required|string|max:50',
         ],
@@ -115,14 +115,14 @@ return view('admissions.error', compact('loginMsg'));
 
     public function searchApplicant()
     {
-        // $this->authorize('remitaSearch',Remita::class);
+        $this->authorize('remitaSearch',Remita::class);
         return view('bursary.remita_searchA');
     } //end search
 
     public function findapplicant(Request $request)
     {
 
-        // $this->authorize('remitaSearch',Remita::class);
+        $this->authorize('remitaSearch',Remita::class);
         $this->validate($request, [
             'data' => 'required|string|max:50',
         ],
@@ -146,23 +146,24 @@ return view('admissions.error', compact('loginMsg'));
 
 
     public function printRRR($id){
-        // $this->authorize('remitaSearch',Remita::class);
+        $this->authorize('remitaSearch',Remita::class);
         $remita = Remita::find($id);
+        // dd($id);
        if($remita){
-            $response = $remita->verifyRRR();
-            if($response->status == 1) {
+            // $response = $remita->verifyRRR();
+            // if($response->status == 1) {
                 $student = $remita->student;
                 $academic = $student->academic;
                 $feeType = $remita->feeType;
                 $name = Auth::guard('staff')->user()->fullName;
                 return view('bursary.remita_print',compact('student','remita','academic','feeType','name'));
-            }
-            else {
-                $error = "Requested Remita payment details not found. Please Bursary.";
-                // dd($response);
-                return redirect()->route('remita.search-rrr')
-                    ->with('error',$error);
-            }
+            // }
+            // else {
+            //     $error = "Requested Remita payment details not found. Please Bursary.";
+            //     // dd($response);
+            //     return redirect()->route('remita.search-rrr')
+            //         ->with('error',$error);
+            // }
         }
         else {
             $error = "Requested Remita record not found. Please ICT.";
@@ -176,7 +177,7 @@ return view('admissions.error', compact('loginMsg'));
     public function feeTypes()
     {
         // if ($this->hasPriviledge("showFeeType",  session('adminId'))) {
-        // $this->authorize('remitaSearch',Remita::class);
+        $this->authorize('remitaFeetype',Remita::class);
         $feeTypes = FeeType::with('paidRemitas')->get();
         return view('admissions.bursary.fee_types',compact('feeTypes'));
     // }
@@ -299,7 +300,7 @@ return view('admissions.error', compact('loginMsg'));
             $remitas = Remita::with(['feeType','student','student.academic'])->where('student_id',$academic->student_id)->where('status_code',1)
                 ->orderBy('transaction_date','DESC')->get();
             $sum = $remitas->sum('amount');
-            return view('bursary.remita_list',compact('remitas','sum'));
+            return view('bursary.remita_list',compact('remitas','sum','academic'));
         }
         else{
             $error = "Student Record not found";

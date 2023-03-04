@@ -84,6 +84,7 @@
                                 <th>Channel</th>
                                 <th>Ip Address</th>
                                 <th>Action</th>
+                                <th>Verify_by</th>
                             </tr>
                             <tr>
                                 <td><?php echo e($remita->transaction_date); ?></td>
@@ -92,8 +93,9 @@
                                 <td><?php echo e($remita->updated_at->format('d-M-Y')); ?></td>
                                 <td><?php echo e($remita->channel); ?></td>
                                 <td><?php echo e($remita->request_ip); ?></td>
-                                <td> <a class="btn btn-info" target="_blank" > Print Receipt </a></td>
-                                
+
+                                <td> <a class="btn btn-info" target="_blank" href="<?php echo e(route("remita.print-rrr",$remita->id)); ?>" > Print Receipt </a></td>
+                              <td><?php echo e($staff->full_name ?? null); ?></td>
                             </tr>
                             <?php endif; ?>
 

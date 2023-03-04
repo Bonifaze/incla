@@ -65,7 +65,7 @@
 
             <div class="card ">
 
-                <?php echo $__env->make("partialsv3.flash", \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
+                
                 <div class="table-responsive">
 
                     <!-- form start -->
@@ -134,7 +134,7 @@
 
                <div class="card ">
 
-                <?php echo $__env->make("partialsv3.flash", \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
+                
                 <div class="table-responsive">
 
                     <!-- form start -->
@@ -148,7 +148,8 @@
 
                                 <div class="col-md-6 form-group">
 								<label for="program">Program :</label>
-					                                        
+					                                        <?php echo e(Form::select('program_id', $programs, null, [ 'class' => 'form-control','placeholder'=>'Select Program', 'id' => 'program_id', 'name' => 'program_id'])); ?>
+
 
 							      <span class="text-danger"> <?php echo e($errors->first('program')); ?></span>
 						        </div>

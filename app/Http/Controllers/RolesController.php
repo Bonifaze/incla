@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\RoleStaff;
 use Illuminate\Http\Request;
 use App\Role;
 use App\Permission;
+use App\Staff;
 use Illuminate\Validation\Rule;
 
 
@@ -164,6 +166,23 @@ class RolesController extends Controller
     	return redirect()->route('rbac.show-role', $role->id)
     	->with('success','permission removed successfully');
     }
+
+    public function showstaff($id)
+    {
+        $this->authorize('rbac','App\Staff');
+        $roles = Role::find($id);
+    	$role = RoleStaff::with('staff')->where('role_id', $id)->get();
+
+        $rolee =$roles->role;
+        // $Staff= new Staff();
+    	// $permission = new Permission();
+
+    	// $permissions = $permission->rolePermissions($role->id);
+    	// $perms = $permission->availablePermissions($role->id);
+
+    	return view('/rbac/show-staff', array('role' => $role,'roles' => $roles,'rolee' => $rolee));
+    }
+
 
 
 } // end Class

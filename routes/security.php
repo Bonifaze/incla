@@ -50,3 +50,6 @@ Route::get('/rbac/refresh-student-password', 'PermissionsController@refreshStude
 
 Route::post('/rbac/reset-student-password', 'PermissionsController@resetStudentPassword')->name('rbac.resetstudentpassword');
 
+Route::get('/rbac/audit', 'PermissionsController@audit')->name('rbac.audit');
+
+Route::get('/rbac/show-staff/{id}', 'RolesController@showstaff')->name('rbac.show-staff');

@@ -61,7 +61,7 @@
 							  <td><?php echo e($role->name); ?></td>
                               <td><?php echo e($role->role); ?></td>
 							 <td><?php echo e($role->description); ?></td>
-							 <td><a href="<?php echo e(route('rbac.show-role',$role->id)); ?>" class="btn btn-default"> Show </td>
+							 <td><a href="<?php echo e(route('rbac.show-role',$role->id)); ?>" class="btn btn-default"> Assign Permission </td>
 
 							 <td><a href="<?php echo e(route('rbac.edit-role',$role->id)); ?>" class="btn btn-default"> Edit </td>
 

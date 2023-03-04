@@ -33,7 +33,7 @@ exit();
 
             <body>
             <br><br>
-  <div class="text-danger h3"><strong> Accomodation into Pa-Etos Female hostel, Male HOTEL L and Male HOSTEL K are currently unavaliable </strong></div> 
+  <div class="text-danger h3"><strong> Accomodation into Pa-Etos Female hostel, Male HOTEL L and Male HOSTEL K are currently unavaliable </strong></div>
                 @if (session('statusMsg'))
                 {!! session('statusMsg') !!}
                 @endif
@@ -148,7 +148,7 @@ exit();
                             "payerName": name,
                             "payerEmail": email,
                             "payerPhone": phone,
-                            "description": "ACCPTANCE"
+                            "description": "VERITAS UNIVERSITY ABUJA FEE"
                             //"expiryDate": "05/09/2021"
                         }))
 
@@ -254,7 +254,7 @@ exit();
                             "feeType": feeType,
                             "fee_type_id": fee_type_id,
                             "status": status,
-                            "description": "UTME"
+                            "description": "VERITAS UNIVERSITY ABUJA FEE"
                             //"expiryDate": "05/09/2021"
                         }));
 

@@ -14,7 +14,7 @@ use App\Staff;
 
 class PermissionsController extends Controller
 {
-    
+
 	/**
 	 * Create a new controller instance.
 	 *
@@ -24,7 +24,7 @@ class PermissionsController extends Controller
 	{
 	    $this->middleware('auth:staff');
 	}
-	
+
 
     /**
      * Display a listing of the resource.
@@ -36,7 +36,7 @@ class PermissionsController extends Controller
         $this->authorize('rbac','App\Staff');
         $perm = Permission::orderBy('id','DESC')->paginate(100);
     	return view('/rbac/list-perms',array('perms' => $perm));
-    	
+
     }
 
     /**
@@ -114,9 +114,9 @@ class PermissionsController extends Controller
     				'name' => 'required|string|max:255|unique:permissions',
     		]);
     	} // end valid name
-    	   
-    	
-    	
+
+
+
     	$this->validate($request, [
     			'name' => 'required|string|max:255',Rule::unique('permissions')->ignore($perm->name),
     			'description' => 'required|string|max:255',
@@ -206,6 +206,13 @@ class PermissionsController extends Controller
     }
 
 
+    public function audit()
+    {
+        // $this->authorize('rbac','App\Staff');
+        $a = Permission::orderBy('id','DESC')->paginate(100);
+    	return view('/rbac/audit',compact('a'));
+
+    }
 
 
 

@@ -50,7 +50,11 @@ class ProgramCoursePolicy
     }
     public function gstallocate(Staff $staff)
     {
-        return $staff->hasPermission(75);
+        return $staff->hasPermission(129);
+    }
+    public function approveResultSBC(Staff $staff)
+    {
+        return $staff->hasPermission(130);
     }
 
 } // end Policy

@@ -695,12 +695,12 @@
                                     </a>
                                 </li>
 
-                                <li class="nav-item">
+                                {{--  <li class="nav-item">
                                     <a href="/adminAllPayments" class="nav-link @yield('remita-list')">
                                         <i class="fa fa-eye nav-icon"></i>
                                         <p>All RRR Payment</p>
                                     </a>
-                                </li>
+                                </li>  --}}
 
                             </ul>
                         </li>

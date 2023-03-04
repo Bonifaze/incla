@@ -170,6 +170,9 @@
 
                     </ul>
                 </li>
+                 <li><a href="{{ route('rbac.audit') }}" class="dropdown-item">Audit </a></li>
+                           <li><a href="{{ route('staff.securitylist') }}" class="dropdown-item">List Staff Roles </a></li>
+
 
                     {{--  <li><a href="{{ route('staff.roles') }}" class="dropdown-item">View Roles </a></li>  --}}
                 <!-- End Level two -->

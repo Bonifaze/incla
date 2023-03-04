@@ -911,6 +911,8 @@ private function getdptcolleg($program_id)
             // $academic = $student->academic;
             $session_ids = RegisteredCourse::where('student_id', $student_id)->distinct('session')->pluck('session');
             $session_ids = $session_ids->toArray();
+            $registered_courses = RegisteredCourse::where('student_id', $student_id)->
+            where('status' , 'published')->get();
             $sessions = Session::wherein('id', $session_ids)->with(['registered_courses1' => function ($query) use ($student_id) {
                 $query->where('student_id', $student_id);
                 $query->where('semester', '1');
@@ -919,7 +921,9 @@ private function getdptcolleg($program_id)
                 $query->where('semester', '2');
             }])->get();
 
-            return view('students.transcript',compact('student','academic','sessions'));
+
+
+            return view('students.transcript',compact('student','academic','sessions','registered_courses'));
         }
 
 

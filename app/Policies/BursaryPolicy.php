@@ -32,4 +32,8 @@ class BursaryPolicy
     {
         return $staff->hasPermission(73);
     }
+    public function remitaFeetype(Staff $staff)
+    {
+        return $staff->hasPermission(124);
+    }
 } //end Policy

@@ -57,13 +57,14 @@
 							   <th>Generated On</th>
                                <th>Staus</th>
                                 <th>Action</th>
+
 						  </tr>
                             <tr>
 
-                                <td><?php echo e($users->first_name); ?>  <?php echo e($users->surname); ?></td>
-                                <td><?php echo e($users->phone); ?></td>
-                                <td><?php echo e($feeType->name); ?></td>
-                                <td>N<?php echo e($remita->amount); ?></td>
+                                <td><?php echo e($users->first_name ?? null); ?>  <?php echo e($users->surname ?? null); ?></td>
+                                <td><?php echo e($users->phone ?? null); ?></td>
+                                <td><?php echo e($feeType->name ?? null); ?></td>
+                                <td>N<?php echo e($remita->amount ?? null); ?></td>
                                 <td><?php echo e($remita->rrr); ?></td>
                                 <td><?php echo e($remita->created_at->format('d-M-Y')); ?></td>
                                  <td><?php echo e($remita->status); ?></td>
@@ -87,6 +88,7 @@
                                 <th>Channel</th>
                                 <th>Ip Address</th>
                                 <th>Action</td>
+                                  <th>Verify_by</th>
                             </tr>
                             <tr>
                                 <td><?php echo e($remita->transaction_date); ?></td>
@@ -95,8 +97,9 @@
                                 <td><?php echo e($remita->updated_at->format('d-M-Y')); ?></td>
                                 <td><?php echo e($remita->channel); ?></td>
                                 <td><?php echo e($remita->request_ip); ?></td>
-                                <td> <a class="btn btn-info" target="_blank" > Print Receipt </a></td>
-                                
+
+                                <td> <a class="btn btn-info" target="_blank" href="<?php echo e(route("remita.print-rrr",$remita->id)); ?>" ><i class="fas fa-print text-white-50"></i> Print Receipt </a></td>
+                                  <td><?php echo e($staff->full_name ?? null); ?></td>
                             </tr>
                             <?php endif; ?>
 

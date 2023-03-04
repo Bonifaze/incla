@@ -36,16 +36,18 @@
         <div class="col_full">
 
 
-            <div class="card card-primary">
-              <div class="card-header">
-                <h3 class="card-title">
-                    @isset($sum)
+             <h1
+                        class="app-page-title text-uppercase h5 font-weight-bold p-2 mb-2 shadow-sm text-center text-success border">
+{{ $academic->student->full_name}} ({{ $academic->mat_no}})
+<br><br>
+                     @isset($sum)
                         {{"Total: N".number_format($sum)}}
                     @else
                         Remita Details
                     @endisset
-                </h3>
-				</div>
+                    </h1>
+
+
 
              <div class="table-responsive card-body">
 
@@ -56,7 +58,7 @@
                               <th>RRR</th>
                               {{--  <th>Student Name</th>  --}}
 							  {{--  <th>Matric Number</th>  --}}
-                              {{--  <th>Service Type</th>  --}}
+                              <th>Service Type</th>
 							   <th>Amount</th>
 							   <th>Generated</th>
                               <th>Action</th>
@@ -66,12 +68,12 @@
                                 <td>{{$remita->rrr}}</td>
                                 {{--  <td>{{$remita->student->fullname}}</td>  --}}
                                 {{--  <td>{{$remita->student->academic->mat_no}}</td>  --}}
-                                {{--  <td>{{$remita->feeType->name}}</td>  --}}
+                                <td>{{$remita->feeType->name}}</td>
                                 <td>&#8358;{{number_format($remita->amount)}}</td>
                                 <td>{{$remita->created_at->format('d-M-Y')}}</td>
                                 <td>
                                     @if($remita->status_code == 1)
-                                        <a class="btn btn-info" target="_blank" href="{{route("remita.print-rrr",$remita->id)}}" > Print Receipt </a>
+                                        <a class="btn btn-info" target="_blank" href="{{route("remita.print-rrr",$remita->id)}}" ><i class="fas fa-print text-white-50"></i> Print Receipt </a>
                                     @else
                                         {{$remita->status}}
                                     @endif
