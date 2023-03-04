@@ -15,7 +15,7 @@
 
 <!-- Page -->
  @section('list-sessions') active @endsection
- 
+
  <!-- End Sidebar links -->
 
 
@@ -24,25 +24,26 @@
 
 <div class="content-wrapper">
     <!-- Content Header (Page header) -->
-    
+
     <!-- Main content -->
     <section class="content">
       <div class="container-fluid">
         <!-- left column -->
         <div class="col_full">
-         
-            
-            <div class="card card-primary">
-              <div class="card-header">
-                <h3 class="card-title">List of Academic Sessions</h3>
-				</div>
+
+
+                      <h1
+                        class="app-page-title text-uppercase h5 font-weight-bold p-2 mb-2 shadow-sm text-center text-success border">
+                     List of Academics Sessions
+                    </h1>
+
             @include('partialsv3.flash')
              <div class="table-responsive card-body">
-  
+
 						<table class="table table-striped">
 						  <thead>
-							
-							  <th>#</th>
+
+							  <th>S/N</th>
 							  <th>Name</th>
 							  <th>Start</th>
 							  <th>End</th>
@@ -50,24 +51,34 @@
 							   <th>Status</th>
 							 <th>Action</th>
 							  <th>Action</th>
-							 
-							  
-							   
-							
+
+
+
+
 						  </thead>
-						  
-						  
+
+
 						  <tbody>
-						  
+
 						  @foreach ($sessions as $key => $session)
-						  
+
 							<tr>
 							  <td>{{ $loop->iteration }}</td>
 							  <td>{{ $session->name }}</td>
 							   <td>{{ $session->start_date }}</td>
 							   <td>{{ $session->end_date }}</td>
-							    <td>{{ $session->semester }}</td>
-							 <td>{{ $session->status }}</td>
+							    {{--  <td>{{ $session->semester }}</td>  --}}
+                                   @if ( $session->semester  == 1)
+                             <td> First </td>
+                             @else ( $session->semester  == 2)
+                             <td>Second </td>
+                             @endif
+       @if ( $session->status == 1)
+                             <td> Active </td>
+                             @else
+                             <td>Deactive </td>
+                             @endif
+							 {{--  <td>{{ $session->status }}</td>  --}}
 								<td><a class="btn btn-warning" href="{{ route('session.edit',$session->id) }}"> <i class="fa fa-edit"></i> Edit </td>
 
 							@if ($session->status == 1)
@@ -84,25 +95,25 @@
 								</td>
 				    		@endif
 							</tr>
-							
-							@endforeach	
-							
+
+							@endforeach
+
 						  </tbody>
-						  
-						  
-						  
+
+
+
 						</table>
 						 {!! $sessions->render() !!}
-						 
-						
+
+
             </div>
-            
+
           </div>
           <!-- /.box -->
 
         </div>
         <!--/.col (left) -->
-        
+
       </div>
       <!-- /.row -->
     </section>
