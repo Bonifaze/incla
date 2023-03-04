@@ -83,7 +83,7 @@
 
 
                             <select class="form-input form-control m-3" name="category">
-                                <option>FEE Type Category</option>
+                                <option>Select Fee Type Category</option>
                                 <option value="1"> Application Fee</option>
                                 <option value="2">Acceptance Fee</option>
                                 <option value="3">School Fee</option>
@@ -92,7 +92,7 @@
                             </select>
 
                               <select class="form-input form-control m-3" name="installment">
-                                <option>Payment Type Instalment</option>
+                                <option>Select Payment Type Instalment</option>
                                 <option value="1"> Full Payment </option>
                                 <option value="2">Part Payment</option>
 
@@ -100,8 +100,8 @@
                             </select>
 
                                 <select class="form-input form-control m-3" name="college_id">
-                                <option  value="0">College </option>
-
+                                <option  value="0">Select College </option>
+                                 
                                   <option value="1"> Management ,Science, Arts and Technology</option>
                                 <option value="2"> Natural and Applied Science</option>
                                   <option value="3"> Faculty of Education</option>
@@ -112,6 +112,7 @@
                                     <option value="8"> LAW FACULTY</option>
                                     <option value="9"> HEALTH SCIENCES</option>
                                     <option value="8"> Pharmaceutical Sciences</option>
+                                     <option  value=" ">None of the Above </option>
 
 
                             </select>

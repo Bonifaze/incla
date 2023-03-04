@@ -247,12 +247,7 @@
                                         <p>Search</p>
                                     </a>
                                 </li>
-                                <li class="nav-item">
-                                    <a href="/adminallUsers" class="nav-link <?php echo $__env->yieldContent('faculties'); ?>">
-                                        <i class="fa fa-eye nav-icon"></i>
-                                        <p>All Registered User</p>
-                                    </a>
-                                </li>
+                                
                                 <li class="nav-item">
                                     <a href="/adminallApplicants" class="nav-link <?php echo $__env->yieldContent('departments'); ?>">
                                         <i class="fas fa-list-alt nav-icon"></i>

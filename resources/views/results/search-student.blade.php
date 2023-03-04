@@ -26,7 +26,7 @@
             <div class="card card-primary">
                 <h1
                         class="app-page-title text-uppercase h5 font-weight-bold p-2 mb-2 shadow-sm text-center text-success border">
-                      Student Result
+                      Student Academics
                     </h1>
              @include("partialsv3.flash")
              <div class="table-responsive">
@@ -55,7 +55,7 @@
 					</div>
 
 
-<TETSING ></TETSING>
+
 
               </div>
              </div>

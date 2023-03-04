@@ -55,7 +55,7 @@ exit;
                                             <label for="title">Title :</label>
 
                                             {!! Form::text('title', null, [
-                                                'placeholder' => 'Mr',
+                                                'placeholder' => '',
                                                 'class' => 'form-control',
                                                 'id' => 'title',
                                                 'name' => 'title',
@@ -84,7 +84,7 @@ exit;
                                             <label for="hobbies">Hobbies :</label>
 
                                             {!! Form::text('hobbies', null, [
-                                                'placeholder' => 'Cooking',
+                                                'placeholder' => '',
                                                 'class' => 'form-control',
                                                 'id' => 'hobbies',
                                                 'name' => 'hobbies',
@@ -493,7 +493,7 @@ exit;
                                         <label for="level">Level :</label>
                                         {{ Form::select(
                                             'level',
-                                            [
+                                            [   
                                                 ' '=> 'Select Level',
                                                 '100' => '100',
                                                 '200' => '200',
@@ -516,7 +516,7 @@ exit;
                                                 'UTME' => 'Undergraduate',
                                                 'PGD' => 'PGD',
                                                 'MSc' => 'Masters',
-                                                'MPA' => 'MPA',
+                                                 'MPA' => 'MPA',
                                                 'MBA' => 'MBA',
                                                 'PhD' => 'PhD',
                                             ],
@@ -533,13 +533,14 @@ exit;
                                     {{--  <div class="col-md-4 form-group">
                                     <label for="mode_of_entry">Mode of Entry :</label>
                                     {{ Form::select('mode_of_entry', [
+                                          ' ' => 'Select Mode of Entry',
                                         'UTME' => 'UTME',
 	                        		'DE' => 'Direct Entry',
 	                        		'TRANSFER' => 'Transfer',
 	                       			'PGD' => 'PGD',
 	                       			'MSc' => 'Masters',
 	                       			'PhD' => 'PhD'],
-	                        		'UTME',
+	                        		' ',
 	                       			 ['class' => 'form-control select2']
 	                    			) }}
 
@@ -667,7 +668,7 @@ exit;
                                         <div @if ($errors->has('condition')) class ='has-error form-group' @endif>
                                             <label for="condition">Known Medical Condition :</label>
                                             {!! Form::textarea('condition', null, [
-                                                'placeholder' => 'Asthma or None',
+                                                'placeholder' => '',
                                                 'rows' => '3',
                                                 'class' => 'form-control',
                                                 'id' => 'condition',
@@ -681,7 +682,7 @@ exit;
                                         <div @if ($errors->has('allergies')) class ='has-error form-group' @endif>
                                             <label for="allergies">Known Allergies :</label>
                                             {!! Form::textarea('allergies', null, [
-                                                'placeholder' => 'Peanuts, sulphur or None',
+                                                'placeholder' => '',
                                                 'rows' => '3',
                                                 'class' => 'form-control',
                                                 'id' => 'allergies',
@@ -747,7 +748,7 @@ exit;
                  ============================================= -->
     <script src="{{ asset('js/jquery.js') }}"></script>
 
-    //
+    
     <script>
         //    var myModal = new bootstrap.Modal(document.getElementById('myModal'), {})
         //  myModal.show()
@@ -757,7 +758,7 @@ exit;
     <!-- bootstrap datepicker -->
     <script src="{{ asset('dist/js/components/bootstrap-datepicker.js') }}"></script>
     <!-- Bootstrap File Upload Plugin -->
-    <script src="{{ asset('dist/js/components/bs-filestyle.js') }}"></script>
+    <script src="{{ asset('dist/js/components/bs-filestyle.js') }}"></script> 
 
     <script type="text/javascript">
         //Date picker

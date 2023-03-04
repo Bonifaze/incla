@@ -18,7 +18,11 @@ class Remita extends Model
     {
         return $this->belongsTo('App\FeeType', 'fee_type_id');
     }
-
+    
+  public function staff()
+    {
+        return $this->belongsTo('App\Staff', 'verify_by');
+    }
 
     public function users()
     {

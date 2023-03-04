@@ -54,7 +54,7 @@ class RemitaController extends Controller
     public function find(Request $request)
     {
 
-        $this->authorize('remitaSearch',Remita::class);
+         $this->authorize('remitaSearch',Remita::class);
         $this->validate($request, [
             'data' => 'required|string|max:50',
         ],
@@ -67,7 +67,8 @@ class RemitaController extends Controller
             $student = $remita->student;
             $academic = $student->academic;
             $feeType = $remita->feeType;
-            return view('bursary.remita_show',compact('remita','student','academic','feeType'));
+            $staff =$remita->staff;
+            return view('bursary.remita_show',compact('remita','student','academic','feeType','staff'));
         }
         else {
             $error = "Requested Remita record not found. Please check your input or contact ICT.";
@@ -115,14 +116,14 @@ return view('admissions.error', compact('loginMsg'));
 
     public function searchApplicant()
     {
-        $this->authorize('remitaSearch',Remita::class);
+         $this->authorize('remitaSearch',Remita::class);
         return view('bursary.remita_searchA');
     } //end search
 
     public function findapplicant(Request $request)
     {
 
-        $this->authorize('remitaSearch',Remita::class);
+         $this->authorize('remitaSearch',Remita::class);
         $this->validate($request, [
             'data' => 'required|string|max:50',
         ],
@@ -146,12 +147,11 @@ return view('admissions.error', compact('loginMsg'));
 
 
     public function printRRR($id){
-        $this->authorize('remitaSearch',Remita::class);
+        // $this->authorize('remitaSearch',Remita::class);
         $remita = Remita::find($id);
-        // dd($id);
        if($remita){
-            // $response = $remita->verifyRRR();
-            // if($response->status == 1) {
+         //   $response = $remita->verifyRRR();
+         //   if($response->status == 1) {
                 $student = $remita->student;
                 $academic = $student->academic;
                 $feeType = $remita->feeType;

@@ -53,7 +53,7 @@ exit;
                                                 <div class="dropdown no-arrow">
 
                                                     @php
-                                                    $fees = array("UTME"=>80000, "DE"=>80000, "Transfer"=>80000, "PG"=>100000);
+                                                    $fees = array("UTME"=>80000, "DE"=>80000, "Transfer"=>80000, "PG"=>50000);
                                                     @endphp
                                                     @foreach ($admission as $utm )
                                                     <input type="hidden" class="form-control" id="js-firstName" placeholder="{{$utm->first_name." ".$utm->middle_name." ".$utm->surname }}" value="{{ $utm->first_name." ".$utm->middle_name." ".$utm->surname }}" name="firstName" readonly>

@@ -12,7 +12,7 @@ use App\Session;
 class SemesterRegistrationsController extends Controller
 {
     //
-    public function registration($encode, $session)
+    public function registration($encode,$session)
     {
         //
         $student_id = base64_decode($encode);
@@ -20,8 +20,9 @@ class SemesterRegistrationsController extends Controller
         $session = Session::findOrFail($session);
         $academic = $student->academic;
         
-        $results = RegisteredCourse::where('student_id', $student_id)->where('session', $session->id)->get();
-        return view('results.course_form',compact('student','session','academic','results'));
+        $results = RegisteredCourse::where('student_id', $student_id)->where('session', $session->id)->where('semester', 1)->get();
+        $results2 = RegisteredCourse::where('student_id', $student_id)->where('session', $session->id)->where('semester', 2)->get();
+        return view('results.course_form',compact('student','session','academic','results' ,'results2'));
     }
 
 

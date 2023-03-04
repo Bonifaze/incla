@@ -17,9 +17,9 @@ Route::get('/students/debt', 'StudentsController@debt')->name('student.debt');
 
 Route::get('/students/transcript', 'StudentsController@transcript')->name('students.transcript');
 
-Route::get('/students/results', 'StudentsController@results')->name('students.results');
+//Route::get('/students/results', 'StudentsController@results')->name('students.results');
 
-Route::get('/students/semester-result/{encode}', 'StudentsController@semesterResult')->name('student.semester-result');
+// Route::get('/students/semester-result/{encode}', 'StudentsController@semesterResult')->name('student.semester-result');
 
 // Route::get('/students/course-registration2', 'StudentsController@courseRegistration2')->name('student.course-registration2');
 
@@ -67,9 +67,8 @@ Route::get('/students/remita/print/{id}', 'StudentPaymentsController@remitaPrint
 
 Route::get('/students/remita/feestype', 'StudentPaymentsController@feespayment')->name('student.feespayment');
 Route::get('/students/remita/paymentview/{id}', 'StudentPaymentsController@viewpayment')->name('student.paymentview');
-Route::get('/students/receipt/{rrr}', 'StudentPaymentsController@receipt')->name('sudent.receipt');
-Route::post('/payremi', 'StudentPaymentsController@payremi')->name('sudent.payremi');
+Route::get('/students/receipt/{rrr}', 'StudentPaymentsController@receipt')->name('student.receipt');
+Route::post('/students/payremi', 'StudentPaymentsController@payremi')->name('student.payremi');
 Route::post('/students/logpay', 'StudentPaymentsController@logpay')->name('student.logpay');
-
 
 // Route::get('/paymentview/{id}', 'App\Http\Controllers\ApplicantController@Viewpayment');

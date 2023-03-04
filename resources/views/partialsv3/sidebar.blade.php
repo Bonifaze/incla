@@ -49,12 +49,12 @@
                             </a>
                         </li>
 
-                        {{--  <li class="nav-item">
+                     {{--  <li class="nav-item">
                             <a href="{{ route('staff.roles') }}" class="nav-link @yield('list-staff')">
                                 <i class="fas fa-list-alt nav-icon"></i>
                                 <p>List Roles</p>
                             </a>
-                        </li>  --}}
+                        </li> --}}
 
                         <li class="nav-item">
                             <a href="{{ route('staff.password') }}" class="nav-link @yield('staff-password')">
@@ -157,7 +157,6 @@
                                         <p>Assign Course to Program </p>
                                     </a>
                                 </li>
-
                                 <li class="nav-item">
                                     <a href="{{ route('program_course.assign') }}"
                                         class="nav-link @yield('exam-remark')">
@@ -171,12 +170,6 @@
                                         <p>Allocted Courses </p>
                                     </a>
                                 </li>
-                                  {{--  <li class="nav-item">
-                                    <a href="{{ route('program_course.list_assign_courses') }}" class="nav-link @yield('exam-remark')">
-                                        <i class="fa fa-plus nav-icon"></i>
-                                        <p>Allocted Courses to staff </p>
-                                    </a>
-                                </li>  --}}
                                 <li class="nav-item">
                                     <a href="{{ route('course.search') }}" class="nav-link @yield('exam-remark')">
                                         <i class="fa fa-search nav-icon"></i>
@@ -316,12 +309,12 @@
                                         <p>Search</p>
                                     </a>
                                 </li>
-                                <li class="nav-item">
+                              {{--  <li class="nav-item">
                                     <a href="/adminallUsers" class="nav-link @yield('faculties')">
                                         <i class="fa fa-eye nav-icon"></i>
                                         <p>All Registered User</p>
                                     </a>
-                                </li>
+                                </li> --}}
                                 <li class="nav-item">
                                     <a href="/adminallApplicants" class="nav-link @yield('departments')">
                                         <i class="fas fa-list-alt nav-icon"></i>
@@ -694,13 +687,12 @@
                                         <p>Show Remita Fee Type</p>
                                     </a>
                                 </li>
-
-                                {{--  <li class="nav-item">
+ {{--  <li class="nav-item">
                                     <a href="/adminAllPayments" class="nav-link @yield('remita-list')">
                                         <i class="fa fa-eye nav-icon"></i>
                                         <p>All RRR Payment</p>
                                     </a>
-                                </li>  --}}
+                                </li> --}}
 
                             </ul>
                         </li>

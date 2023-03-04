@@ -103,7 +103,7 @@
                                 <i class="fa fa-eye nav-icon"></i>
                                 <p>Level Results</p>
                             </a>
-                        </li>  --}}
+                        </li>   --}}
                         <li class="nav-item">
                             <a href="{{ route('students.transcript') }}" class="nav-link @yield('transcript')">
                                 <i class="fa fa-eye nav-icon"></i>

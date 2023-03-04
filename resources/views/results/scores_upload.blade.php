@@ -108,9 +108,9 @@ if(!session('adminId'))
                                                     @foreach ($student_registered_courses as $student_course)
                                                         <tr>
                                                             <td>{{ $loop->iteration }}</td>
-                                                            <td>{{ $student_course->student_name  }} <input type="hidden"
+                                                            <td>{{ $student_course->student_name }} <input type="hidden"
                                                                     name="reg_ids[]" value="{{ $student_course->id }}"></td>
-                                                            <td>{{ $student_course->student_matric   }}</td>
+                                                            <td>{{ $student_course->student_matric }}</td>
                                                             <td>{{ $student_course->course_code }}</td>
                                                             <td><input type="number" name="ca1_scores[]"
                                                                     value="{{ $student_course->ca1_score }}"

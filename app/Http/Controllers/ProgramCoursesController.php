@@ -471,7 +471,7 @@ class ProgramCoursesController extends Controller
      */
     public function changeLecturer($id)
     {
-        $this->authorize('changeLecturer',ProgramCourse::class);
+        $this->authorize('gstallocate',ProgramCourse::class);
         $pcourse = ProgramCourse::findOrFail(base64_decode($id));
         $program = Program::findOrFail($pcourse->course->program_id);
         $programLecturers = Staff::join('staff_work_profiles', 'staff.id', '=', 'staff_work_profiles.staff_id')
@@ -496,7 +496,7 @@ class ProgramCoursesController extends Controller
     public function updateLecturer(Request $request)
     {
         $session = new Session();
-        $this->authorize('changeLecturer',ProgramCourse::class);
+        $this->authorize('gstallocate',ProgramCourse::class);
         $this->validate($request, [
             'staff_id' => 'required|integer',
         ]);

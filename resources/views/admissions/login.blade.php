@@ -111,8 +111,8 @@
 
                             @csrf
                             <div class="form-group">
-                                <label for="exampleInputEmail1">Veritas Email</label>
-                                <input id="email" type="email" placeholder="Veritas Email"
+                                <label for="exampleInputEmail1">Email</label>
+                                <input id="email" type="email" placeholder="Email"
                                     class="form-control{{ $errors->has('email') ? ' is-invalid' : '' }}" name="email"
                                     value="{{ old('email') }}" required autofocus>
                                 @if ($errors->has('email'))

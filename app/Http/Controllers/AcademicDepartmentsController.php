@@ -235,9 +235,8 @@ class AcademicDepartmentsController extends Controller
             ->whereHas('staff')
             ->orderBy('semester','ASC')
             ->get();
-            // dd($program->id,$session->currentSession());
-            $staff_courses = StaffCourse::where('program_id', $program->id)->where('session_id', $session->currentSession())->latest();
-            // $staff_courses = StaffCourse::where('program_id', $program->id)->where('course_id', $course_id)->where('session_id', $program_courses->session_id)->get();
+            $staff_courses = StaffCourse::where('program_id', $program->id)->where('session_id', $session->currentSession())->first();
+
 
         return view('academia.departments.program_level_courses',compact('program','program_courses','level','staff_courses'));
     }

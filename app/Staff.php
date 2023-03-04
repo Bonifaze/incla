@@ -32,10 +32,7 @@ class Staff extends Authenticatable
     ];
 
     protected $appends = ['full_name'];
-
     protected $with = ['roles'];
-
-
 
     public function workProfile()
     {

@@ -114,19 +114,17 @@ class StudentResultsController extends Controller
             {
                 RegisteredCourse::where('student_id', $course_reg->student_id)->where('course_id', $course_reg->course_id)->where('session', '>', $course_reg->session)->delete();
             }
-            $registeredCourse = RegisteredCourse::findOrFail($reg_ids[$i]);
-            $registeredCourse-> ca1_score = $ca1_scores[$i];
-            $registeredCourse->ca2_score = $ca2_scores[$i];
-            $registeredCourse->ca3_score = $ca3_scores[$i];
-            $registeredCourse->exam_score = $exam_scores[$i];
-            $registeredCourse->total = $total_score;
-            $registeredCourse->grade_id = $grade_id;
-            $registeredCourse->grade_status = $grade_setting->status;
-            $registeredCourse->staff_id =$staff->id;
-
-        $registeredCourse->save();
-
-    }
+            RegisteredCourse::where('id', $reg_ids[$i])->update([
+                'ca1_score' => $ca1_scores[$i],
+                'ca2_score' => $ca2_scores[$i],
+                'ca3_score' => $ca3_scores[$i],
+                'exam_score' => $exam_scores[$i],
+                'total' => $total_score,
+                'grade_id' => $grade_id,
+                'grade_status' => $grade_setting->status,
+                 'staff_id' =>$staff->id,
+            ]);
+        }
         return redirect()->back()->with('success', 'Scores uploaded successfully');
     }
 
@@ -462,8 +460,6 @@ class StudentResultsController extends Controller
      */
     public function addCourse(Request $request)
     {
-
-      //  dd($request);
         $this->authorize('register', StudentResult::class);
         $session = Session::findorFail($request->session_id);
         $result = new StudentResult();
@@ -483,7 +479,8 @@ class StudentResultsController extends Controller
             try {
                 // add course
                 $result->save();
-
+                //if(!$student->hasSemesterRegistration($session->id,$semester))
+             //   {
                     //register semester
                     $sem_reg = new RegisteredCourse();
                     $sem_reg->student_id = $student->id;
@@ -504,8 +501,8 @@ class StudentResultsController extends Controller
                         return redirect()->route('result.register',[$student->id,$session->id,$semester,$level])
                        ->with('error',"Errors completing semester registration.".$e->getMessage());
                     }
-                }
-
+           //     }
+            }
             catch(\Exception $e)
             {
                 //failed logic here

@@ -27,11 +27,6 @@ class StudentResult extends Model
         return $this->belongsTo('App\ProgramCourse', 'course_id');
     }
 
-    public function RegisteredCourse()
-    {
-        return $this->belongsTo('App\Models\RegisteredCourse', 'course_id');
-    }
-
     public function evaluations()
     {
         return $this->hasMany('App\EvaluationResult');
@@ -285,10 +280,10 @@ class StudentResult extends Model
 
        public function gpa($student_id,$session_id,$semester)
        {
-           $results = $this->with('RegisteredCourse')->where('student_id',$student_id)->where('session',$session_id)
+           $results = $this->with('programCourse')->where('student_id',$student_id)->where('session_id',$session_id)
            ->where('semester',$semester)
-        //    ->where('status','publishd')
-               ->whereHas('RegisteredCourse')->get();
+           ->where('status',7)
+               ->whereHas('programCourse')->get();
            $hours = 0;
            $units = 0;
 

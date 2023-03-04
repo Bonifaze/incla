@@ -70,6 +70,7 @@
                                     @foreach ($courses as $key => $course)
                                         <tr>
                                             <td>{{ $loop->iteration }}</td>
+                                         {{--    <td>{{ $course->id }}</td> --}}
                                             <td>{{ $course->course_code }}</td>
                                             <td>{{ $course->course_title }}</td>
                                             <td>{{ $course->credit_unit }}</td>

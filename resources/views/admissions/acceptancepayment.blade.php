@@ -147,7 +147,7 @@ exit();
                             "payerName": name,
                             "payerEmail": email,
                             "payerPhone": phone,
-                            "description": "ACCPTANCE"
+                            "description": "ACCPTANCE FEE"
                             //"expiryDate": "05/09/2021"
                         }))
 
@@ -253,7 +253,7 @@ exit();
                             "feeType": feeType,
                             "fee_type_id": fee_type_id,
                             "status": status,
-                            "description": "UTME"
+                            "description": "ACCEPTANCE FEE"
                             //"expiryDate": "05/09/2021"
                         }));
 

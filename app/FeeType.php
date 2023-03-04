@@ -68,13 +68,7 @@ class FeeType extends Model
     }
 
     public function paid(){
-        $paid = Remita::where('fee_type_id',$this->id)->where('status_code',1)
-        // ->where('installment',1)
-        ->get();
+        $paid = Remita::where('fee_type_id',$this->id)->where('status_code',1)->get();
         return $paid->sum('amount');
-    }
-    public function paidpart(){
-        $paidpart = Remita::where('fee_type_id',$this->id)->where('status_code',1)->where('installment',1)->get();
-        return $paidpart->sum('amount');
     }
 } //end Class

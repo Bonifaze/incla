@@ -239,10 +239,9 @@ class AdminController extends Controller
                 StaffCourse::where('level', $level)->where('program_id', $program_id)->where('session_id', $session)->where('semester_id', $semester)->update(['sbc_approval' => 'approved']);
                 break;
             case 'vc':
-                $course_id = $request->course_id;
                 $level = $request->level;
                 StaffCourse::where('level', $level)->where('program_id', $program_id)->where('session_id', $session)->where('semester_id', $semester)->update(['vc_senate_approval' => 'approved']);
-                 RegisteredCourse::where('program_id', $program_id)->where('session', $session)->where('semester', $semester)->update(['status' => 'published']);
+                RegisteredCourse::where('program_id', $program_id)->where('session', $session)->where('semester', $semester)->update(['status' => 'published']);
 
                 break;
             default:
@@ -456,7 +455,7 @@ class AdminController extends Controller
     {
         $staff = Auth::guard('staff')->user();
         if ($this->hasPriviledge("verifyPayment",  $staff->id)) {
-
+         
         try {
             DB::table('remitas')->where('rrr', $req->rrr)
                 ->update([

@@ -1,69 +1,25 @@
-{{--  @php
-
-if(!session('adminId'))
-{
-
-  header('location: /adminLogin');
-  exit;
-}
-@endphp  --}}
-@extends('layouts.mini')
-
-
-
-@section('pagetitle')
-    Staff Home
-@endsection
-
-
-
-<!-- Sidebar Links -->
-
-<!-- Treeview -->
-@section('staff-open')
-    menu-open
-@endsection
-
-@section('staff')
-    active
-@endsection
-
-<!-- Page -->
-@section('staff-home')
-    active
-@endsection
-
-<!-- End Sidebar links -->
-
-
+@extends('layouts.app')
 
 @section('content')
-    <div class="content-wrapper bg-white">
+<div class="row justify-content-center">
 
-        <!-- Main content -->
-        <section class="content">
-            <div class="container-fluid">
-                <!-- left column -->
-                <div class="col_full">
-                    <h1
-                        class="app-page-title text-uppercase h5 font-weight-bold p-2 mb-2 shadow-sm text-center text-success border">
-                 PG APPLICANT PROFILE
-                    </h1>
+    <!-- Page Wrapper -->
+    <div id="wrapper">
 
+        @include('layouts.sidebar')
 
+        <!-- Content Wrapper -->
+        <div id="content-wrapper" class="d-flex flex-column">
+            <!-- Main Content -->
+            <div id="content">
+                <!-- Begin Page Content -->
+                <div class="container-fluid">
 
-
-
- <div class="app-wrapper">
-                            <div class="app-content pt-3 p-md-3 p-lg-4">
-                                <div class="container-xl">
-                                    {{--  <h1 class="app-page-title h5 fw-bold p-2 shadow-sm text-center text-success mb-4 border">
-                                        UTME Applicant Profile</h1>  --}}
-                                    @csrf
-                                    @if (session('approvalMsg'))
-                                        {!! session('approvalMsg') !!}
-                                    @endif
-                                    <div class="row py-4">
+                    <div class="app-wrapper">
+                        <div class="app-content pt-3 p-md-3 p-lg-4">
+                            <div class="container-xl">
+                                <h1 class="app-page-title h5 fw-bold p-2 shadow-sm text-center text-success mb-4 border">PG Applicant Profile</h1>
+                                <div class="row gy-4">
                                     <div class="col-12 col-lg-6">
                                         <div class="app-card app-card-account shadow d-flex flex-column align-items-start ">
 
@@ -267,7 +223,7 @@ if(!session('adminId'))
                                                 <!--//app-card-->
                                             </div>
                                     </div>
-
+                        
                                     <div class="row gy-4 mb-4 mt-1">
                                         <div class="col-12 col-lg-6">
                                             <div class="app-card app-card-account shadow d-flex flex-column align-items-start ">
@@ -583,7 +539,7 @@ if(!session('adminId'))
             <!-- End of Main Content -->
 
             <!-- Footer -->
-
+            
             <!-- End of Footer -->
         </div>
     </div>

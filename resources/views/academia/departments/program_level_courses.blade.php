@@ -58,7 +58,7 @@
                              <td> {{$program_course->course->course_title}}</td>
                              <td> {{$program_course->credit_unit}}</td>
                              {{--  <td> {{$program_course->course->program->name}}</td>  --}}
-                             <td> {{$program_course->staff_name  ?? ' '}}
+                             {{--  <td> {{$program_course->staff_name  ?? ' '}}{{$program_course->lecturer->full_name}}  --}}
                                   <td>
                                   {{--  {{ $staff_courses->staff_name ?? null }}  --}}
                                    {{--  {{$program_course->staff_name  ?? ' '}}  --}}
@@ -113,7 +113,7 @@
                                  <td> {{ $program_course->action }} </td>
                                  <td> {{ $program_course->status }}</td>
                              @endif  --}}
-                          <td> {{$program_course->uploadStatus->upload_status ?? null}} </td>
+                          <td> {{$program_course->uploadStatus->upload_status}} </td>
                          </tr>
                           @endforeach
 

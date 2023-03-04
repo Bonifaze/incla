@@ -46,7 +46,7 @@
 							  <th>S/N</th>
 							  <th>Name</th>
                             <th>Phone</th>
-
+                <th></th>
 							  <th>Action</th>
 
 
@@ -63,10 +63,10 @@
 
 							    <td>
 								{!! Form::open(['method' => 'Post', 'route' => 'rbac.remove-role', 'id'=>'removeRForm'.$roles->role_id]) !!}
-				    		{{ Form::text('role_id', $roles->role_id) }}
-				    		{{ Form::text('staff_id', $roles->staff_id) }}
+				    		{{ Form::hidden('role_id', $roles->role_id) }}
+				    		{{ Form::hidden('staff_id', $roles->staff_id) }}
 
-				    		<button onclick="submitRForm({{$roles->role_id}})" type="button" class="{{$roles->role_id}} btn btn-danger" ><span class="icon-line2-trash"></span> Remove Role</button>
+				    	{{--	<button onclick="submitRForm({{$roles->role_id}})" type="button" class="{{$roles->role_id}} btn btn-danger" ><span class="icon-line2-trash"></span> Remove Role</button> --}}
 				    		{!! Form::close() !!}
 							 </td>
 		<td><a href="{{ route('staff.show',$roles->staff_id) }}" class="btn btn-default"> Edit </a></td>

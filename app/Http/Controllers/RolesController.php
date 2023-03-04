@@ -6,7 +6,6 @@ use App\Models\RoleStaff;
 use Illuminate\Http\Request;
 use App\Role;
 use App\Permission;
-use App\Staff;
 use Illuminate\Validation\Rule;
 
 
@@ -167,7 +166,7 @@ class RolesController extends Controller
     	->with('success','permission removed successfully');
     }
 
-    public function showstaff($id)
+     public function showstaff($id)
     {
         $this->authorize('rbac','App\Staff');
         $roles = Role::find($id);

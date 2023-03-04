@@ -455,7 +455,7 @@ protected function getCourseSemester($course_id)
             $total_reg_units2 += $student_registered_course->course_unit;
         }
     }
-
+   
     $student_courses = [];
 
 
@@ -894,8 +894,7 @@ private function getdptcolleg($program_id)
         //     $totalCGPA = $student->CGPA();
         //     return view('students.transcript',compact('student','academic','registrations','totalCGPA'));
         // } //end show
-
-        public function transcript()
+    public function transcript()
         {
             $student = Auth::guard('student')->user();
             // dd($student->id);
@@ -927,59 +926,58 @@ private function getdptcolleg($program_id)
         }
 
 
+    // public function results()
+    //     {
+    //         $student = Auth::guard('student')->user();
+    //         //check for allowed
+    //         // allowed is not true show error
+    //         $access = $student->resultAccess();
+    //         if($access['value'] < 0)
+    //         {
+    //             return redirect()->route('student.home')
+    //                 ->with('error',$access['error']);
+    //         }
+    //         $academic = $student->academic;
 
-    public function results()
-        {
-            $student = Auth::guard('student')->user();
-            //check for allowed
-            // allowed is not true show error
-            // $access = $student->resultAccess();
-            // if($access['value'] < 0)
-            // {
-            //     return redirect()->route('student.home')
-            //         ->with('error',$access['error']);
-            // }
-             $academic = $student->academic;
+    //         $registrations = $student->semesterRegistrations;
 
-            $registrations = $student->semesterRegistrations;
+    //         $totalCGPA = $student->CGPA();
 
-             $totalCGPA = $student->CGPA();
+    //         return view('students.results',compact('student','academic','registrations','totalCGPA'));
 
-         return view('students.results',compact('student','academic','registrations','totalCGPA'));
-            //return view('students.results');
-        } // end results
+    //     } // end results
 
 
-        public function semesterResult($encode)
-        {
-            $registration = SemesterRegistration::findOrFail(base64_decode($encode));
-            $result = new StudentResult();
-            $student = Student::findOrFail($registration->student_id);
+    //     public function semesterResult($encode)
+    //     {
+    //         $registration = SemesterRegistration::findOrFail(base64_decode($encode));
+    //         $result = new StudentResult();
+    //         $student = Student::findOrFail($registration->student_id);
 
-            //check if debt exists
-            // if(!isset($student->debt))
-            // {
-            //     return redirect()->route('student.home')
-            //         ->with('error',"Financial information not found. Contact ICT.");
-            // }
-            //check for debt
-            // if($student->debt->debt > config('app.DEBT_LIMIT'))
-            // {
-            //     return redirect()->route('student.home')
-            //         ->with('error',"This page has been disabled because of your financial status.");
-            // }
+    //         //check if debt exists
+    //         if(!isset($student->debt))
+    //         {
+    //             return redirect()->route('student.home')
+    //                 ->with('error',"Financial information not found. Contact ICT.");
+    //         }
+    //         //check for debt
+    //         if($student->debt->debt > config('app.DEBT_LIMIT'))
+    //         {
+    //             return redirect()->route('student.home')
+    //                 ->with('error',"This page has been disabled because of your financial status.");
+    //         }
 
-            $academic = $student->academic;
-            $session = Session::findOrFail($registration->session_id);
-            $semester = $registration->semester;
-            $academic = $student->academic;
-            $results =  $registration->result();
-            $gpa = $registration->gpa();
-            $cgpa = $registration->cgpa();
+    //         $academic = $student->academic;
+    //         $session = Session::findOrFail($registration->session_id);
+    //         $semester = $registration->semester;
+    //         $academic = $student->academic;
+    //         $results =  $registration->result();
+    //         $gpa = $registration->gpa();
+    //         $cgpa = $registration->cgpa();
 
-            $totalCGPA = $student->CGPA();
-            return view('students.semester_result',compact('student','session','semester','registration','academic','results','gpa','cgpa','totalCGPA'));
-        } //end show
+    //         $totalCGPA = $student->CGPA();
+    //         return view('students.semester_result',compact('student','session','semester','registration','academic','results','gpa','cgpa','totalCGPA'));
+    //     } //end show
 
 
     // public function evaluateResult($result_id)

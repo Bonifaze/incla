@@ -18,7 +18,7 @@ class VerifyCsrfToken extends Middleware
         '/api/test',
         '/payremi',
         '/logpay',
-       ' /students/payremi',
+        '/students/payremi',
         '/students/logpay',
         '/program-courses/get-by-id',
         '/admin/compute',

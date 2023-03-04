@@ -22,7 +22,7 @@ use App\StudentContact;
 use App\StudentAcademic;
 use App\StudentMedical;
 use App\SemesterRegistration;
-use App\RegisteredCourse;
+use App\StudentResult;
 use Mail;
 
 class UtilitiesController extends Controller
@@ -517,7 +517,7 @@ lawrence christopher <br />
             ->orderBy('lecturer_id','ASC')->get();
         foreach ($program_courses as $pc)
         {
-            $results = RegisteredCourse::with(['programCourse','programCourse.course','programCourse.lecturer','modifiedBy'])->where('program_course_id',$pc->id)
+            $results = StudentResult::with(['programCourse','programCourse.course','programCourse.lecturer','modifiedBy'])->where('program_course_id',$pc->id)
                 ->where('total','>',46)->where('modified_by','!=',$pc->lecturer_id)
                 ->orderBy('updated_at','ASC')->get();
             if($results->count() < 4)

@@ -96,7 +96,7 @@
                             </select>
 
                                 <select class="form-input form-control m-3" name="college_id">
-                                <option  value="0">College </option>
+                                <option  value="0">Select College </option>
 
                                   <option value="1"> Management ,Science, Arts and Technology</option>
                                 <option value="2"> Natural and Applied Science</option>
@@ -108,6 +108,7 @@
                                     <option value="8"> LAW FACULTY</option>
                                     <option value="9"> HEALTH SCIENCES</option>
                                     <option value="8"> Pharmaceutical Sciences</option>
+                                    <option  value=" ">None of the Above </option>
 
 
                             </select>

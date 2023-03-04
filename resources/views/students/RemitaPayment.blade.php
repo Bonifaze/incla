@@ -1,87 +1,135 @@
-@php
+{{--  @php
 
-if (!session('userid')) {
-header('location: /');
-exit();
-}
-@endphp
+    if (!session('userid')) {
+        header('location: /');
+        exit();
+    }
+@endphp  --}}
 
-@extends('layouts.userapp')
+@extends('layouts.student')
+
+
+
+@section('pagetitle')
+    Home
+@endsection
+
+
+
+<!-- Sidebar Links -->
+
+<!-- Treeview -->
+@section('student-open')
+    menu-open
+@endsection
+
+@section('student')
+    active
+@endsection
+
+<!-- Page -->
+@section('home')
+    active
+@endsection
+
+<!-- End Sidebar links -->
+
+
 
 @section('content')
-<!-- Page Wrapper -->
-<div id="wrapper">
-    @include('layouts.usersidebar')
-    <!-- Content Wrapper -->
-    <div id="content-wrapper" class="d-flex flex-column">
-        <!-- Main Content -->
-        <div id="content">
-            <!DOCTYPE html>
-            <html lang="en">
+    <div class="content-wrapper bg-white">
+        <!-- Content Header (Page header) -->
 
-            <head>
-                <meta charset="UTF-8">
-                <meta http-equiv="X-UA-Compatible" content="IE=edge">
-                <meta name="viewport" content="width=device-width, initial-scale=1.0">
-                <meta name="csrf-token" content="{{ csrf_token() }}">
-                <title></title>
-                <!-- CSS only -->
-                <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
+        <!-- Main content -->
+        <section class="content">
+            <div class="container-fluid">
+                <!-- left column -->
+                <div class="col_full">
 
-            </head>
+                    <h1 class="app-page-title text-uppercase h5 font-weight-bold p-2 mb-2 shadow-sm text-center text-success border">
+                        Remita Fees
+                    </h1>
+ <div id="content">
+                <!DOCTYPE html>
+                <html lang="en">
+
+                <head>
+                    <meta charset="UTF-8">
+                    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+                    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+                    <meta name="csrf-token" content="{{ csrf_token() }}">
+                    <title></title>
+                    <!-- CSS only -->
+                    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css"
+                        rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor"
+                        crossorigin="anonymous">
+
+                </head>
 
 
-            <body>
+                <body>
 
-                @if (session('statusMsg'))
-                {!! session('statusMsg') !!}
-                @endif
-                @if (session('signUpMsg'))
-                {!! session('signUpMsg') !!}
-                @endif
-                <form action="" method="POST" onsubmit="event.preventDefault();" class="p-5">
-                    @csrf
-                    <div class="form-group container-fluid mt-5 p-5 border border-success shadow shadow-lg rounded rounded-lg">
-                        <label for="exampleFormControlSelect1" class="text-success fw-bold mb-2">Admission Type</label>
-                        <!-- <select class="form-control" id="pmtype">
-                            <option>Select Payment </option>
-                            <option value="4430731">Application for UTME </option>
-                            <option value="4430731">Application for DE</option>
-                            <option value="4430731">Application for Transfer</option>
-                            <option value="4430731">Application for Post Graduate</option>
-                        </select> -->
-                        <select class="form-select" id="pmtype" onChange="update()">
-                            @foreach ($fee_types as $fee_types)
-                            <option value="{{$fee_types->provider_code}}, {{$fee_types->id}}"  id="{{$fee_types->amount}}" >
+                    @if (session('statusMsg'))
+                        {!! session('statusMsg') !!}
+                    @endif
+                    @if (session('signUpMsg'))
+                        {!! session('signUpMsg') !!}
+                    @endif
+                    <form action="" method="POST" onsubmit="event.preventDefault();" class="p-5">
+                        @csrf
+                        <div
+                            class="form-group container-fluid mt-5 p-5 border border-success shadow shadow-lg rounded rounded-lg">
+                            <label for="exampleFormControlSelect1" class="text-success fw-bold mb-2">Types</label>
 
-                                {{ $fee_types->name }}
-                            </option>
+                            <select class="form-select" id="pmtype" onChange="update()">
+                                @foreach ($fee_types as $fee_types)
+                                    <option value="{{ $fee_types->provider_code }}, {{ $fee_types->id }}"
+                                        id="{{ $fee_types->amount }}">
 
-                            @endforeach
+                                        {{ $fee_types->name }}
+                                    </option>
+                                @endforeach
 
-                        </select>
-                        <input type="hidden" class="form-control mt-2" id="value" readonly>
-                        <input type="hidden" class="form-control mt-2"   id="provider_code" readonly>
-                        <input type="hidden" class="form-control mt-2"   id="fee_type_id" readonly>
-                        <input type="text" class="form-control mt-2" id="id" readonly>
-                        @foreach ($payment as $utm)
-                        <div class="form-floating mb-3 mt-3">
-                            <input type="hidden" class="form-control" id="js-firstName" placeholder="{{ $utm->first_name . ' ' . $utm->middle_name . ' ' . $utm->surname }}" value="{{ $utm->first_name . ' ' . $utm->middle_name . ' ' . $utm->surname }}" name="firstName" readonly>
-                            <label for="email"></label>
-                        </div>
+                            </select>
 
-                        <div class="form-floating mb-3 mt-3">
-                            <input type="hidden" class="form-control" id="js-email" placeholder="{{ $utm->email }}" value="{{ $utm->email }}" name="email" readonly hidden>
-                            <label for="email"></label>
-                        </div>
 
-                        <div class="form-floating mb-3 mt-3">
-                            <input type="hidden" class="form-control" id="js-phone" placeholder="{{ $utm->phone }}" value="{{ $utm->phone }}" name="email" readonly>
-                            <label for="email"></label>
-                        </div>
-                        @endforeach
+                            <input type="hidden" class="form-control mt-2" id="value" readonly>
+                            <input type="hidden" class="form-control mt-2" id="provider_code" readonly>
+                            <input type="hidden" class="form-control mt-2" id="fee_type_id" readonly>
+                            <input type="text" class="form-control mt-2" id="id" readonly>
+                            {{--  @foreach ($payment as $utm)  --}}
+                                <div class="form-floating mb-3 mt-3">
+                                    <input type="hidden" class="form-control" id="js-firstName"
+                                        placeholder="{{ Auth::guard('student')->user()->full_name }}"
+                                        value="{{ Auth::guard('student')->user()->full_name }}"
+                                        name="firstName" readonly>
+                                    <label for="email"></label>
+                                </div>
 
-                        {{--  <div class="form-floating mt-3 mb-3">
+                                <div class="form-floating mb-3 mt-3">
+                                    <input type="hidden" class="form-control" id="js-email"
+                                        placeholder="{{ Auth::guard('student')->user()->email }}" value="{{ Auth::guard('student')->user()->email }}" name="email"
+                                        readonly >
+                                    <label for="email"></label>
+                                </div>
+
+                                <div class="form-floating mb-3 mt-3">
+                                    <input type="hidden" class="form-control" id="js-phone"
+                                        placeholder="{{ Auth::guard('student')->user()->phone }}" value="{{ Auth::guard('student')->user()->phone }}" name="email"
+                                        readonly>
+                                    <label for="email"></label>
+                                </div>
+                                 <div class="form-floating mb-3 mt-3">
+                                    <input type="hidden" class="form-control" id="js-id"
+                                        placeholder="{{ Auth::guard('student')->user()->id }}" value="{{ Auth::guard('student')->user()->id }}" name="email"
+                                        readonly>
+                                    <label for="email"></label>
+                                </div>
+
+                                 {{--  <input type="text" placeholder="{{ Auth::guard('student')->user()->id }}">  --}}
+                            {{--  @endforeach  --}}
+
+                            {{--  <div class="form-floating mt-3 mb-3">
                             <input type="text" class="form-control" id="value" placeholder="Enter Amount" name="amount" readonly>
                             <label for="pwd">Amount</label>
                         </div>  --}}
@@ -93,7 +141,8 @@ exit();
                         <button type="submit" onClick="makePayment()" class="btn btn-success mt-3" id="rrrbtn">Generate RRR</button>
                     </div>
                 </form>
-
+                            @endsection
+@section('pagescript')
                 <!-- JavaScript Bundle with Popper -->
                 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
                 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2" crossorigin="anonymous">
@@ -111,9 +160,10 @@ exit();
 
 
                         */
-                        //e.preventDefault();
-                        var merchantId = "8434377560";
-                        var apiKey = "154279";
+                          //e.preventDefault();
+                            var merchantId = "8434377560";
+                            var apiKey = "154279";
+                         
                       //  var serviceTypeId = document.getElementById("pmtype").options[document.getElementById("pmtype").selectedIndex].value;
                          var serviceTypeId =document.getElementById("provider_code").value;
                         var d = new Date();
@@ -147,7 +197,7 @@ exit();
                             "payerName": name,
                             "payerEmail": email,
                             "payerPhone": phone,
-                            "description": "APPLICATION FEE"
+                            "description": "VERITAS UNIVERSITY ABUJA FEE"
                             //"expiryDate": "05/09/2021"
                         }))
 
@@ -170,9 +220,10 @@ exit();
                                 jsonp(this.responseText);
                             }
                         });
-                        // xhr.open("POST", "https://login.remita.net/");
-                        xhr.open("POST", "https://login.remita.net/remita/exapp/api/v1/send/api/echannelsvc/merchant/api/paymentinit");
-                       // xhr.open("POST", "https://remitademo.net/remita/exapp/api/v1/send/api/echannelsvc/merchant/api/paymentinit");
+                        //  xhr.open("POST", "https://login.remita.net/");
+                         xhr.open("POST", "https://login.remita.net/remita/exapp/api/v1/send/api/echannelsvc/merchant/api/paymentinit");
+                        //xhr.open("POST", "https://remitademo.net");
+                      // xhr.open("POST", "https://remitademo.net/remita/exapp/api/v1/send/api/echannelsvc/merchant/api/paymentinit");
                         xhr.setRequestHeader("Content-Type", "application/json");
                         xhr.setRequestHeader("Authorization", 'remitaConsumerKey=' + merchantId + ',remitaConsumerToken=' + apiHash)
 
@@ -253,7 +304,7 @@ exit();
                             "feeType": feeType,
                             "fee_type_id": fee_type_id,
                             "status": status,
-                            "description": "APPLICATION FEE"
+                            "description": "VERITAS UNIVERSITY ABUJA FEE"
                             //"expiryDate": "05/09/2021"
                         }));
 
@@ -274,9 +325,9 @@ exit();
 
                             }
                         });
-                        xhr.open("POST", "/payremi", true);
+                        xhr.open("POST", "/students/payremi", true);
                         xhr.setRequestHeader("Content-Type", "application/json; charset=utf-8");
-                        //xhr.setRequestHeader("Authorization", 'remitaConsumerKey=' + merchantId + ',remitaConsumerToken=' + apiHash)
+                     //   xhr.setRequestHeader("Authorization", 'remitaConsumerKey=' + merchantId + ',remitaConsumerToken=' + apiHash)
 
                         xhr.send(data);
 
@@ -312,4 +363,4 @@ exit();
             </body>
 
             </html>
-            @endsection
+@endsection

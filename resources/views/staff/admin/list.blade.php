@@ -71,9 +71,8 @@
 							    <td> {{ $stf->phone}} </td>
 							     <td><a href="{{ route('staff.view',$stf->id) }}" class="btn btn-primary"> View </a></td>
 								<td><a href="{{ route('staff.show',$stf->id) }}" class="btn btn-default"> Edit </a></td>
-                                {{--  <td><a href="#" class="btn btn-default"> Edit </a></td>  --}}
+							{{--	<td><a href="{{ route('staff.show',$stf->id) }}" class="btn btn-default"> Edit </a></td> --}}
 								{{--  <td><a href="{{ route('staff.edit',$stf->id) }}"> Edit </a></td>  --}}
-
 
         						@if($stf->id == Auth::guard('staff')->user()->id)
 							   <td class="info">

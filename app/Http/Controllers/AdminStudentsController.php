@@ -515,10 +515,8 @@ class AdminStudentsController extends Controller
         }
         else
         {
-            return redirect()->back()
+                     return redirect()->back()
             ->with('error','No Matching student record found. Try to search again !');
-            // $request->session()->flash('message', 'No Matching student record found. Try to search again !');
-            // return view ('students.admin.search');
         }
 
     } // end find
@@ -548,7 +546,7 @@ class AdminStudentsController extends Controller
 
         else
         {
-            return redirect()->back()
+                   return redirect()->back()
             ->with('error','No Matching student record found. Try to search again !');
         }
 
@@ -862,8 +860,7 @@ ICT Unit<br />
         $academic = $student->academic;
         $session_ids = RegisteredCourse::where('student_id', $student_id)->distinct('session')->pluck('session');
         $session_ids = $session_ids->toArray();
-        $registered_courses = RegisteredCourse::where('student_id', $student_id)->
-        where('status' , 'published')->get();
+        $registered_courses = RegisteredCourse::where('student_id', $student_id)->get();
         //dd($registered_courses->where('session', 15));
         $sessions = Session::wherein('id', $session_ids)->with(['registered_courses1' => function ($query) use ($student_id) {
 

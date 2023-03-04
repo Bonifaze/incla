@@ -33,7 +33,7 @@ exit();
 
             <body>
             <br><br>
-  <div class="text-danger h3"><strong> Accomodation into Pa-Etos Female hostel, Male HOTEL L and Male HOSTEL K are currently unavaliable </strong></div>
+  <div class="text-danger h3"><strong> Accomodation into Pa-Etos Female hostel, Male HOTEL L and Male HOSTEL K are currently unavaliable </strong></div> 
                 @if (session('statusMsg'))
                 {!! session('statusMsg') !!}
                 @endif

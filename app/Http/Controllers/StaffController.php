@@ -2,27 +2,25 @@
 
 namespace App\Http\Controllers;
 
-use PDF;
-use App\Role;
+use App\ProgramCourse;
+use App\Session;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Http\Request;
 use App\Staff;
 use App\Program;
-use App\Session;
-use App\StaffRole;
-use App\StaffContact;
-use App\ProgramCourse;
+use Illuminate\Support\Facades\Auth;
+use App\Role;
+use Illuminate\Support\Facades\Hash;
+use Intervention\Image\ImageManagerStatic as Image;
+use Illuminate\Validation\Rule;
+use Illuminate\Support\Facades\DB;
+use PDF;
+use Illuminate\Support\Facades\Storage;
 use App\StaffPosition;
 use App\EmploymentType;
 use App\AdminDepartment;
-use App\Models\RoleStaff;
+use App\StaffContact;
 use App\StaffWorkProfile;
-use Illuminate\Http\Request;
-use Illuminate\Validation\Rule;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Hash;
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Facades\Storage;
-use Intervention\Image\ImageManagerStatic as Image;
 
 
 
@@ -91,11 +89,10 @@ class StaffController extends Controller
         $roles = $role->staffRoles($staff->id);
         $rls = $role->availableRoles($staff->id);
         $perms = $staff->permissions();
-        // $alltasks = DB::table('task_to_role')->where('role_id', $rls = $role->availableRoles)->get();
         return view('staff.security', compact('staff','roles','rls','perms'));
     }
 
-    public function securitylist()
+     public function securitylist()
     {
         $this->authorize('rbac', Staff::class);
         $roles = Role::get();
@@ -121,7 +118,7 @@ class StaffController extends Controller
 
     public function removeRole(Request $request)
     {
-        dd($request);
+            // dd($request);
         $this->authorize('rbac', Staff::class);
         $staff = Staff::find($request->staff_id);
         $staff->roles()->detach($request->role_id);
@@ -579,7 +576,7 @@ class StaffController extends Controller
                 }
             }
         }
-        $data  =  $emails;
+$data  =  $emails;
         return view('students.admin.plain',compact('data'));
 
     }

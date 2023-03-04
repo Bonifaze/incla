@@ -13,7 +13,7 @@ use App\Student;
 use App\StudentDebt;
 use Remita\HTTPUtil;
 use App\ProgramCourse;
-use Carbon\Carbon
+use Carbon\Carbon;
 use App\StudentResult;
 use App\StudentAcademic;
 use App\Models\fee_types;

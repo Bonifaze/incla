@@ -5,9 +5,6 @@
 Route::get('/results/search-student', 'StudentResultsController@searchStudent')->name('result.search_student');
 
 Route::post('/results/find-student', 'StudentResultsController@findStudent')->name('result.find_student');
-Route::get('/results/modify', 'StudentResultsController@modifyResult')->name('result.modify');
-
-Route::post('/results/update', 'StudentResultsController@updateResult')->name('result.update');
 
 Route::get('/results/manage-student/{id}', 'StudentResultsController@manageStudent')->name('result.manage_student');
 
@@ -20,7 +17,8 @@ Route::post('/results/ict-upload', 'StudentResultsController@ICTUpload')->name('
 Route::post('/results/ict-store', 'StudentResultsController@ICTStore')->name('result.ict_store');
 
 Route::get('/results/semester/{student_id}/{session_id}/{semester}', 'StudentResultsController@semesterResult')->name('result.semester_result');
-
+Route::get('/results/modify', 'StudentResultsController@modifyResult')->name('result.modify');
+Route::post('/results/update', 'StudentResultsController@updateResult')->name('result.update');
 
 // Admin Course Registration Routes
 

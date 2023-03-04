@@ -138,6 +138,7 @@
         $('#dean_id').select2();
         //$('#program_id').select2();
        $('#course_id').select2();
+         $('#course').select2();
        $('#perequisite_id').select2();
        $('#admin').select2();
        $('#hod_id').select2();
