@@ -28,10 +28,11 @@
                                     <th>Code</th>
                                     <th>Title</th>
                                     <th>Unit</th>
-                                    {{--  <th>Host</th>  --}}
+                                    <th>Semester</th>
                                     {{--  <th>Lecturer</th>  --}}
-                                    {{--  <th>Contact</th>  --}}
-                                    <th>Students Registered</th>
+
+                                    <th>Students </th>
+                                     <th>Result Score</th>
 
                                              <th>Action</th>
                                     <th>Status</th>
@@ -45,14 +46,19 @@
                                             <td> {{ $program_course->course->course_code }}</td>
                                             <td> {{ $program_course->course->course_title }}</td>
                                             <td> {{ $program_course->credit_unit }}</td>
+                                              @if ( $program_course->semester == 1)
+                             <td> First </td>
+                             @else ( $program_course->semester == 2)
+                             <td>Second </td>
+                             @endif
                                             {{--  <td> {{ $program_course->course->program->name }}</td>  --}}
                                             {{--  <td> {{ $program_course->lecturer->full_name }}</td>
                                             <td> {{ $program_course->lecturer->phone }}</td>  --}}
-                                            <td>
-                                 <a class="btn btn-primary" target="_blank" href="{{ route('program_course.students',base64_encode($program_course->id)) }}">  List </a>
+
+                                     <td>  <a class="btn btn-primary" target="_blank" href="{{ route('program_course.students',base64_encode($program_course->id)) }}">  List </a>   </td>
                                  {{--  <a class="btn btn-info" target="_blank" href="{{ route('program_course.students_download',base64_encode($program_course->id)) }}">  Download </a>  --}}
-                                 <a class="btn btn-info" href="/admin/download/{{ $program_course->staff_course_id }}">  Download </a>
-<td>
+                                     <td>  <a class="btn btn-info" href="/admin/download/{{ $program_course->staff_course_id }}">  Download </a>   </td>
+                                 <td>
                                  @if(!$program_course->is_approved)
                                  <a href="/staff-course/approve?course_id={{ $program_course->course_id }}&program_id={{ $program_course->program_id }}&by=dean" class="btn btn-outline-success" onclick="return confirm('Are you sure you want to approve this course?')">Approve</a>
                                  @else
@@ -104,7 +110,7 @@
                                                 </td>  --}}
                                             {{--  @else  --}}
                                                 {{--  <td> {{ $program_course->action }} </td>  --}}
-                                                <td> {{$program_course->uploadStatus->upload_status}} </td>
+                                                 <td> {{$program_course->staff_course_status}} </td>
                                             {{--  @endif  --}}
                                         </tr>
                                     @endforeach

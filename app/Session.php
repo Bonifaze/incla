@@ -4,21 +4,24 @@ namespace App;
 
 use App\Models\RegisteredCourse;
 use Illuminate\Database\Eloquent\Model;
+use OwenIt\Auditing\Contracts\Auditable;
 
-class Session extends Model
+class Session extends Model implements Auditable
 {
     //
+
+    use \OwenIt\Auditing\Auditable;
     public function programCourses()
     {
         return $this->hasMany('App\ProgramCourse');
     }
-    
+
     public function results()
     {
         return $this->hasMany('App\StudentResult');
     }
-    
-    
+
+
     public function currentSession()
     {
         $session = $this::where('status',1)->first();
@@ -30,7 +33,7 @@ class Session extends Model
         $session = $this::where('status',1)->first();
         return $session->name;
     }
-    
+
     public function currentSemester()
     {
         $setting = new Setting();
@@ -45,14 +48,14 @@ class Session extends Model
 
 
     public function getCode() {
-        
+
         $data  = explode("/",$this->name);
         $info = $data[0];
         return $info[2].$info[3];
-        
+
     }  // end getCode()
-    
-    
+
+
     public function semesterName($semester)
     {
       if($semester == 1)
@@ -93,12 +96,12 @@ class Session extends Model
     public function registered_courses1()
     {
         return $this->hasMany(RegisteredCourse::class, 'session',)
-         ->where('status', 'published');
+        ->where('status', 'published');
     }
 
     public function registered_courses2()
     {
-        return $this->hasMany(RegisteredCourse::class, 'session',)
-         ->where('status', 'published');
+        return $this->hasMany(RegisteredCourse::class, 'session', )
+        ->where('status', 'published');
     }
 }  // end class

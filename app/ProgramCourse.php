@@ -7,9 +7,13 @@ use App\Models\StaffCourse;
 use App\Models\RegisteredCourse;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Model;
+use OwenIt\Auditing\Contracts\Auditable;
 
-class ProgramCourse extends Model
+
+class ProgramCourse extends Model implements Auditable
 {
+
+    use \OwenIt\Auditing\Auditable;
     //
     public function program()
     {
@@ -42,7 +46,9 @@ class ProgramCourse extends Model
 
     public function staff()
     {
-        return $this->belongsTo('App\Models\StaffCourse', 'course_id');
+        $session = new Session();
+        return $this->belongsTo('App\Models\StaffCourse', 'program_id','course_id');
+
     }
 
     public function results()
@@ -53,12 +59,12 @@ class ProgramCourse extends Model
 
     public function registeredCourse()
     {
-        return $this->hasMany('App\Models\RegisteredCourse', 'student_id')
+        return $this->hasMany('App\Models\RegisteredCourse', 'student_id','seesion_id')
          ->orderBy('student_id','ASC');
 
     }
 
-    public function uploadStatus()
+    public function staffCourses()
     {
         return $this->belongsTo('App\Models\StaffCourse', 'course_id');
 
@@ -373,6 +379,20 @@ public function getActionAttribute()
             get: fn ($value, $attributes) => StaffCourse::where('course_id', $attributes['course_id'])->where('program_id', $attributes['program_id'])->where('session_id', $attributes['session_id'])->first()?->id ?? 0
         );
     }
+
+    public function staffCourseStatus(): Attribute
+    {
+        return Attribute::make(
+            get: fn ($value, $attributes) => StaffCourse::where('course_id', $attributes['course_id'])->where('program_id', $attributes['program_id'])->where('session_id', $attributes['session_id'])->first()?->upload_status ?? 'Not Uploaded'
+        );
+    }
+    public function staffCourseName(): Attribute
+    {
+        return Attribute::make(
+            get: fn ($value, $attributes) => StaffCourse::where('course_id', $attributes['course_id'])->where('program_id', $attributes['program_id'])->where('session_id', $attributes['session_id'])->first()?->staff_id ?? 0
+        );
+    }
+
 
     protected $appends = ['course_title', 'course_code', 'staff_name'];
 

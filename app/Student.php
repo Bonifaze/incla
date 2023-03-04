@@ -11,11 +11,13 @@ use App\Models\Result;
 use App\Models\RegisteredCourse;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Database\Eloquent\Casts\Attribute;
+use OwenIt\Auditing\Contracts\Auditable;
 
-class Student extends Authenticatable
+
+class Student extends Authenticatable implements Auditable
 {
     use Notifiable;
-
+    use \OwenIt\Auditing\Auditable;
 
 
     protected $guard = 'student';

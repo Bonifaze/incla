@@ -3,10 +3,12 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use OwenIt\Auditing\Contracts\Auditable;
 
-class EvaluationResult extends Model
+class EvaluationResult extends Model implements Auditable
 {
     //
+    use \OwenIt\Auditing\Auditable;
     public function student()
     {
         return $this->belongsTo('App\Student', 'student_id');

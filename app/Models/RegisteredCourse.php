@@ -4,15 +4,16 @@ namespace App\Models;
 
 use App\Student;
 use App\ProgramCourse;
-
+use App\Staff;
 use App\StudentAcademic;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use OwenIt\Auditing\Contracts\Auditable;
 
-class RegisteredCourse extends Model
+class RegisteredCourse extends Model implements Auditable
 {
 
-
+    use \OwenIt\Auditing\Auditable;
     use HasFactory;
 
     protected $fillable = [
@@ -53,10 +54,23 @@ class RegisteredCourse extends Model
     {
         return Student::find($this->student_id)?->full_name;
     }
+    public function modifiedBy()
+    {
+        return $this->belongsTo('App\Staff', 'modifiy_by');
+    }
+
+    public function staff()
+    {
+        return $this->belongsTo('App\Staff', 'staff_id');
+    }
 
     public function session()
     {
         return $this->belongsTo('App\Session');
+    }
+    public function sessions()
+    {
+        return $this->belongsTo('App\Session', 'session');
     }
 
     public function course()

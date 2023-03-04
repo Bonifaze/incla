@@ -49,7 +49,7 @@
                             </a>
                         </li>
 
-                        
+                     
 
                         <li class="nav-item">
                             <a href="<?php echo e(route('staff.password')); ?>" class="nav-link <?php echo $__env->yieldContent('staff-password'); ?>">
@@ -147,7 +147,6 @@
                                         <p>Assign Course to Program </p>
                                     </a>
                                 </li>
-
                                 <li class="nav-item">
                                     <a href="<?php echo e(route('program_course.assign')); ?>"
                                         class="nav-link <?php echo $__env->yieldContent('exam-remark'); ?>">
@@ -161,7 +160,6 @@
                                         <p>Allocted Courses </p>
                                     </a>
                                 </li>
-                                  
                                 <li class="nav-item">
                                     <a href="<?php echo e(route('course.search')); ?>" class="nav-link <?php echo $__env->yieldContent('exam-remark'); ?>">
                                         <i class="fa fa-search nav-icon"></i>
@@ -247,7 +245,7 @@
                                         <p>Search</p>
                                     </a>
                                 </li>
-                                
+                              
                                 <li class="nav-item">
                                     <a href="/adminallApplicants" class="nav-link <?php echo $__env->yieldContent('departments'); ?>">
                                         <i class="fas fa-list-alt nav-icon"></i>
@@ -547,8 +545,7 @@
                                         <p>Show Remita Fee Type</p>
                                     </a>
                                 </li>
-
-                                
+ 
 
                             </ul>
                         </li>

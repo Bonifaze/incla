@@ -65,7 +65,7 @@
                                         <div class="row no-gutters align-items-center">
                                             <div class="col mr-3">
                                                 <div class="h4 text-success" style="text-decoration: underline;">
-                                                    <a href="<?php echo e(route('staff.results')); ?>" class="text-success <?php echo $__env->yieldContent('staff-results'); ?>">My Results</a>
+                                                    <a href="#" class="text-success <?php echo $__env->yieldContent('staff-results'); ?>">My Results</a>
                                                 </div>
                                             </div>
                                             <div class="col-auto">
@@ -80,7 +80,7 @@
 
                         <div class="row p-5">
 
-                            <div class="col-xl-6 col-md-6">
+                            <div class="col-xl-6 col-md-6 mb-4">
                                 <div class="card border-left-success shadow h-100 py-3">
                                     <div class="card-body">
                                         <div class="row no-gutters align-items-center">
@@ -98,7 +98,7 @@
                                 </div>
                             </div>
 
-  <div class="col-xl-6 col-md-6">
+                             <div class="col-xl-6 col-md-6 mb-4">
                                 <div class="card border-left-success shadow h-100 py-3">
                                     <div class="card-body">
                                         <div class="row no-gutters align-items-center">
@@ -114,9 +114,6 @@
                                         </div>
                                     </div>
                                 </div>
-                        </div>
-
-
 
                         </div>
 

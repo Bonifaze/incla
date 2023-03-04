@@ -52,7 +52,7 @@ class ExamOfficersController extends Controller
         $this->authorize('programLevelCourses',AcademicDepartment::class);
         $session = new Session();
         $program = Program::findOrFail(base64_decode($id));
-        $program_courses = ProgramCourse::with(['course','program','course.program','lecturer','uploadStatus', 'registeredCourse', 'staff'])->where('program_id',$program->id)
+        $program_courses = ProgramCourse::with(['course','program','course.program','staffCourses', 'registeredCourse', 'staff'])->where('program_id',$program->id)
             ->where('level',$level)
             ->where('session_id',$session->currentSession())
            // ->where('semester',$session->currentSemester())

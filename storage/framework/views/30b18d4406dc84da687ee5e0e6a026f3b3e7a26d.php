@@ -65,9 +65,8 @@
 							    <td> <?php echo e($stf->phone); ?> </td>
 							     <td><a href="<?php echo e(route('staff.view',$stf->id)); ?>" class="btn btn-primary"> View </a></td>
 								<td><a href="<?php echo e(route('staff.show',$stf->id)); ?>" class="btn btn-default"> Edit </a></td>
-                                
+							
 								
-
 
         						<?php if($stf->id == Auth::guard('staff')->user()->id): ?>
 							   <td class="info">

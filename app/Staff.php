@@ -5,11 +5,13 @@ namespace App;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Support\Facades\Mail;
+use OwenIt\Auditing\Contracts\Auditable;
 
-class Staff extends Authenticatable
+class Staff extends Authenticatable implements Auditable
 {
-    use Notifiable;
 
+    use Notifiable;
+  use \OwenIt\Auditing\Auditable;
     protected $guard = 'staff';
 
 
@@ -32,7 +34,10 @@ class Staff extends Authenticatable
     ];
 
     protected $appends = ['full_name'];
+
     protected $with = ['roles'];
+
+
 
     public function workProfile()
     {

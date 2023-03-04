@@ -69,7 +69,10 @@
 				    	{{--	<button onclick="submitRForm({{$roles->role_id}})" type="button" class="{{$roles->role_id}} btn btn-danger" ><span class="icon-line2-trash"></span> Remove Role</button> --}}
 				    		{!! Form::close() !!}
 							 </td>
-		<td><a href="{{ route('staff.show',$roles->staff_id) }}" class="btn btn-default"> Edit </a></td>
+               		<td><a href="{{ route('staff.show',$roles->staff_id) }}" class="btn btn-default"> Show </a></td>
+		<td><a href="{{ route('staff.security', $roles->staff_id) }}" class="btn btn-default"> Remove Role</a></td>
+
+
 
 @if($roles->staff_id == Auth::guard('staff')->user()->id)
 							   <td class="info">

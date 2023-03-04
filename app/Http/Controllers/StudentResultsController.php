@@ -114,17 +114,19 @@ class StudentResultsController extends Controller
             {
                 RegisteredCourse::where('student_id', $course_reg->student_id)->where('course_id', $course_reg->course_id)->where('session', '>', $course_reg->session)->delete();
             }
-            RegisteredCourse::where('id', $reg_ids[$i])->update([
-                'ca1_score' => $ca1_scores[$i],
-                'ca2_score' => $ca2_scores[$i],
-                'ca3_score' => $ca3_scores[$i],
-                'exam_score' => $exam_scores[$i],
-                'total' => $total_score,
-                'grade_id' => $grade_id,
-                'grade_status' => $grade_setting->status,
-                 'staff_id' =>$staff->id,
-            ]);
-        }
+            $registeredCourse = RegisteredCourse::findOrFail($reg_ids[$i]);
+            $registeredCourse-> ca1_score = $ca1_scores[$i];
+            $registeredCourse->ca2_score = $ca2_scores[$i];
+            $registeredCourse->ca3_score = $ca3_scores[$i];
+            $registeredCourse->exam_score = $exam_scores[$i];
+            $registeredCourse->total = $total_score;
+            $registeredCourse->grade_id = $grade_id;
+            $registeredCourse->grade_status = $grade_setting->status;
+            $registeredCourse->staff_id =$staff->id;
+
+        $registeredCourse->save();
+
+    }
         return redirect()->back()->with('success', 'Scores uploaded successfully');
     }
 

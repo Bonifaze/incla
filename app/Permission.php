@@ -3,9 +3,10 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
-
-class Permission extends Model
+use OwenIt\Auditing\Contracts\Auditable;
+class Permission extends Model implements Auditable
 {
+    use \OwenIt\Auditing\Auditable;
     //
 	/**
 	 * The attributes that are mass assignable.
@@ -15,15 +16,15 @@ class Permission extends Model
 	protected $fillable = [
 			'name', 'description',
 	];
-	
-	
+    use \OwenIt\Auditing\Auditable;
+
 	public function roles()
 	{
 		return $this->belongsToMany('App\Role', 'permission_role', 'permission_id', 'role_id')->withTimestamps();
 	}
-	
 
-	
+
+
 	/**
 	 * Determine if the permission belongs to the role.
 	 *
@@ -37,41 +38,41 @@ class Permission extends Model
 		}
 		return !! $role->intersect($this->roles)->count();
 	}
-	
-	
-	
+
+
+
 	public function availablePermissions($roleId)
 	{
-	
-				 
+
+
 		$permissions= $this->whereDoesntHave('roles', function ($query) use($roleId) {
 			$query->where('role_id', $roleId);
 		})->where('id','!=',1)->get();
-		 
+
 		return $permissions;
-		 
+
 	}
-	
-	
+
+
 	public function rolePermissions($roleId)
 	{
-	
-			
+
+
 		$permissions= $this->whereHas('roles', function ($query) use($roleId) {
 			$query->where('role_id', $roleId);
 		})->get();
-			
+
 		return $permissions;
-			
+
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+
+
+
+
+
+
+
+
+
+
 } // end Class Permission

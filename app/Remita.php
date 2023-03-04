@@ -5,10 +5,12 @@ namespace App;
 use Mail;
 use App\Mail\RemitaWebHook;
 use Illuminate\Database\Eloquent\Model;
+use OwenIt\Auditing\Contracts\Auditable;
 
-class Remita extends Model
+class Remita extends Model implements Auditable
 {
     //
+    use \OwenIt\Auditing\Auditable;
     public function student()
     {
         return $this->belongsTo('App\Student', 'student_id');
@@ -18,11 +20,12 @@ class Remita extends Model
     {
         return $this->belongsTo('App\FeeType', 'fee_type_id');
     }
-    
-  public function staff()
+
+    public function staff()
     {
         return $this->belongsTo('App\Staff', 'verify_by');
     }
+
 
     public function users()
     {

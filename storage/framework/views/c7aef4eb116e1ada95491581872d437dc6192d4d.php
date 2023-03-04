@@ -58,7 +58,7 @@
                 </li>
 
                     
-                               
+                             <li><a href="<?php echo e(route('rbac.audit')); ?>" class="dropdown-item">Audit </a></li>
                            <li><a href="<?php echo e(route('staff.securitylist')); ?>" class="dropdown-item">List Staff Roles </a></li>
 
                 <!-- End Level two -->

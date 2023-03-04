@@ -3,12 +3,13 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use OwenIt\Auditing\Contracts\Auditable;
 
-class FeeType extends Model
+class FeeType extends Model implements Auditable
 {
     //
     //delivery_code
-
+    use \OwenIt\Auditing\Auditable;
     public function remitas()
     {
         return $this->hasMany('App\Remita');
@@ -68,7 +69,13 @@ class FeeType extends Model
     }
 
     public function paid(){
-        $paid = Remita::where('fee_type_id',$this->id)->where('status_code',1)->get();
+        $paid = Remita::where('fee_type_id',$this->id)->where('status_code',1)
+        // ->where('installment',1)
+        ->get();
         return $paid->sum('amount');
+    }
+    public function paidpart(){
+        $paidpart = Remita::where('fee_type_id',$this->id)->where('status_code',1)->where('installment',1)->get();
+        return $paidpart->sum('amount');
     }
 } //end Class

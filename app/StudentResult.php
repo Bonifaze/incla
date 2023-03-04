@@ -3,13 +3,13 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Facades\DB;
+//use Illuminate\Support\Facades\DB;
+use OwenIt\Auditing\Contracts\Auditable;
 
-class StudentResult extends Model
+class StudentResult extends Model implements Auditable
 {
-    //
+    use \OwenIt\Auditing\Auditable;
 
-    //
     public function student()
     {
         return $this->belongsTo('App\Student', 'student_id');
@@ -25,6 +25,11 @@ class StudentResult extends Model
     public function programCourse()
     {
         return $this->belongsTo('App\ProgramCourse', 'course_id');
+    }
+
+    public function RegisteredCourse()
+    {
+        return $this->belongsTo('App\Models\RegisteredCourse', 'course_id');
     }
 
     public function evaluations()
@@ -280,10 +285,10 @@ class StudentResult extends Model
 
        public function gpa($student_id,$session_id,$semester)
        {
-           $results = $this->with('programCourse')->where('student_id',$student_id)->where('session_id',$session_id)
+           $results = $this->with('RegisteredCourse')->where('student_id',$student_id)->where('session',$session_id)
            ->where('semester',$semester)
-           ->where('status',7)
-               ->whereHas('programCourse')->get();
+        //    ->where('status','publishd')
+               ->whereHas('RegisteredCourse')->get();
            $hours = 0;
            $units = 0;
 

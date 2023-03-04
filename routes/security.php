@@ -50,6 +50,12 @@ Route::get('/rbac/refresh-student-password', 'PermissionsController@refreshStude
 
 Route::post('/rbac/reset-student-password', 'PermissionsController@resetStudentPassword')->name('rbac.resetstudentpassword');
 
+
 Route::get('/rbac/audit', 'PermissionsController@audit')->name('rbac.audit');
+
+Route::post('/rbac/audit_list', 'PermissionsController@find')->name('rbac.audit-find');
+Route::post('/rbac/audit_lista', 'PermissionsController@list')->name('rbac.audit-list');
+
+Route::post('/rbac/audits', 'PermissionsController@findDate')->name('rbac.audit-find-date');
 
 Route::get('/rbac/show-staff/{id}', 'RolesController@showstaff')->name('rbac.show-staff');

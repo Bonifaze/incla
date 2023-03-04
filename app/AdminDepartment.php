@@ -3,20 +3,21 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
-
-class AdminDepartment extends Model
+use OwenIt\Auditing\Contracts\Auditable;
+class AdminDepartment extends Model implements Auditable
 {
     //
+    use \OwenIt\Auditing\Auditable;
     public function parent()
     {
         return $this->belongsTo('App\AdminDepartment', 'parent_id');
     }
-    
+
     public function staff()
     {
         return $this->hasMany('App\StaffWorkprofile');
     }
-    
+
     public function academics()
     {
         if($this->academic_department_id != 0){
@@ -27,12 +28,12 @@ class AdminDepartment extends Model
         }
         return $academic;
     }
-    
+
     public function academic()
     {
         return $this->belongsTo('App\AcademicDepartment', 'academic_department_id');
     }
-    
-   
-    
+
+
+
 }

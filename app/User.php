@@ -4,9 +4,12 @@ namespace App;
 
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use OwenIt\Auditing\Contracts\Auditable;
 
-class User extends Authenticatable
+class User extends Authenticatable implements Auditable
 {
+
+        use \OwenIt\Auditing\Auditable;
     use Notifiable;
 
     /**
@@ -26,8 +29,8 @@ class User extends Authenticatable
     protected $hidden = [
         'password', 'remember_token',
     ];
-    
-        
+
+
 /**
  * Get the user's full name.
  *
@@ -46,27 +49,27 @@ public function roles()
 
 public function permissions()
 {
-	
+
 		$perms = array();
-	
+
 		foreach ($this->roles as $role)
 		{
 			foreach ($role->permissions as $perm)
 			{
-				
+
 					$perms[] = $perm;
-				
+
 			}
 		}
-	
+
 		$permissions = \Illuminate\Database\Eloquent\Collection::make($perms);
-	
+
 		$unique = $permissions->unique();
-		
+
 		return $unique->values()->all();
-		
-	
-	
+
+
+
 }
 
 public function hasPermission($permit)
@@ -83,11 +86,11 @@ public function hasPermission($permit)
 
 		}
 	}
-	
-	
+
+
 	$permissions = \Illuminate\Database\Eloquent\Collection::make($perms);
-	
-	
+
+
 
 	return $permissions->contains($permit);
 
@@ -109,5 +112,5 @@ public function hasRole($role)
 	return !! $role->intersect($this->roles)->count();
 }
 
-    
+
 } // end Class User

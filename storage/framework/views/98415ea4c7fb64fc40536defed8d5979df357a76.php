@@ -22,7 +22,7 @@
             <div class="card card-primary">
                 <h1
                         class="app-page-title text-uppercase h5 font-weight-bold p-2 mb-2 shadow-sm text-center text-success border">
-                      Student Result
+                      Student Academics
                     </h1>
              <?php echo $__env->make("partialsv3.flash", \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
              <div class="table-responsive">
@@ -49,7 +49,7 @@
 					</div>
 
 
-<TETSING ></TETSING>
+
 
               </div>
              </div>

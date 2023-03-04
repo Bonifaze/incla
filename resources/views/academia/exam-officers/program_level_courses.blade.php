@@ -33,8 +33,8 @@
                               <th>Code</th>
 							 <th>Title</th>
 							 <th>Credit</th>
-							 {{--  <th>Host</th>  --}}
-                              <th>Students</th>
+							 <th>Semester</th>
+                              <th>Action</th>
                               {{--  <th>Lecturer</th>  --}}
                               {{--  <th>Contact</th>  --}}
                               <th>Status</th>
@@ -52,12 +52,18 @@
                              <td> {{$program_course->course->course_code}}</td>
                              <td> {{$program_course->course->course_title}}</td>
                              <td> {{$program_course->credit_unit}}</td>
+                              @if ( $program_course->semester == 1)
+                             <td> First </td>
+                             @else ( $program_course->semester == 2)
+                             <td>Second </td>
+                             @endif
+
                              {{--  <td> {{$program_course->course->program->name}}</td>  --}}
                              {{--  <td><a class="btn btn-info" target="_blank" href="{{ route('program_course.students_download',base64_encode($program_course->id)) }}">  Download </a></td>  --}}
                               <td><a class="btn btn-info" href="/admin/download/{{ $program_course->staff_course_id }}">  Download </a> </td>
                              {{--  <td> {{$program_course->lecturer->full_name}} </td>  --}}
                              {{--  <td> {{$program_course->lecturer->phone}}</td>  --}}
-                             <td> {{$program_course->staff->upload_status}} </td>
+                             <td> {{$program_course->staff_course_status}} </td>
                              {{--  @if ($program_course->approval == 1)
                                  <td> <a target="_blank" href="{{ route('program_course.result',base64_encode($program_course->id)) }}"> View Result </a> </td>
 

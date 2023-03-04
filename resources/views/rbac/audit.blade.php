@@ -1,30 +1,34 @@
-<?php $__env->startSection('pagetitle'); ?>
+@extends('layouts.mini')
+
+
+
+@section('pagetitle')
     Staff Home
-<?php $__env->stopSection(); ?>
+@endsection
 
 
 
 <!-- Sidebar Links -->
 
 <!-- Treeview -->
-<?php $__env->startSection('staff-open'); ?>
+@section('staff-open')
     menu-open
-<?php $__env->stopSection(); ?>
+@endsection
 
-<?php $__env->startSection('staff'); ?>
+@section('staff')
     active
-<?php $__env->stopSection(); ?>
+@endsection
 
 <!-- Page -->
-<?php $__env->startSection('staff-home'); ?>
+@section('staff-home')
     active
-<?php $__env->stopSection(); ?>
+@endsection
 
 <!-- End Sidebar links -->
 
 
 
-<?php $__env->startSection('content'); ?>
+@section('content')
     <div class="content-wrapper bg-white">
 
         <!-- Main content -->
@@ -38,19 +42,17 @@
                     </h1>
 
 
-                    <?php echo $__env->make('partialsv3.flash', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
+                    @include('partialsv3.flash')
                     <div class="card ">
                         <div class="card-header">
                             <h3 class="card-title"> Audits by Date </h3>
                         </div>
                         <div class="">
-                            <?php if(session('approvalMsg')): ?>
-                                <?php echo session('approvalMsg'); ?>
-
-                            <?php endif; ?>
+                            @if (session('approvalMsg'))
+                                {!! session('approvalMsg') !!}
+                            @endif
                             <!-- form start -->
-                            <?php echo Form::open(['route' => 'rbac.audit-find-date', 'method' => 'POST', 'class' => 'nobottommargin']); ?>
-
+                            {!! Form::open(['route' => 'rbac.audit-find-date', 'method' => 'POST', 'class' => 'nobottommargin']) !!}
                             <div class="card-body">
                                 <div class="box-body">
                                     <div class="row">
@@ -66,7 +68,7 @@
                                                         <div class="input-group-text"><i class="fa fa-calendar"></i></div>
                                                     </div>
                                                 </div>
-                                                <span class="text-danger"> <?php echo e($errors->first('start_date')); ?></span>
+                                                <span class="text-danger"> {{ $errors->first('start_date') }}</span>
                                             </div>
                                         </div>
                                         <div class="bootstrap-timepicker col-md-6 ">
@@ -82,7 +84,7 @@
                                                         <div class="input-group-text"><i class="fa fa-calendar"></i></div>
                                                     </div>
                                                 </div>
-                                                <span class="text-danger"> <?php echo e($errors->first('end_date')); ?></span>
+                                                <span class="text-danger"> {{ $errors->first('end_date') }}</span>
                                             </div>
                                         </div>
                                     </div>
@@ -95,8 +97,7 @@
                                 </div>
                             </div>
                             <div class="card-footer">
-                                <?php echo e(Form::submit('Search', ['class' => 'btn btn-success'])); ?>
-
+                                {{ Form::submit('Search', ['class' => 'btn btn-success']) }}
                             </div>
                         </div>
                         <!-- /.box-body -->
@@ -104,11 +105,41 @@
 
 
 
-                        <?php echo Form::close(); ?>
-
+                        {!! Form::close() !!}
                     </div>
-
-
+{{--  // Search by al  --}}
+{{--  <div class="card ">
+                        <div class="card-header">
+                            <h3 class="card-title"> Search Audits </h3>
+                        </div>
+                        <div class="table-responsive">
+                            <!-- form start -->
+                            {!! Form::open(['route' => 'rbac.audit-find', 'method' => 'POST', 'class' => 'nobottommargin']) !!}
+                            <div class="card-body">
+                                <div class="box-body">
+                                    <div class="row">
+                                        <div class="col-md-6 form-group">
+                                            <div @if ($errors->has('data')) class ='has-error form-group' @endif>
+                                                <label for="data">staff Id/ Event/ Old Value/ New Value/ URL/ PC Model/ Audit ID :</label>
+                                                {!! Form::search('data', null, [
+                                                    'placeholder' => '',
+                                                    'class' => 'form-control',
+                                                    'id' => 'data',
+                                                    'required' => 'required',
+                                                ]) !!}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- /.card-body -->
+                            <div class="card-footer">
+                                {{ Form::submit('Search', ['class' => 'btn btn-success']) }}
+                            </div>
+                        </div>
+                        <!-- /.box-body -->
+                        {!! Form::close() !!}
+                    </div>  --}}
 
 
     <div class="table-responsive card-body">
@@ -120,7 +151,7 @@
 
 							  <th>S/N</th>
 						    <th>Audit Id</th>
-                             
+                             {{--  <th>Staff ID</th>  --}}
                               <th>Staff Name</th>
 							 <th>Action</th>
 							 <th>Audited Model</th>
@@ -129,8 +160,8 @@
                             <th>URL</th>
                             <th>IP Address</th>
                             <th>User PC/ Browser</th>
-                            
-                            
+                            {{--  <th>Tags</th>  --}}
+                            {{--  <th>Created at</th>  --}}
                             <th>Date</th>
 
 
@@ -142,57 +173,56 @@
 
 						  <tbody>
 
-						  <?php $__currentLoopData = $article; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $audit): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+						  @foreach ($article as $audit)
 
 							<tr>
-							  <td><?php echo e($loop->iteration); ?></td>
-							  <td><?php echo e($audit->auditable_id); ?></td>
-                                
-                              <td><?php echo e($audit->staff->full_name ?? null); ?></td>
-							 <td><?php echo e($audit->event); ?></td>
-                             <td><?php echo e($audit->auditable_type); ?></td>
+							  <td>{{ $loop->iteration }}</td>
+							  <td>{{ $audit->auditable_id }}</td>
+                                {{--  <td>{{ $audit->staff_id}}</td>  --}}
+                              <td>{{ $audit->staff->full_name ?? null}}</td>
+							 <td>{{ $audit->event}}</td>
+                             <td>{{ $audit->auditable_type}}</td>
                              <td>
                               <table class="table">
-                    <?php $__currentLoopData = $audit->old_values; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $attribute => $value): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                    @foreach($audit->old_values as $attribute => $value)
                       <tr>
-                        <td><b><?php echo e($attribute); ?></b></td>
+                        <td><b>{{ $attribute }}</b></td>
 
-                        <td><?php echo e($value); ?></td>
+                        <td>{{ $value }}</td>
 
 
                       </tr>
-                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                    @endforeach
                   </table>
                   </td>
                        <td>
                               <table class="table">
-                    <?php $__currentLoopData = $audit->new_values; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $attribute => $value): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                    @foreach($audit->new_values as $attribute => $value)
                       <tr>
-                        <td><b><?php echo e($attribute); ?></b></td>
-                        <td><?php echo e($value); ?></td>
+                        <td><b>{{ $attribute }}</b></td>
+                        <td>{{ $value  }}</td>
                       </tr>
-                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                    @endforeach
                   </table>
                   </td>
-                             
-                              
-                               <td><?php echo e($audit->url); ?></td>
-                                <td><?php echo e($audit->ip_address); ?></td>
-                                 <td><?php echo e($audit->user_agent); ?></td>
-                                  
-                                   
-                                    <td><?php echo e($audit->updated_at); ?></td>
+                             {{--  <td>{{ $audit->old_values}}</td>  --}}
+                              {{--  <td>{{ $audit->new_values}}</td>  --}}
+                               <td>{{ $audit->url}}</td>
+                                <td>{{ $audit->ip_address}}</td>
+                                 <td>{{ $audit->user_agent}}</td>
+                                  {{--  <td>{{ $audit->tags}}</td>  --}}
+                                   {{--  <td>{{ $audit->created_at}}</td>  --}}
+                                    <td>{{ $audit->updated_at}}</td>
 
-							 
+							 {{--  <td><a class="btn btn-warning" href="{{ route('rbac.edit-perm',$perm->id) }}"> <i class="fa fa-edit"></i> Edit </td>  --}}
 
 
 							</tr>
 
-							<?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+							@endforeach
 
 						  </tbody>
- <?php echo $article->render(); ?>
-
+ {!! $article->render() !!}
 
 
 						</table>
@@ -209,14 +239,14 @@
 						  <thead>
 
 							  <th>S/N</th>
-						    
+						    {{--  <th>Staff Id</th>  --}}
                             <th>Staff Name</th>
                               <th>Course </th>
 							 <th>session</th>
 							 <th>Semester</th>
                              <th>Level</th>
                              <th>Score</th>
-                            
+                            {{--  <th>Program</th>  --}}
                             <th>Student MatNo.</th>
                             <th>Student Name</th>
                             <th>Date</th>
@@ -225,35 +255,34 @@
 
 						  <tbody>
 
-						  <?php $__currentLoopData = $modify; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $key => $audit): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+						  @foreach ($modify as $key => $audit)
 
 							<tr>
-							  <td><?php echo e($loop->iteration); ?></td>
-							  <td><?php echo e($audit->staff->full_name ?? null); ?></td>
-                              
-                                <td><?php echo e($audit->course->course_code); ?></td>
-							 <td><?php echo e($audit->sessions->name); ?></td>
+							  <td>{{ $loop->iteration }}</td>
+							  <td>{{  $audit->staff->full_name ?? null}}</td>
+                              {{--  <td>{{ $audit->modifiedBy->full_name ?? null}}</td>  --}}
+                                <td>{{ $audit->course->course_code}}</td>
+							 <td>{{ $audit->sessions->name }}</td>
 
-                              <?php if($audit->semester==1): ?>
+                              @if($audit->semester==1)
                                         <td>First</td>
-                                        <?php else: ?>
+                                        @else
                                         <td>Second</td>
-                                        <?php endif; ?>
-                             <td><?php echo e($audit->level); ?></td>
-                             <td><?php echo e($audit->total ?? null); ?></td>
-                             <td><?php echo e($audit->student->academic->mat_no ?? null); ?></td>
-                             <td><?php echo e($audit->full_name); ?></td>
-                                   <td><?php echo e($audit->updated_at); ?></td>
+                                        @endif
+                             <td>{{ $audit->level}}</td>
+                             <td>{{ $audit->total ?? null}}</td>
+                             <td>{{ $audit->student->academic->mat_no ?? null}}</td>
+                             <td>{{ $audit->full_name}}</td>
+                                   <td>{{ $audit->updated_at}}</td>
 
 
 
 							</tr>
 
-							<?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+							@endforeach
 
 						  </tbody>
- <?php echo $modify->render(); ?>
-
+ {!! $modify->render() !!}
 
 
 						</table>
@@ -271,7 +300,7 @@
 						  <thead>
 
 							  <th>S/N</th>
-						    
+						    {{--  <th>Staff Id</th>  --}}
                             <th>Staff Name</th>
                               <th>RRR </th>
 
@@ -284,30 +313,29 @@
 
 						  <tbody>
 
-						  <?php $__currentLoopData = $remita; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $key => $audit): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+						  @foreach ($remita as $key => $audit)
 
 							<tr>
-							  <td><?php echo e($loop->iteration); ?></td>
-							  <td><?php echo e($audit->staff->full_name ?? null); ?></td>
-                              <td><?php echo e($audit->rrr); ?></td>
-                                <td><?php echo e($audit->feeType->name); ?></td>
-							 
+							  <td>{{ $loop->iteration }}</td>
+							  <td>{{  $audit->staff->full_name ?? null}}</td>
+                              <td>{{ $audit->rrr}}</td>
+                                <td>{{ $audit->feeType->name}}</td>
+							 {{--  <td>{{ $audit->session }}</td>  --}}
 
 
-                             <td><?php echo e($audit->student->academic->mat_no ?? null); ?></td>
+                             <td>{{ $audit->student->academic->mat_no ?? null}}</td>
 
-                             <td><?php echo e($audit->student->full_name ?? null); ?></td>
-                                   <td><?php echo e($audit->updated_at); ?></td>
+                             <td>{{ $audit->student->full_name ?? null}}</td>
+                                   <td>{{ $audit->updated_at}}</td>
 
 
 
 							</tr>
 
-							<?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+							@endforeach
 
 						  </tbody>
- <?php echo $modify->render(); ?>
-
+ {!! $modify->render() !!}
 
 
 						</table>
@@ -320,9 +348,9 @@
  </div>
         </section>
     </div>
-<?php $__env->stopSection(); ?>
+@endsection
 
-<?php $__env->startSection('pagescript'); ?>
+@section('pagescript')
     <script src="<?php echo asset('dist/js/bootbox.min.js'); ?>"></script>
      <script type="text/javascript">
         $(function() {
@@ -340,6 +368,4 @@
             });
         });
     </script>
-<?php $__env->stopSection(); ?>
-
-<?php echo $__env->make('layouts.mini', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH /Users/lifeofrence/Documents/laraproject/resources/views//rbac/audit.blade.php ENDPATH**/ ?>
+@endsection

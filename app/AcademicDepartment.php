@@ -1,27 +1,30 @@
 <?php
 
 namespace App;
+use OwenIt\Auditing\Contracts\Auditable;
+
 
 use Illuminate\Database\Eloquent\Model;
 
-class AcademicDepartment extends Model
+class AcademicDepartment extends Model implements Auditable
 {
     //
+    use \OwenIt\Auditing\Auditable;
     public function college()
     {
         return $this->belongsTo('App\College', 'college_id');
     }
-    
+
     public function admin()
     {
         return $this->hasOne('App\AdminDepartment');
     }
-    
+
     public function programs()
     {
         return $this->hasMany('App\Program');
     }
-    
+
     public function courses()
     {
         return $this->hasManyThrough('App\Course', 'App\Program');

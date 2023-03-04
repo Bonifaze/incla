@@ -3,9 +3,11 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use OwenIt\Auditing\Contracts\Auditable;
 
-class Course extends Model
+class Course extends Model implements Auditable
 {
+    use \OwenIt\Auditing\Auditable;
     //
     public function program()
     {
@@ -16,6 +18,10 @@ class Course extends Model
     {
         return $this->hasMany('App\ProgramCourse');
     }
+    // public function registerCourses()
+    // {
+    //     return $this->hasMany('App\Models\RegisteredCourses');
+    // }
 
     public function outstandings()
     {

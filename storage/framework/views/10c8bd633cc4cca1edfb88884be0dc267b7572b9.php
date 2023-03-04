@@ -43,7 +43,7 @@
 							  <th>S/N</th>
 							  <th>Name</th>
                             <th>Phone</th>
-
+                <th></th>
 							  <th>Action</th>
 
 
@@ -61,16 +61,19 @@
 							    <td>
 								<?php echo Form::open(['method' => 'Post', 'route' => 'rbac.remove-role', 'id'=>'removeRForm'.$roles->role_id]); ?>
 
-				    		<?php echo e(Form::text('role_id', $roles->role_id)); ?>
+				    		<?php echo e(Form::hidden('role_id', $roles->role_id)); ?>
 
-				    		<?php echo e(Form::text('staff_id', $roles->staff_id)); ?>
+				    		<?php echo e(Form::hidden('staff_id', $roles->staff_id)); ?>
 
 
-				    		<button onclick="submitRForm(<?php echo e($roles->role_id); ?>)" type="button" class="<?php echo e($roles->role_id); ?> btn btn-danger" ><span class="icon-line2-trash"></span> Remove Role</button>
+				    	
 				    		<?php echo Form::close(); ?>
 
 							 </td>
-		<td><a href="<?php echo e(route('staff.show',$roles->staff_id)); ?>" class="btn btn-default"> Edit </a></td>
+               		<td><a href="<?php echo e(route('staff.show',$roles->staff_id)); ?>" class="btn btn-default"> Show </a></td>
+		<td><a href="<?php echo e(route('staff.security', $roles->staff_id)); ?>" class="btn btn-default"> Remove Role</a></td>
+
+
 
 <?php if($roles->staff_id == Auth::guard('staff')->user()->id): ?>
 							   <td class="info">

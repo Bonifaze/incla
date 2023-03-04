@@ -29,8 +29,8 @@
                               <th>Code</th>
 							 <th>Title</th>
 							 <th>Credit</th>
-							 
-                              <th>Students</th>
+							 <th>Semester</th>
+                              <th>Action</th>
                               
                               
                               <th>Status</th>
@@ -48,12 +48,18 @@
                              <td> <?php echo e($program_course->course->course_code); ?></td>
                              <td> <?php echo e($program_course->course->course_title); ?></td>
                              <td> <?php echo e($program_course->credit_unit); ?></td>
+                              <?php if( $program_course->semester == 1): ?>
+                             <td> First </td>
+                             <?php else: ?>
+                             <td>Second </td>
+                             <?php endif; ?>
+
                              
                              
                               <td><a class="btn btn-info" href="/admin/download/<?php echo e($program_course->staff_course_id); ?>">  Download </a> </td>
                              
                              
-                             <td> <?php echo e($program_course->staff->upload_status); ?> </td>
+                             <td> <?php echo e($program_course->staff_course_status); ?> </td>
                              
                          </tr>
                           <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>

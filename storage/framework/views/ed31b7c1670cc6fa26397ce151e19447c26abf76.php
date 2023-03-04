@@ -24,10 +24,11 @@
                                     <th>Code</th>
                                     <th>Title</th>
                                     <th>Unit</th>
+                                    <th>Semester</th>
                                     
-                                    
-                                    
-                                    <th>Students Registered</th>
+
+                                    <th>Students </th>
+                                     <th>Result Score</th>
 
                                              <th>Action</th>
                                     <th>Status</th>
@@ -41,13 +42,18 @@
                                             <td> <?php echo e($program_course->course->course_code); ?></td>
                                             <td> <?php echo e($program_course->course->course_title); ?></td>
                                             <td> <?php echo e($program_course->credit_unit); ?></td>
+                                              <?php if( $program_course->semester == 1): ?>
+                             <td> First </td>
+                             <?php else: ?>
+                             <td>Second </td>
+                             <?php endif; ?>
                                             
                                             
-                                            <td>
-                                 <a class="btn btn-primary" target="_blank" href="<?php echo e(route('program_course.students',base64_encode($program_course->id))); ?>">  List </a>
+
+                                     <td>  <a class="btn btn-primary" target="_blank" href="<?php echo e(route('program_course.students',base64_encode($program_course->id))); ?>">  List </a>   </td>
                                  
-                                 <a class="btn btn-info" href="/admin/download/<?php echo e($program_course->staff_course_id); ?>">  Download </a>
-<td>
+                                     <td>  <a class="btn btn-info" href="/admin/download/<?php echo e($program_course->staff_course_id); ?>">  Download </a>   </td>
+                                 <td>
                                  <?php if(!$program_course->is_approved): ?>
                                  <a href="/staff-course/approve?course_id=<?php echo e($program_course->course_id); ?>&program_id=<?php echo e($program_course->program_id); ?>&by=dean" class="btn btn-outline-success" onclick="return confirm('Are you sure you want to approve this course?')">Approve</a>
                                  <?php else: ?>
@@ -58,7 +64,7 @@
                                             
                                             
                                                 
-                                                <td> <?php echo e($program_course->uploadStatus->upload_status); ?> </td>
+                                                 <td> <?php echo e($program_course->staff_course_status); ?> </td>
                                             
                                         </tr>
                                     <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
