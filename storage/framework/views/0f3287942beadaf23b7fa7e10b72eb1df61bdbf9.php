@@ -101,7 +101,11 @@
                                                  <br><br>
                                                 <a class="btn btn-outline-primary"
                                                 href="<?php echo e(route('academia.department.export_view', [$program->id, 100, 2])); ?>">
-                                                 Second Semester </a></td>
+                                                 Second Semester </a>
+
+                                                 </td>
+
+
                                         <td><a class="btn btn-outline-dark"
                                                 href="<?php echo e(route('academia.department.export_view', [$program->id, 200, 1])); ?>">
                                                 First Semester </a>
@@ -109,9 +113,8 @@
                                                 <a class="btn btn-outline-primary"
                                                 href="<?php echo e(route('academia.department.export_view', [$program->id, 200, 2])); ?>">
                                                  Second Semester </a>
-                                                    <a class="btn btn-outline-primary"
-                                                href="<?php echo e(route('academia.department.generatePDF', [$program->id, 200, 2])); ?>">
-                                                 Second Semester test </a></td>
+                                                    
+                                                 </td>
                                         <td><a class="btn btn-outline-dark"
                                                 href="<?php echo e(route('academia.department.export_view', [$program->id, 300, 1])); ?>">
                                                 First Semester </a>
