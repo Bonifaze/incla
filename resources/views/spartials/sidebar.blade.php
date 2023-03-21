@@ -72,12 +72,21 @@
                             </p>
                         </a>
                         <ul class="nav nav-treeview">
-                            <li class="nav-item">
+                        {{--  To ALLOW STUDENT SEE COURSE REGISTARION  --}}
+                            {{--  <li class="nav-item">
                                 <a href="{{ route('student.course-registration') }}" class="nav-link @yield('registration')">
                                     <i class="fa fa-tasks nav-icon"></i>
                                     <p>Course Registration</p>
                                 </a>
+                            </li>  --}}
+                            {{--  To close Course Registration  --}}
+                              <li class="nav-item">
+                                <a href="{{ route('student.closed-course-registration') }}" class="nav-link @yield('registration')">
+                                    <i class="fa fa-tasks nav-icon"></i>
+                                    <p>Course Registration</p>
+                                </a>
                             </li>
+
 
                             {{--  <li class="nav-item">
                             <a href="{{ route('student.evaluation') }}" class="nav-link @yield('evaluation')">

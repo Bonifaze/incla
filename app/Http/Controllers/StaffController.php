@@ -402,11 +402,12 @@ class StaffController extends Controller
     public function disable(Request $request)
     {
         $this->authorize('disable', Staff::class);
+        // dd($request);
         $staff = Staff::findOrFail($request->id);
         $name = $staff->fullName;
         $staff->status = $request->status;
         $staff->save();
-        return redirect()->back()
+        return redirect()->route('staff.list')
         ->with('success', $name.' '.$request->action.' successfully');
     }
 

@@ -20,7 +20,7 @@
             <li class="nav-item">
                 <a class="nav-link" href="/home">
                     <i class="fas fa-fw fa-tachometer-alt"></i>
-                    <span>Dashboard</span>
+                    <span>Dashboard F</span>
                 </a>
             </li>
 
@@ -33,9 +33,9 @@
                 <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                         <h6 class="collapse-header">Application Type</h6>
-                        <a class="collapse-item fw-bold" href="/utme">UTME</a>
+                     {{--  <a class="collapse-item fw-bold" href="/utme">UTME</a>
                         <a class="collapse-item fw-bold" href="/de">Direct Entry</a>
-                        <a class="collapse-item fw-bold" href="/transfers">Transfer</a>
+                        <a class="collapse-item fw-bold" href="/transfers">Transfer</a>     --}}
                         <a class="collapse-item fw-bold" href="/pg">Post Graduate</a>
                     </div>
                 </div>
@@ -51,7 +51,7 @@
             </li>
 
 
-            <li class="nav-item"> 
+            <li class="nav-item">
             {!! session('status') =='4'?'
                 <a class="nav-link collapsed" href="/viewprofile">
                     <i class="fas fa-user"></i>

@@ -8,6 +8,7 @@ use App\Session;
 use App\Student;
 use App\ProgramCourse;
 use App\StudentResult;
+use PDF;
 use App\AcademicDepartment;
 use App\Models\StaffCourse;
 use Illuminate\Http\Request;
@@ -300,6 +301,39 @@ class AcademicDepartmentsController extends Controller
         //$fileName = strtolower($program->code)."-".$level."level-result.xlsx";
         //return Excel::download(new AcademicDepartmentsViewExport($id,$level), $fileName);
         $session = $this->getCurrentSession();
+        $student_ids = RegisteredCourse::distinct('student_id')->where('program_id', $id)
+        // ->where('level', $level)
+        ->where('semester', $semester)->where('session', $session)->pluck('student_id');
+        $student_idsreg = RegisteredCourse::distinct('student_id')->where('program_id', $id)
+        // ->where('level', $level)
+        ->where('semester', $semester)->where('session', $session)->pluck('course_id');
+        $student_ids_arr = $student_ids->toArray();
+        $students = Student::wherein('id', $student_ids_arr)->with(['registered_courses' => function ($q) use ($level, $semester, $session) {
+            $q->where('session', $session);
+            // $q->where('level', $level);
+            $q->where('semester', $semester);
+            $q->orderBy('course_id', 'ASC');
+
+        }])->get();
+        // $studentReg = $student_idsreg;
+        // dd($studentReg);
+        $program_courses = ProgramCourse::where('program_id', $id)->with(['program'])->where('session_id', $session)
+        //  ->where('level', $level)
+        ->where('semester', $semester)->orderBy('course_id', 'ASC')->get();
+        $meta = [
+            'program' => Program::find($id),
+            'session' => Session::find($session),
+            'level' => $level,
+            'semester' => $semester
+        ];
+
+    //    dd( $meta['program']->degree );
+        return view('academia.departments.program_level_results_export', ['program_courses' => $program_courses, 'students' => $students,'meta' => $meta]);
+    }
+
+    public function generatePDF($id,$level, $semester){
+        $data =[];
+        $session = $this->getCurrentSession();
         $student_ids = RegisteredCourse::distinct('student_id')->where('program_id', $id)->where('level', $level)->where('semester', $semester)->where('session', $session)->pluck('student_id');
         $student_ids_arr = $student_ids->toArray();
         $students = Student::wherein('id', $student_ids_arr)->with(['registered_courses' => function ($q) use ($level, $semester, $session) {
@@ -311,15 +345,15 @@ class AcademicDepartmentsController extends Controller
         }])->get();
         $program_courses = ProgramCourse::where('program_id', $id)->with(['program'])->where('session_id', $session)->where('level', $level)->where('semester', $semester)->orderBy('course_id', 'ASC')->get();
         $meta = [
-            'program' => Program::find($id)
-           ,
+            'program' => Program::find($id),
             'session' => Session::find($session),
             'level' => $level,
             'semester' => $semester
         ];
 
-    //    dd( $meta['program']->degree );
-        return view('academia.departments.program_level_results_export', ['program_courses' => $program_courses, 'students' => $students,'meta' => $meta]);
+
+    $pdf = PDF::loadView('academia.departments.program_level_results_export', ['program_courses' => $program_courses, 'students' => $students,'meta' => $meta])->setPaper('a4', 'landscape','40');
+    return $pdf->download('pdf_file.pdf');
     }
 
 

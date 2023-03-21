@@ -38,6 +38,14 @@
                     class="app-page-title text-uppercase h5 font-weight-bold p-2 mb-2 shadow-sm text-center text-success border">
                     Staff Profile
                 </h1>
+                                                     <div>
+                                                            @can('rbac', 'App\Staff')
+                                                                <a class="btn btn-warning"
+                                                                    href="{{ route('staff.show',$staff->id) }}">Edit Profile
+                                                                </a>
+                                                            @else
+                                                            @endcan
+                                                        </div>
                 <div class="row py-4">
                     <div class="col-12 col-lg-6">
                         <div class="app-card app-card-account shadow d-flex flex-column align-items-start ">

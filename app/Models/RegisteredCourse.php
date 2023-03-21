@@ -30,7 +30,9 @@ class RegisteredCourse extends Model implements Auditable
         'total',
         'grade_id',
         'grade_status',
-        'status'
+        'status',
+        'staff_id',
+
     ];
 
     protected $appends = ['course_unit', 'course_semester', 'course_title', 'course_code', 'matric_number', 'full_name','result', 'grade_point'];

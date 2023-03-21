@@ -71,6 +71,7 @@ class StudentResultsController extends Controller
 
     public function modifyResult(Request $request)
     {
+        $student = Student::findOrFail($request->student_id);
         $this->authorize('ictUpload', StudentResult::class);
         $session = Session::findOrFail($request->session_id);
          $semester = $request->semester;
@@ -85,7 +86,7 @@ class StudentResultsController extends Controller
         ->where('session', $request->session_id)
         ->where('semester', $request->semester)
         ->get();
-        return view('results.modify', compact('registered_courses' ,'session', 'semester'));
+        return view('results.modify', compact('registered_courses' ,'session', 'semester', 'student'));
     }
 
     public function updateResult(Request $request)
@@ -123,6 +124,8 @@ class StudentResultsController extends Controller
             $registeredCourse->grade_id = $grade_id;
             $registeredCourse->grade_status = $grade_setting->status;
             $registeredCourse->staff_id =$staff->id;
+
+
 
         $registeredCourse->save();
 

@@ -2,22 +2,22 @@
 
 namespace App\Http\Controllers;
 
-use App\program;
-
-
-use App\Models\fee_types;
 use App\FeeType;
+
+
+use App\program;
 use App\Category;
-use App\programs;
 use App\subjects;
 use Carbon\Carbon;
 use App\Models\User;
 use App\Mail\Referee;
+use App\Models\programs;
+use App\Models\fee_types;
 use App\Mail\Confirmsignup;
+use App\Mail\forgotpassword;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
-use App\Mail\forgotpassword;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Database\QueryException;
@@ -291,7 +291,7 @@ class ApplicantController extends Controller
             // ->select('remitas.status_code', 'remitas.fee_type', 'remitas.fee_type_id', 'remitas.created_at')
             ->get();
 
-        
+
                     foreach ($payment as $utm){
                 if ($utm->status_code == '01' && $utm->amount >=170000) {
                     return redirect('completeadmissions');          }
@@ -319,7 +319,7 @@ class ApplicantController extends Controller
         $utme = DB::table('users')->where('users.id', session('userid'))//-> where('remitas.status_code', '01')
             ->leftJoin('usersbiodata', 'usersbiodata.user_id', '=', 'users.id')
             ->select('users.surname', 'users.first_name', 'users.phone', 'users.email', 'usersbiodata.status',)->first();
-            $programs = programs::orderBy('name', 'ASC')->get();
+            $programs = Program::orderBy('name', 'ASC')->get();
             $subjects = subjects::orderBy('subject_name', 'ASC')->get();
 
             $utmeremita= DB::table('users')->where('users.id', session('userid'))//-> where('remitas.status_code', '01')
@@ -642,7 +642,7 @@ class ApplicantController extends Controller
             ->leftJoin('usersbiodata', 'usersbiodata.user_id', '=', 'users.id')
             //->leftJoin('remitas', 'remitas.user_id', '=', 'users.id')
             ->select('users.surname', 'users.first_name', 'users.phone', 'users.email', 'usersbiodata.status', )->first();
-        $programs = programs::orderBy('name', 'ASC')->get();
+        $programs = Program::orderBy('name', 'ASC')->get();
         $subjects = subjects::orderBy('subject_name', 'ASC')->get();
         $deremita= DB::table('users')->where('users.id', session('userid'))//-> where('remitas.status_code', '01')
         ->leftJoin('usersbiodata', 'usersbiodata.user_id', '=', 'users.id')
@@ -667,7 +667,7 @@ class ApplicantController extends Controller
             ->leftJoin('usersbiodata', 'usersbiodata.user_id', '=', 'users.id')
            // ->leftJoin('remitas', 'remitas.user_id', '=', 'users.id')
             ->select('users.surname', 'users.first_name', 'users.phone', 'users.email', 'usersbiodata.status')->first();
-        $programs = programs::orderBy('name', 'ASC')->get();
+        $programs = Program::orderBy('name', 'ASC')->get();
         $subjects = subjects::orderBy('subject_name', 'ASC')->get();
 
         $transfersremita= DB::table('users')->where('users.id', session('userid'))//-> where('remitas.status_code', '01')
@@ -694,7 +694,7 @@ class ApplicantController extends Controller
             ->leftJoin('usersbiodata', 'usersbiodata.user_id', '=', 'users.id')
           //  ->leftJoin('remitas', 'remitas.user_id', '=', 'users.id')
             ->select('users.surname', 'users.first_name', 'users.phone', 'users.email', 'usersbiodata.status', )->first();
-        $programs = programs::orderBy('name', 'ASC')->get();
+        $programs = Program::orderBy('name', 'ASC')->get();
         $subjects = subjects::orderBy('subject_name', 'ASC')->get();
         $pgremita= DB::table('users')->where('users.id', session('userid'))//-> where('remitas.status_code', '01')
         ->leftJoin('usersbiodata', 'usersbiodata.user_id', '=', 'users.id')
@@ -2134,7 +2134,7 @@ class ApplicantController extends Controller
                 ->leftJoin('olevel', 'olevel.user_id', '=', 'users.id')
                 ->select('users.*', 'usersbiodata.*', 'sponsors.*', 'utme.*', 'olevel.*')
                 ->first();
-                $programs = programs::orderBy('name', 'ASC')->get();
+                $programs = Program::orderBy('name', 'ASC')->get();
                 $subjects = subjects::orderBy('subject_name', 'ASC')->get();
             return view('admissions./editUTME', compact('applicantsDetails'),['programs' => $programs, 'subjects' => $subjects]);
         } elseif (session('usersType')  ==  'DE') {
@@ -2146,7 +2146,7 @@ class ApplicantController extends Controller
                 ->leftJoin('olevel', 'olevel.user_id', '=', 'users.id')
                 ->select('users.*', 'usersbiodata.*', 'sponsors.*', 'de.*', 'olevel.*')
                 ->first();
-                $programs = programs::orderBy('name', 'ASC')->get();
+                $programs = Program::orderBy('name', 'ASC')->get();
                 $subjects = subjects::orderBy('subject_name', 'ASC')->get();
             return view('admissions./editDE', compact('applicantsDetails'),['programs' => $programs, 'subjects' => $subjects]);
         } elseif (session('usersType')  ==  'Transfer') {
@@ -2158,7 +2158,7 @@ class ApplicantController extends Controller
                 ->leftJoin('olevel', 'olevel.user_id', '=', 'users.id')
                 ->select('users.*', 'usersbiodata.*', 'sponsors.*', 'transfers.*', 'olevel.*')
                 ->first();
-                $programs = programs::orderBy('name', 'ASC')->get();
+                $programs = Program::orderBy('name', 'ASC')->get();
                 $subjects = subjects::orderBy('subject_name', 'ASC')->get();
             return view('admissions./editTransfer', compact('applicantsDetails'),['programs' => $programs, 'subjects' => $subjects]);
         } elseif (session('usersType') ==  'PG') {
@@ -2172,7 +2172,7 @@ class ApplicantController extends Controller
                 ->leftJoin('olevel', 'olevel.user_id', '=', 'users.id')
                 ->select('users.*', 'usersbiodata.*', 'sponsors.*', 'pgs.*', 'olevel.*', 'pg_referees.*', 'pg_educations.*')
                 ->first();
-                $programs = programs::orderBy('name', 'ASC')->get();
+                $programs = Program::orderBy('name', 'ASC')->get();
                 $subjects = subjects::orderBy('subject_name', 'ASC')->get();
             return view('admissions./editPG', compact('applicantsDetails'),['programs' => $programs, 'subjects' => $subjects]);
         }

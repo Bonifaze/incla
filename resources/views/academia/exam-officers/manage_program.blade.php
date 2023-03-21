@@ -127,7 +127,7 @@
                                                    <br><br>
                                                 <a class="btn btn-outline-primary"
                                                 href="{{ route('academia.department.export_view', [$program->id, 900, 2]) }}">
-                                                 Second Semester)</a>
+                                                 Second Semester</a>
                                                  </td>
                                     </tr>
 

@@ -33,9 +33,9 @@
                 <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                         <h6 class="collapse-header">Application Type</h6>
-                        <a class="collapse-item fw-bold" href="/utme">UTME</a>
+                        {{--  <a class="collapse-item fw-bold" href="/utme">UTME</a>
                         <a class="collapse-item fw-bold" href="/de">Direct Entry</a>
-                        <a class="collapse-item fw-bold" href="/transfers">Transfer</a>
+                        <a class="collapse-item fw-bold" href="/transfers">Transfer</a>  --}}
                         <a class="collapse-item fw-bold" href="/pg">Post Graduate</a>
                     </div>
                 </div>

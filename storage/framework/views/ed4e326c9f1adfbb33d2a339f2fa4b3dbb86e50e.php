@@ -119,16 +119,16 @@
 						  <thead>
 
 							  <th>S/N</th>
-						    <th>Audit Id</th>
                              
                               <th>Staff Name</th>
-							 <th>Action</th>
+							 <th>Event</th>
 							 <th>Audited Model</th>
                              <th>Old Values</th>
 							<th>New Values</th>
                             <th>URL</th>
                             <th>IP Address</th>
                             <th>User PC/ Browser</th>
+						    <th>Audit Id</th>
                             
                             
                             <th>Date</th>
@@ -146,7 +146,6 @@
 
 							<tr>
 							  <td><?php echo e($loop->iteration); ?></td>
-							  <td><?php echo e($audit->auditable_id); ?></td>
                                 
                               <td><?php echo e($audit->staff->full_name ?? null); ?></td>
 							 <td><?php echo e($audit->event); ?></td>
@@ -181,6 +180,7 @@
                                  <td><?php echo e($audit->user_agent); ?></td>
                                   
                                    
+							  <td><?php echo e($audit->auditable_id); ?></td>
                                     <td><?php echo e($audit->updated_at); ?></td>
 
 							 
@@ -189,7 +189,7 @@
 							</tr>
 
 							<?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-
+<a target="_blank" href="<?php echo e(route('rbac.auditviewallevent')); ?>" class="btn btn-primary mb-3 mt-3 float-right">View All Event</a>
 						  </tbody>
  <?php echo $article->render(); ?>
 
@@ -231,7 +231,8 @@
 							  <td><?php echo e($loop->iteration); ?></td>
 							  <td><?php echo e($audit->staff->full_name ?? null); ?></td>
                               
-                                <td><?php echo e($audit->course->course_code); ?></td>
+                                <td><?php echo e($audit->course->course_code); ?> (<?php echo e($audit->course->course_title); ?>)</td>
+
 							 <td><?php echo e($audit->sessions->name); ?></td>
 
                               <?php if($audit->semester==1): ?>
@@ -251,9 +252,9 @@
 
 							<?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
 
+<a target="_blank" href="<?php echo e(route('rbac.auditviewall')); ?>" class="btn btn-primary mb-3 mt-3 float-right">View All Result Changes</a>
 						  </tbody>
  <?php echo $modify->render(); ?>
-
 
 
 						</table>
@@ -304,7 +305,7 @@
 							</tr>
 
 							<?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-
+<a target="_blank" href="<?php echo e(route('rbac.auditviewallremita')); ?>" class="btn btn-primary mb-3 mt-3 float-right">View All Verified</a>
 						  </tbody>
  <?php echo $modify->render(); ?>
 

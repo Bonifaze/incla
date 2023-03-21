@@ -33,13 +33,13 @@ Route::get('/students/contact/edit', 'StudentsController@contactEdit')->name('st
 
 Route::post('/students/contact/update', 'StudentsController@contactUpdate')->name('student.contact-update');
 
-// Route::get('/students/course-registration', 'StudentsController@courseRegistration')->name('student.course-registration');
+//Route::get('/students/course-registration', 'StudentsController@courseRegistration')->name('student.course-registration');
 
 // Route::delete('/students/remove-course', 'StudentsController@removeRegisteredCourse')->name('student.remove-course');
 
 // Route::post('/students/add-course', 'StudentsController@addCourse')->name('student.add-course');
 
-// Route::get('/students/closed-course-registration', 'StudentsController@closedCourseRegistration')->name('student.closed-course-registration');
+Route::get('/students/closed-course-registration', 'StudentsController@closedCourseRegistration')->name('student.closed-course-registration');
 
 // Route::get('/students/course-form/{encode}', 'StudentsController@courseForm')->name('student.course-form');
 

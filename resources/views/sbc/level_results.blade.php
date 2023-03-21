@@ -57,6 +57,7 @@
 							   <th>Students Total</th>
                                <th>Result Download</th>
 							 <th>Action</th>
+                             <th>Status</th>
 
 
 
@@ -79,7 +80,7 @@
 							  {{--  <td> {{ $ready }} </td>  --}}
 							  {{--  <td> {{ $notReady }} </td>  --}}
 							  {{--  <td> {{ $approved }} </td>  --}}
-							  <td> {{ $students}} </td>
+							  <td> {{ $program->registeredStudentsCount( $level) }} </td>
                                 <td>
                                                 <a class="btn btn-outline-dark"
                                                 href="{{ route('academia.department.export_view', [$program->id, $level, 1]) }}">
@@ -89,9 +90,26 @@
                                                 href="{{ route('academia.department.export_view', [$program->id, $level, 2]) }}">
                                                  Second Semester </a></td>
 
-                               <td><a href="/staff-course/approve?by=sbc&level={{$level}} &program_id={{ $program->id }}" class="btn btn-outline-success" onclick="return confirm('are you sure you want to proceed with this action?')">Approve</a><a href="/staff-course/revoke?by=sbc&level={{$level}} &program_id={{ $program->id }}" class="btn btn-outline-danger" onclick="return confirm('are you sure you want to proceed with this action?')">Revoke</a></td>
+                               {{--  <td><a href="/staff-course/approve?by=sbc&level={{$level}} &program_id={{ $program->id }}" class="btn btn-outline-success" onclick="return confirm('are you sure you want to proceed with this action?')">Approve</a><a href="/staff-course/revoke?by=sbc&level={{$level}} &program_id={{ $program->id }}" class="btn btn-outline-danger" onclick="return confirm('are you sure you want to proceed with this action?')">Revoke</a></td>  --}}
+ <td>                           @if (!$program->is_VCapproved)
+ @if(!$program->is_approved)
+                          <a href="/staff-course/approve?by=sbc&level={{$level}} &program_id={{ $program->id }}" class="btn btn-outline-success" onclick="return confirm('are you sure you want to proceed with this action?')">Approve</a>
+                                 @else
+                          <a href="/staff-course/revoke?by=sbc&level={{$level}} &program_id={{ $program->id }}" class="btn btn-outline-danger" onclick="return confirm('are you sure you want to proceed with this action?')">Revoke</a>
+                                 @endif
 
+ @else
+<p class="text-danger text-bold">Kindly ask VC to REVOKE</p>
+ @endif
 
+                                 </td>
+                            <td>
+                               @if(!$program->is_approved)
+                           <P class="text-danger text-bold" >unapproved</P>
+                                 @else
+                             <P class="text-success" >Approved</p>
+                                 @endif
+                                 </td>
 
 
 							</tr>

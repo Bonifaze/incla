@@ -43,6 +43,8 @@
 
     <link rel="stylesheet" href="<?php echo e(asset('v3/plugins/toastr/toastr.min.css')); ?>" />
 
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/dt-1.11.3/b-2.1.1/r-2.2.9/datatables.min.css"/>
+
     <?php echo $__env->yieldContent('css'); ?>
 
 </head>
@@ -143,8 +145,11 @@
        $('#admin').select2();
        $('#hod_id').select2();
        $('#lecturer_id').select2();
+       $(document).ready(function(){
+        $('#dataTable').DataTable();
+       });
     </script>
-
+<script type="text/javascript" src="https://cdn.datatables.net/v/dt/dt-1.11.3/b-2.1.1/r-2.2.9/datatables.min.js"></script>
 
 
 

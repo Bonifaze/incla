@@ -138,15 +138,10 @@
 						</table>
 
 <div>
-<?php echo Form::open(['method' => 'Post', 'route' => 'rbac.remove-perm', 'id'=>'removePForm'.$permission->id]); ?>
-
-				    		<?php echo e(Form::hidden('perm_id', $permission->id)); ?>
-
-				    		<?php echo e(Form::hidden('role_id', $role->id)); ?>
 
 
-				    		<button onclick="submitRForm(<?php echo e($permission->id); ?>)" type="button" class="<?php echo e($permission->id); ?> btn btn-danger" ><span class="icon-line2-trash"></span> Remove</button>
-				    		<?php echo Form::close(); ?></div><br>
+				    		<button onclick="submitRForm" type="button" class="btn btn-danger mb-4 ml-4" ><span class="icon-line2-trash"></span> Remove</button>
+				    		</div>
 
             </div>
 

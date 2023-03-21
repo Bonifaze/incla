@@ -79,7 +79,7 @@ if(!session('adminId'))
                                         @csrf
                                         <div class="mb-4">
                                             <a href="/admin/download/{{ $course->id }}" class="btn btn-primary">Download as CSV</a>
-                                            <a href="javascript:void" class="btn btn-success" data-toggle="modal" data-target="#uploadModal">Upload Scores CSV</a>
+                                              <a href="javascript:void" class="btn btn-success" data-toggle="modal" data-target="#uploadModal">Upload Scores CSV</a>
                                         </div>
                                         <div class="table-responsive mt-5 mb-4">
                                             <table class="table table-bordered table-striped table-hover">
@@ -138,7 +138,7 @@ if(!session('adminId'))
                                             </table>
                                         </div>
                                         <div class="mb-4">
-                                            <button type="submit" name="button" class="btn btn-success">Save & submit for
+                                              <button type="submit" name="button" class="btn btn-success">Save & submit for
                                                 approval</button>
                                         </div>
                                     </form>

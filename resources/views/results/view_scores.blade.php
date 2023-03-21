@@ -38,17 +38,15 @@
                 <div class="col_full">
                     <h1
                         class="app-page-title text-uppercase h5 font-weight-bold p-2 mb-2 shadow-sm text-center text-success border">
-                    Courses Score
+                     {{ $course->course_code }} ( {{ $course->course_title }} )
                     </h1>
 
-                       <div class="row mb-4">
+                       <div class="row">
                     <div class="col-12">
                         <div class="card">
                             <div class="card-body">
                                 <div class="body">
-                                    <h4 class="card-title mb-4">
-                                        {{ $course->course_title }}
-                                    </h4>
+
                                     @if ($errors->any())
                                         @foreach ($errors->all() as $error)
                                             <div class="alert alert-danger">
@@ -63,8 +61,8 @@
                                     @endif
                                     <form method="post" action="/admin/scores/approve">
                                         @csrf
-                                        <div class="table-responsive mt-5 mb-4">
-                                            <table class="table table-bordered table-striped table-hover">
+                                        <div class="table-responsive">
+                                            <table class="table table-bordered table-hover">
                                                 <thead>
                                                     <tr>
                                                         <th>S/N</th>
@@ -77,6 +75,7 @@
                                                         <th>Exam Score</th>
                                                         <th>Total Score</th>
                                                         <th>Grade</th>
+
                                                     </tr>
                                                 </thead>
                                                 <tbody>
@@ -90,28 +89,29 @@
                                                     @foreach ($student_registered_courses as $student_course)
                                                         <tr>
                                                             <td>{{ $loop->iteration }}</td>
-                                                            <td>{{ $student_course->student_name }} <input type="hidden"
+                                                            <td>{{ $student_course->student_name ?? null}} <input type="hidden"
                                                                     name="reg_ids[]" value="{{ $student_course->id }}"></td>
-                                                            <td>{{ $student_course->student_matric }}</td>
+                                                            <td>{{ $student_course->student_matric ?? null}}</td>
                                                             <td>{{ $student_course->course_code }}</td>
                                                             <td>{{ $student_course->ca1_score }}</td>
                                                             <td>{{ $student_course->ca2_score }}</td>
                                                             <td>{{ $student_course->ca3_score }}</td>
                                                             <td>{{ $student_course->exam_score }}</td>
-                                                            <td>{{ $student_course->ca_score + $student_course->exam_score }}
+                                                            <td>{{ $student_course->total }}
                                                             </td>
                                                             <td>{{ $student_course->grade }}</td>
+
                                                         </tr>
                                                     @endforeach
                                                 </tbody>
                                             </table>
                                         </div>
-                                        <div class="mb-4">
+                                        {{--  <div class="mb-4">
                                             <button type="submit" name="button" class="btn btn-success">Approve
                                                 Scores</button>
                                             <a href="/admin/scores/decline/{{ $course->id }}"
                                                 class="btn btn-danger">Decline Scores</a>
-                                        </div>
+                                        </div>  --}}
                                     </form>
                                 </div>
                             </div>

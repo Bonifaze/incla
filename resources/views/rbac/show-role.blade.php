@@ -134,12 +134,10 @@
 						</table>
 
 <div>
-{!! Form::open(['method' => 'Post', 'route' => 'rbac.remove-perm', 'id'=>'removePForm'.$permission->id]) !!}
-				    		{{ Form::hidden('perm_id', $permission->id) }}
-				    		{{ Form::hidden('role_id', $role->id) }}
 
-				    		<button onclick="submitRForm({{$permission->id}})" type="button" class="{{$permission->id}} btn btn-danger" ><span class="icon-line2-trash"></span> Remove</button>
-				    		{!! Form::close() !!}</div><br>
+
+				    		<button onclick="submitRForm" type="button" class="btn btn-danger mb-4 ml-4" ><span class="icon-line2-trash"></span> Remove</button>
+				    		</div>
 
             </div>
 

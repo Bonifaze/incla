@@ -35,8 +35,8 @@ class CollegesController extends Controller
         $colleges = College::orderBy('status','ASC')->orderBy('name','ASC')->paginate(10);
          return view('academia.colleges.list',compact('colleges'));
     }
-    
-    
+
+
     public function create()
     {
         $this->authorize('create',College::class);
@@ -46,7 +46,7 @@ class CollegesController extends Controller
         ->get()->pluck('full_name','id');
         return view('academia.colleges.create', compact('staff'));
     }
-    
+
     public function edit($id)
     {
         $this->authorize('edit',College::class);
@@ -57,8 +57,8 @@ class CollegesController extends Controller
         ->get()->pluck('full_name','id');
         return view('academia.colleges.edit', compact('staff','college'));
     }
-    
-    
+
+
     /**
      * Store a newly created resource in storage.
      *
@@ -76,7 +76,7 @@ class CollegesController extends Controller
         $college->name = $request->name;
         $college->dean_id = $request->dean_id;
         $college->status = 1;
-        
+
         try{
             $college->save();
         } // end try
@@ -85,12 +85,12 @@ class CollegesController extends Controller
             $request->session()->flash('error', 'Error creating Faculty ! <br />');
             return redirect()->route('academia.college.create');
            }
-       
+
         return redirect()->route('academia.college.list')
         ->with('success','New Faculty created successfully');
     }  // end store
-    
-    
+
+
     /**
      * Store a newly created resource in storage.
      *
@@ -108,7 +108,7 @@ class CollegesController extends Controller
             'status' => 'required|integer',
 
         ]);
-        
+
         $college = College::findOrFail($id);
         $college->code = $request->code;
         $college->name = $request->name;
@@ -120,16 +120,16 @@ class CollegesController extends Controller
         catch(\Exception $e)
         {
             $request->session()->flash('error', 'Error updating Faculty !');
-            
+
             return redirect()->route('academia.college.edit', $id);
-         
+
         }
-        
+
         return redirect()->route('academia.college.list')
         ->with('success','Faculty edited successfully');
     }  // end update
-    
-    
+
+
     public function delete(Request $request)
     {
         //
@@ -141,7 +141,7 @@ class CollegesController extends Controller
             $request->session()->flash('error', 'Error deleting Faculty. Departments exist under this college !');
             return redirect()->route('academia.college.list');
         }
-        
+
         try{
             $college->delete();
         } // end try
@@ -150,10 +150,10 @@ class CollegesController extends Controller
             $request->session()->flash('error', 'Error deleting Faculty !');
             return redirect()->route('academia.college.list');
         }
-        
+
         return redirect()->route('academia.college.list')
         ->with('success','Faculty deleted successfully');
-      
+
     } // end delete
 
     public function programs()
@@ -175,8 +175,12 @@ class CollegesController extends Controller
     public function manageProgram($encode)
     {
         $this->authorize('manageProgram',College::class);
+
         $id = base64_decode($encode);
+        // dd($id);
         $program = Program::findOrFail($id);
+
+
         return view('academia.colleges.manage_program',compact('program'));
     }
 

@@ -455,7 +455,7 @@ protected function getCourseSemester($course_id)
             $total_reg_units2 += $student_registered_course->course_unit;
         }
     }
-   
+
     $student_courses = [];
 
 
@@ -713,33 +713,33 @@ private function getdptcolleg($program_id)
 
 
 
-    //     public function closedCourseRegistration()
-    //     {
-    //         //
-    //         $student = Auth::guard('student')->user();
-    //         $sess = new Session();
-    //         $session_id = $sess->currentSession();
-    //         $semester = $sess->courseRegSemester();
-    //         $session = Session::findOrFail($session_id);
+        public function closedCourseRegistration()
+        {
+            //
+            $student = Auth::guard('student')->user();
+            $sess = new Session();
+            $session_id = $sess->currentSession();
+            $semester = $sess->courseRegSemester();
+            $session = Session::findOrFail($session_id);
 
 
-    //         //check if course was registered and show course form
-    //         if($student->hasSemesterRegistration($session_id,$semester))
-    //         {
-    //             $result = new StudentResult();
-    //             $academic = $student->academic;
-    //             $registration = $student->getSemesterRegistration($session->id,$semester);
-    //             $results = $result->semesterRegisteredCourses($student->id,$session_id,$semester);
-    //             $total = $student->totalRegisteredCredits($results);
+            //check if course was registered and show course form
+            if($student->hasSemesterRegistration($session_id,$semester))
+            {
+                $result = new StudentResult();
+                $academic = $student->academic;
+                $registration = $student->getSemesterRegistration($session->id,$semester);
+                $results = $result->semesterRegisteredCourses($student->id,$session_id,$semester);
+                $total = $student->totalRegisteredCredits($results);
 
-    //             return view('students.current_course_form',compact('student','session','semester','academic','registration','results','total'));
+                return view('students.current_course_form',compact('student','session','semester','academic','registration','results','total'));
 
-    //         }
+            }
 
 
-    //         //else just show closed registration
-    //         return view('students.closed_registration',compact('student'));
-    //     }
+            //else just show closed registration
+            return view('students.closed_registration',compact('student'));
+        }
 
     //     public function courseForm2($encode)
     //     {

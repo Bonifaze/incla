@@ -30,7 +30,7 @@
                                     <th>Students </th>
                                      <th>Result Score</th>
 
-                                             <th>Action</th>
+                                    <th>HoD Approval</th>
                                     <th>Status</th>
 
                                 </thead>
@@ -54,10 +54,11 @@
                                  
                                      <td>  <a class="btn btn-info" href="/admin/download/<?php echo e($program_course->staff_course_id); ?>">  Download </a>   </td>
                                  <td>
-                                 <?php if(!$program_course->is_approved): ?>
-                                 <a href="/staff-course/approve?course_id=<?php echo e($program_course->course_id); ?>&program_id=<?php echo e($program_course->program_id); ?>&by=dean" class="btn btn-outline-success" onclick="return confirm('Are you sure you want to approve this course?')">Approve</a>
+                                 
+                                   <?php if(!$program_course->is_approved): ?>
+                           <P class="text-danger text-bold" >unapproved</P>
                                  <?php else: ?>
-                                 <a href="/staff-course/revoke?course_id=<?php echo e($program_course->course_id); ?>&program_id=<?php echo e($program_course->program_id); ?>&by=dean" class="btn btn-outline-danger" onclick="return confirm('Are you sure you want to revoke approval for this course?')">Revoke Approval</a>
+                             <P class="text-success" >Approved</p>
                                  <?php endif; ?>
                                  </td>
                              </td>

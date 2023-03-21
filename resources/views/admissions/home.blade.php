@@ -56,7 +56,7 @@ exit;
 
                     <!-- Content Row -->
                     <div class="row mt-5">
-
+{{--
                         <div class="col-xl-3 col-md-6 mb-4">
                             <div class="border-left-success shadow rounded-lg px-4 p-3">
                                 <div class="row no-gutters align-items-center">
@@ -92,6 +92,7 @@ exit;
                                 </div>
                             </div>
                         </div>
+                        --}}
 
                         <div class="col-xl-3 col-md-6 mb-4">
                             <div class="border-left-warning shadow rounded-lg px-4 p-3">
@@ -107,10 +108,10 @@ exit;
 
                     </div>
 
-                   
+
                 </div>
             </div>
-            @include('layouts.footer')  
+            @include('layouts.footer')
         </div>
     </div>
 </div>

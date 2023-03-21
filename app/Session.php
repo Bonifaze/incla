@@ -36,8 +36,10 @@ class Session extends Model implements Auditable
 
     public function currentSemester()
     {
-        $setting = new Setting();
-        return $setting->staffSemester();
+        $session = $this::where('status',1)->first();
+        return $session->semester;
+        // $setting = new Setting();
+        // return $setting->staffSemester();
     }
 
     public function courseRegSemester()

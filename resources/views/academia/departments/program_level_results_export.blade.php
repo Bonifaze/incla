@@ -16,12 +16,12 @@
     $course_ids = [];
 @endphp
 <body>
- <div class="row justify-content-center mb-4">
+ <div class="row justify-content-center mt-4">
     <div class="col-md-5">
-        <h1 class="text-center text-capitalize">VERITAS UNIVERSITY ABUJA</h1>
-           <h4 class="text-center">(The Catholic Univeristy of Nigeria)</h4>
-            <h4 class="text-center">Bwari Area Council, FCT</h4>
-             <h2 class="text-center text-bold">EXMINATION REPORTING SHEET</h2>
+        <h3 class="text-center text-capitalize">VERITAS UNIVERSITY ABUJA</h3>
+
+            <h6 class="text-center">Bwari Area Council, FCT</h6>
+             <h5 class="text-center text-bold">EXMINATION REPORTING SHEET</h5>
     </div>
   </div>
 <div>
@@ -51,7 +51,7 @@
 
 
                               {{--  @endforeach  --}}
-                              <td colspan="4">Session: {{ $meta['session']->name }} </td>
+                              <td colspan="12">Session: {{ $meta['session']->name }} </td>
                           </tr>
 
                           <tr>
@@ -62,7 +62,7 @@
 
 
                               {{--  @endforeach  --}}
-                              <td colspan="4">Semester:
+                              <td colspan="12">Semester:
                                 @if ( $meta['semester']  == 1)
                               First
                              @else ( $meta['semester']  == 2)
@@ -86,7 +86,7 @@
 
 
                               {{--  @endforeach  --}}
-                              <td colspan="4">Level: {{ $meta['level'] }}</td>
+                              <td colspan="12">Level: {{ $meta['level'] }}</td>
                           </tr>
 
                           <tr>
@@ -117,6 +117,7 @@
                     <th rowspan="2">TC</th>
                     <th rowspan="2">TGP</th>
                     <th rowspan="2">GPA</th>
+                      {{--  <th rowspan="2">CGPA</th>  --}}
                     <th rowspan="2">Remark</th>
                 </tr>
                 <tr>
@@ -136,6 +137,11 @@
                         $gpa = 0.00;
                     @endphp
                     <tr>
+                    @if ($student->academic->level > 900)
+
+                    @else
+
+
                         <td>{{ $loop->iteration }}</td>
                         <td>{{ $student->matric_number }}</td>
                         <td>{{ $student->full_name }}</td>
@@ -155,7 +161,8 @@
                         <td>{{ $tc }}</td>
                         <td>{{ $tgp }}</td>
                         <td>{{ $tc > 0 && $tgp > 0 ? number_format($tgp/$tc, 2) : '0.00' }}</td>
-                        <td>
+                         {{--  <td><span style="font-weight: bold">CGPA : {{ $tgp_cgpa > 0 && $tcu_cgpa > 0 ? number_format($tgp_cgpa/$tcu_cgpa, 2) : '0.00' }}</span></td>  --}}
+                        <td class="small">
                          {{--  {{ $student_course?->total }}
                          @if ( $student_course?->total <= 44)
                                 CO :
@@ -165,6 +172,7 @@
 
                                   {{$student->semesterResultRemark()}}
                         </td>
+                         @endif
                     </tr>
                 @endforeach
             </tbody>
@@ -179,6 +187,11 @@
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.min.js"
     integrity="sha384-7VPbUDkoPSGFnVtYi0QogXtr74QeVeeIs99Qfg5YCF+TidwNdjvaKZX19NZ/e6oz" crossorigin="anonymous">
   </script>
+   <script>
+      window.onload = function() {
+            window.print();
+        }
+    </script>
 </body>
 
 </html>

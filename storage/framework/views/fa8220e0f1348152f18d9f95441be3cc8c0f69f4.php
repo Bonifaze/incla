@@ -1,5 +1,5 @@
 <?php $__env->startSection('pagetitle'); ?>
-    Staff Home
+    Staff Courses
 <?php $__env->stopSection(); ?>
 
 
@@ -47,16 +47,18 @@
                                 <div class="body">
                                     
                                     <div class="table-responsive mt-5">
-                                        <table class="table table-bordered table-striped table-hover tbl">
+                                        <table class="table  table-striped table-hover tbl" id="dataTable" width="100%"
+                                        cellspacing="0">
                                             <thead>
                                                 <tr>
                                                     <th>S/N</th>
                                                      <th>Course Code</th>
                                                     <th>Course Title</th>
-                                                   
-                                                    <th>Total Students</th>
+                                                    <th>Semester</th>
+                                                    <th>Students</th>
+                                                    <th>Student Program</th>
                                                     <th>Upload Status</th>
-                                                    <th>HOD's Approval</th>
+                                                    <th>HoD Approval</th>
                                                     <th>Action</th>
                                                 </tr>
                                             </thead>
@@ -66,11 +68,19 @@
                                                         <td><?php echo e($loop->iteration); ?></td>
                                                         <td><?php echo e($staff_course->course_code); ?></td>
                                                         <td><?php echo e($staff_course->course_title); ?></td>
+                                                          <td >
+                                                          <?php if($staff_course->semester_id==1): ?>
+                                                                First
+                                                          <?php else: ?>
+                                                                Second
+                                                          <?php endif; ?>
+                                                          </td>
                                                         <th><?php echo e($staff_course->total_students); ?></th>
+                                                        <th><?php echo e($staff_course->program->name ?? null); ?></th>
                                                         <td><?php echo e($staff_course->upload_status); ?></td>
                                                         <td><?php echo e($staff_course->hod_approval); ?></td>
                                                         <td><?php if($staff_course->hod_approval != 'approved'): ?> <a href="<?php echo e(route('admin.scores_upload', $staff_course->id)); ?>"
-                                                                class="btn btn-primary">Upload Scores</a> <?php else: ?> No Action <?php endif; ?></td>
+                                                                class="btn btn-primary">Upload Scores</a> <?php else: ?> <p class="text-warning text-bold ">Kindly Ask HoD TO REVOKE</p> <?php endif; ?></td>
                                                     </tr>
                                                 <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                                             </tbody>

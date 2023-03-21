@@ -18,7 +18,7 @@ class StudentLoginController extends Controller
      | to conveniently provide its functionality to your applications.
      |
      */
-    
+
     /**
      * Create a new controller instance.
      *
@@ -28,24 +28,24 @@ class StudentLoginController extends Controller
     {
         $this->middleware('guest:student', ['except' => ['logout']]);
     }
-    
-    
-    
+
+
+
     public function showLoginForm()
     {
         return view('students.auth.login');
     }
-    
+
     public function login(Request $request)
     {
-        
-        
+
+
         // Validate form data
         $this->validate($request, [
             'email' => 'required|email',
             'password' => 'required|min:6'
         ]);
-        
+
         // attempt to log user
         if(Auth::guard('student')->attempt(['username' => $request->email, 'password' => $request->password], $request->remember)){
 
@@ -61,7 +61,7 @@ class StudentLoginController extends Controller
             // disable graduated students
             if(($student->academic->level > 900))
             {
-                //$this->logout();
+                $this->logout();
             }
 
             //check for disabled
@@ -81,7 +81,7 @@ class StudentLoginController extends Controller
 
             // if success redirect to intended location
             return redirect()->intended('/students/home');
-            
+
         }
         // unsuccessful redirect back to login with form data
         return redirect()->back()->withInput($request->only('email', 'remember'))
@@ -89,8 +89,8 @@ class StudentLoginController extends Controller
             'password' => 'Invalid Email or Password',
         ]);
     }
-    
-    
+
+
     public function logout()
     {
         Auth::guard('student')->logout();

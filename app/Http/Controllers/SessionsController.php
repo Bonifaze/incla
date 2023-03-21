@@ -18,10 +18,10 @@ class SessionsController extends Controller
         $this->middleware('auth:staff');
         //$this->middleware('auth:student');
     }
-    
-    
-    
-    
+
+
+
+
     /**
      * Display a listing of the resource.
      *
@@ -60,6 +60,45 @@ class SessionsController extends Controller
         return redirect()->route('session.list')
             ->with('success',$session->name.' set as active successfully');
   } // end setCurrent
+
+  public function edit($id)
+  {
+      $this->authorize('edit',session::class);
+      $sessions = Session::findOrFail($id);
+
+      return view('sessions/edit',compact('sessions'));
+  }
+
+  public function update(Request $request, $id)
+    {
+        //
+        $this->authorize('edit',Session::class);
+        $this->validate($request, [
+
+            'name' => 'required|string|max:255',
+
+
+        ]);
+
+        $sessions = Session::findOrFail($id);
+
+        $sessions->name = $request->name;
+        $sessions->semester = $request->semester;
+
+        try{
+            $sessions->save();
+        } // end try
+        catch(\Exception $e)
+        {
+            $request->session()->flash('error', 'Error updating Session !');
+
+            return redirect()->route('session.edit', $id);
+
+        }
+
+        return redirect()->route('session.list')
+        ->with('success','Session edited successfully');
+    }  // end update
 
 
 

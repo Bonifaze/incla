@@ -184,6 +184,7 @@ return [
         'Collective\Html\HtmlServiceProvider',
         // 'Intervention\Image\ImageServiceProvider',
         Intervention\Image\ImageServiceProvider::class,
+        Barryvdh\DomPDF\ServiceProvider::class,
 
         /*
          * Package Service Providers...
@@ -220,5 +221,6 @@ return [
     // 'Image'=>'Intervention\Image\Facades\Image',
     'Image' => Intervention\Image\Facades\Image::class
     ])->toArray(),
+    'PDF' =>Barryvdh\DomPDF\Facade::class,
 
 ];

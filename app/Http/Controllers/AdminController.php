@@ -22,6 +22,7 @@ use Illuminate\Support\Facades\Mail;
 use App\Computations\ResultComputation;
 use App\Exports\RegisteredCourseExport;
 use App\Imports\RegisteredCourseImport;
+use App\Models\Course;
 use Illuminate\Database\QueryException;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Bus;
@@ -54,6 +55,7 @@ class AdminController extends Controller
         ->orderBy('course_code', 'ASC')
 
         ->get();
+        // dd($staff_courses);
         // ->where('staff_id', $staff->id )
         // ->select('staff_courses.*')
         // ->get();
@@ -143,8 +145,21 @@ class AdminController extends Controller
         if ($this->hasPriviledge("approveScores",  $staff->id)) {
 
 
-        $staff_courses = StaffCourse::where('upload_status', 'uploaded')->where('session_id', $this->getCurrentSession())->get();
+        $staff_courses = StaffCourse::where('upload_status', 'uploaded')->where('session_id', $this->getCurrentSession())->orderBy('updated_at', 'DESC')->get();
         return view('results.approve_scores', ['staff_courses' => $staff_courses]);
+    } else {
+        $loginMsg = '<div class="alert alert-danger alert-dismissible" role="alert"> <button type="button" class="close" data-dismiss="alert"> &times; </button> You dont\'t have access to this task, please see the ICT</div>';
+       return view('admissions.error', compact('loginMsg'));
+    }
+    }
+    public function notuploadedScores()
+    {
+        $staff = Auth::guard('staff')->user();
+        if ($this->hasPriviledge("approveScores",  $staff->id)) {
+
+
+        $staff_courses = StaffCourse::where('upload_status', 'not uploaded')->where('session_id', $this->getCurrentSession())->get();
+        return view('results.notuploaded_scores', ['staff_courses' => $staff_courses]);
     } else {
         $loginMsg = '<div class="alert alert-danger alert-dismissible" role="alert"> <button type="button" class="close" data-dismiss="alert"> &times; </button> You dont\'t have access to this task, please see the ICT</div>';
        return view('admissions.error', compact('loginMsg'));
@@ -455,7 +470,7 @@ class AdminController extends Controller
     {
         $staff = Auth::guard('staff')->user();
         if ($this->hasPriviledge("verifyPayment",  $staff->id)) {
-         
+
         try {
             DB::table('remitas')->where('rrr', $req->rrr)
                 ->update([

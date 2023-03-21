@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Program;
 use App\Staff;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -37,7 +38,7 @@ class StaffCourse extends Model implements Auditable
 
     public function Program()
     {
-        return $this->hasMany('App\Program');
+        return $this->belongsTo('App\Program', 'program_id');
     }
 
     protected $appends = [

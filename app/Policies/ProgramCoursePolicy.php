@@ -58,4 +58,9 @@ class ProgramCoursePolicy
         return $staff->hasPermission(130);
     }
 
+    public function ICTViewResult(Staff $staff)
+    {
+        return $staff->hasPermission(131);
+    }
+
 } // end Policy

@@ -507,7 +507,7 @@ class AdminStudentsController extends Controller
         //})
         ->orderBy('id')
         ->orderBy('surname')
-        ->paginate(50);
+        ->paginate(200);
         if(count($students) > 0)
         {
             $request->session()->flash('message', '');

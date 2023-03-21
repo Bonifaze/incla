@@ -150,16 +150,16 @@
 						  <thead>
 
 							  <th>S/N</th>
-						    <th>Audit Id</th>
                              {{--  <th>Staff ID</th>  --}}
                               <th>Staff Name</th>
-							 <th>Action</th>
+							 <th>Event</th>
 							 <th>Audited Model</th>
                              <th>Old Values</th>
 							<th>New Values</th>
                             <th>URL</th>
                             <th>IP Address</th>
                             <th>User PC/ Browser</th>
+						    <th>Audit Id</th>
                             {{--  <th>Tags</th>  --}}
                             {{--  <th>Created at</th>  --}}
                             <th>Date</th>
@@ -177,7 +177,6 @@
 
 							<tr>
 							  <td>{{ $loop->iteration }}</td>
-							  <td>{{ $audit->auditable_id }}</td>
                                 {{--  <td>{{ $audit->staff_id}}</td>  --}}
                               <td>{{ $audit->staff->full_name ?? null}}</td>
 							 <td>{{ $audit->event}}</td>
@@ -212,6 +211,7 @@
                                  <td>{{ $audit->user_agent}}</td>
                                   {{--  <td>{{ $audit->tags}}</td>  --}}
                                    {{--  <td>{{ $audit->created_at}}</td>  --}}
+							  <td>{{ $audit->auditable_id }}</td>
                                     <td>{{ $audit->updated_at}}</td>
 
 							 {{--  <td><a class="btn btn-warning" href="{{ route('rbac.edit-perm',$perm->id) }}"> <i class="fa fa-edit"></i> Edit </td>  --}}
@@ -220,7 +220,7 @@
 							</tr>
 
 							@endforeach
-
+<a target="_blank" href="{{ route('rbac.auditviewallevent') }}" class="btn btn-primary mb-3 mt-3 float-right">View All Event</a>
 						  </tbody>
  {!! $article->render() !!}
 
@@ -261,7 +261,8 @@
 							  <td>{{ $loop->iteration }}</td>
 							  <td>{{  $audit->staff->full_name ?? null}}</td>
                               {{--  <td>{{ $audit->modifiedBy->full_name ?? null}}</td>  --}}
-                                <td>{{ $audit->course->course_code}}</td>
+                                <td>{{ $audit->course->course_code}} ({{ $audit->course->course_title}})</td>
+
 							 <td>{{ $audit->sessions->name }}</td>
 
                               @if($audit->semester==1)
@@ -281,9 +282,9 @@
 
 							@endforeach
 
+<a target="_blank" href="{{ route('rbac.auditviewall') }}" class="btn btn-primary mb-3 mt-3 float-right">View All Result Changes</a>
 						  </tbody>
  {!! $modify->render() !!}
-
 
 						</table>
 
@@ -333,7 +334,7 @@
 							</tr>
 
 							@endforeach
-
+<a target="_blank" href="{{ route('rbac.auditviewallremita') }}" class="btn btn-primary mb-3 mt-3 float-right">View All Verified</a>
 						  </tbody>
  {!! $modify->render() !!}
 

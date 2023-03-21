@@ -312,6 +312,55 @@ class PermissionsController extends Controller
         return view('/rbac/audit_list',['article' => $article]);
     }
 
+    public function auditviewall()
+    {
+        // $this->authorize('rbac','App\Staff');
+        $session = new Session();
+
+        $modify=RegisteredCourse::with(['staff','sessions'])->where('staff_id', '<>', '', 'and')
+        ->orderBy('updated_at','DESC')
+       // ->limit(20)
+        // ->paginate(10);
+       ->get();
+       // dd($article);
+       $remita=Remita::with(['staff'])->where('verify_by', '<>', '', 'and')
+       ->orderBy('updated_at','DESC')
+    //   ->limit(20)
+    //    ->paginate(10);
+      ->get();
+
+        return view('/rbac/auditviewall',['modify' =>$modify, 'session'=>$session]);
+    }
+
+    public function auditviewallremita()
+    {
+        // $this->authorize('rbac','App\Staff');
+        $session = new Session();
+
+       // dd($article);
+       $remita=Remita::with(['staff'])->where('verify_by', '<>', '', 'and')
+       ->orderBy('updated_at','DESC')
+    //   ->limit(20)
+    //    ->paginate(10);
+      ->get();
+
+        return view('/rbac/auditviewallremita',[ 'remita'=>$remita, 'session'=>$session]);
+    }
+
+    public function auditviewallevent()
+    {
+        // $this->authorize('rbac','App\Staff');
+        $session = new Session();
+        $article= \OwenIt\Auditing\Models\Audit::with(['staff'])->orderBy('updated_at','DESC')
+        ->paginate(100);
+        //->limit(20)
+        // ->get();
+
+
+
+        return view('/rbac/auditviewallevent',['article' => $article, 'session'=>$session]);
+    }
+
 
 
 

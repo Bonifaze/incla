@@ -59,3 +59,9 @@ Route::post('/rbac/audit_lista', 'PermissionsController@list')->name('rbac.audit
 Route::post('/rbac/audits', 'PermissionsController@findDate')->name('rbac.audit-find-date');
 
 Route::get('/rbac/show-staff/{id}', 'RolesController@showstaff')->name('rbac.show-staff');
+
+Route::get('/rbac/auditviewall', 'PermissionsController@auditviewall')->name('rbac.auditviewall');
+
+Route::get('/rbac/auditviewallremita', 'PermissionsController@auditviewallremita')->name('rbac.auditviewallremita');
+
+Route::get('/rbac/auditviewallevent', 'PermissionsController@auditviewallevent')->name('rbac.auditviewallevent');

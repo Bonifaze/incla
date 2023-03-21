@@ -3,7 +3,7 @@
 
 
 @section('pagetitle')
-    Staff Home
+    Staff Courses
 @endsection
 
 
@@ -53,16 +53,18 @@
                                         Staff Course
                                     </h4>  --}}
                                     <div class="table-responsive mt-5">
-                                        <table class="table table-bordered table-striped table-hover tbl">
+                                        <table class="table  table-striped table-hover tbl" id="dataTable" width="100%"
+                                        cellspacing="0">
                                             <thead>
                                                 <tr>
                                                     <th>S/N</th>
                                                      <th>Course Code</th>
                                                     <th>Course Title</th>
-                                                   
-                                                    <th>Total Students</th>
+                                                    <th>Semester</th>
+                                                    <th>Students</th>
+                                                    <th>Student Program</th>
                                                     <th>Upload Status</th>
-                                                    <th>HOD's Approval</th>
+                                                    <th>HoD Approval</th>
                                                     <th>Action</th>
                                                 </tr>
                                             </thead>
@@ -72,11 +74,19 @@
                                                         <td>{{ $loop->iteration }}</td>
                                                         <td>{{ $staff_course->course_code }}</td>
                                                         <td>{{ $staff_course->course_title }}</td>
+                                                          <td >
+                                                          @if ($staff_course->semester_id==1)
+                                                                First
+                                                          @else
+                                                                Second
+                                                          @endif
+                                                          </td>
                                                         <th>{{ $staff_course->total_students }}</th>
+                                                        <th>{{ $staff_course->program->name ?? null }}</th>
                                                         <td>{{ $staff_course->upload_status }}</td>
                                                         <td>{{ $staff_course->hod_approval }}</td>
                                                         <td>@if ($staff_course->hod_approval != 'approved') <a href="{{ route('admin.scores_upload', $staff_course->id) }}"
-                                                                class="btn btn-primary">Upload Scores</a> @else No Action @endif</td>
+                                                                class="btn btn-primary">Upload Scores</a> @else <p class="text-warning text-bold ">Kindly Ask HoD TO REVOKE</p> @endif</td>
                                                     </tr>
                                                 @endforeach
                                             </tbody>

@@ -372,6 +372,16 @@ public function getActionAttribute()
             get: fn ($value, $attributes) => StaffCourse::where('course_id', $attributes['course_id'])->where('program_id', $attributes['program_id'])->where('session_id', $attributes['session_id'])->where('hod_approval', 'approved')->exists()
         );
     }
+    public function isDeanApproved(): Attribute
+    {
+        $session = new Session();
+        return Attribute::make(
+            get: fn ($value, $attributes) => StaffCourse::where('program_id', $attributes['program_id'])->where('session_id', $attributes['session_id'])->where('semester_id', $session->currentSemester())->where('dean_approval', 'approved')->exists()
+        );
+    }
+
+
+
 
     public function staffCourseId(): Attribute
     {

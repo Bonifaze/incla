@@ -2,8 +2,10 @@
 
 namespace App;
 
+use App\Models\StaffCourse;
 use Illuminate\Database\Eloquent\Model;
 use OwenIt\Auditing\Contracts\Auditable;
+use Illuminate\Database\Eloquent\Casts\Attribute;
 
 class Program extends Model implements Auditable
 {
@@ -27,20 +29,25 @@ class Program extends Model implements Auditable
 
     public function VcApproval()
     {
+        $session = new Session();
         return $this->hasMany('App\Models\StaffCourse', 'program_id')
-
+        ->where('semester_id', $session->currentSemester())
         ->where('sbc_approval', 'approved');
     }
 
     public function SbcApproval()
     {
+        $session = new Session();
         return $this->hasMany('App\Models\StaffCourse', 'program_id')
+        ->where('semester_id', $session->currentSemester())
         ->where('dean_approval', 'approved');
     }
 
     public function DeanApproval()
     {
+        $session = new Session();
         return $this->hasMany('App\Models\StaffCourse', 'program_id')
+        ->where('semester_id', $session->currentSemester())
         ->where('hod_approval', 'approved');
 
     }
@@ -79,6 +86,8 @@ class Program extends Model implements Auditable
 
 
 
+
+
     public function registeredStudentsCount($level)
     {
         $session = new Session();
@@ -92,6 +101,7 @@ class Program extends Model implements Auditable
               //  ->where('registered_courses.semester', $session->currentSemester())
                 ->where('student_academics.program_id',$this->id)
                 ->where('student_academics.level','<',$level)
+
                 ->count();
             return $students;
         }
@@ -218,5 +228,100 @@ class Program extends Model implements Auditable
         return $students->count();
     }
 
+
+    public function isApproved(): Attribute
+    {
+        $session = new Session();
+        return Attribute::make(
+            get: fn ($value, $attributes) => StaffCourse::where('program_id', $attributes['id'])->where('session_id', $session->currentSession())->where('semester_id', $session->currentSemester())->where('sbc_approval', 'approved')->exists()
+        );
+    }
+
+    public function isVCApproved(): Attribute
+    {
+        $session = new Session();
+        return Attribute::make(
+            get: fn ($value, $attributes) => StaffCourse::where('program_id', $attributes['id'])->where('session_id', $session->currentSession())->where('semester_id', $session->currentSemester())->where('Vc_senate_approval', 'approved')->exists()
+        );
+    }
+
+    public function isDEANApproved(): Attribute
+    {
+        $session = new Session();
+        return Attribute::make(
+            get: fn ($value, $attributes) => StaffCourse::where('program_id', $attributes['id'])->where('session_id', $session->currentSession())->where('semester_id', $session->currentSemester())->where('dean_approval', 'approved')->exists()
+        );
+    }
+
+    public function isDEAN100Approved(): Attribute
+    {
+        $session = new Session();
+        return Attribute::make(
+            get: fn ($value, $attributes) => StaffCourse::where('program_id', $attributes['id'])->where('level', 100)->where('session_id', $session->currentSession())->where('semester_id', $session->currentSemester())->where('dean_approval', 'approved')->exists()
+        );
+    }
+    public function isDEAN200Approved(): Attribute
+    {
+        $session = new Session();
+        return Attribute::make(
+            get: fn ($value, $attributes) => StaffCourse::where('program_id', $attributes['id'])->where('level', 200)->where('session_id', $session->currentSession())->where('semester_id', $session->currentSemester())->where('dean_approval', 'approved')->exists()
+        );
+    }
+    public function isDEAN300Approved(): Attribute
+    {
+        $session = new Session();
+        return Attribute::make(
+            get: fn ($value, $attributes) => StaffCourse::where('program_id', $attributes['id'])->where('level', 300)->where('session_id', $session->currentSession())->where('semester_id', $session->currentSemester())->where('dean_approval', 'approved')->exists()
+        );
+    }
+    public function isDEAN400Approved(): Attribute
+    {
+        $session = new Session();
+        return Attribute::make(
+            get: fn ($value, $attributes) => StaffCourse::where('program_id', $attributes['id'])->where('level', 400)->where('session_id', $session->currentSession())->where('semester_id', $session->currentSemester())->where('dean_approval', 'approved')->exists()
+        );
+    }
+    public function isDEAN500Approved(): Attribute
+    {
+        $session = new Session();
+        return Attribute::make(
+            get: fn ($value, $attributes) => StaffCourse::where('program_id', $attributes['id'])->where('level', 500)->where('session_id', $session->currentSession())->where('semester_id', $session->currentSemester())->where('dean_approval', 'approved')->exists()
+        );
+    }
+    public function isDEAN600Approved(): Attribute
+    {
+        $session = new Session();
+        return Attribute::make(
+            get: fn ($value, $attributes) => StaffCourse::where('program_id', $attributes['id'])->where('level', 600)->where('session_id', $session->currentSession())->where('semester_id', $session->currentSemester())->where('dean_approval', 'approved')->exists()
+        );
+    }
+    public function isDEAN700Approved(): Attribute
+    {
+        $session = new Session();
+        return Attribute::make(
+            get: fn ($value, $attributes) => StaffCourse::where('program_id', $attributes['id'])->where('level', 700)->where('session_id', $session->currentSession())->where('semester_id', $session->currentSemester())->where('dean_approval', 'approved')->exists()
+        );
+    }
+    public function isDEAN800Approved(): Attribute
+    {
+        $session = new Session();
+        return Attribute::make(
+            get: fn ($value, $attributes) => StaffCourse::where('program_id', $attributes['id'])->where('level', 800)->where('session_id', $session->currentSession())->where('semester_id', $session->currentSemester())->where('dean_approval', 'approved')->exists()
+        );
+    } public function isDEAN900Approved(): Attribute
+    {
+        $session = new Session();
+        return Attribute::make(
+            get: fn ($value, $attributes) => StaffCourse::where('program_id', $attributes['id'])->where('level', 900)->where('session_id', $session->currentSession())->where('semester_id', $session->currentSemester())->where('dean_approval', 'approved')->exists()
+        );
+    }
+
+    public function isHODApproved(): Attribute
+    {
+        $session = new Session();
+        return Attribute::make(
+            get: fn ($value, $attributes) => StaffCourse::where('program_id', $attributes['id'])->where('session_id', $session->currentSession())->where('semester_id', $session->currentSemester())->where('hod_approval', 'approved')->exists()
+        );
+    }
 
 } // end class

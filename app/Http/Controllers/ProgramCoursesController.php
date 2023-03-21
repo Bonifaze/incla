@@ -429,10 +429,11 @@ class ProgramCoursesController extends Controller
 
     public function students($program_course_id)
     {
+
         $pcid = base64_decode($program_course_id);
         $program_course = ProgramCourse::with(['registeredCourse.student','registeredCourse.student.contact','registeredCourse.student.academic'])->findOrFail($pcid);
         $results = $program_course->registeredCourse;
-     ///  dd($results);
+     //  dd($results);
         return view('staff.academic.program_course_students', compact('results','program_course'));
     }
 
@@ -751,10 +752,22 @@ class ProgramCoursesController extends Controller
         $programs = Program::whereHas('SbcApproval')->with(['department','programCourses','SbcApproval'])
             ->orderBy('name','ASC')
             ->paginate(100);
-
+            //dd($programs);
         // $programs = Program::orderBy('name','ASC')->get();
         $session = new Session();
         return view('sbc.level_results', compact('programs','session', 'level'));
+    }
+
+    public function ICTLevel($level)
+    {
+        $this->authorize('ICTViewResult',ProgramCourse::class);
+        $programs = Program::with(['department','programCourses'])
+            ->orderBy('name','ASC')
+            ->paginate(100);
+            //dd($programs);
+        // $programs = Program::orderBy('name','ASC')->get();
+        $session = new Session();
+        return view('ict.level_results', compact('programs','session', 'level'));
     }
 
     // public function resultsStatus()

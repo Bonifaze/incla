@@ -38,7 +38,7 @@
                 <div class="col_full">
                     <h1
                         class="app-page-title text-uppercase h5 font-weight-bold p-2 mb-2 shadow-sm text-center text-success border">
-               Staff Courses Result
+               Courses Result
                     </h1>
 
                 <div class="row mb-4">
@@ -49,15 +49,24 @@
                                     {{--  <h4 class="card-title">
                                         Staff Course
                                     </h4>  --}}
-                                    <div class="table-responsive mt-5">
-                                        <table class="table table-bordered table-striped table-hover tbl">
+                                    <div class="table-responsive">
+                                                         <table class="table table-striped" id="dataTable" width="100%"
+                                        cellspacing="0">
                                             <thead>
                                                 <tr>
-                                                    <th>#</th>
+                                                    <th>S/N</th>
                                                     <th>Course Title</th>
                                                     <th>Course Code</th>
-                                                    <th>Approval Status</th>
+                                                    <th>Semster</th>
+                                                    <th>Level</th>
+
+                                                     <th>HoD Approval</th>
+                                                      <th>Dean Approval</th>
+                                                       <th>SBC Approval</th>
+                                                    <th>VC Approval</th>
+                                                    <th>Lecturer</th>
                                                     <th>Action</th>
+                                                    <th>Date</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -66,9 +75,24 @@
                                                         <td>{{ $loop->iteration }}</td>
                                                         <td>{{ $staff_course->course_title }}</td>
                                                         <td>{{ $staff_course->course_code }}</td>
-                                                        <td>{{ $staff_course->approval_status }}</td>
+                                                            <td>
+                                                              @if ( $staff_course->semester_id == 1)
+                              First
+                             @else ( $staff_course->semester_id == 2)
+                             Second
+                             @endif
+                              </td>
+                                                            </td>
+                                                                <td>{{ $staff_course->level }}</td>
+
+                                                         <td>{{ $staff_course->hod_approval }}</td>
+                                                          <td>{{ $staff_course->dean_approval }}</td>
+                                                           <td>{{ $staff_course->sbc_approval }}</td>
+                                                        <td>{{ $staff_course->vc_senate_approval }}</td>
+                                                        <td>{{ $staff_course->staffName}}</td>
                                                         <td><a href="{{ route('admin.view_scores', $staff_course->course_id) }}"
                                                                 class="btn btn-primary">View Scores</a></td>
+                                                        <td>{{ $staff_course->updated_at}}</td>
                                                     </tr>
                                                 @endforeach
                                             </tbody>
@@ -91,4 +115,10 @@
 
 @section('pagescript')
     <script src="<?php echo asset('dist/js/bootbox.min.js'); ?>"></script>
+    <!-- jQuery UI -->
+    <script src="{{ asset('v3/plugins/jquery-ui/jquery-ui.min.js') }}"></script>
+    <!-- Ekko Lightbox -->
+    <script src="{{ asset('v3/plugins/ekko-lightbox/ekko-lightbox.min.js') }}"></script>
+    <-- DATABABE SCRIPT -->
+    <script type="text/javascript" src="https://cdn.datatables.net/v/dt/dt-1.11.3/b-2.1.1/r-2.2.9/datatables.min.js"></script>
 @endsection
