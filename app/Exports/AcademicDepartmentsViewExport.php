@@ -51,12 +51,18 @@ class AcademicDepartmentsViewExport implements FromView
             $qr->where('level', '<', $level);
         }])->get();
 
-        /*$program_courses = ProgramCourse::where('program_id', $id)->with(['program'])->where('session_id', $session)
-          ->where('level', $level)
+        $student_course_ids = RegisteredCourse::distinct('course_id')->where('program_id', $id)
+         ->where('level', $level)
         ->where('semester', $semester)
-        ->orderBy('course_id', 'ASC')->get();**/
+        ->where('session', $session)->pluck('course_id')->toArray();
 
-        $program_courses = RegisteredCourse::
+        $program_courses = ProgramCourse::whereIn('course_id', $student_course_ids)
+        ->where('program_id', $id)->with(['program']
+        )->where('session_id', $session)
+        ->where('semester', $semester)
+        ->orderBy('level', 'ASC')->get();
+
+        /*$program_courses = RegisteredCourse::
 
     with(['programCoursep'])
         ->where('session', $session)
@@ -72,7 +78,7 @@ class AcademicDepartmentsViewExport implements FromView
         // ->orderBy('level', 'ASC')
         // ->select('registered_courses.*','program_courses.level')
         // ->orderBy('created_at', 'ASC')
-       -> distinct('course_id')->get(['course_id']);
+       -> distinct('course_id')->get(['course_id']);*/
         // dd($program_courses);
         $meta = [
             'program' => Program::find($id),
