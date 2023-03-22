@@ -96,10 +96,10 @@
                     <th rowspan="2">TC</th>
                     <th rowspan="2">TGP</th>
                     <th rowspan="2">GPA</th>
-                    <th>TC (BF)</th>
-                    <th>TGP(BF)</th>
-                    <th>TC (Total)</th>
-                    <th>TGP (Total)</th>
+                    <th rowspan="2">TC (BF)</th>
+                    <th rowspan="2">TGP(BF)</th>
+                    <th rowspan="2">TC (Total)</th>
+                    <th rowspan="2">TGP (Total)</th>
                     <th rowspan="2">Remark</th>
                 </tr>
                 <tr>
