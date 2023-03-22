@@ -73,12 +73,20 @@ class AcademicDepartmentsViewExport implements FromView
             $q->where('semester', $semester);
             $q->orderBy('course_id', 'ASC');
 
+        }, 'previous_registered_courses' => function ($qr) use($level) {
+            $qr->where('level', '<', $level);
         }])->get();
 
-        $program_courses = ProgramCourse::where('program_id', $id)->with(['program'])->where('session_id', $session)
+        /*$program_courses = ProgramCourse::where('program_id', $id)->with(['program'])->where('session_id', $session)
           ->where('level', $level)
         ->where('semester', $semester)
-        ->orderBy('course_id', 'ASC')->get();
+        ->orderBy('course_id', 'ASC')->get();**/
+
+        $program_courses = RegisteredCourse::distinct('course_id')->where('session', $session)
+        ->where('program_id', $id)
+        ->where('level', $level)
+        ->where('semester', $semester)
+        ->orderBy('course_id', 'ASC')->get(['course_id']);
         $meta = [
             'program' => Program::find($id),
             'session' => Session::find($session),

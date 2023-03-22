@@ -96,6 +96,10 @@
                     <th rowspan="2">TC</th>
                     <th rowspan="2">TGP</th>
                     <th rowspan="2">GPA</th>
+                    <th>TC (BF)</th>
+                    <th>TGP(BF)</th>
+                    <th>TC (Total)</th>
+                    <th>TGP (Total)</th>
                     <th rowspan="2">Remark</th>
                 </tr>
                 <tr>
@@ -103,7 +107,7 @@
                         @php
                             $course_ids[] = $program_course->course_id;
                         @endphp
-                        <th>{{ $program_course->course_code }} <br> {{ $program_course->credit_unit }}</th>
+                        <th>{{ $program_course->course_code }} <br> {{ $program_course->course_unit }}</th>
                     @endforeach
                 </tr>
 
@@ -112,12 +116,21 @@
                         $tc = 0;
                         $tgp = 0;
                         $gpa = 0.00;
+                        $tcbf = 0;
+                        $tgpbf = 0;
                     @endphp
                     <tr>
                         <td>{{ $loop->iteration }}</td>
                         <td>{{ $student->matric_number }}</td>
                         <td>{{ $student->full_name }}</td>
                         <td>{{ $student->gender[0] }}</td>
+                        @php
+                            $previous_courses = $student->previous_registered_courses;
+                            foreach ($previous_courses as $course) {
+                                $tcbf = $course?->course_unit;
+                                $tgpbf = $course?->course_unit * $course?->grade_point;
+                            }
+                        @endphp
                         @for ($x = 0; $x < $program_courses->count(); $x++)
                         <td>
                             @php
@@ -133,6 +146,10 @@
                         <td>{{ $tc }}</td>
                         <td>{{ $tgp }}</td>
                         <td>{{ $tc > 0 && $tgp > 0 ? number_format($tgp/$tc, 2) : '0.00' }}</td>
+                        <td>{{ $tcbf }}</td>
+                        <td>{{ $tgpbf }}</td>
+                        <td>{{ $tc + $tcbf }}</td>
+                        <td>{{ $tgp + $tgpbf }}</td>
                         <td class="small">
                          {{--  {{ $student_course?->total }}
                          @if ( $student_course?->total <= 44)

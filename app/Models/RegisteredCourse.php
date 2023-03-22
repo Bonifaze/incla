@@ -114,10 +114,8 @@ class RegisteredCourse extends Model implements Auditable
 
     public function getCourseUnitAttribute()
     {
-        return ProgramCourse::where('program_id', $this->program_id)
-        ->where('course_id', $this->course_id)
-        ->where('session_id',$this->session)
-        ->first()->credit_unit ?? 0;
+        return ProgramCourse::where('course_id', $this->course_id)
+        ->first()?->credit_unit;
     }
 
     public function getCourseSemesterAttribute()

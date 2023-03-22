@@ -80,6 +80,11 @@ class Student extends Authenticatable implements Auditable
         return $this->hasMany(RegisteredCourse::class);
     }
 
+    public function previous_registered_courses()
+    {
+        return $this->hasMany(RegisteredCourse::class, 'student_id', 'id');
+    }
+
     public function remitas()
     {
         return $this->hasMany('App\Remita')
