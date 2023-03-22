@@ -35,32 +35,6 @@ class AcademicDepartmentsViewExport implements FromView
         $session = $session->currentSession();
         $semester = $this->semester;
 
-        // // get all students unique registered program courses
-        // $program_courses = collect([]);
-        // $students = collect([]);
-        // foreach ($stds as $key => $std)
-        // {
-        //     $student = Student::findOrFail($std->student_id);
-        //     $students->prepend($student);
-        //     $results = StudentResult::with('programCourse')->where('student_id',$std->student_id)
-        //         ->where('session_id', $session_id)
-        //         ->where('semester', $semester)
-        //         ->whereHas('programCourse', function ($query) {
-        //             return $query->where('approval', '>', 0);
-        //         })
-
-        //         ->get();
-        //     foreach ($results as $key => $result)
-        //     {
-        //         $program_courses->prepend($result->programCourse);
-        //     }
-        // }
-
-        // $students = $students->unique();
-        // $program_courses = $program_courses->unique();
-        // $program_courses = $program_courses->sortBy('level');
-
-
 
         $student_ids = RegisteredCourse::distinct('student_id')->where('program_id', $id)
          ->where('level', $level)
@@ -82,11 +56,24 @@ class AcademicDepartmentsViewExport implements FromView
         ->where('semester', $semester)
         ->orderBy('course_id', 'ASC')->get();**/
 
-        $program_courses = RegisteredCourse::distinct('course_id')->where('session', $session)
+        $program_courses = RegisteredCourse::
+
+    with(['programCoursep'])
+        ->where('session', $session)
         ->where('program_id', $id)
         ->where('level', $level)
         ->where('semester', $semester)
-        ->orderBy('course_id', 'ASC')->get(['course_id']);
+        ->with(['programCoursep' => function($query){
+            $query->orderBy('level', 'ASC');
+        }])
+        ->whereHas('programCoursep')
+        // ->orderBy('course_id', 'ASC')
+        // ->get(['course_id']);
+        // ->orderBy('level', 'ASC')
+        // ->select('registered_courses.*','program_courses.level')
+        // ->orderBy('created_at', 'ASC')
+       -> distinct('course_id')->get(['course_id']);
+        // dd($program_courses);
         $meta = [
             'program' => Program::find($id),
             'session' => Session::find($session),

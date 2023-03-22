@@ -96,16 +96,21 @@
                     <th rowspan="2">Gender</th>
                     <th colspan="<?php echo e($program_courses->count()); ?>">Courses, Credit, Scores, Grades, GP</th>
                     <th rowspan="2">TC</th>
-                    <th rowspan="2">TGP</th>
+                    <th rowspan="2">GP</th>
                     <th rowspan="2">GPA</th>
-                    <th rowspan="2">Remark</th>
+                    <th rowspan="2">TC (BF)</th>
+                    <th rowspan="2">TGP(BF)</th>
+                    <th rowspan="2">TC (Total)</th>
+                    <th rowspan="2">TGP (Total)</th>
+                    <th rowspan="2">CGPA</th>
+                    <th rowspan="2">Remarks</th>
                 </tr>
                 <tr>
                     <?php $__currentLoopData = $program_courses; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $program_course): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                         <?php
                             $course_ids[] = $program_course->course_id;
                         ?>
-                        <th><?php echo e($program_course->course_code); ?> <br> <?php echo e($program_course->credit_unit); ?></th>
+                        <th><?php echo e($program_course->course_code); ?> <br> <?php echo e($program_course->course_unit); ?></th>
                     <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                 </tr>
 
@@ -114,12 +119,22 @@
                         $tc = 0;
                         $tgp = 0;
                         $gpa = 0.00;
+                        $tcbf = 0;
+                        $tgpbf = 0;
+                        $cgpa = 0.00;
                     ?>
                     <tr>
                         <td><?php echo e($loop->iteration); ?></td>
                         <td><?php echo e($student->matric_number); ?></td>
                         <td><?php echo e($student->full_name); ?></td>
                         <td><?php echo e($student->gender[0]); ?></td>
+                        <?php
+                            $previous_courses = $student->previous_registered_courses;
+                            foreach ($previous_courses as $course) {
+                                $tcbf = $course?->course_unit;
+                                $tgpbf = $course?->course_unit * $course?->grade_point;
+                            }
+                        ?>
                         <?php for($x = 0; $x < $program_courses->count(); $x++): ?>
                         <td>
                             <?php
@@ -136,6 +151,11 @@
                         <td><?php echo e($tc); ?></td>
                         <td><?php echo e($tgp); ?></td>
                         <td><?php echo e($tc > 0 && $tgp > 0 ? number_format($tgp/$tc, 2) : '0.00'); ?></td>
+                        <td><?php echo e($tcbf); ?></td>
+                        <td><?php echo e($tgpbf); ?></td>
+                        <td><?php echo e($tc + $tcbf); ?></td>
+                        <td><?php echo e($tgp + $tgpbf); ?></td>
+                        <td><?php echo e(($tc + $tcbf) >0 && ($tgp + $tgpbf) > 0 ? number_format(($tgp + $tgpbf)/($tc + $tcbf), 2): '0.00'); ?></td>
                         <td class="small">
                          
 

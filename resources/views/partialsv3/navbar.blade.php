@@ -318,6 +318,7 @@
 
 
     </ul>
+    <marquee behavior="alternate" direction="" class="text-bold float-right" width="100%" style="color:red"> <strong> We’ll having downtime from 4pm-6pm Today 22 March, 2023. </strong>  Sorry for any inconvenience this might cause.</marquee>
 
     <!-- SEARCH FORM -->
 

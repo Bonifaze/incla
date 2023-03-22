@@ -149,6 +149,11 @@ class RegisteredCourse extends Model implements Auditable
     }
 
 
+    public function programCoursep()
+    {
+        return $this->belongsTo('App\ProgramCourse','course_id', 'course_id')->orderBy('level','ASC');
+    }
+
     public function RegisteredCourse($student_id, $session, $semester)
        {
 

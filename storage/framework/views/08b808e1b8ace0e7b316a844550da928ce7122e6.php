@@ -54,7 +54,7 @@
   <th>Dean Approval</th>
                              <th>SBC Approval</th>
                                <th>VC Approval</th>
-                               
+
                                 <th>Student Result</th>
                                 <th>Action</th>
 
