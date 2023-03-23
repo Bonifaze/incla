@@ -97,29 +97,31 @@ class StudentResultsController extends Controller
         $ca2_scores = $request->ca2_scores;
         $ca3_scores = $request->ca3_scores;
         $exam_scores = $request->exam_scores;
+        $total = $request->total;
 
         for ($i=0; $i < count($reg_ids); $i++) {
-            $total_score = $ca1_scores[$i] + $ca2_scores[$i] + $ca3_scores[$i] + $exam_scores[$i];
+            // $total_score = $ca1_scores[$i] + $ca2_scores[$i] + $ca3_scores[$i] + $exam_scores[$i];
+            $total_score = $total[$i];
             $grade_setting = GradeSetting::where('min_score', '<=', $total_score)->where('max_score', '>=', $total_score)->first();
             $grade_id = $grade_setting->id;
             $course_reg = RegisteredCourse::find($reg_ids[$i]);
-            if ($ca1_scores[$i] > 100 || $ca2_scores[$i] > 100 || $ca3_scores[$i] > 100)
-            {
-                return redirect()->back()->withErrors(['error' => 'CA score cannot be more than 30']);
-            }
-            if ($exam_scores[$i] > 100)
-            {
-                return redirect()->back()->withErrors(['error' => 'Exam score cannot be more than 70']);
-            }
+            // if ($ca1_scores[$i] > 100 || $ca2_scores[$i] > 100 || $ca3_scores[$i] > 100)
+            // {
+            //     return redirect()->back()->withErrors(['error' => 'CA score cannot be more than 30']);
+            // }
+            // if ($exam_scores[$i] > 100)
+            // {
+            //     return redirect()->back()->withErrors(['error' => 'Exam score cannot be more than 70']);
+            // }
             if ($grade_setting->status != 'fail')
             {
                 RegisteredCourse::where('student_id', $course_reg->student_id)->where('course_id', $course_reg->course_id)->where('session', '>', $course_reg->session)->delete();
             }
             $registeredCourse = RegisteredCourse::findOrFail($reg_ids[$i]);
-            $registeredCourse-> ca1_score = $ca1_scores[$i];
-            $registeredCourse->ca2_score = $ca2_scores[$i];
-            $registeredCourse->ca3_score = $ca3_scores[$i];
-            $registeredCourse->exam_score = $exam_scores[$i];
+            // $registeredCourse-> ca1_score = $ca1_scores[$i];
+            // $registeredCourse->ca2_score = $ca2_scores[$i];
+            // $registeredCourse->ca3_score = $ca3_scores[$i];
+            // $registeredCourse->exam_score = $exam_scores[$i];
             $registeredCourse->total = $total_score;
             $registeredCourse->grade_id = $grade_id;
             $registeredCourse->grade_status = $grade_setting->status;

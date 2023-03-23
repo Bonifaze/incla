@@ -108,7 +108,7 @@
                         @php
                             $course_ids[] = $program_course->course_id;
                         @endphp
-                        <th>{{ $program_course->course_code }} <br> {{ $program_course->course_unit }}</th>
+                        <th>{{ $program_course->course_code }} {{ $program_course->course_id }} <br> {{ $program_course->course_unit }}</th>
                     @endforeach
                 </tr>
 

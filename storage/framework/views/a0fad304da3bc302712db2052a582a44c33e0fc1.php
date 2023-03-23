@@ -34,8 +34,7 @@
                 <div class="col_full">
                     <h1
                         class="app-page-title text-uppercase h5 font-weight-bold p-2 mb-2 shadow-sm text-center text-success border">
-                    Score Upload For  <?php echo e($student->full_name); ?>
-
+                    Score Upload
                     </h1>
 
                     <div class="card shadow border border-success">
@@ -45,7 +44,7 @@
                         <div class="card">
                             <div class="card-header">
 
-                                 <h5 class="app-page-title text-uppercase h5 font-weight p-2 mb-2 shadow-sm text-center text text-primary">
+                                 <h5 class="app-page-title text-uppercase h5 font-weight p-2 mb-2 shadow-sm text-center text">
                          <?php echo e($session->name); ?> Academic Session <?php echo e($session->semesterName($semester)); ?>
 
                     </h5>
@@ -79,8 +78,9 @@
                                                         <th>CA1 Score</th>
                                                         <th>CA2 Score</th>
                                                         <th>CA3 Score</th>
+                                                        <th>Exam Score</th>
+                                                          <th>Change Total Score</th>
                                                         <th>Total Score</th>
-                                                        
                                                         <th>Grade</th>
                                                     </tr>
                                                 </thead>
@@ -106,8 +106,15 @@
                                                             <td><input type="number" name="exam_scores[]"
                                                                     value="<?php echo e($student_course->exam_score); ?>"
                                                                     id="<?php echo e('exam' . $student_course->student_id); ?>"
+                                                                    class="form-control exam" readonly></td>
+                                                                    <td><input type="number" name="total[]"
+                                                                    value="<?php echo e($student_course->total); ?>"
+                                                                    id="<?php echo e('exam' . $student_course->student_id); ?>"
                                                                     class="form-control exam"></td>
-                                                            
+
+                                                            <td><input type="number" name="total_scores[]"
+                                                                    value="<?php echo e($student_course->total); ?>"
+                                                                    class="form-control" readonly></td>
                                                             <td><?php echo e($student_course->grade); ?></td>
                                                         </tr>
                                                     <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
@@ -181,6 +188,6 @@
             }
         })
     </script>
-<?php $__env->stopSection(); ?>
+@end
 
 <?php echo $__env->make('layouts.mini', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH /Users/lifeofrence/Documents/laraproject/resources/views/results/modify.blade.php ENDPATH**/ ?>

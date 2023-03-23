@@ -110,7 +110,7 @@
                         <?php
                             $course_ids[] = $program_course->course_id;
                         ?>
-                        <th><?php echo e($program_course->course_code); ?> <br> <?php echo e($program_course->course_unit); ?></th>
+                        <th><?php echo e($program_course->course_code); ?> <?php echo e($program_course->course_id); ?> <br> <?php echo e($program_course->course_unit); ?></th>
                     <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                 </tr>
 

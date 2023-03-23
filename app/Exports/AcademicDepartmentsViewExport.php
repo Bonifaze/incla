@@ -60,6 +60,7 @@ class AcademicDepartmentsViewExport implements FromView
         ->where('program_id', $id)->with(['program']
         )->where('session_id', $session)
         ->where('semester', $semester)
+        ->distinct($student_course_ids)
         ->orderBy('level', 'ASC')->get();
 
         /*$program_courses = RegisteredCourse::

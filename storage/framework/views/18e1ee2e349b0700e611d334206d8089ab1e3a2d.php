@@ -83,7 +83,7 @@
                                 <th>S/N</th>
                                 <th>Course Code</th>
                                 <th>Course Title</th>
-                                <th>Course Level</th>
+                                
                                 <th>Credit Unit</th>
                                 <th>Action</th>
 
@@ -104,7 +104,7 @@
                                         <td><?php echo e($loop->iteration); ?> <input type="checkbox"></td>
                                         <td><?php echo e($res->course_code); ?></td>
                                         <td><?php echo e($res->course_title); ?></td>
-                                        <td><?php echo e($res->level); ?></td>
+                                        
                                         <?php if($res->semester==1): ?>
                                         <td>First</td>
                                         <?php else: ?>
@@ -229,7 +229,7 @@
 
                                             <?php echo e(Form::hidden('semester', $semester)); ?>
 
-                                            <?php echo e(Form::hidden('level', $level)); ?>
+                                            <?php echo e(Form::hidden('level', $student->academic->level)); ?>
 
                                             <?php echo e(Form::hidden('program_id', $student->academic->program_id)); ?>
 

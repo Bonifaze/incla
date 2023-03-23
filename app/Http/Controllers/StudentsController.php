@@ -469,9 +469,9 @@ protected function getCourseSemester($course_id)
                 "course_id" => $courses[$x],
                 "student_id" => $req->student_id,
                 "session" => $req->session,
-                "program_id"=>  $student->academic->program_id,
-                "level"=>  $student->academic->level,
-                "semester"=>$this->getCourseSemester($courses[$x])
+                "program_id" =>  $student->academic->program_id,
+                "level" =>  $student->academic->level,
+                "semester" => $this->getCourseSemester($courses[$x])
             ];
 
 

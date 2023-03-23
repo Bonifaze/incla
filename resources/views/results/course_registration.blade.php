@@ -148,7 +148,7 @@
                                 <th>S/N</th>
                                 <th>Course Code</th>
                                 <th>Course Title</th>
-                                <th>Course Level</th>
+                                {{--  <th>Course Level</th>  --}}
                                 <th>Credit Unit</th>
                                 <th>Action</th>
 
@@ -169,7 +169,7 @@
                                         <td>{{ $loop->iteration }} <input type="checkbox"></td>
                                         <td>{{ $res->course_code }}</td>
                                         <td>{{ $res->course_title }}</td>
-                                        <td>{{ $res->level }}</td>
+                                        {{--  <td>{{ $res->level }}</td>  --}}
                                         @if($res->semester==1)
                                         <td>First</td>
                                         @else
@@ -287,7 +287,7 @@
                                             {{ Form::hidden('student_id', $student->id) }}
                                             {{ Form::hidden('session_id', $session->id) }}
                                             {{ Form::hidden('semester', $semester) }}
-                                            {{ Form::hidden('level', $level) }}
+                                            {{ Form::hidden('level', $student->academic->level) }}
                                             {{ Form::hidden('program_id', $student->academic->program_id) }}
 
 
