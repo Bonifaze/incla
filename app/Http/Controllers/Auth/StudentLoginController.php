@@ -61,7 +61,7 @@ class StudentLoginController extends Controller
             // disable graduated students
             if(($student->academic->level > 900))
             {
-                $this->logout();
+               // $this->logout();
             }
 
             //check for disabled
@@ -78,7 +78,7 @@ class StudentLoginController extends Controller
                         'debt' => $message,
                     ]);
             }
-
+                // dd($student);
             // if success redirect to intended location
             return redirect()->intended('/students/home');
 

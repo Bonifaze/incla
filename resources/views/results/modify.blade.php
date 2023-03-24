@@ -199,4 +199,4 @@ if(!session('adminId'))
             }
         })
     </script>
-@end
+@endsection

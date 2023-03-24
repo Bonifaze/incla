@@ -110,7 +110,7 @@
                         <?php
                             $course_ids[] = $program_course->course_id;
                         ?>
-                        <th><?php echo e($program_course->course_code); ?> <?php echo e($program_course->course_id); ?> <br> <?php echo e($program_course->course_unit); ?></th>
+                        <th><?php echo e($program_course->course_code); ?><br> <?php echo e($program_course->credit_unit); ?></th>
                     <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                 </tr>
 
@@ -131,20 +131,20 @@
                         <?php
                             $previous_courses = $student->previous_registered_courses;
                             foreach ($previous_courses as $course) {
-                                $tcbf = $course?->course_unit;
-                                $tgpbf = $course?->course_unit * $course?->grade_point;
+                                $tcbf = $course?->credit_unit;
+                                $tgpbf = $course?->credit_unit * $course?->grade_point;
                             }
                         ?>
                         <?php for($x = 0; $x < $program_courses->count(); $x++): ?>
                         <td>
                             <?php
                                 $student_course = $student->registered_courses->where('course_id', $course_ids[$x])->first();
-                                $tc += $student_course?->course_unit;
-                                $tgp += $student_course?->course_unit * $student_course?->grade_point;
+                                $tc += $student_course?->credit_unit;
+                                $tgp += $student_course?->credit_unit * $student_course?->grade_point;
                             ?>
                             <?php echo e($student_course?->total); ?> <br>
                             <?php echo e($student_course?->grade); ?> <br>
-                            <?php echo e($student_course ? $student_course?->course_unit * $student_course?->grade_point : ''); ?>
+                            <?php echo e($student_course ? $student_course?->credit_unit * $student_course?->grade_point : ''); ?>
 
                         </td>
                         <?php endfor; ?>
