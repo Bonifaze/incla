@@ -110,7 +110,7 @@
                         <?php
                             $course_ids[] = $program_course->course_id;
                         ?>
-                        <th><?php echo e($program_course->course_code); ?> <br> <?php echo e($program_course->course_unit); ?></th>
+                        <th><?php echo e($program_course->course_code); ?><br> <?php echo e($program_course->credit_unit); ?></th>
                     <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                 </tr>
 
@@ -129,10 +129,10 @@
                         <td><?php echo e($student->full_name); ?></td>
                         <td><?php echo e($student->gender[0]); ?></td>
                         <?php
-                            $previous_courses = $student->previous_registered_courses;
-                            foreach ($previous_courses as $course) {
-                                $tcbf = $course?->course_unit;
-                                $tgpbf = $course?->course_unit * $course?->grade_point;
+                            
+                            foreach ($student->previous_registered_courses as $course) {
+                                $tcbf += $course?->course_unit;
+                                $tgpbf += $course?->course_unit * $course?->grade_point;
                             }
                         ?>
                         <?php for($x = 0; $x < $program_courses->count(); $x++): ?>

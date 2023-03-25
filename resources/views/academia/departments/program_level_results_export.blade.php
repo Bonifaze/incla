@@ -127,10 +127,10 @@
                         <td>{{ $student->full_name }}</td>
                         <td>{{ $student->gender[0] }}</td>
                         @php
-                            $previous_courses = $student->previous_registered_courses;
-                            foreach ($previous_courses as $course) {
-                                $tcbf = $course?->course_unit;
-                                $tgpbf = $course?->course_unit * $course?->grade_point;
+                            
+                            foreach ($student->previous_registered_courses as $course) {
+                                $tcbf += $course?->course_unit;
+                                $tgpbf += $course?->course_unit * $course?->grade_point;
                             }
                         @endphp
                         @for ($x = 0; $x < $program_courses->count(); $x++)

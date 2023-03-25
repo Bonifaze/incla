@@ -35,7 +35,6 @@ class AcademicDepartmentsViewExport implements FromView
         $session = $session->currentSession();
         $semester = $this->semester;
 
-
         $student_ids = RegisteredCourse::distinct('student_id')->where('program_id', $id)
          ->where('level', $level)
         ->where('semester', $semester)
@@ -47,9 +46,17 @@ class AcademicDepartmentsViewExport implements FromView
             $q->where('semester', $semester);
             $q->orderBy('course_id', 'ASC');
 
-        }, 'previous_registered_courses' => function ($qr) use($level) {
-            $qr->where('level', '<', $level)
-            ;
+        }, 'previous_registered_courses' => function ($qr) use($level, $semester) {
+            if ($semester == 2)
+            {
+                $qr->where('level', $level)
+                ->where('semester', '1')
+                ->orWhere('level', '<', $level);
+            }
+            else
+            {
+                $qr->where('level', '<', $level);
+            }
         }])->get();
         // dd($students);
 
