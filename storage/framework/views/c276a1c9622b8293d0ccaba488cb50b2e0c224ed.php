@@ -129,23 +129,24 @@
                         <td><?php echo e($student->full_name); ?></td>
                         <td><?php echo e($student->gender[0]); ?></td>
                         <?php
-                            $previous_courses = $student->previous_registered_courses;
-                            foreach ($previous_courses as $course) {
-                                $tcbf = $course?->credit_unit;
-                                $tgpbf = $course?->credit_unit * $course?->grade_point;
+
+                            foreach ($student->previous_registered_courses as $course) {
+                                $tcbf += $course?->course_unit;
+                                $tgpbf += $course?->course_unit * $course?->grade_point;
                             }
                         ?>
                         <?php for($x = 0; $x < $program_courses->count(); $x++): ?>
                         <td>
                             <?php
                                 $student_course = $student->registered_courses->where('course_id', $course_ids[$x])->first();
-                                $tc += $student_course?->credit_unit;
-                                $tgp += $student_course?->credit_unit * $student_course?->grade_point;
+                                $tc += $student_course?->course_unit;
+                                $tgp += $student_course?->course_unit * $student_course?->grade_point;
                             ?>
                             <?php echo e($student_course?->total); ?> <br>
                             <?php echo e($student_course?->grade); ?> <br>
-                            <?php echo e($student_course ? $student_course?->credit_unit * $student_course?->grade_point : ''); ?>
+                           <?php echo e($program_courses->credit_unit); ?>
 
+                            
                         </td>
                         <?php endfor; ?>
                         <td><?php echo e($tc); ?></td>

@@ -83,7 +83,7 @@
                                 <th>S/N</th>
                                 <th>Course Code</th>
                                 <th>Course Title</th>
-                                
+                                <th> Semester</th>
                                 <th>Credit Unit</th>
                                 <th>Action</th>
 
@@ -282,14 +282,14 @@
                                 <?php $__currentLoopData = $carry_over; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $key => $co): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                     <tr>
                                         <td> <?php echo e($loop->iteration); ?> <input type="checkbox"></td>
-                                        <td><?php echo e($co->course->course_code); ?></td>
-                                        <td><?php echo e($co->course->course_title); ?></td>
-                                        <td><?php echo e($co->level); ?></td>
-                                        <td><?php echo e($co->credit_unit); ?></td>
+                                        <td><?php echo e($co->course->course_code ?? null); ?></td>
+                                        <td><?php echo e($co->course->course_title ?? null); ?></td>
+                                        <td><?php echo e($co->level ?? null); ?></td>
+                                        <td><?php echo e($co->credit_unit ?? null); ?></td>
                                         <td>
                                             <?php echo Form::open(['method' => 'Post', 'route' => 'result.add-course', 'id' => 'addCOForm' . $co->id]); ?>
 
-                                            <?php echo e(Form::hidden('course_id', $co->course->id)); ?>
+                                            <?php echo e(Form::hidden('course_id', $co->course->id ?? null)); ?>
 
                                             <?php echo e(Form::hidden('student_id', $student->id)); ?>
 

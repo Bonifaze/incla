@@ -153,7 +153,7 @@
 
 
 						</table>
-						 {{--  {!! $programs->render() !!}  --}}
+						 {!! $programs->render() !!}
 
 
             </div>

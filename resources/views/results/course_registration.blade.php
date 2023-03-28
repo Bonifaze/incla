@@ -148,7 +148,7 @@
                                 <th>S/N</th>
                                 <th>Course Code</th>
                                 <th>Course Title</th>
-                                {{--  <th>Course Level</th>  --}}
+                                <th> Semester</th>
                                 <th>Credit Unit</th>
                                 <th>Action</th>
 
@@ -336,13 +336,13 @@
                                 @foreach ($carry_over as $key => $co)
                                     <tr>
                                         <td> {{ $loop->iteration }} <input type="checkbox"></td>
-                                        <td>{{ $co->course->course_code }}</td>
-                                        <td>{{ $co->course->course_title }}</td>
-                                        <td>{{ $co->level }}</td>
-                                        <td>{{ $co->credit_unit }}</td>
+                                        <td>{{ $co->course->course_code ?? null }}</td>
+                                        <td>{{ $co->course->course_title ?? null }}</td>
+                                        <td>{{ $co->level ?? null }}</td>
+                                        <td>{{ $co->credit_unit ?? null }}</td>
                                         <td>
                                             {!! Form::open(['method' => 'Post', 'route' => 'result.add-course', 'id' => 'addCOForm' . $co->id]) !!}
-                                            {{ Form::hidden('course_id', $co->course->id) }}
+                                            {{ Form::hidden('course_id', $co->course->id ?? null) }}
                                             {{ Form::hidden('student_id', $student->id) }}
                                             {{ Form::hidden('session_id', $session->id) }}
                                             {{ Form::hidden('semester', $semester) }}

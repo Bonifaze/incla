@@ -38,8 +38,8 @@
 
 							  <th colspan="2">Action</th>
 
-                              
-							  
+							  <th>Transcript</th>
+                              <th>Action</th>
 
 						  </thead>
 
@@ -73,7 +73,7 @@
                                     <td></td>
                                 <?php endif; ?>
                                     <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('transcript', 'App\Student')): ?>
-                                <td><a class="btn btn-info" href="<?php echo e(route('student.transcript',base64_encode($student->id))); ?>" target="_blank"> <i class="fa fa-eye"></i> Transcript</a></td>  
+                                <td><a class="btn btn-info" href="<?php echo e(route('student.transcript',base64_encode($student->id))); ?>" target="_blank"> <i class="fa fa-eye"></i> Transcript</a></td>
                                 <?php else: ?>
                                     <td></td>
                                 <?php endif; ?>

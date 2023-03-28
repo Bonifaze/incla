@@ -34,7 +34,7 @@ Route::patch('/program-courses/results/approval', 'ProgramCoursesController@upda
 
 Route::get('/program-courses/result/{program_course_id}', 'ProgramCoursesController@result')->name('program_course.result');
 
-Route::get('/program-courses/students/{program_course_id}', 'ProgramCoursesController@students')->name('program_course.students');
+Route::get('/program-courses/students/{program_course_id}/{program_id}', 'ProgramCoursesController@students')->name('program_course.students');
 
 Route::get('/program-courses/change-lecturer/{id}', 'ProgramCoursesController@changeLecturer')->name('program_course.change-lecturer');
 

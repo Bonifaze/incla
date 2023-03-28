@@ -5,17 +5,17 @@ namespace App\Http\Controllers;
 use PDF;
 use App\Staff;
 use Exception;
-use App\Course;
 use App\College;
 use App\Program;
 use App\Session;
 use App\ProgramCourse;
-use App\RegisteredCourse;
 use App\AdminDepartment;
+use App\Course;
 use App\StudentAcademic;
 use App\StaffWorkProfile;
 use App\Models\StaffCourse;
 use Illuminate\Http\Request;
+use App\Models\RegisteredCourse;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Maatwebsite\Excel\Facades\Excel;
@@ -24,6 +24,7 @@ use Maatwebsite\Excel\Facades\Excel;
 use App\Exports\ProgramCoursesExport;
 use App\Imports\ProgramCoursesImport;
 use Illuminate\Support\Facades\Redirect;
+use App\Models\RegisteredCourse as ModelsRegisteredCourse;
 
 class ProgramCoursesController extends Controller
 {
@@ -427,14 +428,17 @@ class ProgramCoursesController extends Controller
             ->with('success',$program_course->course->code.' approval updated successfully');
       }
 
-    public function students($program_course_id)
+    public function students($program_course_id, $program_id)
     {
 
-        $pcid = base64_decode($program_course_id);
-        $program_course = ProgramCourse::with(['registeredCourse.student','registeredCourse.student.contact','registeredCourse.student.academic'])->findOrFail($pcid);
-        $results = $program_course->registeredCourse;
-     //  dd($results);
-        return view('staff.academic.program_course_students', compact('results','program_course'));
+       // $pcid = base64_decode($program_course_id);
+        // dd($pcid);
+        $program_course_name=Course::findOrFail($program_course_id);
+        // $program_course = ProgramCourse::with(['registeredCourse.student','registeredCourse.student.contact','registeredCourse.student.academic'])->findOrFail($pcid);
+        $program_course=RegisteredCourse::with('course','student',)->where('program_id', $program_id)->where('course_id', $program_course_id )->where('session', 16)->get();
+        // $results = $program_course->registeredCourse;
+        // dd($results);
+        return view('staff.academic.program_course_students', compact('program_course','program_course_name'));
     }
 
     public function studentsDownload($program_course_id)
@@ -763,7 +767,7 @@ class ProgramCoursesController extends Controller
         $this->authorize('ICTViewResult',ProgramCourse::class);
         $programs = Program::with(['department','programCourses'])
             ->orderBy('name','ASC')
-            ->paginate(100);
+            ->paginate(10);
             //dd($programs);
         // $programs = Program::orderBy('name','ASC')->get();
         $session = new Session();

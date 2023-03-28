@@ -58,7 +58,7 @@ class AcademicDepartmentsViewExport implements FromView
                 $qr->where('level', '<', $level);
             }
         }])->get();
-        // dd($students);
+        //  dd($students);
 
         $student_course_ids = RegisteredCourse::distinct('course_id')->where('program_id', $id)
          ->where('level', $level)

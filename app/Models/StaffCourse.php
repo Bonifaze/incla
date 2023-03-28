@@ -17,12 +17,12 @@ class StaffCourse extends Model implements Auditable
 
     public function getCourseTitleAttribute()
     {
-        return Course::where('id', $this->course_id)->first()->course_title;
+        return Course::where('id', $this->course_id)->first()->course_title ?? null;
     }
 
     public function getCourseCodeAttribute()
     {
-        return Course::where('id', $this->course_id)->first()->course_code;
+        return Course::where('id', $this->course_id)->first()->course_code ?? null;
     }
 
     public function getStaffNameAttribute()

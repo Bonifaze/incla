@@ -213,6 +213,7 @@ class AcademicDepartmentsController extends Controller
         $this->authorize('programLevelStudents',AcademicDepartment::class);
         $program = Program::findOrFail(base64_decode($id));
         $students = $program->registeredStudents($level);
+        // dd(   $students);
         $session = new Session();
         $session_id = $session->currentSession();
         $semester = $session->currentSemester();

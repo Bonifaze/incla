@@ -1,4 +1,6 @@
-<?php $__env->startSection('pagetitle'); ?> <?php echo e($program_course->course->code); ?>  <?php $__env->stopSection(); ?>
+<?php $__env->startSection('pagetitle'); ?>
+
+ <?php $__env->stopSection(); ?>
 
 
 
@@ -32,7 +34,10 @@
             <div class="card card-primary">
                    <h1
                         class="app-page-title text-uppercase h5 font-weight-bold p-2 mb-2 shadow-sm text-center text-success border">
-                       <?php echo e($program_course->program->name); ?> <?php echo e($program_course->course->code); ?> Student List
+                       
+                       <?php echo e($program_course_name->course_code); ?>
+
+                        Student List
                     </h1>
 
 
@@ -57,7 +62,7 @@
 
 							<tbody>
 
-						  <?php $__currentLoopData = $results; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $key => $result): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+						  <?php $__currentLoopData = $program_course; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $key => $result): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
 
 							<tr>
 							  <td><?php echo e($loop->iteration); ?></td>

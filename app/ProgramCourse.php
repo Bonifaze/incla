@@ -59,7 +59,7 @@ class ProgramCourse extends Model implements Auditable
 
     public function registeredCourse()
     {
-        return $this->hasMany('App\Models\RegisteredCourse', 'student_id','seesion_id')
+        return $this->hasMany('App\Models\RegisteredCourse', 'student_id')
          ->orderBy('student_id','ASC');
 
     }

@@ -124,7 +124,7 @@ class Program extends Model implements Auditable
     public function registeredStudents($level)
     {
         $session = new Session();
-        $students = Student::distinct('students.id')->with(['contact','academic'])
+        $students = Student::distinct('students_id')->with(['contact','academic'])
             ->join('student_academics', 'students.id', '=', 'student_academics.student_id')
             ->join('registered_courses', 'student_academics.student_id', '=', 'registered_courses.student_id')
             ->where('registered_courses.session',$session->currentSession())

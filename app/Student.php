@@ -586,7 +586,7 @@ class Student extends Authenticatable implements Auditable
         $registration = $this->getSemesterRegistration($session->currentSession(),$session->currentSemester());
         $outstandings = RegisteredCourse::with('course')->where('student_id',$this->id)
             //->where('semester_registration_id',$registration->id)
-            ->get();
+          ->distinct('course_id')  ->get();
         $remark = "";
         $co = "";
         $out = "";
@@ -594,11 +594,11 @@ class Student extends Authenticatable implements Auditable
         {
             if($outstanding->grade_status == "fail")
             {
-                $co .= $outstanding->course->course_code . ", ";
+                $co .= $outstanding->course->course_code ?? null . ", ";
             }
             else if($outstanding->grade_status == "fail")
             {
-                $out .= $outstanding->course->course_code . ", ";
+                $out .= $outstanding->course->course_code ?? null . ", ";
             }
         }
         if($co != "")

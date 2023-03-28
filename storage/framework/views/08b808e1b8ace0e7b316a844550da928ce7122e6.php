@@ -147,7 +147,8 @@
 
 
 						</table>
-						 
+						 <?php echo $programs->render(); ?>
+
 
 
             </div>

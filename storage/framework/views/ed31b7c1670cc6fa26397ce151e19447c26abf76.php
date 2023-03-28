@@ -49,8 +49,9 @@
                              <?php endif; ?>
                                             
                                             
-
-                                     <td>  <a class="btn btn-primary" target="_blank" href="<?php echo e(route('program_course.students',base64_encode($program_course->id))); ?>">  List </a>   </td>
+                                <td>
+                              <a class="btn btn-primary" target="_blank" href="/program-courses/students/<?php echo e($program_course->course_id); ?>/<?php echo e($program_course->program_id); ?>">  List </a>
+                                     </td>
                                  
                                      <td>  <a class="btn btn-info" href="/admin/download/<?php echo e($program_course->staff_course_id); ?>">  Download </a>   </td>
                                  <td>

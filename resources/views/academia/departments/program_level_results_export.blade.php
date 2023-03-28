@@ -127,7 +127,7 @@
                         <td>{{ $student->full_name }}</td>
                         <td>{{ $student->gender[0] }}</td>
                         @php
-                            
+
                             foreach ($student->previous_registered_courses as $course) {
                                 $tcbf += $course?->course_unit;
                                 $tgpbf += $course?->course_unit * $course?->grade_point;
@@ -142,7 +142,8 @@
                             @endphp
                             {{ $student_course?->total }} <br>
                             {{ $student_course?->grade }} <br>
-                            {{ $student_course ? $student_course?->course_unit * $student_course?->grade_point : '' }}
+                           {{  $student_course?->course_unit }}
+                            {{--  {{ $student_course ? $student_course?->course_unit * $student_course?->grade_point : '' }}  --}}
                         </td>
                         @endfor
                         <td>{{ $tc }}</td>

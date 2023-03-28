@@ -2,7 +2,9 @@
 
 
 
-@section('pagetitle') {{$program_course->course->code}}  @endsection
+@section('pagetitle')
+{{--  {{$program_course->course_code}}   --}}
+ @endsection
 
 
 
@@ -36,7 +38,9 @@
             <div class="card card-primary">
                    <h1
                         class="app-page-title text-uppercase h5 font-weight-bold p-2 mb-2 shadow-sm text-center text-success border">
-                       {{ $program_course->program->name }} {{$program_course->course->code}} Student List
+                       {{--  {{ $program_course->program->name }}   --}}
+                       {{$program_course_name->course_code}}
+                        Student List
                     </h1>
 
 
@@ -61,7 +65,7 @@
 
 							<tbody>
 
-						  @foreach ($results as $key => $result)
+						  @foreach ($program_course as $key => $result)
 
 							<tr>
 							  <td>{{ $loop->iteration }}</td>
