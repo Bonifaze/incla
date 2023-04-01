@@ -56,7 +56,7 @@
                                     
                                     
                                     <th>Action</th>
-                                    <th>Action</th>
+                                    
 
                                 </thead>
 
@@ -81,9 +81,7 @@
 
 
 
-                                                <button onclick="deleteCourse(<?php echo e($course->id); ?>)" type="button"
-                                                    class="<?php echo e($course->id); ?> btn btn-danger"><span
-                                                        class="icon-line2-trash"></span> Delete</button>
+                                                
                                                 <?php echo Form::close(); ?>
 
 

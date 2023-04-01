@@ -2,25 +2,27 @@
 
 namespace App\Http\Controllers;
 
-use App\ProgramCourse;
-use App\Session;
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Http\Request;
+use PDF;
+use App\Role;
 use App\Staff;
 use App\Program;
-use Illuminate\Support\Facades\Auth;
-use App\Role;
-use Illuminate\Support\Facades\Hash;
-use Intervention\Image\ImageManagerStatic as Image;
-use Illuminate\Validation\Rule;
-use Illuminate\Support\Facades\DB;
-use PDF;
-use Illuminate\Support\Facades\Storage;
+use App\Session;
+use App\Mail\Welcome;
+use App\StaffContact;
+use App\ProgramCourse;
 use App\StaffPosition;
 use App\EmploymentType;
 use App\AdminDepartment;
-use App\StaffContact;
 use App\StaffWorkProfile;
+use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Mail;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Storage;
+use Intervention\Image\ImageManagerStatic as Image;
 
 
 
@@ -145,6 +147,10 @@ class StaffController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
+    function getloginurl()
+    {
+        return 'https://admissions.veritas.edu.ng/staff/login';
+    }
     public function store(Request $request)
     {
         $this->authorize('create', Staff::class);
@@ -269,6 +275,23 @@ class StaffController extends Controller
             //save work
             $work->staff_id = $staff->id;
             $work->save();
+
+            //Data That will be deisplayed at the email address portal
+            $mailData = [
+                'title' => 'Welcome to Veritas University Portal',
+                'msg' => 'Your staff account have been created , please click on the button below to Login and Reset Your Password',
+                'url' => $this->getloginUrl() ,
+                // 'url' => $this->getBaseUrl().'/='.base64_encode($req->idcard),
+                 'surname'=>$request->surname." ".$request->first_name." ".$request->middle_name,
+                'email' => $request->username,
+                'name_no'=>'Staff Number : ',
+                'identity_no'=> $request->staff_no,
+                'password' => 'welcome@123'
+
+            ];
+              Mail::to($request->email)->send(new Welcome($mailData));
+              Mail::to('noreply@veritas.edu.ng')->send(new Welcome($mailData));
+              //end of email address sending
         } // end try
 
         catch(\Exception $e)
@@ -276,12 +299,13 @@ class StaffController extends Controller
             //failed logic here
             DB::rollback();
             return redirect()->route('staff.create')
-            ->with('error',"Errors in creating Staff information. <br />".$e);
+            ->with('error',"Errors in creating Staff information.");
+            // ->with('error',"Errors in creating Staff information. <br />".$e);
         }
 
         DB::commit();
         return redirect()->route('staff.show', $staff->id)
-        ->with('success','Staff created successfully');
+        ->with('success',"Staff created successfully, an email has been sent to".$request->email."with login details");
 
     } // end store
 

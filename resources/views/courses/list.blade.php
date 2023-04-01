@@ -60,7 +60,7 @@
                                     {{--  <th>Status</th>  --}}
                                     {{--  <th>Action</th>  --}}
                                     <th>Action</th>
-                                    <th>Action</th>
+                                    {{--  <th>Action</th>  --}}
 
                                 </thead>
 
@@ -83,9 +83,9 @@
                                                 {{ Form::hidden('id', $course->id) }}
 
 
-                                                <button onclick="deleteCourse({{ $course->id }})" type="button"
+                                                {{--  <button onclick="deleteCourse({{ $course->id }})" type="button"
                                                     class="{{ $course->id }} btn btn-danger"><span
-                                                        class="icon-line2-trash"></span> Delete</button>
+                                                        class="icon-line2-trash"></span> Delete</button>  --}}
                                                 {!! Form::close() !!}
 
                                             </td>

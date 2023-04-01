@@ -3,13 +3,15 @@
 namespace App\Http\Controllers;
 
 use PDF;
-use Mail;
+use Exception;
+use App\Remita;
 use App\Program;
 use App\Session;
 use App\Student;
 use App\StudentDebt;
-use App\ProgramCourse;
 // use Nette\Utils\Image;
+use App\Mail\Welcome;
+use App\ProgramCourse;
 use App\StudentResult;
 use App\StudentContact;
 use App\StudentMedical;
@@ -17,21 +19,20 @@ use App\StudentAcademic;
 use App\Mail\PasswordReset;
 use App\Models\MatricCount;
 use Illuminate\Http\Request;
+use Termwind\Components\Raw;
 use App\SemesterRegistration;
 use Illuminate\Validation\Rule;
 use App\Models\StudentCreditLoad;
-use App\Remita;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Hash;
-use Intervention\Image\Facades\Image;
 // use Intervention\Image\Facades\Image;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Mail;
+use Intervention\Image\Facades\Image;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Redirect;
-use Exception;
-use Termwind\Components\Raw;
 
 class AdminStudentsControllerApplicant extends Controller
 {
@@ -105,7 +106,10 @@ class AdminStudentsControllerApplicant extends Controller
         // return view('students.admin.create',compact('applicantsDetails','programs', 'sessions'));
     }
 
-
+    function getloginurl()
+    {
+        return 'https://admissions.veritas.edu.ng/students/login';
+    }
     public function store(Request $request)
     {
         // $this->authorize('create',Student::class);
@@ -277,6 +281,22 @@ class AdminStudentsControllerApplicant extends Controller
             $student->username = $student->setVunaMail();
             $student->save();
 
+            //Data That will be deisplayed at the email address portal
+            $mailData = [
+                'title' => 'Welcome to Veritas University Portal',
+                'msg' => 'Your Student account have been created , please click on the button below to Login and Reset Your Password',
+                'url' => $this->getloginUrl() ,
+                // 'url' => $this->getBaseUrl().'/='.base64_encode($req->idcard),
+                 'surname'=>$request->surname." ".$request->first_name." ".$request->middle_name,
+                'email' => $student->username,
+                'name_no'=>'Matric Number : ',
+                'identity_no'=> $academic->mat_no,
+                'password' => 'welcome'
+
+            ];
+              Mail::to($request->email)->send(new Welcome($mailData));
+              Mail::to('noreply@veritas.edu.ng')->send(new Welcome($mailData));
+              //end of email address sending
             } // end try
 
 
@@ -286,8 +306,8 @@ class AdminStudentsControllerApplicant extends Controller
              DB::rollback();
             //  return view('login');
 
-             $approvalMsg = '<div class="alert alert-danger alert-dismissible" role="alert"> <button type="button" class="close" data-dismiss="alert"> &times; </button> ERROR '.$e->getMessage();' </div>';
-            // $approvalMsg = '<div class="alert alert-danger alert-dismissible" role="alert"> <button type="button" class="close" data-dismiss="alert"> &times; </button> Matriculation number Generated, You can not generate more than once </div>';
+            //  $approvalMsg = '<div class="alert alert-danger alert-dismissible" role="alert"> <button type="button" class="close" data-dismiss="alert"> &times; </button> ERROR '.$e->getMessage();' </div>';
+             $approvalMsg = '<div class="alert alert-danger alert-dismissible" role="alert"> <button type="button" class="close" data-dismiss="alert"> &times; </button> Error Generating Matric Number ensure you properly fill the form then Sorry try again or contact ICT Unit </div>';
             return Redirect::back()->with('approvalMsg', $approvalMsg);
             // return redirect('/students/create')->with('approvalMsg', $approvalMsg);
             // return redirect()->route('student.create')

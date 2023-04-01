@@ -303,8 +303,9 @@ class StudentResultsController extends Controller
                 ->with(['programs' => $programs, 'error' => 'No academic record available for this student']);
         }
 
-        $sessions = Session::where('id','>',0)->where('id','<',14)->where('status','<',2)->orderBy('id','DESC')->pluck('name','id');
-            return view('results.manage-student',compact('student','sessions','academic'));
+        // $sessions = Session::where('id','>',0)->where('id','<',14)->where('status','<',2)->orderBy('id','DESC')->pluck('name','id');
+         $sessions = Session::orderBy('id','DESC')->pluck('name','id');
+        return view('results.manage-student',compact('student','sessions','academic'));
         }
         else {
             $programs = Program::orderBy('name','ASC')->pluck('name','id');

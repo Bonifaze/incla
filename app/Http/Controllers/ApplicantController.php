@@ -299,7 +299,7 @@ class ApplicantController extends Controller
 
 
         foreach ($payment as $utm){
-            if ($utm->status_code == '01' && ($utm->fee_type_id =='2'||$utm->fee_type_id =='4') ) {
+            if ($utm->status_code == '01' && ($utm->fee_type_id =='2'||$utm->fee_type_id =='4'||$utm->fee_type_id =='118') ) {
                 return redirect('/schoolfeespayment');
                           }
         }

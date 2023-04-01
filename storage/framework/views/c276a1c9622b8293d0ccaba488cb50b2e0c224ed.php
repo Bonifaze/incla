@@ -144,9 +144,9 @@
                             ?>
                             <?php echo e($student_course?->total); ?> <br>
                             <?php echo e($student_course?->grade); ?> <br>
-                           <?php echo e($program_courses->credit_unit); ?>
+                           
+                            <?php echo e($student_course ? $student_course?->course_unit * $student_course?->grade_point : ''); ?>
 
-                            
                         </td>
                         <?php endfor; ?>
                         <td><?php echo e($tc); ?></td>
