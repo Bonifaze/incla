@@ -32,8 +32,8 @@
                 <div class="col_full">
 
 
-                    {{--  <div class="row">
-                        <div class="col-md-4 form-group">
+
+                        <div class="col-md-6 form-group">
                             <div class="card card-primary">
                                 <div class="card-header">
                                     <h3 class="card-title"> Remark Upload for {{ $student->full_name }} </h3>
@@ -46,14 +46,15 @@
                                     {!! Form::open(['method' => 'POST', 'class' => 'nobottommargin']) !!}
                                     <div class="card-body">
                                         <div class="box-body">
-
-                                            @if ($student->hasResultSemesterRegistration())
+ This will allow for upload of outstanding and
+                                                carry over courses for this student, for this semester.
+                                            {{--  @if ($student->hasResultSemesterRegistration())
                                                 This will allow for upload of outstanding and
                                                 carry over courses for this student, for this semester.
                                             @else
                                                 No course registration is available for this student.<br />
                                                 This must be completed before remark upload will be available.
-                                            @endif
+                                            @endif  --}}
 
                                         </div>
                                     </div>
@@ -61,11 +62,11 @@
                                     <!-- /.card-body -->
 
                                     <div class="card-footer">
-                                        @if ($student->hasResultSemesterRegistration())
+                                        {{-- @if ($student->hasResultSemesterRegistration()) --}}
                                             <a class="btn btn-outline-success"
                                                 href="{{ route('result.semester.remark', base64_encode($student->id)) }}">
                                                 Start </a>
-                                        @endif
+                                    {{--  @endif    --}}
                                     </div>
 
                                 </div>
@@ -74,7 +75,7 @@
                             </div>
 
                         </div>
-  --}}
+
 
                         <!-- /.start second column -->
                         <div>
@@ -115,7 +116,7 @@
 
                         </div>
 
-{{--
+
                         <!-- /.start third column -->
                         <div class="col-md-4 form-group">
                             <div class="card card-primary">
@@ -161,6 +162,9 @@
                                                     <span class="text-danger"> {{ $errors->first('TGP') }}</span>
                                                 </div>
 
+                             <div class="card-footer">
+                                 {{ Form::submit('Update', ['class' => 'btn btn-primary']) }}
+                             </div>
 
                                             </div>
 
@@ -168,9 +172,6 @@
                                     </div>
 
                                     <!-- form start
-                             <div class="card-footer">
-                                 {{ Form::submit('Update', ['class' => 'btn btn-primary']) }}
-                             </div>
                              -->
                                     {!! Form::close() !!}
                                 </div>
@@ -178,7 +179,7 @@
 
                         </div>
 
-                    </div>  --}}
+                    </div>
 
     @can('ictUpload', 'App\StudentResult')
             <div>

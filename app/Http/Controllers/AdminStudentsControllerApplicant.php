@@ -302,6 +302,7 @@ class AdminStudentsControllerApplicant extends Controller
 
           catch(\Exception $e)
             {
+
             //failed logic here
              DB::rollback();
             //  return view('login');

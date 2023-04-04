@@ -85,7 +85,7 @@
                 
 
                          
-                <li><a href="<?php echo e(route('result.search_student')); ?>" class="dropdown-item">ICT Upload Results </a></li>
+                
                   
                 
                           <li><a href="<?php echo e(route('program_course.sbc_level', 100)); ?>" class="dropdown-item">100L SBC Approval</a>
@@ -123,8 +123,7 @@
                   <li><a href="<?php echo e(route('program_course.vc_level', 900)); ?>" class="dropdown-item">PhD VC Approval</a>
                 </li>
                  <li class="dropdown-submenu dropdown-hover">
-                    <a id="dropdownSubMenu2" href="#" role="button" data-toggle="dropdown" aria-haspopup="true"
-                        aria-expanded="false" class="dropdown-item dropdown-toggle">ICT View Result</a>
+                    
                     <ul aria-labelledby="dropdownSubMenu2" class="dropdown-menu border-0 shadow">
 
                         <!-- Level two dropdown-->
@@ -155,6 +154,38 @@
                 </li>
 
 
+
+            </ul>
+        </li>
+
+        <li class="nav-item dropdown">
+            <a id="dropdownSubMenu1" style="color: #218c74;" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
+                class="nav-link dropdown-toggle">ICT</a>
+            <ul aria-labelledby="dropdownSubMenu1" class="dropdown-menu border-0 shadow">
+            <li><a href="<?php echo e(route('result.search_student')); ?>" class="dropdown-item">Manage Student</a></li>
+               <li><a href="<?php echo e(route('admin.approve_scores')); ?>" class="dropdown-item">Courses Result
+                        </a></li>
+                 <li><a href="<?php echo e(route('program_course.ict_level', 100)); ?>" class="dropdown-item">100L Result</a>
+                </li>
+                <li><a href="<?php echo e(route('program_course.ict_level', 200)); ?>" class="dropdown-item">200L Result</a>
+                </li>
+                <li><a href="<?php echo e(route('program_course.ict_level', 300)); ?>" class="dropdown-item">300L Result</a>
+                </li>
+                <li><a href="<?php echo e(route('program_course.ict_level', 400)); ?>" class="dropdown-item">400L Result</a>
+                </li>
+                  <li><a href="<?php echo e(route('program_course.ict_level', 500)); ?>" class="dropdown-item">500L Result</a>
+                </li>
+                  <li><a href="<?php echo e(route('program_course.ict_level', 600)); ?>" class="dropdown-item">600L Result</a>
+                </li>
+                  <li><a href="<?php echo e(route('program_course.ict_level', 700)); ?>" class="dropdown-item">PGD Result</a>
+                </li>
+                  <li><a href="<?php echo e(route('program_course.ict_level', 800)); ?>" class="dropdown-item">MSc Result</a>
+                </li>
+                  <li><a href="<?php echo e(route('program_course.ict_level', 900)); ?>" class="dropdown-item">PhD Result</a>
+                </li>
+
+                 <li><a href="<?php echo e(route('admin.notuploaded_scores')); ?>" class="dropdown-item text-warning">Courses Result<br>not Upload
+                        </a></li>
 
             </ul>
         </li>

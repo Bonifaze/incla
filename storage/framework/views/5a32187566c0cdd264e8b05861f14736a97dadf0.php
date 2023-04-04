@@ -28,7 +28,46 @@
                 <div class="col_full">
 
 
-                    
+
+                        <div class="col-md-6 form-group">
+                            <div class="card card-primary">
+                                <div class="card-header">
+                                    <h3 class="card-title"> Remark Upload for <?php echo e($student->full_name); ?> </h3>
+                                </div>
+                                <?php echo $__env->make('partialsv3.flash', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
+                                <div class="table-responsive">
+
+                                    <!-- form start -->
+
+                                    <?php echo Form::open(['method' => 'POST', 'class' => 'nobottommargin']); ?>
+
+                                    <div class="card-body">
+                                        <div class="box-body">
+ This will allow for upload of outstanding and
+                                                carry over courses for this student, for this semester.
+                                            
+
+                                        </div>
+                                    </div>
+
+                                    <!-- /.card-body -->
+
+                                    <div class="card-footer">
+                                        
+                                            <a class="btn btn-outline-success"
+                                                href="<?php echo e(route('result.semester.remark', base64_encode($student->id))); ?>">
+                                                Start </a>
+                                    
+                                    </div>
+
+                                </div>
+                                <?php echo Form::close(); ?>
+
+                                <!-- /.box-body -->
+                            </div>
+
+                        </div>
+
 
                         <!-- /.start second column -->
                         <div>
@@ -71,6 +110,75 @@
                         </div>
 
 
+                        <!-- /.start third column -->
+                        <div class="col-md-4 form-group">
+                            <div class="card card-primary">
+                                <div class="card-header">
+                                    <h3 class="card-title"> Brought Forward CGPA </h3>
+                                </div>
+                                <?php echo $__env->make('partialsv3.flash', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
+                                <div class="table-responsive">
+
+                                    <!-- form start -->
+
+                                    <?php echo Form::model($academic, [
+                                        'method' => 'PATCH',
+                                        'route' => ['result.brought_forward_cgpa'],
+                                        'class' => 'nobottommargin',
+                                    ]); ?>
+
+                                    <div class="card-body">
+                                        <div class="box-body">
+
+                                            <div class="row">
+
+                                                <div class="col-md-6 form-group">
+                                                    <label for="TC">Total Credit :</label>
+                                                    <?php echo Form::text('TC', $academic->TC, [
+                                                        'placeholder' => '',
+                                                        'class' => 'form-control',
+                                                        'id' => 'TC',
+                                                        'name' => 'TC',
+                                                        'required' => 'required',
+                                                    ]); ?>
+
+                                                    <span class="text-danger"> <?php echo e($errors->first('TC')); ?></span>
+                                                </div>
+                                                <?php echo e(Form::hidden('academic_id', $academic->id)); ?>
+
+                                                <div class="col-md-6 form-group">
+                                                    <label for="TGP">Total Grade Point :</label>
+                                                    <?php echo Form::text('TGP', $academic->TGP, [
+                                                        'placeholder' => '',
+                                                        'class' => 'form-control',
+                                                        'id' => 'TGP',
+                                                        'name' => 'TGP',
+                                                        'required' => 'required',
+                                                    ]); ?>
+
+                                                    <span class="text-danger"> <?php echo e($errors->first('TGP')); ?></span>
+                                                </div>
+
+                             <div class="card-footer">
+                                 <?php echo e(Form::submit('Update', ['class' => 'btn btn-primary'])); ?>
+
+                             </div>
+
+                                            </div>
+
+                                        </div>
+                                    </div>
+
+                                    <!-- form start
+                             -->
+                                    <?php echo Form::close(); ?>
+
+                                </div>
+                            </div>
+
+                        </div>
+
+                    </div>
 
     <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('ictUpload', 'App\StudentResult')): ?>
             <div>

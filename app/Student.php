@@ -154,6 +154,44 @@ class Student extends Authenticatable implements Auditable
         }
     } // end checkSerial
 
+
+    function setMatNo($program_id, $session_id, $studentId, $modeOfEntry)
+    {
+        $program = Program::findOrFail($program_id);
+        $sess = Session::findOrFail($session_id);
+        $code = $program->code;
+        $deg = $program->masters;
+        $deg = str_replace(".","",$deg);
+        $deg = str_replace(")","",$deg);
+        $deg = str_replace("(","",$deg);
+        $deg = str_replace(" ","",$deg);
+        $session = $sess->getCode();
+
+        switch ($modeOfEntry) {
+            case "UTME":
+                $reg = "VUG/".$code."/".$session."/".$studentId;
+                break;
+            case "DE":
+                $reg = "VUG/".$code."/".$session."/".$studentId;
+                break;
+            case "PGD":
+                $reg = "VPG/PGD/".$code."/".$session."/".$studentId;
+                break;
+            case "MSc":
+                $reg = "VPG/".$deg."/".$code."/".$session."/".$studentId;
+                break;
+            case "PhD":
+                $reg = "VPG/PHD/".$code."/".$session."/".$studentId;
+                break;
+            default:
+                $reg = "VUG/".$code."/".$session."/".$studentId;
+        }
+
+        return $reg;
+
+
+    } // end setMatNo($prog, $session, $studentId)
+
         public function setVunaMail()
       {
 
@@ -169,6 +207,22 @@ class Student extends Authenticatable implements Auditable
 
 
 
+    // CHNAGING OF MATRIC NUMBER TRIAL
+    /*    public function setVunaMail()
+      {
+
+          $college = $this->academic->program->department->college;
+          $col = $college->code;
+          $mat_no = $this->academic->mat_no;
+          $email = $mat_no.'@'.$col.'.veritas.edu.ng';
+          $email = strtolower($email);
+          return $email;
+
+
+      }
+
+
+*/
 
 
       public function hasSemesterResults($session_id,$semester)
