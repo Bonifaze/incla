@@ -112,7 +112,7 @@
                     </div>
                 </li>
                 <li class="nav-item">
-                    <a href="/logoutUser" class="nav-link text-danger"><i class="fas fa-power-off"></i>Logout</a>
+                    <a href="/logoutUser" class="nav-link text-danger"><i class="fas fa-power-off"></i>Logout </a>
                 </li>
 
 
@@ -128,6 +128,10 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous">
     </script>
+
+
+
+
 </body>
 
 </html>

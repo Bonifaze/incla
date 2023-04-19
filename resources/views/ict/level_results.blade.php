@@ -56,6 +56,7 @@
 							   <th>Results Approved</th>  --}}
 							   <th>Students Total</th>
                                <th>Result Download</th>
+                               {{--  <th>Courses</th>  --}}
        <th>HoD Approval</th>
   <th>Dean Approval</th>
                              <th>SBC Approval</th>
@@ -89,18 +90,23 @@
                                 <td>
                                                 <a class="btn btn-outline-dark"
                                                 href="{{ route('academia.department.export_view', [$program->id, $level, 1]) }}">
-                                                 First Semester </a>
+                                              1st Semester</a>
 
                                                 <a class="btn btn-outline-primary"
                                                 href="{{ route('academia.department.export_view', [$program->id, $level, 2]) }}">
-                                                 Second Semester </a></td>
-   <td>
+                                                 2nd Semester  </a></td>
+                                                 <td>
+                                                 <a class="btn btn-outline-dark"
+                                                href="{{ route('academia.department.program_level_courses', [base64_encode($program->id), $level]) }}">
+                                                Show ({{ $program->levelCoursesCount($level) }})</a>
+                                                 </td>
+   {{--  <td>
                                @if(!$program->is_HODapproved)
                            <P class="text-danger text-bold" >unapproved</P>
                                  @else
                              <P class="text-success" >Approved</p>
                                  @endif
-                                 </td>
+                                 </td>  --}}
      <td>
                                @if(!$program->is_DEANapproved)
                            <P class="text-danger text-bold" >unapproved</P>

@@ -54,60 +54,13 @@ class AdminStudentsController extends Controller
     {
         $this->authorize('create',Student::class);
         $programs = Program::orderBy('name','ASC')->pluck('name','id');
-        // dd($programs);
         $sessions = Session::where('status',1)->pluck('name','id');
-        $applicantsDetails = "";
-        if (session('usersType') ==  'UTME') {
-            $applicantsDetails = DB::table('users')->where('users.applicant_type', 'UTME')
-                ->where('users.id', session('userid'))
-                ->leftJoin('usersbiodata', 'usersbiodata.user_id', '=', 'users.id')
-                ->leftJoin('utme', 'utme.user_id', '=', 'users.id')
-                ->leftJoin('sponsors', 'sponsors.user_id', '=', 'users.id')
-                ->leftJoin('olevel', 'olevel.user_id', '=', 'users.id')
-                ->leftJoin('uploads', 'uploads.user_id', '=', 'users.id')
-                ->select('users.*', 'usersbiodata.*', 'sponsors.*', 'utme.*', 'olevel.*', 'uploads.*')
-                ->first();
-                return view('admissions.students.admin.create',compact('applicantsDetails','programs', 'sessions'));
-        } elseif (session('usersType')  ==  'DE') {
-            $applicantsDetails = DB::table('users')->where('users.applicant_type', 'DE')
-                ->where('users.id', session('userid'))
-                ->leftJoin('usersbiodata', 'usersbiodata.user_id', '=', 'users.id')
-                ->leftJoin('de', 'de.user_id', '=', 'users.id')
-                ->leftJoin('sponsors', 'sponsors.user_id', '=', 'users.id')
-                ->leftJoin('olevel', 'olevel.user_id', '=', 'users.id')
-                ->leftJoin('uploads', 'uploads.user_id', '=', 'users.id')
-                ->select('users.*', 'usersbiodata.*', 'sponsors.*', 'de.*', 'olevel.*', 'uploads.*')
-                ->first();
-                return view('admissions.students.admin.create',compact('applicantsDetails','programs', 'sessions'));
-        } elseif (session('usersType')  ==  'Transfer') {
-            $applicantsDetails = DB::table('users')->where('users.applicant_type', 'Transfer')
-                ->where('users.id', session('userid'))
-                ->leftJoin('usersbiodata', 'usersbiodata.user_id', '=', 'users.id')
-                ->leftJoin('transfers', 'transfers.user_id', '=', 'users.id')
-                ->leftJoin('sponsors', 'sponsors.user_id', '=', 'users.id')
-                ->leftJoin('olevel', 'olevel.user_id', '=', 'users.id')
-                ->leftJoin('uploads', 'uploads.user_id', '=', 'users.id')
-                ->select('users.*', 'usersbiodata.*', 'sponsors.*', 'transfers.*', 'olevel.*', 'uploads.*')
-                ->first();
-                return view('admissions.students.admin.create',compact('applicantsDetails','programs', 'sessions'));
-        } elseif (session('usersType') ==  'PG') {
-            $applicantsDetails = DB::table('users')->where('users.applicant_type', 'PG')
-                ->where('users.id', session('userid'))
-                ->leftJoin('usersbiodata', 'usersbiodata.user_id', '=', 'users.id')
-                ->leftJoin('pgs', 'pgs.user_id', '=', 'users.id')
-                ->leftJoin('sponsors', 'sponsors.user_id', '=', 'users.id')
-                ->leftJoin('pg_referees', 'pg_referees.user_id', '=', 'users.id')
-                ->leftJoin('pg_educations', 'pg_educations.user_id', '=', 'users.id')
-                ->leftJoin('olevel', 'olevel.user_id', '=', 'users.id')
-                ->leftJoin('uploads', 'uploads.user_id', '=', 'users.id')
-                ->select('users.*', 'usersbiodata.*', 'sponsors.*', 'pgs.*', 'olevel.*', 'pg_referees.*', 'pg_educations.*', 'uploads.*')
-                ->first();
-                return view('admissions.students.admin.create',compact('applicantsDetails','programs', 'sessions'));
-        }
-        // return view('students.admin.create',compact('applicantsDetails','programs', 'sessions'));
+        return view('students.admin.create',compact('programs', 'sessions'));
     }
-
-
+    function getloginurl()
+    {
+        return 'https://admissions.veritas.edu.ng/students/login';
+    }
     public function store(Request $request)
     {
         // $this->authorize('create',Student::class);
@@ -233,10 +186,10 @@ class AdminStudentsController extends Controller
             $contact->student_id = $student->id;
             $contact->save();
 
-            //save academic
-            $academic->student_id = $student->id;
-            $academic->mat_no = $this->genMatricNumber($request->only('program_id', 'entry_session_id', 'mode_of_entry'));
-            $academic->save();
+           //save academic
+           $academic->student_id = $student->id;
+           $academic->mat_no = $student->setMatNo($request->program_id, $request->entry_session_id, $student->id, $request->mode_of_entry);
+           $academic->save();
 
             //save medical
             $medical->student_id = $student->id;
@@ -257,7 +210,23 @@ class AdminStudentsController extends Controller
             $student->username = $student->setVunaMail();
             $student->save();
 
-            } // end try
+           //Data That will be deisplayed at the email address portal
+           $mailData = [
+            'title' => 'Welcome to Veritas University Portal',
+            'msg' => 'Your Student account have been created , please click on the button below to Login and Reset Your Password',
+            'url' => $this->getloginUrl() ,
+            // 'url' => $this->getBaseUrl().'/='.base64_encode($req->idcard),
+             'surname'=>$request->surname." ".$request->first_name." ".$request->middle_name,
+            'email' => $student->username,
+            'name_no'=>'Matric Number : ',
+            'identity_no'=> $academic->mat_no,
+            'password' => 'welcome'
+
+        ];
+        //   Mail::to($request->email)->send(new Welcome($mailData));
+        //   Mail::to('noreply@veritas.edu.ng')->send(new Welcome($mailData));
+          //end of email address sending
+        } // end try
 
 
           catch(\Exception $e)
@@ -266,33 +235,16 @@ class AdminStudentsController extends Controller
              DB::rollback();
             //  return view('login');
 
-             $approvalMsg = '<div class="alert alert-danger alert-dismissible" role="alert"> <button type="button" class="close" data-dismiss="alert"> &times; </button> ERROR '.$e->getMessage();' </div>';
-            // $approvalMsg = '<div class="alert alert-danger alert-dismissible" role="alert"> <button type="button" class="close" data-dismiss="alert"> &times; </button> Matriculation number Generated, You can not generate more than once </div>';
-            return Redirect::back()->with('approvalMsg', $approvalMsg);
-            // return redirect('/students/create')->with('approvalMsg', $approvalMsg);
-            // return redirect()->route('student.create')
-            // ->with('error',"Errors in creating Student information.".$e);
+
+            return redirect()->route('student.create')
+            ->with('error',"Errors in creating Student information.".$e);
              }
 
              DB::commit();
-             return redirect()->route('admissions.student.show', $student->id)
-             ->with('success','Student created successfully');
-
-            //  $approvalMsg = '<div class="alert alert-danger alert-dismissible" role="alert"> <button type="button" class="close" data-dismiss="alert"> &times; </button> scuesss </div>';
-            //  return redirect('/students/show')->with('approvalMsg', $approvalMsg);
-
+             return redirect()->route('student.show', $student->id)
+             ->with('success','Student created successfully, an email has been sent to the student with his Matriculation Number and Login details');
 
     } //end store
-    // public function showapplicant($id)
-    // {
-    //     // $this->authorize('show',Student::class);
-    //     $student = Student::findOrFail($id);
-    //     $contact = $student->contact;
-    //     $academic = $student->academic;
-    //     $medical = $student->medical;
-
-    //     return view('admissions.students.admin.show',compact('student','contact','academic','medical'));
-    // }
 
     public function show($id)
     {
@@ -304,92 +256,6 @@ class AdminStudentsController extends Controller
 
         return view('students.admin.show',compact('student','contact','academic','medical'));
     }
-    // protected function studentID(array $fields)
-    // {
-    //     $program_id = $fields['program_id'];
-    //     $entry_session_id = $fields['entry_session_id'];
-    //     $program_type = $fields['program_type'];
-    //     // $modeOfEntry = $fields['mode_of_entry'];
-
-    //     $sess = Session::find($entry_session_id);
-    //     $session = $sess->getCode();
-
-    //     $program_students_count = DB::table('student_academics')->where('program_id', $program_id)
-    //     ->where('entry_session_id', $entry_session_id)
-    //     ->where('program_type', $program_type)->count();
-
-    //     $new_number = $program_students_count + 1;
-
-    //     $program = DB::table('programs')->find($program_id);
-    //     $program_code = $program->code;
-
-    //     $formatted_num = sprintf('%04d', $new_number);
-
-    //     // $matric_number = 'VUG/'.$program_code.'/'. $session . '/'. $formatted_num;
-
-    //     $student_ID= $program_code.''.$formatted_num;
-    //     // dd($matric_number);
-    //     return $student_ID;
-    // }
-
-    protected function genMatricNumber(array $fields)
-    {
-        $program_id = $fields['program_id'];
-        $entry_session_id = $fields['entry_session_id'];
-        // $program_type = $fields['program_type'];
-        $modeOfEntry = $fields['mode_of_entry'];
-
-        $sess = Session::find($entry_session_id);
-        $session = $sess->getCode();
-
-        $program_students_count = DB::table('student_academics')->where('program_id', $program_id)
-        ->where('entry_session_id', $entry_session_id)
-        ->where('mode_of_entry', $modeOfEntry)->count();
-        // ->where('program_type', $program_type)->count();
-
-        $new_number = $program_students_count + 1;
-
-        $program = DB::table('programs')->find($program_id);
-        $program_code = $program->code;
-        $deg = $program->masters;
-
-        $formatted_num = sprintf('%04d', $new_number);
-
-
-        $deg = str_replace(".","",$deg);
-        $deg = str_replace(")","",$deg);
-        $deg = str_replace("(","",$deg);
-        $deg = str_replace(" ","",$deg);
-        switch ($modeOfEntry) {
-            case "UTME":
-                $matric_number= 'VUG/'.$session.'/'.$program_code.''.$formatted_num;
-                break;
-            case "DE":
-                $matric_number= 'VUG/'.$session.'/'.$program_code.''.$formatted_num;
-                break;
-            case "TRANSFER":
-                $matric_number= 'VUG/'.$session.'/'.$program_code.''.$formatted_num;
-                break;
-            case "PGD":
-                $matric_number = "VPG/PGD/".$session.'/'.$program_code.''.$formatted_num;
-                break;
-            case "MSc":
-                $matric_number = "VPG/".$deg."/".$session.'/'.$program_code.''.$formatted_num;
-                break;
-            case "PhD":
-                $matric_number = "VPG/PHD/".$session.'/'.$program_code.''.$formatted_num;
-                break;
-            default:
-             $matric_number= 'VUG/'.$session.'/'.$program_code.''.$formatted_num;
-        }
-
-        // $matric_number = 'VUG/'.$program_code.'/'. $session . '/'. $formatted_num;
-
-        // $matric_number= 'VUG/'.$session.'/'.$program_code.''.$formatted_num;
-        // dd($matric_number);
-        return $matric_number;
-    }
-
 
 
     function moveSession() {
@@ -463,7 +329,7 @@ class AdminStudentsController extends Controller
             ->whereHas('academic', function ($query) use ($level)
         {
             $query->where('entry_session_id', '=', $level)->orderBy('program_id');
-        })->orderBy('id')->orderBy('surname')->paginate(5000);
+        })->orderBy('id')->orderBy('surname')->paginate(100);
         return view('students.admin.plain_list_session',compact('students'));
     } //end list
 

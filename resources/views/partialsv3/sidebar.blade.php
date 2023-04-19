@@ -377,7 +377,7 @@
                                     </a>
                                 </li>
                                 <li class="nav-item">
-                                    <a href="#" class="nav-link @yield('departments')">
+                                    <a href="{{ route('student.create') }}" class="nav-link @yield('departments')">
                                         <i class="fas fa-list-alt nav-icon"></i>
                                         <p>Create</p>
                                     </a>

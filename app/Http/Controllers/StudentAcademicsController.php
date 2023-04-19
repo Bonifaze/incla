@@ -5,11 +5,14 @@ namespace App\Http\Controllers;
 use App\Program;
 use App\Session;
 use App\Student;
+use App\Mail\Welcome;
 use App\StudentAcademic;
 use App\AcademicDepartment;
 use App\Models\MatricCount;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
 
 class StudentAcademicsController extends Controller
 {
@@ -220,9 +223,13 @@ protected function genMatricNumber(array $fields)
     return $matric_number;
 }
 */
-
+function getloginurl()
+{
+    return 'https://admissions.veritas.edu.ng/students/login';
+}
 public function update(Request $request, $id)
 {
+
     $this->authorize('edit', Student::class);
     $this->validate($request, [
         // academic information
@@ -234,6 +241,8 @@ public function update(Request $request, $id)
         'program_id' => 'required|integer',
         'level' => 'required|integer',
         ]);
+    // $staff = Auth::guard('staff')->user();
+    // $staffemail=$staff->email;
     $academic = StudentAcademic::findOrFail($id);
     $academic->mode_of_entry = $request->mode_of_entry;
     $academic->mode_of_study = $request->mode_of_study;
@@ -249,25 +258,28 @@ public function update(Request $request, $id)
         $academic->save();
         $student->username = $student->setVunaMail();
         $student->save();
-
-    } // end try
 //Data That will be deisplayed at the email address portal
 $mailData = [
-    'title' => 'Welcome to Veritas University Portal',
-    'msg' => 'Your Student account have been created , please click on the button below to Login and Reset Your Password',
-    'url' => $this->getloginUrl() ,
+    'title' => '',
+    'msg' => 'Your Matric number and Username have been restructured, Below are your new details',
+     'url' => $this->getloginUrl() ,
     // 'url' => $this->getBaseUrl().'/='.base64_encode($req->idcard),
-     'surname'=>$request->surname." ".$request->first_name." ".$request->middle_name,
+     'surname'=>$student->surname." ".$student->first_name." ".$student->middle_name,
     'email' => $student->username,
     'name_no'=>'Matric Number : ',
     'identity_no'=> $academic->mat_no,
-    'password' => 'welcome'
+    'password' => 'Your password remains unchanged',
+    'note'=>'The change in Matriculation Number takes effect immediately, and you are to discontinue the use of your previous Matriculation Number. Please update your records accordingly.'
 
 ];
-  Mail::to($request->email)->send(new Welcome($mailData));
-  Mail::to('noreply@veritas.edu.ng')->send(new Welcome($mailData));
+
+  Mail::to($student->email)->send(new Welcome($mailData));
+   //Mail::to($staffemail)->send(new Welcome($mailData));
+  //Mail::to('noreply@veritas.edu.ng')->send(new Welcome($mailData));
   //end of email address sending
 } // end try
+
+
     catch(\Exception $e)
     {
         //failed logic here
@@ -276,7 +288,9 @@ $mailData = [
         ->with('error',"Errors in updating Student academic information.".$e->getMessage());
     }
     DB::commit();
-     return redirect()->route('student.show', $academic->student_id)
+    //  return redirect()->route('student.show', $academic->student_id)
+    return redirect()->back()
+    // ->route('student-academic.edit', $id)
     ->with('success','Student academic information updated successfully');
 
 } //end update

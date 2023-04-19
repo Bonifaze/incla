@@ -30,8 +30,10 @@
 						  <thead>
 
 							  <th>S/N</th>
+                
 							  <th>Surname</th>
 							 <th>Other Name</th>
+                             <th>Username</th>
                               <th>Matric No</th>
                               <th>Department</th>
                               <th>Degree & Program Name</th>
@@ -49,8 +51,10 @@
 
 							<tr>
 							  <td><?php echo e($key + $students->firstItem()); ?>.</td>
+                              
 							  <td><?php echo e($student->surname); ?></td>
 							 <td><?php echo e($student->first_name); ?>  <?php echo e($student->middle_name); ?></td>
+                <td><?php echo e($student->username); ?></td>
                                 <?php if($student->academic): ?>
                                <td><?php echo e($student->academic->mat_no); ?></td>
                                 <?php endif; ?>
@@ -58,7 +62,9 @@
          <td> ( <?php echo e($student->academic->program->degree); ?> ) <?php echo e($student->academic->program->name); ?></td>
          <td><?php echo e($student->medical->blood_group); ?></td>
          <td><?php echo e($student->academic->session->name); ?></td>
-
+<td>
+  <td><a class="btn btn-danger" href="<?php echo e(route('student-academic.update',$student->academic->id)); ?>"> UPDATE</a></td>
+</td>
 							</tr>
 
 							<?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>

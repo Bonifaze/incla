@@ -27,7 +27,7 @@ exit;
 
                     </div>
 
-                    <form method="POST" action="/students/store" enctype="multipart/form-data" class="p-3">
+                    <form method="POST" action="/admissions/students/store" enctype="multipart/form-data" class="p-3">
                         @csrf
 
                         <div class="card-body">
@@ -493,7 +493,7 @@ exit;
                                         <label for="level">Level :</label>
                                         {{ Form::select(
                                             'level',
-                                            [   
+                                            [
                                                 ' '=> 'Select Level',
                                                 '100' => '100',
                                                 '200' => '200',
@@ -508,12 +508,14 @@ exit;
                                     </div>
 
                                     <div class="col-md-4 form-group">
-                                        <label for="mode_of_entry">Mode of Entry :</label>
+                                        <label for="mode_of_entry">Mode of Entry <Span class="text-danger">*</Span> : </label>
                                         {{ Form::select(
                                             'mode_of_entry',
                                             [
                                                  ' ' => 'Select Mode of Entry',
-                                                'UTME' => 'Undergraduate',
+                                                'UTME' => 'UTME',
+                                                  'DE' => 'Direct Entry',
+                                                    'TRANSFER' => 'Transfer',
                                                 'PGD' => 'PGD',
                                                 'MSc' => 'Masters',
                                                  'MPA' => 'MPA',
@@ -526,25 +528,6 @@ exit;
 
                                     </div>
 
-
-
-
-
-                                    {{--  <div class="col-md-4 form-group">
-                                    <label for="mode_of_entry">Mode of Entry :</label>
-                                    {{ Form::select('mode_of_entry', [
-                                          ' ' => 'Select Mode of Entry',
-                                        'UTME' => 'UTME',
-	                        		'DE' => 'Direct Entry',
-	                        		'TRANSFER' => 'Transfer',
-	                       			'PGD' => 'PGD',
-	                       			'MSc' => 'Masters',
-	                       			'PhD' => 'PhD'],
-	                        		' ',
-	                       			 ['class' => 'form-control select2']
-	                    			) }}
-
-							        </div>  --}}
 
 
                                 </div>
@@ -742,13 +725,79 @@ exit;
     </div>
     </section>
     </div>
-
+    @endsection
+@section('pagescript')
 
     <!-- External JavaScripts
                  ============================================= -->
     <script src="{{ asset('js/jquery.js') }}"></script>
 
-    
+<script type="text/javascript">
+
+var ngst = [
+{"ID": "0", "Name": "----Mode of Entry----"},
+{"ID": "UTME", "Name": "UTME"},
+{"ID": "DE", "Name": "DE"},
+{"ID": "TRANSFER", "Name": "TRANSFER"},
+{"ID": "PGD", "Name": "PGD"},
+{"ID": "MSc", "Name": "MSc"},
+{"ID": "PhD", "Name": "PhD"},
+
+
+];
+
+var ele = document.getElementById('state');
+for (var i = 0; i < ngst.length; i++) {
+
+ele.innerHTML = ele.innerHTML +
+    '<option value="' + ngst[i]['ID'] + '">' + ngst[i]['Name'] + '</option>';
+}
+
+
+function show(ele) {
+
+$("#slga").empty();
+$('#writew').val('');
+
+var parts =
+  {
+    "UTME": [
+      "100"
+    ],
+    "DE": [
+      "200"
+    ],
+    "TRANSFER": [
+      "200"
+    ],
+    "PGD": [
+      "700"
+    ],
+     "PhD": [
+      "900"
+    ],
+    "MSc": [
+      "800"
+    ]
+  };
+
+var msg = ele.value;
+
+var ele1 = document.getElementById('slga');
+
+for (i = 0; i < parts[msg].length; i++) {
+
+  $('#slga1').show();
+  $('#writew1').show();
+
+ele1.innerHTML = ele1.innerHTML +
+    '<option value="' + parts[msg][i] + '">' + parts[msg][i] + '</option>';
+}
+
+
+    }
+
+</script>
     <script>
         //    var myModal = new bootstrap.Modal(document.getElementById('myModal'), {})
         //  myModal.show()
@@ -758,7 +807,7 @@ exit;
     <!-- bootstrap datepicker -->
     <script src="{{ asset('dist/js/components/bootstrap-datepicker.js') }}"></script>
     <!-- Bootstrap File Upload Plugin -->
-    <script src="{{ asset('dist/js/components/bs-filestyle.js') }}"></script> 
+    <script src="{{ asset('dist/js/components/bs-filestyle.js') }}"></script>
 
     <script type="text/javascript">
         //Date picker

@@ -110,6 +110,7 @@ class AdminStudentsControllerApplicant extends Controller
     {
         return 'https://admissions.veritas.edu.ng/students/login';
     }
+
     public function store(Request $request)
     {
         // $this->authorize('create',Student::class);
@@ -245,9 +246,12 @@ class AdminStudentsControllerApplicant extends Controller
                 'student_id' => $student->id
 
             ]);
-
             //save academic
-            $matric_count = MatricCount::where('program_id', $request->program_id)->where('program_type', $request->mode_of_entry)->where('session_id', $request->entry_session_id)->first();
+            $academic->student_id = $student->id;
+            $academic->mat_no = $student->setMatNo($request->program_id, $request->entry_session_id, $student->id, $request->mode_of_entry);
+            $academic->save();
+            //save academic
+           /* $matric_count = MatricCount::where('program_id', $request->program_id)->where('program_type', $request->mode_of_entry)->where('session_id', $request->entry_session_id)->first();
             $academic->student_id = $student->id;
             $academic->mat_no = $this->genMatricNumber($request->only('program_id', 'entry_session_id', 'mode_of_entry'));
             $academic->save();
@@ -259,7 +263,7 @@ class AdminStudentsControllerApplicant extends Controller
             {
                 $count = 0;
                 MatricCount::create(['program_id' => $request->program_id, 'program_type' => $request->mode_of_entry, 'session_id' => $request->entry_session_id, 'count' => $count + 1]);
-            }
+            } */
             //save medical
             $medical->student_id = $student->id;
             $medical->save();
@@ -291,11 +295,12 @@ class AdminStudentsControllerApplicant extends Controller
                 'email' => $student->username,
                 'name_no'=>'Matric Number : ',
                 'identity_no'=> $academic->mat_no,
-                'password' => 'welcome'
+                'password' => 'welcome',
+                'note'=>''
 
             ];
-              Mail::to($request->email)->send(new Welcome($mailData));
-              Mail::to('noreply@veritas.edu.ng')->send(new Welcome($mailData));
+            //   Mail::to($request->email)->send(new Welcome($mailData));
+            //   Mail::to('noreply@veritas.edu.ng')->send(new Welcome($mailData));
               //end of email address sending
             } // end try
 
@@ -317,13 +322,15 @@ class AdminStudentsControllerApplicant extends Controller
 
              DB::commit();
              return redirect()->route('admissions.student.show', $student->id)
-             ->with('success','Student created successfully');
+             ->with('success','Student created successfully and Matriculation number and Login details has been sent to your email');
 
             //  $approvalMsg = '<div class="alert alert-danger alert-dismissible" role="alert"> <button type="button" class="close" data-dismiss="alert"> &times; </button> scuesss </div>';
             //  return redirect('/students/show')->with('approvalMsg', $approvalMsg);
 
 
-    } //end store
+    }  //end store
+
+
     public function showapplicant($id)
     {
         // $this->authorize('show',Student::class);

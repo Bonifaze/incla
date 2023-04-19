@@ -40,5 +40,11 @@ class StudentResultPolicy
     {
         return $staff->hasPermission(72);
     }
+    public function ICTOfficers(Staff $staff)
+    {
+        return $staff->hasPermission(133);
+    }
+
+
 
 } // end Policy

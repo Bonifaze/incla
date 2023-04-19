@@ -174,11 +174,20 @@ class Student extends Authenticatable implements Auditable
             case "DE":
                 $reg = "VUG/".$code."/".$session."/".$studentId;
                 break;
+                case "TRANSFER":
+                    $reg = "VUG/".$code."/".$session."/".$studentId;
+                    break;
             case "PGD":
                 $reg = "VPG/PGD/".$code."/".$session."/".$studentId;
                 break;
             case "MSc":
                 $reg = "VPG/".$deg."/".$code."/".$session."/".$studentId;
+                break;
+                case "MBA":
+                    $reg = "VPG/".$deg."/".$code."/".$session."/".$studentId;
+                break;
+                case "MPA":
+                    $reg = "VPG/".$deg."/".$code."/".$session."/".$studentId;
                 break;
             case "PhD":
                 $reg = "VPG/PHD/".$code."/".$session."/".$studentId;

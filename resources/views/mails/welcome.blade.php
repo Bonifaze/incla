@@ -3,7 +3,7 @@
 
  {{ $emailData['title'] }}
 
-<h4>{{ $emailData['surname'] }}</h4>
+<h4>Dear {{ $emailData['surname'] }}</h4>
  {{ $emailData['msg'] }}
  <br><br>
  <center> <strong>{{ $emailData['name_no'] }} {{ $emailData['identity_no'] }}  </strong>  </center>
@@ -17,7 +17,12 @@
 @component('mail::button', ['url' => $emailData['url']])
 Click to Login your account
 @endcomponent
+{{ $emailData['note'] }}
+<br>Thank you.<br>
+ <p align='left'> <img src="{{ asset('img/icthead2.png') }}" width='100' height='60' border='0' /></p>
 
-Thanks,<br>
-{{ config('app.name') }}
+  <strong>Mr. Calistus C. Chimezie</strong>
+  <br>(Supervising Head, ICT UNIT)
+
+ {{--  {{ config('app.name') }}  --}}
 @endcomponent

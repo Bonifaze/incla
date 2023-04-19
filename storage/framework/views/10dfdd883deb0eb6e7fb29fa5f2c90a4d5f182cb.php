@@ -83,7 +83,8 @@
                                                            <td><?php echo e($staff_course->sbc_approval); ?></td>
                                                         <td><?php echo e($staff_course->vc_senate_approval); ?></td>
                                                         <td><?php echo e($staff_course->staffName); ?></td>
-                                                        
+                                                        <td><a href="<?php echo e(route('admin.view_scores', $staff_course->course_id)); ?>"
+                                                                class="btn btn-primary">View Scores</a></td>
                                                     </tr>
                                                 <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                                             </tbody>

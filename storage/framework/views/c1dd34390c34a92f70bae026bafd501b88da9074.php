@@ -308,7 +308,7 @@
                                     </a>
                                 </li>
                                 <li class="nav-item">
-                                    <a href="#" class="nav-link <?php echo $__env->yieldContent('departments'); ?>">
+                                    <a href="<?php echo e(route('student.create')); ?>" class="nav-link <?php echo $__env->yieldContent('departments'); ?>">
                                         <i class="fas fa-list-alt nav-icon"></i>
                                         <p>Create</p>
                                     </a>

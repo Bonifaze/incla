@@ -50,9 +50,9 @@
                           <?php $__currentLoopData = $program_courses; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $key => $program_course): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
 						 <tr>
                              <td> <?php echo e($loop->iteration); ?></td>
-                             <td> <?php echo e($program_course->course->course_code); ?> </td>
-                             <td> <?php echo e($program_course->course->course_title); ?></td>
-                             <td> <?php echo e($program_course->credit_unit); ?></td>
+                             <td> <?php echo e($program_course->course->course_code ?? null); ?> </td>
+                             <td> <?php echo e($program_course->course->course_title ?? null); ?></td>
+                             <td> <?php echo e($program_course->credit_unit ?? null); ?></td>
                              
                              
                                   <td>

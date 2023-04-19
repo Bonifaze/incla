@@ -32,6 +32,10 @@ use Maatwebsite\Excel\Facades\Excel;
 class AdminController extends Controller
 {
   //
+  public function authorize()
+  {
+      return true;
+  }
 
     protected $resultComputation;
 
@@ -142,28 +146,28 @@ class AdminController extends Controller
     public function approveScores()
     {
         $staff = Auth::guard('staff')->user();
-        if ($this->hasPriviledge("approveScores",  $staff->id)) {
-
+        // if ($this->hasPriviledge("approveScores",  $staff->id)) {
+            $this->authorize('approveScores',Student::class);
 
         $staff_courses = StaffCourse::where('upload_status', 'uploaded')->where('session_id', $this->getCurrentSession())->orderBy('updated_at', 'DESC')->get();
         return view('results.approve_scores', ['staff_courses' => $staff_courses]);
-    } else {
-        $loginMsg = '<div class="alert alert-danger alert-dismissible" role="alert"> <button type="button" class="close" data-dismiss="alert"> &times; </button> You dont\'t have access to this task, please see the ICT</div>';
-       return view('admissions.error', compact('loginMsg'));
-    }
+    // } else {
+    //     $loginMsg = '<div class="alert alert-danger alert-dismissible" role="alert"> <button type="button" class="close" data-dismiss="alert"> &times; </button> You dont\'t have access to this task, please see the ICT</div>';
+    //    return view('admissions.error', compact('loginMsg'));
+    // }
     }
     public function notuploadedScores()
     {
         $staff = Auth::guard('staff')->user();
-        if ($this->hasPriviledge("approveScores",  $staff->id)) {
-
+        // if ($this->hasPriviledge("approveScores",  $staff->id)) {
+            $this->authorize('approveScores',Student::class);
 
         $staff_courses = StaffCourse::where('upload_status', 'not uploaded')->where('session_id', $this->getCurrentSession())->get();
         return view('results.notuploaded_scores', ['staff_courses' => $staff_courses]);
-    } else {
-        $loginMsg = '<div class="alert alert-danger alert-dismissible" role="alert"> <button type="button" class="close" data-dismiss="alert"> &times; </button> You dont\'t have access to this task, please see the ICT</div>';
-       return view('admissions.error', compact('loginMsg'));
-    }
+  // } else {
+    //     $loginMsg = '<div class="alert alert-danger alert-dismissible" role="alert"> <button type="button" class="close" data-dismiss="alert"> &times; </button> You dont\'t have access to this task, please see the ICT</div>';
+    //    return view('admissions.error', compact('loginMsg'));
+    // }
     }
 
     public function viewScores($course_id)

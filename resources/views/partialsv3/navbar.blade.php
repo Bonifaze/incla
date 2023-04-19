@@ -132,7 +132,7 @@
                 <li><a href="#" class="dropdown-item">Move Session</a></li>
             </ul>
         </li>  --}}
-
+ @can('ICTOfficers', 'App\StudentResult')
         <li class="nav-item dropdown">
             <a id="dropdownSubMenu1" style="color: #218c74;" href="#" data-toggle="dropdown" aria-haspopup="true"
                 aria-expanded="false" class="nav-link dropdown-toggle">Security</a>
@@ -178,7 +178,9 @@
                 <!-- End Level two -->
             </ul>
         </li>
-
+      @else
+                                 <div></div>
+                                @endcan
         <li class="nav-item dropdown">
             <a id="dropdownSubMenu1"style="color: #218c74;" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
                 class="nav-link dropdown-toggle">HR</a>
@@ -290,7 +292,7 @@
 
             </ul>
         </li>
-
+  @can('ICTOfficers', 'App\StudentResult')
         <li class="nav-item dropdown">
             <a id="dropdownSubMenu1" style="color: #218c74;" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
                 class="nav-link dropdown-toggle">ICT</a>
@@ -322,6 +324,9 @@
 
             </ul>
         </li>
+          @else
+                                 <div></div>
+                                @endcan
         {{--
         <li class="nav-item dropdown">
             <a id="dropdownSubMenu1" href="#" data-toggle="dropdown" aria-haspopup="true"

@@ -166,7 +166,7 @@ class StaffController extends Controller
             'marital_status' => 'required|string|max:50',
             'nationality' => 'required|string|max:100',
             'state' => 'required|string|max:50',
-            'lga_name' => 'required|string|max:100',
+            // 'lga_name' => 'required|string|max:100',
             'city' => 'required|string|max:50',
             'maiden_name' => 'sometimes|nullable|string|max:50',
             'religion' => 'required|string|max:50',
@@ -286,7 +286,8 @@ class StaffController extends Controller
                 'email' => $request->username,
                 'name_no'=>'Staff Number : ',
                 'identity_no'=> $request->staff_no,
-                'password' => 'welcome@123'
+                'password' => 'welcome@123',
+                'note'=>''
 
             ];
               Mail::to($request->email)->send(new Welcome($mailData));

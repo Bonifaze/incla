@@ -18,7 +18,7 @@
 
         
         
-
+ <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('ICTOfficers', 'App\StudentResult')): ?>
         <li class="nav-item dropdown">
             <a id="dropdownSubMenu1" style="color: #218c74;" href="#" data-toggle="dropdown" aria-haspopup="true"
                 aria-expanded="false" class="nav-link dropdown-toggle">Security</a>
@@ -64,7 +64,9 @@
                 <!-- End Level two -->
             </ul>
         </li>
-
+      <?php else: ?>
+                                 <div></div>
+                                <?php endif; ?>
         <li class="nav-item dropdown">
             <a id="dropdownSubMenu1"style="color: #218c74;" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
                 class="nav-link dropdown-toggle">HR</a>
@@ -157,7 +159,7 @@
 
             </ul>
         </li>
-
+  <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('ICTOfficers', 'App\StudentResult')): ?>
         <li class="nav-item dropdown">
             <a id="dropdownSubMenu1" style="color: #218c74;" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
                 class="nav-link dropdown-toggle">ICT</a>
@@ -189,6 +191,9 @@
 
             </ul>
         </li>
+          <?php else: ?>
+                                 <div></div>
+                                <?php endif; ?>
         
 
 

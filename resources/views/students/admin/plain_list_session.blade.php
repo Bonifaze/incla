@@ -34,8 +34,10 @@
 						  <thead>
 
 							  <th>S/N</th>
+                {{--  <th>EDIT ACA ID</th>  --}}
 							  <th>Surname</th>
 							 <th>Other Name</th>
+                             <th>Username</th>
                               <th>Matric No</th>
                               <th>Department</th>
                               <th>Degree & Program Name</th>
@@ -53,8 +55,10 @@
 
 							<tr>
 							  <td>{{ $key + $students->firstItem() }}.</td>
+                              {{--  <td>{{ $student->academic->id}}</td>  --}}
 							  <td>{{ $student->surname }}</td>
 							 <td>{{ $student->first_name }}  {{ $student->middle_name }}</td>
+                <td>{{ $student->username }}</td>
                                 @if($student->academic)
                                <td>{{ $student->academic->mat_no }}</td>
                                 @endif
@@ -62,7 +66,9 @@
          <td> ( {{ $student->academic->program->degree }} ) {{ $student->academic->program->name }}</td>
          <td>{{ $student->medical->blood_group }}</td>
          <td>{{ $student->academic->session->name}}</td>
-
+<td>
+  <td><a class="btn btn-danger" href="{{ route('student-academic.update',$student->academic->id) }}"> UPDATE</a></td>
+</td>
 							</tr>
 
 							@endforeach
