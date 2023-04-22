@@ -44,6 +44,11 @@ Route::post('/students/login', 'Auth\StudentLoginController@login')->name('stude
 Route::get('/students/home', 'StudentsController@home')->name('student.home');
 Route::post('/students/logout', 'Auth\StudentLoginController@logout')->name('student.logout');
 
+// Checks the status of payments made in the bank
+Route::get('/remitas', 'RemitaBankPaymentController@index')->name('remitas.remitaBankVerification');
+Route::get('/remita-response', 'RemitaBankPaymentResponseController@handle')->name('remitas.remitaBankResponse');
+
+
 Route::get('/admissions/login', function () {
     return view('admissions.login');
 });
