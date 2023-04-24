@@ -10,11 +10,12 @@ use App\Remita;
 use App\FeeType;
 use App\Session;
 use App\Student;
+use Carbon\Carbon;
 use App\StudentDebt;
 use Remita\HTTPUtil;
 use App\ProgramCourse;
-use Carbon\Carbon;
 use App\StudentResult;
+use App\Models\Remitas;
 use App\StudentAcademic;
 use App\Models\fee_types;
 use Illuminate\Http\Request;
@@ -246,10 +247,12 @@ class StudentPaymentsController extends Controller
 
     public function verifyRRR(Request $request)
     {
+
         $this->validate($request, [
             'remita_id' => 'required|integer',
         ]);
-        $remita = Remita::findOrFail($request->rrr);
+        $remita = Remitas::findOrFail($request->rrr);
+dd($remita);
         $response = $remita->verifyRRR();
         if($response->status == "01")
         {
@@ -270,8 +273,9 @@ class StudentPaymentsController extends Controller
         catch (\Exception $e)
         {
             $error = "Error saving Remita information. Please contact ICT.".$e->getMessage();
-            return redirect()->route('students.paymentview')
+            return redirect()->back()
                 ->with('error',$error);
+
         }
 
     }// end verifyRRR

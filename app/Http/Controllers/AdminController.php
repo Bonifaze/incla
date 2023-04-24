@@ -9,25 +9,26 @@ use App\Session;
 use App\programs;
 use App\subjects;
 use Carbon\Carbon;
+use App\Models\Course;
 use App\Models\fee_types;
 use App\Mail\Confirmsignup;
 use App\Models\StaffCourse;
 use App\Models\GradeSetting;
 use Illuminate\Http\Request;
 use App\Models\RegisteredCourse;
+use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Bus;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
+use Maatwebsite\Excel\Facades\Excel;
+use App\Models\SemesterRemarkCourses;
 use App\Computations\ResultComputation;
 use App\Exports\RegisteredCourseExport;
 use App\Imports\RegisteredCourseImport;
-use App\Models\Course;
 use Illuminate\Database\QueryException;
-use Illuminate\Routing\Controller;
-use Illuminate\Support\Facades\Bus;
 use Illuminate\Support\Facades\Redirect;
-use Maatwebsite\Excel\Facades\Excel;
 
 class AdminController extends Controller
 {
@@ -117,6 +118,7 @@ class AdminController extends Controller
             $total_score = $ca1_scores[$i] + $ca2_scores[$i] + $ca3_scores[$i] + $exam_scores[$i];
             $grade_setting = GradeSetting::where('min_score', '<=', $total_score)->where('max_score', '>=', $total_score)->first();
             $grade_id = $grade_setting->id;
+            $course_reg = RegisteredCourse::find($reg_ids[$i]);
             if ($ca1_scores[$i] > 10 || $ca2_scores[$i] > 10 || $ca3_scores[$i] > 10)
             {
                 return redirect()->back()->withErrors(['error' => 'CA score cannot be more than 30']);
@@ -124,6 +126,16 @@ class AdminController extends Controller
             if ($exam_scores[$i] > 70)
             {
                 return redirect()->back()->withErrors(['error' => 'Exam score cannot be more than 70']);
+            }
+            if ($grade_setting->status == 'fail')
+            {
+
+                SemesterRemarkCourses::create([
+                    'student_id' => $course_reg->student_id,
+                    'course_id' => $course_reg->course_id,
+                    // Add more fields and their values as needed
+                ]);
+
             }
             RegisteredCourse::where('id', $reg_ids[$i])->update([
                 'ca1_score' => $ca1_scores[$i],

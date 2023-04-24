@@ -112,6 +112,7 @@
                                         <?php endif; ?>
                                         
                                         <td><?php echo e($res->course_unit); ?></td>
+                                         <td><?php echo e($res->level); ?></td>
                                         <td>
                                                
                                             <?php echo Form::open(['method' => 'post', 'route' => 'result.remove-course', 'id' => 'removeRCourse' . $res->id]); ?>

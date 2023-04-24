@@ -38,6 +38,7 @@
 							  <th>Surname</th>
 							 <th>Other Name</th>
                              <th>Username</th>
+                              <th>Old Matric No</th>
                               <th>Matric No</th>
                               <th>Department</th>
                               <th>Degree & Program Name</th>
@@ -60,15 +61,16 @@
 							 <td>{{ $student->first_name }}  {{ $student->middle_name }}</td>
                 <td>{{ $student->username }}</td>
                                 @if($student->academic)
+                                <td>{{ $student->academic->old_mat_no }}</td>
                                <td>{{ $student->academic->mat_no }}</td>
                                 @endif
         <td>{{ $student->academic->program->department->name }}</td>
          <td> ( {{ $student->academic->program->degree }} ) {{ $student->academic->program->name }}</td>
          <td>{{ $student->medical->blood_group }}</td>
          <td>{{ $student->academic->session->name}}</td>
-<td>
+{{--  <td>
   <td><a class="btn btn-danger" href="{{ route('student-academic.update',$student->academic->id) }}"> UPDATE</a></td>
-</td>
+</td>  --}}
 							</tr>
 
 							@endforeach

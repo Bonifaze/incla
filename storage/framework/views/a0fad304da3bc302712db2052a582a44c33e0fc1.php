@@ -34,7 +34,8 @@
                 <div class="col_full">
                     <h1
                         class="app-page-title text-uppercase h5 font-weight-bold p-2 mb-2 shadow-sm text-center text-success border">
-                    Score Upload for <?php echo e($student->full_name); ?><br>
+                    Score Upload for <?php echo e($student->full_name); ?>
+
 
 
                     </h1>

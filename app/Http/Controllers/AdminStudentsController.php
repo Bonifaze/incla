@@ -11,6 +11,7 @@ use App\Student;
 use App\StudentDebt;
 
 // use Nette\Utils\Image;
+use App\Mail\Welcome;
 use App\ProgramCourse;
 use App\StudentResult;
 use App\StudentContact;

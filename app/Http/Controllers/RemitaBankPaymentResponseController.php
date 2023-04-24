@@ -39,10 +39,36 @@ class RemitaBankPaymentResponseController extends Controller
             ));
 
             $response = curl_exec($curl);
-            $decodedResponse = json_decode($response);
+             $decodedResponse = json_decode($response);
+            // var_dump($decodedResponse);
+
+            // curl_close($curl);
+            $response = curl_exec($curl);
+
+if ($response === false) {
+    echo 'Error: ' . curl_error($curl);
+} else {
+    $httpCode = curl_getinfo($curl, CURLINFO_HTTP_CODE);
+
+    if ($httpCode != 200) {
+        echo 'Error: HTTP response code ' . $httpCode;
+    } else {
+        $decodedResponse = json_decode($response);
+
+        if ($decodedResponse === null && json_last_error() !== JSON_ERROR_NONE) {
+            echo 'Error: Invalid JSON';
+        } else {
             var_dump($decodedResponse);
 
-            curl_close($curl);
+            // rest of your code...
+        }
+    }
+}
+
+$error = curl_error($curl);
+curl_close($curl);
+
+
             return view('remitas.remitaBankResponse', ['remitas' => $decodedResponse]);
 
             // if ($decodedResponse->status == '01') {

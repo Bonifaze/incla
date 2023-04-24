@@ -124,9 +124,9 @@
                         </div>
                     </td>  --}}
                              <td>
-                                        {!! Form::open(['method' => 'Post', 'route' => 'student.remita-verify', 'id'=>'verifyRemita'.$utm->rrr]) !!}
-                                        {{ Form::hidden('remita_id', $utm->rrr) }}
-                                        <button type="submit" class="{{$utm->rrr}} btn btn-outline-primary" > Verify Payment</button>
+                                      {!! Form::open(['method' => 'Post', 'route' => 'student.remita-verify', 'id'=>'verifyRemita'.$utm->id]) !!}
+                                        {{ Form::hidden('remita_id', $utm->id) }}
+                                        <button type="submit" class="{{$utm->id}} btn btn-outline-warning" > Verify Payment</button>
                                         {!! Form::close() !!}
                                     </td>
                                     @endforeach

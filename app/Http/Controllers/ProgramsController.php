@@ -26,9 +26,9 @@ class ProgramsController extends Controller
         //$this->middleware('auth:student');
     }
 
-    
-    
-    
+
+
+
     /**
      * Display a listing of the resource.
      *
@@ -38,11 +38,11 @@ class ProgramsController extends Controller
     {
         //$this->authorize('list', Program::class);
         $programs = Program::with(['department', 'studentAcademic','undergraduates','postgraduates'])->orderBy('academic_department_id','ASC')->orderBy('name','ASC')->paginate(40);
-        
+
         return view('academia.programs.list',compact('programs'));
     }
-    
-    
+
+
     /**
      * Display a listing of the resource.
      *
@@ -54,8 +54,8 @@ class ProgramsController extends Controller
         $courses = Course::where('program_id', $id)->orderBy('status','DESC')->orderBy('id','ASC')->orderBy('title','ASC')->paginate(100);
         return view('/programs/courselist',compact('courses', 'program'));
     }
-    
-    
+
+
     /**
      * Display a listing of the resource.
      *
@@ -66,19 +66,19 @@ class ProgramsController extends Controller
         $program = Program::findOrFail($id);
         $session = new Session();
         $pcourses = $program->programCourses()->where('session_id', $session->currentSession())->where('semester', $session->currentSemester())->with(['lecturer', 'course'])->orderBy('level','ASC')->paginate(100);
-        
+
         return view('/programs/courses',compact('pcourses', 'program'));
     }
-    
-   
+
+
     public function create()
     {
         $this->authorize('create', Program::class);
         $departments = AcademicDepartment::orderBy('name','ASC')->pluck('name','id');
         return view('academia.programs.create', compact('departments'));
     }
-    
-    
+
+
     public function edit($id)
     {
         $this->authorize('edit', Program::class);
@@ -111,22 +111,22 @@ class ProgramsController extends Controller
         $program->duration = $request->duration;
         $program->academic_department_id = $request->academic_department_id;
         $program->status = 1;
-        
+
         try{
             $program->save();
         } // end try
         catch(\Exception $e)
         {
-            $request->session()->flash('error', 'Error creating Program ! <br />');
+            $request->session()->flash('error',"Errors in creating Program. <br />".$e);
             return redirect()->route('academia.program.create');
         }
-        
+
         return redirect()->route('academia.program.list')
         ->with('success','New Program created successfully');
     }  // end store
-    
-    
-    
+
+
+
     public function update(Request $request, $id)
     {
         $this->authorize('edit', Program::class);
@@ -146,7 +146,7 @@ class ProgramsController extends Controller
         $program->duration = $request->duration;
         $program->academic_department_id = $request->academic_department_id;
         $program->status = $request->status;
-        
+
         try{
             $program->save();
         } // end try
@@ -157,22 +157,22 @@ class ProgramsController extends Controller
         }
         return redirect()->route('academia.program.list')
         ->with('success','Program updated successfully');
-        
+
     } // end update
-    
-    
+
+
     public function delete(Request $request)
     {
         $this->authorize('delete', Program::class);
         $program = Program::findOrFail($request->id);
-        
+
         //check if for database constraint.
         if($program->studentAcademic()->exists())
         {
             $request->session()->flash('error', 'Error deleting Program. Students exist under this Program !');
             return redirect()->route('academia.program.list');
         }
-        
+
         try{
             $program->delete();
         } // end try
@@ -183,7 +183,7 @@ class ProgramsController extends Controller
         }
         return redirect()->route('academia.program.list')
         ->with('success','Program deleted successfully');
-        
+
     } // end delete
 
 

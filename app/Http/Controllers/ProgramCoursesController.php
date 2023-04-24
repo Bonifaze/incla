@@ -773,6 +773,18 @@ class ProgramCoursesController extends Controller
         $session = new Session();
         return view('ict.level_results', compact('programs','session', 'level'));
     }
+    public function ICTmanageoldresult()
+    {
+        $this->authorize('ICTViewResult',ProgramCourse::class);
+        $programs = Program::with(['department','programCourses'])
+            ->orderBy('name','ASC')
+            ->paginate(10);
+            //dd($programs);
+        // $programs = Program::orderBy('name','ASC')->get();
+        $session = new Session();
+        return view('ict.manage_oldresult', compact('programs','session'));
+    }
+
 
     // public function resultsStatus()
     // {

@@ -109,11 +109,11 @@
 
                                             
                              <td>
-                                        <?php echo Form::open(['method' => 'Post', 'route' => 'student.remita-verify', 'id'=>'verifyRemita'.$utm->rrr]); ?>
+                                      <?php echo Form::open(['method' => 'Post', 'route' => 'student.remita-verify', 'id'=>'verifyRemita'.$utm->rrr]); ?>
 
                                         <?php echo e(Form::hidden('remita_id', $utm->rrr)); ?>
 
-                                        <button type="submit" class="<?php echo e($utm->rrr); ?> btn btn-outline-primary" > Verify Payment</button>
+                                        <button type="submit" class="<?php echo e($utm->rrr); ?> btn btn-outline-warning" > Verify Payment</button>
                                         <?php echo Form::close(); ?>
 
                                     </td>

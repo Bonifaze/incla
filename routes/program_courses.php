@@ -67,3 +67,5 @@ Route::post('/program-courses/get-by-id', [ProgramCoursesController::class, 'get
 Route::get('/program-course/staff-course/drop/{staff_course_id}', [ProgramCoursesController::class, 'dropStaffCourse'])->name('drop_staff_course');
 
 Route::get('/program-courses/results/ict/{level}', 'ProgramCoursesController@ICTLevel')->name('program_course.ict_level');
+
+Route::get('/program-courses/results/ict/manage_oldresult', 'ProgramCoursesController@ICTmanageoldresult')->name('program_course.ict_manage_oldresut');

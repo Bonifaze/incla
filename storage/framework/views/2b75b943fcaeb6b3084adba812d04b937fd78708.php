@@ -53,7 +53,8 @@
 
                              </td>
                             <td colspan="2" align="center"><strong>LEVEL</strong>:
-                             <?php echo e($session->registered_courses1->last()?->level); ?>
+                           <?php echo e($session->registered_courses1->max('level')); ?>
+
 
                              </td>
                             <td colspan="2"><strong>SEMESTER</strong>:

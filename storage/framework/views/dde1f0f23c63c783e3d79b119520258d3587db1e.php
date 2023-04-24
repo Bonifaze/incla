@@ -56,6 +56,7 @@
 							 <td><?php echo e($student->first_name); ?>  <?php echo e($student->middle_name); ?></td>
                 <td><?php echo e($student->username); ?></td>
                                 <?php if($student->academic): ?>
+                                <td><?php echo e($student->academic->old_mat_no); ?></td>
                                <td><?php echo e($student->academic->mat_no); ?></td>
                                 <?php endif; ?>
         <td><?php echo e($student->academic->program->department->name); ?></td>

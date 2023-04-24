@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use App\Models\Result;
 use App\Models\RegisteredCourse;
+use App\Models\SemesterRemarkCourses;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use OwenIt\Auditing\Contracts\Auditable;
@@ -647,7 +648,7 @@ class Student extends Authenticatable implements Auditable
     {
         $session = new Session();
         $registration = $this->getSemesterRegistration($session->currentSession(),$session->currentSemester());
-        $outstandings = RegisteredCourse::with('course')->where('student_id',$this->id)
+        $outstandings = SemesterRemarkCourses::with('course')->where('student_id',$this->id)
             //->where('semester_registration_id',$registration->id)
           ->distinct('course_id')  ->get();
         $remark = "";
@@ -655,18 +656,19 @@ class Student extends Authenticatable implements Auditable
         $out = "";
         foreach ($outstandings as  $outstanding)
         {
-            if($outstanding->grade_status == "fail")
+            if($outstanding->type == "co")
             {
-                $co .= $outstanding->course->course_code ?? null . ", ";
+                $co  .= $outstanding->course->course_code . ", ";
             }
-            else if($outstanding->grade_status == "fail")
+            else if($outstanding->type== "out")
             {
-                $out .= $outstanding->course->course_code ?? null . ", ";
+                $out .= $outstanding->course->course_code  . ", ";
             }
+            // dd($co);
         }
         if($co != "")
         {
-            $remark .= "Co:".$co." ";
+            $remark .= "Co:". $co ." ";
         }
         if($out != "")
         {

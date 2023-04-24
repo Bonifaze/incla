@@ -396,6 +396,17 @@
 
                                             </div>
                                         </div>
+
+                                         <div class="col-auto">
+                                            <div class="item-label">
+                                                <strong>Old Matric Number</strong>
+                                            </div>
+                                            <div class="item-data">
+                                                <?php echo e($academic->old_mat_no); ?>
+
+                                            </div>
+                                        </div>
+
                                     </div>
                                 </div>
                             </div>

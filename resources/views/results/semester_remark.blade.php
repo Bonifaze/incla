@@ -20,31 +20,32 @@
 
 <div class="content-wrapper">
     <!-- Content Header (Page header) -->
-    
+
     <!-- Main content -->
     <section class="content">
       <div class="container-fluid">
         <!-- left column -->
         <div class="col_full">
-         
+
          @include('partialsv3.flash')
-         
+
         <div class="card card-success">
             <div class="card-header">
                 <h4 class="card-title">Courses added  for {{$student->fullName}}</h4>
 				</div>
            </div>
-           
+
            <div class="table-responsive">
-  
+
 						<table class="table table-striped">
 						  <thead>
-							
+
 							  <th>#</th>
 							  <th>Course Code</th>
 							  <th>Course Title</th>
+                               <th>Course Type</th>
 							 <th>Action</th>
-							  
+
 						  </thead>
 
 						  <tbody>
@@ -53,13 +54,20 @@
 
                               <tr>
                                   <td>{{ $loop->iteration }}</td>
-                                  <td>{{ $out->code }}</td>
-                                  <td>{{ $out->title }}</td>
+                                  <td>{{ $out->course->course_code }}</td>
+                                  <td>{{ $out->course->course_title }}</td>
+
+                                  @if ($out->type=='co')
+                                    <td>Carry Over</td>
+                                  @else
+                                       <td>Outstanding</td>
+                                  @endif
+
                                  <td>
                                       {!! Form::open(['method' => 'Delete', 'route' => 'result.remove_semester_remark', 'id'=>'removeRCourse'.$out->id]) !!}
                                       {{ Form::hidden('id', $out->id) }}
                                      {{ Form::hidden('student_id', $student->id) }}
-                                     {{ Form::hidden('semester_registration_id', $registration->id) }}
+                                     {{--  {{ Form::hidden('semester_registration_id', $registration->id) }}  --}}
 
                                       <button onclick="removeRCForm({{$out->id}})" type="button" class="{{$out->id}} btn btn-danger" ><span class="icon-line2-trash"></span> Remove</button>
                                       {!! Form::close() !!}
@@ -106,29 +114,29 @@
                             <div class="col-md-4 form-group">
                                 <label for="type">Type:</label>
                                 {{ Form::select('type', [
-                                    '1' => 'Outstanding',
-                                    '2' => 'Carry Over'],
-                                    '2',
+                                    'out' => 'Outstanding',
+                                    'co' => 'Carry Over'],
+                                    'co',
                                         ['class' => 'form-control select2']
                                     ) }}
                                 <span class="text-danger"> {{ $errors->first('type') }}</span>
                             </div>
 
+                             <div class="col-md-4 mt-3 form-group">
+                                  <div style="margin-left:50px; margin-top:15px">
+                    {{ Form::submit('Add Course', array('class' => 'btn btn-primary')) }}
+                </div>
+                            </div>
+
                         </div>
                         {{ Form::hidden('student_id', $student->id) }}
-                         <div class="row">
 
-
-                            <div class="col-md-6 form-group pull-left">
-
-                            </div>
-                        </div>
                     </div>
                 </div>
                 <!-- /.card-body -->
-                <div class="card-footer">
+                {{--  <div class="card-footer">
                     {{ Form::submit('Add Course', array('class' => 'btn btn-primary')) }}
-                </div>
+                </div>  --}}
                 <!-- /.box-body -->
                 {!! Form::close() !!}
             </div>

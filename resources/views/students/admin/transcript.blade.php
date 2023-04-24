@@ -59,6 +59,7 @@
                              </td>
                             <td colspan="2" align="center"><strong>LEVEL</strong>:
                              {{ $session->registered_courses1->last()?->level }}
+                            //   {{ $session->registered_courses1->max('level') }}
                              </td>
                             <td colspan="2"><strong>SEMESTER</strong>:
                         {{--  {{ $session->registered_courses1->first()?->semester }}  --}}

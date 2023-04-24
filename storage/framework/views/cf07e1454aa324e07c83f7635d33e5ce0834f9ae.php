@@ -1,12 +1,8 @@
-@extends('layouts.mini')
-
-
-
-@section('pagetitle')
+<?php $__env->startSection('pagetitle'); ?>
     Create New Program
-@endsection
+<?php $__env->stopSection(); ?>
 
-@section('content')
+<?php $__env->startSection('content'); ?>
     <div class="content-wrapper">
 
         <section class="content">
@@ -18,38 +14,42 @@
                     </h1>
                     <div class="card">
 
-                        @include('partialsv3.flash')
+                        <?php echo $__env->make('partialsv3.flash', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
 
-                        {!! Form::open(['route' => 'academia.program.store', 'method' => 'POST', 'class' => 'nobottommargin']) !!}
+                        <?php echo Form::open(['route' => 'academia.program.store', 'method' => 'POST', 'class' => 'nobottommargin']); ?>
+
                         <div class="card-body">
                             <div class="box-body">
                                 <div class="row">
                                     <div class="col-md-4 form-group">
                                         <label for="name">Program Name :</label>
-                                        {!! Form::text('name', null, [
+                                        <?php echo Form::text('name', null, [
                                             'placeholder' => '',
                                             'class' => 'form-control',
                                             'id' => 'name',
                                             'required' => 'required',
-                                        ]) !!}
-                                        <span class="text-danger"> {{ $errors->first('name') }}</span>
+                                        ]); ?>
+
+                                        <span class="text-danger"> <?php echo e($errors->first('name')); ?></span>
                                     </div>
 
                                     <div class="col-md-4 form-group">
                                         <label for="code">Code :</label>
-                                        {!! Form::text('code', null, [
+                                        <?php echo Form::text('code', null, [
                                             'placeholder' => '',
                                             'class' => 'form-control',
                                             'id' => 'code',
                                             'required' => 'required',
-                                        ]) !!}
-                                        <span class="text-danger"> {{ $errors->first('code') }}</span>
+                                        ]); ?>
+
+                                        <span class="text-danger"> <?php echo e($errors->first('code')); ?></span>
                                     </div>
 
                                     <div class="col-md-4 form-group">
                                         <label for="academic_department_id">Department :</label>
-                                        {{ Form::select('academic_department_id', $departments, null, ['class' => 'form-control', 'id' => 'academic_department_id', 'name' => 'academic_department_id']) }}
-                                        <span class="text-danger"> {{ $errors->first('academic_department_id') }}</span>
+                                        <?php echo e(Form::select('academic_department_id', $departments, null, ['class' => 'form-control', 'id' => 'academic_department_id', 'name' => 'academic_department_id'])); ?>
+
+                                        <span class="text-danger"> <?php echo e($errors->first('academic_department_id')); ?></span>
                                     </div>
 
                                 </div>
@@ -57,7 +57,7 @@
                                 <div class="row">
                                     <div class="col-md-4 form-group">
                                         <label for="degree">Degree Type:</label>
-                                        {{ Form::select(
+                                        <?php echo e(Form::select(
                                             'degree',
                                             [
                                                 'B.Sc' => 'B.Sc',
@@ -72,13 +72,14 @@
                                             ],
                                             'B.A',
                                             ['class' => 'form-control select2'],
-                                        ) }}
-                                        <span class="text-danger"> {{ $errors->first('degree') }}</span>
+                                        )); ?>
+
+                                        <span class="text-danger"> <?php echo e($errors->first('degree')); ?></span>
                                     </div>
 
                                     <div class="col-md-4 form-group">
                                         <label for="masters">Masters Type:</label>
-                                        {{ Form::select(
+                                        <?php echo e(Form::select(
                                             'masters',
                                             [
                                                 'M.Sc' => 'M.Sc',
@@ -90,13 +91,14 @@
                                             ],
                                             'null',
                                             ['class' => 'form-control select2'],
-                                        ) }}
-                                        <span class="text-danger"> {{ $errors->first('masters') }}</span>
+                                        )); ?>
+
+                                        <span class="text-danger"> <?php echo e($errors->first('masters')); ?></span>
                                     </div>
 
                                     <div class="col-md-4 form-group">
                                         <label for="duration">Duration :</label>
-                                        {{ Form::select(
+                                        <?php echo e(Form::select(
                                             'duration',
                                             [
                                                 '3' => '3 years',
@@ -106,8 +108,8 @@
                                             ],
                                             '4',
                                             ['class' => 'form-control select2'],
-                                        ) }}<span
-                                            class="text-danger"> {{ $errors->first('duration') }}</span>
+                                        )); ?><span
+                                            class="text-danger"> <?php echo e($errors->first('duration')); ?></span>
                                     </div>
 
                                 </div>
@@ -119,10 +121,12 @@
                             </div>
                         </div>
                         <div class="card-footer">
-                            {{ Form::submit('Create', ['class' => 'btn btn-primary']) }}
+                            <?php echo e(Form::submit('Create', ['class' => 'btn btn-primary'])); ?>
+
                         </div>
 
-                        {!! Form::close() !!}
+                        <?php echo Form::close(); ?>
+
 
                     </div>
 
@@ -131,4 +135,6 @@
             </div>
         </section>
     </div>
-@endsection
+<?php $__env->stopSection(); ?>
+
+<?php echo $__env->make('layouts.mini', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH /Users/lifeofrence/Documents/laraproject/resources/views/academia/programs/create.blade.php ENDPATH**/ ?>
