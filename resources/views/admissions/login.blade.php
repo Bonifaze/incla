@@ -5,7 +5,7 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>Veritas University | Staff Login</title>
+    <title>Veritas University | Applicant Login</title>
 @endsection
 
 @section('css')

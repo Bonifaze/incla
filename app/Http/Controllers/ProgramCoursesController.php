@@ -776,13 +776,9 @@ class ProgramCoursesController extends Controller
     public function ICTmanageoldresult()
     {
         $this->authorize('ICTViewResult',ProgramCourse::class);
-        $programs = Program::with(['department','programCourses'])
-            ->orderBy('name','ASC')
-            ->paginate(10);
-            //dd($programs);
-        // $programs = Program::orderBy('name','ASC')->get();
-        $session = new Session();
-        return view('ict.manage_oldresult', compact('programs','session'));
+        $programs = Program::orderBy('name','ASC')->pluck('name', 'id');
+        $sessions = Session::orderBy('id', 'DESC')->pluck('name', 'id');
+        return view('ict.manage_oldresult', compact('programs','sessions'));
     }
 
 

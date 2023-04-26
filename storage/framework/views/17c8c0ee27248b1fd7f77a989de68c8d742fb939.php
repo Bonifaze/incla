@@ -145,6 +145,7 @@
 										<th>Course Code</th>
 										<th>Course Title</th>
 										<th>Staff Name</th>
+                                        <th>Phone Number</th>
 										<th>Action</th>
 									</tr>
 								</thead>
@@ -154,7 +155,8 @@
 											<td><?php echo e($loop->iteration); ?></td>
 											<td><?php echo e($staff_course->course_code); ?></td>
 											<td><?php echo e($staff_course->course_title); ?></td>
-											<td><?php echo e($staff_course->staff_name); ?></td>
+											<td><?php echo e($staff_course->staff_name); ?> </td>
+                                            <td><?php echo e($staff_course->staff_phone); ?></td>
 											<td><a href="<?php echo e(route('drop_staff_course', $staff_course->id)); ?>" class="btn btn-danger" onclick="return confirm('are you sure you want to drop this course?')">Drop</a></td>
 										</tr>
 									<?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>

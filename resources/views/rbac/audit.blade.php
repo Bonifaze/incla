@@ -245,7 +245,8 @@
 							 <th>session</th>
 							 <th>Semester</th>
                              <th>Level</th>
-                             <th>Score</th>
+                             <th>Old Score</th>
+                             <th>New Score</th>
                             {{--  <th>Program</th>  --}}
                             <th>Student MatNo.</th>
                             <th>Student Name</th>
@@ -271,6 +272,7 @@
                                         <td>Second</td>
                                         @endif
                              <td>{{ $audit->level}}</td>
+                              <td>{{ $audit->old_total ?? null}}</td>
                              <td>{{ $audit->total ?? null}}</td>
                              <td>{{ $audit->student->academic->mat_no ?? null}}</td>
                              <td>{{ $audit->full_name}}</td>

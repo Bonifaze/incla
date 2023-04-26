@@ -34,3 +34,5 @@ Route::get('/academia/departments/export-pdf/{id}/{level}/{semester}', 'Academic
 
 Route::get('/academia/departments/export-view/{id}/{level}/{semester}', 'AcademicDepartmentsController@exportView')->name('academia.department.export_view');
 
+Route::get('/academia/departments/export-view', 'AcademicDepartmentsController@exportViewoldresult')->name('academia.department.export_view_oldresult');
+

@@ -115,6 +115,11 @@
                                                                     id="<?php echo e('exam' . $student_course->student_id); ?>"
                                                                     class="form-control exam"></td>
 
+                                                                        <input type="hidden" name="old_total[]"
+                                                                    value="<?php echo e($student_course->total); ?>"
+                                                                    id="<?php echo e('exam' . $student_course->student_id); ?>"
+                                                                    class="form-control exam">
+
                                                             <td><input type="number" name="total_scores[]"
                                                                     value="<?php echo e($student_course->total); ?>"
                                                                     class="form-control" readonly></td>

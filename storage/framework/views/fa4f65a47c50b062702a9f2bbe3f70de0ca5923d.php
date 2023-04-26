@@ -73,14 +73,13 @@
                         </a>
                         <ul class="nav nav-treeview">
                         
-                            <li class="nav-item">
-                                <a href="<?php echo e(route('student.course-registration')); ?>" class="nav-link <?php echo $__env->yieldContent('registration'); ?>">
+                            
+                            
+                              <li class="nav-item">
+                                <a href="<?php echo e(route('student.closed-course-registration')); ?>" class="nav-link <?php echo $__env->yieldContent('registration'); ?>">
                                     <i class="fa fa-tasks nav-icon"></i>
                                     <p>Course Registration</p>
                                 </a>
-                            </li>
-                            
-                              
                             </li>
 
 

@@ -136,7 +136,12 @@ class AdminController extends Controller
                     // Add more fields and their values as needed
                 ]);
 
+            }else{
+                SemesterRemarkCourses::where('student_id', $course_reg->student_id)
+                ->where('course_id', $course_reg->course_id)
+                ->delete();
             }
+
             RegisteredCourse::where('id', $reg_ids[$i])->update([
                 'ca1_score' => $ca1_scores[$i],
                 'ca2_score' => $ca2_scores[$i],

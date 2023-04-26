@@ -1,26 +1,22 @@
-@extends('layouts.mini')
-
-
-
-@section('pagetitle')
+<?php $__env->startSection('pagetitle'); ?>
     Manage Student
-@endsection
+<?php $__env->stopSection(); ?>
 
 <!-- Treeview -->
-@section('results-open')
+<?php $__env->startSection('results-open'); ?>
     menu-open
-@endsection
+<?php $__env->stopSection(); ?>
 
-@section('results')
+<?php $__env->startSection('results'); ?>
     active
-@endsection
+<?php $__env->stopSection(); ?>
 
 <!-- Page -->
-@section('exam-remark')
+<?php $__env->startSection('exam-remark'); ?>
     active
-@endsection
+<?php $__env->stopSection(); ?>
 
-@section('content')
+<?php $__env->startSection('content'); ?>
     <div class="content-wrapper">
         <!-- Content Header (Page header) -->
 
@@ -28,7 +24,7 @@
         <section class="content">
             <div class="container-fluid">
 
- @can('ictUpload', 'App\StudentResult')
+ <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('ictUpload', 'App\StudentResult')): ?>
 
 
                         <div class="card card-primary">
@@ -38,31 +34,34 @@
                                 </span>
                             </h1>
 
-                        @include('partialsv3.flash')
+                        <?php echo $__env->make('partialsv3.flash', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
                         <div class="table-responsive">
 
                             <!-- form start -->
 
- {!! Form::open(['route' => 'academia.department.export_view_oldresult', 'method' => 'GET', 'class' => 'nobottommargin']) !!}
+ <?php echo Form::open(['route' => 'academia.department.export_view_oldresult', 'method' => 'GET', 'class' => 'nobottommargin']); ?>
+
                             <div class="card-body">
                                 <div class="box-body">
 
                                     <div class="row">
                                         <div class="col-md-6  form-group">
                                             <label for="session_id">Session :</label>
-                                            {{ Form::select('session_id', $sessions, null, ['class' => 'form-control', 'id' => 'session_id', 'name' => 'session_id']) }}
-                                            <span class="text-danger"> {{ $errors->first('session_id') }}</span>
+                                            <?php echo e(Form::select('session_id', $sessions, null, ['class' => 'form-control', 'id' => 'session_id', 'name' => 'session_id'])); ?>
+
+                                            <span class="text-danger"> <?php echo e($errors->first('session_id')); ?></span>
                                         </div>
 
                                           <div class="col-md-6 form-group">
                                             <label for="session_id">Session :</label>
-                                            {{ Form::select('program_id', $programs, null, ['class' => 'form-control', 'id' => 'program_id', 'name' => 'program_id']) }}
-                                            <span class="text-danger"> {{ $errors->first('program_id') }}</span>
+                                            <?php echo e(Form::select('program_id', $programs, null, ['class' => 'form-control', 'id' => 'program_id', 'name' => 'program_id'])); ?>
+
+                                            <span class="text-danger"> <?php echo e($errors->first('program_id')); ?></span>
                                         </div>
 
                                         <div class="col-md-6  form-group">
                                             <label for="semester">Semester :</label>
-                                            {{ Form::select(
+                                            <?php echo e(Form::select(
                                                 'semester',
                                                 [
                                                     '1' => 'First Semester',
@@ -70,13 +69,14 @@
                                                 ],
                                                 1,
                                                 ['class' => 'form-control select2'],
-                                            ) }}
-                                            <span class="text-danger"> {{ $errors->first('semester') }}</span>
+                                            )); ?>
+
+                                            <span class="text-danger"> <?php echo e($errors->first('semester')); ?></span>
                                         </div>
 
                                         <div class="col-md-6 form-group">
                                             <label for="level">Level :</label>
-                                            {{ Form::select(
+                                            <?php echo e(Form::select(
                                                 'level',
                                                 [
                                                     '100' => '100 Level',
@@ -91,8 +91,9 @@
                                                 ],
                                                 100,
                                                 ['class' => 'form-control select2'],
-                                            ) }}
-                                            <span class="text-danger"> {{ $errors->first('level') }}</span>
+                                            )); ?>
+
+                                            <span class="text-danger"> <?php echo e($errors->first('level')); ?></span>
                                         </div>
 
                                     </div>
@@ -106,7 +107,8 @@
 
                             <div class="card-footer">
 
-                                {{ Form::submit('Download', ['class' => 'btn btn-primary float-right']) }}
+                                <?php echo e(Form::submit('Download', ['class' => 'btn btn-primary float-right'])); ?>
+
 
                             </div>
 
@@ -114,12 +116,13 @@
                         <!-- /.box-body -->
 
 
-                        {!! Form::close() !!}
+                        <?php echo Form::close(); ?>
+
 
                     </div>
-                @else
+                <?php else: ?>
                     <div></div>
-                @endcan
+                <?php endif; ?>
 
     </div>
     <!--/.col (left) -->
@@ -129,5 +132,7 @@
     </section>
     <!-- /.content -->
     </div>
-@endsection
+<?php $__env->stopSection(); ?>
 
+
+<?php echo $__env->make('layouts.mini', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH /Users/lifeofrence/Documents/laraproject/resources/views/ict/manage_oldresult.blade.php ENDPATH**/ ?>

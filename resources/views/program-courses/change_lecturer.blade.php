@@ -148,6 +148,7 @@
 										<th>Course Code</th>
 										<th>Course Title</th>
 										<th>Staff Name</th>
+                                        <th>Phone Number</th>
 										<th>Action</th>
 									</tr>
 								</thead>
@@ -157,7 +158,8 @@
 											<td>{{ $loop->iteration }}</td>
 											<td>{{ $staff_course->course_code }}</td>
 											<td>{{ $staff_course->course_title }}</td>
-											<td>{{ $staff_course->staff_name }}</td>
+											<td>{{ $staff_course->staff_name }} </td>
+                                            <td>{{ $staff_course->staff_phone }}</td>
 											<td><a href="{{ route('drop_staff_course', $staff_course->id) }}" class="btn btn-danger" onclick="return confirm('are you sure you want to drop this course?')">Drop</a></td>
 										</tr>
 									@endforeach

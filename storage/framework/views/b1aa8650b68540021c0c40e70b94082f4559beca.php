@@ -48,10 +48,11 @@
                                         cellspacing="0">
                                             <thead>
                                                 <tr>
-                                                    <th>S/N</th>
+                                                    
                                                     <th>Course Title</th>
                                                     <th>Course Code</th>
-                                                    <th>Semster</th>
+                                                    <th>Program</th>
+                                                    <th>Semester</th>
                                                     <th>Level</th>
 
                                                      <th>HoD Approval</th>
@@ -64,31 +65,43 @@
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                <?php $__currentLoopData = $staff_courses; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $staff_course): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                                                    <tr>
-                                                        <td><?php echo e($loop->iteration); ?></td>
-                                                        <td><?php echo e($staff_course->course_title); ?></td>
-                                                        <td><?php echo e($staff_course->course_code); ?></td>
-                                                            <td>
-                                                              <?php if( $staff_course->semester_id == 1): ?>
-                              First
-                             <?php else: ?>
-                             Second
-                             <?php endif; ?>
-                              </td>
-                                                            </td>
-                                                                <td><?php echo e($staff_course->level); ?></td>
+                                              <?php
+    $prev_course_id = null;
+    $prev_staff_id = null;
+?>
 
-                                                         <td><?php echo e($staff_course->hod_approval); ?></td>
-                                                          <td><?php echo e($staff_course->dean_approval); ?></td>
-                                                           <td><?php echo e($staff_course->sbc_approval); ?></td>
-                                                        <td><?php echo e($staff_course->vc_senate_approval); ?></td>
-                                                        <td><?php echo e($staff_course->staffName); ?></td>
-                                                        <td><a href="<?php echo e(route('admin.view_scores', $staff_course->course_id)); ?>"
-                                                                class="btn btn-primary">View Scores</a></td>
-                                                        <td><?php echo e($staff_course->updated_at); ?></td>
-                                                    </tr>
-                                                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+<?php $__currentLoopData = $staff_courses; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $staff_course): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+    <?php if($staff_course->course_id != $prev_course_id || $staff_course->staff_id != $prev_staff_id): ?>
+        <tr>
+            
+            <td><?php echo e($staff_course->course_title); ?></td>
+            <td><?php echo e($staff_course->course_code); ?></td>
+              <td><?php echo e($staff_course->program->name); ?></td>
+            <td>
+                <?php if($staff_course->semester_id == 1): ?>
+                    First
+                <?php elseif($staff_course->semester_id == 2): ?>
+                    Second
+                <?php endif; ?>
+            </td>
+            <td><?php echo e($staff_course->level); ?></td>
+            <td><?php echo e($staff_course->hod_approval); ?></td>
+            <td><?php echo e($staff_course->dean_approval); ?></td>
+            <td><?php echo e($staff_course->sbc_approval); ?></td>
+            <td><?php echo e($staff_course->vc_senate_approval); ?></td>
+            <td><?php echo e($staff_course->staffName); ?></td>
+            <td><a href="<?php echo e(route('admin.view_scores', $staff_course->course_id)); ?>" class="btn btn-primary">View Scores</a></td>
+            <td><?php echo e($staff_course->updated_at); ?></td>
+        </tr>
+    <?php endif; ?>
+
+    <?php
+        $prev_course_id = $staff_course->course_id;
+        $prev_staff_id = $staff_course->staff_id;
+    ?>
+<?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+
+
                                             </tbody>
                                         </table>
                                     </div>

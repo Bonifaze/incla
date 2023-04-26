@@ -3,20 +3,22 @@
 namespace App\Http\Controllers;
 
 use App\Course;
-use App\Models\GradeSetting;
-use App\Models\RegisteredCourse;
-use App\Models\SemesterRemarkCourses;
 use App\Program;
-use App\ProgramCourse;
 use App\Session;
 use App\Student;
-use App\StudentAcademic;
+use App\ProgramCourse;
 use App\StudentResult;
-use Illuminate\Database\QueryException;
+use App\StudentAcademic;
+use App\Models\GradeSetting;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
+use App\Models\RegisteredCourse;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
+use Maatwebsite\Excel\Facades\Excel;
+use App\Models\SemesterRemarkCourses;
+use Illuminate\Database\QueryException;
 use Illuminate\Support\Facades\Redirect;
+use App\Exports\AcademicDepartmentsExport;
 
 class StudentResultsController extends Controller
 {
@@ -85,6 +87,7 @@ class StudentResultsController extends Controller
 
     public function updateResult(Request $request)
     {
+
         $staff = Auth::guard('staff')->user();
         $reg_ids = $request->reg_ids;
 
@@ -93,10 +96,13 @@ class StudentResultsController extends Controller
         $ca3_scores = $request->ca3_scores;
         $exam_scores = $request->exam_scores;
         $total = $request->total;
+        $old_total = $request->old_total;
+        // dd($request->oldtotal);
 
         for ($i = 0; $i < count($reg_ids); $i++) {
             // $total_score = $ca1_scores[$i] + $ca2_scores[$i] + $ca3_scores[$i] + $exam_scores[$i];
             $total_score = $total[$i];
+            $old_total_score = $old_total[$i];
             $grade_setting = GradeSetting::where('min_score', '<=', $total_score)->where('max_score', '>=', $total_score)->first();
             $grade_id = $grade_setting->id;
             $course_reg = RegisteredCourse::find($reg_ids[$i]);
@@ -125,6 +131,9 @@ class StudentResultsController extends Controller
                         // Add more fields and their values as needed
                     ]);
                 }
+            }
+
+
             //     SemesterRemarkCourses::create([
             //         'student_id' => $course_reg->student_id,
             //         'course_id' => $course_reg->course_id,
@@ -137,17 +146,19 @@ class StudentResultsController extends Controller
             // $registeredCourse->ca3_score = $ca3_scores[$i];
             // $registeredCourse->exam_score = $exam_scores[$i];
             $registeredCourse->total = $total_score;
+           $registeredCourse->old_total = $old_total_score;
             $registeredCourse->grade_id = $grade_id;
             $registeredCourse->grade_status = $grade_setting->status;
             $registeredCourse->status = 'published';
             $registeredCourse->staff_id = $staff->id;
 
             $registeredCourse->save();
-
+            // dd($registeredCourse->save());
         }
+
         return redirect()->back()->with('success', 'Scores uploaded successfully');
     }
-    }
+
 
     public function manageStudent($id)
     {
@@ -271,12 +282,15 @@ class StudentResultsController extends Controller
         $staff = Auth::guard('staff')->user();
         if ($staff->isAcademic()) {
             $programs = $staff->workProfile->admin->academic->programs->pluck('name', 'id');
-            return view('results.program-search-student', compact('programs'));
+            $sessions = Session::where('status', 0)->orderBy('id', 'DESC')->pluck('name', 'id');
+            return view('results.program-search-student', compact('programs','sessions'));
         } else {
             return redirect()->route('staff.home')
                 ->with('error', 'Academic Department not found');
         }
     }
+
+
 
     public function programFindStudent(Request $request)
     {

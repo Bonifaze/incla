@@ -125,6 +125,11 @@ if(!session('adminId'))
                                                                     id="{{ 'exam' . $student_course->student_id }}"
                                                                     class="form-control exam"></td>
 
+                                                                        <input type="hidden" name="old_total[]"
+                                                                    value="{{ $student_course->total }}"
+                                                                    id="{{ 'exam' . $student_course->student_id }}"
+                                                                    class="form-control exam">
+
                                                             <td><input type="number" name="total_scores[]"
                                                                     value="{{ $student_course->total }}"
                                                                     class="form-control" readonly></td>

@@ -101,7 +101,7 @@
                                     <div class="">
                                         Displays all academic results for this student.
                                         Only Senate approve result will be shown without GPA and CGPA just Courses and Grade.
-<br>
+            <br>
 
                                     </div>
                                 </div>

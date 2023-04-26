@@ -304,6 +304,19 @@ class AcademicDepartmentsController extends Controller
 
     }
 
+    public function exportViewoldresult(Request $request)
+    {
+        $session = $request->input('session_id');
+        $id = $request->input('program_id');
+        $semester = $request->input('semester');
+        $level = $request->input('level');
+        $program =Program::findorFail($id);
+        $session_name=Session::findorFail($request->input('session_id'));
+        $fileName = strtolower(str_replace("/", "-",$session_name->name))."-".($program->name)."-(".($program->code).")-".$level."level-result.xlsx";
+        return Excel::download(new AcademicDepartmentsExport($id,$level,$semester,$session), $fileName);
+
+    }
+
     // public function exportViewRemoved($id,$level, $semester)
     // {
     //     //$program = Program::findOrFail($id);

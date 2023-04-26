@@ -30,6 +30,11 @@ class StaffCourse extends Model implements Auditable
         return Staff::find($this->staff_id)?->full_name;
     }
 
+    public function getStaffPhoneAttribute()
+    {
+        return Staff::find($this->staff_id)?->phone;
+    }
+
 
     public function getTotalStudentsAttribute()
     {

@@ -54,10 +54,11 @@
                                         cellspacing="0">
                                             <thead>
                                                 <tr>
-                                                    <th>S/N</th>
+                                                    {{--  <th>S/N</th>  --}}
                                                     <th>Course Title</th>
                                                     <th>Course Code</th>
-                                                    <th>Semster</th>
+                                                    <th>Program</th>
+                                                    <th>Semester</th>
                                                     <th>Level</th>
 
                                                      <th>HoD Approval</th>
@@ -70,31 +71,43 @@
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                @foreach ($staff_courses as $staff_course)
-                                                    <tr>
-                                                        <td>{{ $loop->iteration }}</td>
-                                                        <td>{{ $staff_course->course_title }}</td>
-                                                        <td>{{ $staff_course->course_code }}</td>
-                                                            <td>
-                                                              @if ( $staff_course->semester_id == 1)
-                              First
-                             @else ( $staff_course->semester_id == 2)
-                             Second
-                             @endif
-                              </td>
-                                                            </td>
-                                                                <td>{{ $staff_course->level }}</td>
+                                              @php
+    $prev_course_id = null;
+    $prev_staff_id = null;
+@endphp
 
-                                                         <td>{{ $staff_course->hod_approval }}</td>
-                                                          <td>{{ $staff_course->dean_approval }}</td>
-                                                           <td>{{ $staff_course->sbc_approval }}</td>
-                                                        <td>{{ $staff_course->vc_senate_approval }}</td>
-                                                        <td>{{ $staff_course->staffName}}</td>
-                                                        <td><a href="{{ route('admin.view_scores', $staff_course->course_id) }}"
-                                                                class="btn btn-primary">View Scores</a></td>
-                                                        <td>{{ $staff_course->updated_at}}</td>
-                                                    </tr>
-                                                @endforeach
+@foreach ($staff_courses as $staff_course)
+    @if ($staff_course->course_id != $prev_course_id || $staff_course->staff_id != $prev_staff_id)
+        <tr>
+            {{--  <td>{{ $loop->iteration }}</td>  --}}
+            <td>{{ $staff_course->course_title }}</td>
+            <td>{{ $staff_course->course_code }}</td>
+              <td>{{ $staff_course->program->name }}</td>
+            <td>
+                @if ($staff_course->semester_id == 1)
+                    First
+                @elseif ($staff_course->semester_id == 2)
+                    Second
+                @endif
+            </td>
+            <td>{{ $staff_course->level }}</td>
+            <td>{{ $staff_course->hod_approval }}</td>
+            <td>{{ $staff_course->dean_approval }}</td>
+            <td>{{ $staff_course->sbc_approval }}</td>
+            <td>{{ $staff_course->vc_senate_approval }}</td>
+            <td>{{ $staff_course->staffName }}</td>
+            <td><a href="{{ route('admin.view_scores', $staff_course->course_id) }}" class="btn btn-primary">View Scores</a></td>
+            <td>{{ $staff_course->updated_at }}</td>
+        </tr>
+    @endif
+
+    @php
+        $prev_course_id = $staff_course->course_id;
+        $prev_staff_id = $staff_course->staff_id;
+    @endphp
+@endforeach
+
+
                                             </tbody>
                                         </table>
                                     </div>

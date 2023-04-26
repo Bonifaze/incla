@@ -215,7 +215,8 @@
 							 <th>session</th>
 							 <th>Semester</th>
                              <th>Level</th>
-                             <th>Score</th>
+                             <th>Old Score</th>
+                             <th>New Score</th>
                             
                             <th>Student MatNo.</th>
                             <th>Student Name</th>
@@ -241,6 +242,7 @@
                                         <td>Second</td>
                                         <?php endif; ?>
                              <td><?php echo e($audit->level); ?></td>
+                              <td><?php echo e($audit->old_total ?? null); ?></td>
                              <td><?php echo e($audit->total ?? null); ?></td>
                              <td><?php echo e($audit->student->academic->mat_no ?? null); ?></td>
                              <td><?php echo e($audit->full_name); ?></td>
