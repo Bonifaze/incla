@@ -2,14 +2,14 @@
 <!-- CSRF Token -->
     <meta name="csrf-token" content="<?php echo e(csrf_token()); ?>">
 
-<title> Course Form</title>
+<title> <?php echo e($student->full_name); ?> COURSE FORM</title>
 
 <?php $__env->stopSection(); ?>
    <script>
       window.onload = function() {
             window.print();
         }
-    </script>  
+    </script>
 <?php $__env->startSection('content'); ?>
 <body>
 <table width="650" border="0" cellspacing="0" cellpadding="0">

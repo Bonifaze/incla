@@ -4,14 +4,14 @@
 <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-<title> Course Form</title>
+<title> {{ $student->full_name }} COURSE FORM</title>
 
 @endsection
    <script>
       window.onload = function() {
             window.print();
         }
-    </script>  
+    </script>
 @section('content')
 <body>
 <table width="650" border="0" cellspacing="0" cellpadding="0">
