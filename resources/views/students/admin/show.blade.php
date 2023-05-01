@@ -58,7 +58,7 @@
                                             <div class="rounded-circle">
                                                 <img class="rounded-circle p-3 mx-auto d-block"
                                                     src="data:image/png;base64,{{ $student->passport }}"
-                                                    alt="Student Passport" style="height: 200px; width:200px;" />
+                                                    alt="Student Passport" style="height: 190px; width:200px;" />
                                             </div>
                                         </div>
                                         <div class="col-auto">
@@ -68,7 +68,7 @@
                                             <div class="rounded-circle">
                                                 <img class="rounded-circle p-3 mx-auto d-block"
                                                     src="data:image/png;base64,{{ $student->signature }}"
-                                                    alt="Student signature" style="height: 200px; width:200px;" />
+                                                    alt="Student signature" style="height: 190px; width:200px;" />
                                             </div>
                                         </div>
                                     </div>
@@ -157,7 +157,10 @@
                                     <div class="row justify-content-between align-items-center">
                                         <div class="col-auto">
                                             <div class="item-label"><strong>Date of Birth</strong></div>
-                                            <div class="item-data">{{ $student->dob }}</div>
+                                             {{--   <div class="item-data">{{ $student->dob }}</div> --}}
+                                      <div class="item-data">{{ \Carbon\Carbon::parse($student->dob)->format('l j, F Y') }} ({{ \Carbon\Carbon::parse($student->dob)->age }} years old)</div>
+
+
                                         </div>
                                     </div>
                                 </div>

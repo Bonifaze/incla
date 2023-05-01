@@ -459,18 +459,14 @@ class Student extends Authenticatable implements Auditable
 
       public function CGPA()
       {
-          $regs = SemesterRegistration::where('student_id',$this->id)->get();
+        SemesterRegistration::where('student_id', $this->id)->chunk(100, function ($regs) use (&$credit_unit, &$units) {
+            foreach ($regs as $reg) {
+                $result = $reg->results();
+                $credit_unit += $result->gpa->credit_unit;
+                $units += $result->gpa->units;
+            }
+        });
 
-          $credit_unit = 0;
-          $units = 0;
-
-
-          foreach($regs as $key => $reg)
-          {
-              $result = $reg->results();
-              $credit_unit += $result->gpa->credit_unit;
-              $units += $result->gpa->units;
-          }
 
           if($credit_unit !== 0)
           {

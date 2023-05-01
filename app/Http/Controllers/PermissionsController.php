@@ -6,6 +6,7 @@ use App\Staff;
 use App\Remita;
 use App\Session;
 use App\Student;
+use App\Models\Otp;
 use App\Permission;
 use App\StudentDebt;
 use App\StaffWorkProfile;
@@ -13,7 +14,10 @@ use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 use App\Models\RegisteredCourse;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use App\Models\StaffRoleAssignmentLog;
+use OwenIt\Auditing\Models\Audit;
 
 class PermissionsController extends Controller
 {
@@ -212,32 +216,35 @@ class PermissionsController extends Controller
 
     public function audit()
     {
-        // $this->authorize('rbac','App\Staff');
+        $this->authorize('rbac','App\Staff');
         $session = new Session();
         $article= \OwenIt\Auditing\Models\Audit::with(['staff'])->orderBy('updated_at','DESC')
-        ->paginate(5);
+        ->paginate(20);
         //->limit(20)
         //->get();
         $modify=RegisteredCourse::with(['staff','sessions'])->where('staff_id', '<>', '', 'and')
         ->orderBy('updated_at','DESC')
        // ->limit(20)
-        ->paginate(10);
+        ->paginate(20);
        // ->get();
        // dd($article);
        $remita=Remita::with(['staff'])->where('verify_by', '<>', '', 'and')
        ->orderBy('updated_at','DESC')
       // ->limit(20)
-       ->paginate(10);
+       ->paginate(20);
       // ->get();
+      $logs=StaffRoleAssignmentLog::with(['staff','assignedBy'])
+      ->orderBy('updated_at','DESC')
+      ->paginate(20);
 
-        return view('/rbac/audit',['article' => $article, 'modify' =>$modify, 'remita'=>$remita, 'session'=>$session]);
+        return view('/rbac/audit',['article' => $article, 'modify' =>$modify, 'remita'=>$remita, 'session'=>$session, 'logs'=>$logs]);
     }
 
 
     public function findDate(Request $request)
     {
         //dd($request);
-        // $this->authorize('remitaSearch',Remita::class);
+        $this->authorize('rbac','App\Staff');
        $this->validate($request, [
             'start_date' => 'required|string|max:11',
             'end_date' => 'required|string|max:11',
@@ -250,19 +257,24 @@ class PermissionsController extends Controller
         $end = $request->end_date; // "2021-10-20";
         $article = \OwenIt\Auditing\Models\Audit::with(['staff'])->where('updated_at','>=',$start)->where('updated_at','<=',$end)
         ->orderBy('updated_at','ASC')
-        ->paginate(200);
+        ->paginate(2000);
         $modify=RegisteredCourse::with(['staff'])->where('staff_id', '<>', '', 'and')
         ->where('updated_at','>=',$start)->where('updated_at','<=',$end)
         ->orderBy('updated_at','ASC')
        // ->limit(20)
-        ->paginate(200);
+        ->paginate(2000);
         $remita=Remita::with(['staff'])->where('verify_by', '<>', '', 'and')
         ->where('updated_at','>=',$start)->where('updated_at','<=',$end)
         ->orderBy('updated_at','ASC')
        // ->limit(20)
-        ->paginate(200);
+        ->paginate(2000);
        // ->get();
-        return view('/rbac/audit',['article' => $article, 'modify' =>$modify,'remita'=>$remita]);
+       $logs=StaffRoleAssignmentLog::with(['staff'])->where('staff_id', '<>', '', 'and')
+       ->where('updated_at','>=',$start)->where('updated_at','<=',$end)
+       ->orderBy('updated_at','ASC')
+      // ->limit(20)
+       ->paginate(2000);
+        return view('/rbac/audit',['article' => $article, 'modify' =>$modify,'remita'=>$remita, 'logs'=>$logs]);
 
     }
 
@@ -270,7 +282,7 @@ class PermissionsController extends Controller
     public function find(Request $request)
     {
 
-    //    $this->authorize('search', Student::class);
+        $this->authorize('rbac','App\Staff');
         $article = \OwenIt\Auditing\Models\Audit::with(['staff'])
         ->where('event', 'like', '%'.$request->data.'%')
         ->orWhere('staff_id', $request->data)
@@ -285,7 +297,9 @@ class PermissionsController extends Controller
         {
             $request->session()->flash('message', '');
             // dd($request);
-            view('/rbac/audit_list',['article' => $article]);
+            return redirect()->to('/rbac/auditA');
+            //return view('/rbac/audit',['article' => $article, 'modify' =>$modify,'remita'=>$remita, 'logs'=>$logs]);
+
 
         }
 
@@ -293,7 +307,7 @@ class PermissionsController extends Controller
         {
             //   dd($request);
             $request->session()->flash('message', 'No Matching student record found. Try to search again !');
-            view('/rbac/audit',['article' => $article, 'modify' =>$modify,'remita'=>$remita]);
+            view('/rbac/audit',['article' => $article, 'modify' =>$modify,'remita'=>$remita, 'logs'=>$logs]);
 
         }
 
@@ -301,7 +315,7 @@ class PermissionsController extends Controller
 
     public function list()
     {
-        // $this->authorize('rbac','App\Staff');
+        $this->authorize('rbac','App\Staff');
         $session = new Session();
         $article= \OwenIt\Auditing\Models\Audit::with(['staff'])->orderBy('updated_at','DESC')
         ->paginate(200);
@@ -314,7 +328,7 @@ class PermissionsController extends Controller
 
     public function auditviewall()
     {
-        // $this->authorize('rbac','App\Staff');
+        $this->authorize('rbac','App\Staff');
         $session = new Session();
 
         $modify=RegisteredCourse::with(['staff','sessions'])->where('staff_id', '<>', '', 'and')
@@ -334,7 +348,7 @@ class PermissionsController extends Controller
 
     public function auditviewallremita()
     {
-        // $this->authorize('rbac','App\Staff');
+        $this->authorize('rbac','App\Staff');
         $session = new Session();
 
        // dd($article);
@@ -349,10 +363,10 @@ class PermissionsController extends Controller
 
     public function auditviewallevent()
     {
-        // $this->authorize('rbac','App\Staff');
+        $this->authorize('rbac','App\Staff');
         $session = new Session();
         $article= \OwenIt\Auditing\Models\Audit::with(['staff'])->orderBy('updated_at','DESC')
-        ->paginate(100);
+        ->paginate(2000);
         //->limit(20)
         // ->get();
 
@@ -362,8 +376,141 @@ class PermissionsController extends Controller
     }
 
 
+    public function auditviewallassigned()
+    {
+        $this->authorize('rbac','App\Staff');
+
+        $logs=StaffRoleAssignmentLog::with(['staff','assignedBy'])
+        ->orderBy('updated_at','DESC')
+    //   ->paginate(20);
+        //->limit(20)
+        ->get();
 
 
 
+        return view('/rbac/auditviewallassigned',['logs' => $logs]);
+    }
 
+    public function otp()
+    {
+        $this->authorize('rbac','App\Staff');
+
+        return view('rbac.otp');
+    }
+
+    public function otplogin(Request $request)
+    {
+        $this->authorize('rbac','App\Staff');
+        $otp = DB::table('otp')->where('staff_id', $request->staff_id)->first();
+
+        if($otp) {
+            if (Hash::check($request->pin, $otp->pin)) {
+                // User is authenticated, log them in
+                Auth::loginUsingId($otp->staff_id);
+                session(['userid' => $otp->id]);
+                // dd($otp->staff_id);
+                // Redirect to the desired page after login
+                return redirect('/rbac/home');
+            } else {
+                // Invalid OTP entered
+                // dd($otp->staff_id);
+                return redirect()->back()
+                ->with('error','ivalide otp !');
+            }
+        } else {
+            // OTP not found for the given staff_id
+            return redirect()->back()
+            ->with('error','invalid login detials !');
+        }
+    }
+
+    public function home()
+    {
+        $staff = Auth::guard('staff')->user();
+        return view('rbac.home',compact('staff'));
+    }
+
+
+    public function auditA()
+    {
+        $this->authorize('rbac','App\Staff');
+        $session = new Session();
+        $article= \OwenIt\Auditing\Models\Audit::with(['staff'])->orderBy('updated_at','DESC')
+        ->paginate(500);
+        //->limit(20)
+        //->get();
+        $modify=RegisteredCourse::with(['staff','sessions'])->where('staff_id', '<>', '', 'and')
+        ->orderBy('updated_at','DESC')
+       // ->limit(20)
+        ->paginate(100);
+       // ->get();
+       // dd($article);
+       $remita=Remita::with(['staff'])->where('verify_by', '<>', '', 'and')
+       ->orderBy('updated_at','DESC')
+      // ->limit(20)
+       ->paginate(100);
+      // ->get();
+      $logs=StaffRoleAssignmentLog::with(['staff','assignedBy'])
+      ->orderBy('updated_at','DESC')
+      ->paginate(50);
+
+        return view('/rbac/auditA',['article' => $article, 'modify' =>$modify, 'remita'=>$remita, 'session'=>$session, 'logs'=>$logs]);
+    }
+
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function deleteA(Request $request)
+    {
+        $this->authorize('rbac','App\Staff');
+        $audit = \OwenIt\Auditing\Models\Audit::find($request->id);
+    	$audit->delete();
+    	return redirect()->to('/rbac/auditA')
+    	->with('success','deleted successfully');
+   }
+   public function destroy(Audit $audit)
+{
+    $audit->delete();
+    return redirect()->to('/rbac/auditA')
+    ->with('success','audit log deleted successfully');
+}
+
+public function destroyR(StaffRoleAssignmentLog $audit)
+{
+    $audit->delete();
+    return redirect()->to('/rbac/auditA')
+    ->with('success','role log deleted successfully');
+}
+
+public function otpreset()
+{
+    $this->authorize('rbac','App\Staff');
+
+    return view('rbac.forgotpasswordSetNew');
+}
+
+public function otpresetpin(Request $req)
+{
+    $this->authorize('rbac','App\Staff');
+
+    if ($req->pin == $req->pin_confirmation) {
+        DB::table('otp')->where('id', $req->id)
+            ->update([
+
+                'id' => $req->id,
+                //Hash::make to encrpty or hash the password
+                'pin' => Hash::make($req->pin)
+            ]);
+
+        $signUpMsg = '<div class="alert alert-success alert-dismissible"><button type="button" class="close" data-dismiss="alert">&times;</button><strong>Success!</strong> Your Password Reset was Successfull</div>';
+        return redirect('/rbac/otpreset')->with('signUpMsg', $signUpMsg);
+    } else {
+        $signUpMsg = '<div class="alert alert-danger alert-dismissible"><button type="button" class="close" data-dismiss="alert">&times;</button><strong>Error!</strong> Password mismatched</div>';
+        return redirect('/rbac/otpreset')->with('signUpMsg', $signUpMsg);
+    }
+}
 }// end class

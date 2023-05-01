@@ -45,7 +45,10 @@
                     @include('partialsv3.flash')
                     <div class="card ">
                         <div class="card-header">
-                            <h3 class="card-title"> Audits by Date </h3>
+                               <h6
+                        class="app-page-title text-uppercase h6 font-weight-bold p-2 mb-2 text-success">
+                       Audit Search by date
+                    </h6>
                         </div>
                         <div class="">
                             @if (session('approvalMsg'))
@@ -144,9 +147,15 @@
 
     <div class="table-responsive card-body">
  <div class="card-header">
-                            <h3 class="card-title"> Audits Records </h3>
+                              <h6
+                        class="app-page-title text-uppercase h5 font-weight-bold p-2 mb-2 shadow-sm text-center text-success border">
+                       Audit Logs
+                    </h6>
                         </div>
-						<table class="table table-striped">
+				<table class="table table-striped"
+                        id="dataTable"
+                        width="100%"
+                                        cellspacing="0">
 						  <thead>
 
 							  <th>S/N</th>
@@ -212,7 +221,7 @@
                                   {{--  <td>{{ $audit->tags}}</td>  --}}
                                    {{--  <td>{{ $audit->created_at}}</td>  --}}
 							  <td>{{ $audit->auditable_id }}</td>
-                                    <td>{{ $audit->updated_at}}</td>
+                                    <td>{{ \Carbon\Carbon::parse($audit->updated_at)->format('l j, F Y H:i:s') }}</td>
 
 							 {{--  <td><a class="btn btn-warning" href="{{ route('rbac.edit-perm',$perm->id) }}"> <i class="fa fa-edit"></i> Edit </td>  --}}
 
@@ -233,7 +242,10 @@
 
 <div class="table-responsive card-body">
  <div class="card-header">
-                            <h3 class="card-title"> Result Audits </h3>
+                              <h6
+                        class="app-page-title text-uppercase h5 font-weight-bold p-2 mb-2 shadow-sm text-center text-success border">
+                       Audit Results
+                    </h6>
                         </div>
 						<table class="table table-striped">
 						  <thead>
@@ -276,7 +288,7 @@
                              <td>{{ $audit->total ?? null}}</td>
                              <td>{{ $audit->student->academic->mat_no ?? null}}</td>
                              <td>{{ $audit->full_name}}</td>
-                                   <td>{{ $audit->updated_at}}</td>
+                                   <td> {{ \Carbon\Carbon::parse($audit->updated_at)->format('l j, F Y H:i:s') }}</td>
 
 
 
@@ -297,7 +309,10 @@
 
 <div class="table-responsive card-body">
  <div class="card-header">
-                            <h3 class="card-title"> Remita Audits </h3>
+                              <h6
+                        class="app-page-title text-uppercase h5 font-weight-bold p-2 mb-2 shadow-sm text-center text-success border">
+                       Audit Remita
+                    </h6>
                         </div>
 						<table class="table table-striped">
 						  <thead>
@@ -329,7 +344,7 @@
                              <td>{{ $audit->student->academic->mat_no ?? null}}</td>
 
                              <td>{{ $audit->student->full_name ?? null}}</td>
-                                   <td>{{ $audit->updated_at}}</td>
+                                   <td>{{ \Carbon\Carbon::parse($audit->updated_at)->format('l j, F Y H:i:s') }}</td>
 
 
 
@@ -342,6 +357,57 @@
 
 
 						</table>
+
+
+
+            </div>
+    </div>
+
+    {{--  staff assignment  --}}
+
+<div class="table-responsive card-body">
+ <div class="card-header">
+                             <h6
+                        class="app-page-title text-uppercase h5 font-weight-bold p-2 mb-2 shadow-sm text-center text-success border">
+                       Audit Assigned Roles
+                    </h6>
+                        </div>
+				<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>S/N</th>
+            <th>Role</th>
+            <th>Staff Name</th>
+            <th>Assigned By</th>
+             <th>Removed By</th>
+             <th>Date</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach($logs as $key =>  $audit)
+        <tr>
+         <td>{{ $loop->iteration }}</td>
+            <td>{{ $audit->role->name }}</td>
+            <td>{{ $audit->staff->full_name ?? null}}</td>
+          <td> {{ $audit->StaffName }}</td>
+          <td> {{ $audit->StaffNameremove }}</td>
+          <td>{{ \Carbon\Carbon::parse($audit->created_at)->format('l j, F Y H:i:s') }}
+
+
+</td>
+{{--  @if (auth()->user()->id == 506)
+<td>Delect</td>
+@else
+    <td></td>
+@endif  --}}
+
+        </tr>
+        @endforeach
+        <a target="_blank" href="{{ route('rbac.auditviewallassigned') }}" class="btn btn-primary mb-3 mt-3 float-right">View All Assigned Roles</a>
+    </tbody>
+     {!! $modify->render() !!}
+</table>
+
 
 
 

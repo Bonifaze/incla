@@ -41,7 +41,10 @@
                     <?php echo $__env->make('partialsv3.flash', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
                     <div class="card ">
                         <div class="card-header">
-                            <h3 class="card-title"> Audits by Date </h3>
+                               <h6
+                        class="app-page-title text-uppercase h6 font-weight-bold p-2 mb-2 text-success">
+                       Audit Search by date
+                    </h6>
                         </div>
                         <div class="">
                             <?php if(session('approvalMsg')): ?>
@@ -113,9 +116,15 @@
 
     <div class="table-responsive card-body">
  <div class="card-header">
-                            <h3 class="card-title"> Audits Records </h3>
+                              <h6
+                        class="app-page-title text-uppercase h5 font-weight-bold p-2 mb-2 shadow-sm text-center text-success border">
+                       Audit Logs
+                    </h6>
                         </div>
-						<table class="table table-striped">
+				<table class="table table-striped"
+                        id="dataTable"
+                        width="100%"
+                                        cellspacing="0">
 						  <thead>
 
 							  <th>S/N</th>
@@ -181,7 +190,7 @@
                                   
                                    
 							  <td><?php echo e($audit->auditable_id); ?></td>
-                                    <td><?php echo e($audit->updated_at); ?></td>
+                                    <td><?php echo e(\Carbon\Carbon::parse($audit->updated_at)->format('l j, F Y H:i:s')); ?></td>
 
 							 
 
@@ -203,7 +212,10 @@
 
 <div class="table-responsive card-body">
  <div class="card-header">
-                            <h3 class="card-title"> Result Audits </h3>
+                              <h6
+                        class="app-page-title text-uppercase h5 font-weight-bold p-2 mb-2 shadow-sm text-center text-success border">
+                       Audit Results
+                    </h6>
                         </div>
 						<table class="table table-striped">
 						  <thead>
@@ -246,7 +258,7 @@
                              <td><?php echo e($audit->total ?? null); ?></td>
                              <td><?php echo e($audit->student->academic->mat_no ?? null); ?></td>
                              <td><?php echo e($audit->full_name); ?></td>
-                                   <td><?php echo e($audit->updated_at); ?></td>
+                                   <td> <?php echo e(\Carbon\Carbon::parse($audit->updated_at)->format('l j, F Y H:i:s')); ?></td>
 
 
 
@@ -268,7 +280,10 @@
 
 <div class="table-responsive card-body">
  <div class="card-header">
-                            <h3 class="card-title"> Remita Audits </h3>
+                              <h6
+                        class="app-page-title text-uppercase h5 font-weight-bold p-2 mb-2 shadow-sm text-center text-success border">
+                       Audit Remita
+                    </h6>
                         </div>
 						<table class="table table-striped">
 						  <thead>
@@ -300,7 +315,7 @@
                              <td><?php echo e($audit->student->academic->mat_no ?? null); ?></td>
 
                              <td><?php echo e($audit->student->full_name ?? null); ?></td>
-                                   <td><?php echo e($audit->updated_at); ?></td>
+                                   <td><?php echo e(\Carbon\Carbon::parse($audit->updated_at)->format('l j, F Y H:i:s')); ?></td>
 
 
 
@@ -314,6 +329,55 @@
 
 
 						</table>
+
+
+
+            </div>
+    </div>
+
+    
+
+<div class="table-responsive card-body">
+ <div class="card-header">
+                             <h6
+                        class="app-page-title text-uppercase h5 font-weight-bold p-2 mb-2 shadow-sm text-center text-success border">
+                       Audit Assigned Roles
+                    </h6>
+                        </div>
+				<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>S/N</th>
+            <th>Role</th>
+            <th>Staff Name</th>
+            <th>Assigned By</th>
+             <th>Removed By</th>
+             <th>Date</th>
+        </tr>
+    </thead>
+    <tbody>
+        <?php $__currentLoopData = $logs; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $key =>  $audit): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+        <tr>
+         <td><?php echo e($loop->iteration); ?></td>
+            <td><?php echo e($audit->role->name); ?></td>
+            <td><?php echo e($audit->staff->full_name ?? null); ?></td>
+          <td> <?php echo e($audit->StaffName); ?></td>
+          <td> <?php echo e($audit->StaffNameremove); ?></td>
+          <td><?php echo e(\Carbon\Carbon::parse($audit->created_at)->format('l j, F Y H:i:s')); ?>
+
+
+
+</td>
+
+
+        </tr>
+        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+        <a target="_blank" href="<?php echo e(route('rbac.auditviewallassigned')); ?>" class="btn btn-primary mb-3 mt-3 float-right">View All Assigned Roles</a>
+    </tbody>
+     <?php echo $modify->render(); ?>
+
+</table>
+
 
 
 

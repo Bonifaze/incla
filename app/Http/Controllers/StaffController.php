@@ -20,6 +20,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
+use App\Models\StaffRoleAssignmentLog;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Storage;
 use Intervention\Image\ImageManagerStatic as Image;
@@ -111,22 +112,40 @@ class StaffController extends Controller
 
     public function assignRole(Request $request)
     {
+        $staff = Auth::guard('staff')->user();
         $this->authorize('rbac', Staff::class);
-        $staff = Staff::find($request->staff_id);
-        $staff->roles()->attach($request->role_id);
-        return redirect()->route('staff.security', $staff->id)
-        ->with('success','Staff role added successfully');
+        $staffToAssign = Staff::find($request->staff_id);
+        $staffToAssign->roles()->attach($request->role_id);
+
+        // create log entry
+        $log = new StaffRoleAssignmentLog();
+        $log->staff_id = $staffToAssign->id;
+        $log->role_id = $request->role_id;
+        $log->assigned_by = $staff->id;
+        $log->save();
+
+        return redirect()->route('staff.security', $staffToAssign->id)
+            ->with('success', 'Staff role added successfully');
     }
+
 
     public function removeRole(Request $request)
     {
-            // dd($request);
+        $staff = Auth::guard('staff')->user();
         $this->authorize('rbac', Staff::class);
-        $staff = Staff::find($request->staff_id);
-        $staff->roles()->detach($request->role_id);
-        return redirect()->back()
-        ->with('success','Staff role removed successfully');
-    } // end removeRole
+        $staffToRemoveRole = Staff::find($request->staff_id);
+        $staffToRemoveRole->roles()->detach($request->role_id);
+
+        // create log entry
+        $log = new StaffRoleAssignmentLog();
+        $log->staff_id = $staffToRemoveRole->id;
+        $log->role_id = $request->role_id;
+        $log->removed_by = $staff->id;
+        $log->save();
+
+        return redirect()->route('staff.security', $staffToRemoveRole->id)
+            ->with('success', 'Staff role removed successfully');
+    }
 
     public function create()
     {

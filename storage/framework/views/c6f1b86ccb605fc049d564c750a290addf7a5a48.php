@@ -8,14 +8,15 @@
 <?php $__env->stopSection(); ?>
 
 <?php $__env->startSection('content'); ?>
- <div class="content-wrapper">
+    <div class="content-wrapper">
         <!-- Content Header (Page header) -->
 
         <!-- Main content -->
         <section class="content bg-white">
             <?php echo $__env->make('partialsv3.flash', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
             <div class="container-fluid">
-                <h1 class="app-page-title text-uppercase h5 font-weight-bold p-2 mb-2 shadow-sm text-center text-success border">
+                <h1
+                    class="app-page-title text-uppercase h5 font-weight-bold p-2 mb-2 shadow-sm text-center text-success border">
                     Students Information
                 </h1>
                 <div class="row py-4">
@@ -146,7 +147,10 @@
                                     <div class="row justify-content-between align-items-center">
                                         <div class="col-auto">
                                             <div class="item-label"><strong>Date of Birth</strong></div>
-                                            <div class="item-data"><?php echo e($student->dob); ?></div>
+                                            
+                                            <?php echo e(\Carbon\Carbon::parse($student->dob)->format('l j, F Y')); ?>
+
+
                                         </div>
                                     </div>
                                 </div>
@@ -362,7 +366,7 @@
                                     </div>
                                 </div>
                             </div>
-                           <div class="app-card-body px-4 w-100">
+                            <div class="app-card-body px-4 w-100">
                                 <div class="item border-bottom py-3">
                                     <div class="row justify-content-between align-items-center">
                                         <div class="col-auto">
@@ -374,20 +378,19 @@
 
                                             </div>
                                         </div>
-                                            <?php if($academic->old_mat_no==null): ?>
+                                        <?php if($academic->old_mat_no == null): ?>
+                                        <div></div>
+                                        <?php else: ?>
+                                            <div class="col-auto">
+                                                <div class="item-label">
+                                                    <strong>Old Matric Number</strong>
+                                                </div>
+                                                <div class="item-data">
+                                                    <?php echo e($academic->old_mat_no); ?>
 
-                                            <?php else: ?>
-
-                                         <div class="col-auto">
-                                            <div class="item-label">
-                                                <strong>Old Matric Number</strong>
+                                                </div>
                                             </div>
-                                            <div class="item-data">
-                                                <?php echo e($academic->old_mat_no); ?>
-
-                                            </div>
-                                        </div>
-                                            <?php endif; ?>
+                                        <?php endif; ?>
 
                                     </div>
                                 </div>

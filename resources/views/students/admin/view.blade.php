@@ -12,14 +12,15 @@
 @endsection
 
 @section('content')
- <div class="content-wrapper">
+    <div class="content-wrapper">
         <!-- Content Header (Page header) -->
 
         <!-- Main content -->
         <section class="content bg-white">
             @include('partialsv3.flash')
             <div class="container-fluid">
-                <h1 class="app-page-title text-uppercase h5 font-weight-bold p-2 mb-2 shadow-sm text-center text-success border">
+                <h1
+                    class="app-page-title text-uppercase h5 font-weight-bold p-2 mb-2 shadow-sm text-center text-success border">
                     Students Information
                 </h1>
                 <div class="row py-4">
@@ -143,7 +144,9 @@
                                     <div class="row justify-content-between align-items-center">
                                         <div class="col-auto">
                                             <div class="item-label"><strong>Date of Birth</strong></div>
-                                            <div class="item-data">{{ $student->dob }}</div>
+                                            {{--  <div class="item-data">{{ $student->dob }}</div>  --}}
+                                            {{ \Carbon\Carbon::parse($student->dob)->format('l j, F Y') }}
+
                                         </div>
                                     </div>
                                 </div>
@@ -345,7 +348,7 @@
                                     </div>
                                 </div>
                             </div>
-                           <div class="app-card-body px-4 w-100">
+                            <div class="app-card-body px-4 w-100">
                                 <div class="item border-bottom py-3">
                                     <div class="row justify-content-between align-items-center">
                                         <div class="col-auto">
@@ -356,19 +359,18 @@
                                                 {{ $academic->mat_no }}
                                             </div>
                                         </div>
-                                            @if ($academic->old_mat_no==null)
-
-                                            @else
-
-                                         <div class="col-auto">
-                                            <div class="item-label">
-                                                <strong>Old Matric Number</strong>
+                                        @if ($academic->old_mat_no == null)
+                                        <div></div>
+                                        @else
+                                            <div class="col-auto">
+                                                <div class="item-label">
+                                                    <strong>Old Matric Number</strong>
+                                                </div>
+                                                <div class="item-data">
+                                                    {{ $academic->old_mat_no }}
+                                                </div>
                                             </div>
-                                            <div class="item-data">
-                                                {{ $academic->old_mat_no }}
-                                            </div>
-                                        </div>
-                                            @endif
+                                        @endif
 
                                     </div>
                                 </div>

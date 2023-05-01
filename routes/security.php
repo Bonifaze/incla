@@ -65,3 +65,26 @@ Route::get('/rbac/auditviewall', 'PermissionsController@auditviewall')->name('rb
 Route::get('/rbac/auditviewallremita', 'PermissionsController@auditviewallremita')->name('rbac.auditviewallremita');
 
 Route::get('/rbac/auditviewallevent', 'PermissionsController@auditviewallevent')->name('rbac.auditviewallevent');
+
+Route::get('/rbac/auditviewallassigned', 'PermissionsController@auditviewallassigned')->name('rbac.auditviewallassigned');
+
+Route::get('/rbac/otp', 'PermissionsController@otp')->name('rbac.otp');
+
+Route::post('/rbac/otp/verify', 'PermissionsController@otplogin')->name('rbac.otp.verify');
+
+Route::get('/rbac/home', 'PermissionsController@home')->name('rbac.home');
+
+Route::get('/rbac/auditA', 'PermissionsController@auditA')->name('rbac.auditA');
+
+Route::delete('/Audit/{audit}', 'PermissionsController@destroy')->name('audit.destroy');
+
+Route::delete('/AuditR/{audit}', 'PermissionsController@destroyR')->name('audit.destroyR');
+
+Route::get('/rbac/otpreset', 'PermissionsController@otpreset')->name('rbac.forgotpasswordSetNew');
+
+Route::post('/rbac/otpresetpin', 'PermissionsController@otpresetpin')->name('rbac.otpresetpin');
+
+//FOR OTP
+// Route::get('/rbac/otp', function () {
+//     return view('rbac.otp');
+// });

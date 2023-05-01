@@ -57,7 +57,7 @@
                                             <div class="rounded-circle">
                                                 <img class="rounded-circle p-3 mx-auto d-block"
                                                     src="data:image/png;base64,<?php echo e($student->passport); ?>"
-                                                    alt="Student Passport" style="height: 200px; width:200px;" />
+                                                    alt="Student Passport" style="height: 190px; width:200px;" />
                                             </div>
                                         </div>
                                         <div class="col-auto">
@@ -67,7 +67,7 @@
                                             <div class="rounded-circle">
                                                 <img class="rounded-circle p-3 mx-auto d-block"
                                                     src="data:image/png;base64,<?php echo e($student->signature); ?>"
-                                                    alt="Student signature" style="height: 200px; width:200px;" />
+                                                    alt="Student signature" style="height: 190px; width:200px;" />
                                             </div>
                                         </div>
                                     </div>
@@ -163,7 +163,10 @@
                                     <div class="row justify-content-between align-items-center">
                                         <div class="col-auto">
                                             <div class="item-label"><strong>Date of Birth</strong></div>
-                                            <div class="item-data"><?php echo e($student->dob); ?></div>
+                                             
+                                      <div class="item-data"><?php echo e(\Carbon\Carbon::parse($student->dob)->format('l j, F Y')); ?> (<?php echo e(\Carbon\Carbon::parse($student->dob)->age); ?> years old)</div>
+
+
                                         </div>
                                     </div>
                                 </div>
@@ -384,7 +387,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="app-card-body px-4 w-100">
+                         <div class="app-card-body px-4 w-100">
                                 <div class="item border-bottom py-3">
                                     <div class="row justify-content-between align-items-center">
                                         <div class="col-auto">
@@ -396,6 +399,9 @@
 
                                             </div>
                                         </div>
+                                            <?php if($academic->old_mat_no==null): ?>
+
+                                            <?php else: ?>
 
                                          <div class="col-auto">
                                             <div class="item-label">
@@ -406,6 +412,7 @@
 
                                             </div>
                                         </div>
+                                            <?php endif; ?>
 
                                     </div>
                                 </div>

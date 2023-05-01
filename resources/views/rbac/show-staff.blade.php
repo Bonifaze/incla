@@ -46,6 +46,7 @@
 							  <th>S/N</th>
 							  <th>Name</th>
                             <th>Phone</th>
+
                 <th></th>
 							  <th>Action</th>
 
@@ -54,11 +55,12 @@
 
 
 						  <tbody>
-@foreach ($role as $key => $roles)
+                      @foreach ($role as $key => $roles)
 						  <tr>
 							  <td>{{ $loop->iteration  }}</td>
 							  <td>{{ $roles->staff->full_name ?? null }}</td>
 							 <td>{{ $roles->staff->phone ?? null }}</td>
+
 
 
 							    <td>

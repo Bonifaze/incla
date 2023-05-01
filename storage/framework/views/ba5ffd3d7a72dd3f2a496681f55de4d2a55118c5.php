@@ -169,7 +169,8 @@
                                     <div class="row justify-content-between align-items-center">
                                         <div class="col-auto">
                                             <div class="item-label"><strong>Date of Birth</strong></div>
-                                            <div class="item-data"><?php echo e($student->dob); ?></div>
+                                            
+                                             <div class="item-data"><?php echo e(\Carbon\Carbon::parse($student->dob)->format('l j, F Y')); ?> (<?php echo e(\Carbon\Carbon::parse($student->dob)->age); ?> years old)</div>
                                         </div>
                                     </div>
                                 </div>

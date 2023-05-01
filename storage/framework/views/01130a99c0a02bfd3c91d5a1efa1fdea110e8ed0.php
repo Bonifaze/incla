@@ -91,6 +91,52 @@
                         
 
                     </div>
+                     <div class="card shadow border border-success">
+
+                        <div class="row p-5">
+                            <div class="col-xl-6 col-md-6 mb-4">
+                                <div class="card border-left-success shadow h-100 py-3">
+                                    <div class="card-body">
+                                        <div class="row no-gutters align-items-center">
+                                            <div class="col mr-2">
+                                                <div class="h4 text-success" style="text-decoration: underline;">
+                                                        <a href="<?php echo e(route('students.transcript')); ?>"
+                                                        class="text-success <?php echo $__env->yieldContent('registration'); ?>">View Result</a>
+
+                                                </div>
+                                            </div>
+                                            <div class="col-auto">
+                                                <i class="fa fa-eye nav-icon fa-3x text-success"></i>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-xl-6 col-md-6 mb-4">
+                                <div class="card border-left-success shadow h-100 py-3">
+                                    <div class="card-body">
+                                        <a class="" href="/students/remita/feestype">
+                                            <div class="row no-gutters align-items-center">
+                                                <div class="col mr-3">
+                                                    <div class="h4 text-success" style="text-decoration: underline;">
+                                                        <a href="/students/remita/paymentview/{id}" class="text-success">View
+                                                            Remita</a>
+                                                    </div>
+                                                </div>
+                                                <div class="col-auto">
+                                                    <i class="fa fa-eye nav-icon fa-3x text-success"></i>
+                                                </div>
+                                            </div>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+
+
+                    </div>
                 </div>
             </div>
         </section>

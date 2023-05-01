@@ -1,7 +1,7 @@
 
 
 
-  <footer class="main-footer">
+  <footer class="main-footer fixed-bottom">
     <strong> &copy Copyright 2022 <a href="https://www.veritas.edu.ng" class="text-success">Veritas University ICT</a>.</strong>
     All rights reserved.
       {{--  <img src="{{ asset('img/veritasin.png') }}" alt="" width="10" height="10" class="px-2">  --}}

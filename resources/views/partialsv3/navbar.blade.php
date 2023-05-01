@@ -139,7 +139,6 @@
                 <ul aria-labelledby="dropdownSubMenu1" class="dropdown-menu border-0 shadow">
 
                     <!-- Level two dropdown-->
-                    <li><a href="{{ route('rbac.create-role') }}" class="dropdown-item">Create Role</a></li>
 
                     <li class="dropdown-submenu dropdown-hover">
                         <a id="dropdownSubMenu2" href="#" role="button" data-toggle="dropdown" aria-haspopup="true"
@@ -147,7 +146,7 @@
                         <ul aria-labelledby="dropdownSubMenu2" class="dropdown-menu border-0 shadow">
 
                             <!-- Level two dropdown-->
-                            {{--  <li><a href="{{ route('rbac.create-role') }}" class="dropdown-item">Create Role </a></li>  --}}
+                            <li><a href="{{ route('rbac.create-role') }}" class="dropdown-item">Create Role </a></li>
                             <li><a href="{{ route('rbac.create-perm') }}" class="dropdown-item">Create Permissions</a></li>
                             <li><a href="{{ route('rbac.list-roles') }}" class="dropdown-item">List Roles</a></li>
                             <li><a href="{{ route('rbac.list-perms') }}" class="dropdown-item">List Permissions</a></li>

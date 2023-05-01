@@ -724,17 +724,17 @@ private function getdptcolleg($program_id)
 
 
             //check if course was registered and show course form
-            if($student->hasSemesterRegistration($session_id,$semester))
-            {
-                $result = new StudentResult();
-                $academic = $student->academic;
-                $registration = $student->getSemesterRegistration($session->id,$semester);
-                $results = $result->semesterRegisteredCourses($student->id,$session_id,$semester);
-                $total = $student->totalRegisteredCredits($results);
+            // if($student->hasSemesterRegistration($session_id,$semester))
+            // {
+            //     $result = new StudentResult();
+            //     $academic = $student->academic;
+            //     $registration = $student->getSemesterRegistration($session->id,$semester);
+            //     $results = $result->semesterRegisteredCourses($student->id,$session_id,$semester);
+            //     $total = $student->totalRegisteredCredits($results);
 
-                return view('students.current_course_form',compact('student','session','semester','academic','registration','results','total'));
+            //     return view('students.current_course_form',compact('student','session','semester','academic','registration','results','total'));
 
-            }
+            // }
 
 
             //else just show closed registration
@@ -926,26 +926,26 @@ private function getdptcolleg($program_id)
         }
 
 
-    // public function results()
-    //     {
-    //         $student = Auth::guard('student')->user();
-    //         //check for allowed
-    //         // allowed is not true show error
-    //         $access = $student->resultAccess();
-    //         if($access['value'] < 0)
-    //         {
-    //             return redirect()->route('student.home')
-    //                 ->with('error',$access['error']);
-    //         }
-    //         $academic = $student->academic;
+    public function results()
+        {
+            $student = Auth::guard('student')->user();
+            //check for allowed
+            // allowed is not true show error
+            // $access = $student->resultAccess();
+            // if($access['value'] < 0)
+            // {
+            //     return redirect()->route('student.home')
+            //         ->with('error',$access['error']);
+            // }
+            $academic = $student->academic;
 
-    //         $registrations = $student->semesterRegistrations;
+            $registrations = $student->semesterRegistrations;
+            $totalCGPA = $student->CGPA();
+            dd($student->CGPA());
 
-    //         $totalCGPA = $student->CGPA();
+            return view('students.results',compact('student','academic','registrations','totalCGPA'));
 
-    //         return view('students.results',compact('student','academic','registrations','totalCGPA'));
-
-    //     } // end results
+        } // end results
 
 
     //     public function semesterResult($encode)

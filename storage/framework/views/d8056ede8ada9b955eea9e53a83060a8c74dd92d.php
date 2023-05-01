@@ -44,7 +44,9 @@
 
 
                         </div>
-						<table class="table table-striped" id="dataTable" width="100%"
+						<table class="table table-striped"
+                        id="dataTable"
+                        width="100%"
                                         cellspacing="0">
 						  <thead>
 
