@@ -42,26 +42,26 @@
 
                     <h1
                         class="app-page-title text-uppercase h5 font-weight-bold p-2 mb-2 shadow-sm text-center text-success border">
-                        Academic Results
+                        Academic Result
                     </h1>
 
-                    {{--  <div class="card card-success">
-                        <div class="card-header">
-                            <h4 class="card-title">Academic Results</h4>
-                        </div>
-                    </div>  --}}
+                    <div class="card card-success">
+                         <a class="btn btn-primary"
+                                                    href="{{ route('students.studentResult') }}"
+                                                    target="_blank"> <i class="fa fa-eye"></i> Show Result </a>
+                    </div>
 
                     <div class="table-responsive shadow">
 
                         <table class="table table-striped">
                             <thead>
 
-                                <th>#</th>
+                                {{--  <th>S/N</th>  --}}
                                 <th>Session</th>
                                 <th>Semester</th>
                                 <th>Level</th>
-                                <th>GPA</th>
-                                <th>Details</th>
+                                {{--  <th>GPA</th>  --}}
+                                {{--  <th>Details</th>  --}}
                                 <th>Course Form</th>
 
                             </thead>
@@ -71,26 +71,36 @@
 
                                 @foreach ($registrations as $key => $reg)
                                     <tr>
-                                        <td>{{ $loop->iteration }}</td>
-                                        <td>{{ $reg->session->name }}</td>
-                                        <td>{{ $reg->semester }}</td>
+                                    @if ( $reg->semester==1 )
+                                        {{--  <td>{{ $loop->iteration }}</td>  --}}
+                                    <td>{{ $reg->session->name }}</td>
+
+                                       @if ($reg->semester==1 )
+                                          <td>First/Second Semester </td>
+                                       @else
+                                           <td>Second Semester</td>
+                                       @endif
                                         <td>{{ $reg->level }}</td>
-                                        <td>{{ $reg->gpa()->value }}</td>
-                                        <td>
+                                        {{--  <td>{{ $reg->gpa()->value }}</td>  --}}
+                                        {{--  <td>
                                             @if ($reg->result()->isNotEmpty())
                                                 <a class="btn btn-primary"
-                                                    href="{{ route('student.semester-result', base64_encode($reg->id)) }}"
+                                                    href="{{ route('students.studentResult') }}"
                                                     target="_blank"> <i class="fa fa-eye"></i> Show Result </a>
                                             @else
                                                 Results not yet available
                                             @endif
 
-                                        </td>
+                                        </td>  --}}
                                         <td> <a class="btn btn-info"
                                                 href="{{ route('student.course-form', base64_encode($reg->id)) }}"
-                                                target="_blank"> <i class="fa fa-print"></i> Print Form </a></td>
+                                                target="_blank"> <i class="fa fa-print"></i> Print Form </a></td>  @else
 
+
+
+@endif
                                     </tr>
+
                                 @endforeach
 
 

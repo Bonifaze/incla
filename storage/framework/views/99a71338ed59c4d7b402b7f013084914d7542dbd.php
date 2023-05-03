@@ -65,7 +65,7 @@
                                         <div class="row no-gutters align-items-center">
                                             <div class="col mr-3">
                                                 <div class="h4 text-success" style="text-decoration: underline;">
-                                                    <a href="#" class="text-success <?php echo $__env->yieldContent('staff-results'); ?>">My Results</a>
+                                                    <a href="/admin/staffscoresresult" class="text-success <?php echo $__env->yieldContent('staff-results'); ?>">My Results</a>
                                                 </div>
                                             </div>
                                             <div class="col-auto">

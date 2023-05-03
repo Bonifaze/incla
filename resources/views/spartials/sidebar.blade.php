@@ -107,12 +107,12 @@
                         </p>
                     </a>
                     <ul class="nav nav-treeview">
-                        {{--  <li class="nav-item">
+                        <li class="nav-item">
                             <a href="{{ route('students.results') }}" class="nav-link @yield('results')">
                                 <i class="fa fa-eye nav-icon"></i>
-                                <p>Level Results</p>
+                                <p>Academic Results</p>
                             </a>
-                        </li>  --}}
+                        </li>
                         <li class="nav-item">
                             <a href="{{ route('students.transcript') }}" class="nav-link @yield('transcript')">
                                 <i class="fa fa-eye nav-icon"></i>

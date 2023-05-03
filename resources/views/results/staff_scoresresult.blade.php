@@ -3,7 +3,7 @@
 
 
 @section('pagetitle')
-    Staff Home
+    Staff Result
 @endsection
 
 
@@ -38,7 +38,7 @@
                 <div class="col_full">
                     <h1
                         class="app-page-title text-uppercase h5 font-weight-bold p-2 mb-2 shadow-sm text-center text-success border">
-                        Courses Result
+                        My Results
                     </h1>
 
                     <div class="row mb-4">
@@ -46,9 +46,7 @@
                             <div class="card">
                                 <div class="card-body">
                                     <div class="body">
-                                        {{--  <h4 class="card-title">
-                                        Staff Course
-                                    </h4>  --}}
+
                                         <div class="table-responsive">
                                             <table class="table table-striped" id="dataTable" width="100%"
                                                 cellspacing="0">
@@ -65,9 +63,9 @@
                                                         <th>Dean Approval</th>
                                                         <th>SBC Approval</th>
                                                         <th>VC Approval</th>
-                                                        <th>Lecturer</th>
+
                                                         <th>Action</th>
-                                                        <th>Date</th>
+                                                        <th>Date Uploaded</th>
                                                         <th>Student Result</th>
                                                     </tr>
                                                 </thead>
@@ -96,7 +94,6 @@
                                                                 <td>{{ $staff_course->dean_approval }}</td>
                                                                 <td>{{ $staff_course->sbc_approval }}</td>
                                                                 <td>{{ $staff_course->vc_senate_approval }}</td>
-                                                                <td>{{ $staff_course->staffName }}</td>
                                                                 <td><a href="{{ route('admin.view_scores', $staff_course->course_id) }}"
                                                                         class="btn btn-primary">View Scores</a></td>
                                                                 <td>{{ $staff_course->updated_at }}</td>

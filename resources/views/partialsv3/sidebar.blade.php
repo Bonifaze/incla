@@ -33,7 +33,7 @@
                     </a>
                 </li>
 
-                <li class="nav-item has-treeview @yield('staff-open')">
+                <li class="nav-item has-treeview @yield('staff-opens')">
                     <a href="#" class="nav-link @yield('staffs')">
                         <i class="nav-icon fas fa-user"></i>
                         <p>
@@ -65,7 +65,7 @@
                         </li>
                         @if (auth()->user()->id == 506)
                             <li class="nav-item">
-                                <a href="/rbac/otp" class="nav-link @yield('list-staff')">
+                                <a href="/rbac/otp" class="nav-link @yield('')">
 
                                     <p></p>
                                 </a>
@@ -523,6 +523,24 @@
 
 
                             </ul>
+                        </li>
+                         <li class="nav-item">
+                            <a href="{{ route('student.list_level', 600) }}" class="nav-link @yield('departments')">
+                                <i class="fas fa-list-alt nav-icon"></i>
+                                <p>UnderGraduate Student</p>
+                            </a>
+                        </li>
+                         <li class="nav-item">
+                            <a href="{{ route('student.list_level', 700) }}" class="nav-link @yield('departments')">
+                                <i class="fas fa-list-alt nav-icon"></i>
+                                <p>PostGraduate Student</p>
+                            </a>
+                        </li>
+                         <li class="nav-item">
+                            <a href="{{ route('student.list_level', 1000) }}" class="nav-link @yield('departments')">
+                                <i class="fas fa-list-alt nav-icon"></i>
+                                <p>Gradutaed Student</p>
+                            </a>
                         </li>
                     </ul>
                 </li>

@@ -17,10 +17,6 @@ Route::get('/students/debt', 'StudentsController@debt')->name('student.debt');
 
 Route::get('/students/transcript', 'StudentsController@transcript')->name('students.transcript');
 
-//Route::get('/students/results', 'StudentsController@results')->name('students.results');
-
-// Route::get('/students/semester-result/{encode}', 'StudentsController@semesterResult')->name('student.semester-result');
-
 // Route::get('/students/course-registration2', 'StudentsController@courseRegistration2')->name('student.course-registration2');
 
 // Route::get('/students/evaluation', 'StudentsController@evaluation')->name('student.evaluation');
@@ -41,7 +37,7 @@ Route::post('/students/contact/update', 'StudentsController@contactUpdate')->nam
 
 Route::get('/students/closed-course-registration', 'StudentsController@closedCourseRegistration')->name('student.closed-course-registration');
 
-// Route::get('/students/course-form/{encode}', 'StudentsController@courseForm')->name('student.course-form');
+Route::get('/students/course-form/{encode}', 'StudentsController@courseFormstudent')->name('student.course-form');
 
 
 
@@ -70,5 +66,14 @@ Route::get('/students/remita/paymentview/{id}', 'StudentPaymentsController@viewp
 Route::get('/students/receipt/{rrr}', 'StudentPaymentsController@receipt')->name('student.receipt');
 Route::post('/students/payremi', 'StudentPaymentsController@payremi')->name('student.payremi');
 Route::post('/students/logpay', 'StudentPaymentsController@logpay')->name('student.logpay');
+//02-05-2023
+
+Route::get('/students/studentResult', 'StudentsController@studentResult')->name('students.studentResult');
+
+Route::get('/students/results', 'StudentsController@results')->name('students.results');
+
+Route::get('/students/semester-result/{encode}', 'StudentsController@semesterResult')->name('student.semester-result');
+
+Route::get('/students/course-form/{encode}', 'StudentsController@courseFormstudent')->name('student.course-form');
 
 // Route::get('/paymentview/{id}', 'App\Http\Controllers\ApplicantController@Viewpayment');

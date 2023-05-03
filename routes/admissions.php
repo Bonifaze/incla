@@ -24,6 +24,7 @@ Route::prefix('/admin')->group(function () {
     Route::get('upload/{staff_course_id}', [AdminController::class, 'scoresUpload'])->name('admin.scores_upload');
     Route::post('upload', [AdminController::class, 'uploadScores'])->name('admin.upload_scores');
     Route::get('approve-scores', [AdminController::class, 'approveScores'])->name('admin.approve_scores');
+    Route::get('staffscoresresult', [AdminController::class, 'staffScoresresult'])->name('admin.staffscoresresult');
     Route::get('notuploaded-scores', [AdminController::class, 'notuploadedScores'])->name('admin.notuploaded_scores');
     Route::get('approve-scores/view/{course_id}', [AdminController::class, 'viewScores'])->name('admin.view_scores');
     Route::post('/scores/approve', [AdminController::class, 'approve'])->name('admin.approve');

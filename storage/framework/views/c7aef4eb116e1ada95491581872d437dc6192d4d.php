@@ -207,7 +207,7 @@
                             <li><a href="<?php echo e(route('program_course.ict_level', 900)); ?>" class="dropdown-item">PhD
                                     Result</a>
                             </li>
-                              <li><a href="<?php echo e(route('program_course.ict_manage_oldresut')); ?>" class="dropdown-item">Old Result</a>
+                              <li><a href="<?php echo e(route('program_course.ict_manage_oldresut')); ?>" class="dropdown-item">Download Result</a>
                             </li>
                         </ul>
                     </li>

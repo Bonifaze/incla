@@ -199,7 +199,7 @@
                                 <div class="item border-bottom py-3">
                                     <div class="row justify-content-between align-items-center">
                                         <div class="col-auto">
-                                            <div class="item-label"><strong>Date of Birth</strong></div>
+                                            <div class="item-label"><strong>Date of Birth</strong>: ({{ $staff->dob }})</div>
                                             {{--  <div class="item-data">{{ $staff->dob }}</div>  --}}
                                                   <div class="item-data">{{ \Carbon\Carbon::parse($staff->dob)->format('l j, F Y') }} ({{ \Carbon\Carbon::parse($staff->dob)->age }} years old)</div>
                                         </div>

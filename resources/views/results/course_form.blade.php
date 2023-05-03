@@ -53,7 +53,7 @@
         <table width="100%" height="87" border="1" cellpadding="0" cellspacing="0">
                           <tr>
                             <td colspan="3" align="center"><strong>ACADEMIC SESSION: {{ $session->name }}</strong></td>
-                            <td colspan="1" align="center"><strong>LEVEL: {{ $academic->level }} </strong></td>
+                            <td colspan="1" align="center"><strong>LEVEL: {{  $results->last()?->level }} </strong></td>
                             <td colspan="1" align="center"><strong>Semester: First </strong> </td>
                           </tr>
                           <tr>
@@ -95,7 +95,7 @@
                           <table width="100%" height="87" border="1" cellpadding="0" cellspacing="0">
                           <tr>
                             <td colspan="3" align="center"><strong>ACADEMIC SESSION: {{ $session->name }}</strong></td>
-                            <td colspan="1" align="center"><strong>LEVEL:  {{ $academic->level }} </strong></td>
+                            <td colspan="1" align="center"><strong>LEVEL:   {{  $results2->last()?->level }}  </strong></td>
                             <td colspan="1" align="center"><strong>Semester: Second </strong> </td>
                           </tr>
                           <tr>

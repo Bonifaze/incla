@@ -529,6 +529,7 @@ public function dropcourse_Reg(Request $req)
 
 public function courseform(){
     $student = Auth::guard('student')->user();
+    // dd($student);
 
     $academic = $student->academic;
 
@@ -924,7 +925,7 @@ private function getdptcolleg($program_id)
 
             return view('students.transcript',compact('student','academic','sessions','registered_courses'));
         }
-
+//02-05-2023
 
     public function results()
         {
@@ -938,46 +939,46 @@ private function getdptcolleg($program_id)
             //         ->with('error',$access['error']);
             // }
             $academic = $student->academic;
-
             $registrations = $student->semesterRegistrations;
-            $totalCGPA = $student->CGPA();
-            dd($student->CGPA());
+            // dd($registrations);
+            // $totalCGPA = $student->CGPA();
 
-            return view('students.results',compact('student','academic','registrations','totalCGPA'));
+
+            return view('students.results',compact('student','academic','registrations'));
 
         } // end results
 
 
-    //     public function semesterResult($encode)
-    //     {
-    //         $registration = SemesterRegistration::findOrFail(base64_decode($encode));
-    //         $result = new StudentResult();
-    //         $student = Student::findOrFail($registration->student_id);
+        public function studentResult()
+        {
+            $student = Auth::guard('student')->user();
+            // dd($student->id);
 
-    //         //check if debt exists
-    //         if(!isset($student->debt))
-    //         {
-    //             return redirect()->route('student.home')
-    //                 ->with('error',"Financial information not found. Contact ICT.");
-    //         }
-    //         //check for debt
-    //         if($student->debt->debt > config('app.DEBT_LIMIT'))
-    //         {
-    //             return redirect()->route('student.home')
-    //                 ->with('error',"This page has been disabled because of your financial status.");
-    //         }
+            $academic = $student->academic;
 
-    //         $academic = $student->academic;
-    //         $session = Session::findOrFail($registration->session_id);
-    //         $semester = $registration->semester;
-    //         $academic = $student->academic;
-    //         $results =  $registration->result();
-    //         $gpa = $registration->gpa();
-    //         $cgpa = $registration->cgpa();
+           // $registrations = $student->semesterRegistrations;
 
-    //         $totalCGPA = $student->CGPA();
-    //         return view('students.semester_result',compact('student','session','semester','registration','academic','results','gpa','cgpa','totalCGPA'));
-    //     } //end show
+            // $totalCGPA = $student->CGPA();
+
+            $student_id = $student->id;
+            // $student = Student::with('academic')->find($student_id);
+            // $academic = $student->academic;
+            $session_ids = RegisteredCourse::where('student_id', $student_id)->distinct('session')->pluck('session');
+            $session_ids = $session_ids->toArray();
+            $registered_courses = RegisteredCourse::where('student_id', $student_id)->
+            where('status' , 'published')->get();
+            $sessions = Session::wherein('id', $session_ids)->with(['registered_courses1' => function ($query) use ($student_id) {
+                $query->where('student_id', $student_id);
+                $query->where('semester', '1');
+            }, 'registered_courses2' => function ($query) use ($student_id) {
+                $query->where('student_id', $student_id);
+                $query->where('semester', '2');
+            }])->get();
+
+
+
+            return view('students.studentResult',compact('student','academic','sessions','registered_courses'));
+        }
 
 
     // public function evaluateResult($result_id)
@@ -1120,6 +1121,35 @@ private function getdptcolleg($program_id)
     //     $courses = DB::table('courses')->get();
     //     return view('students.courseReg', compact('courses'));
     // }
+
+    public function courseFormstudent($encode)
+    {
+        //
+        $registration = SemesterRegistration::findOrFail(base64_decode($encode));
+        $result = new StudentResult();
+        $student = Student::findOrFail($registration->student_id);
+        $session = Session::findOrFail($registration->session_id);
+        $semester = $registration->semester;
+        $academic = $student->academic;
+        $courseform = RegisteredCourse::where('student_id', $student->id)
+        ->where('registered_courses.semester', 1)
+        ->where('session', $session->id)
+        ->get();
+        $courseform2 = RegisteredCourse::where('student_id', $student->id)
+        ->where('registered_courses.semester', 2)
+        ->where('session', $session->id)
+        ->get();
+        $facultyAndDept = array();
+    foreach ($courseform as $ca) {
+        $facultyAndDept = $this->getdptcolleg($ca->program_id);
+    }
+
+
+        // $results = $result->semesterRegisteredCourses($registration->student_id,$registration->session_id,$registration->semester);
+        // $total = $student->totalRegisteredCredits($results);
+
+    return view('students.course_form', compact('student', 'academic','courseform','courseform2','session', 'facultyAndDept'));
+    }
 
 
 } // end Class

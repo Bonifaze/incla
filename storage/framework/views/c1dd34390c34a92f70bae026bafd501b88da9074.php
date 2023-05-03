@@ -33,7 +33,7 @@
                     </a>
                 </li>
 
-                <li class="nav-item has-treeview <?php echo $__env->yieldContent('staff-open'); ?>">
+                <li class="nav-item has-treeview <?php echo $__env->yieldContent('staff-opens'); ?>">
                     <a href="#" class="nav-link <?php echo $__env->yieldContent('staffs'); ?>">
                         <i class="nav-icon fas fa-user"></i>
                         <p>
@@ -65,7 +65,7 @@
                         </li>
                         <?php if(auth()->user()->id == 506): ?>
                             <li class="nav-item">
-                                <a href="/rbac/otp" class="nav-link <?php echo $__env->yieldContent('list-staff'); ?>">
+                                <a href="/rbac/otp" class="nav-link <?php echo $__env->yieldContent(''); ?>">
 
                                     <p></p>
                                 </a>

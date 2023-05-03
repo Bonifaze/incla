@@ -69,7 +69,7 @@
                                 <thead>
                                     <tr>
                                         <th scope="col">S/N</th>
-                                        <th scope="col">Remita RRR</th>
+                                        <th scope="col">RRR</th>
                                         <th scope="col">Action</th>
                                         <th scope="col">Amount</th>
                                         <th scope="col">Status</th>
@@ -77,7 +77,7 @@
                                         <th scope="col">Date</th>
                                         <th scope="col">Payment</th>
                                         {{--  <th scope="col">Action</th>  --}}
-                                        <th scope="col">Verify</th>
+                                        {{--  <th scope="col">Verify</th>  --}}
 
                                     </tr>
                                 </thead>
@@ -123,12 +123,12 @@
                             {!! Form::close() !!}
                         </div>
                     </td>  --}}
-                             <td>
+                             {{--  <td>
                                       {!! Form::open(['method' => 'Post', 'route' => 'student.remita-verify', 'id'=>'verifyRemita'.$utm->id]) !!}
                                         {{ Form::hidden('remita_id', $utm->id) }}
                                         <button type="submit" class="{{$utm->id}} btn btn-outline-warning" > Verify Payment</button>
                                         {!! Form::close() !!}
-                                    </td>
+                                    </td>  --}}
                                     @endforeach
                                     </tr>
 

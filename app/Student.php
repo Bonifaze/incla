@@ -356,139 +356,144 @@ class Student extends Authenticatable implements Auditable
 
 
 
-    //   public function registerSemester()
-    //   {
-    //       $session = new Session();
-    //       $sem_reg = new SemesterRegistration();
-    //       $sem_reg->student_id = $this->id;
-    //       $sem_reg->session_id = $session->currentSession();
-    //       $sem_reg->semester = $session->courseRegSemester();
-    //       $sem_reg->level = $this->academic->level;
-    //       $sem_reg->status = 1;
-
-    //        try {
-    //               $sem_reg->save();
-    //               return true;
-    //           }
-    //           catch(\Exception $e)
-    //           {
-    //               //failed logic here
-    //               return redirect()->route('student.course-registration')
-    //               ->with('error',"Errors completing semester registration.");
-    //           }
-//
-    //   }// end registerSemester()
-
-
-    //   public function totalRegisteredCredits($registered_courses)
-    //   {
-    //     $total = 0;
-    //     foreach ($registered_courses as $key => $rc)
-    //     {
-    //         if($rc->programCourse) {
-    //             $total += $rc->programCourse->credit_unit;
-    //         }
-    //     }
-    //     return $total;
-    //   } // end totalRegisteredCredits($registered_courses)
-
-      // make sure toal credit is not exceeded
-    //   public function hasSemesterCredits($registered_courses,$program_course_id)
-    //   {
-    //       $program_course = ProgramCourse::findOrFail($program_course_id);
-    //       $total = $program_course->credit_unit;
-    //       $total += $this->totalRegisteredCredits($registered_courses);
-    //       $allowed = $this->allowedCredits();
-    //       if($total <= $allowed)
-    //       {
-    //           return true;
-    //       }
-    //        else
-    //        {
-    //          return false;
-    //        }
-    //   }// end hasSemesterCredits()
-
-    //Deprecated.
-    //Replaced by hasExcessSemesterCredits
-    // public function hasExcessSemesterCredits($registered_courses,$program_course_id,$session_id,$semester)
-    // {
-    //     $program_course = ProgramCourse::findOrFail($program_course_id);
-    //     $total = $program_course->credit_unit;
-    //     $total += $this->totalRegisteredCredits($registered_courses);
-    //     $allowed = $this->allowedCredits($session_id,$semester);
-    //    if($total <= $allowed)
-    //     {
-    //         return true;
-    //     }
-    //     else
-    //     {
-    //         return false;
-    //     }
-    // }// end hasSemesterCredits()
-
-    //   public function allowedCredits($session_id=0,$semester)
-    //   {
-    //       $total = 24;
-    //       //add excess if the student has registered.
-    //       if($this->hasSemesterRegistration($session_id,$semester))
-    //       {
-    //           $registration = SemesterRegistration::where('student_id',$this->id)
-    //               ->where('session_id',$session_id)
-    //               ->where('semester',$semester)
-    //               ->get()->last();
-    //           $total += $registration->excess_credit;
-    //       }
-    //       else if ($session_id == 0)
-    //       {
-    //           $total = 24;
-    //       }
-    //     return $total;
-    //   } // end allowedCredits()
-
-    // public function unApprovedGPA()
-    // {
-    //     $session = new Session();
-    //     $result = new RegisteredCourse();
-    //     $session_id = $session->currentSession();
-    //     $semester = $session->currentSemester();
-    //     $gpa = $result->unApprovedGPA($this->id,$session_id,$semester);
-    //    return $gpa;
-    // }
-
-
-      public function CGPA()
+      public function registerSemester()
       {
-        SemesterRegistration::where('student_id', $this->id)->chunk(100, function ($regs) use (&$credit_unit, &$units) {
-            foreach ($regs as $reg) {
-                $result = $reg->results();
-                $credit_unit += $result->gpa->credit_unit;
-                $units += $result->gpa->units;
+          $session = new Session();
+          $sem_reg = new SemesterRegistration();
+          $sem_reg->student_id = $this->id;
+          $sem_reg->session_id = $session->currentSession();
+          $sem_reg->semester = $session->courseRegSemester();
+          $sem_reg->level = $this->academic->level;
+          $sem_reg->status = 1;
+
+           try {
+                  $sem_reg->save();
+                  return true;
+              }
+              catch(\Exception $e)
+              {
+                  //failed logic here
+                  return redirect()->route('student.course-registration')
+                  ->with('error',"Errors completing semester registration.");
+              }
+
+      }// end registerSemester()
+
+
+      public function totalRegisteredCredits($registered_courses)
+      {
+        $total = 0;
+        foreach ($registered_courses as $key => $rc)
+        {
+            if($rc->programCourse) {
+                $total += $rc->programCourse->credit_unit;
             }
-        });
+        }
+        return $total;
+      } // end totalRegisteredCredits($registered_courses)
 
-
-          if($credit_unit !== 0)
+    //   make sure toal credit is not exceeded
+      public function hasSemesterCredits($registered_courses,$program_course_id)
+      {
+          $program_course = ProgramCourse::findOrFail($program_course_id);
+          $total = $program_course->credit_unit;
+          $total += $this->totalRegisteredCredits($registered_courses);
+          $allowed = $this->allowedCredits();
+          if($total <= $allowed)
           {
-              $value = $units / $credit_unit;
+              return true;
           }
-          else
+           else
+           {
+             return false;
+           }
+      }// end hasSemesterCredits()
+
+    // Deprecated.
+    // Replaced by hasExcessSemesterCredits
+    public function hasExcessSemesterCredits($registered_courses,$program_course_id,$session_id,$semester)
+    {
+        $program_course = ProgramCourse::findOrFail($program_course_id);
+        $total = $program_course->credit_unit;
+        $total += $this->totalRegisteredCredits($registered_courses);
+        $allowed = $this->allowedCredits($session_id,$semester);
+       if($total <= $allowed)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }// end hasSemesterCredits()
+
+      public function allowedCredits($session_id=0,$semester)
+      {
+          $total = 24;
+          //add excess if the student has registered.
+          if($this->hasSemesterRegistration($session_id,$semester))
           {
-              $value = 0.00;
+              $registration = SemesterRegistration::where('student_id',$this->id)
+                  ->where('session_id',$session_id)
+                  ->where('semester',$semester)
+                  ->get()->last();
+              $total += $registration->excess_credit;
           }
+          else if ($session_id == 0)
+          {
+              $total = 24;
+          }
+        return $total;
+      } // end allowedCredits()
 
-          $value = number_format(round($value,2),2,'.', '');
+    public function unApprovedGPA()
+    {
+        $session = new Session();
+        $result = new RegisteredCourse();
+        $session_id = $session->currentSession();
+        $semester = $session->currentSemester();
+        $gpa = $result->unApprovedGPA($this->id,$session_id,$semester);
+       return $gpa;
+    }
 
-          $cgpa = collect([]);
-          $cgpa->value = $value;
-          $cgpa->credit_unit = $credit_unit;
-          $cgpa->units= $units;
-
-          return $cgpa;
 
 
-      } // end CGPA
+    public function CGPA()
+    {
+        $regs = SemesterRegistration::where('student_id',$this->id)->get();
 
+
+        $hours = 0;
+        $units = 0;
+
+
+        foreach($regs as $key => $reg)
+        {
+            $result = $reg->results();
+            $hours += $result->gpa->hours;
+            $units += $result->gpa->units;
+        }
+
+        if($hours !== 0)
+        {
+            $value = $units / $hours;
+        }
+        else
+        {
+            $value = 0.00;
+        }
+
+        $value = number_format(round($value,2),2,'.', '');
+
+        $cgpa = collect([]);
+        $cgpa->value = $value;
+        $cgpa->hours = $hours;
+        $cgpa->units= $units;
+
+        return $cgpa;
+
+
+    } // end CGPA
     public function excelCGPA()
     {
 

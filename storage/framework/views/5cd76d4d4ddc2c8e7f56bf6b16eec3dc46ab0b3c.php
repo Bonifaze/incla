@@ -47,7 +47,7 @@
         <table width="100%" height="87" border="1" cellpadding="0" cellspacing="0">
                           <tr>
                             <td colspan="3" align="center"><strong>ACADEMIC SESSION: <?php echo e($session->name); ?></strong></td>
-                            <td colspan="1" align="center"><strong>LEVEL: <?php echo e($academic->level); ?> </strong></td>
+                            <td colspan="1" align="center"><strong>LEVEL: <?php echo e($results->last()?->level); ?> </strong></td>
                             <td colspan="1" align="center"><strong>Semester: First </strong> </td>
                           </tr>
                           <tr>
@@ -89,7 +89,7 @@
                           <table width="100%" height="87" border="1" cellpadding="0" cellspacing="0">
                           <tr>
                             <td colspan="3" align="center"><strong>ACADEMIC SESSION: <?php echo e($session->name); ?></strong></td>
-                            <td colspan="1" align="center"><strong>LEVEL:  <?php echo e($academic->level); ?> </strong></td>
+                            <td colspan="1" align="center"><strong>LEVEL:   <?php echo e($results2->last()?->level); ?>  </strong></td>
                             <td colspan="1" align="center"><strong>Semester: Second </strong> </td>
                           </tr>
                           <tr>

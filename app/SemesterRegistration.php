@@ -31,7 +31,7 @@ class SemesterRegistration extends Model implements Auditable
         $results = RegisteredCourse::where('student_id',$student_id)
         ->where('session',$session_id)
         ->where('semester',$semester)
-       // ->where('status',7)
+        ->where('status','published')
         ->whereHas('programCourse')
         ->get();
 

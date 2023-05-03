@@ -186,7 +186,8 @@
                                     <div class="row justify-content-between align-items-center">
                                         <div class="col-auto">
                                             <div class="item-label"><strong>Date of Birth</strong></div>
-                                            <div class="item-data"><?php echo e($staff->dob); ?></div>
+                                            
+                                             <div class="item-data"><?php echo e(\Carbon\Carbon::parse($staff->dob)->format('l j, F Y')); ?> </div>
                                         </div>
                                     </div>
                                 </div>

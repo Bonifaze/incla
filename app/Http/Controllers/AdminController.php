@@ -173,6 +173,18 @@ class AdminController extends Controller
     //    return view('admissions.error', compact('loginMsg'));
     // }
     }
+
+
+    public function staffScoresresult()
+    {
+        $staff = Auth::guard('staff')->user();
+
+        $staff_courses = StaffCourse::where('upload_status', 'uploaded')->where('staff_id', $staff->id )->where('session_id', $this->getCurrentSession())->orderBy('updated_at', 'DESC')->get();
+
+        return view('results.staff_scoresresult', ['staff_courses' => $staff_courses]);
+
+    }
+
     public function notuploadedScores()
     {
         $staff = Auth::guard('staff')->user();

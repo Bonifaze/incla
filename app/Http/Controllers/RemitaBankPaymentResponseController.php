@@ -7,8 +7,29 @@ use Illuminate\Support\Facades\DB;
 
 class RemitaBankPaymentResponseController extends Controller
 {
+    public function formatResponse($response)
+    {
+        $result = $response;
+        $result = substr($result, 7);
+        $newLength = strlen($result);
+        $result = substr($result, 0, $newLength - 1);
+        return json_decode($result);
+    }
+
+    public function getMethod($url, $headers)
+{
+    $ch = curl_init();
+    curl_setopt($ch, CURLOPT_URL, $url);
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+    curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+    $response = curl_exec($ch);
+    curl_close($ch);
+    return $response;
+}
+
     public function handle()
     {
+
 
         $remitas = DB::table('remitas')->where('status_code', '=', '025')->get();
 
@@ -18,10 +39,30 @@ class RemitaBankPaymentResponseController extends Controller
             // $merchantId = config('app.REMITA_MERCHANT_ID');
             $apiKey = "1946";
             $merchantId = "2547916";
-            $apiHash = hash('sha512', $remita->rrr . $apiKey . $merchantId);
+            // $apiHash = hash('sha512', $remita->rrr . $apiKey . $merchantId);
 
-            $url = str_replace(['{{rrr}}', '{{apiHash}}'], [$remita->rrr, $apiHash], 'https://remitademo.net/remita/exapp/api/v1/send/api/2547916/{{rrr}}/{{apiHash}}/status.reg');
-            $curl = curl_init();
+            // $url = str_replace(['{{rrr}}', '{{apiHash}}'], [$remita->rrr, $apiHash], 'https://remitademo.net/remita/exapp/api/v1/send/api/2547916/{{rrr}}/{{apiHash}}/status.reg');
+            // $curl = curl_init();
+        //     $apiKey = config('app.REMITA_API_KEY');
+        // $merchantId = config('app.REMITA_MERCHANT_ID');
+        $hash = hash('sha512', $remita->rrr . $apiKey . $merchantId);
+        $url = (config('app.REMITA_DOMAIN')."/remita/ecomm/". $merchantId . "/" . $remita->rrr . "/" . $hash . "/status.reg");
+
+        $headers = array(
+            'Content-Type: application/json',
+            'Authorization: remitaConsumerKey=' . $merchantId . ',remitaConsumerToken=' . $hash
+        );
+        $response = json_decode($this->getMethod($url, $headers));
+        if($response == false)
+        {
+            $error =  'Connection to Remita server has failed with error #%d: %s ';
+            $response = $this->formatResponse('jsonp ({"statuscode":"-1","error":"Connection to Remita server has failed. Contact ICT Unit ","status":"Remita Error"})');
+            return $response;
+        }
+        else
+        {
+            return $response;
+        }
 
             curl_setopt_array($curl, array(
                 CURLOPT_URL => $url,
@@ -34,7 +75,7 @@ class RemitaBankPaymentResponseController extends Controller
                 CURLOPT_CUSTOMREQUEST => 'GET',
                 CURLOPT_HTTPHEADER => array(
                     'Content-Type: application/json',
-                    "Authorization: remitaConsumerKey=2547916,remitaConsumerToken=$apiHash"
+                    "Authorization: remitaConsumerKey=2547916,remitaConsumerToken={{apiHash}}"
                 ),
             ));
 

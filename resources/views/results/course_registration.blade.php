@@ -7,11 +7,11 @@
 @endsection
 
 <!-- Treeview -->
-@section('results-open')
+@section('results-zopen')
     menu-open
 @endsection
 
-@section('results')
+@section('resulzts')
     active
 @endsection
 

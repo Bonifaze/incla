@@ -65,7 +65,7 @@
                                 <thead>
                                     <tr>
                                         <th scope="col">S/N</th>
-                                        <th scope="col">Remita RRR</th>
+                                        <th scope="col">RRR</th>
                                         <th scope="col">Action</th>
                                         <th scope="col">Amount</th>
                                         <th scope="col">Status</th>
@@ -73,7 +73,7 @@
                                         <th scope="col">Date</th>
                                         <th scope="col">Payment</th>
                                         
-                                        <th scope="col">Verify</th>
+                                        
 
                                     </tr>
                                 </thead>
@@ -108,15 +108,7 @@
 
 
                                             
-                             <td>
-                                      <?php echo Form::open(['method' => 'Post', 'route' => 'student.remita-verify', 'id'=>'verifyRemita'.$utm->id]); ?>
-
-                                        <?php echo e(Form::hidden('remita_id', $utm->id)); ?>
-
-                                        <button type="submit" class="<?php echo e($utm->id); ?> btn btn-outline-warning" > Verify Payment</button>
-                                        <?php echo Form::close(); ?>
-
-                                    </td>
+                             
                                     <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                                     </tr>
 

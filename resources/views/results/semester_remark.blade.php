@@ -9,9 +9,9 @@
 <!-- Sidebar Links -->
 
 <!-- Treeview -->
-@section('results-open') menu-open @endsection
+@section('results-opxen') menu-open @endsection
 
-@section('results') active @endsection
+@section('resultxs') active @endsection
  <!-- End Sidebar links -->
 
 

@@ -5,9 +5,9 @@
 <!-- Sidebar Links -->
 
 <!-- Treeview -->
-<?php $__env->startSection('results-open'); ?> menu-open <?php $__env->stopSection(); ?>
+<?php $__env->startSection('results-opxen'); ?> menu-open <?php $__env->stopSection(); ?>
 
-<?php $__env->startSection('results'); ?> active <?php $__env->stopSection(); ?>
+<?php $__env->startSection('resultxs'); ?> active <?php $__env->stopSection(); ?>
  <!-- End Sidebar links -->
 
 

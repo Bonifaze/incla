@@ -654,4 +654,27 @@ class StudentResultsController extends Controller
             ->with('success', "Course removed.");
     } // removeRegisteredCourse
 
+    public function coursesRegStudent($id)
+    {
+        $this->authorize('viewcourseform', StudentResult::class);
+        $student = Student::findOrFail($id);
+        $sessions = Session::orderBy('id', 'DESC')->pluck('name', 'id');
+        return view('results.coursesReg-student', compact('student', 'sessions'));
+    }
+
+    public function courseRegStudentForm(Request $request)
+    {
+        //
+        // $student_id = base64_decode($encode);
+        $student = Student::findOrFail($request->student_id);
+        $session = Session::findOrFail($request->session_id);
+        // dd($student->id);
+        $academic = $student->academic;
+
+        $results = RegisteredCourse::where('student_id', $student->id)->where('session', $session->id)->where('semester', 1)->get();
+        $results2 = RegisteredCourse::where('student_id', $student->id)->where('session', $session->id)->where('semester', 2)->get();
+        return view('results.course_form',compact('student','session','academic','results' ,'results2'));
+    }
+    //02-05-2023
+
 } // end class

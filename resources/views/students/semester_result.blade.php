@@ -3,7 +3,7 @@
 @section('pagetitle')
 <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    
+
 <title>{{ $session->semesterName($semester) }} {{ $session->name }} Result</title>
 
 @endsection
@@ -13,13 +13,13 @@
 <table width="650" border="0" cellspacing="0" cellpadding="0">
   <tr>
     <td height="650" valign="top"><table width="100%" height="174" border="0" cellpadding="0" cellspacing="0">
-      
+
       <tr>
         <td align="center" valign="top"><h1><strong>{{ $session->semesterName($semester) }} {{ $session->name }} Result </strong></h1></td>
       </tr>
     </table>
       <table width="100%" border="0">
-      
+
         <tr>
           <td><strong>Name of Student: {{ $student->full_name }} </strong></td>
           <td><strong>  Matric. No.: {{ $academic->mat_no }} </strong></td>
@@ -41,8 +41,8 @@
           <td>&nbsp;</td>
         </tr>
       </table>
-      
-	
+
+
         <table width="100%" height="87" border="1" cellpadding="0" cellspacing="0">
                           <tr>
                             <td colspan="3" align="center"><strong>ACADEMIC SESSION</strong>: {{ $session->name }}</td>
@@ -69,16 +69,16 @@
                             <td width="17%"><div align="center"><span style="font-weight: bold">{{ $result->grade }}</span></div></td>
                             <td width="13%"><div align="center"><span style="font-weight: bold">{{ $result->pass_status }}</span></div></td>
                           </tr>
-                         @endforeach		
-                        
+                         @endforeach
+
                          </table>
-      
-                        
+
+
       <table width="100%" border="1" cellpadding="0" cellspacing="0">
                           <tr>
                             <td  colspan="7">&nbsp;</td>
                             </tr>
-                            
+
                           <tr>
                             <td width="2%">&nbsp;</td>
                             <td colspan="2" align="center"><strong>Total Credit Load</strong></td>
@@ -100,7 +100,7 @@
                             <td><strong> {{ $cgpa->hours }}</strong></td>
                             <td>&nbsp;</td>
                           </tr>
-                          
+
                            <tr>
                             <td>&nbsp;</td>
                             <td colspan="3" align="right"><strong>TGP</strong></td>
@@ -115,8 +115,8 @@
                             <td><span style="font-weight: bold">CGPA : {{ $cgpa->value }}</span></td>
                             <td>&nbsp; </td>
                           </tr>
-                          
-                          
+
+
                         </table></td>
   </tr>
 </table>

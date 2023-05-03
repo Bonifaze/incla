@@ -3,11 +3,11 @@
 <?php $__env->stopSection(); ?>
 
 <!-- Treeview -->
-<?php $__env->startSection('results-open'); ?>
+<?php $__env->startSection('results-zopen'); ?>
     menu-open
 <?php $__env->stopSection(); ?>
 
-<?php $__env->startSection('results'); ?>
+<?php $__env->startSection('resulzts'); ?>
     active
 <?php $__env->stopSection(); ?>
 
@@ -112,7 +112,6 @@
                                         <?php endif; ?>
                                         
                                         <td><?php echo e($res->course_unit); ?></td>
-                                         <td><?php echo e($res->level); ?></td>
                                         <td>
                                                
                                             <?php echo Form::open(['method' => 'post', 'route' => 'result.remove-course', 'id' => 'removeRCourse' . $res->id]); ?>

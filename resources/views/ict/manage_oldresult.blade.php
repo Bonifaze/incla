@@ -7,16 +7,16 @@
 @endsection
 
 <!-- Treeview -->
-@section('results-open')
+@section('results-opn')
     menu-open
 @endsection
 
-@section('results')
+@section('resuls')
     active
 @endsection
 
 <!-- Page -->
-@section('exam-remark')
+@section('exam-rema')
     active
 @endsection
 

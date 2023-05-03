@@ -57,7 +57,7 @@
                                <th>VC Approval</th>
 
                                 <th>Student Result</th>
-                                <th>Action</th>
+                                
 
 
 
@@ -95,26 +95,27 @@
                                                 Show (<?php echo e($program->levelCoursesCount($level)); ?>)</a>
                                                  </td>
    
-     <td>
-                               <?php if(!$program->is_DEANapproved): ?>
-                           <P class="text-danger text-bold" >unapproved</P>
-                                 <?php else: ?>
-                             <P class="text-success" >Approved</p>
-                                 <?php endif; ?>
-                                 </td>
-                            <td>
-                               <?php if(!$program->is_approved): ?>
-                           <P class="text-danger text-bold" >unapproved</P>
-                                 <?php else: ?>
-                             <P class="text-success" >Approved</p>
-                                 <?php endif; ?>
-                                 </td>
-
+            
                                   <td>
-                               <?php if(!$program->is_VCapproved): ?>
-                           <P class="text-danger text-bold" >unapproved</P>
+                               <?php if(!$program->is_DEANapproved): ?>
+                 <a href="/staff-course/approve?by=dean&level=<?php echo e($level); ?>&program_id=<?php echo e($program->id); ?>" class="btn btn-outline-success" onclick="return confirm('are you sure you want to proceed with this action?  Result will be made available for Student to View')">Approve</a>
                                  <?php else: ?>
-                             <P class="text-success" >Approved</p>
+                     <a href="/staff-course/revoke?by=dean&level=<?php echo e($level); ?>&program_id=<?php echo e($program->id); ?>" class="btn btn-outline-danger" onclick="return confirm('are you sure you want to proceed with this action?   Result will not be made available for Student to View')">Revoke</a>
+                                 <?php endif; ?>
+                                 </td>
+                            
+                                      <td>
+                                     <?php if(!$program->is_approved): ?>
+                 <a href="/staff-course/approve?by=sbc&level=<?php echo e($level); ?>&program_id=<?php echo e($program->id); ?>" class="btn btn-outline-success" onclick="return confirm('are you sure you want to proceed with this action?  Result will be made available for Student to View')">Approve</a>
+                                 <?php else: ?>
+                     <a href="/staff-course/revoke?by=sbc&level=<?php echo e($level); ?>&program_id=<?php echo e($program->id); ?>" class="btn btn-outline-danger" onclick="return confirm('are you sure you want to proceed with this action?   Result will not be made available for Student to View')">Revoke</a>
+                                 <?php endif; ?>
+                                 </td>
+ <td>
+                               <?php if(!$program->is_VCapproved): ?>
+                 <a href="/staff-course/approve?by=vc&level=<?php echo e($level); ?>&program_id=<?php echo e($program->id); ?>" class="btn btn-outline-success" onclick="return confirm('are you sure you want to proceed with this action?  Result will be made available for Student to View')">Approve</a>
+                                 <?php else: ?>
+                     <a href="/staff-course/revoke?by=vc&level=<?php echo e($level); ?>&program_id=<?php echo e($program->id); ?>" class="btn btn-outline-danger" onclick="return confirm('are you sure you want to proceed with this action?   Result will not be made available for Student to View')">Revoke</a>
                                  <?php endif; ?>
                                  </td>
 
@@ -125,13 +126,7 @@
                              <P class="text-success" >Published</p>
                                  <?php endif; ?>
                                  </td>
- <td>
-                               <?php if(!$program->is_VCapproved): ?>
-                 <a href="/staff-course/approve?by=vc&level=<?php echo e($level); ?>&program_id=<?php echo e($program->id); ?>" class="btn btn-outline-success" onclick="return confirm('are you sure you want to proceed with this action?  Result will be made available for Student to View')">Publish</a>
-                                 <?php else: ?>
-                     <a href="/staff-course/revoke?by=vc&level=<?php echo e($level); ?>&program_id=<?php echo e($program->id); ?>" class="btn btn-outline-danger" onclick="return confirm('are you sure you want to proceed with this action?   Result will not be made available for Student to View')">Unpublish</a>
-                                 <?php endif; ?>
-                                 </td>
+
 
 
 							</tr>

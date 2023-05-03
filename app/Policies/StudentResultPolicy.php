@@ -42,9 +42,11 @@ class StudentResultPolicy
     }
     public function ICTOfficers(Staff $staff)
     {
+        return $staff->hasPermission(132);
+    }
+    public function viewcourseform(Staff $staff)
+    {
         return $staff->hasPermission(133);
     }
-
-
 
 } // end Policy

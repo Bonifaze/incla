@@ -1,24 +1,30 @@
-@extends('layouts.app')
+@extends('layouts.mini')
+
+
+
+@section('pagetitle')
+    {{$applicantsDetails -> surname}} Profile
+@endsection
+
+@section('css')
+    <!-- Ekko Lightbox -->
+    <link rel="stylesheet" href="{{ asset('v3/plugins/ekko-lightbox/ekko-lightbox.css') }}">
+@endsection
+
 
 @section('content')
-<div class="row justify-content-center">
+    <div class="content-wrapper">
+        <!-- Content Header (Page header) -->
 
-    <!-- Page Wrapper -->
-    <div id="wrapper">
-
-        @include('layouts.sidebar')
-
-        <!-- Content Wrapper -->
-        <div id="content-wrapper" class="d-flex flex-column">
-            <!-- Main Content -->
-            <div id="content">
-                <!-- Begin Page Content -->
-                <div class="container-fluid">
-
-                    <div class="app-wrapper">
-                        <div class="app-content pt-3 p-md-3 p-lg-4">
-                            <div class="container-xl">
-                                <h1 class="app-page-title h5 fw-bold p-2 shadow-sm text-center text-success mb-4 border">PG Applicant Profile</h1>
+        <!-- Main content -->
+        <section class="content">
+            <div class="container-fluid">
+                <!-- left column -->
+                <div class="col_full">
+          <h1
+                        class="app-page-title text-uppercase h5 font-weight-bold p-2 mb-2 shadow-sm text-center text-success border">
+                  PG Applicant Profile
+                    </h1>
                                 <div class="row gy-4">
                                     <div class="col-12 col-lg-6">
                                         <div class="app-card app-card-account shadow d-flex flex-column align-items-start ">
@@ -223,7 +229,7 @@
                                                 <!--//app-card-->
                                             </div>
                                     </div>
-                        
+
                                     <div class="row gy-4 mb-4 mt-1">
                                         <div class="col-12 col-lg-6">
                                             <div class="app-card app-card-account shadow d-flex flex-column align-items-start ">
@@ -539,12 +545,9 @@
             <!-- End of Main Content -->
 
             <!-- Footer -->
-            
-            <!-- End of Footer -->
-        </div>
+
+          </div>
+        </section>
+        <!-- /.content -->
     </div>
-    <!-- End of Content Wrapper -->
-
-</div>
-
 @endsection

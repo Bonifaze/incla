@@ -3,16 +3,16 @@
 <?php $__env->stopSection(); ?>
 
 <!-- Treeview -->
-<?php $__env->startSection('results-open'); ?>
+<?php $__env->startSection('results-opn'); ?>
     menu-open
 <?php $__env->stopSection(); ?>
 
-<?php $__env->startSection('results'); ?>
+<?php $__env->startSection('resuls'); ?>
     active
 <?php $__env->stopSection(); ?>
 
 <!-- Page -->
-<?php $__env->startSection('exam-remark'); ?>
+<?php $__env->startSection('exam-rema'); ?>
     active
 <?php $__env->stopSection(); ?>
 

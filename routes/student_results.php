@@ -45,6 +45,10 @@ Route::get('/results/excess/{encode}', 'SemesterRegistrationsController@modifyEx
 
 Route::patch('/results/excess/{encode}', 'SemesterRegistrationsController@updateExcess')->name('semester.registration.update-excess');
 
+Route::get('/results/coursesReg-student/{id}', 'StudentResultsController@coursesRegStudent')->name('result.coursesReg_student');
 
+Route::post('/results/courseRegStudentForm', 'StudentResultsController@courseRegStudentForm')->name('result.courseRegStudentForm');
+
+//02-05-2023
 
 //
