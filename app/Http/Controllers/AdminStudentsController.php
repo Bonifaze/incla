@@ -330,7 +330,7 @@ class AdminStudentsController extends Controller
             ->whereHas('academic', function ($query) use ($level)
         {
             $query->where('entry_session_id', '=', $level)->orderBy('program_id');
-        })->orderBy('id')->orderBy('surname')->paginate(100);
+        })->orderBy('id')->orderBy('surname')->paginate(2000);
         return view('students.admin.plain_list_session',compact('students'));
     } //end list
 
@@ -758,7 +758,46 @@ ICT Unit<br />
         return view('students.admin.transcript',compact('student','academic','sessions', 'registered_courses'));
     } //end show
 
+//03-05-2023
 
+function getActivePostGrad() {
+
+    $session = new Session();
+    $students = Student::distinct('students.id')->with(['academic'])
+        ->select('student_academics.id AS academic_id', 'students.*')
+        ->join('student_academics', 'students.id', '=', 'student_academics.student_id')
+        ->join('semester_registrations', 'student_academics.student_id', '=', 'semester_registrations.student_id')
+        ->where('semester_registrations.session_id',$session->currentSession())
+        ->where('student_academics.level', '>=', 700 ,'<=',900)
+        ->get();
+    return $students;
+
+}  // end getActivePostGrad()
+
+
+public function getGradStudent($level)
+{
+    if ($level == 1000) {
+        $students = Student::with(['contact', 'academic', 'medical', 'academic.program'])
+            ->whereHas('academic', function ($query) use ($level) {
+                $query->where('level', '=', $level)->orderBy('program_id');
+            })->orderBy('id')->orderBy('surname')->paginate(2000);
+    } elseif ($level >= 700 && $level <= 900) {
+        $students = Student::with(['contact', 'academic', 'medical', 'academic.program'])
+            ->whereHas('academic', function ($query) use ($level) {
+                $query->whereBetween('level', [700, 900])->orderBy('program_id');
+            })->orderBy('id')->orderBy('surname')->paginate(2000);
+    } elseif ($level > 100 && $level <= 600) {
+        $students = Student::with(['contact', 'academic', 'medical', 'academic.program'])
+            ->whereHas('academic', function ($query) use ($level) {
+                $query->whereBetween('level', [100, 600])->orderBy('program_id');
+            })->orderBy('id')->orderBy('surname')->paginate(1000);
+    } else {
+        $students = collect(); // or return an error message
+    }
+
+    return view('students.admin.plain_list', compact('students'));
+}
 
 
 

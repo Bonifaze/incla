@@ -1,11 +1,8 @@
-
-
-
 <?php $__env->startSection('pagetitle'); ?>
     <!-- CSRF Token -->
     <meta name="csrf-token" content="<?php echo e(csrf_token()); ?>">
 
-    <title>Veritas University | Staff Login</title>
+    <title>Veritas University | Applicant Login</title>
 <?php $__env->stopSection(); ?>
 
 <?php $__env->startSection('css'); ?>
@@ -150,6 +147,8 @@
                                 account
                                 <br>
                                 <a href="/forgotpassword" class="text-danger h4 float-left">Forgot Password ?</a>
+                                  <a href="https://tawk.to/chat/6452e8b94247f20fefef3648/1gvhtq6f7" class="text-danger h4 float-left">Chat with us</a>
+
 
                         </form>
                     </div>

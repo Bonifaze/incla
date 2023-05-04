@@ -56,9 +56,9 @@
                                             <td><?php echo e($student->contact->surname); ?> <?php echo e($student->contact->other_names); ?></td>
                                             <td><?php echo e($student->contact->email); ?></td>
                                             <td><?php echo e($student->contact->phone); ?></td>
-                                            <td><a class="btn btn-default"
+                                            <td><a class="btn btn-primary"
                                                     href="<?php echo e(route('result.coursesReg_student', $student->id)); ?>"> Show
-                                                    Course Form</a></td>
+                                                    Courses</a></td>
 
                                         </tr>
                                     <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>

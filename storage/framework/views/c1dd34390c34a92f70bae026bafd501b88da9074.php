@@ -460,6 +460,24 @@
 
                             </ul>
                         </li>
+                         <li class="nav-item">
+                            <a href="<?php echo e(route('student.getGradStudent', 600)); ?>" class="nav-link <?php echo $__env->yieldContent('departments'); ?>">
+                                <i class="fas fa-list-alt nav-icon"></i>
+                                <p>UnderGraduate Student</p>
+                            </a>
+                        </li>
+                         <li class="nav-item">
+                            <a href="<?php echo e(route('student.getGradStudent', 700)); ?>" class="nav-link <?php echo $__env->yieldContent('departments'); ?>">
+                                <i class="fas fa-list-alt nav-icon"></i>
+                                <p>PostGraduate Student</p>
+                            </a>
+                        </li>
+                         <li class="nav-item">
+                            <a href="<?php echo e(route('student.getGradStudent', 1000)); ?>" class="nav-link <?php echo $__env->yieldContent('departments'); ?>">
+                                <i class="fas fa-list-alt nav-icon"></i>
+                                <p>Gradutaed Student</p>
+                            </a>
+                        </li>
                     </ul>
                 </li>
 

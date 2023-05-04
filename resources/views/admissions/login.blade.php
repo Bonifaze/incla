@@ -147,6 +147,8 @@
                                 account
                                 <br>
                                 <a href="/forgotpassword" class="text-danger h4 float-left">Forgot Password ?</a>
+                                  <a href="https://tawk.to/chat/6452e8b94247f20fefef3648/1gvhtq6f7" class="text-danger h4 float-left">Chat with us</a>
+
 
                         </form>
                     </div>

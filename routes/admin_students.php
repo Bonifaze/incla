@@ -62,4 +62,6 @@ Route::get('/student-medicals/edit/{id}', 'StudentMedicalsController@edit')->nam
 
 Route::patch('/student-medicals/edit/{id}', 'StudentMedicalsController@update')->name('student-medical.update');
 
+//03-05-2023
+Route::get('/students/list/getGradStudent/{level}', 'AdminStudentsController@getGradStudent')->name('student.getGradStudent');
 
