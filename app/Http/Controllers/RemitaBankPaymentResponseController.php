@@ -56,7 +56,7 @@ class RemitaBankPaymentResponseController extends Controller
         if($response == false)
         {
             $error =  'Connection to Remita server has failed with error #%d: %s ';
-            $response = $this->formatResponse('jsonp ({"statuscode":"-1","error":"Connection to Remita server has failed. Contact ICT Unit ","status":"Remita Error"})');
+            $response = $this->formatResponse('jsonp ({"statuscode":"025","error":"Connection to Remita server has failed. Contact ICT Unit ","status":"Remita Error"})');
             return $response;
         }
         else

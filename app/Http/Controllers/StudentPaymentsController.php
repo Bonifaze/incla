@@ -251,28 +251,38 @@ class StudentPaymentsController extends Controller
         $this->validate($request, [
             'remita_id' => 'required|integer',
         ]);
-        $remita = Remitas::findOrFail($request->rrr);
-dd($remita);
+        $remita = Remitas::findOrFail($request->remita_id);
+        // dd($remita);
+        // $remita =DB::table('remitas')->where('rrr', $request->rrr)->get();
         $response = $remita->verifyRRR();
-        if($response->status == "01")
+
+        if($response->status == "00")
         {
-           $remita->status_code = $response->status;
-           $update = $remita->rrr." payment verified.";
+            //  dd($response);
+
+           $remita->status_code = "01";
+           $remita->status = "Payment Successful";
+           $update = "RRR ". $remita->rrr." payment verified.";
         }
         else
         {
-            $remita->status_code = $response->status;
+            // dd($response);
+            $remita->status_code = "025";
+            $remita->status = "Payment Reference generate";
+            // dd($response);
             //verify transaction time and transaction date
-            $update = $remita->rrr." pending payment.";
+            $update = "RRR ".$remita->rrr." Pending or NOT PAID.";
         }
         try{
             $remita->save();
-            return redirect()->route('students.paymentview')
-                ->with('update',$update);
+            //  dd($remita);
+            return redirect()->back()
+                ->with('success',$update);
         }
         catch (\Exception $e)
         {
-            $error = "Error saving Remita information. Please contact ICT.".$e->getMessage();
+            // $error = "Error Verifying RRR. Please contact ICT.".$e->getMessage();
+            $error = "Error Verifying RRR. Please contact ICT.";
             return redirect()->back()
                 ->with('error',$error);
 
@@ -313,9 +323,11 @@ dd($remita);
         $remita = $remitas->first();
 
         $response = $remita->verifyRRR();
+        dd($response);
         if($response->status == "01")
         {
             $remita->status_code = $response->status;
+            dd($response->status);
             $update = $remita->rrr." payment verified.";
         }
         else

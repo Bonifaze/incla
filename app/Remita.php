@@ -61,7 +61,7 @@ class Remita extends Model implements Auditable
         if($response == false)
         {
             $error =  'Connection to Remita server has failed with error #%d: %s ';
-            $response = $this->formatResponse('jsonp ({"statuscode":"-1","error":"Connection to Remita server has failed. Contact ICT Unit ","status":"Remita Error"})');
+            $response = $this->formatResponse('jsonp ({"statuscode":"025","error":"Connection to Remita server has failed. Contact ICT Unit ","status":"Remita Error"})');
             return $response;
         }
         else
@@ -96,7 +96,7 @@ class Remita extends Model implements Auditable
             $error =
                 'Connection to Remita server has failed with error #%d: %s '.
                 $e->getCode() . " - Message: " . $e->getMessage(). E_USER_ERROR;
-            $response = json_encode('{"statuscode":"-1","error" : "$error"}');
+            $response = json_encode('{"statuscode":"025","error" : "$error"}');
             return $response;
 
 
@@ -128,7 +128,7 @@ class Remita extends Model implements Auditable
         if($response == false)
         {
             $error =  'Connection to Remita server has failed with error #%d: %s ';
-            $response = $this->formatResponse('jsonp ({"statuscode":"-1","error":"Connection to Remita server has failed. Contact ICT Unit ","status":"Remita Error"})');
+            $response = $this->formatResponse('jsonp ({"statuscode":"025","error":"Connection to Remita server has failed. Contact ICT Unit ","status":"Remita Error"})');
             return $response;
         }
         else
