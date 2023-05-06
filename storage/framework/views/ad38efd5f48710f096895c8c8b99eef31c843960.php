@@ -51,6 +51,12 @@
                                     <?php else: ?>
                                         <th></th>
                                     <?php endif; ?>
+                                    <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('search', 'App\Bursary')): ?>
+                                        <th colspan="2">
+                                            RRR</th>
+                                    <?php else: ?>
+                                        <th></th>
+                                    <?php endif; ?>
                                     <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('disable', 'App\Student')): ?>
                                         <th>Action</th>
                                     <?php else: ?>
@@ -80,13 +86,13 @@
 
                                             <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('view', 'App\Student')): ?>
                                                 <td><a class="btn btn-default" href="<?php echo e(route('student.view', $student->id)); ?>">
-                                                        View</a></td>
+                                                        <i class="fa fa-eye"></i>View</a></td>
                                             <?php else: ?>
                                                 <td></td>
                                             <?php endif; ?>
                                             <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('show', 'App\Student')): ?>
                                                 <td><a class="btn btn-default" href="<?php echo e(route('student.show', $student->id)); ?>">
-                                                        Edit</a></td>
+                                                        <i class="fa fa-eye"></i>Edit</a></td>
                                             <?php else: ?>
                                                 <td></td>
                                             <?php endif; ?>
@@ -97,10 +103,38 @@
                                             <?php else: ?>
                                                 <td></td>
                                             <?php endif; ?>
+
                                             <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('viewcourseform', 'App\StudentResult')): ?>
                                                 <td><a class="btn btn-primary"
-                                                        href="<?php echo e(route('result.coursesReg_student', $student->id)); ?>"> Show
+                                                        href="<?php echo e(route('result.coursesReg_student', $student->id)); ?>"><i
+                                                            class="fa fa-eye"></i>
                                                         Course Form</a></td>
+                                            <?php else: ?>
+                                                <td></td>
+                                            <?php endif; ?>
+                                            <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('search', 'App\Bursary')): ?>
+                                                <td> <?php echo Form::open(['route' => 'remita.find-student', 'method' => 'POST', 'class' => 'nobottommargin']); ?>
+
+
+                                                    <?php echo Form::hidden('data', $student->id, [
+                                                        'placeholder' => 'Student Matric',
+                                                        'class' => 'form-control',
+                                                        'id' => 'data',
+                                                        'required' => 'required',
+                                                    ]); ?>
+
+
+                                                    <button type="submit" class="btn btn-success"><span
+                                                            class="icon-line2-trash"></span><i class="fa fa-eye"></i> Paid
+                                                    </button>
+
+                                                    <?php echo Form::close(); ?>
+
+                                                </td>
+                                                <td> <a class="btn btn-warning" target="_blank"
+                                                        href="<?php echo e(route('remita.find-studentunpaidrrr', $student->id)); ?>"> <i
+                                                            class="fa fa-eye"></i> Unpaid </a>
+                                                </td>
                                             <?php else: ?>
                                                 <td></td>
                                             <?php endif; ?>
@@ -122,7 +156,8 @@
 
 
                                                         <button type="submit" class="btn btn-danger"><span
-                                                                class="icon-line2-trash"></span> Disable</button>
+                                                                class="icon-line2-trash"></span><i
+                                                                class="fas fa-solid fa-user-slash"></i> Disable</button>
                                                         <?php echo Form::close(); ?>
 
 
@@ -143,7 +178,7 @@
 
 
                                                         <button type="submit" class="btn btn-success"><span
-                                                                class="icon-line2-trash"></span> Enable</button>
+                                                                class="icon-line2-trash"></span><i class="fas fa-solid fa-door-open"></i> Enable</button>
                                                         <?php echo Form::close(); ?>
 
 

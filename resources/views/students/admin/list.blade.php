@@ -55,6 +55,12 @@
                                     @else
                                         <th></th>
                                     @endcan
+                                    @can('search', 'App\Bursary')
+                                        <th colspan="2">
+                                            RRR</th>
+                                    @else
+                                        <th></th>
+                                    @endcan
                                     @can('disable', 'App\Student')
                                         <th>Action</th>
                                     @else
@@ -84,13 +90,13 @@
 
                                             @can('view', 'App\Student')
                                                 <td><a class="btn btn-default" href="{{ route('student.view', $student->id) }}">
-                                                        View</a></td>
+                                                        <i class="fa fa-eye"></i>View</a></td>
                                             @else
                                                 <td></td>
                                             @endcan
                                             @can('show', 'App\Student')
-                                                <td><a class="btn btn-default" href="{{ route('student.show', $student->id) }}">
-                                                        Edit</a></td>
+                                                <td><a class="btn btn-primary" href="{{ route('student.show', $student->id) }}">
+                                                        <i class="fa fa-eye"></i>Edit</a></td>
                                             @else
                                                 <td></td>
                                             @endcan
@@ -101,10 +107,35 @@
                                             @else
                                                 <td></td>
                                             @endcan
+
                                             @can('viewcourseform', 'App\StudentResult')
                                                 <td><a class="btn btn-primary"
-                                                        href="{{ route('result.coursesReg_student', $student->id) }}"> Show
+                                                        href="{{ route('result.coursesReg_student', $student->id) }}"><i
+                                                            class="fa fa-eye"></i>
                                                         Course Form</a></td>
+                                            @else
+                                                <td></td>
+                                            @endcan
+                                            @can('search', 'App\Bursary')
+                                                <td> {!! Form::open(['route' => 'remita.find-student', 'method' => 'POST', 'class' => 'nobottommargin']) !!}
+
+                                                    {!! Form::hidden('data', $student->id, [
+                                                        'placeholder' => 'Student Matric',
+                                                        'class' => 'form-control',
+                                                        'id' => 'data',
+                                                        'required' => 'required',
+                                                    ]) !!}
+
+                                                    <button type="submit" class="btn btn-success"><span
+                                                            class="icon-line2-trash"></span><i class="fa fa-eye"></i> Paid
+                                                    </button>
+
+                                                    {!! Form::close() !!}
+                                                </td>
+                                                <td> <a class="btn btn-warning" target="_blank"
+                                                        href="{{ route('remita.find-studentunpaidrrr', $student->id) }}"> <i
+                                                            class="fa fa-eye"></i> Unpaid </a>
+                                                </td>
                                             @else
                                                 <td></td>
                                             @endcan
@@ -122,7 +153,8 @@
 
 
                                                         <button type="submit" class="btn btn-danger"><span
-                                                                class="icon-line2-trash"></span> Disable</button>
+                                                                class="icon-line2-trash"></span><i
+                                                                class="fas fa-solid fa-user-slash"></i> Disable</button>
                                                         {!! Form::close() !!}
 
                                                     </td>
@@ -138,7 +170,7 @@
                                                         {{ Form::hidden('action', 'enabled') }}
 
                                                         <button type="submit" class="btn btn-success"><span
-                                                                class="icon-line2-trash"></span> Enable</button>
+                                                                class="icon-line2-trash"></span><i class="fas fa-solid fa-door-open"></i> Enable</button>
                                                         {!! Form::close() !!}
 
                                                     </td>

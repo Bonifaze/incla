@@ -19,7 +19,13 @@
 
               <h1
                         class="app-page-title text-uppercase h5 font-weight-bold p-2 mb-2 shadow-sm text-center text-success border">
+                        
+                          <?php if(isset($sum)): ?>
+                        <?php echo e(($sum)); ?>
+
+                    <?php else: ?>
                         List Students Entery Session
+                    <?php endif; ?>
                     </h1>
             <div class="card ">
 
@@ -34,6 +40,7 @@
 							  <th>Surname</th>
 							 <th>Other Name</th>
                              <th>Username</th>
+                              <th>Old Matric No</th>
                               <th>Matric No</th>
                               <th>Department</th>
                               <th>Degree & Program Name</th>
@@ -63,9 +70,7 @@
          <td> ( <?php echo e($student->academic->program->degree); ?> ) <?php echo e($student->academic->program->name); ?></td>
          <td><?php echo e($student->medical->blood_group); ?></td>
          <td><?php echo e($student->academic->session->name); ?></td>
-<td>
-  <td><a class="btn btn-danger" href="<?php echo e(route('student-academic.update',$student->academic->id)); ?>"> UPDATE</a></td>
-</td>
+
 							</tr>
 
 							<?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>

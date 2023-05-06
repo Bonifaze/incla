@@ -69,8 +69,8 @@
 							  <td>{{ $stf->fullName }}</td>
 							   <td> {{ $stf->username }}</td>
 							    <td> {{ $stf->phone}} </td>
-							     <td><a href="{{ route('staff.view',$stf->id) }}" class="btn btn-primary"> View </a></td>
-								<td><a href="{{ route('staff.show',$stf->id) }}" class="btn btn-default"> Edit </a></td>
+							     <td><a href="{{ route('staff.view',$stf->id) }}" class="btn btn-primary"><i class="fa fa-eye"></i> View </a></td>
+								<td><a href="{{ route('staff.show',$stf->id) }}" class="btn btn-default"><i class="fa fa-eye"></i> Edit </a></td>
 							{{--	<td><a href="{{ route('staff.show',$stf->id) }}" class="btn btn-default"> Edit </a></td> --}}
 								{{--  <td><a href="{{ route('staff.edit',$stf->id) }}"> Edit </a></td>  --}}
 
@@ -87,7 +87,8 @@
 				    		{{ Form::hidden('action', "disabled") }}
 
 
-				    		<button type="submit" class="btn btn-danger" ><span class="icon-line2-trash"></span> Disable</button>
+				    		<button type="submit" class="btn btn-danger" ><span class="icon-line2-trash"></span><i
+                                                                class="fas fa-solid fa-user-slash"></i>  Disable</button>
 				    		{!! Form::close() !!}
 
 							 </td>
@@ -99,7 +100,7 @@
 				    		{{ Form::hidden('status', 1) }}
 				    		{{ Form::hidden('action', "enabled") }}
 
-				    		<button type="submit" class="btn btn-success" ><span class="icon-line2-trash"></span> Enable</button>
+				    		<button type="submit" class="btn btn-success" ><span class="icon-line2-trash"></span><i class="fas fa-solid fa-door-open"></i>  Enable</button>
 				    		{!! Form::close() !!}
 
 							 </td>

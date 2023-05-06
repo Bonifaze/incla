@@ -407,42 +407,42 @@
                                     <a href="{{ route('student.list_level', 100) }}"
                                         class="nav-link @yield('exam-remark')">
                                         <i class="fas fa-list-alt nav-icon"></i>
-                                        <p>100 L</p>
+                                        <p>100 Level</p>
                                     </a>
                                 </li>
                                 <li class="nav-item">
                                     <a href="{{ route('student.list_level', 200) }}"
                                         class="nav-link @yield('exam-remark')">
                                         <i class="fas fa-list-alt nav-icon"></i>
-                                        <p>200 L</p>
+                                        <p>200 Level</p>
                                     </a>
                                 </li>
                                 <li class="nav-item">
                                     <a href="{{ route('student.list_level', 300) }}"
                                         class="nav-link @yield('exam-download')">
                                         <i class="fas fa-list-alt nav-icon"></i>
-                                        <p>300 L</p>
+                                        <p>300 Level</p>
                                     </a>
                                 </li>
                                 <li class="nav-item">
                                     <a href="{{ route('student.list_level', 400) }}"
                                         class="nav-link @yield('exam-download')">
                                         <i class="fas fa-list-alt nav-icon"></i>
-                                        <p>400 L</p>
+                                        <p>400 Level</p>
                                     </a>
                                 </li>
                                 <li class="nav-item">
                                     <a href="{{ route('student.list_level', 500) }}"
                                         class="nav-link @yield('exam-download')">
                                         <i class="fas fa-list-alt nav-icon"></i>
-                                        <p>500 L</p>
+                                        <p>500 Level</p>
                                     </a>
                                 </li>
                                 <li class="nav-item">
                                     <a href="{{ route('student.list_level', 600) }}"
                                         class="nav-link @yield('exam-download')">
                                         <i class="fas fa-list-alt nav-icon"></i>
-                                        <p>600 L</p>
+                                        <p>600 Level</p>
                                     </a>
                                 </li>
                                 <li class="nav-item">

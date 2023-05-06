@@ -30,7 +30,7 @@
 
 
 
-                    <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('register', 'App\StudentResult')): ?>
+                    <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('viewcourseform', 'App\StudentResult')): ?>
                         <div class="card card-primary">
                             <h1
                                 class="app-page-title text-uppercase h5 font-weight-bold p-2 mb-2 shadow-sm text-center text-success border">

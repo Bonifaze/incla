@@ -63,8 +63,8 @@
 							  <td><?php echo e($stf->fullName); ?></td>
 							   <td> <?php echo e($stf->username); ?></td>
 							    <td> <?php echo e($stf->phone); ?> </td>
-							     <td><a href="<?php echo e(route('staff.view',$stf->id)); ?>" class="btn btn-primary"> View </a></td>
-								<td><a href="<?php echo e(route('staff.show',$stf->id)); ?>" class="btn btn-default"> Edit </a></td>
+							     <td><a href="<?php echo e(route('staff.view',$stf->id)); ?>" class="btn btn-primary"><i class="fa fa-eye"></i> View </a></td>
+								<td><a href="<?php echo e(route('staff.show',$stf->id)); ?>" class="btn btn-default"><i class="fa fa-eye"></i> Edit </a></td>
 							
 								
 
@@ -85,7 +85,8 @@
 
 
 
-				    		<button type="submit" class="btn btn-danger" ><span class="icon-line2-trash"></span> Disable</button>
+				    		<button type="submit" class="btn btn-danger" ><span class="icon-line2-trash"></span><i
+                                                                class="fas fa-solid fa-user-slash"></i>  Disable</button>
 				    		<?php echo Form::close(); ?>
 
 
@@ -102,7 +103,7 @@
 				    		<?php echo e(Form::hidden('action', "enabled")); ?>
 
 
-				    		<button type="submit" class="btn btn-success" ><span class="icon-line2-trash"></span> Enable</button>
+				    		<button type="submit" class="btn btn-success" ><span class="icon-line2-trash"></span><i class="fas fa-solid fa-door-open"></i>  Enable</button>
 				    		<?php echo Form::close(); ?>
 
 

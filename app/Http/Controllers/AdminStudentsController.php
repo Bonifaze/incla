@@ -314,12 +314,13 @@ class AdminStudentsController extends Controller
 
     public function listLevel($level)
     {
+        $sum = "LIST OF $level LEVEL STUDENTS";
         $students = Student::with(['contact', 'academic', 'medical', 'academic.program'])
             ->whereHas('academic', function ($query) use ($level)
         {
             $query->where('level', '=', $level)->orderBy('program_id');
         })->orderBy('id')->orderBy('surname')->paginate(2000);
-        return view('students.admin.plain_list',compact('students'));
+        return view('students.admin.plain_list',compact('students','sum'));
     } //end list
 
 

@@ -95,12 +95,7 @@
                                         href="<?php echo e(route('remita.find-studentunpaidrrr', $academic->student_id)); ?>"><i
                                             class="fas fa-eye text-white-50"></i> Show Unpaid RRR </a>
                                 </td>
-                                 <td></td>
-                                  <td></td>
-                                   <td></td>
-                                    <td></td>
-                                     <td></td>
-                                      <td></td>
+
 
                             </tr>
                         </table>
