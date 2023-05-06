@@ -417,7 +417,7 @@
                                                 <strong>Level </strong>
                                             </div>
                                             <div class="item-data">
-                                                {{ $academic->level }}
+                                                {{ $academic->level ==1000 ?'Graduated': $academic->level  }}
                                             </div>
                                         </div>
                                     </div>

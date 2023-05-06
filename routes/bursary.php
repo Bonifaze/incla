@@ -33,4 +33,4 @@ Route::get('/bursary/remita/fee-types', 'RemitaController@feeTypes')->name('remi
 
 Route::get('/bursary/remita/fee-type/{fee_type_id}', 'RemitaController@feeType')->name('remita.fee-type');
 
-Route::post('/bursary/remita/find-student', 'RemitaController@findStudent')->name('remita.find-student');
+Route::post('/', 'RemitaController@findStudent')->name('remita.find-student');

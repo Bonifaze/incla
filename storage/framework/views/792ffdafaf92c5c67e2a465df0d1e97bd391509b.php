@@ -55,11 +55,18 @@
                                 integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor"
                                 crossorigin="anonymous">
 
+
                         </head>
 
                         <body>
                             <div class="container p-4">
                                 <?php echo $__env->make('partialsv3.flash', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
+                                  <?php if(session('signUpMsg')): ?>
+                        <?php echo session('signUpMsg'); ?>
+
+                    <?php endif; ?>
+                                
+
                                 <div class="table-responsive">
                                     <table class="table table-hover shadow m-1 mb-5">
 
@@ -112,14 +119,14 @@ $paidRRNs = [];
             ?>
                                                 <?php else: ?>
 
-                                                <td>
+                                                <td>  NOT PAID
                                                     <?php echo Form::open(['method' => 'Post', 'route' => 'student.remita-verify', 'id' => 'verifyRemita' . $utm->id]); ?>
 
                                                     <?php echo e(Form::hidden('remita_id', $utm->id)); ?>
 
                                                     <button type="submit"
-                                                        class=" <?php echo e($utm->id); ?> btn btn-primary ">
-                                                        NOT PAID
+                                                        class=" <?php echo e($utm->id); ?> btn btn-primary invisible">
+
                                                         Verify</button>
                                                     <?php echo Form::close(); ?>
 
@@ -145,7 +152,82 @@ $paidRRNs = [];
                                     </table>
                                 </div>
                             </div>
+                            <script type="text/javascript" src="https://login.remita.net/payment/v1/remita-pay-inline.bundle.js"></script>
+                    </script>
 
+                    <script>
+  //script to make payment
+                        function makePayment(rrr) {
+                            // var form = document.querySelector("#payment-form");
+                            var paymentEngine = RmPaymentEngine.init({
+                                key: "QzAwMDAzOTk0NDd8ODQzNDM3NzU2MHxjZTQ3ZDdiMGEzYTI3MGQ1MTBhZDRjZjc3Y2ZkNTMxZTU0YzEwMWViNDUyNDY3MDA1ODhjOTNiZGFmMzI3OWJkMzU4MThjYjRhNzQxOGY1YjFkMDMyYWZhMDA0NjJlMzliOGQxZjI5ZDRjYjA3YWMwNjMxZGMxOWE1Mjk5NDY2ZA==",
+                                processRrr: true,
+
+                                extendedData: {
+                                    customFields: [{
+                                        name: "rrr",
+                                        value: rrr //form.querySelector('input[name="rrr"]').value
+                                    }]
+                                },
+                                onSuccess: function(response) {
+                                    console.log('callback Successful Response', response);
+                                    logPayment(response, rrr);
+                                },
+                                onError: function(response) {
+                                    console.log('callback Error Response', response);
+                                },
+                                onClose: function() {
+                                    console.log("closed");
+                                }
+                            });
+                            paymentEngine.showPaymentWidget();
+                        }
+
+                        //handle payment from remita
+                        function logPayment(pmtJson, rrr) {
+                            //  alert(pmtJson.paymentReference);
+                            var pmtObj = pmtJson; //JSON.parse(pmtJson);
+
+                            var orderRef = pmtObj.paymentReference;
+                            var transaction_id = pmtObj.transactionId;
+                            var statuscode = "01";
+                            var rrr = rrr;
+                            var status = "Payment Successful";
+
+                            var data = new TextEncoder().encode(JSON.stringify({
+                                "orderRef": orderRef, // Where the error was
+                                "statuscode": statuscode,
+                                "rrr": rrr,
+                                "status": status,
+                                "transaction_id": transaction_id,
+                            }));
+
+                            var xhr = new XMLHttpRequest();
+                            xhr.withCredentials = true;
+
+                            xhr.addEventListener("readystatechange", function() {
+                                if (this.readyState === 4 && this.status == 200) {
+                                    // alert(this.responseText);
+                                    console.log(this.responseText);
+                                    var jsonObj = JSON.parse(this.responseText);
+                                    if (jsonObj.success) {
+                                        window.location.replace(jsonObj.route + jsonObj.id);
+                                    } else {
+                                        // alert(jsonObj.msg);
+                                        // window.location.replace(jsonObj.route);
+                                        alert("An error occured while logging your payment, please contact Veritas Bursary");
+                                    }
+
+                                }
+                            });
+                            xhr.open("POST", "/students/logpay", true);
+                            xhr.setRequestHeader("Content-Type", "application/json; charset=utf-8");
+                            //xhr.setRequestHeader("Authorization", 'remitaConsumerKey=' + merchantId + ',remitaConsumerToken=' + apiHash)
+
+                            xhr.send(data);
+
+                        }
+                    </script>
 
 
 
@@ -178,21 +260,6 @@ $paidRRNs = [];
 
 <?php $__env->startSection('pagescript'); ?>
     <script src="<?php echo asset('dist/js/bootbox.min.js'); ?>"></script>
-
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script>
-   $(document).ready(function() {
-      // Iterate through all buttons with class name 'check-payment-status-btn' and trigger click event for each button
-      $('.check-payment-status-btn').each(function() {
-         var button = $(this);
-         button.trigger('click');
-         setTimeout(function() {
-            button.off('click'); // Disable the click event after 30 seconds
-         }, 30000); // 30 seconds
-      });
-   });
-</script>
-
 
 
 

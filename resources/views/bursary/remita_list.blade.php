@@ -38,7 +38,7 @@
 
              <h1
                         class="app-page-title text-uppercase h5 font-weight-bold p-2 mb-2 shadow-sm text-center text-success border">
-{{ $academic->student->full_name}} ({{ $academic->mat_no}})
+{{--  {{ $academic->student->full_name}} ({{ $academic->mat_no}})  --}}
 <br><br>
                      @isset($sum)
                         {{"Total: N".number_format($sum)}}
@@ -55,9 +55,10 @@
 
 						<table class="table table-striped">
 						  <thead>
+                              <th>S/N</th>
                               <th>RRR</th>
-                              {{--  <th>Student Name</th>  --}}
-							  {{--  <th>Matric Number</th>  --}}
+                              <th>Student Name</th>
+							  <th>Matric Number</th>
                               <th>Service Type</th>
 							   <th>Amount</th>
 							   <th>Generated</th>
@@ -65,10 +66,11 @@
 						  </thead>
                             @foreach ($remitas as $key => $remita)
                             <tr>
+                                <td>{{ $key+1}}</td>
                                 <td>{{$remita->rrr}}</td>
-                                {{--  <td>{{$remita->student->fullname}}</td>  --}}
-                                {{--  <td>{{$remita->student->academic->mat_no}}</td>  --}}
-                                <td>{{$remita->feeType->name}}</td>
+                                <td>{{$remita->student->fullname?? null}}</td>
+                                <td>{{$remita->student->academic->mat_no?? null}}</td>
+                                <td>{{$remita->feeType->name??null}}</td>
                                 <td>&#8358;{{number_format($remita->amount)}}</td>
                                 <td>{{$remita->created_at->format('d-M-Y')}}</td>
                                 <td>

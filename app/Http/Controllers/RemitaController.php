@@ -217,7 +217,7 @@ return view('admissions.error', compact('loginMsg'));
 
         // $remitas = Remita::with(['feeType'])->where('fee_type_id',$fee_type_id)->where('status_code',1)
 
-        ->orderBy('transaction_date','DESC')->get();
+        ->orderBy('updated_at','DESC')->get();
         $sum = $remitas->sum('amount');
         return view('admissions.bursary.remita_lists',compact('remitas','sum'));
 
@@ -237,7 +237,7 @@ return view('admissions.error', compact('loginMsg'));
 
         // $remitas = Remita::with(['feeType'])->where('fee_type_id',$fee_type_id)->where('status_code',1)
 
-        ->orderBy('transaction_date','DESC')->get();
+        ->orderBy('updated_at','DESC')->get();
         $sum = $remitas->sum('amount');
         return view('admissions.bursary.remita_list',compact('remitas','sum'));
 
@@ -257,8 +257,8 @@ return view('admissions.error', compact('loginMsg'));
             ]);
         $start = $request->start_date; //"2021-10-20";
         $end = $request->end_date; // "2021-10-20";
-        $remitas = Remita::with(['feeType','student','student.academic'])->where('transaction_date','>=',$start)->where('transaction_date','<=',$end)
-            ->where('status_code',1)->orderBy('transaction_date','DESC')->get();
+        $remitas = Remita::with(['feeType','student','student.academic'])->where('updated_at','>=',$start)->where('updated_at','<=',$end)
+            ->where('status_code',1)->orderBy('updated_at','DESC')->get();
         $sum = $remitas->sum('amount');
         return view('bursary.remita_list',compact('remitas','sum'));
 
@@ -298,7 +298,7 @@ return view('admissions.error', compact('loginMsg'));
         //     ->paginate(50);
         if($academic){
             $remitas = Remita::with(['feeType','student','student.academic'])->where('student_id',$academic->student_id)->where('status_code',1)
-                ->orderBy('transaction_date','DESC')->get();
+                ->orderBy('updated_at','DESC')->get();
             $sum = $remitas->sum('amount');
             return view('bursary.remita_list',compact('remitas','sum','academic'));
         }

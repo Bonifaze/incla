@@ -34,34 +34,31 @@
                     class="app-page-title text-uppercase h5 font-weight-bold p-2 mb-2 shadow-sm text-center text-success border">
                     Staff Profile
                 </h1>
-          <div class="row mt-3">
-                                                        <div class="col-md-6">
-                                                            <?php echo Form::open(['method' => 'Patch', 'route' => 'staff.reset', 'id' => 'resetPasswordForm' . $staff->id]); ?>
+                <div class="row mt-3">
+                    <div class="col-md-6">
+                        <?php echo Form::open(['method' => 'Patch', 'route' => 'staff.reset', 'id' => 'resetPasswordForm' . $staff->id]); ?>
 
-                                                            <?php echo e(Form::hidden('id', $staff->id)); ?>
-
-
-
-                                                            <button onclick="resetPassword(<?php echo e($staff->id); ?>)"
-                                                                type="button"
-                                                                class="<?php echo e($staff->id); ?> btn btn-warning"><span
-                                                                    class="icon-line2-trash"></span> Reset
-                                                                Password</button>
-                                                            <?php echo Form::close(); ?>
-
-                                                        </div>
-                                                        <div class="col-md-6">
-                                                            <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('rbac', 'App\Staff')): ?>
-                                                                <a class="btn btn-warning"
-                                                                    href="<?php echo e(route('staff.security', $staff->id)); ?>"> Roles
-                                                                </a>
-                                                            <?php else: ?>
-                                                            <?php endif; ?>
-                                                        </div>
+                        <?php echo e(Form::hidden('id', $staff->id)); ?>
 
 
 
-                                            </div>
+                        <button onclick="resetPassword(<?php echo e($staff->id); ?>)" type="button"
+                            class="<?php echo e($staff->id); ?> btn btn-danger"><span class="icon-line2-trash"></span> Reset
+                            Password</button>
+                        <?php echo Form::close(); ?>
+
+                    </div>
+                    <div class="col-md-6">
+                        <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('rbac', 'App\Staff')): ?>
+                            <a class="btn btn-warning" href="<?php echo e(route('staff.security', $staff->id)); ?>"> Roles
+                            </a>
+                        <?php else: ?>
+                        <?php endif; ?>
+                    </div>
+
+
+
+                </div>
 
                 <div class="row py-4">
                     <div class="col-12 col-lg-6">
@@ -70,8 +67,10 @@
                             <div class="app-card-header p-3 border-bottom-0">
                                 <div class="row align-items-center gx-3">
                                     <div class="col-auto">
-                                        <h4 class="app-card-title">Bio Data <a class="btn btn-info" href="<?php echo e(route('staff.edit',$staff->id)); ?>"> <i class="fa fa-edit"></i> Edit </a>
-</h4>
+                                        <h4 class="app-card-title">Bio Data <a class="btn btn-info"
+                                                href="<?php echo e(route('staff.edit', $staff->id)); ?>"> <i class="fa fa-edit"></i> Edit
+                                            </a>
+                                        </h4>
                                     </div>
                                 </div>
                             </div>
@@ -207,9 +206,12 @@
                                 <div class="item border-bottom py-3">
                                     <div class="row justify-content-between align-items-center">
                                         <div class="col-auto">
-                                            <div class="item-label"><strong>Date of Birth</strong>: (<?php echo e($staff->dob); ?>)</div>
+                                            <div class="item-label"><strong>Date of Birth</strong>:</div>
                                             
-                                                  <div class="item-data"><?php echo e(\Carbon\Carbon::parse($staff->dob)->format('l j, F Y')); ?> (<?php echo e(\Carbon\Carbon::parse($staff->dob)->age); ?> years old)</div>
+                                            <div class="item-data">
+                                                <?php echo e(\Carbon\Carbon::parse($staff->dob)->format('l j, F Y')); ?>
+
+                                                (<?php echo e(\Carbon\Carbon::parse($staff->dob)->age); ?> years old)</div>
                                         </div>
                                     </div>
                                 </div>
@@ -289,8 +291,10 @@
                     <div class="app-card-header p-3 border-bottom-0">
                         <div class="row align-items-center px-3">
                             <div class="col-auto">
-                                <h4 class="app-card-title">Emergency Contact  <a class="btn btn-info" href="<?php echo e(route('staff-contact.edit',$contact->id)); ?>"> <i class="fa fa-edit"></i> Edit </a>
-</h4>
+                                <h4 class="app-card-title">Emergency Contact <a class="btn btn-info"
+                                        href="<?php echo e(route('staff-contact.edit', $contact->id)); ?>"> <i class="fa fa-edit"></i>
+                                        Edit </a>
+                                </h4>
                             </div>
                         </div>
                     </div>
@@ -395,8 +399,10 @@
                     <div class="app-card-header p-3 border-bottom-0">
                         <div class="row align-items-center px-3">
                             <div class="col-auto">
-                                <h4 class="app-card-title">Work Infomatation <a class="btn btn-info" href="<?php echo e(route('staff-work.edit',$work->id)); ?>"> <i class="fa fa-edit"></i> Edit </a>
-</h4>
+                                <h4 class="app-card-title">Work Infomatation <a class="btn btn-info"
+                                        href="<?php echo e(route('staff-work.edit', $work->id)); ?>"> <i class="fa fa-edit"></i> Edit
+                                    </a>
+                                </h4>
                             </div>
                         </div>
                     </div>
@@ -537,32 +543,29 @@
 <?php $__env->startSection('pagescript'); ?>
     <script src="<?php echo asset('dist/js/bootbox.min.js'); ?>"></script>
 
-<script>
+    <script>
+        function resetPassword(id) {
+            bootbox.dialog({
+                message: "<h4>Confirm you want to Reset this staff password?</h4>",
+                buttons: {
+                    confirm: {
+                        label: 'Yes',
+                        className: 'btn-success',
+                        callback: function() {
+                            document.getElementById("resetPasswordForm" + id).submit();
+                        }
+                    },
+                    cancel: {
+                        label: 'No',
+                        className: 'btn-danger',
+                    }
+                },
+                callback: function(result) {}
 
-	function resetPassword(id)
-	{
-		bootbox.dialog({
-			message: "<h4>Confirm you want to Reset this staff password?</h4>",
-			buttons: {
-				confirm: {
-					label: 'Yes',
-					className: 'btn-success',
-					callback: function(){
-						document.getElementById("resetPasswordForm"+id).submit();
-					}
-				},
-				cancel: {
-					label: 'No',
-					className: 'btn-danger',
-				}
-			},
-			callback: function (result) {}
-
-		});
-		// e.preventDefault(); // avoid to execute the actual submit of the form if onsubmit is used.
-	}
-
-</script>
+            });
+            // e.preventDefault(); // avoid to execute the actual submit of the form if onsubmit is used.
+        }
+    </script>
 
     <script>
         function submitAForm(id) {

@@ -692,7 +692,7 @@
                             </a>
                         </li>  --}}
                         <li class="nav-item">
-                            <a href="/addRemitaServiceType" class="nav-link @yield('remita-list')">
+                            <a href="/addRemitaServiceType" class="nav-link @yield('remita-list1')">
                                 <i class="fas fa-plus nav-icon"></i>
                                 <p>Add Service Type</p>
                             </a>
@@ -704,23 +704,23 @@
                             </a>
                         </li>  --}}
                         <li class="nav-item">
-                            <a href="/viewRemitaServiceType" class="nav-link @yield('remita-list')">
+                            <a href="/viewRemitaServiceType" class="nav-link @yield('remita-list2')">
                                 <i class="fa fa-eye nav-icon"></i>
                                 <p>View Service Type</p>
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="/bursary/remita/fee-types" class="nav-link @yield('remita-list')">
+                            <a href="/bursary/remita/fee-types" class="nav-link @yield('remita-list3')">
                                 <i class="fa fa-eye nav-icon"></i>
                                 <p>Show Remita Fee Type</p>
                             </a>
                         </li>
                         {{--  <li class="nav-item">
-                                    <a href="/adminAllPayments" class="nav-link @yield('remita-list')">
+                                    <a href="/adminAllPayments" class="nav-link @yield('remita-list3')">
                                         <i class="fa fa-eye nav-icon"></i>
                                         <p>All RRR Payment</p>
                                     </a>
-                                </li> --}}
+                                </li>  --}}
 
                     </ul>
                 </li>

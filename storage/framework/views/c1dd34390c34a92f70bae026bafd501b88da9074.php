@@ -463,19 +463,19 @@
                          <li class="nav-item">
                             <a href="<?php echo e(route('student.getGradStudent', 600)); ?>" class="nav-link <?php echo $__env->yieldContent('departments'); ?>">
                                 <i class="fas fa-list-alt nav-icon"></i>
-                                <p>UnderGraduate Student</p>
+                                <p>UnderGraduate</p>
                             </a>
                         </li>
                          <li class="nav-item">
                             <a href="<?php echo e(route('student.getGradStudent', 700)); ?>" class="nav-link <?php echo $__env->yieldContent('departments'); ?>">
                                 <i class="fas fa-list-alt nav-icon"></i>
-                                <p>PostGraduate Student</p>
+                                <p>PostGraduate</p>
                             </a>
                         </li>
                          <li class="nav-item">
                             <a href="<?php echo e(route('student.getGradStudent', 1000)); ?>" class="nav-link <?php echo $__env->yieldContent('departments'); ?>">
                                 <i class="fas fa-list-alt nav-icon"></i>
-                                <p>Gradutaed Student</p>
+                                <p>Gradutaed</p>
                             </a>
                         </li>
                     </ul>
@@ -560,25 +560,30 @@
 
                         
                         <li class="nav-item">
-                            <a href="/addRemitaServiceType" class="nav-link <?php echo $__env->yieldContent('remita-list'); ?>">
+                            <a href="/addRemitaServiceType" class="nav-link <?php echo $__env->yieldContent('remita-list1'); ?>">
                                 <i class="fas fa-plus nav-icon"></i>
                                 <p>Add Service Type</p>
                             </a>
                         </li>
                         
                         <li class="nav-item">
-                            <a href="/viewRemitaServiceType" class="nav-link <?php echo $__env->yieldContent('remita-list'); ?>">
+                            <a href="/viewRemitaServiceType" class="nav-link <?php echo $__env->yieldContent('remita-list2'); ?>">
                                 <i class="fa fa-eye nav-icon"></i>
                                 <p>View Service Type</p>
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="/bursary/remita/fee-types" class="nav-link <?php echo $__env->yieldContent('remita-list'); ?>">
+                            <a href="/bursary/remita/fee-types" class="nav-link <?php echo $__env->yieldContent('remita-list3'); ?>">
                                 <i class="fa fa-eye nav-icon"></i>
                                 <p>Show Remita Fee Type</p>
                             </a>
                         </li>
-                        
+                        <li class="nav-item">
+                                    <a href="/adminAllPayments" class="nav-link <?php echo $__env->yieldContent('remita-list3'); ?>">
+                                        <i class="fa fa-eye nav-icon"></i>
+                                        <p>All RRR Payment</p>
+                                    </a>
+                                </li>
 
                     </ul>
                 </li>

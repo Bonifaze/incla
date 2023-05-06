@@ -418,7 +418,7 @@
                                                 <strong>Level </strong>
                                             </div>
                                             <div class="item-data">
-                                                <?php echo e($academic->level); ?>
+                                               <?php echo e($academic->level ==1000 ?'Graduated': $academic->level); ?>
 
                                             </div>
                                         </div>

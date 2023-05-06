@@ -124,8 +124,8 @@
                                         <div class="row no-gutters align-items-center">
                                             <div class="col mr-2">
                                                 <div class="h4 text-success" style="text-decoration: underline;">
-                                                        <a href="{{ route('students.transcript') }}"
-                                                        class="text-success @yield('registration')">View Result</a>
+                                                        <a href="{{ route('students.results') }}"
+                                                        class="text-success @yield('results')">View Result</a>
 
                                                 </div>
                                             </div>
