@@ -125,7 +125,7 @@
                             <li class="nav-item">
                                 <a href="/students/remita/paymentview/{id}" class="nav-link <?php echo $__env->yieldContent('viewremita'); ?>">
                                     <i class="fa fa-eye nav-icon"></i>
-                                    <p>View Remita</p>
+                                    <p>View Remita Payment</p>
                                 </a>
                             </li>
                             <li class="nav-item">

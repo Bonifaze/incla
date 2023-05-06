@@ -33,4 +33,9 @@ Route::get('/bursary/remita/fee-types', 'RemitaController@feeTypes')->name('remi
 
 Route::get('/bursary/remita/fee-type/{fee_type_id}', 'RemitaController@feeType')->name('remita.fee-type');
 
-Route::post('/', 'RemitaController@findStudent')->name('remita.find-student');
+Route::post('/bursary/remita/student', 'RemitaController@findStudent')->name('remita.find-student');
+
+//06-05-2023
+Route::Get('/bursary/remita/studentupaid/{id}', 'RemitaController@findStudentUnpaidRRR')->name('remita.find-studentunpaidrrr');
+
+Route::delete('/bursary/remita/studentupaid/{remita}', 'RemitaController@destroy')->name('remita.find-studentunpaidrrr.destroy');

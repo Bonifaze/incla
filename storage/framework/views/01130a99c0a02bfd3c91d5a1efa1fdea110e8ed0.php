@@ -121,7 +121,7 @@
                                                 <div class="col mr-3">
                                                     <div class="h4 text-success" style="text-decoration: underline;">
                                                         <a href="/students/remita/paymentview/{id}" class="text-success">View
-                                                            Remita</a>
+                                                            Remita Payment</a>
                                                     </div>
                                                 </div>
                                                 <div class="col-auto">

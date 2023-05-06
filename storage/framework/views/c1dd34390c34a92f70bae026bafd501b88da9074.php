@@ -578,12 +578,7 @@
                                 <p>Show Remita Fee Type</p>
                             </a>
                         </li>
-                        <li class="nav-item">
-                                    <a href="/adminAllPayments" class="nav-link <?php echo $__env->yieldContent('remita-list3'); ?>">
-                                        <i class="fa fa-eye nav-icon"></i>
-                                        <p>All RRR Payment</p>
-                                    </a>
-                                </li>
+                        
 
                     </ul>
                 </li>

@@ -220,6 +220,45 @@
 
                     </div>
 
+                    
+                     <div class="card card-success">
+                        <div class="card-header">
+                            <h3 class="card-title"> Search Student Unpaid RRR </h3>
+                        </div>
+                        <div class="table-responsive">
+                            <!-- form start -->
+                            <?php echo Form::open(['route' => 'remita.find-studentunpaidrrr', 'method' => 'POST', 'class' => 'nobottommargin']); ?>
+
+                            <div class="card-body">
+                                <div class="box-body">
+                                    <div class="row">
+                                        <div class="col-md-6 form-group">
+                                            <div <?php if($errors->has('data')): ?> class ='has-error form-group' <?php endif; ?>>
+                                                <label for="data">Student Matric:</label>
+                                                <?php echo Form::search('data', null, [
+                                                    'placeholder' => 'Student Matric',
+                                                    'class' => 'form-control',
+                                                    'id' => 'data',
+                                                    'required' => 'required',
+                                                ]); ?>
+
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- /.card-body -->
+                            <div class="card-footer">
+                                <?php echo e(Form::submit('Search', ['class' => 'btn btn-success'])); ?>
+
+                            </div>
+                        </div>
+                        <!-- /.box-body -->
+                        <?php echo Form::close(); ?>
+
+                    </div>
+
 
 
 

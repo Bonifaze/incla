@@ -2,41 +2,21 @@
 
 namespace App\Http\Controllers;
 
-use PDF;
-use Mail;
-use Exception;
-use App\Course;
-use App\Remita;
 use App\FeeType;
-use App\Session;
+use App\Models\fee_types;
+use App\Models\Remitas;
+use App\Remita;
 use App\Student;
 use Carbon\Carbon;
-use App\StudentDebt;
-use Remita\HTTPUtil;
-use App\ProgramCourse;
-use App\StudentResult;
-use App\Models\Remitas;
-use App\StudentAcademic;
-use App\Models\fee_types;
-use Illuminate\Http\Request;
-use App\SemesterRegistration;
-use App\Mail\ExceptionOccured;
-use Illuminate\Validation\Rule;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Http;
-use Remita\TestRRRGeneratorAndStatus;
 use Illuminate\Database\QueryException;
-use Illuminate\Support\Facades\Storage;
-use Intervention\Image\ImageManagerStatic as Image;
-use Symfony\Component\Debug\Exception\FlattenException;
-use Symfony\Component\Debug\ExceptionHandler as SymfonyExceptionHandler;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class StudentPaymentsController extends Controller
 {
     //
-     /**
+    /**
      * Create a new controller instance.
      *
      * @return void
@@ -50,24 +30,39 @@ class StudentPaymentsController extends Controller
     {
         // $payment = DB::table('students')->where('id', session('userid'))->get();
         $payment = Auth::guard('student')->user();
-            // ->leftJoin('usersbiodata', 'usersbiodata.user_id', '=', 'users.id')->get();
+        // ->leftJoin('usersbiodata', 'usersbiodata.user_id', '=', 'users.id')->get();
 
         $fee_types = fee_types::orderBy('status', 'ASC')
-        ->where('status', 1)
-        ->where('category', '>', '2')
+            ->where('status', 1)
+            ->where('category', '>', '2')
         // ->where('category', 3)
-        ->get();
+            ->get();
         $fee_typess = fee_types::orderBy('status', 'ASC')
-        ->where('status', 1)
-        ->where('category',4)
-        ->get();
+            ->where('status', 1)
+            ->where('category', 4)
+            ->get();
 
-        return view('students.RemitaPayment', compact('payment'),['fee_types' => $fee_types, 'fee_typess' => $fee_typess]);
+        return view('students.RemitaPayment', compact('payment'), ['fee_types' => $fee_types, 'fee_typess' => $fee_typess]);
     }
 
 //To INSERT THE GENERATE RRR INTO THE DB
-   public function payremi(Request $req)
+    public function payremi(Request $req)
     {
+        $student_id = Auth::guard('student')->user()->id;
+
+        // Count the number of unpaid RRRs with status code 025 for the student
+        $unpaid_rrr_count = DB::table('remitas')
+            ->where('student_id', $student_id)
+            ->where('status_code', '025')
+            ->count();
+
+        if ($unpaid_rrr_count >= 5) {
+            // The student has already created 5 or more unpaid RRRs, so don't insert a new RRR
+            $json = array('success' => false, 'route' => '/students/remita/feestype', 'msg' => 'You have reached the maximum number of unpaid Generated RRRs, Please pay your outstanding RRR before generating a new RRR. Visit ICT Unit or Bursary .');
+            $jsonstring = json_encode($json, JSON_HEX_TAG);
+            echo $jsonstring;
+            return;
+        }
         // DB::beginTransaction();
         try {
             DB::table('remitas')->insert([
@@ -82,7 +77,7 @@ class StudentPaymentsController extends Controller
                 'amount' => $req->amount,
                 'status_code' => $req->statuscode,
                 'status' => $req->status,
-                'request_ip' => $_SERVER['REMOTE_ADDR']
+                'request_ip' => $_SERVER['REMOTE_ADDR'],
             ]);
             // DB::table('usersbiodata')->where('user_id', session('userid'))->update([
             //     'status' => 5
@@ -97,8 +92,8 @@ class StudentPaymentsController extends Controller
             echo $jsonstring;
             //return redirect('/paymentview/'.session('userid'));
         } catch (QueryException $e) {
-         // $statusMsg = '<div class="alert alert-danger alert-dismissible"><button type="button" class="close" data-dismiss="alert">&times;</button><strong>Error!</strong> RRR not generated successfuly, please try again ' . $e->getMessage() . "###" . $req->rrr . '</div>';
-             $statusMsg = 'RRR not generated successfuly, please try again or contact ICT';
+            // $statusMsg = '<div class="alert alert-danger alert-dismissible"><button type="button" class="close" data-dismiss="alert">&times;</button><strong>Error!</strong> RRR not generated successfuly, please try again ' . $e->getMessage() . "###" . $req->rrr . '</div>';
+            $statusMsg = 'RRR not generated successfuly, please try again or contact ICT';
 
             $json = array('success' => false, 'route' => '/students/remita/feestype', 'msg' => $statusMsg);
             $jsonstring = json_encode($json, JSON_HEX_TAG);
@@ -106,7 +101,6 @@ class StudentPaymentsController extends Controller
             // return redirect('/newPayment/')->with('mgs',$statusMsg);
         }
     }
-
 
 //LOG PAYMENT
     public function logpay(Request $req)
@@ -121,7 +115,7 @@ class StudentPaymentsController extends Controller
                     'transaction_id' => $req->transaction_id,
                     'transaction_date' => Carbon::now(),
                     'channel' => "Remita Online",
-                    'updated_at' => Carbon::now()
+                    'updated_at' => Carbon::now(),
 
                 ]);
             $json = array('success' => true, 'route' => '/students/remita/paymentview/', 'id' => Auth::guard('student')->user()->id);
@@ -137,7 +131,6 @@ class StudentPaymentsController extends Controller
         }
     }
 
-
     public function viewpayment($id)
     {
 
@@ -145,8 +138,8 @@ class StudentPaymentsController extends Controller
             ->orderBy('status_code', 'ASC')->orderBy('created_at', 'DESC')
             ->get();
 
-            $verifyResponse = $this->verifyRRRALL();
-            return view('students.paymentview', compact('viewpayment', 'verifyResponse'));
+        $verifyResponse = $this->verifyRRRALL();
+        return view('students.paymentview', compact('viewpayment', 'verifyResponse'));
     }
     public function verifyRRRALL()
     {
@@ -156,18 +149,17 @@ class StudentPaymentsController extends Controller
 
         $response = [];
 
-
         foreach ($remitas as $remita) {
             $verifyResponse = $remita->verifyRRR();
 
             if ($verifyResponse->status == "00") {
                 $remita->status_code = "01";
                 $remita->status = "Payment Successful";
-                $update = "RRR ". $remita->rrr." payment verified.";
+                $update = "RRR " . $remita->rrr . " payment verified.";
             } else {
                 $remita->status_code = "025";
                 $remita->status = "Payment Reference generated";
-                $update = "RRR ".$remita->rrr." Pending or NOT PAID.";
+                $update = "RRR " . $remita->rrr . " Pending or NOT PAID.";
             }
 
             try {
@@ -184,7 +176,6 @@ class StudentPaymentsController extends Controller
         // ->with('success', json_encode($response))->with('timeout', 5000);
         return $response;
 
-
     }
 
     public function receipt($rrr)
@@ -192,13 +183,10 @@ class StudentPaymentsController extends Controller
 
         $receipt = DB::table('remitas')->where('rrr', $rrr)
             ->leftJoin('students', 'remitas.student_id', '=', 'students.id')
-            // ->leftjoin('usersbiodata', 'usersbiodata.user_id', '=', 'users.id')
+        // ->leftjoin('usersbiodata', 'usersbiodata.user_id', '=', 'users.id')
             ->first();
         return view('students.receipt', compact('receipt'));
     }
-
-
-
 
     // public function remita()
     // {
@@ -295,39 +283,34 @@ class StudentPaymentsController extends Controller
         // dd($remita);
         // $remita =DB::table('remitas')->where('rrr', $request->rrr)->get();
         $response = $remita->verifyRRR();
-        if($response->status == "00")
-        {
+        if ($response->status == "00") {
             //  dd($response);
 
-           $remita->status_code = "01";
-           $remita->status = "Payment Successful";
-           $update = "RRR ". $remita->rrr." payment verified.";
-        }
-        else
-        {
+            $remita->status_code = "01";
+            $remita->status = "Payment Successful";
+            $update = "RRR " . $remita->rrr . " payment verified.";
+        } else {
             // dd($response);
             $remita->status_code = "025";
             $remita->status = "Payment Reference generatedd";
             // dd($response);
             //verify transaction time and transaction date
-            $update = "RRR ".$remita->rrr." Payment pending or NOT PAID.";
+            $update = "RRR " . $remita->rrr . " Payment pending or NOT PAID.";
         }
-        try{
+        try {
             $remita->save();
             //  dd($remita);
             return redirect()->back()
-                ->with('success',$update);
-        }
-        catch (\Exception $e)
-        {
+                ->with('success', $update);
+        } catch (\Exception $e) {
             // $error = "Error Verifying RRR. Please contact ICT.".$e->getMessage();
             $error = "Error Verifying RRR. Please contact ICT.";
             return redirect()->back()
-                ->with('error',$error);
+                ->with('error', $error);
 
         }
 
-    }// end verifyRRR
+    } // end verifyRRR
 
     // public function pay2(Request $request)
     // {
@@ -340,7 +323,6 @@ class StudentPaymentsController extends Controller
 
     // }// end pay
 
-
     // public function pay(Request $request)
     // {
     //     //
@@ -349,46 +331,39 @@ class StudentPaymentsController extends Controller
 
 //public function paymentResponse($rrr,$orderId)
     public function paymentResponse(Request $request)
-{
-    $sample = "https://yourwebsite.com/response.php?RRR=300008248091&orderID=1633889789819";
-    $status = "https://remitademo.net/remita/exapp/api/v1/send/api/echannelsvc/{{merchantId}}/{{orderId}}/{{apiHash}}/orderstatus.reg";
-    $this->validate($request, [
-        'RRR' => 'required|numeric',
-        'orderID' => 'required|numeric',
-    ]);
-   $remitas = Remita::where('rrr',$request->RRR)->where('order_id',$request->orderID)->get();
-    if($remitas->count() > 0)
     {
-        $remita = $remitas->first();
+        $sample = "https://yourwebsite.com/response.php?RRR=300008248091&orderID=1633889789819";
+        $status = "https://remitademo.net/remita/exapp/api/v1/send/api/echannelsvc/{{merchantId}}/{{orderId}}/{{apiHash}}/orderstatus.reg";
+        $this->validate($request, [
+            'RRR' => 'required|numeric',
+            'orderID' => 'required|numeric',
+        ]);
+        $remitas = Remita::where('rrr', $request->RRR)->where('order_id', $request->orderID)->get();
+        if ($remitas->count() > 0) {
+            $remita = $remitas->first();
 
-        $response = $remita->verifyRRR();
-        dd($response);
-        if($response->status == "01")
-        {
-            $remita->status_code = $response->status;
-            dd($response->status);
-            $update = $remita->rrr." payment verified.";
-        }
-        else
-        {
-            $remita->status_code = $response->status;
-            //verify transaction time and transaction date
-            $update = $remita->rrr." pending payment.";
-        }
-        try{
-            $remita->save();
-            return redirect()->route('students.paymentview')
-                ->with('update',$update);
-        }
-        catch (\Exception $e)
-        {
-            $error = "Error saving Remita information. Please contact ICT.".$e->getMessage();
-            return redirect()->route('students.paymentview')
-                ->with('error',$error);
+            $response = $remita->verifyRRR();
+            dd($response);
+            if ($response->status == "01") {
+                $remita->status_code = $response->status;
+                dd($response->status);
+                $update = $remita->rrr . " payment verified.";
+            } else {
+                $remita->status_code = $response->status;
+                //verify transaction time and transaction date
+                $update = $remita->rrr . " pending payment.";
+            }
+            try {
+                $remita->save();
+                return redirect()->route('students.paymentview')
+                    ->with('update', $update);
+            } catch (\Exception $e) {
+                $error = "Error saving Remita information. Please contact ICT." . $e->getMessage();
+                return redirect()->route('students.paymentview')
+                    ->with('error', $error);
+            }
         }
     }
-   }
-
 
     // public function paymentConfirmation(Request $request)
     // {
@@ -411,7 +386,6 @@ class StudentPaymentsController extends Controller
     //     $data->payerPhone = $student->phone;
     //     $data->description = "Student Fees";
     //     $data->orderId = round(microtime(true) * 1000);
-
 
     //     $customField = collect();
     //     $customField->name = "Student ID";
@@ -452,7 +426,6 @@ class StudentPaymentsController extends Controller
 
     // }// end payementConfirmation
 
-
     // public function confirmationNotification(Request $request)
     // {
 
@@ -466,7 +439,6 @@ class StudentPaymentsController extends Controller
 
     //             //Mail::to('lawrencechrisojor@gmail.com')->send(new ExceptionOccured($request->toJson()));
 
-
     //         } catch (Exception $ex) {
 
     //         }
@@ -474,34 +446,31 @@ class StudentPaymentsController extends Controller
 
     // }
 
-    public function remitaPrint($id){
+    public function remitaPrint($id)
+    {
         //get instance
         $remita = Remita::find($id);
 
         //verify remita
-        if($remita){
+        if ($remita) {
             $response = $remita->verifyRRR();
 
-        if($response->status == 1) {
-            $student = $remita->student;
-            $academic = $student->academic;
-            $feeType = $remita->feeType;
-            return view('students.remita-print',compact('student','remita','academic','feeType'));
-        }
-        else {
-            $error = "Requested Remita payment details not found. Please contact Support on .".'app.REMITA_EMAIL';
+            if ($response->status == 1) {
+                $student = $remita->student;
+                $academic = $student->academic;
+                $feeType = $remita->feeType;
+                return view('students.remita-print', compact('student', 'remita', 'academic', 'feeType'));
+            } else {
+                $error = "Requested Remita payment details not found. Please contact Support on ." . 'app.REMITA_EMAIL';
+                return redirect()->route('student.remita')
+                    ->with('error', $error);
+            }
+        } else {
+            $error = "Requested Remita record not found. Please contact Support on ." . 'app.REMITA_EMAIL';
             return redirect()->route('student.remita')
-                ->with('error',$error);
-        }
-        }
-        else {
-            $error = "Requested Remita record not found. Please contact Support on .".'app.REMITA_EMAIL';
-            return redirect()->route('student.remita')
-                ->with('error',$error);
+                ->with('error', $error);
         }
 
     }
 
 } // end Class
-
-

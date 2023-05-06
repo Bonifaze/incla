@@ -308,4 +308,37 @@ return view('admissions.error', compact('loginMsg'));
                 ->with('error',$error);
         }
     } // end findStudent
+
+    //to find student UNPAID RRR AND DELETE THEM
+    public function findStudentUnpaidRRR($id)
+    {
+        // $this->authorize('remitaSearch',Remita::class);
+
+        $academic= StudentAcademic::where('student_id', $id)->first();
+
+        if($academic){
+            $remitas = Remita::with(['feeType','student','student.academic'])->where('student_id',$academic->student_id)->where('status_code','025')
+                ->orderBy('updated_at','DESC')->get();
+            $sum = "LIST OF UNPAID RRR";
+            return view('bursary.remita_listunpaid',compact('remitas','sum','academic'));
+        }
+        else{
+            $error = "Student Record not found";
+            return redirect()->route('remita.search-rrr')
+                ->with('error',$error);
+        }
+    } // end findStudent
+
+    public function destroy(Request $request, Remita $remita)
+    {
+        $remita->delete();
+
+        if ($request->method() === 'GET') {
+            // Redirect to a specific URL with an error message
+            return redirect(url('/bursary/remita/studentupaid'))->with('error', 'The GET method is not supported for this route. Please use the POST method instead.');
+        }
+
+        return redirect()->back()->with('success','Unpaid RRR deleted successfully');
+    }
+
 } // end Controller
