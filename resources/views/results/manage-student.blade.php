@@ -117,6 +117,7 @@
                              <a class="btn btn-primary float-right" href="{{ route('student.transcript',base64_encode($student->id)) }}" target="_blank"> <i class="fa fa-eye"></i> Transcript</a>
 
                                 @endcan
+
                                 </div>
 
                             </div>
@@ -264,7 +265,10 @@
                             <div class="card-footer">
 
                                 {{ Form::submit('Select', ['class' => 'btn btn-primary']) }}
+                               @can('transcript', 'App\Student')
+                             <a class="btn btn-primary float-right" href="{{ route('results.transcript',base64_encode($student->id)) }}" target="_blank"> <i class="fa fa-eye"></i> Transcript Admin</a>
 
+                                @endcan
                             </div>
 
                         </div>

@@ -106,4 +106,15 @@ class Session extends Model implements Auditable
         return $this->hasMany(RegisteredCourse::class, 'session', )
         ->where('status', 'published');
     }
+
+    public function registered_courses1admin()
+    {
+        return $this->hasMany(RegisteredCourse::class, 'session',);
+    }
+
+    public function registered_courses2admin()
+    {
+        return $this->hasMany(RegisteredCourse::class, 'session', );
+
+    }
 }  // end class

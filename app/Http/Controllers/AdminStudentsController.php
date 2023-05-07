@@ -738,26 +738,8 @@ ICT Unit<br />
             $query->where('student_id', $student_id);
             $query->where('semester', '2');
         }])->get();
-
-        //dd($sessions);
-
-    //     $registrations = DB::table('registered_courses')->where('registered_courses.student_id',  $student->id)
-    //     ->where('registered_courses.status', 'published')
-    //     ->join('courses', 'courses.id', '=', 'registered_courses.course_id')
-    //     // ->join('program_courses', 'program_courses.course_id', '=', 'registered_courses.course_id')
-    //    ->limit(200)
-    //     ->get();
-
-        // ->join('student_academics', 'student_academics.id', '=', 'registered_courses.id')
-        // ->join('sessions', 'sessions.id', '=', 'student_academics.id')
-        // ->orderBy('sessions.id')
-        // ->where('level', $course->level)
-        // ->where('session', $this->getCurrentSession())
-       // $registrations = $student->semesterRegistrations;
-        // $totalCGPA = $student->CGPA();
-        // return view('students.admin.transcript',compact('student','academic','registrations','totalCGPA'));
         return view('students.admin.transcript',compact('student','academic','sessions', 'registered_courses'));
-    } //end show
+    } //end transcript
 
 //03-05-2023
 
@@ -800,6 +782,26 @@ public function getGradStudent($level)
     return view('students.admin.plain_list', compact('students'));
 }
 
+public function transcriptadmin($encode)
+{
+    $this->authorize('transcript',Student::class);
 
+    $student_id = base64_decode($encode);
+    $student = Student::with('academic')->with('registered_courses')->find($student_id);
+    $academic = $student->academic;
+    $session_ids = RegisteredCourse::where('student_id', $student_id)->distinct('session')->pluck('session');
+    $session_ids = $session_ids->toArray();
+    $registered_courses = RegisteredCourse::where('student_id', $student_id)->get();
+    //dd($registered_courses->where('session', 15));
+    $sessions = Session::wherein('id', $session_ids)->with(['registered_courses1admin' => function ($query) use ($student_id) {
+
+        $query->where('student_id', $student_id);
+        $query->where('semester', '1');
+    }, 'registered_courses2admin' => function ($query) use ($student_id) {
+        $query->where('student_id', $student_id);
+        $query->where('semester', '2');
+    }])->get();
+    return view('results.transcript',compact('student','academic','sessions', 'registered_courses'));
+} //end transcriptAdmin
 
 } // end Class

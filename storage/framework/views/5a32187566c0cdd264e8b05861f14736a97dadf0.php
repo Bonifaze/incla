@@ -111,6 +111,7 @@
                              <a class="btn btn-primary float-right" href="<?php echo e(route('student.transcript',base64_encode($student->id))); ?>" target="_blank"> <i class="fa fa-eye"></i> Transcript</a>
 
                                 <?php endif; ?>
+
                                 </div>
 
                             </div>
@@ -204,7 +205,10 @@
 
                                 <?php echo e(Form::submit('Select', ['class' => 'btn btn-primary'])); ?>
 
+                               <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('transcript', 'App\Student')): ?>
+                             <a class="btn btn-primary float-right" href="<?php echo e(route('results.transcript',base64_encode($student->id))); ?>" target="_blank"> <i class="fa fa-eye"></i> Transcript Admin</a>
 
+                                <?php endif; ?>
                             </div>
 
                         </div>

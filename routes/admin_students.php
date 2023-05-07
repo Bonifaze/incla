@@ -65,3 +65,4 @@ Route::patch('/student-medicals/edit/{id}', 'StudentMedicalsController@update')-
 //03-05-2023
 Route::get('/students/list/getGradStudent/{level}', 'AdminStudentsController@getGradStudent')->name('student.getGradStudent');
 
+Route::get('/results/transcript/{encode}', 'AdminStudentsController@transcriptadmin')->name('results.transcript');
