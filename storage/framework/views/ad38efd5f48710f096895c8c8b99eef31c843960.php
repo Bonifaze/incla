@@ -91,7 +91,7 @@
                                                 <td></td>
                                             <?php endif; ?>
                                             <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('show', 'App\Student')): ?>
-                                                <td><a class="btn btn-default" href="<?php echo e(route('student.show', $student->id)); ?>">
+                                                <td><a class="btn btn-primary" href="<?php echo e(route('student.show', $student->id)); ?>">
                                                         <i class="fa fa-eye"></i>Edit</a></td>
                                             <?php else: ?>
                                                 <td></td>

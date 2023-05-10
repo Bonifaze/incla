@@ -80,7 +80,7 @@
                                             <th>Provider Code</th>
                                             <th>Provider</th>
                                             <th>Total</th>
-                                            <th>Balance</th>
+                                            
                                             <th>Action</th>
 
 
@@ -109,14 +109,7 @@
                                                     <td><?php echo e($fee->provider_code); ?></td>
                                                     <td><?php echo e($fee->provider); ?></td>
                                                     <td> &#8358;<?php echo e(number_format($fee->paidRemitas->sum('amount'))); ?></td>
-                                                      <?php if($fee->installment == 1): ?>
-                                                    <td>&#8358;0</td>
-                                                       <?php else: ?>
-                                                                 <?php
-                                      $tatolAmount1 += $fee->paidRemitas->sum('amount');
-                                   ?>
-                                                    <td>&#8358;<?php echo e(number_format($fee->paidRemitas->sum('amount'))); ?></td>
-                                                      <?php endif; ?>
+                                                      
                                                     <td> <a class="btn btn-success" target="_blank"
                                                             href="<?php echo e(route('remita.fee-type', $fee->id)); ?>"> Show </a></td>
 
@@ -129,10 +122,7 @@
                                         <td ></td>
                                         <td></td>
                                        <td><strong>&#8358;<?php echo e(number_format(  $tatolAmount)); ?> </strong></td>
-                                        <td><strong>&#8358;<?php echo e(number_format(  $tatolAmount1)); ?> </strong></td>
-                                                     <?php
-                                      $tatolBal =$tatolAmount - $tatolAmount1;
-                                   ?>
+                                        
                                    <td></td>
                                         
 

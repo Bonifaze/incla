@@ -5,12 +5,14 @@ namespace App\Http\Controllers;
 use App\FeeType;
 
 
-use App\program;
+use App\Program;
+//use App\program;
 use App\Category;
 use App\subjects;
 use Carbon\Carbon;
 use App\Models\User;
 use App\Mail\Referee;
+use App\Models\Remitas;
 use App\Models\programs;
 use App\Models\fee_types;
 use App\Mail\Confirmsignup;
@@ -101,7 +103,7 @@ class ApplicantController extends Controller
             'email_verified_at' => now()
         ]);
         $signUpMsg = '<div class="alert alert-success text-align-center alert-dismissible"><button type="button" class="close" data-dismiss="alert">&times;</button><strong>Your email has been Verified you can now Login</strong></div>';
-        return redirect('/')->with('signUpMsg', $signUpMsg);
+        return redirect('/admissions/login')->with('signUpMsg', $signUpMsg);
     }
     // End of Registration Function
 
@@ -114,6 +116,12 @@ class ApplicantController extends Controller
         ->leftJoin('remitas', 'remitas.user_id', '=', 'users.id')
         ->select('users.*', 'usersbiodata.status', 'usersbiodata.user_id', 'remitas.status_code', 'remitas.fee_type', 'remitas.amount')
         ->get();
+        if ($users->isEmpty()) {
+            // Email not found in database
+            $loginMsg = '<div class="alert alert-danger alert-dismissible" role="alert"> <button type="button" class="close" data-dismiss="alert"> &times; </button>  Wrong Email  </div>';
+            return redirect('/admissions/login')->with('loginMsg', $loginMsg);
+        }
+
         // $admission = DB::table('users') -> where('users.id', session('userid'))->get();
         if ($users) {
 
@@ -157,7 +165,9 @@ class ApplicantController extends Controller
                 }
             }
 
-            //  if (Hash::check($request->password, $admin->password)) {
+                // To check if the email entered is our db
+
+                // to check password
             if (Hash::check($request->password, $users->password)) {
 
                 if ($users->email_verified_at != null) {
@@ -190,15 +200,15 @@ class ApplicantController extends Controller
                 } else {
                     $loginMsg = '<div class="alert alert-danger alert-dismissible" role="alert"> <button type="button" class="close" data-dismiss="alert"> &times; </button>  Your Acount have not been Activated, Kindly Check your Mail to Verify your Account </div>';
 
-                    return redirect('/')->with('loginMsg', $loginMsg);
+                    return redirect('/admissions/login')->with('loginMsg', $loginMsg);
                 }
             } else {
-                $loginMsg = '<div class="alert alert-danger alert-dismissible" role="alert"> <button type="button" class="close" data-dismiss="alert"> &times; </button>  Wrong Email or Password </div>';
-                return redirect('/')->with('loginMsg', $loginMsg);
+                $loginMsg = '<div class="alert alert-danger alert-dismissible" role="alert"> <button type="button" class="close" data-dismiss="alert"> &times; </button>  Wrong  Password </div>';
+                return redirect('/admissions/login')->with('loginMsg', $loginMsg);
             }
         } {
             $loginMsg = '<div class="alert alert-danger alert-dismissible"><button type="button" class="close" data-dismiss="alert">&times;</button><strong>Error!</strong> Wrong email or password</div>';
-            return redirect('/')->with('loginMsg', $loginMsg);
+            return redirect('/admissions/login')->with('loginMsg', $loginMsg);
         }
         //echo $jsonstring;
     }
@@ -264,7 +274,7 @@ class ApplicantController extends Controller
                 ]);
 
             $signUpMsg = '<div class="alert alert-success alert-dismissible"><button type="button" class="close" data-dismiss="alert">&times;</button><strong>Success!</strong> Your Password Reset was Successfull</div>';
-            return redirect('/')->with('signUpMsg', $signUpMsg);
+            return redirect('/admissions/login')->with('signUpMsg', $signUpMsg);
         } else {
             $signUpMsg = '<div class="alert alert-danger alert-dismissible"><button type="button" class="close" data-dismiss="alert">&times;</button><strong>Error!</strong> Password mismatched</div>';
             return redirect('/forgotpasswordSetNew')->with('signUpMsg', $signUpMsg);
@@ -375,6 +385,21 @@ class ApplicantController extends Controller
 
    public function payremi(Request $req)
     {
+        $user_id =  session('userid');
+
+        // Count the number of unpaid RRRs with status code 025 for the student
+        $unpaid_rrr_count = DB::table('remitas')
+            ->where('user_id', $user_id)
+            ->where('status_code', '025')
+            ->count();
+
+        if ($unpaid_rrr_count >= 5) {
+            // The student has already created 5 or more unpaid RRRs, so don't insert a new RRR
+            $json = array('success' => false, 'route' => '/home', 'msg' => 'You have reached the maximum number of unpaid Generated RRRs, Please pay your outstanding RRR before generating a new RRR. Visit ICT Unit or Bursary .');
+            $jsonstring = json_encode($json, JSON_HEX_TAG);
+            echo $jsonstring;
+            return;
+        }
         // DB::beginTransaction();
         try {
             DB::table('remitas')->insert([
@@ -417,7 +442,46 @@ class ApplicantController extends Controller
             ->orderBy('status_code', 'ASC')->orderBy('created_at', 'DESC')
             ->get();
 
-        return view('admissions.paymentview', compact('viewpayment'));
+            $verifyResponse = $this->verifyRRRALL();
+
+        return view('admissions.paymentview', compact('viewpayment', 'verifyResponse'));
+    }
+
+    public function verifyRRRALL()
+    {
+        $remitas = Remitas::where('user_id', session('userid'))
+            ->where('status_code', '025')
+            ->get();
+
+        $response = [];
+
+        foreach ($remitas as $remita) {
+            $verifyResponse = $remita->verifyRRR();
+
+            if ($verifyResponse->status == "00") {
+                $remita->status_code = "01";
+                $remita->status = "Payment Successful";
+                $update = "RRR " . $remita->rrr . " payment verified.";
+            } else {
+                $remita->status_code = "025";
+                $remita->status = "Payment Reference generated";
+                $update = "RRR " . $remita->rrr . " Pending or NOT PAID.";
+            }
+
+            try {
+                $remita->save();
+                $response[] = $update;
+
+            } catch (\Exception $e) {
+                $error = "Error Verifying RRR. Please contact ICT.";
+                $response[] = $error;
+            }
+        }
+
+        // return redirect()->back()
+        // ->with('success', json_encode($response))->with('timeout', 5000);
+        return $response;
+
     }
 
     //REMITA PAYMENT FOR ACCEPTANCE FEE
@@ -438,6 +502,21 @@ class ApplicantController extends Controller
     }
     public function payremiacceptance(Request $req)
     {
+        $user_id =  session('userid');
+
+        // Count the number of unpaid RRRs with status code 025 for the student
+        $unpaid_rrr_count = DB::table('remitas')
+            ->where('user_id', $user_id)
+            ->where('status_code', '025')
+            ->count();
+
+        if ($unpaid_rrr_count >= 5) {
+            // The student has already created 5 or more unpaid RRRs, so don't insert a new RRR
+            $json = array('success' => false, 'route' => '/home', 'msg' => 'You have reached the maximum number of unpaid Generated RRRs, Please pay your outstanding RRR before generating a new RRR. Visit ICT Unit or Bursary .');
+            $jsonstring = json_encode($json, JSON_HEX_TAG);
+            echo $jsonstring;
+            return;
+        }
         try {
             DB::table('remitas')->insert([
                 'user_id' => session('userid'),

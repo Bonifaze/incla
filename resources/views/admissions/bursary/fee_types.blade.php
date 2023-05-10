@@ -92,7 +92,7 @@ if(!session('adminId'))
                                             <th>Provider Code</th>
                                             <th>Provider</th>
                                             <th>Total</th>
-                                            <th>Balance</th>
+                                            {{--  <th>Balance</th>  --}}
                                             <th>Action</th>
 
 
@@ -121,14 +121,14 @@ if(!session('adminId'))
                                                     <td>{{ $fee->provider_code }}</td>
                                                     <td>{{ $fee->provider }}</td>
                                                     <td> &#8358;{{ number_format($fee->paidRemitas->sum('amount')) }}</td>
-                                                      @if($fee->installment == 1)
+                                                      {{--  @if($fee->installment == 1)
                                                     <td>&#8358;0</td>
                                                        @else
                                                                  @php
                                       $tatolAmount1 += $fee->paidRemitas->sum('amount');
                                    @endphp
                                                     <td>&#8358;{{ number_format($fee->paidRemitas->sum('amount')) }}</td>
-                                                      @endif
+                                                      @endif  --}}
                                                     <td> <a class="btn btn-success" target="_blank"
                                                             href="{{ route('remita.fee-type', $fee->id) }}"> Show </a></td>
 
@@ -141,10 +141,10 @@ if(!session('adminId'))
                                         <td ></td>
                                         <td></td>
                                        <td><strong>&#8358;{{ number_format(  $tatolAmount)}} </strong></td>
-                                        <td><strong>&#8358;{{ number_format(  $tatolAmount1)}} </strong></td>
+                                        {{--  <td><strong>&#8358;{{ number_format(  $tatolAmount1)}} </strong></td>
                                                      @php
                                       $tatolBal =$tatolAmount - $tatolAmount1;
-                                   @endphp
+                                   @endphp  --}}
                                    <td></td>
                                         {{--  <td>&#8358;{{ number_format( $tatolBal) }}</td>  --}}
 
