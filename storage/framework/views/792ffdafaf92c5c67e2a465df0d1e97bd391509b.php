@@ -61,35 +61,36 @@
                         <body>
                             <div class="container p-4">
                                 <?php echo $__env->make('partialsv3.flash', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
-                                  <?php if(session('signUpMsg')): ?>
-                        <?php echo session('signUpMsg'); ?>
+                                <?php if(session('signUpMsg')): ?>
+                                    <?php echo session('signUpMsg'); ?>
 
-                    <?php endif; ?>
+                                <?php endif; ?>
                                 
 
                                 <div class="table-responsive">
                                     <table class="table table-hover shadow m-1 mb-5">
 
                                         <thead></thead>
-                                            <tr>
-                                                <th scope="col">S/N</th>
-                                                <th scope="col">RRR</th>
-                                                <th colspan="2">Action</th>
-                                                <th scope="col">Amount</th>
-                                                <th scope="col">Status</th>
-                                                <th scope="col">Description</th>
-                                                <th scope="col">Date</th>
-                                                
-                                                
-                                                
+                                        <tr>
+                                            <th scope="col">S/N</th>
+                                            <th scope="col">RRR</th>
+                                            <th colspan="2">Action</th>
+                                            <th scope="col">Amount</th>
+                                            <th scope="col">Status</th>
+                                            <th scope="col">Description</th>
+                                            <th scope="col">Date</th>
+                                            <th>Action</th>
+                                            
+                                            
+                                            
 
-                                            </tr>
+                                        </tr>
                                         </thead>
                                         <tbody class="">
-                                        <?php
-$totalPaid = 0;
-$paidRRNs = [];
-?>
+                                            <?php
+                                                $totalPaid = 0;
+                                                $paidRRNs = [];
+                                            ?>
                                             <?php $__currentLoopData = $viewpayment; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $key => $utm): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                                 <tr></tr>
                                                 <td><?php echo e($key + 1); ?></td>
@@ -99,38 +100,37 @@ $paidRRNs = [];
                                                         $utm->rrr .
                                                         '" button class="btn btn-success "><i class="fas fa-print text-white-50"></i> Print Receipt</a>'
                                                     : '
-                                                         <form onsubmit="makePayment()" id="payment-form">
-                                                       <div class="btn btn-success px-3"> <i class="fas fa-credit-card text-white-50"></i>
-                                                      <input type="hidden" class="form-control" id="js-rrr" value="' .
+                                                                                                         <form onsubmit="makePayment()" id="payment-form">
+                                                                                                       <div class="btn btn-success px-3"> <i class="fas fa-credit-card text-white-50"></i>
+                                                                                                      <input type="hidden" class="form-control" id="js-rrr" value="' .
                                                         $utm->rrr .
                                                         '" name="rrr" />
-                                                         <input type="button" onclick="makePayment(' .
+                                                                                                         <input type="button" onclick="makePayment(' .
                                                         $utm->rrr .
                                                         ')" value="Pay" button class="btn btn-success"/>
-                                                 </div>
-                                                 </form>'; ?>
-
-                                                 </td>
-                                                  <?php if($utm->status_code == '01'): ?>
-                                                    <td class="text-bold"> PAID </td>
-                                                     <?php
-            $totalPaid += $utm->amount;
-            array_push($paidRRNs, $utm->rrr);
-            ?>
-                                                <?php else: ?>
-
-                                                <td>  NOT PAID
-                                                    <?php echo Form::open(['method' => 'Post', 'route' => 'student.remita-verify', 'id' => 'verifyRemita' . $utm->id]); ?>
-
-                                                    <?php echo e(Form::hidden('remita_id', $utm->id)); ?>
-
-                                                    <button type="submit"
-                                                        class=" <?php echo e($utm->id); ?> btn btn-primary invisible">
-
-                                                        Verify</button>
-                                                    <?php echo Form::close(); ?>
+                                                                                                 </div>
+                                                                                                 </form>'; ?>
 
                                                 </td>
+                                                <?php if($utm->status_code == '01'): ?>
+                                                    <td class="text-bold"> PAID </td>
+                                                    <?php
+                                                        $totalPaid += $utm->amount;
+                                                        array_push($paidRRNs, $utm->rrr);
+                                                    ?>
+                                                <?php else: ?>
+                                                    <td> NOT PAID
+                                                        <?php echo Form::open(['method' => 'Post', 'route' => 'student.remita-verify', 'id' => 'verifyRemita' . $utm->id]); ?>
+
+                                                        <?php echo e(Form::hidden('remita_id', $utm->id)); ?>
+
+                                                        <button type="submit"
+                                                            class=" <?php echo e($utm->id); ?> btn btn-primary invisible">
+
+                                                            Verify</button>
+                                                        <?php echo Form::close(); ?>
+
+                                                    </td>
                                                 <?php endif; ?>
                                                 <td>&#8358;<?php echo e(number_format($utm->amount, 2)); ?></td>
                                                 <td><?php echo e($utm->status); ?></td>
@@ -138,96 +138,134 @@ $paidRRNs = [];
                                                 <td><?php echo e(\Carbon\Carbon::parse($utm->created_at)->format('d/m/Y')); ?></td>
                                                 
                                                 </td>
+                                                <td>  <?php if($utm->status_code == '01'): ?>
+                                                <td></td>
+                                                 <?php else: ?>
+                                                    <form
+                                                        action="<?php echo e(route('remita.find-studentunpaidrrr.destroy', $utm->id)); ?>"
+                                                        method="POST">
+                                                        <?php echo csrf_field(); ?>
+                                                        <?php echo method_field('DELETE'); ?>
+                                                        <button type="button" class="btn btn-danger" data-bs-toggle="modal"
+                                    data-bs-target="#myModal"> <i
+                                                                class="fas fa-solid fa-trash"  ></i> Delete</button>
+                                                                 <div class="modal" id="myModal">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
 
+                                    <!-- Modal Header -->
+                                    <div class="modal-header">
+                                        <h4 class="modal-title bold">Are you sure you want to delete this RRR?</h4>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                                    </div>
 
+                                    <!-- Modal body -->
+                                    <div class="modal-body">
+                                        Please confirm that you are deleting the RRR and ensure that the payment status is not pending.
+                                    </div>
+
+                                    <!-- Modal footer -->
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn fw-bolder text-danger"
+                                            data-bs-dismiss="modal">Go Back</button>
+                                        <button type="submit" class="btn btn-success"
+                                            data-bs-dismiss="modal">Proceed</button>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                                                    </form>
+                                                </td>
+                                                  <?php endif; ?>
                                             <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                                             </tr>
-<tr>
-    <td colspan="4" class="text-right text-bold">Total Paid Amount:</td>
-    <td class="text-bold">&#8358;<?php echo e(number_format($totalPaid, 2)); ?></td>
-    
-</tr>
+                                            <tr>
+                                                <td colspan="4" class="text-right text-bold">Total Paid Amount:</td>
+                                                <td class="text-bold">&#8358;<?php echo e(number_format($totalPaid, 2)); ?></td>
+                                                
+                                            </tr>
                                         </tbody>
 
                                     </table>
                                 </div>
                             </div>
                             <script type="text/javascript" src="https://login.remita.net/payment/v1/remita-pay-inline.bundle.js"></script>
-                    </script>
+                            </script>
 
-                    <script>
-  //script to make payment
-                        function makePayment(rrr) {
-                            // var form = document.querySelector("#payment-form");
-                            var paymentEngine = RmPaymentEngine.init({
-                                key: "QzAwMDAzOTk0NDd8ODQzNDM3NzU2MHxjZTQ3ZDdiMGEzYTI3MGQ1MTBhZDRjZjc3Y2ZkNTMxZTU0YzEwMWViNDUyNDY3MDA1ODhjOTNiZGFmMzI3OWJkMzU4MThjYjRhNzQxOGY1YjFkMDMyYWZhMDA0NjJlMzliOGQxZjI5ZDRjYjA3YWMwNjMxZGMxOWE1Mjk5NDY2ZA==",
-                                processRrr: true,
+                            <script>
+                                //script to make payment
+                                function makePayment(rrr) {
+                                    // var form = document.querySelector("#payment-form");
+                                    var paymentEngine = RmPaymentEngine.init({
+                                        key: "QzAwMDAzOTk0NDd8ODQzNDM3NzU2MHxjZTQ3ZDdiMGEzYTI3MGQ1MTBhZDRjZjc3Y2ZkNTMxZTU0YzEwMWViNDUyNDY3MDA1ODhjOTNiZGFmMzI3OWJkMzU4MThjYjRhNzQxOGY1YjFkMDMyYWZhMDA0NjJlMzliOGQxZjI5ZDRjYjA3YWMwNjMxZGMxOWE1Mjk5NDY2ZA==",
+                                        processRrr: true,
 
-                                extendedData: {
-                                    customFields: [{
-                                        name: "rrr",
-                                        value: rrr //form.querySelector('input[name="rrr"]').value
-                                    }]
-                                },
-                                onSuccess: function(response) {
-                                    console.log('callback Successful Response', response);
-                                    logPayment(response, rrr);
-                                },
-                                onError: function(response) {
-                                    console.log('callback Error Response', response);
-                                },
-                                onClose: function() {
-                                    console.log("closed");
+                                        extendedData: {
+                                            customFields: [{
+                                                name: "rrr",
+                                                value: rrr //form.querySelector('input[name="rrr"]').value
+                                            }]
+                                        },
+                                        onSuccess: function(response) {
+                                            console.log('callback Successful Response', response);
+                                            logPayment(response, rrr);
+                                        },
+                                        onError: function(response) {
+                                            console.log('callback Error Response', response);
+                                        },
+                                        onClose: function() {
+                                            console.log("closed");
+                                        }
+                                    });
+                                    paymentEngine.showPaymentWidget();
                                 }
-                            });
-                            paymentEngine.showPaymentWidget();
-                        }
 
-                        //handle payment from remita
-                        function logPayment(pmtJson, rrr) {
-                            //  alert(pmtJson.paymentReference);
-                            var pmtObj = pmtJson; //JSON.parse(pmtJson);
+                                //handle payment from remita
+                                function logPayment(pmtJson, rrr) {
+                                    //  alert(pmtJson.paymentReference);
+                                    var pmtObj = pmtJson; //JSON.parse(pmtJson);
 
-                            var orderRef = pmtObj.paymentReference;
-                            var transaction_id = pmtObj.transactionId;
-                            var statuscode = "01";
-                            var rrr = rrr;
-                            var status = "Payment Successful";
+                                    var orderRef = pmtObj.paymentReference;
+                                    var transaction_id = pmtObj.transactionId;
+                                    var statuscode = "01";
+                                    var rrr = rrr;
+                                    var status = "Payment Successful";
 
-                            var data = new TextEncoder().encode(JSON.stringify({
-                                "orderRef": orderRef, // Where the error was
-                                "statuscode": statuscode,
-                                "rrr": rrr,
-                                "status": status,
-                                "transaction_id": transaction_id,
-                            }));
+                                    var data = new TextEncoder().encode(JSON.stringify({
+                                        "orderRef": orderRef, // Where the error was
+                                        "statuscode": statuscode,
+                                        "rrr": rrr,
+                                        "status": status,
+                                        "transaction_id": transaction_id,
+                                    }));
 
-                            var xhr = new XMLHttpRequest();
-                            xhr.withCredentials = true;
+                                    var xhr = new XMLHttpRequest();
+                                    xhr.withCredentials = true;
 
-                            xhr.addEventListener("readystatechange", function() {
-                                if (this.readyState === 4 && this.status == 200) {
-                                    // alert(this.responseText);
-                                    console.log(this.responseText);
-                                    var jsonObj = JSON.parse(this.responseText);
-                                    if (jsonObj.success) {
-                                        window.location.replace(jsonObj.route + jsonObj.id);
-                                    } else {
-                                        // alert(jsonObj.msg);
-                                        // window.location.replace(jsonObj.route);
-                                        alert("An error occured while logging your payment, please contact Veritas Bursary");
-                                    }
+                                    xhr.addEventListener("readystatechange", function() {
+                                        if (this.readyState === 4 && this.status == 200) {
+                                            // alert(this.responseText);
+                                            console.log(this.responseText);
+                                            var jsonObj = JSON.parse(this.responseText);
+                                            if (jsonObj.success) {
+                                                window.location.replace(jsonObj.route + jsonObj.id);
+                                            } else {
+                                                // alert(jsonObj.msg);
+                                                // window.location.replace(jsonObj.route);
+                                                alert("An error occured while logging your payment, please contact Veritas Bursary");
+                                            }
+
+                                        }
+                                    });
+                                    xhr.open("POST", "/students/logpay", true);
+                                    xhr.setRequestHeader("Content-Type", "application/json; charset=utf-8");
+                                    //xhr.setRequestHeader("Authorization", 'remitaConsumerKey=' + merchantId + ',remitaConsumerToken=' + apiHash)
+
+                                    xhr.send(data);
 
                                 }
-                            });
-                            xhr.open("POST", "/students/logpay", true);
-                            xhr.setRequestHeader("Content-Type", "application/json; charset=utf-8");
-                            //xhr.setRequestHeader("Authorization", 'remitaConsumerKey=' + merchantId + ',remitaConsumerToken=' + apiHash)
-
-                            xhr.send(data);
-
-                        }
-                    </script>
+                            </script>
 
 
 
@@ -260,10 +298,6 @@ $paidRRNs = [];
 
 <?php $__env->startSection('pagescript'); ?>
     <script src="<?php echo asset('dist/js/bootbox.min.js'); ?>"></script>
-
-
-
-
 <?php $__env->stopSection(); ?>
 
 <?php echo $__env->make('layouts.student', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH /Users/lifeofrence/Documents/laraproject/resources/views/students/paymentview.blade.php ENDPATH**/ ?>

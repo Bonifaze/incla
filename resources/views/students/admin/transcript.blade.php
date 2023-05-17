@@ -59,7 +59,7 @@
                              </td>
                             <td colspan="2" align="center"><strong>LEVEL</strong>:
                              {{ $session->registered_courses1->last()?->level }}
-                            //   {{ $session->registered_courses1->max('level') }}
+                             {{--  {{ $session->registered_courses1->max('level') }}  --}}
                              </td>
                             <td colspan="2"><strong>SEMESTER</strong>:
                         {{--  {{ $session->registered_courses1->first()?->semester }}  --}}
@@ -93,7 +93,12 @@
                              <td width="23%"><div align="center"><span style="font-weight: bold">{{ $result->course_title }} </span></div></td>
                            <td width="14%"><div align="center"><span style="font-weight: bold">{{ $result->course_unit }} </span></div></td>
                             <td width="13%"><div align="center"><span style="font-weight: bold">{{ $result->total }}</span></div></td>
+                            {{--  @if ($academic->program->id == 22 && $result->total<50 )  --}}
+                       {{--  <td width="17%"><div align="center"><span style="font-weight: bold">F</span></div></td>  --}}
+                            {{--  @else  --}}
                             <td width="17%"><div align="center"><span style="font-weight: bold">{{ $result->grade }}</span></div></td>
+
+                            @endif
                             <td width="13%"><div align="center"><span style="font-weight: bold">{{ $result->grade_status }}</span></div></td>
                           </tr>
                          @endforeach

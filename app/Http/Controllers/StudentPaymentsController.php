@@ -58,7 +58,8 @@ class StudentPaymentsController extends Controller
 
         if ($unpaid_rrr_count >= 5) {
             // The student has already created 5 or more unpaid RRRs, so don't insert a new RRR
-            $json = array('success' => false, 'route' => '/students/remita/feestype', 'msg' => 'You have reached the maximum number of unpaid Generated RRRs, Please pay your outstanding RRR before generating a new RRR. Visit ICT Unit or Bursary .');
+            // $json = array('success' => false, 'route' => '/students/remita/feestype', 'msg' => 'You have reached the maximum number of unpaid Generated RRRs, Please pay your outstanding RRR before generating a new RRR. Visit ICT Unit or Bursary .');
+            $json = array('success' => false, 'route' => '/students/remita/feestype', 'msg' => 'You have reached the maximum number of unpaid Generated RRRs, Please pay your outstanding RRR before generating a new RRR. Go to View Remita Payment and Delete unpaid RRR .');
             $jsonstring = json_encode($json, JSON_HEX_TAG);
             echo $jsonstring;
             return;

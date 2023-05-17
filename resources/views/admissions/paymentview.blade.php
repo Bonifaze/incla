@@ -47,6 +47,7 @@
                                     <th scope="col">Status</th>
                                     <th scope="col">Description</th>
                                     <th scope="col">Date</th>
+                                    <th scope="col">Action</th>
                                     {{--  <th scope="col">Payment</th>  --}}
                                     {{--  <th scope="col">Action</th>  --}}
                                     {{--  <th scope="col">Verify</th>  --}}
@@ -101,6 +102,46 @@
                                         <td>{{ \Carbon\Carbon::parse($utm->created_at)->format('d/m/Y') }}</td>
                                         {{--  <td>{{ $utm->status_code == '01' ? 'PAID' : 'NOT PAID' }}  --}}
                                         </td>
+                                         <td>  @if ($utm->status_code == '01')
+                                                <td></td>
+                                                 @else
+                                                    <form
+                                                        action="{{ route('remita.find-studentunpaidrrr.destroy', $utm->id) }}"
+                                                        method="POST">
+                                                        @csrf
+                                                        @method('DELETE')
+                                                        <button type="button" class="btn btn-danger" data-bs-toggle="modal"
+                                    data-bs-target="#myModal"> <i
+                                                                class="fas fa-solid fa-trash"  ></i> Delete</button>
+                                                                 <div class="modal" id="myModal">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+
+                                    <!-- Modal Header -->
+                                    <div class="modal-header">
+                                        <h4 class="modal-title bold">Are you sure you want to delete this RRR?</h4>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                                    </div>
+
+                                    <!-- Modal body -->
+                                    <div class="modal-body">
+                                       Please confirm that you are deleting the RRR and ensure that the payment status is not pending.
+                                    </div>
+
+                                    <!-- Modal footer -->
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn fw-bolder text-danger"
+                                            data-bs-dismiss="modal">Go Back</button>
+                                        <button type="submit" class="btn btn-success"
+                                            data-bs-dismiss="modal">Proceed</button>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                                                    </form>
+                                                </td>
+                                                  @endif
                                     @endforeach
                                     </tr>
                                     <tr>

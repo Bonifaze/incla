@@ -37,13 +37,29 @@
 
                                     <th>S/N</th>
                                     
+                                      <th>Passport</th>
                                     <th>Name</th>
                                     <th>Phone</th>
                                     <th>Matric No</th>
                                     <th>Parents Name</th>
                                     <th>Parents Email</th>
                                     <th>Parents Phone</th>
-                                    <th>Registered Courses</th>
+                                     <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('viewcourseform', 'App\StudentResult')): ?>
+                                        <th>Registered Courses</th>
+                                    <?php else: ?>
+                                        <th></th>
+                                    <?php endif; ?>
+                                      <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('view', 'App\Student')): ?>
+                                        <th colspan="2">Action</th>
+                                    <?php else: ?>
+                                        <th></th>
+                                    <?php endif; ?>
+                                    <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('transcript', 'App\Student')): ?>
+                                        <th>Transcript</th>
+                                    <?php else: ?>
+                                        <th></th>
+                                    <?php endif; ?>
+                                     
                                 </thead>
 
 
@@ -51,8 +67,17 @@
 
                                     <?php $__currentLoopData = $students; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $key => $student): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                         <tr>
-                                            <td><?php echo e($key + $students->firstItem()); ?>.</td>
+
+
                                             
+                                                   <td><?php echo e($key + $students->firstItem()); ?>.</td>
+                                               <td>
+                                                <a href="data:image/png;base64,<?php echo e($student->passport); ?>"
+                                                    data-toggle="lightbox" data-title="Passport">
+                                                    <img src="data:image/png;base64,<?php echo e($student->passport); ?>"
+                                                        class="img elevation-2" alt="Passport" width="50px">
+                                                </a>
+                                            </td>
                                             <td><?php echo e($student->full_name); ?></td>
                                             <td><?php echo e($student->phone); ?></td>
                                             <?php if($student->academic): ?>
@@ -64,6 +89,28 @@
                                             <td><a class="btn btn-primary"
                                                     href="<?php echo e(route('result.coursesReg_student', $student->id)); ?>"> Show
                                                     Courses</a></td>
+                                                      <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('view', 'App\Student')): ?>
+                                                <td><a class="btn btn-default" href="<?php echo e(route('student.view', $student->id)); ?>">
+                                                        <i class="fa fa-eye"></i>View</a></td>
+                                            <?php else: ?>
+                                                <td></td>
+                                            <?php endif; ?>
+                                            <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('show', 'App\Student')): ?>
+                                                <td><a class="btn btn-primary" href="<?php echo e(route('student.show', $student->id)); ?>">
+                                                        <i class="fa fa-eye"></i>Edit</a></td>
+                                            <?php else: ?>
+                                                <td></td>
+                                            <?php endif; ?>
+
+                                            <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('transcript', 'App\Student')): ?>
+                                                <td><a class="btn btn-info"
+                                                        href="<?php echo e(route('student.transcript', base64_encode($student->id))); ?>"
+                                                        target="_blank"> <i class="fa fa-eye"></i> Transcript</a></td>
+                                            <?php else: ?>
+                                                <td></td>
+                                            <?php endif; ?>
+
+                                            
 
                                         </tr>
                                     <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
