@@ -330,7 +330,7 @@
                                         <td>{{ $loop->iteration }}</td>
                                         <td>{{ $audit->staff->full_name ?? null }}</td>
                                         <td>{{ $audit->rrr }}</td>
-                                        <td>{{ $audit->feeType->name }}</td>
+                                        <td>{{ $audit->feeType->name ?? null }}</td>
                                         {{--  <td>{{ $audit->session }}</td>  --}}
 
 

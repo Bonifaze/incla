@@ -50,15 +50,15 @@ if(!session('userid'))
                 <tr>
                     <td><b>RRR: </b>{{ $receipt->rrr}}</td>
                     <td><b>Service: </b>{{ $receipt->fee_type}}</td>
-                    <td><b>Amount: </b>{{ $receipt->amount}} </td>
+                        <td><b>Amount: </b>&#8358;{{ number_format($receipt->amount, 2)}} </td>
                     <td><b>Bank: </b> Unknown</td>
 
                 </tr>
                 <tr>
                     <td><b>Channel: </b>{{ $receipt->channel}} </td>
                     <td><b>Order: </b> {{ $receipt->order_ref}}</td>
-                    <td><b>RRR Date: </b> {{ $receipt->created_at}}</td>
-                    <td><b>Payment Date: </b> {{ $receipt->transaction_date}}</td>
+                    <td><b>RRR Date: </b> {{ \Carbon\Carbon::parse($receipt->created_at)->format('d-m-Y') }}</td>
+                    <td><b>Payment Date: </b> {{ \Carbon\Carbon::parse($receipt->updated_at)->format('d-m-Y') }}</td>
                 </tr>
             </tbody>
         </table>

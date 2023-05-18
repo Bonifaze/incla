@@ -1,7 +1,7 @@
 <?php $__env->startSection('pagetitle'); ?>
 <!-- CSRF Token -->
     <meta name="csrf-token" content="<?php echo e(csrf_token()); ?>">
-    
+
 <title><?php echo e($student->full_name); ?> Remita Payment</title>
 
 <?php $__env->stopSection(); ?>
@@ -19,7 +19,7 @@
       </tr>
     </table>
       <table width="100%" border="0">
-      
+
         <tr>
           <td><strong>Name of Student: <?php echo e($student->full_name); ?> </strong></td>
           <td><strong>  Matric. No.: <?php echo e($academic->mat_no); ?> </strong></td>
@@ -41,14 +41,14 @@
           <td>&nbsp;</td>
         </tr>
       </table>
-      
 
-  
+
+
         <table width="100%" height="87" border="1" cellpadding="0" cellspacing="0">
                           <tr>
                             <td colspan="3"><strong>RRR</strong>: <?php echo e($remita->rrr); ?></td>
                             <td colspan="2" align="center"><strong>Service</strong>: <?php echo e($feeType->name); ?> </td>
-                            <td colspan="2"><strong>Amount</strong>: &#8358;<?php echo e(number_format($remita->amount)); ?></td>
+                            <td colspan="2"><strong>Amount</strong>: &#8358;<?php echo e(number_format($remita->amount, 2)); ?></td>
                           </tr>
                         <tr>
                             <td colspan="3"><strong>Bank</strong>: <?php echo e($remita->bankName($remita->bank_code)); ?></td>
@@ -57,8 +57,8 @@
                         </tr>
                         <tr>
                             <td colspan="3"><strong>RRR Date</strong>: <?php echo e($remita->created_at->format('d-M-Y')); ?></td>
-                            <td colspan="2" align="center"><strong>Payment Date</strong>: <?php echo e($remita->transaction_date); ?> </td>
-                            <td colspan="2"><strong>Updated On</strong>: <?php echo e($remita->updated_at->format('d-M-Y')); ?></td>
+                            <td colspan="2" align="center"><strong>Payment Date</strong>: <?php echo e(\Carbon\Carbon::parse($remita->created_at)->format('d-m-Y')); ?> </td>
+                            <td colspan="2"><strong>Updated On</strong>: <?php echo e(\Carbon\Carbon::parse($remita->updated_at)->format('d-m-Y')); ?></td>
                         </tr>
 
 
@@ -82,4 +82,5 @@
   </tr>
 </table>
 <?php $__env->stopSection(); ?>
+
 <?php echo $__env->make('layouts.plain', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH /Users/lifeofrence/Documents/laraproject/resources/views/bursary/remita_print.blade.php ENDPATH**/ ?>

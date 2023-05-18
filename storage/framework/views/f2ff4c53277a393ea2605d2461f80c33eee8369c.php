@@ -1,4 +1,12 @@
+<?php
 
+if(!session('userid'))
+{
+
+  header('location: /');
+  exit;
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -9,7 +17,7 @@
     <meta name="csrf-token" content="<?php echo e(csrf_token()); ?>">
     
 <link rel="shortcut icon" href="<?php echo e(asset('img/letter_logo.png')); ?>" >
-    <title><?php echo e($receipt->first_name." ".$receipt->middle_name." ".$receipt->surname); ?> REMITA RECEPT</title>
+    <title>Document</title>
     <!-- CSS only -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
 </head>
@@ -18,11 +26,7 @@
     <div class="container-fluid m-1">
 
         <div class="d-inline-flex">
-
-                    <img src="data:image/png;base64,<?php echo e(Auth::guard('student')->user()->passport); ?>"
-                        class="card-img-top mb-2 mx-3" alt="User Image" style="width: 50px;">
-
-            
+            <img class="card-img-top mb-2 mx-3" src="data:image/<?php echo e($receipt -> passport_type); ?>;base64,<?php echo e(base64_encode($receipt -> passport)); ?>" alt="Applicant Image" style="height: 70px; width:70px;">
             <h3 class="text-nowrap mx-5">Remita Payment Receipt</>
         </div>
 
@@ -46,7 +50,7 @@
                 <tr>
                     <td><b>RRR: </b><?php echo e($receipt->rrr); ?></td>
                     <td><b>Service: </b><?php echo e($receipt->fee_type); ?></td>
-                    <td><b>Amount: </b>&#8358;<?php echo e(number_format($receipt->amount, 2)); ?> </td>
+                        <td><b>Amount: </b>&#8358;<?php echo e(number_format($receipt->amount, 2)); ?> </td>
                     <td><b>Bank: </b> Unknown</td>
 
                 </tr>
@@ -67,4 +71,4 @@
     </script>
 </body>
 </html>
-<?php /**PATH /Users/lifeofrence/Documents/laraproject/resources/views/students/receipt.blade.php ENDPATH**/ ?>
+<?php /**PATH /Users/lifeofrence/Documents/laraproject/resources/views/admissions/receipt.blade.php ENDPATH**/ ?>

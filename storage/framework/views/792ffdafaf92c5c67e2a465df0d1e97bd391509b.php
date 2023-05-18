@@ -100,16 +100,16 @@
                                                         $utm->rrr .
                                                         '" button class="btn btn-success "><i class="fas fa-print text-white-50"></i> Print Receipt</a>'
                                                     : '
-                                                                                                         <form onsubmit="makePayment()" id="payment-form">
-                                                                                                       <div class="btn btn-success px-3"> <i class="fas fa-credit-card text-white-50"></i>
-                                                                                                      <input type="hidden" class="form-control" id="js-rrr" value="' .
+                                                                                                                                                         <form onsubmit="makePayment()" id="payment-form">
+                                                                                                                                                       <div class="btn btn-success px-3"> <i class="fas fa-credit-card text-white-50"></i>
+                                                                                                                                                      <input type="hidden" class="form-control" id="js-rrr" value="' .
                                                         $utm->rrr .
                                                         '" name="rrr" />
-                                                                                                         <input type="button" onclick="makePayment(' .
+                                                                                                                                                         <input type="button" onclick="makePayment(' .
                                                         $utm->rrr .
                                                         ')" value="Pay" button class="btn btn-success"/>
-                                                                                                 </div>
-                                                                                                 </form>'; ?>
+                                                                                                                                                 </div>
+                                                                                                                                                 </form>'; ?>
 
                                                 </td>
                                                 <?php if($utm->status_code == '01'): ?>
@@ -138,46 +138,23 @@
                                                 <td><?php echo e(\Carbon\Carbon::parse($utm->created_at)->format('d/m/Y')); ?></td>
                                                 
                                                 </td>
-                                                <td>  <?php if($utm->status_code == '01'): ?>
+                                                <td>
+                                                    <?php if($utm->status_code == '01'): ?>
                                                 <td></td>
-                                                 <?php else: ?>
+                                            <?php else: ?>
+                                                <td>
                                                     <form
                                                         action="<?php echo e(route('remita.find-studentunpaidrrr.destroy', $utm->id)); ?>"
                                                         method="POST">
                                                         <?php echo csrf_field(); ?>
                                                         <?php echo method_field('DELETE'); ?>
-                                                        <button type="button" class="btn btn-danger" data-bs-toggle="modal"
-                                    data-bs-target="#myModal"> <i
-                                                                class="fas fa-solid fa-trash"  ></i> Delete</button>
-                                                                 <div class="modal" id="myModal">
-                            <div class="modal-dialog">
-                                <div class="modal-content">
+                                                        <button type="submit" class="btn btn-danger" data-bs-toggle="modal"
+                                                            data-bs-target="#myModal"> <i class="fas fa-solid fa-trash"></i>
+                                                            Delete</button>
 
-                                    <!-- Modal Header -->
-                                    <div class="modal-header">
-                                        <h4 class="modal-title bold">Are you sure you want to delete this RRR?</h4>
-                                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-                                    </div>
-
-                                    <!-- Modal body -->
-                                    <div class="modal-body">
-                                        Please confirm that you are deleting the RRR and ensure that the payment status is not pending.
-                                    </div>
-
-                                    <!-- Modal footer -->
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn fw-bolder text-danger"
-                                            data-bs-dismiss="modal">Go Back</button>
-                                        <button type="submit" class="btn btn-success"
-                                            data-bs-dismiss="modal">Proceed</button>
-                                    </div>
-
-                                </div>
-                            </div>
-                        </div>
                                                     </form>
                                                 </td>
-                                                  <?php endif; ?>
+                                            <?php endif; ?>
                                             <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                                             </tr>
                                             <tr>
@@ -190,6 +167,36 @@
                                     </table>
                                 </div>
                             </div>
+                            <div class="modal" id="myModal">
+                                                            <div class="modal-dialog">
+                                                                <div class="modal-content">
+
+                                                                    <!-- Modal Header -->
+                                                                    <div class="modal-header">
+                                                                        <h4 class="modal-title bold">Are you sure you want
+                                                                            to delete this RRR?</h4>
+                                                                        <button type="button" class="btn-close"
+                                                                            data-bs-dismiss="modal"></button>
+                                                                    </div>
+
+                                                                    <!-- Modal body -->
+                                                                    <div class="modal-body">
+                                                                        Please confirm that you are deleting the RRR and
+                                                                        ensure that the payment status is not pending.
+                                                                    </div>
+
+                                                                    <!-- Modal footer -->
+                                                                    <div class="modal-footer">
+                                                                        <button type="button"
+                                                                            class="btn fw-bolder text-danger"
+                                                                            data-bs-dismiss="modal">Go Back</button>
+                                                                        <button type="submit" class="btn btn-success"
+                                                                            data-bs-dismiss="modal">Proceed</button>
+                                                                    </div>
+
+                                                                </div>
+                                                            </div>
+                                                        </div>
                             <script type="text/javascript" src="https://login.remita.net/payment/v1/remita-pay-inline.bundle.js"></script>
                             </script>
 

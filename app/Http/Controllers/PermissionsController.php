@@ -223,6 +223,7 @@ class PermissionsController extends Controller
         //->limit(20)
         //->get();
         $modify=RegisteredCourse::with(['staff','sessions'])->where('staff_id', '<>', '', 'and')
+        ->whereColumn('old_total', '!=', 'total')
         ->orderBy('updated_at','DESC')
        // ->limit(20)
         ->paginate(20);
@@ -260,6 +261,7 @@ class PermissionsController extends Controller
         ->paginate(2000);
         $modify=RegisteredCourse::with(['staff'])->where('staff_id', '<>', '', 'and')
         ->where('updated_at','>=',$start)->where('updated_at','<=',$end)
+        ->whereColumn('old_total', '!=', 'total')
         ->orderBy('updated_at','ASC')
        // ->limit(20)
         ->paginate(2000);
@@ -332,6 +334,7 @@ class PermissionsController extends Controller
         $session = new Session();
 
         $modify=RegisteredCourse::with(['staff','sessions'])->where('staff_id', '<>', '', 'and')
+        ->whereColumn('old_total', '!=', 'total')
         ->orderBy('updated_at','DESC')
        // ->limit(20)
         // ->paginate(10);
@@ -440,6 +443,7 @@ class PermissionsController extends Controller
         //->limit(20)
         //->get();
         $modify=RegisteredCourse::with(['staff','sessions'])->where('staff_id', '<>', '', 'and')
+        ->whereColumn('old_total', '!=', 'total')
         ->orderBy('updated_at','DESC')
        // ->limit(20)
         ->paginate(100);

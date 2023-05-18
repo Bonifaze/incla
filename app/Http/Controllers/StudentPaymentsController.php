@@ -184,6 +184,7 @@ class StudentPaymentsController extends Controller
 
         $receipt = DB::table('remitas')->where('rrr', $rrr)
             ->leftJoin('students', 'remitas.student_id', '=', 'students.id')
+            ->select('remitas.*','students.surname','students.first_name','students.middle_name','students.gender','students.email','students.phone',)
         // ->leftjoin('usersbiodata', 'usersbiodata.user_id', '=', 'users.id')
             ->first();
         return view('students.receipt', compact('receipt'));

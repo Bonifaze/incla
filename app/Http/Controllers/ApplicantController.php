@@ -588,7 +588,9 @@ class ApplicantController extends Controller
 
         $receipt = DB::table('remitas')->where('rrr', $rrr)
             ->leftJoin('users', 'remitas.user_id', '=', 'users.id')
-            ->leftjoin('usersbiodata', 'usersbiodata.user_id', '=', 'users.id')->first();
+            ->leftjoin('usersbiodata', 'usersbiodata.user_id', '=', 'users.id')
+            ->select('remitas.*','users.surname','users.first_name','usersbiodata.middle_name','usersbiodata.gender','usersbiodata.passport','usersbiodata.passport_type','users.email','users.phone',)
+            ->first();
         return view('admissions.receipt', compact('receipt'));
     }
 
