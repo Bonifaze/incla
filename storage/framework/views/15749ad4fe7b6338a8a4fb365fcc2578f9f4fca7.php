@@ -6,11 +6,11 @@
           <a href="https://www.veritas.edu.ng" class="text-success"> Veritas University ICT</a>.
         </strong>
         All rights reserved.
-        {{-- <img src="{{ asset('img/letter_logo1.png') }}" alt="" width="170" height="60" class="px-2"> --}}
+        
         <div class="float-right d-none d-sm-inline-block">
           <b>Version</b> 2.1
         </div>
       </div>
     </div>
   </div>
-</footer>
+</footer><?php /**PATH C:\Users\hp\Documents\WEB DEV\Work-VUNA\laraproject\resources\views/adminsials/footer.blade.php ENDPATH**/ ?>

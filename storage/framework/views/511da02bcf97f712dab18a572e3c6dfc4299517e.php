@@ -1,34 +1,34 @@
-@extends('layouts.adminsials')
 
 
 
-@section('pagetitle')
+
+<?php $__env->startSection('pagetitle'); ?>
 Home
-@endsection
+<?php $__env->stopSection(); ?>
 
 
 
 <!-- Sidebar Links -->
 
 <!-- Treeview -->
-@section('student-open')
+<?php $__env->startSection('student-open'); ?>
 menu-open
-@endsection
+<?php $__env->stopSection(); ?>
 
-@section('student')
+<?php $__env->startSection('student'); ?>
 active
-@endsection
+<?php $__env->stopSection(); ?>
 
 <!-- Page -->
-@section('home')
+<?php $__env->startSection('home'); ?>
 active
-@endsection
+<?php $__env->stopSection(); ?>
 
 <!-- End Sidebar links -->
 
 
 
-@section('content')
+<?php $__env->startSection('content'); ?>
 <div class="content-wrapper bg-white">
     <!-- Content Header (Page header) -->
     <!-- Main content -->
@@ -43,7 +43,7 @@ active
                 <div class="card shadow border border-success">
 
                     <div class="row p-5">
-                        @foreach ($admissiontype as $key => $session)
+                        <?php $__currentLoopData = $admissiontype; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $key => $session): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
 
 
                         <div class="col-xl-6 col-md-6 mb-4">
@@ -53,7 +53,7 @@ active
                                         <div class="col mr-2">
                                             <div class="h4 text-success" style="text-decoration: underline;">
 
-                                                <a href="{{ $session->route }}" class="text-success @yield('registration')">{{ $session->name }}</a>
+                                                <a href="<?php echo e($session->route); ?>" class="text-success <?php echo $__env->yieldContent('registration'); ?>"><?php echo e($session->name); ?></a>
 
                                             </div>
                                         </div>
@@ -64,15 +64,16 @@ active
                                 </div>
                             </div>
                         </div>
-                        @endforeach
+                        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                     </div>
                 </div>
             </div>
         </div>
     </section>
 </div>
-@endsection
+<?php $__env->stopSection(); ?>
 
-@section('pagescript')
+<?php $__env->startSection('pagescript'); ?>
 <script src="<?php echo asset('dist/js/bootbox.min.js'); ?>"></script>
-@endsection
+<?php $__env->stopSection(); ?>
+<?php echo $__env->make('layouts.adminsials', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH C:\Users\hp\Documents\WEB DEV\Work-VUNA\laraproject\resources\views/admissions/home.blade.php ENDPATH**/ ?>

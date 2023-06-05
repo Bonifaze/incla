@@ -33,7 +33,7 @@
                     </a>
                 </li>
 
-                <li class="nav-item has-treeview <?php echo $__env->yieldContent('staff-open'); ?>">
+                <li class="nav-item has-treeview <?php echo $__env->yieldContent('staff-opens'); ?>">
                     <a href="#" class="nav-link <?php echo $__env->yieldContent('staffs'); ?>">
                         <i class="nav-icon fas fa-user"></i>
                         <p>
@@ -49,7 +49,13 @@
                             </a>
                         </li>
 
-                     
+                        <li class="nav-item">
+                            <a href="<?php echo e(route('staff.roles')); ?>" class="nav-link <?php echo $__env->yieldContent('list-staff'); ?>">
+                                <i class="fas fa-list-alt nav-icon"></i>
+                                <p>My Roles</p>
+                            </a>
+                        </li>
+
 
                         <li class="nav-item">
                             <a href="<?php echo e(route('staff.password')); ?>" class="nav-link <?php echo $__env->yieldContent('staff-password'); ?>">
@@ -57,6 +63,7 @@
                                 <p>Change Password</p>
                             </a>
                         </li>
+                        
                     </ul>
                 </li>
 
@@ -142,7 +149,8 @@
                                     </a>
                                 </li>
                                 <li class="nav-item">
-                                    <a href="<?php echo e(route('program_course.create')); ?>" class="nav-link <?php echo $__env->yieldContent('exam-remark'); ?>">
+                                    <a href="<?php echo e(route('program_course.create')); ?>"
+                                        class="nav-link <?php echo $__env->yieldContent('exam-remark'); ?>">
                                         <i class="fa fa-plus nav-icon"></i>
                                         <p>Assign Course to Program </p>
                                     </a>
@@ -222,354 +230,371 @@
 
 
                             </ul>
-                            </ul>
+                    </ul>
 
-                        </li>
-
-
-                        
-
-                        <li class="nav-item has-treeview <?php echo $__env->yieldContent('results-open'); ?>">
-                            <a href="#" class="nav-link <?php echo $__env->yieldContent('results'); ?>">
-                                <i class="nav-icon fas fa-graduation-cap"></i>
-                                <p>
-                                    Admissions
-                                    <i class="right fas fa-angle-right"></i>
-                                </p>
-                            </a>
-                            <ul class="nav nav-treeview ml-4">
-                                <li class="nav-item">
-                                    <a href="<?php echo e(route('admissions.student.search')); ?>"
-                                        class="nav-link <?php echo $__env->yieldContent('faculties'); ?>">
-                                        <i class="fa fa-search nav-icon"></i>
-                                        <p>Search</p>
-                                    </a>
-                                </li>
-                              
-                                <li class="nav-item">
-                                    <a href="/adminallApplicants" class="nav-link <?php echo $__env->yieldContent('departments'); ?>">
-                                        <i class="fas fa-list-alt nav-icon"></i>
-                                        <p>All Applicant</p>
-                                    </a>
-                                </li>
-
-                                <li class="nav-item has-treeview <?php echo $__env->yieldContent('exam-officers-open'); ?> ">
-                                    <a href="#" class="nav-link <?php echo $__env->yieldContent('results'); ?>">
-                                        <i class="nav-icon fas fa-graduation-cap"></i>
-                                        <p>
-                                            Applicant Type
-                                            <i class="right fas fa-angle-left"></i>
-                                        </p>
-                                    </a>
-                                    <ul class="nav nav-treeview">
-                                        <li class="nav-item">
-                                            <a href="/adminutme" class="nav-link <?php echo $__env->yieldContent('exam-remark'); ?>">
-                                                <i class="fa fa-eye nav-icon"></i>
-                                                <p>UTME</p>
-                                            </a>
-                                        </li>
-                                        <li class="nav-item">
-                                            <a href="/adminde" class="nav-link <?php echo $__env->yieldContent('exam-remark'); ?>">
-                                                <i class="fa fa-eye nav-icon"></i>
-                                                <p>DIRECT ENTRY</p>
-                                            </a>
-                                        </li>
-                                        <li class="nav-item">
-                                            <a href="/admintransfer" class="nav-link <?php echo $__env->yieldContent('exam-download'); ?>">
-                                                <i class="fa fa-eye nav-icon"></i>
-                                                <p>TRANSFER</p>
-                                            </a>
-                                        </li>
-                                        <li class="nav-item">
-                                            <a href="/adminpg" class="nav-link <?php echo $__env->yieldContent('exam-download'); ?>">
-                                                <i class="fa fa-eye nav-icon"></i>
-                                                <p>Postgraduate</p>
-                                            </a>
-                                        </li>
-
-                                    </ul>
-                                </li>
-                            </ul>
-                        </li>
-
-                        <li class="nav-item has-treeview <?php echo $__env->yieldContent('results-open'); ?>">
-                            <a href="#" class="nav-link <?php echo $__env->yieldContent('results'); ?>">
-                                <i class="nav-icon fas fa-graduation-cap"></i>
-                                <p>
-                                    Student
-                                    <i class="right fas fa-angle-right"></i>
-                                </p>
-                            </a>
-                            <ul class="nav nav-treeview ml-4">
-                                <li class="nav-item">
-                                    <a href="<?php echo e(route('student.search')); ?>" class="nav-link <?php echo $__env->yieldContent('faculties'); ?>">
-                                        <i class="fa fa-search nav-icon"></i>
-                                        <p>Search</p>
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a href="<?php echo e(route('student.create')); ?>" class="nav-link <?php echo $__env->yieldContent('departments'); ?>">
-                                        <i class="fas fa-list-alt nav-icon"></i>
-                                        <p>Create</p>
-                                    </a>
-                                </li>
+                </li>
 
 
-                                <li class="nav-item has-treeview <?php echo $__env->yieldContent('exam-officers-open'); ?>">
-                                    <a href="#" class="nav-link <?php echo $__env->yieldContent('results'); ?>">
-                                        <i class="nav-icon fas fa-graduation-cap"></i>
-                                        <p>
-                                            list level
-                                            <i class="right fas fa-angle-left"></i>
-                                        </p>
-                                    </a>
-                                    <ul class="nav nav-treeview">
-                                        <li class="nav-item">
-                                            <a href="<?php echo e(route('student.list_level', 100)); ?>"
-                                                class="nav-link <?php echo $__env->yieldContent('exam-remark'); ?>">
-                                                <i class="fas fa-list-alt nav-icon"></i>
-                                                <p>100 L</p>
-                                            </a>
-                                        </li>
-                                        <li class="nav-item">
-                                            <a href="<?php echo e(route('student.list_level', 200)); ?>"
-                                                class="nav-link <?php echo $__env->yieldContent('exam-remark'); ?>">
-                                                <i class="fas fa-list-alt nav-icon"></i>
-                                                <p>200 L</p>
-                                            </a>
-                                        </li>
-                                        <li class="nav-item">
-                                            <a href="<?php echo e(route('student.list_level', 300)); ?>"
-                                                class="nav-link <?php echo $__env->yieldContent('exam-download'); ?>">
-                                                <i class="fas fa-list-alt nav-icon"></i>
-                                                <p>300 L</p>
-                                            </a>
-                                        </li>
-                                        <li class="nav-item">
-                                            <a href="<?php echo e(route('student.list_level', 400)); ?>"
-                                                class="nav-link <?php echo $__env->yieldContent('exam-download'); ?>">
-                                                <i class="fas fa-list-alt nav-icon"></i>
-                                                <p>400 L</p>
-                                            </a>
-                                        </li>
-                                        <li class="nav-item">
-                                            <a href="<?php echo e(route('student.list_level', 500)); ?>"
-                                                class="nav-link <?php echo $__env->yieldContent('exam-download'); ?>">
-                                                <i class="fas fa-list-alt nav-icon"></i>
-                                                <p>500 L</p>
-                                            </a>
-                                        </li>
-                                        <li class="nav-item">
-                                            <a href="<?php echo e(route('student.list_level', 600)); ?>"
-                                                class="nav-link <?php echo $__env->yieldContent('exam-download'); ?>">
-                                                <i class="fas fa-list-alt nav-icon"></i>
-                                                <p>600 L</p>
-                                            </a>
-                                        </li>
-                                        <li class="nav-item">
-                                            <a href="<?php echo e(route('student.list_level', 700)); ?>"
-                                                class="nav-link <?php echo $__env->yieldContent('exam-download'); ?>">
-                                                <i class="fas fa-list-alt nav-icon"></i>
-                                                <p>PGD</p>
-                                            </a>
-                                        </li>
-                                        <li class="nav-item">
-                                            <a href="<?php echo e(route('student.list_level', 800)); ?>"
-                                                class="nav-link <?php echo $__env->yieldContent('exam-download'); ?>">
-                                                <i class="fas fa-list-alt nav-icon"></i>
-                                                <p> Masters </p>
-                                            </a>
-                                        </li>
-                                        <li class="nav-item">
-                                            <a href="<?php echo e(route('student.list_level', 900)); ?>"
-                                                class="nav-link <?php echo $__env->yieldContent('exam-download'); ?>">
-                                                <i class="fas fa-list-alt nav-icon"></i>
-                                                <p>PhD</p>
-                                            </a>
-                                        </li>
-                                    </ul>
+                
 
-                                </li>
-                                <li class="nav-item has-treeview <?php echo $__env->yieldContent('exam-officers-open'); ?>">
-                                    <a href="#" class="nav-link <?php echo $__env->yieldContent('results'); ?>">
-                                        <i class="nav-icon fas fa-graduation-cap"></i>
-                                        <p>
-                                            list Session
-                                            <i class="right fas fa-angle-left"></i>
-                                        </p>
-                                    </a>
-                                    <ul class="nav nav-treeview">
-                                        <li class="nav-item">
-                                            <a href="<?php echo e(route('student.list_session', 16)); ?>"
-                                                class="nav-link <?php echo $__env->yieldContent('exam-remark'); ?>">
-                                                <i class="fas fa-list-alt nav-icon"></i>
-                                                <p>2022/2023 </p>
-                                            </a>
-                                        </li>
-                                        <li class="nav-item">
-                                            <a href="<?php echo e(route('student.list_session', 15)); ?>"
-                                                class="nav-link <?php echo $__env->yieldContent('exam-remark'); ?>">
-                                                <i class="fas fa-list-alt nav-icon"></i>
-                                                <p>2021/2022</p>
-                                            </a>
-                                        </li>
-                                        <li class="nav-item">
-                                            <a href="<?php echo e(route('student.list_session', 14)); ?>"
-                                                class="nav-link <?php echo $__env->yieldContent('exam-download'); ?>">
-                                                <i class="fas fa-list-alt nav-icon"></i>
-                                                <p>2022/2021</p>
-                                            </a>
-                                        </li>
-                                        <li class="nav-item">
-                                            <a href="<?php echo e(route('student.list_session', 13)); ?>"
-                                                class="nav-link <?php echo $__env->yieldContent('exam-download'); ?>">
-                                                <i class="fas fa-list-alt nav-icon"></i>
-                                                <p>2019/2020</p>
-                                            </a>
-                                        </li>
-                                        <li class="nav-item">
-                                            <a href="<?php echo e(route('student.list_session', 12)); ?>"
-                                                class="nav-link <?php echo $__env->yieldContent('exam-download'); ?>">
-                                                <i class="fas fa-list-alt nav-icon"></i>
-                                                <p>2018/2019</p>
-                                            </a>
-                                        </li>
-                                        <li class="nav-item">
-                                            <a href="<?php echo e(route('student.list_session', 11)); ?>"
-                                                class="nav-link <?php echo $__env->yieldContent('exam-download'); ?>">
-                                                <i class="fas fa-list-alt nav-icon"></i>
-                                                <p>2017/2018</p>
-                                            </a>
-                                        </li>
-
-
-                                    </ul>
-                                </li>
-                            </ul>
-                        </li>
-
-
-                        <li class="nav-item has-treeview <?php echo $__env->yieldContent('results-open'); ?>">
-                            <a href="#" class="nav-link <?php echo $__env->yieldContent('results'); ?>">
-                                <i class="nav-icon fas fa-graduation-cap"></i>
-                                <p>
-                                    Staff
-                                    <i class="right fas fa-angle-right"></i>
-                                </p>
-                            </a>
-                            <ul class="nav nav-treeview ml-4">
-                                <li class="nav-item">
-                                    <a href="<?php echo e(route('staff.create')); ?>" class="nav-link <?php echo $__env->yieldContent('faculties'); ?>">
-                                        <i class="fa fa-plus nav-icon"></i>
-                                        <p>Create Staff</p>
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a href="<?php echo e(route('staff.search')); ?>" class="nav-link <?php echo $__env->yieldContent('departments'); ?>">
-                                        <i class="fa fa-search nav-icon"></i>
-                                        <p>Search Staff</p>
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a href="<?php echo e(route('staff.list')); ?>" class="nav-link <?php echo $__env->yieldContent('departments'); ?>">
-                                        <i class="fas fa-list-alt nav-icon"></i>
-                                        <p>List Staff</p>
-                                    </a>
-                                </li>
-                                
-                            </ul>
-                        </li>
-
-
-                        
-
-                        <li class="nav-item has-treeview <?php echo $__env->yieldContent('bursary-open'); ?>">
-                            <a href="#" class="nav-link <?php echo $__env->yieldContent('bursary'); ?>">
-                                <i class="nav-icon fas fa-money-bill-wave"></i>
-                                <p>
-                                    Bursary
-                                    <i class="right fas fa-angle-right"></i>
-                                </p>
-                            </a>
-                            <ul class="nav nav-treeview ml-4">
-                                
-
-                                <li class="nav-item">
-                                    
-                                </li>
-                                
-                                
-                                <li class="nav-item">
-                                    <a href="<?php echo e(route('remita.search-rrr')); ?>" class="nav-link <?php echo $__env->yieldContent('remita-search'); ?>">
-                                        <i class="fas fa-search nav-icon"></i>
-                                        <p>Remita Search</p>
-                                    </a>
-                                </li>
-                                <li class="nav-item has-treeview <?php echo $__env->yieldContent('exam-officers-open'); ?>">
-                                    
-                                    <ul class="nav nav-treeview ml-4">
-                                        <li class="nav-item">
-                                            <a href="/utmePayment" class="nav-link <?php echo $__env->yieldContent('bursary-search'); ?>">
-                                                <i class="fa fa-eye nav-icon"></i>
-                                                <p>Undergraute</p>
-                                            </a>
-                                        </li>
-
-                                        <li class="nav-item">
-                                            <a href="/pgPayment" class="nav-link <?php echo $__env->yieldContent('bursary-search'); ?>">
-                                                <i class="fa fa-eye nav-icon"></i>
-                                                <p>Postgraduate</p>
-                                            </a>
-                                        </li>
-
-                                    </ul>
-                                </li>
-
-                                
-                                <li class="nav-item">
-                                    <a href="/addRemitaServiceType" class="nav-link <?php echo $__env->yieldContent('remita-list'); ?>">
-                                        <i class="fas fa-plus nav-icon"></i>
-                                        <p>Add Service Type</p>
-                                    </a>
-                                </li>
-                                
-                                <li class="nav-item">
-                                    <a href="/viewRemitaServiceType" class="nav-link <?php echo $__env->yieldContent('remita-list'); ?>">
-                                        <i class="fa fa-eye nav-icon"></i>
-                                        <p>View Service Type</p>
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a href="/bursary/remita/fee-types" class="nav-link <?php echo $__env->yieldContent('remita-list'); ?>">
-                                        <i class="fa fa-eye nav-icon"></i>
-                                        <p>Show Remita Fee Type</p>
-                                    </a>
-                                </li>
- 
-
-                            </ul>
-                        </li>
-
-
-
-
-
-                        
-
+                <li class="nav-item has-treeview <?php echo $__env->yieldContent('results-open'); ?>">
+                    <a href="#" class="nav-link <?php echo $__env->yieldContent('results'); ?>">
+                        <i class="nav-icon fas fa-graduation-cap"></i>
+                        <p>
+                            Admissions
+                            <i class="right fas fa-angle-right"></i>
+                        </p>
+                    </a>
+                    <ul class="nav nav-treeview ml-4">
                         <li class="nav-item">
-                            <a href="<?php echo e(route('staff.logout')); ?>" class="nav-link"Contact
-                                onclick="event.preventDefault();
-                                                     document.getElementById('logout-form').submit();">
-                                <i class="fas fa-power-off nav-icon text-danger"></i>
-                                <?php echo e(__('Logout')); ?>
+                            <a href="<?php echo e(route('admissions.student.search')); ?>" class="nav-link <?php echo $__env->yieldContent('faculties'); ?>">
+                                <i class="fa fa-search nav-icon"></i>
+                                <p>Search</p>
+                            </a>
+                        </li>
+                        
+                        <li class="nav-item">
+                            <a href="/adminallApplicants" class="nav-link <?php echo $__env->yieldContent('departments'); ?>">
+                                <i class="fas fa-list-alt nav-icon"></i>
+                                <p>All Applicant</p>
+                            </a>
+                        </li>
 
-                                <form id="logout-form" action="<?php echo e(route('staff.logout')); ?>" method="POST"
-                                    style="display: none;">
-                                    <?php echo csrf_field(); ?>
-                                </form>
+                        <li class="nav-item has-treeview <?php echo $__env->yieldContent('exam-officers-open'); ?> ">
+                            <a href="#" class="nav-link <?php echo $__env->yieldContent('results'); ?>">
+                                <i class="nav-icon fas fa-graduation-cap"></i>
+                                <p>
+                                    Applicant Type
+                                    <i class="right fas fa-angle-left"></i>
+                                </p>
+                            </a>
+                            <ul class="nav nav-treeview">
+                                <li class="nav-item">
+                                    <a href="/adminutme" class="nav-link <?php echo $__env->yieldContent('exam-remark'); ?>">
+                                        <i class="fa fa-eye nav-icon"></i>
+                                        <p>UTME</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="/adminde" class="nav-link <?php echo $__env->yieldContent('exam-remark'); ?>">
+                                        <i class="fa fa-eye nav-icon"></i>
+                                        <p>DIRECT ENTRY</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="/admintransfer" class="nav-link <?php echo $__env->yieldContent('exam-download'); ?>">
+                                        <i class="fa fa-eye nav-icon"></i>
+                                        <p>TRANSFER</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="/adminpg" class="nav-link <?php echo $__env->yieldContent('exam-download'); ?>">
+                                        <i class="fa fa-eye nav-icon"></i>
+                                        <p>Postgraduate</p>
+                                    </a>
+                                </li>
+
+                            </ul>
+                        </li>
+                    </ul>
+                </li>
+
+                <li class="nav-item has-treeview <?php echo $__env->yieldContent('results-open'); ?>">
+                    <a href="#" class="nav-link <?php echo $__env->yieldContent('results'); ?>">
+                        <i class="nav-icon fas fa-graduation-cap"></i>
+                        <p>
+                            Student
+                            <i class="right fas fa-angle-right"></i>
+                        </p>
+                    </a>
+                    <ul class="nav nav-treeview ml-4">
+                        <li class="nav-item">
+                            <a href="<?php echo e(route('student.search')); ?>" class="nav-link <?php echo $__env->yieldContent('faculties'); ?>">
+                                <i class="fa fa-search nav-icon"></i>
+                                <p>Search</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="<?php echo e(route('student.create')); ?>" class="nav-link <?php echo $__env->yieldContent('departments'); ?>">
+                                <i class="fas fa-list-alt nav-icon"></i>
+                                <p>Create</p>
+                            </a>
+                        </li>
+
+
+                        <li class="nav-item has-treeview <?php echo $__env->yieldContent('exam-officers-open'); ?>">
+                            <a href="#" class="nav-link <?php echo $__env->yieldContent('results'); ?>">
+                                <i class="nav-icon fas fa-graduation-cap"></i>
+                                <p>
+                                    list level
+                                    <i class="right fas fa-angle-left"></i>
+                                </p>
+                            </a>
+                            <ul class="nav nav-treeview">
+                                <li class="nav-item">
+                                    <a href="<?php echo e(route('student.list_level', 100)); ?>"
+                                        class="nav-link <?php echo $__env->yieldContent('exam-remark'); ?>">
+                                        <i class="fas fa-list-alt nav-icon"></i>
+                                        <p>100 Level</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="<?php echo e(route('student.list_level', 200)); ?>"
+                                        class="nav-link <?php echo $__env->yieldContent('exam-remark'); ?>">
+                                        <i class="fas fa-list-alt nav-icon"></i>
+                                        <p>200 Level</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="<?php echo e(route('student.list_level', 300)); ?>"
+                                        class="nav-link <?php echo $__env->yieldContent('exam-download'); ?>">
+                                        <i class="fas fa-list-alt nav-icon"></i>
+                                        <p>300 Level</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="<?php echo e(route('student.list_level', 400)); ?>"
+                                        class="nav-link <?php echo $__env->yieldContent('exam-download'); ?>">
+                                        <i class="fas fa-list-alt nav-icon"></i>
+                                        <p>400 Level</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="<?php echo e(route('student.list_level', 500)); ?>"
+                                        class="nav-link <?php echo $__env->yieldContent('exam-download'); ?>">
+                                        <i class="fas fa-list-alt nav-icon"></i>
+                                        <p>500 Level</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="<?php echo e(route('student.list_level', 600)); ?>"
+                                        class="nav-link <?php echo $__env->yieldContent('exam-download'); ?>">
+                                        <i class="fas fa-list-alt nav-icon"></i>
+                                        <p>600 Level</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="<?php echo e(route('student.list_level', 700)); ?>"
+                                        class="nav-link <?php echo $__env->yieldContent('exam-download'); ?>">
+                                        <i class="fas fa-list-alt nav-icon"></i>
+                                        <p>PGD</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="<?php echo e(route('student.list_level', 800)); ?>"
+                                        class="nav-link <?php echo $__env->yieldContent('exam-download'); ?>">
+                                        <i class="fas fa-list-alt nav-icon"></i>
+                                        <p> Masters </p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="<?php echo e(route('student.list_level', 900)); ?>"
+                                        class="nav-link <?php echo $__env->yieldContent('exam-download'); ?>">
+                                        <i class="fas fa-list-alt nav-icon"></i>
+                                        <p>PhD</p>
+                                    </a>
+                                </li>
+                            </ul>
+
+                        </li>
+                        <li class="nav-item has-treeview <?php echo $__env->yieldContent('exam-officers-open'); ?>">
+                            <a href="#" class="nav-link <?php echo $__env->yieldContent('results'); ?>">
+                                <i class="nav-icon fas fa-graduation-cap"></i>
+                                <p>
+                                    list Session
+                                    <i class="right fas fa-angle-left"></i>
+                                </p>
+                            </a>
+                            <ul class="nav nav-treeview">
+                                <li class="nav-item">
+                                    <a href="<?php echo e(route('student.list_session', 16)); ?>"
+                                        class="nav-link <?php echo $__env->yieldContent('exam-remark'); ?>">
+                                        <i class="fas fa-list-alt nav-icon"></i>
+                                        <p>2022/2023 </p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="<?php echo e(route('student.list_session', 15)); ?>"
+                                        class="nav-link <?php echo $__env->yieldContent('exam-remark'); ?>">
+                                        <i class="fas fa-list-alt nav-icon"></i>
+                                        <p>2021/2022</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="<?php echo e(route('student.list_session', 14)); ?>"
+                                        class="nav-link <?php echo $__env->yieldContent('exam-download'); ?>">
+                                        <i class="fas fa-list-alt nav-icon"></i>
+                                        <p>2022/2021</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="<?php echo e(route('student.list_session', 13)); ?>"
+                                        class="nav-link <?php echo $__env->yieldContent('exam-download'); ?>">
+                                        <i class="fas fa-list-alt nav-icon"></i>
+                                        <p>2019/2020</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="<?php echo e(route('student.list_session', 12)); ?>"
+                                        class="nav-link <?php echo $__env->yieldContent('exam-download'); ?>">
+                                        <i class="fas fa-list-alt nav-icon"></i>
+                                        <p>2018/2019</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="<?php echo e(route('student.list_session', 11)); ?>"
+                                        class="nav-link <?php echo $__env->yieldContent('exam-download'); ?>">
+                                        <i class="fas fa-list-alt nav-icon"></i>
+                                        <p>2017/2018</p>
+                                    </a>
+                                </li>
+
+
+                            </ul>
+                        </li>
+                         <li class="nav-item">
+                            <a href="<?php echo e(route('student.getGradStudent', 600)); ?>" class="nav-link <?php echo $__env->yieldContent('departments'); ?>">
+                                <i class="fas fa-list-alt nav-icon"></i>
+                                <p>UnderGraduate</p>
+                            </a>
+                        </li>
+                         <li class="nav-item">
+                            <a href="<?php echo e(route('student.getGradStudent', 700)); ?>" class="nav-link <?php echo $__env->yieldContent('departments'); ?>">
+                                <i class="fas fa-list-alt nav-icon"></i>
+                                <p>PostGraduate</p>
+                            </a>
+                        </li>
+                         <li class="nav-item">
+                            <a href="<?php echo e(route('student.getGradStudent', 1000)); ?>" class="nav-link <?php echo $__env->yieldContent('departments'); ?>">
+                                <i class="fas fa-list-alt nav-icon"></i>
+                                <p>Gradutaed</p>
                             </a>
                         </li>
                     </ul>
+                </li>
+
+
+                <li class="nav-item has-treeview <?php echo $__env->yieldContent('results-open'); ?>">
+                    <a href="#" class="nav-link <?php echo $__env->yieldContent('results'); ?>">
+                        <i class="nav-icon fas fa-graduation-cap"></i>
+                        <p>
+                            Staff
+                            <i class="right fas fa-angle-right"></i>
+                        </p>
+                    </a>
+                    <ul class="nav nav-treeview ml-4">
+                        <li class="nav-item">
+                            <a href="<?php echo e(route('staff.create')); ?>" class="nav-link <?php echo $__env->yieldContent('faculties'); ?>">
+                                <i class="fa fa-plus nav-icon"></i>
+                                <p>Create Staff</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="<?php echo e(route('staff.search')); ?>" class="nav-link <?php echo $__env->yieldContent('departments'); ?>">
+                                <i class="fa fa-search nav-icon"></i>
+                                <p>Search Staff</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="<?php echo e(route('staff.list')); ?>" class="nav-link <?php echo $__env->yieldContent('departments'); ?>">
+                                <i class="fas fa-list-alt nav-icon"></i>
+                                <p>List Staff</p>
+                            </a>
+                        </li>
+                        
+                    </ul>
+                </li>
+
+
+                
+
+                <li class="nav-item has-treeview <?php echo $__env->yieldContent('bursary-open'); ?>">
+                    <a href="#" class="nav-link <?php echo $__env->yieldContent('bursary'); ?>">
+                        <i class="nav-icon fas fa-money-bill-wave"></i>
+                        <p>
+                            Bursary
+                            <i class="right fas fa-angle-right"></i>
+                        </p>
+                    </a>
+                    <ul class="nav nav-treeview ml-4">
+                        
+
+                        <li class="nav-item">
+                            
+                        </li>
+                        
+                        
+                        <li class="nav-item">
+                            <a href="<?php echo e(route('remita.search-rrr')); ?>" class="nav-link <?php echo $__env->yieldContent('remita-search'); ?>">
+                                <i class="fas fa-search nav-icon"></i>
+                                <p>Remita Search</p>
+                            </a>
+                        </li>
+                        <li class="nav-item has-treeview <?php echo $__env->yieldContent('exam-officers-open'); ?>">
+                            
+                            <ul class="nav nav-treeview ml-4">
+                                <li class="nav-item">
+                                    <a href="/utmePayment" class="nav-link <?php echo $__env->yieldContent('bursary-search'); ?>">
+                                        <i class="fa fa-eye nav-icon"></i>
+                                        <p>Undergraute</p>
+                                    </a>
+                                </li>
+
+                                <li class="nav-item">
+                                    <a href="/pgPayment" class="nav-link <?php echo $__env->yieldContent('bursary-search'); ?>">
+                                        <i class="fa fa-eye nav-icon"></i>
+                                        <p>Postgraduate</p>
+                                    </a>
+                                </li>
+
+                            </ul>
+                        </li>
+
+                        
+                        <li class="nav-item">
+                            <a href="/addRemitaServiceType" class="nav-link <?php echo $__env->yieldContent('remita-list1'); ?>">
+                                <i class="fas fa-plus nav-icon"></i>
+                                <p>Add Service Type</p>
+                            </a>
+                        </li>
+                        
+                        <li class="nav-item">
+                            <a href="/viewRemitaServiceType" class="nav-link <?php echo $__env->yieldContent('remita-list2'); ?>">
+                                <i class="fa fa-eye nav-icon"></i>
+                                <p>View Service Type</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="/bursary/remita/fee-types" class="nav-link <?php echo $__env->yieldContent('remita-list3'); ?>">
+                                <i class="fa fa-eye nav-icon"></i>
+                                <p>Show Remita Fee Type</p>
+                            </a>
+                        </li>
+                        
+
+                    </ul>
+                </li>
+
+
+
+
+
+                
+
+                <li class="nav-item">
+                    <a href="<?php echo e(route('staff.logout')); ?>" class="nav-link"Contact
+                        onclick="event.preventDefault();
+                                                     document.getElementById('logout-form').submit();">
+                        <i class="fas fa-power-off nav-icon text-danger"></i>
+                        <?php echo e(__('Logout')); ?>
+
+                        <form id="logout-form" action="<?php echo e(route('staff.logout')); ?>" method="POST"
+                            style="display: none;">
+                            <?php echo csrf_field(); ?>
+                        </form>
+                    </a>
+                </li>
+            </ul>
         </nav>
     </div>
 </aside>

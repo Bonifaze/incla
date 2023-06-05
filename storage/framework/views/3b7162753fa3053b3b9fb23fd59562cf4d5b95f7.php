@@ -1,20 +1,20 @@
-@extends('layouts.plain')
 
 
-@section('pagetitle')
+
+<?php $__env->startSection('pagetitle'); ?>
 <!-- CSRF Token -->
-<meta name="csrf-token" content="{{ csrf_token() }}">
+<meta name="csrf-token" content="<?php echo e(csrf_token()); ?>">
 
 <title>Veritas University | Applicant Login</title>
-@endsection
+<?php $__env->stopSection(); ?>
 
-@section('css')
-<!-- <link rel="stylesheet" href="{{ asset('plugins/iCheck/square/blue.css') }}"> -->
+<?php $__env->startSection('css'); ?>
+<!-- <link rel="stylesheet" href="<?php echo e(asset('plugins/iCheck/square/blue.css')); ?>"> -->
 
 <style>
     body {
         background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
-        url("{{ asset('/css/default.jpg') }}") center center no-repeat;
+        url("<?php echo e(asset('/css/default.jpg')); ?>") center center no-repeat;
         background-size: cover;
         padding-top: 10px;
         display: flex;
@@ -63,9 +63,9 @@
 
     }
 </style>
-@endsection
+<?php $__env->stopSection(); ?>
 
-@section('content')
+<?php $__env->startSection('content'); ?>
 
 <body>
     <div class="container">
@@ -116,37 +116,40 @@
                         <p>APPLICANT Login</p>
                     </div>
                     <form method="POST" action="/login">
-                        @if (session('signUpMsg'))
-                        {!! session('signUpMsg') !!}
-                        @endif
+                        <?php if(session('signUpMsg')): ?>
+                        <?php echo session('signUpMsg'); ?>
 
-                        @csrf
+                        <?php endif; ?>
+
+                        <?php echo csrf_field(); ?>
                         <div class="form-group">
                             <label for="exampleInputEmail1">Email</label>
-                            <input id="email" type="email" placeholder="Email" class="form-control{{ $errors->has('email') ? ' is-invalid' : '' }}" name="email" value="{{ old('email') }}" required autofocus>
-                            @if ($errors->has('email'))
-                            <span class="invalid-feedback"> <strong>{{ $errors->first('email') }}</strong> </span>
-                            @endif
+                            <input id="email" type="email" placeholder="Email" class="form-control<?php echo e($errors->has('email') ? ' is-invalid' : ''); ?>" name="email" value="<?php echo e(old('email')); ?>" required autofocus>
+                            <?php if($errors->has('email')): ?>
+                            <span class="invalid-feedback"> <strong><?php echo e($errors->first('email')); ?></strong> </span>
+                            <?php endif; ?>
                             <!-- <small id="emailHelp" class="form-text text-muted">Well never share your email with anyone else.</small> -->
                         </div>
                         <div class="form-group">
                             <label for="exampleInputPassword1">Password</label>
-                            <input id="password" type="password" placeholder="Password" class="form-control{{ $errors->has('password') ? ' is-invalid' : '' }}" name="password" required>
-                            @if ($errors->has('password'))
-                            <span class="invalid-feedback"><strong>{{ $errors->first('password') }}</strong></span>
-                            @endif
+                            <input id="password" type="password" placeholder="Password" class="form-control<?php echo e($errors->has('password') ? ' is-invalid' : ''); ?>" name="password" required>
+                            <?php if($errors->has('password')): ?>
+                            <span class="invalid-feedback"><strong><?php echo e($errors->first('password')); ?></strong></span>
+                            <?php endif; ?>
                         </div>
                         <div class="form-group form-check">
                             <label class="form-check-label" for="exampleCheck1">
-                                <input type="checkbox" name="remember" {{ old('remember') ? 'checked' : '' }}>
-                                {{ __('Remember Me') }}
+                                <input type="checkbox" name="remember" <?php echo e(old('remember') ? 'checked' : ''); ?>>
+                                <?php echo e(__('Remember Me')); ?>
+
                             </label>
                         </div>
 
-                        @if (session('loginMsg'))
-                        {!! session('loginMsg') !!}
-                        @endif
-                        <button type="submit" class="btn btn-success"> {{ __('Login') }}</button>
+                        <?php if(session('loginMsg')): ?>
+                        <?php echo session('loginMsg'); ?>
+
+                        <?php endif; ?>
+                        <button type="submit" class="btn btn-success"> <?php echo e(__('Login')); ?></button>
                         <br>
                         <br>
 
@@ -159,16 +162,16 @@
             </div>
         </div>
     </div>
-    @endsection
+    <?php $__env->stopSection(); ?>
 
-    @section('pagescript')
+    <?php $__env->startSection('pagescript'); ?>
     <!-- iCheck -->
     <script>
         var myModal = new bootstrap.Modal(document.getElementById('myModal'), {})
         myModal.show()
     </script>
 
-    <!-- <script src="{{ asset('plugins/iCheck/icheck.min.js') }}"></script>
+    <!-- <script src="<?php echo e(asset('plugins/iCheck/icheck.min.js')); ?>"></script>
                       <script>
                           $(function() {
                               $('input').iCheck({
@@ -188,4 +191,5 @@
     </script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous">
     </script>
-    @endsection
+    <?php $__env->stopSection(); ?>
+<?php echo $__env->make('layouts.plain', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH C:\Users\hp\Documents\WEB DEV\Work-VUNA\laraproject\resources\views/admissions/login.blade.php ENDPATH**/ ?>

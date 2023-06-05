@@ -1,33 +1,33 @@
-@extends('layouts.adminsials')
 
 
 
-@section('pagetitle')
+
+<?php $__env->startSection('pagetitle'); ?>
 Home
-@endsection
+<?php $__env->stopSection(); ?>
 
 
 
 <!-- Sidebar Links -->
 
 <!-- Treeview -->
-@section('student-open')
+<?php $__env->startSection('student-open'); ?>
 menu-open
-@endsection
+<?php $__env->stopSection(); ?>
 
-@section('student')
+<?php $__env->startSection('student'); ?>
 active
-@endsection
+<?php $__env->stopSection(); ?>
 
 <!-- Page -->
-@section('home')
+<?php $__env->startSection('home'); ?>
 active
-@endsection
+<?php $__env->stopSection(); ?>
 
 <!-- End Sidebar links -->
 
 
-@section('content')
+<?php $__env->startSection('content'); ?>
 
 
 
@@ -42,7 +42,7 @@ active
             <meta charset="UTF-8">
             <meta http-equiv="X-UA-Compatible" content="IE=edge">
             <meta name="viewport" content="width=device-width, initial-scale=1.0">
-            <meta name="csrf-token" content="{{ csrf_token() }}">
+            <meta name="csrf-token" content="<?php echo e(csrf_token()); ?>">
             <title></title>
             <!-- CSS only -->
             <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
@@ -52,14 +52,16 @@ active
 
         <body class="body-style">
 
-            @if (session('statusMsg'))
-            {!! session('statusMsg') !!}
-            @endif
-            @if (session('signUpMsg'))
-            {!! session('signUpMsg') !!}
-            @endif
+            <?php if(session('statusMsg')): ?>
+            <?php echo session('statusMsg'); ?>
+
+            <?php endif; ?>
+            <?php if(session('signUpMsg')): ?>
+            <?php echo session('signUpMsg'); ?>
+
+            <?php endif; ?>
             <form action="" method="POST" onsubmit="event.preventDefault();" class="p-5">
-                @csrf
+                <?php echo csrf_field(); ?>
                 <div class="form-group container-fluid mt-5 p-5 border border-success shadow shadow-lg rounded rounded-lg">
                     <label for="exampleFormControlSelect1" class="text-success fw-bold mb-2">Admission Type</label>
                     <!-- <select class="form-control" id="pmtype">
@@ -70,39 +72,37 @@ active
                             <option value="4430731">Application for Post Graduate</option>
                         </select> -->
                     <select class="form-select" id="pmtype" onChange="update()">
-                        @foreach ($fee_types as $fee_types)
-                        <option value="{{$fee_types->provider_code}}, {{$fee_types->id}}" id="{{$fee_types->amount}}">
-                            {{ $fee_types->name }}
+                        <?php $__currentLoopData = $fee_types; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $fee_types): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                        <option value="<?php echo e($fee_types->provider_code); ?>, <?php echo e($fee_types->id); ?>" id="<?php echo e($fee_types->amount); ?>">
+                            <?php echo e($fee_types->name); ?>
+
                         </option>
 
-                        @endforeach
+                        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
 
                     </select>
                     <input type="hidden" class="form-control mt-2" id="value" readonly>
                     <input type="hidden" class="form-control mt-2" id="provider_code" readonly>
                     <input type="hidden" class="form-control mt-2" id="fee_type_id" readonly>
                     <input type="text" class="form-control mt-2" id="id" readonly>
-                    @foreach ($payment as $utm)
+                    <?php $__currentLoopData = $payment; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $utm): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                     <div class="form-floating mb-3 mt-3">
-                        <input type="hidden" class="form-control" id="js-firstName" placeholder="{{ $utm->first_name . ' ' . $utm->middle_name . ' ' . $utm->surname }}" value="{{ $utm->first_name . ' ' . $utm->middle_name . ' ' . $utm->surname }}" name="firstName" readonly>
+                        <input type="hidden" class="form-control" id="js-firstName" placeholder="<?php echo e($utm->first_name . ' ' . $utm->middle_name . ' ' . $utm->surname); ?>" value="<?php echo e($utm->first_name . ' ' . $utm->middle_name . ' ' . $utm->surname); ?>" name="firstName" readonly>
                         <label for="email"></label>
                     </div>
 
                     <div class="form-floating mb-3 mt-3">
-                        <input type="hidden" class="form-control" id="js-email" placeholder="{{ $utm->email }}" value="{{ $utm->email }}" name="email" readonly hidden>
+                        <input type="hidden" class="form-control" id="js-email" placeholder="<?php echo e($utm->email); ?>" value="<?php echo e($utm->email); ?>" name="email" readonly hidden>
                         <label for="email"></label>
                     </div>
 
                     <div class="form-floating mb-3 mt-3">
-                        <input type="hidden" class="form-control" id="js-phone" placeholder="{{ $utm->phone }}" value="{{ $utm->phone }}" name="email" readonly>
+                        <input type="hidden" class="form-control" id="js-phone" placeholder="<?php echo e($utm->phone); ?>" value="<?php echo e($utm->phone); ?>" name="email" readonly>
                         <label for="email"></label>
                     </div>
-                    @endforeach
+                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
 
-                    {{-- <div class="form-floating mt-3 mb-3">
-                            <input type="text" class="form-control" id="value" placeholder="Enter Amount" name="amount" readonly>
-                            <label for="pwd">Amount</label>
-                        </div>  --}}
+                    
                     <!-- <div class="form-floating mt-3 mb-3">
                             <input type="text" class="form-control" id="js-amount" placeholder="Enter Amount" name="amount" readonly>
                             <label for="pwd">Amount</label>
@@ -300,17 +300,7 @@ active
 
                 }
             </script>
-            {{-- <script>
-                    $("#pmtype").change(function(e) {
-                        let narate = $("#pmtype").val();
-                        if (narate == "4430731") {
-                            $('#js-amount').val(4500);
-                        } else if (narate == "PG") {
-
-                            $('#js-amount').val(80000);
-                        }
-                    });
-                </script>  --}}
+            
             <script type="text/javascript">
                 function update() {
                     var select = document.getElementById('pmtype');
@@ -333,8 +323,9 @@ active
     </div>
 
 
-    @endsection
+    <?php $__env->stopSection(); ?>
 
-    @section('pagescript')
+    <?php $__env->startSection('pagescript'); ?>
     <script src="<?php echo asset('dist/js/bootbox.min.js'); ?>"></script>
-    @endsection
+    <?php $__env->stopSection(); ?>
+<?php echo $__env->make('layouts.adminsials', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH C:\Users\hp\Documents\WEB DEV\Work-VUNA\laraproject\resources\views/admissions/newPayment.blade.php ENDPATH**/ ?>

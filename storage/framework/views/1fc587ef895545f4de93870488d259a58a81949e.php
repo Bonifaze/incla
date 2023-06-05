@@ -1,34 +1,34 @@
-@extends('layouts.adminsials')
 
 
 
-@section('pagetitle')
+
+<?php $__env->startSection('pagetitle'); ?>
 Home
-@endsection
+<?php $__env->stopSection(); ?>
 
 
 
 <!-- Sidebar Links -->
 
 <!-- Treeview -->
-@section('student-open')
+<?php $__env->startSection('student-open'); ?>
 menu-open
-@endsection
+<?php $__env->stopSection(); ?>
 
-@section('student')
+<?php $__env->startSection('student'); ?>
 active
-@endsection
+<?php $__env->stopSection(); ?>
 
 <!-- Page -->
-@section('home')
+<?php $__env->startSection('home'); ?>
 active
-@endsection
+<?php $__env->stopSection(); ?>
 
 <!-- End Sidebar links -->
 
 
 
-@section('content')
+<?php $__env->startSection('content'); ?>
 
 
 
@@ -42,7 +42,7 @@ active
             <meta charset="UTF-8">
             <meta http-equiv="X-UA-Compatible" content="IE=edge">
             <meta name="viewport" content="width=device-width, initial-scale=1.0">
-            <meta name="csrf-token" content="{{ csrf_token() }}">
+            <meta name="csrf-token" content="<?php echo e(csrf_token()); ?>">
             <title>Document</title>
             <!-- CSS only -->
             <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
@@ -51,8 +51,7 @@ active
 
         <body>
             <div class="container p-4">
-                {{--
-        <div class="text-danger h1"><strong> Accomodation into Pa-Etos Female hostel, Male HOTEL L and Male HOSTEL K are currently unavaliable </strong></div> <br>  --}}
+                
                 <div class="table-responsive">
                     <table class="table table-hover shadow m-1 mb-5">
 
@@ -66,22 +65,22 @@ active
                             <th scope="col">Description</th>
                             <th scope="col">Date</th>
                             <th scope="col">Action</th>
-                            {{-- <th scope="col">Payment</th>  --}}
-                            {{-- <th scope="col">Action</th>  --}}
-                            {{-- <th scope="col">Verify</th>  --}}
+                            
+                            
+                            
 
                         </tr>
                         </thead>
                         <tbody class="">
-                            @php
+                            <?php
                             $totalPaid = 0;
                             $paidRRNs = [];
-                            @endphp
-                            @foreach ($viewpayment as $key => $utm)
+                            ?>
+                            <?php $__currentLoopData = $viewpayment; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $key => $utm): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                             <tr></tr>
-                            <td>{{ $key + 1 }}</td>
-                            <td>{{ $utm->rrr }}</td>
-                            <td>{!! $utm->status_code == '01'
+                            <td><?php echo e($key + 1); ?></td>
+                            <td><?php echo e($utm->rrr); ?></td>
+                            <td><?php echo $utm->status_code == '01'
                                 ? '<a href="/receipt/' .
                                                 $utm->rrr .
                                                 '" button class="btn btn-success "><i class="fas fa-print text-white-50"></i> Print Receipt</a>'
@@ -95,36 +94,40 @@ active
                                                 $utm->rrr .
                                                 ')" value="Pay" button class="btn btn-success" />
                                     </div>
-                                </form>' !!}
+                                </form>'; ?>
+
                             </td>
-                            @if ($utm->status_code == '01')
+                            <?php if($utm->status_code == '01'): ?>
                             <td class="text-bold"> PAID </td>
-                            @php
+                            <?php
                             $totalPaid += $utm->amount;
                             array_push($paidRRNs, $utm->rrr);
-                            @endphp
-                            @else
+                            ?>
+                            <?php else: ?>
                             <td> NOT PAID
-                                {!! Form::open(['method' => 'Post', 'route' => 'student.remita-verify', 'id' => 'verifyRemita' . $utm->id]) !!}
-                                {{ Form::hidden('remita_id', $utm->id) }}
-                                <button type="submit" class=" {{ $utm->id }} btn btn-primary invisible">
+                                <?php echo Form::open(['method' => 'Post', 'route' => 'student.remita-verify', 'id' => 'verifyRemita' . $utm->id]); ?>
+
+                                <?php echo e(Form::hidden('remita_id', $utm->id)); ?>
+
+                                <button type="submit" class=" <?php echo e($utm->id); ?> btn btn-primary invisible">
 
                                     Verify</button>
-                                {!! Form::close() !!}
+                                <?php echo Form::close(); ?>
+
                             </td>
-                            @endif
-                            <td>&#8358;{{ number_format($utm->amount, 2) }}</td>
-                            <td>{{ $utm->status }}</td>
-                            <td>{{ $utm->fee_type }}</td>
-                            <td>{{ \Carbon\Carbon::parse($utm->created_at)->format('d/m/Y') }}</td>
-                            {{-- <td>{{ $utm->status_code == '01' ? 'PAID' : 'NOT PAID' }} --}}
+                            <?php endif; ?>
+                            <td>&#8358;<?php echo e(number_format($utm->amount, 2)); ?></td>
+                            <td><?php echo e($utm->status); ?></td>
+                            <td><?php echo e($utm->fee_type); ?></td>
+                            <td><?php echo e(\Carbon\Carbon::parse($utm->created_at)->format('d/m/Y')); ?></td>
+                            
                             </td>
-                            <td> @if ($utm->status_code == '01')
+                            <td> <?php if($utm->status_code == '01'): ?>
                             <td></td>
-                            @else
-                            <form action="{{ route('remita.find-studentunpaidrrr.destroy', $utm->id) }}" method="POST">
-                                @csrf
-                                @method('DELETE')
+                            <?php else: ?>
+                            <form action="<?php echo e(route('remita.find-studentunpaidrrr.destroy', $utm->id)); ?>" method="POST">
+                                <?php echo csrf_field(); ?>
+                                <?php echo method_field('DELETE'); ?>
                                 <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#myModal"> <i class="fas fa-solid fa-trash"></i> Delete</button>
                                 <div class="modal" id="myModal">
                                     <div class="modal-dialog">
@@ -152,13 +155,13 @@ active
                                 </div>
                             </form>
                             </td>
-                            @endif
-                            @endforeach
+                            <?php endif; ?>
+                            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                             </tr>
                             <tr>
                                 <td colspan="3" class="text-semibold h4">Total Paid Amount:</td>
-                                <td class="text-semibold h4">&#8358;{{ number_format($totalPaid, 2) }}</td>
-                                {{-- <td>RRNs: {{ implode(', ', $paidRRNs) }}</td> --}}
+                                <td class="text-semibold h4">&#8358;<?php echo e(number_format($totalPaid, 2)); ?></td>
+                                
                             </tr>
                         </tbody>
 
@@ -371,8 +374,9 @@ active
     </div>
 </div>
 
-@endsection
+<?php $__env->stopSection(); ?>
 
-@section('pagescript')
+<?php $__env->startSection('pagescript'); ?>
 <script src="<?php echo asset('dist/js/bootbox.min.js'); ?>"></script>
-@endsection
+<?php $__env->stopSection(); ?>
+<?php echo $__env->make('layouts.adminsials', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH C:\Users\hp\Documents\WEB DEV\Work-VUNA\laraproject\resources\views/admissions/paymentview.blade.php ENDPATH**/ ?>
