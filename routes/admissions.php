@@ -68,7 +68,7 @@ Route::get('/forgotpasswordSetNew', function () {
 });
 Route::post('/forgotpassword', 'App\Http\Controllers\ApplicantController@forgotpassword');
 
-Route::get('/logoutUser', 'App\Http\Controllers\ApplicantController@logoutUsers');
+Route::post('/logoutUser', 'App\Http\Controllers\ApplicantController@logoutUsers');
 //Applicants Home Page
 Route::post('/login', 'App\Http\Controllers\ApplicantController@login');
 Route::get('/dashboard', 'App\Http\Controllers\ApplicantController@admissionstatus');

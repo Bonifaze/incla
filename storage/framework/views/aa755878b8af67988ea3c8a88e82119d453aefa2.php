@@ -1,4 +1,4 @@
-@php
+<?php
 
 if(!session('userid'))
 {
@@ -6,16 +6,16 @@ if(!session('userid'))
 header('location: /');
 exit;
 }
-@endphp
-@extends('layouts.userapp')
+?>
 
-@section('content')
+
+<?php $__env->startSection('content'); ?>
 <div class="row justify-content-center">
 
 
     <!-- Page Wrapper -->
     <div id="wrapper">
-        @include('layouts.usersidebar')
+        <?php echo $__env->make('layouts.usersidebar', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
         <!-- Content Wrapper -->
         <div id="content-wrapper" class="d-flex flex-column">
 
@@ -51,18 +51,8 @@ exit;
                                         <li class="nav-item" role="presentation">
                                             <button class="nav-link text-success fw-bold text-capitalize" id="profile2-tab" data-bs-toggle="tab" data-bs-target="#profile2-tab-pane" type="button" role="tab" aria-controls="profile2-tab-pane" aria-selected="false">Direct Entry Information</button>
                                         </li>
-                                        {{-- <li class="nav-item" role="presentation">
-                                                    <button class="nav-link" id="contact-tab" data-bs-toggle="tab"
-                                                        data-bs-target="#contact-tab-pane" type="button" role="tab"
-                                                        aria-controls="contact-tab-pane"
-                                                        aria-selected="false">Academic Information</button>
-                                                </li>  --}}
-                                        {{-- <li class="nav-item" role="presentation">
-                                                    <button class="nav-link" id="contact2-tab" data-bs-toggle="tab"
-                                                        data-bs-target="#contact2-tab-pane" type="button" role="tab"
-                                                        aria-controls="contact2-tab-pane"
-                                                        aria-selected="false">Olevel</button>
-                                                </li>  --}}
+                                        
+                                        
                                         <li class="nav-item" role="presentation">
                                             <button class="nav-link text-success fw-bold text-capitalize" id="profile3-tab" data-bs-toggle="tab" data-bs-target="#profile3-tab-pane" type="button" role="tab" aria-controls="profile3-tab-pane" aria-selected="false">Upload
                                                 Documents</button>
@@ -72,37 +62,44 @@ exit;
                                     <div class="tab-content" id="myTabContent">
                                         <div class="tab-pane fade show active" id="home-tab-pane" role="tabpanel" aria-labelledby="home-tab" tabindex="0">
                                             <form method="POST" action="/debiodata" enctype="multipart/form-data" class="p-3">
-                                                @csrf
+                                                <?php echo csrf_field(); ?>
 
-                                                <label for="">{{ __('Surname') }} </label>
+                                                <label for=""><?php echo e(__('Surname')); ?> </label>
                                                 <div class="form-group">
                                                     <div class="form-group">
-                                                        <input id="surname" type="text" class="form-control @error('surname') is-invalid @enderror" name="surname" placeholder="{{ $de->surname}}" readonly autofocus>
-                                                        <input id="status" type="hidden" class="form-control " name="status" value="{{ $de->status }}" readonly autofocus>
+                                                        <input id="surname" type="text" class="form-control <?php $__errorArgs = ['surname'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?> is-invalid <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>" name="surname" placeholder="<?php echo e($de->surname); ?>" readonly autofocus>
+                                                        <input id="status" type="hidden" class="form-control " name="status" value="<?php echo e($de->status); ?>" readonly autofocus>
 
 
                                                     </div>
                                                 </div>
                                                 <div class="form-group">
                                                     <div class="form-group">
-                                                        <label for="">{{ __('First Name') }} </label>
-                                                        <input id="first_name" type="text" class="form-control" name="first_name" placeholder="{{ $de->first_name}}" readonly autofocus>
+                                                        <label for=""><?php echo e(__('First Name')); ?> </label>
+                                                        <input id="first_name" type="text" class="form-control" name="first_name" placeholder="<?php echo e($de->first_name); ?>" readonly autofocus>
 
 
                                                     </div>
                                                 </div>
                                                 <div class="form-group">
                                                     <div class="form-group">
-                                                        <label for="">{{ __('Email') }} </label>
-                                                        <input id="email" type="email" class="form-control " name="email" placeholder="{{ $de->email}}" readonly autofocus>
+                                                        <label for=""><?php echo e(__('Email')); ?> </label>
+                                                        <input id="email" type="email" class="form-control " name="email" placeholder="<?php echo e($de->email); ?>" readonly autofocus>
 
 
                                                     </div>
                                                 </div>
                                                 <div class="form-group">
                                                     <div class="form-group">
-                                                        <label for="">{{ __('Phone') }} </label>
-                                                        <input id="phone" type="phone" class="form-control" name="phone" autocomplete="phone" placeholder="{{ $de->phone}}" readonly autofocus>
+                                                        <label for=""><?php echo e(__('Phone')); ?> </label>
+                                                        <input id="phone" type="phone" class="form-control" name="phone" autocomplete="phone" placeholder="<?php echo e($de->phone); ?>" readonly autofocus>
 
 
                                                     </div>
@@ -141,7 +138,7 @@ exit;
                                                 </div>
 
                                                 <div class="form-group">
-                                                    <label for="dob">{{ __('Date of Birth') }} </label>
+                                                    <label for="dob"><?php echo e(__('Date of Birth')); ?> </label>
 
                                                     <div class="form-group">
                                                         <input id="dob" type="date" class="form-control" name="dob" required>
@@ -149,7 +146,7 @@ exit;
                                                 </div>
 
                                                <div class="form-group">
-                                                    <label for="refferal">{{ __('Nationality') }} </label>
+                                                    <label for="refferal"><?php echo e(__('Nationality')); ?> </label>
 
                                                     <div class="form-group">
                                                         <select class="form-select" name="nationality" id="nationality">
@@ -423,7 +420,7 @@ exit;
                                                 </div>
 
                                                 <div class="form-group">
-                                                    <label for="passport">{{ __('Upload Passport Photograph') }} </label>
+                                                    <label for="passport"><?php echo e(__('Upload Passport Photograph')); ?> </label>
 
                                                     <div class="form-group">
                                                         <input id="passport" type="file" class="form-control" name="passport">
@@ -432,7 +429,7 @@ exit;
 
 
                                                 <div class="form-group">
-                                                    <label for="refferal">{{ __('How did you hear about us') }} </label>
+                                                    <label for="refferal"><?php echo e(__('How did you hear about us')); ?> </label>
 
                                                     <div class="form-group">
                                                         <select class="form-select" name="referral">
@@ -448,11 +445,10 @@ exit;
                                                 <div class="form-group">
                                                     <div class="form-group">
 
-                                                        {{--  @if (session('signUpMsg'))
-                                                        {!! session('signUpMsg') !!}
-                                                        @endif  --}}
+                                                        
                                                         <button type="submit" class="btn btn-success">
-                                                            {{ __('Save and continue') }}
+                                                            <?php echo e(__('Save and continue')); ?>
+
                                                         </button>
                                                     </div>
                                                 </div>
@@ -461,9 +457,9 @@ exit;
                                         </div>
                                         <div class="tab-pane fade" id="profile-tab-pane" role="tabpanel" aria-labelledby="profile-tab" tabindex="0">
 
-                                            {{-- 2nd table div  --}}
+                                            
                                             <form method="POST" action="/desponsors" class="p-3">
-                                                @csrf
+                                                <?php echo csrf_field(); ?>
                                                 <div class="form-group">
 
                                                     <div class="form-group">
@@ -497,11 +493,10 @@ exit;
                                                     <div class="form-group">
                                                         <div class="form-group">
 
-                                                            {{-- @if (session('signUpMsg'))
-                                                                {!! session('signUpMsg') !!}
-                                                            @endif  --}}
+                                                            
                                                             <button type="submit" class="btn btn-success">
-                                                                {{ __('Save and continue') }}
+                                                                <?php echo e(__('Save and continue')); ?>
+
                                                             </button>
                                                         </div>
                                                     </div>
@@ -509,10 +504,10 @@ exit;
                                         </div>
                                     </div>
                                     <div class="tab-pane fade" id="profile2-tab-pane" role="tabpanel" aria-labelledby="profile2-tab" tabindex="0">
-                                        {{-- 3rd div  --}}
+                                        
 
                                         <form method="POST" action="/deinformation" class="p-3">
-                                            @csrf
+                                            <?php echo csrf_field(); ?>
 
                                             <div class="form-group">
 
@@ -535,12 +530,12 @@ exit;
                                             </div>
                                             <div class="form-group">
                                                 <div class="form-group">
-                                                    <label for="refferal">{{ __('Course of Study') }} </label>
+                                                    <label for="refferal"><?php echo e(__('Course of Study')); ?> </label>
                                                     <select class="form-select" name="course_applied">
-                                                        @foreach($programs as $program)
+                                                        <?php $__currentLoopData = $programs; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $program): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
 
-                                                        <option value="{{$program->name}}">{{$program->name}}</option>
-                                                        @endforeach
+                                                        <option value="<?php echo e($program->name); ?>"><?php echo e($program->name); ?></option>
+                                                        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                                                     </select>
 
                                                 </div>
@@ -562,11 +557,10 @@ exit;
                                             <div class="form-group">
                                                 <div class="form-group">
 
-                                                    {{--  @if (session('signUpMsg'))
-                                                    {!! session('signUpMsg') !!}
-                                                    @endif  --}}
+                                                    
                                                     <button type="submit" class="btn btn-success">
-                                                        {{ __('Save and continue') }}
+                                                        <?php echo e(__('Save and continue')); ?>
+
                                                     </button>
                                                 </div>
                                             </div>
@@ -576,500 +570,72 @@ exit;
                                     <div class="tab-pane fade" id="profile3-tab-pane" role="tabpanel" aria-labelledby="profile3-tab" tabindex="0">
                                         <form method="POST" action="/utmeuploads"enctype="multipart/form-data"
                                         class="p-3">
-                                        @csrf
+                                        <?php echo csrf_field(); ?>
 
  <div class="col-md-12 form-group">
                                                     <label for="passport">Direct Entry Result :</label>
-                                                    {!! Form::file('passport', [
+                                                    <?php echo Form::file('passport', [
                                                         'class' => 'form-control file-loading',
                                                         'id' => 'passport',
                                                         'placeholder' => 'Choose profile pic',
                                                         'name' => 'jamb',
                                                         'accept' => 'image/*',
                                                         'required' => 'required',
-                                                    ]) !!}
-                                                    <span class="text-danger"> {{ $errors->first('passport') }}</span>
+                                                    ]); ?>
+
+                                                    <span class="text-danger"> <?php echo e($errors->first('passport')); ?></span>
                                                 </div>
 
  <div class="col-md-12 form-group">
                                                     <label for="passport">Olevel Result :</label>
-                                                    {!! Form::file('passport', [
+                                                    <?php echo Form::file('passport', [
                                                         'class' => 'form-control file-loading',
                                                         'id' => 'passport',
                                                         'placeholder' => 'Choose profile pic',
                                                         'name' => 'olevel1',
                                                         'accept' => 'image/*',
                                                         'required' => 'required',
-                                                    ]) !!}
-                                                    <span class="text-danger"> {{ $errors->first('passport') }}</span>
+                                                    ]); ?>
+
+                                                    <span class="text-danger"> <?php echo e($errors->first('passport')); ?></span>
                                                 </div>
 
                                                  <div class="col-md-12 form-group">
                                                     <label for="passport"> Result <b class="text-danger">(  if any)</b>:</label>
-                                                    {!! Form::file('passport', [
+                                                    <?php echo Form::file('passport', [
                                                         'class' => 'form-control file-loading',
                                                         'id' => 'passport',
                                                         'placeholder' => 'Choose profile pic',
                                                         'name' => 'olevel2',
                                                         'accept' => 'image/*',
 
-                                                    ]) !!}
-                                                    <span class="text-danger"> {{ $errors->first('passport') }}</span>
+                                                    ]); ?>
+
+                                                    <span class="text-danger"> <?php echo e($errors->first('passport')); ?></span>
                                                 </div>
-                                        {{--  <div class="form-group">
+                                        
 
-                                            @if (session('statusMsg'))
-                                                {!! session('statusMsg') !!}
-                                            @endif
-                                            <label for="passport">{{ __('Direct Entry Result') }}<b class="text-warning"> (Picture format .jpeg, .png, .jpg)</b>
-                                            </label>
-
-                                            <div class="form-group">
-                                                <input id="jamb" type="file" class="form-control"
-                                                    name="jamb">
-                                            </div>
-                                        </div>  --}}
-
-                                        {{--  <div class="form-check mb-3">
-                                            <input class="form-check-input" type="checkbox"
-                                                name="olevel_awaiting" value="Awaiting Result"
-                                                id="flexCheckDefault">
-                                            <label class="form-check-label" for="flexCheckDefault">
-                                                Awaiting Result
-                                            </label>
-                                        </div>  --}}
+                                        
 
 
-                                        {{--  <div class="form-group">
-                                            <label for="passport">{{ __('Upload Olevel Result') }}<b class="text-warning"> (Picture format .jpeg, .png, .jpg)</b>
-                                            </label>
-
-                                            <div class="form-group">
-                                                <input id="olevel1" type="file" class="form-control"
-                                                    name="olevel1">
-                                            </div>
-                                        </div>  --}}
-                                        {{--  <div class="form-group">
-
-                                            <p>Upload Result <b class="text-danger">(  if any)</b></p>
-                                            <div class="form-group">
-                                                <input id="olevel2" type="file" class="form-control"
-                                                    name="olevel2">
-                                            </div>
-                                        </div>  --}}
+                                        
+                                        
                                         <div class="form-group">
                                             <div class="form-group">
 
-                                                {{-- @if (session('signUpMsg'))
-                                                    {!! session('signUpMsg') !!}
-                                                @endif --}}
+                                                
                                                 <button type="submit" class="btn btn-success">
-                                                    {{ __('Save') }}
+                                                    <?php echo e(__('Save')); ?>
+
                                                 </button>
                                             </div>
                                         </div>
                                     </form>
-                                        {{--  <form method="POST" action="/deolevel" enctype="multipart/form-data" class="p-3">
-                                            @csrf
+                                        
+                                                    
 
-                                            <div class="form-grop sbj1 mt-3">
-                                                <div class="btn-group">
-<select class="form-select bg-light mx-1"                name="subject_1" >
-                                                        <option selected value="General Mathematics" selected class="bg-secondary">General Mathematics</option readonly>
-                                                        @foreach($subjects as $subject)
-
-                                                        <option disabled>{{$subject->subject_name}}</option>
-                                                        @endforeach
-                                                    </select>
-
-
-                                                    <select class="form-select mx-1" name="exam_1">
-                                                        <option disabled selected>Exam </option>
-                                                        <option value="WAEC">WAEC</option>
-                                                        <option value="NECO">NECO</option>
-                                                        <option value="SSCE">SSCE</option>
-                                                        <option value="NABTEB">NABTEB</option>
-                                                    </select>
-                                                    <select class="form-select" name="grade_1">
-                                                        <option disabled selected>Grade</option>
-                                                        <option value="A1">A1</option>
-                                                        <option value="B2">B2</option>
-                                                        <option value="B3">B3</option>
-                                                        <option value="C4">C4</option>
-                                                        <option value="C5">C5</option>
-                                                        <option value="C6">C6</option>
-                                                        <option value="D7">D7</option>
-                                                        <option value="E8">E8</option>
-                                                        <option value="F9">F9</option>
-                                                    </select>
-                                                </div>
-                                            </div>
-                                            <div class="form-grop sbj2 mt-3">
-                                                <div class="btn-group">
-
-                                                     <select class="form-select bg-light mx-1"                name="subject_2" >
-                                                        <option selected value="English Language" selected class="bg-secondary">English Language</option readonly>
-                                                        @foreach($subjects as $subject)
-
-                                                        <option disabled>{{$subject->subject_name}}</option>
-                                                        @endforeach
-                                                    </select>
-
-                                                    <select class="form-select mx-1" name="exam_2">
-                                                        <option disabled selected>Exam </option>
-                                                        <option value="WAEC">WAEC</option>
-                                                        <option value="NECO">NECO</option>
-                                                        <option value="SSCE">SSCE</option>
-                                                        <option value="NABTEB">NABTEB</option>
-                                                    </select>
-                                                    <select class="form-select" name="grade_2">
-                                                        <option disabled selected>Grade</option>
-                                                        <option value="A1">A1</option>
-                                                        <option value="B2">B2</option>
-                                                        <option value="B3">B3</option>
-                                                        <option value="C4">C4</option>
-                                                        <option value="C5">C5</option>
-                                                        <option value="C6">C6</option>
-                                                        <option value="D7">D7</option>
-                                                        <option value="E8">E8</option>
-                                                        <option value="F9">F9</option>
-                                                    </select>
-                                                </div>
-                                            </div>
-                                            <div class="form-grop sbj3 mt-3">
-                                                <div class="btn-group">
-
-                                                    <select class="form-select mx-1" name="subject_3">
-                                                        <option disabled selected>Select Subject</option>
-                                                        @foreach($subjects as $subject)
-
-                                                        <option value="{{$subject->subject_name}}">{{$subject->subject_name}}</option>
-                                                        @endforeach
-                                                    </select>
-                                                    <select class="form-select mx-1" name="exam_3">
-                                                        <option disabled selected>Exam </option>
-                                                        <option value="WAEC">WAEC</option>
-                                                        <option value="NECO">NECO</option>
-                                                        <option value="SSCE">SSCE</option>
-                                                        <option value="NABTEB">NABTEB</option>
-                                                    </select>
-                                                    <select class="form-select" name="grade_3">
-                                                        <option disabled selected>Grade</option>
-                                                        <option value="A1">A1</option>
-                                                        <option value="B2">B2</option>
-                                                        <option value="B3">B3</option>
-                                                        <option value="C4">C4</option>
-                                                        <option value="C5">C5</option>
-                                                        <option value="C6">C6</option>
-                                                        <option value="D7">D7</option>
-                                                        <option value="E8">E8</option>
-                                                        <option value="F9">F9</option>
-                                                    </select>
-                                                </div>
-                                            </div>
-                                            <div class="form-grop sbj4 mt-3">
-                                                <div class="btn-group">
-
-                                                    <select class="form-select mx-1" name="subject_4">
-                                                        <option disabled selected>Select Subject</option>
-                                                        @foreach($subjects as $subject)
-
-                                                        <option value="{{$subject->subject_name}}">{{$subject->subject_name}}</option>
-                                                        @endforeach
-                                                    </select>
-                                                    <select class="form-select mx-1" name="exam_4">
-                                                        <option disabled selected>Exam </option>
-                                                        <option value="WAEC">WAEC</option>
-                                                        <option value="NECO">NECO</option>
-                                                        <option value="SSCE">SSCE</option>
-                                                        <option value="NABTEB">NABTEB</option>
-                                                    </select>
-                                                    <select class="form-select" name="grade_4">
-                                                        <option disabled selected>Grade</option>
-                                                        <option value="A1">A1</option>
-                                                        <option value="B2">B2</option>
-                                                        <option value="B3">B3</option>
-                                                        <option value="C4">C4</option>
-                                                        <option value="C5">C5</option>
-                                                        <option value="C6">C6</option>
-                                                        <option value="D7">D7</option>
-                                                        <option value="E8">E8</option>
-                                                        <option value="F9">F9</option>
-                                                    </select>
-                                                </div>
-                                            </div>
-                                            <div class="form-grop sbj5 mt-3">
-                                                <div class="btn-group">
-
-                                                    <select class="form-select mx-1" name="subject_5">
-                                                        <option disabled selected>Select Subject</option>
-                                                        @foreach($subjects as $subject)
-
-                                                        <option value="{{$subject->subject_name}}">{{$subject->subject_name}}</option>
-                                                        @endforeach
-                                                    </select>
-                                                    <select class="form-select mx-1" name="exam_5">
-                                                        <option disabled selected>Exam </option>
-                                                        <option value="WAEC">WAEC</option>
-                                                        <option value="NECO">NECO</option>
-                                                        <option value="SSCE">SSCE</option>
-                                                        <option value="NABTEB">NABTEB</option>
-                                                    </select>
-                                                    <select class="form-select mx-1" name="grade_5">
-                                                        <option disabled selected>Grade</option>
-                                                        <option value="A1">A1</option>
-                                                        <option value="B2">B2</option>
-                                                        <option value="B3">B3</option>
-                                                        <option value="C4">C4</option>
-                                                        <option value="C5">C5</option>
-                                                        <option value="C6">C6</option>
-                                                        <option value="D7">D7</option>
-                                                        <option value="E8">E8</option>
-                                                        <option value="F9">F9</option>
-                                                    </select>
-                                                </div>
-                                            </div>
-                                            <div class="form-grop sbj6 mt-3">
-                                                <div class="btn-group">
-
-                                                    <select class="form-select mx-1" name="subject_6">
-                                                        <option disabled selected>Select Subject</option>
-                                                        @foreach($subjects as $subject)
-
-                                                        <option value="{{$subject->subject_name}}">{{$subject->subject_name}}</option>
-                                                        @endforeach
-                                                    </select>
-                                                    <select class="form-select mx-1" name="exam_6">
-                                                        <option disabled selected>Exam </option>
-                                                        <option value="WAEC">WAEC</option>
-                                                        <option value="NECO">NECO</option>
-                                                        <option value="SSCE">SSCE</option>
-                                                        <option value="NABTEB">NABTEB</option>
-                                                    </select>
-                                                    <select class="form-select " name="grade_6">
-                                                        <option disabled selected>Grade</option>
-                                                        <option value="A1">A1</option>
-                                                        <option value="B2">B2</option>
-                                                        <option value="B3">B3</option>
-                                                        <option value="C4">C4</option>
-                                                        <option value="C5">C5</option>
-                                                        <option value="C6">C6</option>
-                                                        <option value="D7">D7</option>
-                                                        <option value="E8">E8</option>
-                                                        <option value="F9">F9</option>
-                                                    </select>
-                                                </div>
-                                            </div>
-                                            <div class="form-grop sbj7 mt-3">
-                                                <div class="btn-group">
-
-                                                    <select class="form-select mx-1" name="subject_7">
-                                                        <option disabled selected>Select Subject</option>
-                                                        @foreach($subjects as $subject)
-
-                                                        <option value="{{$subject->subject_name}}">{{$subject->subject_name}}</option>
-                                                        @endforeach
-                                                    </select>
-                                                    <select class="form-select mx-1" name="exam_7">
-                                                        <option disabled selected>Exam </option>
-                                                        <option value="WAEC">WAEC</option>
-                                                        <option value="NECO">NECO</option>
-                                                        <option value="SSCE">SSCE</option>
-                                                        <option value="NABTEB">NABTEB</option>
-                                                    </select>
-                                                    <select class="form-select" name="grade_7">
-                                                        <option disabled selected>Grade</option>
-                                                        <option value="A1">A1</option>
-                                                        <option value="B2">B2</option>
-                                                        <option value="B3">B3</option>
-                                                        <option value="C4">C4</option>
-                                                        <option value="C5">C5</option>
-                                                        <option value="C6">C6</option>
-                                                        <option value="D7">D7</option>
-                                                        <option value="E8">E8</option>
-                                                        <option value="F9">F9</option>
-                                                    </select>
-                                                </div>
-                                            </div>
-                                            <div class="form-grop sbj8 mt-3">
-                                                <div class="btn-group">
-
-                                                    <select class="form-select mx-1" name="subject_8">
-                                                        <option disabled selected>Select Subject</option>
-                                                        @foreach($subjects as $subject)
-
-                                                        <option value="{{$subject->subject_name}}">{{$subject->subject_name}}</option>
-                                                        @endforeach
-                                                    </select>
-                                                    <select class="form-select mx-1" name="exam_8">
-                                                        <option disabled selected>Exam </option>
-                                                        <option value="WAEC">WAEC</option>
-                                                        <option value="NECO">NECO</option>
-                                                        <option value="SSCE">SSCE</option>
-                                                        <option value="NABTEB">NABTEB</option>
-                                                    </select>
-                                                    <select class="form-select" name="grade_8">
-                                                        <option disabled selected>Grade</option>
-                                                        <option value="A1">A1</option>
-                                                        <option value="B2">B2</option>
-                                                        <option value="B3">B3</option>
-                                                        <option value="C4">C4</option>
-                                                        <option value="C5">C5</option>
-                                                        <option value="C6">C6</option>
-                                                        <option value="D7">D7</option>
-                                                        <option value="E8">E8</option>
-                                                        <option value="F9">F9</option>
-                                                    </select>
-                                                </div>
-                                            </div>
-                                            <div class="form-grop sbj9 mt-3">
-                                                <div class="btn-group">
-
-                                                    <select class="form-select mx-1" name="subject_9">
-                                                        <option disabled selected>Select Subject</option>
-                                                        @foreach($subjects as $subject)
-
-                                                        <option value="{{$subject->subject_name}}">{{$subject->subject_name}}</option>
-                                                        @endforeach
-                                                    </select>
-                                                    <select class="form-select mx-1" name="exam_9">
-                                                        <option disabled selected>Exam </option>
-                                                        <option value="WAEC">WAEC</option>
-                                                        <option value="NECO">NECO</option>
-                                                        <option value="SSCE">SSCE</option>
-                                                        <option value="NABTEB">NABTEB</option>
-                                                    </select>
-                                                    <select class="form-select" name="grade_9">
-                                                        <option disabled selected>Grade</option>
-                                                        <option value="A1">A1</option>
-                                                        <option value="B2">B2</option>
-                                                        <option value="B3">B3</option>
-                                                        <option value="C4">C4</option>
-                                                        <option value="C5">C5</option>
-                                                        <option value="C6">C6</option>
-                                                        <option value="D7">D7</option>
-                                                        <option value="E8">E8</option>
-                                                        <option value="F9">F9</option>
-                                                    </select>
-                                                </div>
-                                            </div>
-                                            <div class="form-grop sbj10 mt-3">
-                                                <div class="btn-group">
-
-                                                    <select class="form-select mx-1" name="subject_10">
-                                                        <option disabled selected>Select Subject</option>
-                                                        @foreach($subjects as $subject)
-
-                                                        <option value="{{$subject->subject_name}}">{{$subject->subject_name}}</option>
-                                                        @endforeach
-                                                    </select>
-                                                    <select class="form-select mx-1" name="exam_10">
-                                                        <option disabled selected>Exam </option>
-                                                        <option value="WAEC">WAEC</option>
-                                                        <option value="NECO">NECO</option>
-                                                        <option value="SSCE">SSCE</option>
-                                                        <option value="NABTEB">NABTEB</option>
-                                                    </select>
-                                                    <select class="form-select" name="grade_10">
-                                                        <option disabled selected>Grade</option>
-                                                        <option value="A1">A1</option>
-                                                        <option value="B2">B2</option>
-                                                        <option value="B3">B3</option>
-                                                        <option value="C4">C4</option>
-                                                        <option value="C5">C5</option>
-                                                        <option value="C6">C6</option>
-                                                        <option value="D7">D7</option>
-                                                        <option value="E8">E8</option>
-                                                        <option value="F9">F9</option>
-                                                    </select>
-                                                </div>
-                                            </div>
-                                            <div class="form-grop sbj11 mt-3">
-                                                <div class="btn-group">
-
-                                                    <select class="form-select mx-1" name="subject_11">
-                                                        <option disabled selected>Select Subject</option>
-                                                        @foreach($subjects as $subject)
-
-                                                        <option value="{{$subject->subject_name}}">{{$subject->subject_name}}</option>
-                                                        @endforeach
-                                                    </select>
-                                                    <select class="form-select mx-1" name="exam_11">
-                                                        <option disabled selected>Exam </option>
-                                                        <option value="WAEC">WAEC</option>
-                                                        <option value="NECO">NECO</option>
-                                                        <option value="SSCE">SSCE</option>
-                                                        <option value="NABTEB">NABTEB</option>
-                                                    </select>
-                                                    <select class="form-select" name="grade_11">
-                                                        <option disabled selected>Grade</option>
-                                                        <option value="A1">A1</option>
-                                                        <option value="B2">B2</option>
-                                                        <option value="B3">B3</option>
-                                                        <option value="C4">C4</option>
-                                                        <option value="C5">C5</option>
-                                                        <option value="C6">C6</option>
-                                                        <option value="D7">D7</option>
-                                                        <option value="E8">E8</option>
-                                                        <option value="F9">F9</option>
-                                                    </select>
-                                                </div>
-                                            </div>
-                                            <div class="form-grop sbj12 mt-3">
-                                                <div class="btn-group">
-
-                                                    <select class="form-select mx-1" name="subject_12">
-                                                        <option disabled selected>Select Subject</option>
-                                                        @foreach($subjects as $subject)
-
-                                                        <option value="{{$subject->subject_name}}">{{$subject->subject_name}}</option>
-                                                        @endforeach  --}}
-                                                    {{--  </select>
-                                                    <select class="form-select mx-1" name="exam_12">
-                                                        <option disabled selected>Exam </option>
-                                                        <option value="WAEC">WAEC</option>
-                                                        <option value="NECO">NECO</option>
-                                                        <option value="SSCE">SSCE</option>
-                                                        <option value="NABTEB">NABTEB</option>
-                                                    </select>
-                                                    <select class="form-select" name="grade_12">
-                                                        <option disabled selected>Grade</option>
-                                                        <option value="A1">A1</option>
-                                                        <option value="B2">B2</option>
-                                                        <option value="B3">B3</option>
-                                                        <option value="C4">C4</option>
-                                                        <option value="C5">C5</option>
-                                                        <option value="C6">C6</option>
-                                                        <option value="D7">D7</option>
-                                                        <option value="E8">E8</option>
-                                                        <option value="F9">F9</option>
-                                                    </select>
-                                                </div>
-
-                                                <div class="form-group">
-                                                    <label for="refferal">{{ __('Number of Sittings') }} </label>
-
-                                                    <div class="form-group col-10">
-                                                        <select class="form-select" name="sitting">
-                                                            <option value=1>1</option>
-                                                            <option value=2>2</option>
-                                                            <option value=3>3</option>
-                                                        </select>
-                                                    </div>
-                                                </div>
-
-                                                <div class="form-group">
-                                                    <div class="form-group">  --}}
-
-                                                        {{--  @if (session('signUpMsg'))
-                                                        {!! session('signUpMsg') !!}
-                                                        @endif  --}}
-                                                        {{--  <button type="submit" class="btn btn-success">
-                                                            {{ __('Submit') }}
-                                                        </button>
-                                                    </div>
-                                                </div>
-                                        </form>  --}}
+                                                        
+                                                        
                                     </div>
                                 </div>
 
@@ -1085,14 +651,14 @@ exit;
             <!-- End of Main Content -->
 
             <!-- Footer -->
-            @include('layouts.footer')
+            <?php echo $__env->make('layouts.footer', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
             <!-- End of Footer -->
 
         </div>
         <!-- End of Content Wrapper -->
     </div>
 </div>
-{{-- JAVASCRIPT FOR DOING THE MOST  --}}
+
 <script>
     $(document).ready(function() {
         let status = $("#status").val();
@@ -1160,4 +726,6 @@ exit;
 
         });
     </script>
-@endsection
+<?php $__env->stopSection(); ?>
+
+<?php echo $__env->make('layouts.userapp', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH /Users/lifeofrence/Documents/laraproject/resources/views/admissions//de.blade.php ENDPATH**/ ?>

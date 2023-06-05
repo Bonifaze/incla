@@ -67,7 +67,7 @@ class AdminController extends Controller
         return view('results.course_upload', ['staff_courses' => $staff_courses]);
     // } else {
     //     $loginMsg = '<div class="alert alert-danger alert-dismissible" role="alert"> <button type="button" class="close" data-dismiss="alert"> &times; </button> You dont\'t have access to this task, please see the ICT</div>';
-    //    return view('admissions.error', compact('loginMsg'));
+    //    return view('adminutmessions.error', compact('loginMsg'));
     // }
     }
 
@@ -446,9 +446,7 @@ class AdminController extends Controller
     // View All Applicants
     public function allApplicants()
     {
-        $staff = Auth::guard('staff')->user();
-
-        if ($this->hasPriviledge("allApplicants",   $staff->id)) {
+        $currentSessionId = $this->getCurrentAdmissionSession();
             $allAppli = array();
             $allApplicants = DB::table('approved_applicants')->get();
             $approvedArr = array();
@@ -458,15 +456,19 @@ class AdminController extends Controller
                 $counter++;
             }
             $allApplicants = DB::table('users')
-                ->whereNotIn('users.id', $approvedArr)
+             ->where('users.session_id', $currentSessionId)
+             ->whereNotNull('users.applicant_type')
+                // ->whereNotIn('users.id', $approvedArr)
                 ->join('usersbiodata', 'usersbiodata.user_id', '=', 'users.id')
                 ->leftJoin('de', 'de.user_id', '=', 'users.id')
                 ->leftJoin('pgs', 'pgs.user_id', '=', 'users.id')
                 ->leftJoin('transfers', 'transfers.user_id', '=', 'users.id')
                 ->leftJoin('utme', 'utme.user_id', '=', 'users.id')
+
                 ->select('users.*', 'usersbiodata.gender',
                 // 'usersbiodata.passport', 'usersbiodata.passport_type',
                 'usersbiodata.created_at', 'de.course_applied', 'transfers.course_applied', 'utme.course_applied', 'pgs.course_applied')
+
                 ->get()->toArray();
 
             foreach ($allApplicants as $applicant) {
@@ -491,10 +493,7 @@ class AdminController extends Controller
             }
             $fullName = session('adminFirstName') . " " . session('adminsurname');
            return view('admissions.allApplicants', compact('allAppli', 'fullName'));
-        } else {
-            $loginMsg = '<div class="alert alert-danger alert-dismissible" role="alert"> <button type="button" class="close" data-dismiss="alert"> &times; </button> You dont\'t have access to this task, please see the ICT</div>';
-           return view('admissions.error', compact('loginMsg'));
-        }
+
     }
 
 //VERIFY PAYMENT FUNCTION
@@ -641,15 +640,17 @@ class AdminController extends Controller
 
     public function allApprovedApplicants($user_type)
     {
-        $staff = Auth::guard('staff')->user();
-        if ($this->hasPriviledge("allApprovedApplicants",  $staff->id)) {
+        $currentSessionId = $this->getCurrentAdmissionSession();
+
             $allApplicants = "";
             if ($user_type == "UTME") {
                 $allApplicants = DB::table('approved_applicants')
                     ->join('users', 'approved_applicants.user_id', '=', 'users.id')
                     ->join('usersbiodata', 'usersbiodata.user_id', '=', 'approved_applicants.user_id')
                     ->join('utme', 'utme.user_id', '=', 'approved_applicants.user_id')
+
                     ->select('users.*', 'usersbiodata.gender', 'utme.course_applied', 'approved_applicants.*')
+                    ->where('users.session_id', $currentSessionId)
                     ->get()->toArray();
             } elseif ($user_type == "DE") {
                 $allApplicants = DB::table('approved_applicants')
@@ -657,6 +658,7 @@ class AdminController extends Controller
                     ->join('usersbiodata', 'usersbiodata.user_id', '=', 'approved_applicants.user_id')
                     ->join('de', 'de.user_id', '=', 'approved_applicants.user_id')
                     ->select('users.*', 'usersbiodata.gender', 'de.course_applied', 'approved_applicants.*')
+                    ->where('users.session_id', $currentSessionId)
                     ->get()->toArray();
             } elseif ($user_type == "Transfer") {
                 $allApplicants = DB::table('approved_applicants')
@@ -664,6 +666,7 @@ class AdminController extends Controller
                     ->join('usersbiodata', 'usersbiodata.user_id', '=', 'approved_applicants.user_id')
                     ->join('transfers', 'transfers.user_id', '=', 'approved_applicants.user_id')
                     ->select('users.*', 'usersbiodata.gender', 'transfers.course_applied', 'approved_applicants.*')
+                    ->where('users.session_id', $currentSessionId)
                     ->get()->toArray();
             } elseif ($user_type == "PG") {
                 $allApplicants = DB::table('approved_applicants')
@@ -671,15 +674,13 @@ class AdminController extends Controller
                     ->join('usersbiodata', 'usersbiodata.user_id', '=', 'approved_applicants.user_id')
                     ->join('pgs', 'pgs.user_id', '=', 'approved_applicants.user_id')
                     ->select('users.*', 'usersbiodata.gender', 'pgs.course_applied', 'approved_applicants.*')
+                    ->where('users.session_id', $currentSessionId)
                     ->get()->toArray();
             }
 
             $fullName = session('adminFirstName') . " " . session('adminsurname');
            return view('admissions.allApprovedApplicants', compact('allApplicants', 'fullName', 'user_type'));
-        } else {
-            $loginMsg = '<div class="alert alert-danger alert-dismissible" role="alert"> <button type="button" class="close" data-dismiss="alert"> &times; </button> You dont\'t have access to this task, please see the ICT</div>';
-           return view('admissions.error', compact('loginMsg'));
-        }
+
     }
 
     public function DE()
@@ -759,8 +760,9 @@ class AdminController extends Controller
 
     public function utme()
     {
-        $staff = Auth::guard('staff')->user();
-        if ($this->hasPriviledge("utme",  $staff->id)) {
+        $currentSessionId = $this->getCurrentAdmissionSession();
+
+        $this->authorize('reset', Staff::class);
             $utmeApplicants = DB::table('approved_applicants')->get();
             $approvedArr = array();
             $counter = 0;
@@ -769,20 +771,18 @@ class AdminController extends Controller
                 $counter++;
             }
             $utmeApplicants = DB::table('users')->where('applicant_type', 'utme')
+              ->where('users.session_id', $currentSessionId)
                 ->whereNotIn('users.id', $approvedArr)
                 ->join('usersbiodata', 'usersbiodata.user_id', '=', 'users.id')
                 // ->join('uploads', 'uploads.user_id', '=', 'users.id')
                 ->join('utme', 'utme.user_id', '=', 'users.id')
                 ->select('users.*', 'usersbiodata.gender', 'usersbiodata.created_at',  'usersbiodata.dob', 'usersbiodata.status', 'utme.course_applied')
                 ->where('status','4')
+
                 ->get();
             $fullName = session('adminFirstName') . " " . session('adminsurname');
            return view('admissions.utmeApplicants', compact('utmeApplicants', 'fullName'));
-        } else {
-            $loginMsg = '<div class="alert alert-danger alert-dismissible" role="alert"> <button type="button" class="close" data-dismiss="alert"> &times; </button> You dont\'t have access to this task, please see the ICT</div>';
-           return view('admissions.error', compact('loginMsg'));
         }
-    }
 
     // View paymnets for UTME Applicants
     public function utmePayment()
@@ -1193,8 +1193,8 @@ public function changecourseTransfer(Request $req)
     // View all qualified applicants
     public function viewQualifiedApplicants($user_type)
     {
-        $staff = Auth::guard('staff')->user();
-        if ($this->hasPriviledge("viewQualifiedApplicants",  $staff->id)) {
+        $currentSessionId = $this->getCurrentAdmissionSession();
+        $this->authorize('reset', Staff::class);
             $allAppli = array();
             $utmeApplicants = DB::table('approved_applicants')->get();
             $approvedArr = array();
@@ -1205,6 +1205,7 @@ public function changecourseTransfer(Request $req)
             }
             if ($user_type == "UTME") {
                 $utmeApplicants = DB::table('users')->where('applicant_type', 'UTME')
+                ->where('users.session_id', $currentSessionId)
                     ->whereNotIn('users.id', $approvedArr)
                     ->join('usersbiodata', 'usersbiodata.user_id', '=', 'users.id')
                     ->join('utme', 'utme.user_id', '=', 'users.id')
@@ -1217,6 +1218,7 @@ public function changecourseTransfer(Request $req)
                 }
             } elseif ($user_type == "DE") {
                 $deApplicants = DB::table('users')->where('applicant_type', 'DE')
+                ->where('users.session_id', $currentSessionId)
                     ->whereNotIn('users.id', $approvedArr)
                     ->join('usersbiodata', 'usersbiodata.user_id', '=', 'users.id')
                     ->join('de', 'de.user_id', '=', 'users.id')
@@ -1229,6 +1231,7 @@ public function changecourseTransfer(Request $req)
                 }
             } elseif ($user_type == "Transfer") {
                 $transferApplicants = DB::table('users')->where('applicant_type', 'Transfer')
+                ->where('users.session_id', $currentSessionId)
                     ->whereNotIn('users.id', $approvedArr)
                     ->join('usersbiodata', 'usersbiodata.user_id', '=', 'users.id')
                     ->join('transfers', 'transfers.user_id', '=', 'users.id')
@@ -1242,10 +1245,7 @@ public function changecourseTransfer(Request $req)
             }
             $fullName = session('adminFirstName') . " " . session('adminsurname');
            return view('admissions.qualifiedApplicants', compact('allAppli', 'fullName', 'user_type'));
-        } else {
-            $loginMsg = '<div class="alert alert-danger alert-dismissible" role="alert"> <button type="button" class="close" data-dismiss="alert"> &times; </button> You dont\'t have access to this task, please see the ICT</div>';
-           return view('admissions./error', compact('loginMsg'));
-        }
+
     }
 
     //View Recommended Applicants
@@ -2310,6 +2310,14 @@ else {
 
    }
 
+   protected function getCurrentAdmissionSession()
+   {
+       $session = DB::table('admission_sessions')->where('status', 1)
+           ->select('admission_sessions.id')->first();
+       $ses = $session->id;
+       $currentadmissionsession = $ses;
+       return $currentadmissionsession;
+   }
 
    public function search()
     {
@@ -2320,32 +2328,29 @@ else {
 
     public function find(Request $request)
     {
-    //    $this->authorize('search', Student::class);
-        $users = DB::table('users')
-        ->where('surname', 'like', '%'.$request->data.'%')
-        ->orWhere('id', $request->data)
-        ->orWhere('first_name', 'like', '%'.$request->data.'%')
-        ->orWhere('phone', 'like', '%'.$request->data.'%')
-        ->orWhere('email', 'like', '%'.$request->data.'%')
-        //add full matric search
-        //->orWhereHas('academic', function ($query) use ($request){
-            //$query->where('mat_no', '=', $request->data);
-        //})
-        ->orderBy('id')
-        ->orderBy('surname')
-        ->paginate(50);
-        if(count($users) > 0)
-        {
-            $request->session()->flash('message', '');
-            return view('admissions.students.admin.list',compact('users'));
-        }
-        else
-        {
-            $request->session()->flash('message', 'No Matching Applicants record found. Try to search again !');
-            return view ('admissions.students.admin.search');
-        }
+        $currentSessionId = $this->getCurrentAdmissionSession();
 
-    } // end find
+        $users = DB::table('users')
+            ->where('session_id', $currentSessionId)
+            ->where(function ($query) use ($request) {
+                $query->where('surname', 'like', '%' . $request->data . '%')
+                    ->orWhere('id', $request->data)
+                    ->orWhere('first_name', 'like', '%' . $request->data . '%')
+                    ->orWhere('phone', 'like', '%' . $request->data . '%')
+                    ->orWhere('email', 'like', '%' . $request->data . '%');
+            })
+            ->orderBy('id')
+            ->orderBy('surname')
+            ->paginate(50);
+
+        if (count($users) > 0) {
+            $request->session()->flash('message', '');
+            return view('admissions.students.admin.list', compact('users'));
+        } else {
+            $request->session()->flash('message', 'No Matching Applicants record found. Try to search again!');
+            return view('admissions.students.admin.search');
+        }
+    }
 
 
 }

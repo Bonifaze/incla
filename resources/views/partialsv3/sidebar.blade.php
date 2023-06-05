@@ -63,7 +63,7 @@
                                 <p>Change Password</p>
                             </a>
                         </li>
-                        @if (auth()->user()->id == 506)
+                        {{--  @if (auth()->user()->id == 506)
                             <li class="nav-item">
                                 <a href="/rbac/otp" class="nav-link @yield('')">
 
@@ -71,7 +71,7 @@
                                 </a>
                             </li>
                         @else
-                        @endif
+                        @endif  --}}
                     </ul>
                 </li>
 

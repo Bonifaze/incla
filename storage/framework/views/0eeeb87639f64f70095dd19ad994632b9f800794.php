@@ -91,10 +91,7 @@
                             <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                             <tr>
                                 <td></td>
-                                <td> <a class="btn btn-info" target="_blank"
-                                        href="<?php echo e(route('remita.find-studentunpaidrrr', $academic->student_id)); ?>"><i
-                                            class="fas fa-eye text-white-50"></i> Show Unpaid RRR </a>
-                                </td>
+                                
 
 
                             </tr>

@@ -59,7 +59,11 @@
                     
                     <li><a href="<?php echo e(route('rbac.audit')); ?>" class="dropdown-item">Audit </a></li>
                     <li><a href="<?php echo e(route('staff.securitylist')); ?>" class="dropdown-item">List Staff Roles </a></li>
-                    <li><a href="<?php echo e(route('session.list')); ?>" class="dropdown-item">List Sessions</a></li>
+                      <li><a href="<?php echo e(route('session.create')); ?>" class="dropdown-item">Create Academic Sessions</a></li>
+                    <li><a href="<?php echo e(route('session.list')); ?>" class="dropdown-item">List Academic Sessions</a></li>
+                     <li><a href="<?php echo e(route('session.createAdmission')); ?>" class="dropdown-item">Create Admission Sessions</a></li>
+                    <li><a href="<?php echo e(route('session.listAdmission')); ?>" class="dropdown-item">List Admission Sessions</a></li>
+                     
                     <!-- End Level two -->
                 </ul>
             </li>

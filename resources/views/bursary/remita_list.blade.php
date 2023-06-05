@@ -93,10 +93,10 @@
                             @endforeach
                             <tr>
                                 <td></td>
-                                <td> <a class="btn btn-info" target="_blank"
+                                {{--  <td> <a class="btn btn-info" target="_blank"
                                         href="{{ route('remita.find-studentunpaidrrr', $academic->student_id) }}"><i
                                             class="fas fa-eye text-white-50"></i> Show Unpaid RRR </a>
-                                </td>
+                                </td>  --}}
 
 
                             </tr>

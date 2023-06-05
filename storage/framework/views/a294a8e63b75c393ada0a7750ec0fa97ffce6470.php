@@ -40,8 +40,8 @@ exit;
                                                 <h6 class="m-0 font-weight-bold text-success">Admission Status : <?php echo e($status); ?></h6>
                                                  <div class="dropdown no-arrow">
 
-                                                    <?php echo $status=="Successful"?' 
-                                                    
+                                                    <?php echo $status=="Successful"?'
+
                                                     ':''; ?>
 
 
@@ -54,7 +54,7 @@ exit;
                                                 <div class="dropdown no-arrow">
 
                                                     <?php
-                                                    $fees = array("UTME"=>80000, "DE"=>80000, "Transfer"=>80000, "PG"=>50000);
+                                                    $fees = array("UTME"=>80000, "DE"=>80000, "Transfer"=>80000, "PG"=>50000 or 30000);
                                                     ?>
                                                     <?php $__currentLoopData = $admission; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $utm): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                                     <input type="hidden" class="form-control" id="js-firstName" placeholder="<?php echo e($utm->first_name." ".$utm->middle_name." ".$utm->surname); ?>" value="<?php echo e($utm->first_name." ".$utm->middle_name." ".$utm->surname); ?>" name="firstName" readonly>
@@ -101,6 +101,8 @@ exit;
 
 
             <?php $__currentLoopData = $admission; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $utm): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+
+
             <div class="row gy-4">
                 <div class="col-12 col-lg-6">
                     <div class="app-card app-card-account shadow d-flex flex-column align-items-start ">
@@ -112,9 +114,10 @@ exit;
                                         <div class="item-label mb-2">
                                             <strong>Photo</strong>
                                         </div>
-                                        <div class="rounded-circle">
-                                            <img class="rounded-circle p-3 mx-auto d-block" src="data:image/<?php echo e($utm->passport_type); ?>;base64,<?php echo e(base64_encode($utm->passport)); ?>" alt="Applicant Passport" style="height: 180px; width:200px;" />
-                                        </div>
+                                       <div class="rounded-circle">
+    <img class="rounded-circle p-3 mx-auto d-block" src="data:image/jpeg;base64,<?php echo e($utm->passport); ?>" alt="Applicant Passport" style="height: 180px; width: 200px;">
+</div>
+
                                     </div>
                                 </div>
                             </div>

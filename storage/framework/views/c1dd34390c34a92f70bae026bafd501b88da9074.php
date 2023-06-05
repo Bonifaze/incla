@@ -63,15 +63,7 @@
                                 <p>Change Password</p>
                             </a>
                         </li>
-                        <?php if(auth()->user()->id == 506): ?>
-                            <li class="nav-item">
-                                <a href="/rbac/otp" class="nav-link <?php echo $__env->yieldContent(''); ?>">
-
-                                    <p></p>
-                                </a>
-                            </li>
-                        <?php else: ?>
-                        <?php endif; ?>
+                        
                     </ul>
                 </li>
 

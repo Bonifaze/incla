@@ -18,10 +18,10 @@ class AdminDepartmentsController extends Controller
     public function __construct()
     {
         $this->middleware('auth:staff');
-       
+
     }
-    
-    
+
+
     /**
      * Display a listing of the resource.
      *
@@ -33,8 +33,8 @@ class AdminDepartmentsController extends Controller
         $departments = AdminDepartment::with(['parent','academic'])->orderBy('status','ASC')->orderBy('name','ASC')->paginate(40);
         return view('admins.departments.list',compact('departments'));
     }
-    
-    
+
+
     public function create()
     {
         $this->authorize('create',AdminDepartment::class);
@@ -44,7 +44,7 @@ class AdminDepartmentsController extends Controller
         $staff = Staff::orderBy('surname','ASC')->get()->pluck('full_name','id');
         return view('admins.departments.create', compact('admins','academics', 'staff'));
     }
-    
+
     /**
      * Store a newly created resource in storage.
      *
@@ -66,7 +66,7 @@ class AdminDepartmentsController extends Controller
         $department->parent_id = $request->parent_id;
         $department->hod_id = $request->hod_id;
         $department->status = 1;
-        
+
         try{
             $department->save();
         } // end try
@@ -75,13 +75,13 @@ class AdminDepartmentsController extends Controller
             $request->session()->flash('error', 'Error creating Admin Department ! <br />');
             return redirect()->route('admin.department.create');
         }
-        
+
         return redirect()->route('admin.department.list')
         ->with('success','New Admin Department created successfully');
     }  // end store
-    
-    
-    
+
+
+
     public function edit($id)
     {
         $this->authorize('edit',AdminDepartment::class);
@@ -92,8 +92,8 @@ class AdminDepartmentsController extends Controller
         $staff = Staff::orderBy('surname','ASC')->get()->pluck('full_name','id');
         return view('admins.departments.edit', compact('department','admins','academics', 'staff'));
     }
-    
-    
+
+
     /**
      * Store a newly created resource in storage.
      *
@@ -116,7 +116,7 @@ class AdminDepartmentsController extends Controller
         $department->parent_id = $request->parent_id;
         $department->hod_id = $request->hod_id;
         $department->status = $request->status;
-        
+
         try{
             $department->save();
         } // end try
@@ -141,7 +141,7 @@ class AdminDepartmentsController extends Controller
             $request->session()->flash('error', 'Error deleting Department. Academic Department exist under this Admin Department !');
             return redirect()->route('admin.department.list');
         }
-        
+
         try{
             $department->delete();
         } // end try
@@ -152,7 +152,7 @@ class AdminDepartmentsController extends Controller
         }
         return redirect()->route('admin.department.list')
         ->with('success','Department deleted successfully');
-        
+
     } // end delete
 
 
@@ -164,16 +164,17 @@ class AdminDepartmentsController extends Controller
             ->whereHas('workProfile',function($q) use ($dept_id)
     {
         $q->where('admin_department_id',$dept_id)
-        ->where('staff_type_id',1);
+        // ->where('staff_type_id',1)
+        ;
     })
         ->where('status',1)
             ->orderBy('surname','ASC')->paginate(100);
         return view('staff.admin.list',compact('staff'));
     }
-    
-    
-    
-    
-    
-    
+
+
+
+
+
+
 } // end class

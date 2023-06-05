@@ -1,4 +1,4 @@
-<?php $__env->startSection('pagetitle'); ?> List of Academic Sessions  <?php $__env->stopSection(); ?>
+<?php $__env->startSection('pagetitle'); ?> List of Admissions Sessions  <?php $__env->stopSection(); ?>
 
 
 
@@ -30,7 +30,7 @@
 
                       <h1
                         class="app-page-title text-uppercase h5 font-weight-bold p-2 mb-2 shadow-sm text-center text-success border">
-                     List of Academics Sessions
+                     List of Admissions Sessions
                     </h1>
 
             <?php echo $__env->make('partialsv3.flash', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
@@ -40,15 +40,15 @@
 						  <thead>
 
 							  <th>S/N</th>
-                              <th>ID</th>
 							  <th>Name</th>
 							  <th>Start</th>
 							  <th>End</th>
-							   <th>Semester</th>
+
 							   <th>Status</th>
 							 <th>Action</th>
 							  <th>Action</th>
 
+                              <th>Session_ID</th>
 
 
 
@@ -61,29 +61,24 @@
 
 							<tr>
 							  <td><?php echo e($loop->iteration); ?></td>
-                                <td><?php echo e($session->id); ?></td>
+
 							  <td><?php echo e($session->name); ?></td>
 							   <td><?php echo e($session->start_date); ?></td>
 							   <td><?php echo e($session->end_date); ?></td>
-							    
-                                   <?php if( $session->semester  == 1): ?>
-                             <td> First </td>
-                             <?php else: ?>
-                             <td>Second </td>
-                             <?php endif; ?>
+
        <?php if( $session->status == 1): ?>
                              <td> Active </td>
                              <?php else: ?>
                              <td>Deactive </td>
                              <?php endif; ?>
 							 
-								<td><a class="btn btn-warning" href="<?php echo e(route('session.edit',$session->id)); ?>"> <i class="fa fa-edit"></i> Edit </td>
+								<td><a class="btn btn-warning" href="<?php echo e(route('session.editAdmission',$session->id)); ?>"> <i class="fa fa-edit"></i> View </td>
 
 							<?php if($session->status == 1): ?>
 									<td>Current Session</td>
 								<?php elseif($session->status == 0): ?>
 							 <td>
-									<?php echo Form::open(['method' => 'Patch', 'route' => 'session.set_current', 'id'=>'setCurrentForm'.$session->id]); ?>
+									<?php echo Form::open(['method' => 'Patch', 'route' => 'session.set_currentAdmission', 'id'=>'setCurrentForm'.$session->id]); ?>
 
 									<?php echo e(Form::hidden('id', $session->id)); ?>
 
@@ -94,7 +89,9 @@
 
 
 								</td>
+
 				    		<?php endif; ?>
+                             <td> <?php echo e($session->id); ?></td>
 							</tr>
 
 							<?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
@@ -158,4 +155,4 @@
 <?php $__env->stopSection(); ?>
 
 
-<?php echo $__env->make('layouts.mini', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH /Users/lifeofrence/Documents/laraproject/resources/views//sessions/list.blade.php ENDPATH**/ ?>
+<?php echo $__env->make('layouts.mini', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH /Users/lifeofrence/Documents/laraproject/resources/views//sessions/listAdmission.blade.php ENDPATH**/ ?>

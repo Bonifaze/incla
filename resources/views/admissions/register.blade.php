@@ -71,7 +71,7 @@
                         </div>
                            <div class="form-group">
                             <div class="form-group">
-                                <input id="first_name" type="text" class="form-control @error('first_name') is-invalid @enderror" placeholder="Other Name" autocomplete="other_name" autofocus>
+                                <input id="first_name" type="text" class="form-control @error('first_name') is-invalid @enderror" name="middle_name"  placeholder="Other Name" autocomplete="other_name" autofocus>
 
                                 @error('first_name')
                                 <span class="invalid-feedback" role="alert">

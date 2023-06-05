@@ -2,7 +2,7 @@
 
 
 
-@section('pagetitle') List of Academic Sessions  @endsection
+@section('pagetitle') List of Admissions Sessions  @endsection
 
 
 
@@ -34,7 +34,7 @@
 
                       <h1
                         class="app-page-title text-uppercase h5 font-weight-bold p-2 mb-2 shadow-sm text-center text-success border">
-                     List of Academics Sessions
+                     List of Admissions Sessions
                     </h1>
 
             @include('partialsv3.flash')
@@ -44,15 +44,15 @@
 						  <thead>
 
 							  <th>S/N</th>
-                              <th>ID</th>
 							  <th>Name</th>
 							  <th>Start</th>
 							  <th>End</th>
-							   <th>Semester</th>
+
 							   <th>Status</th>
 							 <th>Action</th>
 							  <th>Action</th>
 
+                              <th>Session_ID</th>
 
 
 
@@ -65,29 +65,24 @@
 
 							<tr>
 							  <td>{{ $loop->iteration }}</td>
-                                <td>{{ $session->id }}</td>
+
 							  <td>{{ $session->name }}</td>
 							   <td>{{ $session->start_date }}</td>
 							   <td>{{ $session->end_date }}</td>
-							    {{--  <td>{{ $session->semester }}</td>  --}}
-                                   @if ( $session->semester  == 1)
-                             <td> First </td>
-                             @else ( $session->semester  == 2)
-                             <td>Second </td>
-                             @endif
+
        @if ( $session->status == 1)
                              <td> Active </td>
                              @else
                              <td>Deactive </td>
                              @endif
 							 {{--  <td>{{ $session->status }}</td>  --}}
-								<td><a class="btn btn-warning" href="{{ route('session.edit',$session->id) }}"> <i class="fa fa-edit"></i> Edit </td>
+								<td><a class="btn btn-warning" href="{{ route('session.editAdmission',$session->id) }}"> <i class="fa fa-edit"></i> View </td>
 
 							@if ($session->status == 1)
 									<td>Current Session</td>
 								@elseif($session->status == 0)
 							 <td>
-									{!! Form::open(['method' => 'Patch', 'route' => 'session.set_current', 'id'=>'setCurrentForm'.$session->id]) !!}
+									{!! Form::open(['method' => 'Patch', 'route' => 'session.set_currentAdmission', 'id'=>'setCurrentForm'.$session->id]) !!}
 									{{ Form::hidden('id', $session->id) }}
 
 
@@ -95,7 +90,9 @@
 									{!! Form::close() !!}
 
 								</td>
+
 				    		@endif
+                             <td> {{ $session->id }}</td>
 							</tr>
 
 							@endforeach

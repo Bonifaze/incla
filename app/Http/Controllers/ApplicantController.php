@@ -2,42 +2,51 @@
 
 namespace App\Http\Controllers;
 
+use Exception;
 use App\FeeType;
-
-
-use App\Program;
 //use App\program;
+use App\Program;
 use App\Category;
 use App\subjects;
 use Carbon\Carbon;
-use App\Models\User;
 use App\Mail\Referee;
 use App\Models\Remitas;
-use App\Models\programs;
 use App\Models\fee_types;
 use App\Mail\Confirmsignup;
 use App\Mail\forgotpassword;
 use Illuminate\Http\Request;
+use App\Models\admissionType;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Database\QueryException;
-use PHPUnit\Framework\MockObject\ClassIsFinalException;
+use Intervention\Image\ImageManagerStatic as Image;
+
 
 //use Intervention\Image\ImageManagerStatic as Image;
 
-
 class ApplicantController extends Controller
 {
+
+    protected function getCurrentAdmissionSession()
+    {
+        $session = DB::table('admission_sessions')->where('status', 1)
+            ->select('admission_sessions.id')->first();
+        $ses = $session->id;
+        $currentadmissionsession = $ses;
+        return $currentadmissionsession;
+    }
+
+
     //Mail base URL
-    function getBaseurl()
+    public function getBaseurl()
     {
         return 'https://admissions.veritas.edu.ng';
     }
 
     // Registeration Fuction
-    function register(Request $req)
+    public function register(Request $req)
     {
         //Comfirm password verification
         if ($req->password == $req->password_confirmation) {
@@ -50,10 +59,12 @@ class ApplicantController extends Controller
 
                     'surname' => $req->surname,
                     'first_name' => $req->first_name,
+                    'middile_name' => $req->middile_name,
                     'phone' => $req->phone,
                     'email' => $req->email,
+                    'session_id'=>$this->getCurrentAdmissionSession(),
                     //Hash::make to encrpty or hash the password
-                    'password' => Hash::make($req->password)
+                    'password' => Hash::make($req->password),
 
                 ]);
 
@@ -65,17 +76,16 @@ class ApplicantController extends Controller
                     'url' => $this->getBaseUrl() . '/confirmation/?applicant=' . base64_encode($idcard),
                     // 'url' => $this->getBaseUrl().'/='.base64_encode($req->idcard),
                     //  'surname'=>$req->surname
-                    'surname' => $req->first_name . " " . $req->surname
+                    'surname' => $req->first_name . " " . $req->middile_name . " " . $req->surname,
                 ];
 
                 DB::table('password_resets')->insert([
                     'email' => $req->email,
-                    'token' => 'welcome'
+                    'token' => 'welcome',
                 ]);
                 //To send the mail to uour email
                 Mail::to($req->email)->send(new Confirmsignup($mailData));
                 DB::commit();
-
 
                 $signUpMsg = '<div class="alert alert-success alert-dismissible"><button type="button" class="close" data-dismiss="alert">&times;</button><strong>Success!</strong> ' . $req->surname . ' Your Registration was successful, please follow the instruction sent to your mail ' . $req->email . ' to complete the process</div>';
                 return redirect('/register')->with('signUpMsg', $signUpMsg);
@@ -100,22 +110,21 @@ class ApplicantController extends Controller
     {
         $cofirm = base64_decode($req->applicant);
         DB::table('users')->where('id', $cofirm)->update([
-            'email_verified_at' => now()
+            'email_verified_at' => now(),
         ]);
         $signUpMsg = '<div class="alert alert-success text-align-center alert-dismissible"><button type="button" class="close" data-dismiss="alert">&times;</button><strong>Your email has been Verified you can now Login</strong></div>';
         return redirect('/admissions/login')->with('signUpMsg', $signUpMsg);
     }
     // End of Registration Function
 
-
     // Begin of Login function
     public function login(Request $request)
     {
         $users = DB::table('users')->where('email', $request->email)
-        ->leftJoin('usersbiodata', 'usersbiodata.user_id', '=', 'users.id')
-        ->leftJoin('remitas', 'remitas.user_id', '=', 'users.id')
-        ->select('users.*', 'usersbiodata.status', 'usersbiodata.user_id', 'remitas.status_code', 'remitas.fee_type', 'remitas.amount')
-        ->get();
+            ->leftJoin('usersbiodata', 'usersbiodata.user_id', '=', 'users.id')
+            ->leftJoin('remitas', 'remitas.user_id', '=', 'users.id')
+            ->select('users.*', 'usersbiodata.status', 'usersbiodata.user_id', 'remitas.status_code', 'remitas.fee_type', 'remitas.amount')
+            ->get();
         if ($users->isEmpty()) {
             // Email not found in database
             $loginMsg = '<div class="alert alert-danger alert-dismissible" role="alert"> <button type="button" class="close" data-dismiss="alert"> &times; </button>  Wrong Email  </div>';
@@ -127,13 +136,14 @@ class ApplicantController extends Controller
 
             foreach ($users as $users) {
 
-                if ($users->status_code == '01' && $users->amount >=170000){
+                if ($users->status_code == '01' && $users->amount >= 170000) {
                     if (Hash::check($request->password, $users->password)) {
 
                         if ($users->email_verified_at != null) {
 
                             session(['userid' => $users->id]);
                             session(['usersFirstName' => $users->first_name]);
+                            session(['usersMiddleName' => $users->middle_name]);
                             session(['userssurname' => $users->surname]);
                             session(['usersPhone' => $users->phone]);
                             session(['usersEmail' => $users->email]);
@@ -146,34 +156,35 @@ class ApplicantController extends Controller
 
                     return redirect('/completeadmissions');
                 }
-                if ($users->status_code == '01' && ($users->fee_type == 'Acceptance fees (Undergraduate ) (₦80000)' || $users->fee_type == 'Acceptance Fees (Postgraduate) (₦50000)') )
-                {
+                if ($users->status_code == '01' && ($users->fee_type == 'Acceptance fees (Undergraduate ) (₦80000)' || $users->fee_type == 'Acceptance Fees (Postgraduate) (₦50000)')) {
                     if (Hash::check($request->password, $users->password)) {
 
-                if ($users->email_verified_at != null) {
+                        if ($users->email_verified_at != null) {
 
-                    session(['userid' => $users->id]);
-                    session(['usersFirstName' => $users->first_name]);
-                    session(['userssurname' => $users->surname]);
-                    session(['usersPhone' => $users->phone]);
-                    session(['usersEmail' => $users->email]);
-                    session(['usersType' => $users->applicant_type]);
-                    session(['status' => $users->status]);
+                            session(['userid' => $users->id]);
+                            session(['usersFirstName' => $users->first_name]);
+                            session(['usersMiddleName' => $users->middle_name]);
+                            session(['userssurname' => $users->surname]);
+                            session(['usersPhone' => $users->phone]);
+                            session(['usersEmail' => $users->email]);
+                            session(['usersType' => $users->applicant_type]);
+                            session(['status' => $users->status]);
+                        }
+                    }
+                    return redirect('/schoolfeespayment');
                 }
             }
-            return redirect ('/schoolfeespayment');
-                }
-            }
 
-                // To check if the email entered is our db
+            // To check if the email entered is our db
 
-                // to check password
+            // to check password
             if (Hash::check($request->password, $users->password)) {
 
                 if ($users->email_verified_at != null) {
 
                     session(['userid' => $users->id]);
                     session(['usersFirstName' => $users->first_name]);
+                    session(['usersMiddleName' => $users->middle_name]);
                     session(['userssurname' => $users->surname]);
                     session(['usersPhone' => $users->phone]);
                     session(['usersEmail' => $users->email]);
@@ -206,7 +217,7 @@ class ApplicantController extends Controller
                 $loginMsg = '<div class="alert alert-danger alert-dismissible" role="alert"> <button type="button" class="close" data-dismiss="alert"> &times; </button>  Wrong  Password </div>';
                 return redirect('/admissions/login')->with('loginMsg', $loginMsg);
             }
-        } {
+        }{
             $loginMsg = '<div class="alert alert-danger alert-dismissible"><button type="button" class="close" data-dismiss="alert">&times;</button><strong>Error!</strong> Wrong email or password</div>';
             return redirect('/admissions/login')->with('loginMsg', $loginMsg);
         }
@@ -214,11 +225,18 @@ class ApplicantController extends Controller
     }
 
     //   END OF LOGIN FUNCTION
+
+    //HOME VIEW
+
+    public function home()
+    {
+        $sessions = admissionType::where('status', 1)->orderBy('id', 'ASC');
+        return view('admissions/home', compact('sessions'));
+    }
     //FORGOT PASSWORD
 
     public function forgotpassword(Request $req)
     {
-
 
         $forgotpassword = DB::table('users')->where('email', $req->email)->first();
         if ($forgotpassword) {
@@ -235,7 +253,7 @@ class ApplicantController extends Controller
                 // 'url' => $this->getBaseUrl().'/confirmation/?applicant='.base64_encode( $forgotpassword),
                 'url' => $this->getBaseUrl() . '/resetpassword/?pwrc=' . base64_encode($currenttime) . '&uid=' . base64_encode($req->email),
                 //  'surname'=>$req->surname
-                'surname' =>  $forgotpassword->first_name . " " . $forgotpassword->surname
+                'surname' => $forgotpassword->first_name . " " . $forgotpassword->surname,
 
             ];
 
@@ -270,7 +288,7 @@ class ApplicantController extends Controller
 
                     'email' => $req->email,
                     //Hash::make to encrpty or hash the password
-                    'password' => Hash::make($req->password)
+                    'password' => Hash::make($req->password),
                 ]);
 
             $signUpMsg = '<div class="alert alert-success alert-dismissible"><button type="button" class="close" data-dismiss="alert">&times;</button><strong>Success!</strong> Your Password Reset was Successfull</div>';
@@ -285,107 +303,108 @@ class ApplicantController extends Controller
     public function logoutUsers()
     {
         session()->flush();
-        return redirect('/');
+        return redirect('/admissions/login');
     }
     // END OF LOGOUT FUNCTION
 
     // HOME FUNCTION PASSING PARAMETER USEFUL FOR THE BLADE
+    public function sidebaradmission(){
+        $admissiontype = admissionType::where('status', 1)->orderBy('id', 'ASC')->paginate(20);
+        return redirect('adminsials.sidebar', compact('admissiontype'));
+    }
+
     public function paymen()
     {
-        $paymen =  DB::table('users')->where('users.id', session('userid'))
+        $admissiontype = admissionType::where('status', 1)->orderBy('id', 'ASC')->paginate(20);
+        // dd($sessions);
+        $paymen = DB::table('users')->where('users.id', session('userid'))
             ->leftJoin('usersbiodata', 'usersbiodata.user_id', '=', 'users.id')
             ->select('usersbiodata.status')->first();
-            $payment= DB::table('users')->where('users.id', session('userid'))//-> where('remitas.status_code', '01')
+        $payment = DB::table('users')->where('users.id', session('userid')) //-> where('remitas.status_code', '01')
             ->leftJoin('usersbiodata', 'usersbiodata.user_id', '=', 'users.id')
             ->leftJoin('remitas', 'remitas.user_id', '=', 'users.id')
-            // ->select('remitas.status_code', 'remitas.fee_type', 'remitas.fee_type_id', 'remitas.created_at')
+        // ->select('remitas.status_code', 'remitas.fee_type', 'remitas.fee_type_id', 'remitas.created_at')
             ->get();
 
+        foreach ($payment as $utm) {
+            if ($utm->status_code == '01' && $utm->amount >= 170000) {
+                return redirect('completeadmissions');}
+        }
 
-                    foreach ($payment as $utm){
-                if ($utm->status_code == '01' && $utm->amount >=170000) {
-                    return redirect('completeadmissions');          }
-            }
-
-
-        foreach ($payment as $utm){
-            if ($utm->status_code == '01' && ($utm->fee_type_id =='2'||$utm->fee_type_id =='4'||$utm->fee_type_id =='118') ) {
+        foreach ($payment as $utm) {
+            if ($utm->status_code == '01' && ($utm->fee_type_id == '2' || $utm->fee_type_id == '4' || $utm->fee_type_id == '118')) {
                 return redirect('/schoolfeespayment');
-                          }
+            }
         }
         if ($paymen->status >= 4) {
 
             return redirect('/admission');
         }
-        return view('admissions.home', compact('paymen'));
+        return view('admissions.home', compact('paymen', 'admissiontype'));
     }
 
     // END OF HOME FUNCTION PASSING PARAMETER USEFUL FOR THE BLADE
 
-
     // UTME FUNCTION PASSING PARAMETER USEFUL FOR THE BLADE
     public function utme()
     {
-        $utme = DB::table('users')->where('users.id', session('userid'))//-> where('remitas.status_code', '01')
+        $admissiontype = admissionType::where('status', 1)->orderBy('id', 'ASC')->paginate(20);
+        $utme = DB::table('users')->where('users.id', session('userid')) //-> where('remitas.status_code', '01')
             ->leftJoin('usersbiodata', 'usersbiodata.user_id', '=', 'users.id')
-            ->select('users.surname', 'users.first_name', 'users.phone', 'users.email', 'usersbiodata.status',)->first();
-            $programs = Program::orderBy('name', 'ASC')->get();
-            $subjects = subjects::orderBy('subject_name', 'ASC')->get();
+            ->select('users.surname', 'users.first_name', 'users.middle_name', 'users.phone', 'users.email', 'usersbiodata.status', )->first();
+        $programs = Program::orderBy('name', 'ASC')->get();
+        $subjects = subjects::orderBy('subject_name', 'ASC')->get();
 
-            $utmeremita= DB::table('users')->where('users.id', session('userid'))//-> where('remitas.status_code', '01')
+        $utmeremita = DB::table('users')->where('users.id', session('userid')) //-> where('remitas.status_code', '01')
             ->leftJoin('usersbiodata', 'usersbiodata.user_id', '=', 'users.id')
             ->leftJoin('remitas', 'remitas.user_id', '=', 'users.id')
             ->select('remitas.status_code', 'remitas.fee_type', 'remitas.created_at')->get();
 
-        foreach ($utmeremita as $utm){
-        if ($utm->status_code == '01'&& $utm->fee_type =='Application Fee (Under Graduate) (₦4500)') {
-            return view('admissions./utme', compact('utme','utmeremita'), ['programs' => $programs, 'subjects' => $subjects]);
+        foreach ($utmeremita as $utm) {
+            if ($utm->status_code == '01' && $utm->fee_type == 'Application Fee (Under Graduate) (₦4500)') {
+                return view('admissions./utme', compact('utme', 'utmeremita','admissiontype'), ['programs' => $programs, 'subjects' => $subjects]);
+            }
         }
-    }
         $signUpMsg = '<div class="alert alert-success text-align-center alert-dismissible"><button type="button" class="close" data-dismiss="alert">&times;</button><strong>You Have to make payment before filling out your application form, Please kindly generate RRR to continue</strong></div>';
-        return redirect('/newPayment')->with('signUpMsg', $signUpMsg);;
+        return redirect('/newPayment')->with('signUpMsg', $signUpMsg);
     }
-
-
-
 
     // PAYMENT FOR REMITA application fee
-      public function payment()
+    public function payment()
     {
         $payment = DB::table('users')->where('users.id', session('userid'))
             ->leftJoin('usersbiodata', 'usersbiodata.user_id', '=', 'users.id')->get();
         $fee_types = fee_types::orderBy('status', 'ASC')
             ->where('status', 1)
-            ->where('category',1)
+            ->where('category', 1)
             ->get();
-            $fee_typess = fee_types::orderBy('status', 'ASC')
-            ->where('status', 1)
-            ->where('category',1)
-            ->get();
-
-
-        return view('admissions.newPayment', compact('payment') ,['fee_types' => $fee_types, 'fee_typess' => $fee_typess]);
-    }
-   public function schoolfeespayment()
-    {
-        $payment = DB::table('users')->where('users.id', session('userid'))
-            ->leftJoin('usersbiodata', 'usersbiodata.user_id', '=', 'users.id')->get();
-
-        $fee_types = fee_types::orderBy('status', 'ASC')
-        ->where('status', 1)
-        ->where('category',3)
-        ->get();
         $fee_typess = fee_types::orderBy('status', 'ASC')
-        ->where('status', 1)
-        ->where('category',3)
-        ->get();
+            ->where('status', 1)
+            ->where('category', 1)
+            ->get();
 
-        return view('admissions.schoolfeespayment', compact('payment'),['fee_types' => $fee_types, 'fee_typess' => $fee_typess]);
+        return view('admissions.newPayment', compact('payment'), ['fee_types' => $fee_types, 'fee_typess' => $fee_typess]);
+    }
+    public function schoolfeespayment()
+    {
+        $payment = DB::table('users')->where('users.id', session('userid'))
+            ->leftJoin('usersbiodata', 'usersbiodata.user_id', '=', 'users.id')->get();
+
+        $fee_types = fee_types::orderBy('status', 'ASC')
+            ->where('status', 1)
+            ->where('category', 3)
+            ->get();
+        $fee_typess = fee_types::orderBy('status', 'ASC')
+            ->where('status', 1)
+            ->where('category', 3)
+            ->get();
+
+        return view('admissions.schoolfeespayment', compact('payment'), ['fee_types' => $fee_types, 'fee_typess' => $fee_typess]);
     }
 
-   public function payremi(Request $req)
+    public function payremi(Request $req)
     {
-        $user_id =  session('userid');
+        $user_id = session('userid');
 
         // Count the number of unpaid RRRs with status code 025 for the student
         $unpaid_rrr_count = DB::table('remitas')
@@ -413,7 +432,7 @@ class ApplicantController extends Controller
                 'amount' => $req->amount,
                 'status_code' => $req->statuscode,
                 'status' => $req->status,
-                'request_ip' => $_SERVER['REMOTE_ADDR']
+                'request_ip' => $_SERVER['REMOTE_ADDR'],
             ]);
             // DB::table('usersbiodata')->where('user_id', session('userid'))->update([
             //     'status' => 5
@@ -427,8 +446,8 @@ class ApplicantController extends Controller
             echo $jsonstring;
             //return redirect('/paymentview/'.session('userid'));
         } catch (QueryException $e) {
-         // $statusMsg = '<div class="alert alert-danger alert-dismissible"><button type="button" class="close" data-dismiss="alert">&times;</button><strong>Error!</strong> RRR not generated successfuly, please try again ' . $e->getMessage() . "###" . $req->rrr . '</div>';
-             $statusMsg = 'RRR not generated successfuly, please try again or contact ICT';
+            // $statusMsg = '<div class="alert alert-danger alert-dismissible"><button type="button" class="close" data-dismiss="alert">&times;</button><strong>Error!</strong> RRR not generated successfuly, please try again ' . $e->getMessage() . "###" . $req->rrr . '</div>';
+            $statusMsg = 'RRR not generated successfuly, please try again or contact ICT';
 
             $json = array('success' => false, 'route' => '/home', 'msg' => $statusMsg);
             $jsonstring = json_encode($json, JSON_HEX_TAG);
@@ -443,7 +462,7 @@ class ApplicantController extends Controller
             ->orderBy('status_code', 'ASC')->orderBy('created_at', 'DESC')
             ->get();
 
-            $verifyResponse = $this->verifyRRRALL();
+        $verifyResponse = $this->verifyRRRALL();
 
         return view('admissions.paymentview', compact('viewpayment', 'verifyResponse'));
     }
@@ -487,23 +506,23 @@ class ApplicantController extends Controller
 
     //REMITA PAYMENT FOR ACCEPTANCE FEE
     // PAYMENT FOR REMITA
-     public function paymentacceptance()
+    public function paymentacceptance()
     {
         $payment = DB::table('users')->where('users.id', session('userid'))
             ->leftJoin('usersbiodata', 'usersbiodata.user_id', '=', 'users.id')->get();
-            $fee_types = fee_types::orderBy('status', 'ASC')
+        $fee_types = fee_types::orderBy('status', 'ASC')
             ->where('status', 1)
-            ->where('category',2)
+            ->where('category', 2)
             ->get();
-            $fee_typess = fee_types::orderBy('status', 'ASC')
+        $fee_typess = fee_types::orderBy('status', 'ASC')
             ->where('status', 1)
-            ->where('category',2)
+            ->where('category', 2)
             ->get();
-        return view('admissions.acceptancepayment', compact('payment') ,['fee_types' => $fee_types, 'fee_typess' => $fee_typess]);
+        return view('admissions.acceptancepayment', compact('payment'), ['fee_types' => $fee_types, 'fee_typess' => $fee_typess]);
     }
     public function payremiacceptance(Request $req)
     {
-        $user_id =  session('userid');
+        $user_id = session('userid');
 
         // Count the number of unpaid RRRs with status code 025 for the student
         $unpaid_rrr_count = DB::table('remitas')
@@ -529,14 +548,14 @@ class ApplicantController extends Controller
                 'amount' => $req->amount,
                 'status_code' => $req->statuscode,
                 'status' => $req->status,
-                'request_ip' => $_SERVER['REMOTE_ADDR']
+                'request_ip' => $_SERVER['REMOTE_ADDR'],
             ]);
             $json = array('success' => true, 'route' => '/paymentview/', 'id' => session('userid'));
             $jsonstring = json_encode($json, JSON_HEX_TAG);
             echo $jsonstring;
             //return redirect('/paymentview/'.session('userid'));
         } catch (QueryException $e) {
-           // $statusMsg = '<div class="alert alert-danger alert-dismissible"><button type="button" class="close" data-dismiss="alert">&times;</button><strong>Error!</strong> RRR not generated successfuly, please try again ' . $e->getMessage() . "###" . $req->rrr . '</div>';
+            // $statusMsg = '<div class="alert alert-danger alert-dismissible"><button type="button" class="close" data-dismiss="alert">&times;</button><strong>Error!</strong> RRR not generated successfuly, please try again ' . $e->getMessage() . "###" . $req->rrr . '</div>';
             $statusMsg = 'RRR not generated successfuly, please try again or contact ICT';
             $json = array('success' => false, 'route' => '/home', 'msg' => $statusMsg);
             $jsonstring = json_encode($json, JSON_HEX_TAG);
@@ -564,7 +583,7 @@ class ApplicantController extends Controller
                     'transaction_id' => $req->transaction_id,
                     'transaction_date' => Carbon::now(),
                     'channel' => "Remita Online",
-                    'updated_at' => Carbon::now()
+                    'updated_at' => Carbon::now(),
 
                 ]);
             $json = array('success' => true, 'route' => 'admissions/paymentview/', 'id' => session('userid'));
@@ -580,8 +599,6 @@ class ApplicantController extends Controller
         }
     }
 
-
-
     // View/Print Receipt
     public function receipt($rrr)
     {
@@ -589,12 +606,10 @@ class ApplicantController extends Controller
         $receipt = DB::table('remitas')->where('rrr', $rrr)
             ->leftJoin('users', 'remitas.user_id', '=', 'users.id')
             ->leftjoin('usersbiodata', 'usersbiodata.user_id', '=', 'users.id')
-            ->select('remitas.*','users.surname','users.first_name','usersbiodata.middle_name','usersbiodata.gender','usersbiodata.passport','usersbiodata.passport_type','users.email','users.phone',)
+            ->select('remitas.*', 'users.surname', 'users.first_name', 'usersbiodata.middle_name', 'usersbiodata.gender', 'usersbiodata.passport', 'usersbiodata.passport_type', 'users.email', 'users.phone', )
             ->first();
         return view('admissions.receipt', compact('receipt'));
     }
-
-
 
     private function getdptcolleg($course_applied)
     {
@@ -606,8 +621,7 @@ class ApplicantController extends Controller
 
         $getdptcollege = DB::table('colleges')->where('id', $getdptcollege->college_id)->first();
 
-        $deptCol['col'] = $getdptcollege->name;;
-
+        $deptCol['col'] = $getdptcollege->name;
 
         return $deptCol;
     }
@@ -615,7 +629,7 @@ class ApplicantController extends Controller
     public function generatePDF()
     {
 
-        $admission =  DB::table('users')->where('users.id', session('userid'))->first();
+        $admission = DB::table('users')->where('users.id', session('userid'))->first();
 
         if ($admission->applicant_type == 'UTME') {
 
@@ -645,7 +659,6 @@ class ApplicantController extends Controller
             $facultyAndDept = $this->getdptcolleg($ca->course_applied);
         }
 
-
         return view('admissions.utmeletter', compact('utmeadmission', 'facultyAndDept'));
     }
 
@@ -666,7 +679,6 @@ class ApplicantController extends Controller
         foreach ($deadmission as $ca) {
             $facultyAndDept = $this->getdptcolleg($ca->course_applied);
         }
-
 
         return view('admissions.deletterPDF', compact('deadmission', 'facultyAndDept'));
     }
@@ -689,11 +701,8 @@ class ApplicantController extends Controller
             $facultyAndDept = $this->getdptcolleg($ca->course_applied);
         }
 
-
         return view('admissions.transferletterPDF', compact('transferadmission', 'facultyAndDept'));
     }
-
-
 
     public function pgletterPDF()
     {
@@ -708,12 +717,10 @@ class ApplicantController extends Controller
 
         //$programs= programs::orderBy('name','ASC')->get();
 
-
         $facultyAndDept = array();
         foreach ($pgadmission as $ca) {
             $facultyAndDept = $this->getdptcolleg($ca->course_applied);
         }
-
 
         return view('admissions.pgletterPDF', compact('pgadmission', 'facultyAndDept'));
     }
@@ -721,76 +728,74 @@ class ApplicantController extends Controller
     // DE FUNCTION PASSING PARAMETER USEFUL FOR THE BLADE
     public function de()
     {
-        $de = DB::table('users')->where('users.id', session('userid'))//-> where('remitas.status_code', '01')
+        $de = DB::table('users')->where('users.id', session('userid')) //-> where('remitas.status_code', '01')
             ->leftJoin('usersbiodata', 'usersbiodata.user_id', '=', 'users.id')
-            //->leftJoin('remitas', 'remitas.user_id', '=', 'users.id')
+        //->leftJoin('remitas', 'remitas.user_id', '=', 'users.id')
             ->select('users.surname', 'users.first_name', 'users.phone', 'users.email', 'usersbiodata.status', )->first();
         $programs = Program::orderBy('name', 'ASC')->get();
         $subjects = subjects::orderBy('subject_name', 'ASC')->get();
-        $deremita= DB::table('users')->where('users.id', session('userid'))//-> where('remitas.status_code', '01')
-        ->leftJoin('usersbiodata', 'usersbiodata.user_id', '=', 'users.id')
-        ->leftJoin('remitas', 'remitas.user_id', '=', 'users.id')
-        ->select('remitas.status_code', 'remitas.fee_type', 'remitas.created_at')->get();
+        $deremita = DB::table('users')->where('users.id', session('userid')) //-> where('remitas.status_code', '01')
+            ->leftJoin('usersbiodata', 'usersbiodata.user_id', '=', 'users.id')
+            ->leftJoin('remitas', 'remitas.user_id', '=', 'users.id')
+            ->select('remitas.status_code', 'remitas.fee_type', 'remitas.created_at')->get();
 
-    foreach ($deremita as $der){
-        if ($der->status_code == '01'&& $der->fee_type =='Application Fee (Under Graduate) (₦4500)') {
-            return view('admissions./de', compact('de', 'deremita'), ['programs' => $programs, 'subjects' => $subjects]);
+        foreach ($deremita as $der) {
+            if ($der->status_code == '01' && $der->fee_type == 'Application Fee (Under Graduate) (₦4500)') {
+                return view('admissions./de', compact('de', 'deremita'), ['programs' => $programs, 'subjects' => $subjects]);
+            }
         }
-    }
         $signUpMsg = '<div class="alert alert-success text-align-center alert-dismissible"><button type="button" class="close" data-dismiss="alert">&times;</button><strong>You Have to make payment before filling out your application form, Please kindly generate RRR to continue</strong></div>';
-        return redirect('/newPayment')->with('signUpMsg', $signUpMsg);;
+        return redirect('/newPayment')->with('signUpMsg', $signUpMsg);
     }
     //  END OF DE FUNCTION PASSING PARAMETER USEFUL FOR THE BLADE
-
 
     // TRANSFER FUNCTION PASSING PARAMETER USEFUL FOR THE BLADE
     public function transfers()
     {
-        $transfers = DB::table('users')->where('users.id', session('userid'))//-> where('remitas.status_code', '01')
+        $transfers = DB::table('users')->where('users.id', session('userid')) //-> where('remitas.status_code', '01')
             ->leftJoin('usersbiodata', 'usersbiodata.user_id', '=', 'users.id')
-           // ->leftJoin('remitas', 'remitas.user_id', '=', 'users.id')
+        // ->leftJoin('remitas', 'remitas.user_id', '=', 'users.id')
             ->select('users.surname', 'users.first_name', 'users.phone', 'users.email', 'usersbiodata.status')->first();
         $programs = Program::orderBy('name', 'ASC')->get();
         $subjects = subjects::orderBy('subject_name', 'ASC')->get();
 
-        $transfersremita= DB::table('users')->where('users.id', session('userid'))//-> where('remitas.status_code', '01')
-        ->leftJoin('usersbiodata', 'usersbiodata.user_id', '=', 'users.id')
-        ->leftJoin('remitas', 'remitas.user_id', '=', 'users.id')
-        ->select('remitas.status_code', 'remitas.fee_type', 'remitas.created_at')->get();
+        $transfersremita = DB::table('users')->where('users.id', session('userid')) //-> where('remitas.status_code', '01')
+            ->leftJoin('usersbiodata', 'usersbiodata.user_id', '=', 'users.id')
+            ->leftJoin('remitas', 'remitas.user_id', '=', 'users.id')
+            ->select('remitas.status_code', 'remitas.fee_type', 'remitas.created_at')->get();
 
-    foreach ($transfersremita as $utm){
-    if ($utm->status_code == '01'&& $utm->fee_type =='Application Fee (Under Graduate) (₦4500)') {
-        return view('admissions./transfers', compact('transfers','transfersremita'), ['programs' => $programs, 'subjects' => $subjects]);
-    }
-}
+        foreach ($transfersremita as $utm) {
+            if ($utm->status_code == '01' && $utm->fee_type == 'Application Fee (Under Graduate) (₦4500)') {
+                return view('admissions./transfers', compact('transfers', 'transfersremita'), ['programs' => $programs, 'subjects' => $subjects]);
+            }
+        }
 
         $signUpMsg = '<div class="alert alert-success text-align-center alert-dismissible"><button type="button" class="close" data-dismiss="alert">&times;</button><strong>You Have to make payment before filling out your application form, Please kindly generate RRR to continue</strong></div>';
-        return redirect('/newPayment')->with('signUpMsg', $signUpMsg);;
+        return redirect('/newPayment')->with('signUpMsg', $signUpMsg);
     }
     // END TRANSFER FUNCTION PASSING PARAMETER USEFUL FOR THE BLADE
-
 
     // TRANSFER FUNCTION PASSING PARAMETER USEFUL FOR THE BLADE
     public function pg()
     {
-        $pg = DB::table('users')->where('users.id', session('userid'))//-> where('remitas.status_code', '01')
+        $pg = DB::table('users')->where('users.id', session('userid')) //-> where('remitas.status_code', '01')
             ->leftJoin('usersbiodata', 'usersbiodata.user_id', '=', 'users.id')
-          //  ->leftJoin('remitas', 'remitas.user_id', '=', 'users.id')
+        //  ->leftJoin('remitas', 'remitas.user_id', '=', 'users.id')
             ->select('users.surname', 'users.first_name', 'users.phone', 'users.email', 'usersbiodata.status', )->first();
         $programs = Program::orderBy('name', 'ASC')->get();
         $subjects = subjects::orderBy('subject_name', 'ASC')->get();
-        $pgremita= DB::table('users')->where('users.id', session('userid'))//-> where('remitas.status_code', '01')
-        ->leftJoin('usersbiodata', 'usersbiodata.user_id', '=', 'users.id')
-        ->leftJoin('remitas', 'remitas.user_id', '=', 'users.id')
-        ->select('remitas.status_code', 'remitas.fee_type', 'remitas.created_at')->get();
+        $pgremita = DB::table('users')->where('users.id', session('userid')) //-> where('remitas.status_code', '01')
+            ->leftJoin('usersbiodata', 'usersbiodata.user_id', '=', 'users.id')
+            ->leftJoin('remitas', 'remitas.user_id', '=', 'users.id')
+            ->select('remitas.status_code', 'remitas.fee_type', 'remitas.created_at')->get();
 
-    foreach ($pgremita as $utm){
-    if ($utm->status_code == '01'&& $utm->fee_type =='Application Fees (Postgraduate) (₦10000)') {
-        return view('admissions./pg', compact('pg','pgremita'), ['programs' => $programs, 'subjects' => $subjects]);
-    }
-}
+        foreach ($pgremita as $utm) {
+            if ($utm->status_code == '01' && $utm->fee_type == 'Application Fees (Postgraduate) (₦10000)') {
+                return view('admissions./pg', compact('pg', 'pgremita'), ['programs' => $programs, 'subjects' => $subjects]);
+            }
+        }
         $signUpMsg = '<div class="alert alert-success text-align-center alert-dismissible"><button type="button" class="close" data-dismiss="alert">&times;</button><strong>You Have to make payment before filling out your application form, Please kindly generate RRR to continue</strong></div>';
-        return redirect('/newPayment')->with('signUpMsg', $signUpMsg);;
+        return redirect('/newPayment')->with('signUpMsg', $signUpMsg);
     }
 
     // END TRANSFER FUNCTION PASSING PARAMETER USEFUL FOR THE BLADE
@@ -825,35 +830,40 @@ class ApplicantController extends Controller
         return view('admissions./admission', compact('status', 'admission'));
     }
 
-      public function completeadmissions()
-        {
+    public function completeadmissions()
+    {
 
+        $completeadmissions = DB::table('users')->where('users.id', session('userid'))
+            ->leftJoin('usersbiodata', 'usersbiodata.user_id', '=', 'users.id')
+            ->leftJoin('utme', 'utme.user_id', '=', 'users.id')
+            ->get();
 
-
-            $completeadmissions = DB::table('users')->where('users.id', session('userid'))
-                ->leftJoin('usersbiodata', 'usersbiodata.user_id', '=', 'users.id')
-                ->leftJoin('utme', 'utme.user_id', '=', 'users.id')
-                ->get();
-
-            return view('admissions.completeadmission', compact('completeadmissions'));
-             }
-
+        return view('admissions.completeadmission', compact('completeadmissions'));
+    }
 
     // Function to covert image into binary for **UTME** SO the image can be uploaded
     private function getBinaryImage()
     {
-        $fileName = basename($_FILES["passport"]["name"]);
+        $fileName = $_FILES["passport"]["name"];
         $fileType = pathinfo($fileName, PATHINFO_EXTENSION);
+        $fileSize = $_FILES["passport"]["size"];
         $allowTypes = array('jpg', 'png', 'jpeg', 'JPG', 'PNG', 'JPEG');
+        $maxFileSize = 300 * 1024; // Maximum file size in bytes (300KB)
+
         if (in_array($fileType, $allowTypes)) {
-            $imgContect = file_get_contents(addslashes($_FILES['passport']['tmp_name']));
-            $binaryData = array($imgContect, $fileType);
-            return $binaryData;
+            if ($fileSize <= $maxFileSize) {
+                $imgContent = file_get_contents($_FILES['passport']['tmp_name']);
+                $binaryData = array($imgContent, $fileType);
+                return $binaryData;
+            } else {
+                throw new Exception('Sorry, the uploaded image size should not exceed 300KB.');
+            }
         } else {
-            $statusMsg = 'Sorry, only JPG. JPEG and PNG files are allowed to upload.';
-            return redirect('/utme')->with('mgs', $statusMsg);
+            throw new Exception('Sorry, only JPG, JPEG, and PNG files are allowed to upload.');
         }
     }
+
+
     // END OF Function to covert image into binary for **UTME** SO the image can be uploaded
 
     private function getBinaryImagejamb()
@@ -909,7 +919,7 @@ class ApplicantController extends Controller
         if (in_array($fileType, $allowTypes)) {
             // Check file size
             if ($_FILES['passport']['size'] > 500000) {
-                $statusMsg= 'Sorry, your file is too large.';
+                $statusMsg = 'Sorry, your file is too large.';
                 $uploadOk = 0;
             }
             $imgContect = file_get_contents(addslashes($_FILES['passport']['tmp_name']));
@@ -921,7 +931,6 @@ class ApplicantController extends Controller
         }
     }
     // END Function to covert image into binary for **DE** SO the image can be uploaded
-
 
     // Function to covert image into binary for **TRANSFER** SO the image can be uploaded
     private function getBinaryImagetransfer()
@@ -940,7 +949,6 @@ class ApplicantController extends Controller
     }
     // END Function to covert image into binary for **TRANSFER** SO the image can be uploaded
 
-
     // Function to covert image into binary for **TRANSFER** SO the image can be uploaded
     private function getBinaryImagepg()
     {
@@ -958,60 +966,101 @@ class ApplicantController extends Controller
     }
     // END Function to covert image into binary for **TRANSFER** SO the image can be uploaded
 
-  public function utmeuploads (Request $req)
-  {
+    public function utmeuploads(Request $req)
+    {
+        $this->validate($req, [
 
-     // dd($req);
+
+            'jamb' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:1048|dimensions:min_width=300',
+            'olevel1'  => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:1048|dimensions:min_width=300',
+            'olevel2'  => 'image|mimes:jpeg,png,jpg,gif,svg|max:1048|dimensions:min_width=300',
+        ],
+        $messages = [
+            'jamb.dimensions'    => 'Result Image is too small. Must be at least 400px wide.',
+            'olevel1.dimensions' => 'Olevel Image is too small. Must be at least 400px wide.',
+            'olevel2.dimensions' => 'Olevel Image is too small. Must be at least 400px wide.',
+
+        ]);
+        // dd($req);
         DB::beginTransaction();
 
         try {
 
-            $img0 = array("", "");
-            if ($req->hasFile('jamb')) {
+            // $img0 = array("", "");
+            // if ($req->hasFile('jamb')) {
 
-                $img0 = $this->getBinaryImagejamb();
+            //     $img0 = $this->getBinaryImagejamb();
 
-            $img1 = array("", "");
-            if ($req->hasFile('olevel1')) {
+            //     $img1 = array("", "");
+            //     if ($req->hasFile('olevel1')) {
 
-                $img1 = $this->getBinaryImageolevel1();
-            }
-            $img2 = array("", "");
-            if ($req->hasFile('olevel2')) {
+            //         $img1 = $this->getBinaryImageolevel1();
+            //     }
+            //     $img2 = array("", "");
+            //     if ($req->hasFile('olevel2')) {
 
-                $img2 = $this->getBinaryImageolevel2();
-            }
-            DB::table('uploads')->insert([
-                'user_id' => session('userid'),
-                'jamb' =>$img0[0],
-                'jamb_type' =>$img0[1],
-                'olevel1' => $img1[0],
-                'olevel1_type' => $img1[1],
-                'olevel2' => $img2[0],
-                'olevel2_type' => $img2[1],
-                'olevel_awaiting' =>$req->olevel_awaiting
+            //         $img2 = $this->getBinaryImageolevel2();
+            //     }
+                   //process result upload
+                   $img = "";
+                   if($req->hasFile('jamb'))
+                   {
+                       $img1 = Image::make($req->file('jamb'))->resize(300, null, function ($constraint) {
+                           $constraint->aspectRatio();
+                       });
+                           $passport = base64_encode($img1->encode()->encoded);
+                           $img = $passport;
+                   } // end result
+                   $img1 = "";
+                   if($req->hasFile('olevel1'))
+                   {
+                       $img2 = Image::make($req->file('olevel1'))->resize(300, null, function ($constraint) {
+                           $constraint->aspectRatio();
+                       });
+                           $passport = base64_encode($img2->encode()->encoded);
+                           $img1 = $passport;
+                   } // end result
+                   $img2 = "";
+                   if($req->hasFile('olevel2'))
+                   {
+                       $img3 = Image::make($req->file('olevel2'))->resize(300, null, function ($constraint) {
+                           $constraint->aspectRatio();
+                       });
+                           $passport = base64_encode($img3->encode()->encoded);
+                           $img1 = $passport;
+                   } // end result
 
-                //   'passport'=>$req->passport,'passportype'=>$file_extension
-            ]);
-            } else {
-                $img0 = array("", "");
-                if ($req->hasFile('jamb')) {
+                DB::table('uploads')->insert([
+                    'user_id' => session('userid'),
+                    'jamb' => $img,
+                    // 'jamb_type' => $img0[1],
+                    'olevel1' => $img1,
+                    // 'olevel1_type' => $img1[1],
+                    'olevel2' => $img2,
+                    // 'olevel2_type' => $img2[1],
+                    'olevel_awaiting' => $req->olevel_awaiting,
 
-                    $img0 = $this->getBinaryImagejamb();
+                    //   'passport'=>$req->passport,'passportype'=>$file_extension
+                ]);
 
-            DB::table('uploads')->insert([
-                'user_id' => session('userid'),
-                'jamb' =>$img0[0],
-                'jamb_type' =>$img0[1],
-          'olevel_awaiting' =>$req->olevel_awaiting
-        ]);
-    }
-            }
+            // } else {
+            //     $img0 = array("", "");
+            //     if ($req->hasFile('jamb')) {
+
+            //         $img0 = $this->getBinaryImagejamb();
+
+            //         DB::table('uploads')->insert([
+            //             'user_id' => session('userid'),
+            //             'jamb' => $img0[0],
+            //             'jamb_type' => $img0[1],
+            //             'olevel_awaiting' => $req->olevel_awaiting,
+            //         ]);
+            //     }
+            // }
             DB::table('usersbiodata')->where('user_id', session('userid'))->update([
-                'status' => 4
+                'status' => 4,
 
             ]);
-
 
             //  Mail::to($req->email)->send(new Confirmsignup($mailData));
             DB::commit();
@@ -1030,11 +1079,11 @@ class ApplicantController extends Controller
                 return redirect('/utme')->with('signUpMsg', $signUpMsg);
             }
         }
-  }
-  public function transfersuploads (Request $req)
-  {
+    }
+    public function transfersuploads(Request $req)
+    {
 
-     // dd($req);
+        // dd($req);
         DB::beginTransaction();
 
         try {
@@ -1044,40 +1093,38 @@ class ApplicantController extends Controller
 
                 $img0 = $this->getBinaryImageolevel1();
 
+                $img2 = array("", "");
+                if ($req->hasFile('olevel2')) {
 
-            $img2 = array("", "");
-            if ($req->hasFile('olevel2')) {
+                    $img2 = $this->getBinaryImageolevel2();
+                }
+                DB::table('uploads')->insert([
+                    'user_id' => session('userid'),
+                    'olevel1' => $img0[0],
+                    'olevel1_type' => $img0[1],
+                    'olevel2' => $img2[0],
+                    'olevel2_type' => $img2[1],
 
-                $img2 = $this->getBinaryImageolevel2();
-            }
-            DB::table('uploads')->insert([
-                'user_id' => session('userid'),
-                'olevel1' => $img0[0],
-                'olevel1_type' => $img0[1],
-                'olevel2' => $img2[0],
-                'olevel2_type' => $img2[1],
-
-                //   'passport'=>$req->passport,'passportype'=>$file_extension
-            ]);
+                    //   'passport'=>$req->passport,'passportype'=>$file_extension
+                ]);
             } else {
                 $img0 = array("", "");
                 if ($req->hasFile('olevel1')) {
 
                     $img0 = $this->getBinaryImageolevel1();
 
-            DB::table('uploads')->insert([
-                'user_id' => session('userid'),
-                'olevel1' =>$img0[0],
-                'olevel1_type' =>$img0[1],
+                    DB::table('uploads')->insert([
+                        'user_id' => session('userid'),
+                        'olevel1' => $img0[0],
+                        'olevel1_type' => $img0[1],
 
-        ]);
-    }
+                    ]);
+                }
             }
             DB::table('usersbiodata')->where('user_id', session('userid'))->update([
-                'status' => 4
+                'status' => 4,
 
             ]);
-
 
             //  Mail::to($req->email)->send(new Confirmsignup($mailData));
             DB::commit();
@@ -1096,21 +1143,47 @@ class ApplicantController extends Controller
                 return redirect('/transfers')->with('signUpMsg', $signUpMsg);
             }
         }
-  }
+    }
     // **************************************************************************************************
     // FUNCTION TO UPLOAD INTO THE USERSBIODATE OF A UTME APPLICANT
-    function utmebiodata(Request $req)
+    public function utmebiodata(Request $req)
     {
         // dd($req);
+        $this->validate($req, [
+
+            'gender' => 'required|string|max:6',
+            'dob' => 'required|string|max:50',
+            'nationality' => 'required|string|max:100',
+            'state_origin' => 'required|string|max:50',
+            // 'lga_name' => 'required|string|max:100',
+            'religion' => 'required|string|max:50',
+            'address' => 'required|string|max:200',
+            'passport' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:1048|dimensions:min_width=300',
+        ],
+        $messages = [
+            'passport.dimensions'    => 'Passport Image is too small. Must be at least 400px wide.',
+
+        ]);
         DB::beginTransaction();
 
         try {
 
-            $img = array("", "");
-            if ($req->hasFile('passport')) {
+            // $img = array("", "");
+            // if ($req->hasFile('passport')) {
 
-                $img = $this->getBinaryImage();
-            }
+            //     $img = $this->getBinaryImage();
+            // }
+              //process Passport upload
+              $img = "";
+        if($req->hasFile('passport'))
+        {
+            $img1 = Image::make($req->file('passport'))->resize(300, null, function ($constraint) {
+                $constraint->aspectRatio();
+            });
+                $passport = base64_encode($img1->encode()->encoded);
+                $img = $passport;
+        } // end Passport
+
 
             DB::table('usersbiodata')->insert([
                 'user_id' => session('userid'),
@@ -1122,20 +1195,22 @@ class ApplicantController extends Controller
                 'lga' => $req->lga,
                 'state_origin' => $req->state_origin,
                 'address' => $req->address,
-                'passport' => $img[0],
-                'passport_type' => $img[1],
-                'referral' => $req->referral
+                'session_id'=>$this->getCurrentAdmissionSession(),
+                'passport' => $img,
+                // 'passport_type' => $img[1],
+                'referral' => $req->referral,
                 //   'passport'=>$req->passport,'passportype'=>$file_extension
             ]);
 
             DB::table('users')->where('id', session('userid'))->update([
-                'applicant_type' => 'UTME'
+                'applicant_type' => 'UTME',
 
             ]);
             DB::table('usersbiodata')->where('user_id', session('userid'))->update([
-                'status' => 1
+                'status' => 1,
 
             ]);
+
 
             //  Mail::to($req->email)->send(new Confirmsignup($mailData));
             DB::commit();
@@ -1158,13 +1233,11 @@ class ApplicantController extends Controller
     }
     // END OF FUNCTION TO UPLOAD INTO THE USERSBIODATE OF A UTME APPLICANT
 
-
-    function utmesponsors(Request $req)
+    public function utmesponsors(Request $req)
     {
         // dd($req);
         DB::beginTransaction();
         try {
-
 
             DB::table('sponsors')->insert([
                 'user_id' => session('userid'),
@@ -1172,11 +1245,11 @@ class ApplicantController extends Controller
                 'sponsors_phone' => $req->sponsors_phone,
                 'sponsors_email' => $req->sponsors_email,
                 'sponsors_address' => $req->sponsors_address,
-                'occupation' => $req->occupation
+                'occupation' => $req->occupation,
                 //   'passport'=>$req->passport,'passportype'=>$file_extension
             ]);
             DB::table('usersbiodata')->where('user_id', session('userid'))->update([
-                'status' => 2
+                'status' => 2,
 
             ]);
 
@@ -1202,21 +1275,20 @@ class ApplicantController extends Controller
     }
     // END OF UTME SPONSOR FUNCTION THAT INSERT DATA INTO THE DATABASE
 
-
     // UTME FUCNTION THAT INSERT JAMB DETAILS INTO THE BASEBASE
-    function utmejamb(Request $req)
+    public function utmejamb(Request $req)
     {
         // dd($req);
         // $programs= programs::all();
 
         DB::beginTransaction();
-             try {
+        try {
 
-                // $img = array("", "");
-                // if ($req->hasFile('passport')) {
+            // $img = array("", "");
+            // if ($req->hasFile('passport')) {
 
-                //     $img = $this->getBinaryImagejamb();
-                // }
+            //     $img = $this->getBinaryImagejamb();
+            // }
 
             DB::table('utme')->insert([
                 'user_id' => session('userid'),
@@ -1232,20 +1304,17 @@ class ApplicantController extends Controller
                 // 'jamb' =>$img[0],
                 // 'jamb_type' =>$img[1]
 
-
             ]);
             DB::table('usersbiodata')->where('user_id', session('userid'))->update([
-                'status' => 3
+                'status' => 3,
 
             ]);
 
             DB::commit();
 
-
             // $signUpMsg = '<div class="alert alert-success alert-dismissible"><button type="button" class="close" data-dismiss="alert">&times;</button><strong>Success!</strong> Your Registration was successful, please follow the instruction sent to your mail to complete the process</div>';
             return redirect('/utme');
             //->with('signUpMsg',$signUpMsg);
-
 
         } catch (QueryException $e) {
             DB::rollBack();
@@ -1258,14 +1327,12 @@ class ApplicantController extends Controller
             } else {
                 $signUpMsg = '<div class="alert alert-danger alert-dismissible"><button type="button" class="close" data-dismiss="alert">&times;</button><strong>Error!</strong> please try again later or Veritas University help line</div>';
                 //   $signUpMsg = '<div class="alert alert-danger alert-dismissible"><button type="button" class="close" data-dismiss="alert">&times;</button><strong>Error!</strong> please try again later or call Muoga Market help line'.$e->getMessage().'</div>';
-                return redirect('/utme')->with('signUpMsg',$signUpMsg);
+                return redirect('/utme')->with('signUpMsg', $signUpMsg);
             }
         }
     }
 
-
     // END OF UTME FUCNTION THAT INSERT JAMB DETAILS INTO THE BASEBASE
-
 
     // UTME FUCNTION THAT INSERT OLEVEL DETAILS INTO THE DATEBASE
     // function utmeolevel(Request $req)
@@ -1324,12 +1391,10 @@ class ApplicantController extends Controller
     //             array_push($olevel, $subject);
     //         }
 
-
     //         DB::table('olevel')->insert([
     //             'user_id' => session('userid'),
     //             'olevel_result' => json_encode($olevel, JSON_HEX_TAG),
     //             'sitting' => $req->sitting
-
 
     //             //   'passport'=>$req->passport,'passportype'=>$file_extension
     //         ]);
@@ -1340,9 +1405,7 @@ class ApplicantController extends Controller
 
     //         DB::commit();
 
-
     //         //  Mail::to($req->email)->send(new Confirmsignup($mailData));
-
 
     //         $signUpMsg = '<div class="alert alert-success alert-dismissible"><button type="button" class="close" data-dismiss="alert">&times;</button><strong>Success!</strong> Thank You for filling your Application Form</div>';
     //         return redirect('/admission')->with('signUpMsg', $signUpMsg);
@@ -1361,11 +1424,10 @@ class ApplicantController extends Controller
     // END OF UTME APPLICANT FUNCTIONS
     // *****************************************************************************
 
-
     // ***********************************************************************************
 
     // START OF DIRECT ENTRY FORM INSERTING INTO BIODATA
-    function debiodata(Request $req)
+    public function debiodata(Request $req)
     {
         // dd($req);
         DB::beginTransaction();
@@ -1389,16 +1451,16 @@ class ApplicantController extends Controller
                 'address' => $req->address,
                 'passport' => $img[0],
                 'passport_type' => $img[1],
-                'referral' => $req->referral
+                'referral' => $req->referral,
                 //   'passport'=>$req->passport,'passportype'=>$file_extension
             ]);
 
             DB::table('users')->where('id', session('userid'))->update([
-                'applicant_type' => 'DE'
+                'applicant_type' => 'DE',
 
             ]);
             DB::table('usersbiodata')->where('user_id', session('userid'))->update([
-                'status' => 1
+                'status' => 1,
 
             ]);
 
@@ -1421,14 +1483,12 @@ class ApplicantController extends Controller
     }
     // END OF DE INSERTING INTO BIODATA
 
-
     //FUNCTION INSERTING SPONSOR OF DIRECT ENETRY DE INTO SPONSOR TABLE IN THE DATABASE
-    function desponsors(Request $req)
+    public function desponsors(Request $req)
     {
         // dd($req);
         DB::beginTransaction();
         try {
-
 
             DB::table('sponsors')->insert([
                 'user_id' => session('userid'),
@@ -1436,19 +1496,17 @@ class ApplicantController extends Controller
                 'sponsors_phone' => $req->sponsors_phone,
                 'sponsors_email' => $req->sponsors_email,
                 'sponsors_address' => $req->sponsors_address,
-                'occupation' => $req->occupation
+                'occupation' => $req->occupation,
             ]);
             DB::table('usersbiodata')->where('user_id', session('userid'))->update([
-                'status' => 2
+                'status' => 2,
 
             ]);
 
             //  Mail::to($req->email)->send(new Confirmsignup($mailData));
             DB::commit();
 
-
             //  Mail::to($req->email)->send(new Confirmsignup($mailData));
-
 
             $signUpMsg = '<div class="alert alert-success alert-dismissible"><button type="button" class="close" data-dismiss="alert">&times;</button><strong>Success!</strong> Saving your information</div>';
             return redirect('/de')->with('signUpMsg', $signUpMsg);
@@ -1466,13 +1524,12 @@ class ApplicantController extends Controller
     }
 
     //INSERTING INTO THE APPLICANT TRANSFERINFORMATION TABLE
-    function deinformation(Request $req)
+    public function deinformation(Request $req)
     {
         // dd($req);
 
         DB::beginTransaction();
         try {
-
 
             DB::table('de')->insert([
                 'user_id' => session('userid'),
@@ -1480,17 +1537,16 @@ class ApplicantController extends Controller
                 'qualification' => $req->qualification,
                 'qualification_year' => $req->qualification_year,
                 'qualification_number' => $req->qualification_number,
-                'course_applied' => $req->course_applied
+                'course_applied' => $req->course_applied,
             ]);
             DB::table('usersbiodata')->where('user_id', session('userid'))->update([
-                'status' => 3
+                'status' => 3,
 
             ]);
 
             DB::commit();
 
             //  Mail::to($req->email)->send(new Confirmsignup($mailData));
-
 
             $signUpMsg = '<div class="alert alert-success alert-dismissible"><button type="button" class="close" data-dismiss="alert">&times;</button><strong>Success!</strong> Saving your information</div>';
             return redirect('/de')->with('signUpMsg', $signUpMsg);
@@ -1508,9 +1564,8 @@ class ApplicantController extends Controller
     }
     // END OF tansfer FUCNTION THAT INSERT transfersinformation DETAILS INTO THE dateBASE
 
-
     // UTME FUCNTION THAT INSERT OLEVEL DETAILS INTO THE DATEBASE
-    function deolevel(Request $req)
+    public function deolevel(Request $req)
     {
 
         DB::beginTransaction();
@@ -1566,25 +1621,21 @@ class ApplicantController extends Controller
                 array_push($olevel, $subject);
             }
 
-
             DB::table('olevel')->insert([
                 'user_id' => session('userid'),
                 'olevel_result' => json_encode($olevel, JSON_HEX_TAG),
-                'sitting' => $req->sitting
-
+                'sitting' => $req->sitting,
 
                 //   'passport'=>$req->passport,'passportype'=>$file_extension
             ]);
             DB::table('usersbiodata')->where('user_id', session('userid'))->update([
-                'status' => 4
+                'status' => 4,
 
             ]);
 
             DB::commit();
 
-
             //  Mail::to($req->email)->send(new Confirmsignup($mailData));
-
 
             $signUpMsg = '<div class="alert alert-success alert-dismissible"><button type="button" class="close" data-dismiss="alert">&times;</button><strong>Success!</strong> Thank You for filling your Application Form</div>';
             return redirect('/admission')->with('signUpMsg', $signUpMsg);
@@ -1602,10 +1653,9 @@ class ApplicantController extends Controller
     }
     // ******************************************************************************
 
-
     // *************************************************************************************
     // FUCTION FOR THE TRANSFER APPLICANT
-    function transfersbiodata(Request $req)
+    public function transfersbiodata(Request $req)
     {
         // dd($req);
         DB::beginTransaction();
@@ -1629,16 +1679,16 @@ class ApplicantController extends Controller
                 'address' => $req->address,
                 'passport' => $img[0],
                 'passport_type' => $img[1],
-                'referral' => $req->referral
+                'referral' => $req->referral,
                 //   'passport'=>$req->passport,'passportype'=>$file_extension
             ]);
 
             DB::table('users')->where('id', session('userid'))->update([
-                'applicant_type' => 'Transfer'
+                'applicant_type' => 'Transfer',
 
             ]);
             DB::table('usersbiodata')->where('user_id', session('userid'))->update([
-                'status' => 1
+                'status' => 1,
 
             ]);
 
@@ -1661,7 +1711,7 @@ class ApplicantController extends Controller
     }
 
     // INSERTING TRANSFER APPLICANT INTO SPONER TABLE
-    function transferssponsors(Request $req)
+    public function transferssponsors(Request $req)
     {
         // dd($req);
         DB::beginTransaction();
@@ -1672,20 +1722,18 @@ class ApplicantController extends Controller
                 'sponsors_phone' => $req->sponsors_phone,
                 'sponsors_email' => $req->sponsors_email,
                 'sponsors_address' => $req->sponsors_address,
-                'occupation' => $req->occupation
+                'occupation' => $req->occupation,
 
             ]);
             DB::table('usersbiodata')->where('user_id', session('userid'))->update([
-                'status' => 2
+                'status' => 2,
 
             ]);
 
             //  Mail::to($req->email)->send(new Confirmsignup($mailData));
             DB::commit();
 
-
             //  Mail::to($req->email)->send(new Confirmsignup($mailData));
-
 
             $signUpMsg = '<div class="alert alert-success alert-dismissible"><button type="button" class="close" data-dismiss="alert">&times;</button><strong>Success!</strong>Saving your information </div>';
             return redirect('/transfers')->with('signUpMsg', $signUpMsg);
@@ -1696,7 +1744,7 @@ class ApplicantController extends Controller
                 $signUpMsg = '<div class="alert alert-danger alert-dismissible"><button type="button" class="close" data-dismiss="alert">&times;</button><strong>Error!</strong> Sorry you have filled the form already</div>';
                 return redirect('/transfers')->with('signUpMsg', $signUpMsg);
             } else {
-                   $signUpMsg = '<div class="alert alert-danger alert-dismissible"><button type="button" class="close" data-dismiss="alert">&times;</button><strong>Error!</strong>Sorry try again </div>';
+                $signUpMsg = '<div class="alert alert-danger alert-dismissible"><button type="button" class="close" data-dismiss="alert">&times;</button><strong>Error!</strong>Sorry try again </div>';
                 // $signUpMsg = '<div class="alert alert-danger alert-dismissible"><button type="button" class="close" data-dismiss="alert">&times;</button><strong>Error!</strong>Sorry try again' . $e->getMessage() . '</div>';
                 return redirect('/transfers')->with('signUpMsg', $signUpMsg);
             }
@@ -1705,13 +1753,12 @@ class ApplicantController extends Controller
     //end of transfer sponsor applicant inserting
 
     //INSERTING INTO THE APPLICANT TRANSFERINFORMATION TABLE
-    function transfersinformation(Request $req)
+    public function transfersinformation(Request $req)
     {
         // dd($req);
 
         DB::beginTransaction();
         try {
-
 
             DB::table('transfers')->insert([
                 'user_id' => session('userid'),
@@ -1721,19 +1768,17 @@ class ApplicantController extends Controller
                 'level' => $req->level,
                 'course' => $req->course,
                 'cgpa' => $req->cgpa,
-                'course_applied' => $req->course_applied
-
+                'course_applied' => $req->course_applied,
 
             ]);
             DB::table('usersbiodata')->where('user_id', session('userid'))->update([
-                'status' => 3
+                'status' => 3,
 
             ]);
 
             DB::commit();
 
             //  Mail::to($req->email)->send(new Confirmsignup($mailData));
-
 
             $signUpMsg = '<div class="alert alert-success alert-dismissible"><button type="button" class="close" data-dismiss="alert">&times;</button><strong>Success!</strong> Saving your information </div>';
             return redirect('/transfers')->with('signUpMsg', $signUpMsg);
@@ -1751,9 +1796,8 @@ class ApplicantController extends Controller
     }
     // END OF tansfer FUCNTION THAT INSERT transfersinformation DETAILS INTO THE dateBASE
 
-
     // TRANSFER FUCNTION THAT INSERT OLEVEL DETAILS INTO THE DATEBASE
-    function transfersolevel(Request $req)
+    public function transfersolevel(Request $req)
     {
         // dd($req);
 
@@ -1810,25 +1854,21 @@ class ApplicantController extends Controller
                 array_push($olevel, $subject);
             }
 
-
             DB::table('olevel')->insert([
                 'user_id' => session('userid'),
                 'olevel_result' => json_encode($olevel, JSON_HEX_TAG),
-                'sitting' => $req->sitting
-
+                'sitting' => $req->sitting,
 
                 //   'passport'=>$req->passport,'passportype'=>$file_extension
             ]);
             DB::table('usersbiodata')->where('user_id', session('userid'))->update([
-                'status' => 4
+                'status' => 4,
 
             ]);
 
             DB::commit();
 
-
             //  Mail::to($req->email)->send(new Confirmsignup($mailData));
-
 
             $signUpMsg = '<div class="alert alert-success alert-dismissible"><button type="button" class="close" data-dismiss="alert">&times;</button><strong>Success!</strong> Thank You for filling your Application Form</div>';
             return redirect('/admission')->with('signUpMsg', $signUpMsg);
@@ -1849,10 +1889,9 @@ class ApplicantController extends Controller
     // END OF TRANSFER INSERTING
     // ************************************************************************************
 
-
     // *******************************************************************************************
     // FUNCTION FOR BIODATE INSERTING OF PG APPLICANT
-    function pgbiodata(Request $req)
+    public function pgbiodata(Request $req)
     {
         // dd($req);
         DB::beginTransaction();
@@ -1876,16 +1915,16 @@ class ApplicantController extends Controller
                 'address' => $req->address,
                 'passport' => $img[0],
                 'passport_type' => $img[1],
-                'referral' => $req->referral
+                'referral' => $req->referral,
                 //   'passport'=>$req->passport,'passportype'=>$file_extension
             ]);
 
             DB::table('users')->where('id', session('userid'))->update([
-                'applicant_type' => 'PG'
+                'applicant_type' => 'PG',
 
             ]);
             DB::table('usersbiodata')->where('user_id', session('userid'))->update([
-                'status' => 1
+                'status' => 1,
 
             ]);
 
@@ -1908,14 +1947,12 @@ class ApplicantController extends Controller
     }
     // END OF PG BIODATE
 
-
     //PG SPONSOR INSTERTING
-    function pgsponsors(Request $req)
+    public function pgsponsors(Request $req)
     {
         // dd($req);
         DB::beginTransaction();
         try {
-
 
             DB::table('sponsors')->insert([
                 'user_id' => session('userid'),
@@ -1923,20 +1960,18 @@ class ApplicantController extends Controller
                 'sponsors_phone' => $req->sponsors_phone,
                 'sponsors_email' => $req->sponsors_email,
                 'sponsors_address' => $req->sponsors_address,
-                'occupation' => $req->occupation
+                'occupation' => $req->occupation,
                 //   'passport'=>$req->passport,'passportype'=>$file_extension
             ]);
             DB::table('usersbiodata')->where('user_id', session('userid'))->update([
-                'status' => 2
+                'status' => 2,
 
             ]);
 
             //  Mail::to($req->email)->send(new Confirmsignup($mailData));
             DB::commit();
 
-
             //  Mail::to($req->email)->send(new Confirmsignup($mailData));
-
 
             $signUpMsg = '<div class="alert alert-success alert-dismissible"><button type="button" class="close" data-dismiss="alert">&times;</button><strong>Success!</strong> Saviing biodata</div>';
             return redirect('/pg')->with('signUpMsg', $signUpMsg);
@@ -1954,30 +1989,28 @@ class ApplicantController extends Controller
     }
 
     // END OF INSERTING INTO PG APPLICANT
-    function getpgurl()
+    public function getpgurl()
     {
         return 'https://docs.google.com/forms/d/e/1FAIpQLSdPRhgBHMVU49nMEdyT5zOLQKwJqyp59HHz0OI2BYzsTTBeHw/viewform?usp=pp_url';
     }
-    function pginformation(Request $req)
+    public function pginformation(Request $req)
     {
         // dd($req);
 
         DB::beginTransaction();
         try {
 
-
             DB::table('pgs')->insert([
                 'user_id' => session('userid'),
                 'mode' => $req->mode,
                 'type' => $req->type,
                 'research_topic' => $req->research_topic,
-                'course_applied' => $req->course_applied
-
+                'course_applied' => $req->course_applied,
 
                 //   'passport'=>$req->passport,'passportype'=>$file_extension
             ]);
             DB::table('usersbiodata')->where('user_id', session('userid'))->update([
-                'status' => 3
+                'status' => 3,
 
             ]);
             DB::table('pg_educations')->insert([
@@ -1987,8 +2020,7 @@ class ApplicantController extends Controller
                 'course' => $req->course,
                 'certificate_name' => $req->certificate_name,
                 'certificate_type' => $req->certificate_type,
-                'class_honour' => $req->class_honour
-
+                'class_honour' => $req->class_honour,
 
             ]);
             DB::table('pg_referees')->insert([
@@ -2004,28 +2036,23 @@ class ApplicantController extends Controller
                 'name3' => $req->name3,
                 'position3' => $req->position3,
                 'institution3' => $req->institution3,
-                'email3' => $req->email3
-
+                'email3' => $req->email3,
 
             ]);
             $userreferee = DB::table('users')->where('id', session('userid'))->first();
-
 
             $mailData = [
                 'title' => 'Welcome to Veritas University Abuja',
                 'msg' => ' Please click on the button below to fill the Referee form ',
                 'url' => $this->getpgUrl(),
-                'surname' =>  $userreferee->first_name . " " . $userreferee->surname
+                'surname' => $userreferee->first_name . " " . $userreferee->surname,
             ];
 
             Mail::to($req->email1)->send(new Referee($mailData));
             Mail::to($req->email2)->send(new Referee($mailData));
             Mail::to($req->email3)->send(new Referee($mailData));
 
-
             DB::commit();
-
-
 
             $signUpMsg = '<div class="alert alert-success alert-dismissible"><button type="button" class="close" data-dismiss="alert">&times;</button><strong>Success!</strong> Saving your information</div>';
             return redirect('/pg')->with('signUpMsg', $signUpMsg);
@@ -2043,7 +2070,7 @@ class ApplicantController extends Controller
     }
 
     //pgFUCNTION THAT INSERT OLEVEL DETAILS INTO THE DATEBASE
-    function pgolevel(Request $req)
+    public function pgolevel(Request $req)
     {
         // dd($req);
         try {
@@ -2098,25 +2125,21 @@ class ApplicantController extends Controller
                 array_push($olevel, $subject);
             }
 
-
             DB::table('olevel')->insert([
                 'user_id' => session('userid'),
                 'olevel_result' => json_encode($olevel, JSON_HEX_TAG),
-                'sitting' => $req->sitting
-
+                'sitting' => $req->sitting,
 
                 //   'passport'=>$req->passport,'passportype'=>$file_extension
             ]);
             DB::table('usersbiodata')->where('user_id', session('userid'))->update([
-                'status' => 4
+                'status' => 4,
 
             ]);
 
             DB::commit();
 
-
             //  Mail::to($req->email)->send(new Confirmsignup($mailData));
-
 
             $signUpMsg = '<div class="alert alert-success alert-dismissible"><button type="button" class="close" data-dismiss="alert">&times;</button><strong>Success!</strong> Thank You for filling your Application Form</div>';
             return redirect('/admission')->with('signUpMsg', $signUpMsg);
@@ -2136,20 +2159,15 @@ class ApplicantController extends Controller
 
     // *********************************************************************************************
 
-
     // *******************************************************************
-
-
-
 
     public function viewprofile()
     {
 
         // $app_id = base64_decode(urldecode($id));
 
-
         $applicantsDetails = "";
-        if (session('usersType') ==  'UTME') {
+        if (session('usersType') == 'UTME') {
             $applicantsDetails = DB::table('users')->where('users.applicant_type', 'UTME')
                 ->where('users.id', session('userid'))
                 ->leftJoin('usersbiodata', 'usersbiodata.user_id', '=', 'users.id')
@@ -2160,7 +2178,7 @@ class ApplicantController extends Controller
                 ->select('users.*', 'usersbiodata.*', 'sponsors.*', 'utme.*', 'olevel.*', 'uploads.*')
                 ->first();
             return view('admissions./viewUTMEprofile', compact('applicantsDetails'));
-        } elseif (session('usersType')  ==  'DE') {
+        } elseif (session('usersType') == 'DE') {
             $applicantsDetails = DB::table('users')->where('users.applicant_type', 'DE')
                 ->where('users.id', session('userid'))
                 ->leftJoin('usersbiodata', 'usersbiodata.user_id', '=', 'users.id')
@@ -2171,7 +2189,7 @@ class ApplicantController extends Controller
                 ->select('users.*', 'usersbiodata.*', 'sponsors.*', 'de.*', 'olevel.*', 'uploads.*')
                 ->first();
             return view('admissions./viewDEprofile', compact('applicantsDetails'));
-        } elseif (session('usersType')  ==  'Transfer') {
+        } elseif (session('usersType') == 'Transfer') {
             $applicantsDetails = DB::table('users')->where('users.applicant_type', 'Transfer')
                 ->where('users.id', session('userid'))
                 ->leftJoin('usersbiodata', 'usersbiodata.user_id', '=', 'users.id')
@@ -2182,7 +2200,7 @@ class ApplicantController extends Controller
                 ->select('users.*', 'usersbiodata.*', 'sponsors.*', 'transfers.*', 'olevel.*', 'uploads.*')
                 ->first();
             return view('admissions./viewTransferprofile', compact('applicantsDetails'));
-        } elseif (session('usersType') ==  'PG') {
+        } elseif (session('usersType') == 'PG') {
             $applicantsDetails = DB::table('users')->where('users.applicant_type', 'PG')
                 ->where('users.id', session('userid'))
                 ->leftJoin('usersbiodata', 'usersbiodata.user_id', '=', 'users.id')
@@ -2206,9 +2224,8 @@ class ApplicantController extends Controller
 
         // $app_id = base64_decode(urldecode($id));
 
-
         $applicantsDetails = "";
-        if (session('usersType') ==  'UTME') {
+        if (session('usersType') == 'UTME') {
             $applicantsDetails = DB::table('users')->where('users.applicant_type', 'UTME')
                 ->where('users.id', session('userid'))
                 ->leftJoin('usersbiodata', 'usersbiodata.user_id', '=', 'users.id')
@@ -2217,10 +2234,10 @@ class ApplicantController extends Controller
                 ->leftJoin('olevel', 'olevel.user_id', '=', 'users.id')
                 ->select('users.*', 'usersbiodata.*', 'sponsors.*', 'utme.*', 'olevel.*')
                 ->first();
-                $programs = Program::orderBy('name', 'ASC')->get();
-                $subjects = subjects::orderBy('subject_name', 'ASC')->get();
-            return view('admissions./editUTME', compact('applicantsDetails'),['programs' => $programs, 'subjects' => $subjects]);
-        } elseif (session('usersType')  ==  'DE') {
+            $programs = Program::orderBy('name', 'ASC')->get();
+            $subjects = subjects::orderBy('subject_name', 'ASC')->get();
+            return view('admissions./editUTME', compact('applicantsDetails'), ['programs' => $programs, 'subjects' => $subjects]);
+        } elseif (session('usersType') == 'DE') {
             $applicantsDetails = DB::table('users')->where('users.applicant_type', 'DE')
                 ->where('users.id', session('userid'))
                 ->leftJoin('usersbiodata', 'usersbiodata.user_id', '=', 'users.id')
@@ -2229,10 +2246,10 @@ class ApplicantController extends Controller
                 ->leftJoin('olevel', 'olevel.user_id', '=', 'users.id')
                 ->select('users.*', 'usersbiodata.*', 'sponsors.*', 'de.*', 'olevel.*')
                 ->first();
-                $programs = Program::orderBy('name', 'ASC')->get();
-                $subjects = subjects::orderBy('subject_name', 'ASC')->get();
-            return view('admissions./editDE', compact('applicantsDetails'),['programs' => $programs, 'subjects' => $subjects]);
-        } elseif (session('usersType')  ==  'Transfer') {
+            $programs = Program::orderBy('name', 'ASC')->get();
+            $subjects = subjects::orderBy('subject_name', 'ASC')->get();
+            return view('admissions./editDE', compact('applicantsDetails'), ['programs' => $programs, 'subjects' => $subjects]);
+        } elseif (session('usersType') == 'Transfer') {
             $applicantsDetails = DB::table('users')->where('users.applicant_type', 'Transfer')
                 ->where('users.id', session('userid'))
                 ->leftJoin('usersbiodata', 'usersbiodata.user_id', '=', 'users.id')
@@ -2241,10 +2258,10 @@ class ApplicantController extends Controller
                 ->leftJoin('olevel', 'olevel.user_id', '=', 'users.id')
                 ->select('users.*', 'usersbiodata.*', 'sponsors.*', 'transfers.*', 'olevel.*')
                 ->first();
-                $programs = Program::orderBy('name', 'ASC')->get();
-                $subjects = subjects::orderBy('subject_name', 'ASC')->get();
-            return view('admissions./editTransfer', compact('applicantsDetails'),['programs' => $programs, 'subjects' => $subjects]);
-        } elseif (session('usersType') ==  'PG') {
+            $programs = Program::orderBy('name', 'ASC')->get();
+            $subjects = subjects::orderBy('subject_name', 'ASC')->get();
+            return view('admissions./editTransfer', compact('applicantsDetails'), ['programs' => $programs, 'subjects' => $subjects]);
+        } elseif (session('usersType') == 'PG') {
             $applicantsDetails = DB::table('users')->where('users.applicant_type', 'PG')
                 ->where('users.id', session('userid'))
                 ->leftJoin('usersbiodata', 'usersbiodata.user_id', '=', 'users.id')
@@ -2255,9 +2272,9 @@ class ApplicantController extends Controller
                 ->leftJoin('olevel', 'olevel.user_id', '=', 'users.id')
                 ->select('users.*', 'usersbiodata.*', 'sponsors.*', 'pgs.*', 'olevel.*', 'pg_referees.*', 'pg_educations.*')
                 ->first();
-                $programs = Program::orderBy('name', 'ASC')->get();
-                $subjects = subjects::orderBy('subject_name', 'ASC')->get();
-            return view('admissions./editPG', compact('applicantsDetails'),['programs' => $programs, 'subjects' => $subjects]);
+            $programs = Program::orderBy('name', 'ASC')->get();
+            $subjects = subjects::orderBy('subject_name', 'ASC')->get();
+            return view('admissions./editPG', compact('applicantsDetails'), ['programs' => $programs, 'subjects' => $subjects]);
         }
     }
 
@@ -2270,7 +2287,7 @@ class ApplicantController extends Controller
 
                     'email' => $req->email,
                     //Hash::make to encrpty or hash the password
-                    'password' => Hash::make($req->password)
+                    'password' => Hash::make($req->password),
                 ]);
 
             $signUpMsg = '<div class="alert alert-success alert-dismissible"><button type="button" class="close" data-dismiss="alert">&times;</button><strong>Success!</strong> Your Password Change was Successfull</div>';
@@ -2283,7 +2300,7 @@ class ApplicantController extends Controller
 
     //EDIT UTME PROFILE
 
-    function editbiodata(Request $req)
+    public function editbiodata(Request $req)
     {
         // dd($req);
         DB::beginTransaction();
@@ -2297,15 +2314,14 @@ class ApplicantController extends Controller
                 DB::beginTransaction();
                 //try and catch to get the errors
 
-                    DB::table('users')->where('id', session('userid'))->update([
-                        'id' =>session('userid'),
-                        'surname' => $req->surname,
-                        'first_name' => $req->first_name,
-                        'phone' => $req->phone,
-                        'email' => $req->email,
+                DB::table('users')->where('id', session('userid'))->update([
+                    'id' => session('userid'),
+                    'surname' => $req->surname,
+                    'first_name' => $req->first_name,
+                    'phone' => $req->phone,
+                    'email' => $req->email,
 
-
-                    ]);
+                ]);
 
                 DB::table('usersbiodata')->where('user_id', session('userid'))->update([
                     'user_id' => session('userid'),
@@ -2319,40 +2335,38 @@ class ApplicantController extends Controller
                     'address' => $req->address,
                     'passport' => $img[0],
                     'passport_type' => $img[1],
-                    'referral' => $req->referral
+                    'referral' => $req->referral,
                     //   'passport'=>$req->passport,'passportype'=>$file_extension
                 ]);
-            } else
-            {
+            } else {
                 DB::table('users')->where('id', session('userid'))->update([
-                    'id' =>session('userid'),
+                    'id' => session('userid'),
                     'surname' => $req->surname,
                     'first_name' => $req->first_name,
                     'phone' => $req->phone,
                     'email' => $req->email,
 
-
                 ]);
-            DB::table('usersbiodata')->where('user_id', session('userid'))->update([
-                'user_id' => session('userid'),
-                'middle_name' => $req->middle_name,
-                'gender' => $req->gender,
-                'religion' => $req->religion,
-                'dob' => $req->dob,
-                'nationality' => $req->nationality,
-                'lga' => $req->lga,
-                'state_origin' => $req->state_origin,
-                'address' => $req->address,
-                'referral' => $req->referral
-                //   'passport'=>$req->passport,'passportype'=>$file_extension
-            ]);
+                DB::table('usersbiodata')->where('user_id', session('userid'))->update([
+                    'user_id' => session('userid'),
+                    'middle_name' => $req->middle_name,
+                    'gender' => $req->gender,
+                    'religion' => $req->religion,
+                    'dob' => $req->dob,
+                    'nationality' => $req->nationality,
+                    'lga' => $req->lga,
+                    'state_origin' => $req->state_origin,
+                    'address' => $req->address,
+                    'referral' => $req->referral,
+                    //   'passport'=>$req->passport,'passportype'=>$file_extension
+                ]);
 
-            //  Mail::to($req->email)->send(new Confirmsignup($mailData));
-            DB::commit();
+                //  Mail::to($req->email)->send(new Confirmsignup($mailData));
+                DB::commit();
 
-            $signUpMsg = '<div class="alert alert-success alert-dismissible"><button type="button" class="close" data-dismiss="alert">&times;</button><strong>Success!</strong> Your have sucessfully updated your Biodata</div>';
-            return redirect('/editprofile')->with('signUpMsg', $signUpMsg);
-        }
+                $signUpMsg = '<div class="alert alert-success alert-dismissible"><button type="button" class="close" data-dismiss="alert">&times;</button><strong>Success!</strong> Your have sucessfully updated your Biodata</div>';
+                return redirect('/editprofile')->with('signUpMsg', $signUpMsg);
+            }
         } catch (QueryException $e) {
             DB::rollBack();
             $error_code = $e->errorInfo[1];
@@ -2365,12 +2379,11 @@ class ApplicantController extends Controller
             }
         }
     }
-    function editsponsors(Request $req)
+    public function editsponsors(Request $req)
     {
         // dd($req);
         DB::beginTransaction();
         try {
-
 
             DB::table('sponsors')->where('user_id', session('userid'))->update([
                 'user_id' => session('userid'),
@@ -2378,17 +2391,14 @@ class ApplicantController extends Controller
                 'sponsors_phone' => $req->sponsors_phone,
                 'sponsors_email' => $req->sponsors_email,
                 'sponsors_address' => $req->sponsors_address,
-                'occupation' => $req->occupation
+                'occupation' => $req->occupation,
                 //   'passport'=>$req->passport,'passportype'=>$file_extension
             ]);
-
 
             //  Mail::to($req->email)->send(new Confirmsignup($mailData));
             DB::commit();
 
-
             //  Mail::to($req->email)->send(new Confirmsignup($mailData));
-
 
             $signUpMsg = '<div class="alert alert-success alert-dismissible"><button type="button" class="close" data-dismiss="alert">&times;</button><strong>Success!</strong> You have Successful Updated your Sponsor Information</div>';
             return redirect('/editprofile')->with('signUpMsg', $signUpMsg);
@@ -2405,8 +2415,23 @@ class ApplicantController extends Controller
         }
     }
 
-    function editutmeuploads(Request $req)
+    public function editutmeuploads(Request $req)
     {
+        $this->validate($req, [
+
+            'gender' => 'required|string|max:6',
+            'dob' => 'required|string|max:50',
+            'nationality' => 'required|string|max:100',
+            'state_origin' => 'required|string|max:50',
+            // 'lga_name' => 'required|string|max:100',
+            'religion' => 'required|string|max:50',
+            'address' => 'required|string|max:200',
+            'passport' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:1048|dimensions:min_width=300',
+        ],
+        $messages = [
+            'passport.dimensions'    => 'Passport Image is too small. Must be at least 400px wide.',
+
+        ]);
         DB::beginTransaction();
 
         try {
@@ -2416,43 +2441,42 @@ class ApplicantController extends Controller
 
                 $img0 = $this->getBinaryImagejamb();
 
-            $img1 = array("", "");
-            if ($req->hasFile('olevel1')) {
+                $img1 = array("", "");
+                if ($req->hasFile('olevel1')) {
 
-                $img1 = $this->getBinaryImageolevel1();
-            }
-            $img2 = array("", "");
-            if ($req->hasFile('olevel2')) {
+                    $img1 = $this->getBinaryImageolevel1();
+                }
+                $img2 = array("", "");
+                if ($req->hasFile('olevel2')) {
 
-                $img2 = $this->getBinaryImageolevel2();
-            }
-            DB::table('uploads')->where('user_id', session('userid'))->update([
-                'user_id' => session('userid'),
-                'jamb' =>$img0[0],
-                'jamb_type' =>$img0[1],
-                'olevel1' => $img1[0],
-                'olevel1_type' => $img1[1],
-                'olevel2' => $img2[0],
-                'olevel2_type' => $img2[1],
-                'olevel_awaiting' =>$req->olevel_awaiting
+                    $img2 = $this->getBinaryImageolevel2();
+                }
+                DB::table('uploads')->where('user_id', session('userid'))->update([
+                    'user_id' => session('userid'),
+                    'jamb' => $img0[0],
+                    'jamb_type' => $img0[1],
+                    'olevel1' => $img1[0],
+                    'olevel1_type' => $img1[1],
+                    'olevel2' => $img2[0],
+                    'olevel2_type' => $img2[1],
+                    'olevel_awaiting' => $req->olevel_awaiting,
 
-                //   'passport'=>$req->passport,'passportype'=>$file_extension
-            ]);
+                    //   'passport'=>$req->passport,'passportype'=>$file_extension
+                ]);
             } else {
                 $img0 = array("", "");
                 if ($req->hasFile('jamb')) {
 
                     $img0 = $this->getBinaryImagejamb();
 
-            DB::table('uploads')->where('user_id', session('userid'))->update([
-                'user_id' => session('userid'),
-                'jamb' =>$img0[0],
-                'jamb_type' =>$img0[1],
-          'olevel_awaiting' =>$req->olevel_awaiting
-        ]);
-    }
+                    DB::table('uploads')->where('user_id', session('userid'))->update([
+                        'user_id' => session('userid'),
+                        'jamb' => $img0[0],
+                        'jamb_type' => $img0[1],
+                        'olevel_awaiting' => $req->olevel_awaiting,
+                    ]);
+                }
             }
-
 
             //  Mail::to($req->email)->send(new Confirmsignup($mailData));
             DB::commit();
@@ -2528,22 +2552,17 @@ class ApplicantController extends Controller
     //             array_push($olevel, $subject);
     //         }
 
-
     //         DB::table('olevel')->where('user_id', session('userid'))->update([
     //             'user_id' => session('userid'),
     //             'olevel_result' => json_encode($olevel, JSON_HEX_TAG),
     //             'sitting' => $req->sitting
 
-
     //             //   'passport'=>$req->passport,'passportype'=>$file_extension
     //         ]);
 
-
     //         DB::commit();
 
-
     //         //  Mail::to($req->email)->send(new Confirmsignup($mailData));
-
 
     //         $signUpMsg = '<div class="alert alert-success alert-dismissible"><button type="button" class="close" data-dismiss="alert">&times;</button><strong>Success!</strong> You have Successfully Updated your Olevel</div>';
     //         return redirect('/editprofile')->with('signUpMsg', $signUpMsg);
@@ -2561,13 +2580,11 @@ class ApplicantController extends Controller
     // }
 
 // UTME UPDATE PROFILE JAMB
-function editutmejamb(Request $req)
+    public function editutmejamb(Request $req)
     {
-
 
         DB::beginTransaction();
         try {
-
 
             DB::table('utme')->where('user_id', session('userid'))->update([
                 'user_id' => session('userid'),
@@ -2579,13 +2596,11 @@ function editutmejamb(Request $req)
                 'subject_1' => $req->subject_1,
                 'subject_2' => $req->subject_2,
                 'subject_3' => $req->subject_3,
-                'subject_4' => $req->subject_4
+                'subject_4' => $req->subject_4,
 
             ]);
 
             DB::commit();
-
-
 
             $signUpMsg = '<div class="alert alert-success alert-dismissible"><button type="button" class="close" data-dismiss="alert">&times;</button><strong>Success!</strong> You have Successfully Updated your  Information </div>';
             return redirect('/editprofile')->with('signUpMsg', $signUpMsg);
@@ -2602,13 +2617,12 @@ function editutmejamb(Request $req)
         }
     }
     // END OF UTME FUCNTION THAT INSERT JAMB DETAILS INTO THE BASEBASE
-    function editdeinformation(Request $req)
+    public function editdeinformation(Request $req)
     {
         // dd($req);
 
         DB::beginTransaction();
         try {
-
 
             DB::table('de')->where('user_id', session('userid'))->update([
                 'user_id' => session('userid'),
@@ -2616,17 +2630,11 @@ function editutmejamb(Request $req)
                 'qualification' => $req->qualification,
                 'qualification_year' => $req->qualification_year,
                 'qualification_number' => $req->qualification_number,
-                'course_applied' => $req->course_applied
-
-
+                'course_applied' => $req->course_applied,
 
             ]);
 
-
             DB::commit();
-
-
-
 
             $signUpMsg = '<div class="alert alert-success alert-dismissible"><button type="button" class="close" data-dismiss="alert">&times;</button><strong>Success!</strong> You have successfully updated your Diect Entry information</div>';
             return redirect('/editprofile')->with('signUpMsg', $signUpMsg);
@@ -2642,13 +2650,12 @@ function editutmejamb(Request $req)
             }
         }
     }
-    function edittransfersinformation(Request $req)
+    public function edittransfersinformation(Request $req)
     {
         // dd($req);
 
         DB::beginTransaction();
         try {
-
 
             DB::table('transfers')->where('user_id', session('userid'))->update([
                 'user_id' => session('userid'),
@@ -2658,17 +2665,11 @@ function editutmejamb(Request $req)
                 'level' => $req->level,
                 'course' => $req->course,
                 'cgpa' => $req->cgpa,
-                'course_applied' => $req->course_applied
-
-
+                'course_applied' => $req->course_applied,
 
             ]);
 
-
             DB::commit();
-
-
-
 
             $signUpMsg = '<div class="alert alert-success alert-dismissible"><button type="button" class="close" data-dismiss="alert">&times;</button><strong>Success!</strong> You have successfully update Transfer information</div>';
             return redirect('/editprofile')->with('signUpMsg', $signUpMsg);
@@ -2686,22 +2687,19 @@ function editutmejamb(Request $req)
     }
     //EDIT PG PROFILE
 
-
-    function editpginformation(Request $req)
+    public function editpginformation(Request $req)
     {
         // dd($req);
 
         DB::beginTransaction();
         try {
 
-
             DB::table('pgs')->where('user_id', session('userid'))->update([
                 'user_id' => session('userid'),
                 'mode' => $req->mode,
                 'type' => $req->type,
                 'research_topic' => $req->research_topic,
-                'course_applied' => $req->course_applied
-
+                'course_applied' => $req->course_applied,
 
                 //   'passport'=>$req->passport,'passportype'=>$file_extension
             ]);
@@ -2713,8 +2711,7 @@ function editutmejamb(Request $req)
                 'course' => $req->course,
                 'certificate_name' => $req->certificate_name,
                 'certificate_type' => $req->certificate_type,
-                'class_honour' => $req->class_honour
-
+                'class_honour' => $req->class_honour,
 
             ]);
             DB::table('pg_referees')->where('user_id', session('userid'))->update([
@@ -2730,28 +2727,23 @@ function editutmejamb(Request $req)
                 'name3' => $req->name3,
                 'position3' => $req->position3,
                 'institution3' => $req->institution3,
-                'email3' => $req->email3
-
+                'email3' => $req->email3,
 
             ]);
             $userreferee = DB::table('users')->where('id', session('userid'))->first();
-
 
             $mailData = [
                 'title' => 'School of PostGraduate Studies',
                 'msg' => ' Please click on the button below to fill the Referee form ',
                 'url' => $this->getpgUrl(),
-                'surname' =>  $userreferee->first_name . " " . $userreferee->surname
+                'surname' => $userreferee->first_name . " " . $userreferee->surname,
             ];
 
             Mail::to($req->email1)->send(new Referee($mailData));
             Mail::to($req->email2)->send(new Referee($mailData));
             Mail::to($req->email3)->send(new Referee($mailData));
 
-
             DB::commit();
-
-
 
             $signUpMsg = '<div class="alert alert-success alert-dismissible"><button type="button" class="close" data-dismiss="alert">&times;</button><strong>Success!</strong> Your have Sucessfully updated your PG information.</div>';
             return redirect('/editprofile')->with('signUpMsg', $signUpMsg);
@@ -2779,9 +2771,9 @@ function editutmejamb(Request $req)
 
 //NEW UPDATE FUNCTIONS
 
- public function editusers($id)
+    public function editusers($id)
     {
-        if ($this->hasPriviledge("editusersinfo",  session('adminId'))) {
+        if ($this->hasPriviledge("editusersinfo", session('adminId'))) {
             // $allAppli = array();
             // $allApplicants = DB::table('users')->get();
             // $approvedArr = array();
@@ -2792,111 +2784,108 @@ function editutmejamb(Request $req)
             // }
 
             $allApp = DB::table('users')
-                 ->where('email', $id)
+                ->where('email', $id)
                 ->select('users.*')
                 ->first();
 
             $fullName = session('adminFirstName') . " " . session('adminsurname');
             return view('admissions./editusers', compact('allApp', 'fullName'));
-        }
-        else {
-           $loginMsg = '<div class="alert alert-danger alert-dismissible" role="alert"> <button type="button" class="close" data-dismiss="alert"> &times; </button> You dont\'t have access to this task, please see the ICT</div>';
-           return view('admissions.error', compact('loginMsg'));
+        } else {
+            $loginMsg = '<div class="alert alert-danger alert-dismissible" role="alert"> <button type="button" class="close" data-dismiss="alert"> &times; </button> You dont\'t have access to this task, please see the ICT</div>';
+            return view('admissions.error', compact('loginMsg'));
         }
     }
 
-    public function editusersinfo(Request $req){
-        if ($this->hasPriviledge("editusersinfo",  session('adminId'))) {
+    public function editusersinfo(Request $req)
+    {
+        if ($this->hasPriviledge("editusersinfo", session('adminId'))) {
 
-        try {
-            DB::table('users')->where('email', $req->email)
-                ->update([
+            try {
+                DB::table('users')->where('email', $req->email)
+                    ->update([
 
-                    'first_name' => $req->first_name,
-                    'surname' => $req->surname,
-                    'email' => $req->email,
-                    'phone' => $req->phone,
-                    'applicant_type' =>$req->applicant_type,
-                    'email_verified_at' =>$req->email_verified_at
+                        'first_name' => $req->first_name,
+                        'surname' => $req->surname,
+                        'email' => $req->email,
+                        'phone' => $req->phone,
+                        'applicant_type' => $req->applicant_type,
+                        'email_verified_at' => $req->email_verified_at,
 
-                ]);
+                    ]);
                 $approvalMsg = '<div class="alert alert-success alert-dismissible" role="alert"> <button type="button" class="close" data-dismiss="alert"> &times; </button> You have successful Edited the User </div>';
                 return redirect('/admissions.adminallUsers')->with('approvalMsg', $approvalMsg);
 
-        } catch (QueryException $e) {
-            $approvalMsg = '<div class="alert alert-danger alert-dismissible" role="alert"> <button type="button" class="close" data-dismiss="alert"> &times; </button> Your Edit was not successful'.$e->getMessage();' </div>';
-            return redirect('/admissions.adminallUsers')->with('approvalMsg', $approvalMsg);
-            // return redirect('/newPayment/')->with('mgs',$statusMsg);
+            } catch (QueryException $e) {
+                $approvalMsg = '<div class="alert alert-danger alert-dismissible" role="alert"> <button type="button" class="close" data-dismiss="alert"> &times; </button> Your Edit was not successful' . $e->getMessage();' </div>';
+                return redirect('/admissions.adminallUsers')->with('approvalMsg', $approvalMsg);
+                // return redirect('/newPayment/')->with('mgs',$statusMsg);
+            }
+        } else {
+            $loginMsg = '<div class="alert alert-danger alert-dismissible" role="alert"> <button type="button" class="close" data-dismiss="alert"> &times; </button> You dont\'t have access to this task, please see the ICT</div>';
+            return view('admissions.error', compact('loginMsg'));
         }
     }
-    else {
-       $loginMsg = '<div class="alert alert-danger alert-dismissible" role="alert"> <button type="button" class="close" data-dismiss="alert"> &times; </button> You dont\'t have access to this task, please see the ICT</div>';
-       return view('admissions.error', compact('loginMsg'));
-    }
-}
 
     public function resetuserspassword(Request $req)
     {
-        if ($this->hasPriviledge("resetuserpassword",  session('adminId'))) {
+        if ($this->hasPriviledge("resetuserpassword", session('adminId'))) {
 
-        try {
-            $newpass='welcome';
-            DB::table('users')->where('email', $req->email)
-            ->update([
+            try {
+                $newpass = 'welcome';
+                DB::table('users')->where('email', $req->email)
+                    ->update([
 
-                // 'email' => $req->email,
-                //Hash::make to encrpty or hash the password
-                'password' => Hash::make($newpass)
+                        // 'email' => $req->email,
+                        //Hash::make to encrpty or hash the password
+                        'password' => Hash::make($newpass),
 
-            ]);
+                    ]);
                 $approvalMsg = '<div class="alert alert-success alert-dismissible" role="alert"> <button type="button" class="close" data-dismiss="alert"> &times; </button> User Password has been Reset to <strong>welcome</strong> </div>';
                 return redirect('/adminallUsers')->with('approvalMsg', $approvalMsg);
                 // return redirect('allUsers');
-        } catch (QueryException $e) {
-            $approvalMsg = '<div class="alert alert-danger alert-dismissible" role="alert"> <button type="button" class="close" data-dismiss="alert"> &times; </button> Your Verification was not successful'.$e->getMessage();' </div>';
-            return redirect('/adminallUsers')->with('approvalMsg', $approvalMsg);
-            // return redirect('/newPayment/')->with('mgs',$statusMsg);
+            } catch (QueryException $e) {
+                $approvalMsg = '<div class="alert alert-danger alert-dismissible" role="alert"> <button type="button" class="close" data-dismiss="alert"> &times; </button> Your Verification was not successful' . $e->getMessage();' </div>';
+                return redirect('/adminallUsers')->with('approvalMsg', $approvalMsg);
+                // return redirect('/newPayment/')->with('mgs',$statusMsg);
+            }
+        } else {
+            $loginMsg = '<div class="alert alert-danger alert-dismissible" role="alert"> <button type="button" class="close" data-dismiss="alert"> &times; </button> You dont\'t have access to this task, please see the ICT</div>';
+            return view('admissions.error', compact('loginMsg'));
         }
     }
- else {
-    $loginMsg = '<div class="alert alert-danger alert-dismissible" role="alert"> <button type="button" class="close" data-dismiss="alert"> &times; </button> You dont\'t have access to this task, please see the ICT</div>';
-    return view('admissions.error', compact('loginMsg'));
- }
- }
- public function resetadminpassword(Request $req)
- {
-     if ($this->hasPriviledge("resetadminpassword",  session('adminId'))) {
+    public function resetadminpassword(Request $req)
+    {
+        if ($this->hasPriviledge("resetadminpassword", session('adminId'))) {
 
-     try {
-         $newpass='welcome@123';
-         DB::table('admin')->where('email', $req->email)
-         ->update([
+            try {
+                $newpass = 'welcome@123';
+                DB::table('admin')->where('email', $req->email)
+                    ->update([
 
-             // 'email' => $req->email,
-             //Hash::make to encrpty or hash the password
-             'password' => Hash::make($newpass)
+                        // 'email' => $req->email,
+                        //Hash::make to encrpty or hash the password
+                        'password' => Hash::make($newpass),
 
-         ]);
-             $approvalMsg = '<div class="alert alert-success alert-dismissible" role="alert"> <button type="button" class="close" data-dismiss="alert"> &times; </button> Admin Password has been Reset to <strong>welcome@123</strong> </div>';
-             return redirect('/viewAdmins')->with('approvalMsg', $approvalMsg);
-             // return redirect('allUsers');
-     } catch (QueryException $e) {
-         $approvalMsg = '<div class="alert alert-danger alert-dismissible" role="alert"> <button type="button" class="close" data-dismiss="alert"> &times; </button> Your password reset not successful'.$e->getMessage();' </div>';
-         return redirect('/viewAdmins')->with('approvalMsg', $approvalMsg);
-         // return redirect('/newPayment/')->with('mgs',$statusMsg);
-     }
- }
-else {
- $loginMsg = '<div class="alert alert-danger alert-dismissible" role="alert"> <button type="button" class="close" data-dismiss="alert"> &times; </button> You dont\'t have access to this task, please see the ICT</div>';
- return view('admissions.error', compact('loginMsg'));
-}
-}
+                    ]);
+                $approvalMsg = '<div class="alert alert-success alert-dismissible" role="alert"> <button type="button" class="close" data-dismiss="alert"> &times; </button> Admin Password has been Reset to <strong>welcome@123</strong> </div>';
+                return redirect('/viewAdmins')->with('approvalMsg', $approvalMsg);
+                // return redirect('allUsers');
+            } catch (QueryException $e) {
+                $approvalMsg = '<div class="alert alert-danger alert-dismissible" role="alert"> <button type="button" class="close" data-dismiss="alert"> &times; </button> Your password reset not successful' . $e->getMessage();' </div>';
+                return redirect('/viewAdmins')->with('approvalMsg', $approvalMsg);
+                // return redirect('/newPayment/')->with('mgs',$statusMsg);
+            }
+        } else {
+            $loginMsg = '<div class="alert alert-danger alert-dismissible" role="alert"> <button type="button" class="close" data-dismiss="alert"> &times; </button> You dont\'t have access to this task, please see the ICT</div>';
+            return view('admissions.error', compact('loginMsg'));
+        }
+    }
 
     // ADD REMITA SERVICE TYPE
 
-    public function addRemitaServiceType(Request $req){
-        if ($this->hasPriviledge("addRemitaServiceType",  session('adminId'))) {
-
+    public function addRemitaServiceType(Request $req)
+    {
+        if ($this->hasPriviledge("addRemitaServiceType", session('adminId'))) {
 
             // dd($req);
             DB::beginTransaction();
@@ -2912,17 +2901,15 @@ else {
                     'gender_code' => 1,
                     'provider_code' => $req->provider_code,
                     'status' => 1,
-                    'category' => $req->category
+                    'category' => $req->category,
 
                 ]);
-
-
 
                 //  Mail::to($req->email)->send(new Confirmsignup($mailData));
                 DB::commit();
 
                 $signUpMsg = '<div class="alert alert-success alert-dismissible"><button type="button" class="close" data-dismiss="alert">&times;</button><strong></strong>Remita Service Type Successfully Added! </div>';
-                return redirect('/addRemitaServiceType')->with('signUpMsg', $signUpMsg);;
+                return redirect('/addRemitaServiceType')->with('signUpMsg', $signUpMsg);
                 // return redirect('/viewRemitaServiceType');
                 // ->with('signUpMsg',$signUpMsg);
             } catch (QueryException $e) {
@@ -2937,121 +2924,115 @@ else {
                     return redirect('/addRemitaServiceType')->with('signUpMsg', $signUpMsg);
                 }
             }
+        } else {
+            $loginMsg = '<div class="alert alert-danger alert-dismissible" role="alert"> <button type="button" class="close" data-dismiss="alert"> &times; </button> You dont\'t have access to this task, please see the ICT</div>';
+            return view('admissions.error', compact('loginMsg'));
         }
-        else {
-           $loginMsg = '<div class="alert alert-danger alert-dismissible" role="alert"> <button type="button" class="close" data-dismiss="alert"> &times; </button> You dont\'t have access to this task, please see the ICT</div>';
-           return view('admissions.error', compact('loginMsg'));
+    }
+    public function viewRemitaServiceType()
+    {
+        if ($this->hasPriviledge("viewRemitaServiceType", session('adminId'))) {
+            $fee_types = fee_types::orderBy('status', 'ASC')
+                ->where('status', 1)
+                ->get();
+            $fee_typess = fee_types::orderBy('status', 'ASC')
+                ->where('status', 2)
+                ->get();
+            return view('admissions./viewRemitaServiceType', compact('fee_typess'), ['fee_types' => $fee_types, ['fee_types' => $fee_typess]]);
+        } else {
+            $loginMsg = '<div class="alert alert-danger alert-dismissible" role="alert"> <button type="button" class="close" data-dismiss="alert"> &times; </button> You dont\'t have access to this task, please see the ICT</div>';
+            return view('admissions.error', compact('loginMsg'));
         }
+    }
+
+    public function editRemitaServiceType(Request $req, $id)
+    {
+        if ($this->hasPriviledge("editRemitaServiceType", session('adminId'))) {
+            $fee_types = DB::table('fee_types')
+                ->where('provider_code', $id)
+                ->select('fee_types.*')
+                ->first();
+            return view('admissions./editRemitaServiceType', compact('fee_types'), ['fee_types' => $fee_types]);
+        } else {
+            $loginMsg = '<div class="alert alert-danger alert-dismissible" role="alert"> <button type="button" class="close" data-dismiss="alert"> &times; </button> You dont\'t have access to this task, please see the ICT</div>';
+            return view('admissions.error', compact('loginMsg'));
         }
-    public function viewRemitaServiceType(){
-        if ($this->hasPriviledge("viewRemitaServiceType",  session('adminId'))) {
-        $fee_types = fee_types::orderBy('status', 'ASC')
-        ->where('status', 1)
-        ->get();
-        $fee_typess = fee_types::orderBy('status', 'ASC')
-        ->where('status', 2)
-        ->get();
-        return view('admissions./viewRemitaServiceType', compact('fee_typess'), ['fee_types' => $fee_types,  ['fee_types' => $fee_typess]]);
-    }
-    else {
-       $loginMsg = '<div class="alert alert-danger alert-dismissible" role="alert"> <button type="button" class="close" data-dismiss="alert"> &times; </button> You dont\'t have access to this task, please see the ICT</div>';
-       return view('admissions.error', compact('loginMsg'));
-    }
     }
 
-    public function editRemitaServiceType(Request $req, $id){
-        if ($this->hasPriviledge("editRemitaServiceType",  session('adminId'))) {
-        $fee_types = DB::table('fee_types')
-        ->where('provider_code', $id)
-        ->select('fee_types.*')
-        ->first();
-        return view('admissions./editRemitaServiceType', compact('fee_types'), ['fee_types' => $fee_types]);
-    }
-    else {
-       $loginMsg = '<div class="alert alert-danger alert-dismissible" role="alert"> <button type="button" class="close" data-dismiss="alert"> &times; </button> You dont\'t have access to this task, please see the ICT</div>';
-       return view('admissions.error', compact('loginMsg'));
-    }
-    }
+    public function editRemitaServiceTypefee(Request $req)
+    {
+        if ($this->hasPriviledge("editRemitaServiceType", session('adminId'))) {
+            try {
+                DB::table('fee_types')->where('provider_code', $req->provider_code)
+                    ->update([
 
-    public function editRemitaServiceTypefee(Request $req){
-        if ($this->hasPriviledge("editRemitaServiceType",  session('adminId'))) {
-        try {
-            DB::table('fee_types')->where('provider_code', $req->provider_code)
-                ->update([
+                        'name' => $req->name,
+                        'amount' => $req->amount,
+                        'provider_code' => $req->provider_code,
 
-                    'name' => $req->name,
-                    'amount' => $req->amount,
-                    'provider_code' => $req->provider_code
-
-                ]);
+                    ]);
                 $signUpMsg = '<div class="alert alert-success alert-dismissible" role="alert"> <button type="button" class="close" data-dismiss="alert"> &times; </button> You have successful Edited this Service Type </div>';
                 return redirect('/viewRemitaServiceType')->with('signUpMsg', $signUpMsg);
 
-        } catch (QueryException $e) {
-            $signUpMsg = '<div class="alert alert-danger alert-dismissible" role="alert"> <button type="button" class="close" data-dismiss="alert"> &times; </button> Your Edit was not successful'.$e->getMessage();' </div>';
-            return redirect('viewRemitaServiceType')->with('signUpMsg', $signUpMsg);
-            // return redirect('/newPayment/')->with('mgs',$statusMsg);
+            } catch (QueryException $e) {
+                $signUpMsg = '<div class="alert alert-danger alert-dismissible" role="alert"> <button type="button" class="close" data-dismiss="alert"> &times; </button> Your Edit was not successful' . $e->getMessage();' </div>';
+                return redirect('viewRemitaServiceType')->with('signUpMsg', $signUpMsg);
+                // return redirect('/newPayment/')->with('mgs',$statusMsg);
+            }
+        } else {
+            $loginMsg = '<div class="alert alert-danger alert-dismissible" role="alert"> <button type="button" class="close" data-dismiss="alert"> &times; </button> You dont\'t have access to this task, please see the ICT</div>';
+            return view('admissions.error', compact('loginMsg'));
         }
     }
-    else {
-       $loginMsg = '<div class="alert alert-danger alert-dismissible" role="alert"> <button type="button" class="close" data-dismiss="alert"> &times; </button> You dont\'t have access to this task, please see the ICT</div>';
-       return view('admissions.error', compact('loginMsg'));
+
+    public function suspendRemitaServiceType(Request $req)
+    {
+        if ($this->hasPriviledge("suspendRemitaServiceType", session('adminId'))) {
+            try {
+                DB::table('fee_types')->where('provider_code', $req->provider_code)
+                    ->update([
+
+                        'status' => "2",
+
+                    ]);
+                $signUpMsg = '<div class="alert alert-success alert-dismissible" role="alert"> <button type="button" class="close" data-dismiss="alert"> &times; </button> You have successful Suspended this Service Type </div>';
+                return redirect('/viewRemitaServiceType')->with('signUpMsg', $signUpMsg);
+
+            } catch (QueryException $e) {
+                $signUpMsg = '<div class="alert alert-danger alert-dismissible" role="alert"> <button type="button" class="close" data-dismiss="alert"> &times; </button> Your Suspend was not successful' . $e->getMessage();' </div>';
+                return redirect('viewRemitaServiceType')->with('signUpMsg', $signUpMsg);
+                // return redirect('/newPayment/')->with('mgs',$statusMsg);
+            }
+        } else {
+            $loginMsg = '<div class="alert alert-danger alert-dismissible" role="alert"> <button type="button" class="close" data-dismiss="alert"> &times; </button> You dont\'t have access to this task, please see the ICT</div>';
+            return view('admissions.error', compact('loginMsg'));
+        }
+
     }
+
+    public function activeRemitaServiceType(Request $req)
+    {
+        if ($this->hasPriviledge("activeRemitaServiceType", session('adminId'))) {
+            try {
+                DB::table('fee_types')->where('provider_code', $req->provider_code)
+                    ->update([
+
+                        'status' => "1",
+
+                    ]);
+                $signUpMsg = '<div class="alert alert-success alert-dismissible" role="alert"> <button type="button" class="close" data-dismiss="alert"> &times; </button> You have successful Activated this Service Type </div>';
+                return redirect('/viewRemitaServiceType')->with('signUpMsg', $signUpMsg);
+
+            } catch (QueryException $e) {
+                $signUpMsg = '<div class="alert alert-danger alert-dismissible" role="alert"> <button type="button" class="close" data-dismiss="alert"> &times; </button> Your Activation was not successful' . $e->getMessage();' </div>';
+                return redirect('viewRemitaServiceType')->with('signUpMsg', $signUpMsg);
+                // return redirect('/newPayment/')->with('mgs',$statusMsg);
+            }
+        } else {
+            $loginMsg = '<div class="alert alert-danger alert-dismissible" role="alert"> <button type="button" class="close" data-dismiss="alert"> &times; </button> You dont\'t have access to this task, please see the ICT</div>';
+            return view('admissions.error', compact('loginMsg'));
+        }
+
     }
-
-
-   public function suspendRemitaServiceType(Request $req){
-    if ($this->hasPriviledge("suspendRemitaServiceType",  session('adminId'))) {
-    try {
-        DB::table('fee_types')->where('provider_code', $req->provider_code)
-            ->update([
-
-                'status' => "2"
-
-            ]);
-            $signUpMsg = '<div class="alert alert-success alert-dismissible" role="alert"> <button type="button" class="close" data-dismiss="alert"> &times; </button> You have successful Suspended this Service Type </div>';
-            return redirect('/viewRemitaServiceType')->with('signUpMsg', $signUpMsg);
-
-    } catch (QueryException $e) {
-        $signUpMsg = '<div class="alert alert-danger alert-dismissible" role="alert"> <button type="button" class="close" data-dismiss="alert"> &times; </button> Your Suspend was not successful'.$e->getMessage();' </div>';
-        return redirect('viewRemitaServiceType')->with('signUpMsg', $signUpMsg);
-        // return redirect('/newPayment/')->with('mgs',$statusMsg);
-    }
-}
-else {
-   $loginMsg = '<div class="alert alert-danger alert-dismissible" role="alert"> <button type="button" class="close" data-dismiss="alert"> &times; </button> You dont\'t have access to this task, please see the ICT</div>';
-   return view('admissions.error', compact('loginMsg'));
-}
-
-
-   }
-
-
-   public function activeRemitaServiceType(Request $req){
-    if ($this->hasPriviledge("activeRemitaServiceType",  session('adminId'))) {
-    try {
-        DB::table('fee_types')->where('provider_code', $req->provider_code)
-            ->update([
-
-                'status' => "1"
-
-            ]);
-            $signUpMsg = '<div class="alert alert-success alert-dismissible" role="alert"> <button type="button" class="close" data-dismiss="alert"> &times; </button> You have successful Activated this Service Type </div>';
-            return redirect('/viewRemitaServiceType')->with('signUpMsg', $signUpMsg);
-
-    } catch (QueryException $e) {
-        $signUpMsg = '<div class="alert alert-danger alert-dismissible" role="alert"> <button type="button" class="close" data-dismiss="alert"> &times; </button> Your Activation was not successful'.$e->getMessage();' </div>';
-        return redirect('viewRemitaServiceType')->with('signUpMsg', $signUpMsg);
-        // return redirect('/newPayment/')->with('mgs',$statusMsg);
-    }
-}
-else {
-   $loginMsg = '<div class="alert alert-danger alert-dismissible" role="alert"> <button type="button" class="close" data-dismiss="alert"> &times; </button> You dont\'t have access to this task, please see the ICT</div>';
-   return view('admissions.error', compact('loginMsg'));
-}
-
-
-   }
-
 
 }
