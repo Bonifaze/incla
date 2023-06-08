@@ -144,7 +144,7 @@
                                             <?php else: ?>
                                                 <td>
                                                     <form
-                                                        action="<?php echo e(route('remita.find-studentunpaidrrr.destroy', $utm->id)); ?>"
+                                                        action="<?php echo e(route('studentremita.find-studentunpaidrrr.destroy', $utm->id)); ?>"
                                                         method="POST">
                                                         <?php echo csrf_field(); ?>
                                                         <?php echo method_field('DELETE'); ?>

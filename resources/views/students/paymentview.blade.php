@@ -150,7 +150,7 @@
                                             @else
                                                 <td>
                                                     <form
-                                                        action="{{ route('remita.find-studentunpaidrrr.destroy', $utm->id) }}"
+                                                        action="{{ route('studentremita.find-studentunpaidrrr.destroy', $utm->id) }}"
                                                         method="POST">
                                                         @csrf
                                                         @method('DELETE')

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use PDF;
 use App\Course;
+use App\Remita;
 use App\Session;
 use App\Student;
 use App\StudentDebt;
@@ -12,20 +13,20 @@ use App\StudentResult;
 use App\StudentAcademic;
 use App\EvaluationResult;
 use App\EvaluationQuestion;
-use App\Models\CourseRegistrations;
 use Illuminate\Http\Request;
 use App\SemesterRegistration;
 use Illuminate\Validation\Rule;
 use App\Models\RegisteredCourse;
 use App\Models\StudentCreditLoad;
 use Illuminate\Support\Facades\DB;
+use App\Models\CourseRegistrations;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\View;
 use Illuminate\Database\QueryException;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Redirect;
 use Intervention\Image\ImageManagerStatic as Image;
-use Illuminate\Support\Facades\View;
 
 class StudentsController extends Controller
 {
@@ -1173,5 +1174,16 @@ private function getdptcolleg($program_id)
     return view('students.course_form', compact('student', 'academic','courseform','courseform2','session', 'facultyAndDept'));
     }
 
+    public function destroy(Request $request, Remita $remita)
+    {
+        $remita->delete();
+
+        if ($request->method() === 'GET') {
+            // Redirect to a specific URL with an error message
+            return redirect()->back()->with('error', 'The GET method is not supported for this route. Please use the POST method instead.');
+        }
+
+        return redirect()->back()->with('success','Unpaid RRR deleted successfully');
+    }
 
 } // end Class
