@@ -12,6 +12,7 @@ use App\StudentResult;
 use App\StudentAcademic;
 use App\EvaluationResult;
 use App\EvaluationQuestion;
+use App\Models\CourseRegistrations;
 use Illuminate\Http\Request;
 use App\SemesterRegistration;
 use Illuminate\Validation\Rule;
@@ -24,6 +25,7 @@ use Illuminate\Database\QueryException;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Redirect;
 use Intervention\Image\ImageManagerStatic as Image;
+use Illuminate\Support\Facades\View;
 
 class StudentsController extends Controller
 {
@@ -44,33 +46,50 @@ class StudentsController extends Controller
      *
      * @return void
      */
+
+
+
+
+public function sidebaradmission()
+{
+    $courseReg = CourseRegistrations::where('status', 1)->orderBy('id', 'ASC')->paginate(20);
+
+    View::share('courseReg', $courseReg);
+
+    return view('layouts.student');
+}
+
+
+
+
+
     public function home()
     {
         //
         $student = Auth::guard('student')->user();
+        $courseReg = CourseRegistrations::where('status', 1)->orderBy('id', 'ASC')->paginate(20);
 
-
-        return view('students.home',compact('student'));
+        return view('students.home',compact('student','courseReg'));
     }
 
     public function profile()
     {
         $student = Auth::guard('student')->user();
-
+        $courseReg = CourseRegistrations::where('status', 1)->orderBy('id', 'ASC')->paginate(20);
         $contact = $student->contact;
 
         $academic = $student->academic;
 
         $medical = $student->medical;
 
-        return view('students.profile',compact('student','contact','academic','medical'));
+        return view('students.profile',compact('student','contact','academic','medical','courseReg'));
     } //end profile
 
     public function password()
     {
         //
-
-        return view('students.password');
+        $courseReg = CourseRegistrations::where('status', 1)->orderBy('id', 'ASC')->paginate(20);
+        return view('students.password', compact('courseReg'));
     }
 
 
@@ -158,6 +177,7 @@ class StudentsController extends Controller
 // TO RETUNE COURSE courseRegistration BLADE
     public function courseRegistration()
     {
+        $courseReg = CourseRegistrations::where('status', 1)->orderBy('id', 'ASC')->paginate(20);
         $student = Auth::guard('student')->user();
         $course = new Course();
         $registeredcourses = DB::table('registered_courses')
@@ -270,7 +290,7 @@ class StudentsController extends Controller
 
 
             // $prevsession = $this->getprevioussession();
-        return view('students.course_registration', compact('courseFirst','courseSecond', 'lowercourseFirst' ,'lowercourseSecond','session', 'courseform'));
+        return view('students.course_registration', compact('courseFirst','courseSecond', 'lowercourseFirst' ,'lowercourseSecond','session', 'courseform','courseReg'));
                 // return view('students.course_registration', compact('courseFirst','courseSecond','session', 'courseform'));
 
             }
@@ -362,7 +382,7 @@ class StudentsController extends Controller
                 ->orderBy('course_category','ASC')
                 ->select('program_courses.*', 'courses.course_code', 'courses.course_title')->get();
 
-            return view('students.course_registration', compact('courseFirst','courseSecond', 'lowercourseFirst' ,'lowercourseSecond','session', 'courseform'));
+            return view('students.course_registration', compact('courseFirst','courseSecond', 'lowercourseFirst' ,'lowercourseSecond','session', 'courseform','courseReg'));
 
             //    return view('students.course_registration', compact('courseFirst','courseSecond','session','courseform'));
                 }
@@ -717,6 +737,7 @@ private function getdptcolleg($program_id)
         public function closedCourseRegistration()
         {
             //
+            $courseReg = CourseRegistrations::where('status', 1)->orderBy('id', 'ASC')->paginate(20);
             $student = Auth::guard('student')->user();
             $sess = new Session();
             $session_id = $sess->currentSession();
@@ -739,7 +760,7 @@ private function getdptcolleg($program_id)
 
 
             //else just show closed registration
-            return view('students.closed_registration',compact('student'));
+            return view('students.closed_registration',compact('student','courseReg'));
         }
 
     //     public function courseForm2($encode)
@@ -929,6 +950,7 @@ private function getdptcolleg($program_id)
 
     public function results()
         {
+            $courseReg = CourseRegistrations::where('status', 1)->orderBy('id', 'ASC')->paginate(20);
             $student = Auth::guard('student')->user();
             //check for allowed
             // allowed is not true show error
@@ -944,7 +966,7 @@ private function getdptcolleg($program_id)
             // $totalCGPA = $student->CGPA();
 
 
-            return view('students.results',compact('student','academic','registrations'));
+            return view('students.results',compact('student','academic','registrations','courseReg'));
 
         } // end results
 

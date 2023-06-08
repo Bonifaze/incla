@@ -44,6 +44,7 @@
                                       <th>Passport</th>
                                     <th>Name</th>
                                     <th>Phone</th>
+                                    <th>Usernameame</th>
                                     <th>Matric No</th>
                                     <th>Parents Name</th>
                                     <th>Parents Email</th>
@@ -90,6 +91,7 @@
                                             </td>
                                             <td>{{ $student->full_name }}</td>
                                             <td>{{ $student->phone }}</td>
+                                             <td>{{ $student->username }}</td>
                                             @if ($student->academic)
                                                 <td>{{ $student->academic->mat_no }}</td>
                                             @endif

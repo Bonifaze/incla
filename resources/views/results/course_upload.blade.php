@@ -75,7 +75,7 @@
                                                         <td>{{ $staff_course->course_code }}</td>
                                                         <td>{{ $staff_course->course_title }}</td>
                                                           <td >
-                                                          @if ($staff_course->semester_id==1)
+                                                          @if ($staff_course->semester==1)
                                                                 First
                                                           @else
                                                                 Second

@@ -89,12 +89,12 @@
                              <td width="23%"><div align="center"><span style="font-weight: bold"><?php echo e($result->course_title); ?> </span></div></td>
                            <td width="14%"><div align="center"><span style="font-weight: bold"><?php echo e($result->course_unit); ?> </span></div></td>
                             <td width="13%"><div align="center"><span style="font-weight: bold"><?php echo e($result->total); ?></span></div></td>
-                            <?php if($academic->program->id == 22 && $result->total<50 ): ?>
-                       <td width="17%"><div align="center"><span style="font-weight: bold">F</span></div></td>
-                            <?php else: ?>
+                            
+                       
+                            
                             <td width="17%"><div align="center"><span style="font-weight: bold"><?php echo e($result->grade); ?></span></div></td>
 
-                            <?php endif; ?>
+                            
                             <td width="13%"><div align="center"><span style="font-weight: bold"><?php echo e($result->grade_status); ?></span></div></td>
                           </tr>
                          <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
@@ -253,7 +253,7 @@
     <td colspan="3" align="right"><strong>Cumulative Grade Points Average (CGPA) </strong></td>
     <td>&nbsp;</td>
 
-    <td><span style="font-weight: bold">CGPA : <?php echo e(($tgp_cgpa2+$tgp2) > 0 && ($tcu_cgpa2+$tc2) > 0 ? number_format(($tgp_cgpa2+$tgp2)/($tcu_cgpa2+$tc2), 2) : '0.00'); ?></span></td>
+    <td><span style="font-weight: bold">CGPA : <?php echo e($tc2 > 0  ? number_format(($tgp_cgpa2+$tgp2)/($tcu_cgpa2+$tc2), 2) : '0.00'); ?></span></td>
     <td>&nbsp; </td>
   </tr>
 

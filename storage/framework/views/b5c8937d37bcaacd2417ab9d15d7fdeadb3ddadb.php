@@ -80,6 +80,79 @@
                     </div>
                 </div>
             </div>
+                <div class="row">
+
+
+                                        <div class="table-responsive card-body">
+
+                                            <table class="table table-striped">
+                                                <thead>
+
+                                                    <th>S/N</th>
+                                                    <th>Name</th>
+
+
+                                                    
+
+                                                    <th>Action</th>
+
+
+
+
+
+                                                </thead>
+
+
+                                                <tbody>
+
+                                                    <?php $__currentLoopData = $courseReg; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $key => $session): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                                        <tr>
+                                                            <td><?php echo e($loop->iteration); ?></td>
+
+                                                            <td><?php echo e($session->name); ?></td>
+
+
+                                                            
+
+                                                            <?php if($session->status == 1): ?>
+
+	                                                            <td>Current Status</td>
+                                                            <?php elseif($session->status == 0): ?>
+                                                                <td>
+                                                                    <?php echo Form::open([
+                                                                        'method' => 'Patch',
+                                                                        'route' => 'session.setcourseReg',
+                                                                        'id' => 'session.setcourseReg' . $session->id,
+                                                                    ]); ?>
+
+                                                                    <?php echo e(Form::hidden('id', $session->id)); ?>
+
+
+
+                                                                    <button onclick="setCurrent(<?php echo e($session->id); ?>)"
+                                                                        type="submit"
+                                                                        class="<?php echo e($session->id); ?> btn btn-primary"> Set
+                                                                    </button>
+                                                                    <?php echo Form::close(); ?>
+
+
+                                                                </td>
+                                                            <?php endif; ?>
+
+                                                        </tr>
+                                                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+
+                                                </tbody>
+
+
+
+                                            </table>
+
+
+                                        </div>
+
+
+                                    </div>
         </section>
     </div>
 <?php $__env->stopSection(); ?>

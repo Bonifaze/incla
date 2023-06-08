@@ -98,7 +98,7 @@
                             {{--  @else  --}}
                             <td width="17%"><div align="center"><span style="font-weight: bold">{{ $result->grade }}</span></div></td>
 
-                            @endif
+                            {{--  @endif  --}}
                             <td width="13%"><div align="center"><span style="font-weight: bold">{{ $result->grade_status }}</span></div></td>
                           </tr>
                          @endforeach
@@ -255,7 +255,7 @@
     <td colspan="3" align="right"><strong>Cumulative Grade Points Average (CGPA) </strong></td>
     <td>&nbsp;</td>
 
-    <td><span style="font-weight: bold">CGPA : {{ ($tgp_cgpa2+$tgp2) > 0 && ($tcu_cgpa2+$tc2) > 0 ? number_format(($tgp_cgpa2+$tgp2)/($tcu_cgpa2+$tc2), 2) : '0.00' }}</span></td>
+    <td><span style="font-weight: bold">CGPA : {{ $tc2 > 0  ? number_format(($tgp_cgpa2+$tgp2)/($tcu_cgpa2+$tc2), 2) : '0.00' }}</span></td>
     <td>&nbsp; </td>
   </tr>
 

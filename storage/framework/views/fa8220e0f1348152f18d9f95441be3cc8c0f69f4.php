@@ -69,7 +69,7 @@
                                                         <td><?php echo e($staff_course->course_code); ?></td>
                                                         <td><?php echo e($staff_course->course_title); ?></td>
                                                           <td >
-                                                          <?php if($staff_course->semester_id==1): ?>
+                                                          <?php if($staff_course->semester==1): ?>
                                                                 First
                                                           <?php else: ?>
                                                                 Second

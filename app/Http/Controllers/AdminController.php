@@ -53,17 +53,26 @@ class AdminController extends Controller
 
         // $staff_courses = StaffCourse::where('session_id', $this->getCurrentSession());
 
-        $staff_courses = StaffCourse::distinct()->where('session_id', $this->getCurrentSession())->where('staff_id', $staff->id )
-        ->leftJoin('courses', 'staff_courses.course_id', '=', 'courses.id')
-        ->distinct()
-        ->select('staff_courses.*','courses.course_title', 'courses.course_code')
-        ->orderBy('course_code', 'ASC')
-
-        ->get();
+        // $staff_courses = StaffCourse::distinct()->where('session_id', $this->getCurrentSession())->where('staff_id', $staff->id )
+        // ->leftJoin('courses', 'staff_courses.course_id', '=', 'courses.id')
+        // ->leftJoin('program_courses', 'courses.course_id','=', 'program_courses.course_id')
+        // ->distinct()
+        // ->select('staff_courses.*','courses.course_title', 'courses.course_code', 'program_courses.semester')
+        // ->orderBy('course_code', 'ASC')
+        // ->get();
         // dd($staff_courses);
         // ->where('staff_id', $staff->id )
         // ->select('staff_courses.*')
         // ->get();
+        $staff_courses = StaffCourse::distinct()
+    ->where('staff_courses.session_id', $this->getCurrentSession())
+    ->where('staff_courses.staff_id', $staff->id)
+    ->leftJoin('courses', 'staff_courses.course_id', '=', 'courses.id')
+    ->leftJoin('program_courses', 'courses.id', '=', 'program_courses.course_id')
+    ->select('staff_courses.*', 'courses.course_title', 'courses.course_code', 'program_courses.semester')
+    ->orderBy('courses.course_code', 'ASC')
+    ->get();
+
         return view('results.course_upload', ['staff_courses' => $staff_courses]);
     // } else {
     //     $loginMsg = '<div class="alert alert-danger alert-dismissible" role="alert"> <button type="button" class="close" data-dismiss="alert"> &times; </button> You dont\'t have access to this task, please see the ICT</div>';

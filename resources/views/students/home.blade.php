@@ -45,6 +45,7 @@
                     <div class="card shadow border border-success">
 
                         <div class="row p-5">
+                           @foreach ($courseReg as $key => $session)
                             <div class="col-xl-6 col-md-6 mb-4">
                                 <div class="card border-left-success shadow h-100 py-3">
                                     <div class="card-body">
@@ -55,7 +56,7 @@
                                                     {{--  <a href="{{ route('student.course-registration') }}"
                                                         class="text-success @yield('registration')">Course Registration</a>  --}}
                                                         {{--  close course reg  --}}
-                                                        <a href="{{ route('student.closed-course-registration') }}"
+                                                        <a href="{{ $session->route }}"
                                                         class="text-success @yield('registration')">Course Registration</a>
 
                                                 </div>
@@ -67,6 +68,7 @@
                                     </div>
                                 </div>
                             </div>
+                                  @endforeach
 
                             <div class="col-xl-6 col-md-6 mb-4">
                                 <div class="card border-left-success shadow h-100 py-3">

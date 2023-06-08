@@ -72,6 +72,7 @@
                             </p>
                         </a>
                         <ul class="nav nav-treeview">
+                         @foreach ($courseReg as $key => $session)
                         {{--  To ALLOW STUDENT SEE COURSE REGISTARION  --}}
                             {{--  <li class="nav-item">
                                 <a href="{{ route('student.course-registration') }}" class="nav-link @yield('registration')">
@@ -81,11 +82,12 @@
                             </li>  --}}
                             {{--  To close Course Registration  --}}
                               <li class="nav-item">
-                                <a href="{{ route('student.closed-course-registration') }}" class="nav-link @yield('registration')">
+                                <a href="{{ $session->route }}" class="nav-link @yield('registration')">
                                     <i class="fa fa-tasks nav-icon"></i>
                                     <p>Course Registration</p>
                                 </a>
                             </li>
+       @endforeach
 
 
                             {{--  <li class="nav-item">

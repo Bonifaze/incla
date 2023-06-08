@@ -2,11 +2,12 @@
 
 namespace App\Models;
 
-use App\Program;
 use App\Staff;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use App\Program;
+use App\ProgramCourse;
 use Illuminate\Database\Eloquent\Model;
 use OwenIt\Auditing\Contracts\Auditable;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class StaffCourse extends Model implements Auditable
 {
@@ -46,6 +47,10 @@ class StaffCourse extends Model implements Auditable
         return $this->belongsTo('App\Program', 'program_id');
     }
 
+    public function getCourseSemesterAttribute()
+    {
+        return ProgramCourse::where('id', $this->course_id)->first()->semester_id ?? null;
+    }
     protected $appends = [
         'course_title',
         'course_code',

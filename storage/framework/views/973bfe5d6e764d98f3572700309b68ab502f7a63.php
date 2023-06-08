@@ -40,6 +40,7 @@
                                       <th>Passport</th>
                                     <th>Name</th>
                                     <th>Phone</th>
+                                    <th>Usernameame</th>
                                     <th>Matric No</th>
                                     <th>Parents Name</th>
                                     <th>Parents Email</th>
@@ -80,6 +81,7 @@
                                             </td>
                                             <td><?php echo e($student->full_name); ?></td>
                                             <td><?php echo e($student->phone); ?></td>
+                                             <td><?php echo e($student->username); ?></td>
                                             <?php if($student->academic): ?>
                                                 <td><?php echo e($student->academic->mat_no); ?></td>
                                             <?php endif; ?>

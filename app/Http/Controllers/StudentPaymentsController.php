@@ -2,16 +2,17 @@
 
 namespace App\Http\Controllers;
 
-use App\FeeType;
-use App\Models\fee_types;
-use App\Models\Remitas;
 use App\Remita;
+use App\FeeType;
 use App\Student;
 use Carbon\Carbon;
-use Illuminate\Database\QueryException;
+use App\Models\Remitas;
+use App\Models\fee_types;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use App\Models\CourseRegistrations;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Database\QueryException;
 
 class StudentPaymentsController extends Controller
 {
@@ -134,13 +135,14 @@ class StudentPaymentsController extends Controller
 
     public function viewpayment($id)
     {
+        $courseReg = CourseRegistrations::where('status', 1)->orderBy('id', 'ASC')->paginate(20);
 
         $viewpayment = DB::table('remitas')->where('student_id', Auth::guard('student')->user()->id)
             ->orderBy('status_code', 'ASC')->orderBy('created_at', 'DESC')
             ->get();
 
         $verifyResponse = $this->verifyRRRALL();
-        return view('students.paymentview', compact('viewpayment', 'verifyResponse'));
+        return view('students.paymentview', compact('viewpayment', 'verifyResponse','courseReg'));
     }
     public function verifyRRRALL()
     {

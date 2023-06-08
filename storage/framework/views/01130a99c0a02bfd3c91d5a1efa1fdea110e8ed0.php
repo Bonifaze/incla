@@ -41,6 +41,7 @@
                     <div class="card shadow border border-success">
 
                         <div class="row p-5">
+                           <?php $__currentLoopData = $courseReg; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $key => $session): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                             <div class="col-xl-6 col-md-6 mb-4">
                                 <div class="card border-left-success shadow h-100 py-3">
                                     <div class="card-body">
@@ -50,7 +51,7 @@
                                                        
                                                     
                                                         
-                                                        <a href="<?php echo e(route('student.closed-course-registration')); ?>"
+                                                        <a href="<?php echo e($session->route); ?>"
                                                         class="text-success <?php echo $__env->yieldContent('registration'); ?>">Course Registration</a>
 
                                                 </div>
@@ -62,6 +63,7 @@
                                     </div>
                                 </div>
                             </div>
+                                  <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
 
                             <div class="col-xl-6 col-md-6 mb-4">
                                 <div class="card border-left-success shadow h-100 py-3">

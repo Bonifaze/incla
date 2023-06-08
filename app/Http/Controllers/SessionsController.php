@@ -6,6 +6,7 @@ use App\Session;
 use Illuminate\Http\Request;
 use App\Models\admissionType;
 use App\Models\admissionSession;
+use App\Models\CourseRegistrations;
 use Illuminate\Support\Facades\DB;
 
 class SessionsController extends Controller
@@ -66,10 +67,11 @@ class SessionsController extends Controller
   public function edit($id)
   {
       $this->authorize('edit',session::class);
+      $courseReg = CourseRegistrations::orderBy('id','DESC')->paginate(20);
       $sessions = Session::findOrFail($id);
 
 
-      return view('sessions/edit',compact('sessions'));
+      return view('sessions/edit',compact('sessions', 'courseReg'));
   }
 
   public function update(Request $request, $id)
@@ -252,5 +254,32 @@ public function closeAdmissionType(Request $request)
     return redirect()->back()
         ->with('success',$session->name.' Admission is close successfully');
 } //
+
+public function setCourseReg(Request $request)
+{
+    $this->authorize('setCurrent', Session::class);
+    $this->validate($request, [
+        'id' => 'required|integer',
+    ]);
+    $session = CourseRegistrations::findOrFail($request->id);
+    $session->status = 1;
+    $current  = CourseRegistrations::where('status',1)->first();
+    $current->status = 0;
+    DB::beginTransaction(); //Start transaction!
+    try {
+        $current->save();
+        $session->save();
+    }
+    catch(\Exception $e)
+    {
+        //failed logic here
+        DB::rollback();
+        return redirect()->back()
+            ->with('error',"Errors updating Session. <br />".$e);
+    }
+    DB::commit();
+    return redirect()->back()
+        ->with('success',$session->name.' set as active successfully');
+} // end setCurrent
 
 } // end class

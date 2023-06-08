@@ -72,15 +72,17 @@
                             </p>
                         </a>
                         <ul class="nav nav-treeview">
+                         <?php $__currentLoopData = $courseReg; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $key => $session): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                         
                             
                             
                               <li class="nav-item">
-                                <a href="<?php echo e(route('student.closed-course-registration')); ?>" class="nav-link <?php echo $__env->yieldContent('registration'); ?>">
+                                <a href="<?php echo e($session->route); ?>" class="nav-link <?php echo $__env->yieldContent('registration'); ?>">
                                     <i class="fa fa-tasks nav-icon"></i>
                                     <p>Course Registration</p>
                                 </a>
                             </li>
+       <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
 
 
                             

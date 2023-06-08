@@ -79,6 +79,80 @@
                     </div>
                 </div>
             </div>
+                <div class="row">
+
+
+                                        <div class="table-responsive card-body">
+
+                                            <table class="table table-striped">
+                                                <thead>
+
+                                                    <th>S/N</th>
+                                                    <th>Name</th>
+
+
+                                                    {{--  <th>Status</th>  --}}
+
+                                                    <th>Action</th>
+
+
+
+
+
+                                                </thead>
+
+
+                                                <tbody>
+
+                                                    @foreach ($courseReg as $key => $session)
+                                                        <tr>
+                                                            <td>{{ $loop->iteration }}</td>
+
+                                                            <td>{{ $session->name }}</td>
+
+
+                                                            {{--  @if ($session->status == 1)
+                                                                <td>Course Registrstion is Available </td>
+                                                            @else
+                                                                <td>Course Registration iS CLose</td>
+                                                            @endif  --}}
+
+                                                            @if ($session->status == 1)
+
+	                                                            <td>Current Status</td>
+                                                            @elseif($session->status == 0)
+                                                                <td>
+                                                                    {!! Form::open([
+                                                                        'method' => 'Patch',
+                                                                        'route' => 'session.setcourseReg',
+                                                                        'id' => 'session.setcourseReg' . $session->id,
+                                                                    ]) !!}
+                                                                    {{ Form::hidden('id', $session->id) }}
+
+
+                                                                    <button onclick="setCurrent({{ $session->id }})"
+                                                                        type="submit"
+                                                                        class="{{ $session->id }} btn btn-primary"> Set
+                                                                    </button>
+                                                                    {!! Form::close() !!}
+
+                                                                </td>
+                                                            @endif
+
+                                                        </tr>
+                                                    @endforeach
+
+                                                </tbody>
+
+
+
+                                            </table>
+
+
+                                        </div>
+
+
+                                    </div>
         </section>
     </div>
 @endsection

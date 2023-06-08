@@ -18,6 +18,7 @@ use Illuminate\Http\Request;
 use App\Models\admissionType;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
+use App\Models\CountryCodes;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Database\QueryException;
@@ -354,6 +355,7 @@ class ApplicantController extends Controller
             ->select('users.surname', 'users.first_name', 'users.middle_name', 'users.phone', 'users.email', 'usersbiodata.status', )->first();
         $programs = Program::orderBy('name', 'ASC')->get();
         $subjects = subjects::orderBy('subject_name', 'ASC')->get();
+        $country = CountryCodes::orderByRaw("CASE WHEN countryname = 'Nigeria' THEN -1 ELSE countryname END")->pluck('countryname', 'countryname' );
 
         $utmeremita = DB::table('users')->where('users.id', session('userid')) //-> where('remitas.status_code', '01')
             ->leftJoin('usersbiodata', 'usersbiodata.user_id', '=', 'users.id')
@@ -362,7 +364,7 @@ class ApplicantController extends Controller
 
         foreach ($utmeremita as $utm) {
             if ($utm->status_code == '01' && $utm->fee_type == 'Application Fee (Under Graduate) (₦4500)') {
-                return view('admissions./utme', compact('utme', 'utmeremita','admissiontype'), ['programs' => $programs, 'subjects' => $subjects]);
+                return view('admissions./utme', compact('utme', 'utmeremita','admissiontype'), ['programs' => $programs, 'subjects' => $subjects, 'country' => $country]);
             }
         }
         $signUpMsg = '<div class="alert alert-success text-align-center alert-dismissible"><button type="button" class="close" data-dismiss="alert">&times;</button><strong>You Have to make payment before filling out your application form, Please kindly generate RRR to continue</strong></div>';
@@ -1148,7 +1150,7 @@ class ApplicantController extends Controller
     // FUNCTION TO UPLOAD INTO THE USERSBIODATE OF A UTME APPLICANT
     public function utmebiodata(Request $req)
     {
-        // dd($req);
+         dd($req);
         $this->validate($req, [
 
             'gender' => 'required|string|max:6',

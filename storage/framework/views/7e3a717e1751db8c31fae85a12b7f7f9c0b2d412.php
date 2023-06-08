@@ -1,5 +1,5 @@
 <?php $__env->startSection('pagetitle'); ?>
-    Home
+Home
 <?php $__env->stopSection(); ?>
 
 
@@ -8,16 +8,16 @@
 
 <!-- Treeview -->
 <?php $__env->startSection('student-open'); ?>
-    menu-open
+menu-open
 <?php $__env->stopSection(); ?>
 
 <?php $__env->startSection('student'); ?>
-    active
+active
 <?php $__env->stopSection(); ?>
 
 <!-- Page -->
 <?php $__env->startSection('home'); ?>
-    active
+active
 <?php $__env->stopSection(); ?>
 
 <!-- End Sidebar links -->
@@ -25,25 +25,21 @@
 
 
 <?php $__env->startSection('content'); ?>
-<?php $__env->startSection('content'); ?>
-    <div class="content-wrapper bg-white">
-        <!-- Content Header (Page header) -->
+<div class="content-wrapper bg-white">
+    <!-- Content Header (Page header) -->
+    <!-- Main content -->
+    <section class="content">
+        <div class="container-fluid">
+            <!-- left column -->
+            <div class="col_full">
+                <h1 class="app-page-title text-uppercase h5 font-weight-bold p-2 mb-2 shadow-sm text-center text-success border">
+                    Dashboard
+                </h1>
 
-        <!-- Main content -->
-        <section class="content">
-            <div class="container-fluid">
-                <!-- left column -->
-                <div class="col_full">
+                <div class="card shadow border border-success">
 
-                    <h1
-                        class="app-page-title text-uppercase h5 font-weight-bold p-2 mb-2 shadow-sm text-center text-success border">
-                        Dashboard
-                    </h1>
-
-<div class="card shadow border border-success">
-
-                        <div class="row p-5">
-                    <?php $__currentLoopData = $admissiontype; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $key => $session): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                    <div class="row p-5">
+                        <?php $__currentLoopData = $admissiontype; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $key => $session): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
 
 
                         <div class="col-xl-6 col-md-6 mb-4">
@@ -53,8 +49,7 @@
                                         <div class="col mr-2">
                                             <div class="h4 text-success" style="text-decoration: underline;">
 
-                                                <a href="<?php echo e($session->route); ?>"
-                                                    class="text-success <?php echo $__env->yieldContent('registration'); ?>"><?php echo e($session->name); ?></a>
+                                                <a href="<?php echo e($session->route); ?>" class="text-success <?php echo $__env->yieldContent('registration'); ?>"><?php echo e($session->name); ?></a>
 
                                             </div>
                                         </div>
@@ -65,24 +60,16 @@
                                 </div>
                             </div>
                         </div>
-                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-</div>
-</div>
-
-
-                    
-                    
+                        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                    </div>
                 </div>
             </div>
-        </section>
-    </div>
-<?php $__env->stopSection(); ?>
-
-
+        </div>
+    </section>
+</div>
 <?php $__env->stopSection(); ?>
 
 <?php $__env->startSection('pagescript'); ?>
 <script src="<?php echo asset('dist/js/bootbox.min.js'); ?>"></script>
 <?php $__env->stopSection(); ?>
-
 <?php echo $__env->make('layouts.adminsials', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH /Users/lifeofrence/Documents/laraproject/resources/views/admissions/home.blade.php ENDPATH**/ ?>

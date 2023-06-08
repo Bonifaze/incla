@@ -31,3 +31,5 @@ Route::patch('/Admissionsessions/set-current', 'SessionsController@setCurrentAdm
 Route::patch('/openAdmissionType', 'SessionsController@openAdmissionType')->name('openAdmissionType');
 
 Route::patch('/closeAdmissionType', 'SessionsController@closeAdmissionType')->name('closeAdmissionType');
+
+Route::patch('/courseReg/setCourseReg', 'SessionsController@setCourseReg')->name('session.setcourseReg');
