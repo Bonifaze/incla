@@ -33,7 +33,7 @@
         <!-- Content Header (Page header) -->
 
 
-        <!-- Main content -->
+ <!-- Main content -->
         <section class="content">
             <div class="container-fluid">
                 <!-- left column -->
@@ -185,7 +185,7 @@
                                                     </div>
                                                 </div>
 
-
+                                                <div class="form-group">
 
                                                     <div class="form-group">
                                                         <label for="religion">Religion :</label>
@@ -202,7 +202,7 @@
                                                         ) }}
 
                                                     </div>
-
+                                                </div>
 
                                                 <div class="form-group">
                                                     <label for="dob">{{ __('Date of Birth') }} </label>
@@ -212,15 +212,10 @@
                                                             name="dob" required>
                                                     </div>
                                                 </div>
-
                                                 <div class="form-group">
+                                                    <label for="refferal">{{ __('Nationality') }} </label>
 
-                                                    <label for="nationality">Nationality :</label>
-                                                    {{ Form::select('nationality', $country, null, ['class' => 'form-control', 'id' => 'nationality', 'name' => 'nationality', ]) }}
-                                                    <span class="text-danger"> {{ $errors->first('nationality') }}</span>
-
-                                                </div>
-                                                {{--  <div class="form-group">
+                                                    <div class="form-group">
                                                         <select class="col-md-12 form-group text-lg" name="nationality"
                                                             id="nationality">
                                                             <option value="Afghanistan">Afghanistan</option>
@@ -508,8 +503,8 @@
                                                             <option value="Zambia">Zambia</option>
                                                             <option value="Zimbabwe">Zimbabwe</option>
                                                         </select>
-                                                    </div>  --}}
-
+                                                    </div>
+                                                </div>
 
 
                                                 <div class="form-group" style="margin-top:0px" id="state1">
@@ -547,7 +542,10 @@
                                                             "ID": "0",
                                                             "Name": "----Choose State----"
                                                         },
-
+                                                        {
+                                                            "ID": "NOT NGN",
+                                                            "Name": "Not a Nigerian"
+                                                        },
                                                         {
                                                             "ID": "Abuja",
                                                             "Name": "Abuja"
@@ -695,10 +693,6 @@
                                                         {
                                                             "ID": "Zamfara",
                                                             "Name": "Zamfara"
-                                                        },
-                                                         {
-                                                            "ID": "NOT NGN",
-                                                            "Name": "Not a Nigerian"
                                                         },
                                                     ];
 
@@ -1641,24 +1635,8 @@
                                                         </div>
                                                     </div> --}}
 
-                                        <div class="form-group">
-                                                        <label for="referral">How did you hear about us :</label>
-                                                        {{ Form::select(
-                                                            'referral',
-                                                            [
-                                                                'Social Media' => 'Social Media',
-                                                                'Friends' => 'A Friends',
-                                                                'Google' => 'Google',
-                                                                'TV' => 'Television',
-                                                                'Church' => 'Church',
-                                                            ],
-                                                            'Social Media',
-                                                            ['class' => 'form-control select2'],
-                                                        ) }}
 
-                                                    </div>
-
-                                    {{--  <div class="form-group">
+                                    <div class="form-group">
                                         <label for="refferal">{{ __('How did you hear about us') }}
                                         </label>
 
@@ -1671,7 +1649,7 @@
                                                 <option value="Church">Church</option>
                                             </select>
                                         </div>
-                                    </div>  --}}
+                                    </div>
 
                                     <div class="form-group">
                                         <div class="form-group">
@@ -1685,8 +1663,7 @@
                                             </button>
                                         </div>
                                     </div>
-                                </div>
-                                </div>
+
                                     </form>
                                 </div>
                                 {{-- end of biodata tab --}}
@@ -2318,20 +2295,21 @@
 
                         </div>
                     </div>
-                </div>
+             </div>
 
-        </section>
+         </section>
 
 
-    </div>
+  </div>
+
 @endsection
 
 
 @section('pagescript')
     <!-- External JavaScripts
-                 ============================================= -->
+             ============================================= -->
 
-    <script>
+      <script>
         $(document).ready(function() {
             let status = $("#status").val();
             if (status == 0) {
