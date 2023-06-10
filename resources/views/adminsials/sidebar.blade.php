@@ -54,7 +54,7 @@ exit;
 
                         <ul class="nav nav-treeview">
 
-                            <li class="nav-item">
+                            <li class="nav-item ml-2">
                                {!! session('status') =='4'?'
                 <a class="nav-link collapsed" href="/viewprofile">
                     <i class="fas fa-user"></i>
@@ -63,7 +63,7 @@ exit;
             ':'' !!}
                             </li>
                             <li class="nav-item">
-                                <a href="#" class="nav-link @yield('password')">
+                                <a href="/editpassword" class="nav-link @yield('password')">
                                     <i class="fa fa-unlock-alt nav-icon"></i>
                                     <p>Change Password</p>
                                 </a>

@@ -12,41 +12,47 @@ exit;
 <?php $__env->startSection('content'); ?>
 <div class="row justify-content-center">
 
+
     <!-- Page Wrapper -->
     <div id="wrapper">
+
         <?php echo $__env->make('layouts.usersidebar', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
         <!-- Content Wrapper -->
         <div id="content-wrapper" class="d-flex flex-column">
+
             <!-- Main Content -->
             <div id="content">
 
                 <!-- Begin Page Content -->
                 <div class="container-fluid">
+
                     <!-- Page Heading -->
                     <h3 class="h5 text-center fw-bold mb-4 pt-2">
-                        <p class="fw-bold text-success">UTME</p> Edit Profile Form
+                        <p class="fw-bold text-success">Post Graduate</p> Registration Form
                     </h3>
+
                     <!-- Content Row -->
 
                     <div class="row justify-content-center">
 
                         <!-- Area Chart -->
                         <div class="col-xl-8">
-                            <div class="card shadow mb-4">
+                            <div class="card shadow mb-4 p-5">
                                 <!-- Card Header - Dropdown -->
 
-                                <div class="card-body p-5">
+                                <div class="card-body">
                                     <ul class="nav nav-tabs" id="myTab" role="tablist">
                                         <li class="nav-item" role="presentation">
                                             <button class="nav-link active text-success fw-bold text-capitalize" id="home-tab" data-bs-toggle="tab" data-bs-target="#home-tab-pane" type="button" role="tab" aria-controls="home-tab-pane" aria-selected="true">Bio Data</button>
                                         </li>
                                         <li class="nav-item" role="presentation">
-                                            <button class="nav-link text-success fw-bold text-capitalize" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile-tab-pane" type="button" role="tab" aria-controls="profile-tab-pane" aria-selected="false">Sponsor Information</button>
+                                            <button class="nav-link text-success  fw-bold text-capitalize" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile-tab-pane" type="button" role="tab" aria-controls="profile-tab-pane" aria-selected="false">Sponsor Information</button>
                                         </li>
                                         <li class="nav-item" role="presentation">
-                                            <button class="nav-link text-success fw-bold text-capitalize" id="profile2-tab" data-bs-toggle="tab" data-bs-target="#profile2-tab-pane" type="button" role="tab" aria-controls="profile2-tab-pane" aria-selected="false">Jamb</button>
+                                            <button class="nav-link text-success fw-bold text-capitalize" id="profile2-tab" data-bs-toggle="tab" data-bs-target="#profile2-tab-pane" type="button" role="tab" aria-controls="profile2-tab-pane" aria-selected="false">PG Information/ Qualification</button>
                                         </li>
-
+                                        
+                                        
                                         <li class="nav-item" role="presentation">
                                             <button class="nav-link text-success fw-bold text-capitalize" id="profile3-tab" data-bs-toggle="tab" data-bs-target="#profile3-tab-pane" type="button" role="tab" aria-controls="profile3-tab-pane" aria-selected="false">Uploaded Documents</button>
                                         </li>
@@ -55,21 +61,20 @@ exit;
                                         </li>
 
                                     </ul>
-
-                                    
                                     <div class="tab-content" id="myTabContent">
                                         <div class="tab-pane fade show active" id="home-tab-pane" role="tabpanel" aria-labelledby="home-tab" tabindex="0">
                                             <form method="POST" action="/editbiodata" enctype="multipart/form-data" class="p-3">
                                                 <?php echo csrf_field(); ?>
-                                               <?php if(session('signUpMsg')): ?>
-                                                    <?php echo session('signUpMsg'); ?>
+                                                <?php if(session('signUpMsg')): ?>
+                                                <?php echo session('signUpMsg'); ?>
 
-                                                    <?php endif; ?>
+                                                <?php endif; ?>
+
                                                 <div class="item border-bottom py-3">
                                                     <div class="row justify-content-between align-items-center">
                                                         <div class="col-auto">
                                                             <div class="item-label mb-2">
-                                                                Photo
+                                                                <strong>Photo</strong>
                                                             </div>
                                                             <div class="rounded-circle">
                               <img class="rounded-circle p-3 mx-auto d-block" src="data:image/jpeg;base64,<?php echo e($applicantsDetails ->passport); ?>" alt="Applicant Passport" style="height: 180px; width:200px;" />
@@ -78,28 +83,23 @@ exit;
                                                     </div>
                                                 </div>
                                                 <div class="form-group">
-
-                                                    <?php if(session('statusMsg')): ?>
-                                                    <?php echo session('statusMsg'); ?>
-
-                                                    <?php endif; ?>
                                                     <label for="passport"><?php echo e(__('Upload Passport Photograph')); ?> </label>
 
                                                     <div class="form-group">
-                                                        <input id="passport" type="file" class="form-control" name="passport">
+                                                        <input id="passport" type="file" class="form-control" name="passport" value="">
                                                     </div>
                                                 </div>
                                                 <label for=""><?php echo e(__('Surname')); ?> </label>
                                                 <div class="form-group">
                                                     <div class="form-group">
-                                                        <input id="surname" type="text" class="form-control" value="<?php echo e($applicantsDetails -> surname); ?>" name="surname" placeholder="<?php echo e($applicantsDetails -> surname); ?>" autofocus readonly >
+                                                        <input id="surname" type="text" class="form-control " name="surname" value="<?php echo e($applicantsDetails->surname); ?>" autofocus>
 
                                                     </div>
                                                 </div>
                                                 <div class="form-group">
                                                     <div class="form-group">
                                                         <label for=""><?php echo e(__('First Name')); ?> </label>
-                                                        <input id="first_name" type="text" class="form-control" value="<?php echo e($applicantsDetails -> first_name); ?>" name="first_name" autofocus readonly >
+                                                        <input id="first_name" type="text" class="form-control" name="first_name" value="<?php echo e($applicantsDetails->first_name); ?>" autofocus>
 
 
                                                     </div>
@@ -107,7 +107,7 @@ exit;
                                                 <div class="form-group">
                                                     <div class="form-group">
                                                         <label for=""><?php echo e(__('Email')); ?> </label>
-                                                        <input id="email" type="email" class="form-control" value="<?php echo e($applicantsDetails -> email); ?>"name="email"  autofocus readonly>
+                                                        <input id="email" type="email" class="form-control " name="email" value="<?php echo e($applicantsDetails->email); ?>" autofocus>
 
 
                                                     </div>
@@ -115,20 +115,22 @@ exit;
                                                 <div class="form-group">
                                                     <div class="form-group">
                                                         <label for=""><?php echo e(__('Phone')); ?> </label>
-                                                        <input id="phone" type="phone" class="form-control" value="<?php echo e($applicantsDetails -> phone); ?>" name="phone" autocomplete="phone"  autofocus>
+                                                        <input id="phone" type="phone" class="form-control" name="phone" autocomplete="phone" placeholder="<?php echo e($applicantsDetails->phone); ?>" autofocus>
 
 
                                                     </div>
                                                 </div>
 
                                                 <div class="form-group">
+
                                                     <div class="form-group">
                                                         <label for=""><?php echo e(__('Other Name')); ?> </label>
-                                                        <input id="middle_name" type="text" class="form-control" value="<?php echo e($applicantsDetails -> middle_name); ?>"name="middle_name" placeholder="<?php echo e($applicantsDetails -> middle_name); ?>" autofocus>
+                                                        <input id="middle_name" type="text" class="form-control" name="middle_name" value="<?php echo e($applicantsDetails -> middle_name); ?>" autofocus>
                                                     </div>
                                                 </div>
 
                                                 <div class="form-group">
+
                                                     <div class="form-group">
                                                         <label for=""><?php echo e(__('Gender')); ?> </label>
                                                         <select class="form-select" name="gender">
@@ -140,10 +142,11 @@ exit;
                                                 </div>
 
                                                 <div class="form-group">
+
                                                     <div class="form-group">
-                                                        <label for=""><?php echo e(__('Religion')); ?> </label>
                                                         <select class="form-select" name="religion">
-                                                            <option value="<?php echo e($applicantsDetails -> gender); ?>"><?php echo e($applicantsDetails-> religion); ?></option>
+                                                            <label for=""><?php echo e(__('Religion')); ?> </label>
+                                                            <option value="<?php echo e($applicantsDetails -> religion); ?>"><?php echo e($applicantsDetails -> religion); ?></option>
                                                             <option value="Christian (Catholic)">Christian (Catholic)</option>
                                                             <option value="Christian (non-catholic)">Christian (non-catholic)</option>
                                                             <option value="Muslim">Muslim</option>
@@ -153,20 +156,18 @@ exit;
                                                 </div>
 
                                                 <div class="form-group">
-                                                    <label for="dob"><?php echo e(__('Date of Birth')); ?>:<?php echo e(\Carbon\Carbon::parse($applicantsDetails -> dob)->format(' jS \of F Y ')); ?></label>
+                                                    <label for="dob"><?php echo e(__('Date of Birth')); ?> </label>
 
                                                     <div class="form-group">
-                                                        <input id="dob" type="date" class="form-control" value="<?php echo e($applicantsDetails -> dob); ?>"name="dob" required>
+                                                        <input id="dob" type="date" class="form-control" name="dob" value="<?php echo e($applicantsDetails -> dob); ?>">
                                                     </div>
                                                 </div>
 
                                                 <div class="form-group">
-                                                    <label for="refferal"><?php echo e(__('Nationality')); ?></label>
-
                                                     <div class="form-group">
+                                                        <label for=""><?php echo e(__('Nationality')); ?> </label>
                                                         <select class="form-select" name="nationality" id="nationality">
                                                             <option value="<?php echo e($applicantsDetails-> nationality); ?>"><?php echo e($applicantsDetails-> nationality); ?></option>
-                                                            <option value="Afghanistan">Afghanistan</option>
                                                             <option value="Åland Islands">Åland Islands</option>
                                                             <option value="Albania">Albania</option>
                                                             <option value="Algeria">Algeria</option>
@@ -415,100 +416,47 @@ exit;
                                                 </div>
 
                                                 <div class="form-group">
+
                                                     <div class="form-group">
-                                                        <label for=""><?php echo e(__('State of Origin')); ?> </label>
-                                                        <input id="state_origin" type="text" class="form-control" name="state_origin" value="<?php echo e($applicantsDetails -> state_origin); ?> ">
+                                                        <label for="refferal"><?php echo e(__('Statr of Origin')); ?> </label>
+                                                        <input id="state_origin" type="text" class="form-control" name="state_origin" value="<?php echo e($applicantsDetails -> state_origin); ?>">
                                                     </div>
                                                 </div>
 
                                                 <div class="form-group">
+
                                                     <div class="form-group">
-                                                        <label for=""><?php echo e(__('Local Area Governemt')); ?> </label>
-                                                        <input id="lga" type="text" class="form-control" name="lga" required value=" <?php echo e($applicantsDetails -> lga); ?>">
+                                                        <label for="refferal"><?php echo e(__('Local Government Area')); ?> </label>
+                                                        <input id="lga" type="text" class="form-control" name="lga" value="<?php echo e($applicantsDetails -> lga); ?>">
                                                     </div>
                                                 </div>
 
                                                 <div class="form-group">
+
                                                     <div class="form-group">
-                                                        <label for=""><?php echo e(__('Address')); ?> </label>
-                                                        <input id="address" type="text" class="form-control" name="address"  value="<?php echo e($applicantsDetails -> address); ?>">
+                                                        <label for="refferal"><?php echo e(__('Address')); ?> </label>
+                                                        <input id="address" type="text" class="form-control" name="address" value="<?php echo e($applicantsDetails -> address); ?>">
                                                     </div>
                                                 </div>
-
 
 
                                                 <div class="form-group">
                                                     <label for="refferal"><?php echo e(__('How did you hear about us')); ?> </label>
 
-                                                <div class="form-group">
-                                                    <select class="form-select" name="referral">
-                                                    <option value="<?php echo e($applicantsDetails -> referral); ?>"><?php echo e($applicantsDetails -> referral); ?></option>
-                                                        <option value="Social Media"> Social Media</option>
-                                                        <option value="Friend">From a friend</option>
-                                                        <option value="Google">Google</option>
-                                                        <option value="TV">Television</option>
-                                                        <option value="Church">Church</option>
-                                                    </select>
-                                                </div>
-                                        </div>
-
-                                        <div class="form-group">
-                                            <div class="form-group">
-
-                                                
-
-                                                <button type="submit" class="btn btn-success">
-                                                    <?php echo e(__('Update')); ?>
-
-                                                </button>
-                                            </div>
-                                        </div>
-
-                                        </form>
-                                    </div>
-                                    
-
-                                    <div class="tab-pane fade" id="profile-tab-pane" role="tabpanel" aria-labelledby="profile-tab" tabindex="0">
-
-                                        
-                                        <form method="POST" action="/editsponsers" class="p-3">
-                                            <?php echo csrf_field(); ?>
-                                            <div class="form-group">
-                                                <div class="form-group">
-                                                    <label for=""><?php echo e(__(' Name')); ?> </label>
-                                                    <input id="fname" type="text" name="name" class="form-control" value="<?php echo e($applicantsDetails -> name); ?>" autofocus>
-                                                </div>
-                                            </div>
-
-                                            <div class="form-group">
-                                                <div class="form-group">
-                                                    <label for=""><?php echo e(__('Phone No.')); ?> </label>
-                                                    <input id="phone" type="text" name="sponsors_phone" class="form-control" value="<?php echo e($applicantsDetails -> sponsors_phone); ?>" autofocus>
-                                                </div>
-                                            </div>
-
-                                            <div class="form-group">
-                                                <div class="form-group">
-                                                    <label for=""><?php echo e(__('Sponsor email')); ?> </label>
-                                                    <input id="foccupation" type="text" name="sponsors_email" class="form-control" value="<?php echo e($applicantsDetails -> sponsors_email); ?>" autofocus>
-                                                </div>
-                                            </div>
-
-                                            <div class="form-group">
-                                                <div class="form-group">
-                                                    <label for=""><?php echo e(__('Address')); ?> </label>
-                                                    <input id="address" type="text" class="form-control" name="sponsors_address" value="<?php echo e($applicantsDetails -> sponsors_address); ?>">
-                                                </div>
-                                            </div>
-                                            <div class="form-group">
-                                                <div class="form-group">
-                                                    <label for=""><?php echo e(__(' Occupation')); ?> </label>
-                                                    <input id="foccupation" type="text" name="occupation" class="form-control" value="<?php echo e($applicantsDetails -> occupation); ?>" autofocus>
+                                                    <div class="form-group">
+                                                        <select class="form-select" name="referral">
+                                                            <option value="<?php echo e($applicantsDetails-> referral); ?>"><?php echo e($applicantsDetails-> referral); ?></option>
+                                                            <option value="Social Media"> Social Media</option>
+                                                            <option value="Friend">From a friend</option>
+                                                            <option value="Google">Google</option>
+                                                            <option value="TV">Television</option>
+                                                            <option value="Church">Church</option>
+                                                        </select>
+                                                    </div>
                                                 </div>
 
                                                 <div class="form-group">
                                                     <div class="form-group">
-
                                                         
                                                         <button type="submit" class="btn btn-success">
                                                             <?php echo e(__('Update')); ?>
@@ -516,18 +464,74 @@ exit;
                                                         </button>
                                                     </div>
                                                 </div>
-                                        </form>
-                                    </div>
-                                </div>
-                                <div class="tab-pane fade" id="profile4-tab-pane" role="tabpanel" aria-labelledby="profile4-tab" tabindex="0">
 
-                                    
-                                    <form method="POST" action="/editpassword" class="p-3">
-                                        <?php echo csrf_field(); ?>
-                                          <input id="email" type="hidden" class="form-input form-control"  name="email" value="<?php echo e($applicantsDetails -> email); ?>">
-                                        <div class="form-group">
+
+                                            </form>
+                                        </div>
+                                        <div class="tab-pane fade" id="profile-tab-pane" role="tabpanel" aria-labelledby="profile-tab" tabindex="0">
+
+                                            
+                                            <form method="POST" action="/editsponsers" class="p-3">
+                                                <?php echo csrf_field(); ?>
+
+                                                <div class="form-group">
+
+                                                    <div class="form-group">
+                                                        <label for="refferal"><?php echo e(__('Name')); ?> </label>
+                                                        <input id="fname" type="text" name="name" class="form-control" value="<?php echo e($applicantsDetails -> name); ?>" autofocus>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+
+                                                    <div class="form-group">
+                                                        <label for="refferal"><?php echo e(__('Phone')); ?> </label>
+                                                        <input id="phone" type="text" name="sponsors_phone" class="form-control" value="<?php echo e($applicantsDetails -> sponsors_phone); ?>" autofocus>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+
+                                                    <div class="form-group">
+                                                        <label for="refferal"><?php echo e(__('email')); ?> </label>
+                                                        <input id="foccupation" type="text" name="sponsors_email" class="form-control" value="<?php echo e($applicantsDetails -> sponsors_email); ?>" autofocus>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+
+                                                    <div class="form-group">
+                                                        <label for="refferal"><?php echo e(__('Address')); ?> </label>
+                                                        <input id="address" type="text" class="form-control" name="sponsors_address" required value="<?php echo e($applicantsDetails -> sponsors_address); ?>">
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+
+                                                    <div class="form-group">
+                                                        <label for="refferal"><?php echo e(__('Ocupation')); ?> </label>
+                                                        <input id="foccupation" type="text" name="occupation" class="form-control" value="<?php echo e($applicantsDetails -> occupation); ?>" autofocus>
+                                                    </div>
+
+                                                    <div class="form-group">
+                                                        <div class="form-group">
+
+
+                                                            <button type="submit" class="btn btn-success">
+                                                                <?php echo e(__('Update')); ?>
+
+                                                            </button>
+                                                        </div>
+                                                    </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                    <div class="tab-pane fade" id="profile4-tab-pane" role="tabpanel" aria-labelledby="profile4-tab" tabindex="0">
+
+                                        
+                                        <form method="POST" action="/editpassword" class="p-3">
+                                            <?php echo csrf_field(); ?>
+                                            <input id="email" type="hidden" class="form-input form-control"  name="email" value="<?php echo e($applicantsDetails -> email); ?>">
+
                                             <div class="form-group">
-                                                <input id="password" type="password" class="form-control <?php $__errorArgs = ['password'];
+                                                <div class="form-group">
+                                                    <input id="password" type="password" class="form-control <?php $__errorArgs = ['password'];
 $__bag = $errors->getBag($__errorArgs[1] ?? 'default');
 if ($__bag->has($__errorArgs[0])) :
 if (isset($message)) { $__messageOriginal = $message; }
@@ -536,127 +540,231 @@ if (isset($__messageOriginal)) { $message = $__messageOriginal; }
 endif;
 unset($__errorArgs, $__bag); ?>" name="password" required placeholder="New Password" autocomplete="new-password">
 
-                                                <?php $__errorArgs = ['password'];
+                                                    <?php $__errorArgs = ['password'];
 $__bag = $errors->getBag($__errorArgs[1] ?? 'default');
 if ($__bag->has($__errorArgs[0])) :
 if (isset($message)) { $__messageOriginal = $message; }
 $message = $__bag->first($__errorArgs[0]); ?>
-                                                <span class="invalid-feedback" role="alert">
-                                                    <strong><?php echo e($message); ?></strong>
-                                                </span>
-                                                <?php unset($message);
+                                                    <span class="invalid-feedback" role="alert">
+                                                        <strong><?php echo e($message); ?></strong>
+                                                    </span>
+                                                    <?php unset($message);
 if (isset($__messageOriginal)) { $message = $__messageOriginal; }
 endif;
 unset($__errorArgs, $__bag); ?>
+                                                </div>
                                             </div>
-                                        </div>
 
-                                        <div class="form-group">
                                             <div class="form-group">
-                                                <input id="password-confirm" type="password" class="form-control" name="password_confirmation" required placeholder="Confirm Password" autocomplete="new-password">
+                                                <div class="form-group">
+                                                    <input id="password-confirm" type="password" class="form-control" name="password_confirmation" required placeholder="Confirm Password" autocomplete="new-password">
+                                                </div>
                                             </div>
-                                        </div>
 
-                                        <div class="form-group">
+                                            <div class="form-group">
+                                                <div class="form-group">
+
+                                                    
+                                                    <button type="submit" class="btn btn-success">
+                                                        <?php echo e(__('Update')); ?>
+
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>
+                                    <div class="tab-pane fade" id="profile2-tab-pane" role="tabpanel" aria-labelledby="profile2-tab" tabindex="0">
+                                        
+
+                                        <form method="POST" action="/editpginformation" class="p-3">
+                                            <?php echo csrf_field(); ?>
                                             <div class="form-group">
 
-                                                
-                                                <button type="submit" class="btn btn-success">
-                                                    <?php echo e(__('Update')); ?>
+                                                <div class="form-group">
+                                                    <label for="refferal"><?php echo e(__('Program')); ?> </label>
+                                                    <select class="form-select" name="mode">
+                                                        <option value="<?php echo e($applicantsDetails -> mode); ?>"><?php echo e($applicantsDetails -> mode); ?> </option>
+                                                        <option value="PGD">PGD</option>
+                                                        <option value="M.Sc">M.Sc</option>
+                                                        <option value="PhD">PhD</option>
 
-                                                </button>
+                                                    </select>
+                                                </div>
                                             </div>
-                                        </div>
-                                    </form>
-                                </div>
-                                <div class="tab-pane fade" id="profile2-tab-pane" role="tabpanel" aria-labelledby="profile2-tab" tabindex="0">
-                                    
 
-                                    <form method="POST" action="/editutmejamb" class="p-3">
+                                            <div class="form-group">
+
+                                                <div class="form-group">
+                                                    <label for="refferal"><?php echo e(__('Mode of Learning')); ?> </label>
+                                                    <select class="form-select" name="type">
+                                                        <option value="<?php echo e($applicantsDetails -> type); ?>"><?php echo e($applicantsDetails -> type); ?> </option>
+                                                        <option value="Full Time">Full Time</option>
+                                                        <option value="Part Time">Part Time</option>
+
+                                                    </select>
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group">
+
+                                                <div class="form-group">
+                                                    <label for="refferal"><?php echo e(__('Research Topic')); ?> </label>
+                                                    <input id="first_choice" type="text" class="form-control" name="research_topic" value="<?php echo e($applicantsDetails -> research_topic); ?>" required autofocus>
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <div class="form-group">
+                                                    <label for="refferal"><?php echo e(__('Course of Study')); ?> </label>
+                                                    <select class="form-select" name="course_applied">
+                                                        <option value="<?php echo e($applicantsDetails -> course_applied); ?>"><?php echo e($applicantsDetails -> course_applied); ?></option>
+                                                        <?php $__currentLoopData = $programs; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $program): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+
+                                                        <option value="<?php echo e($program->name); ?>"><?php echo e($program->name); ?></option>
+                                                        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                                                    </select>
+
+                                                </div>
+                                            </div>
+                                            <h5 class="h6 text-success text-center fw-bold mb-4 pt-2">Post Secondary Education and Certifications </h5>
+
+                                            <div class="form-group">
+                                                <label for="refferal"><?php echo e(__('Institution')); ?> </label>
+                                                <div class="form-group">
+                                                    <input id="second_choice" type="text" class="form-control" name="institution" value="<?php echo e($applicantsDetails -> institution); ?>" required autofocus>
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group">
+                                                <label for="refferal"><?php echo e(__('Period')); ?> </label>
+                                                <div class="form-group">
+                                                    <input id="subject_1" type="text" name="period" class="form-control" value="<?php echo e($applicantsDetails -> period); ?>" autofocus required>
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+
+                                                <div class="form-group">
+                                                    <label for="refferal"><?php echo e(__('Course')); ?> </label>
+                                                    <input id="subject_2" type="text" name="course" class="form-control" required value="<?php echo e($applicantsDetails -> course); ?>" autofocus>
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <div class="form-group">
+                                                    <label for="refferal"><?php echo e(__('Certificate Obtained')); ?> </label>
+                                                    <input id="subject_3" type="text" name="certificate_name" class="form-control" required value="<?php echo e($applicantsDetails -> certificate_name); ?>" autofocus>
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+
+                                                <div class="form-group">
+                                                    <label for="refferal"><?php echo e(__('Type of Certificate')); ?> </label>
+                                                    <select class="form-select" name="certificate_type">
+                                                        <option value="<?php echo e($applicantsDetails -> certificate_type); ?>"><?php echo e($applicantsDetails -> certificate_type); ?></option>
+                                                        <option value="Degree">Degree</option>
+                                                        <option value="PGD">PGD</option>
+                                                        <option value="M.Sc">M.Sc</option>
+                                                        <option value="PhD">PhD</option>
+                                                        <option value="Professional">Professional</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+
+                                                <div class="form-group">
+                                                    <label for="refferal"><?php echo e(__('Honour')); ?> </label>
+                                                    <input id="subject_4" type="text" name="class_honour" class="form-control" value="<?php echo e($applicantsDetails -> class_honour); ?>" required autofocus>
+                                                </div>
+                                            </div>
+                                            <h5 class="h6 text-success text-center fw-bold mb-2 pt-2">REFEREES </h5>
+                                            <h6 class="h6 text-warning text-center fw-small mb-4 pt-2"> Provide three (3) referees, two (2) must be your former lecturers. </h6>
+                                            
+                                            <hr>
+                                            <div class="form-group">
+                                                <div class="form-group">
+                                                    <label for="refferal"><?php echo e(__('Name')); ?> </label>
+                                                    <input id="subject_3" type="text" name="name1" class="form-control" required value="<?php echo e($applicantsDetails -> name1); ?>" autofocus>
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <div class="form-group">
+                                                    <label for="refferal"><?php echo e(__('Position')); ?> </label>
+                                                    <input id="subject_3" type="text" name="position1" class="form-control" required value="<?php echo e($applicantsDetails -> position1); ?>" autofocus>
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <div class="form-group">
+                                                    <label for="refferal"><?php echo e(__('Institution/ Organisation')); ?> </label>
+                                                    <input id="subject_3" type="text" name="institution1" class="form-control" required value="<?php echo e($applicantsDetails -> institution1); ?>" autofocus>
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <div class="form-group">
+                                                    <label for="refferal"><?php echo e(__('Nmae')); ?> </label>
+                                                    <input id="subject_3" type="text" name="email1" class="form-control" required value="<?php echo e($applicantsDetails -> email1); ?>" autofocus>
+                                                </div>
+                                            </div>
+                                            
+                                            <hr>
+                                            <div class="form-group">
+                                                <div class="form-group">
+                                                    <input id="subject_3" type="text" name="name2" class="form-control" required value="<?php echo e($applicantsDetails -> name2); ?>" autofocus>
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <div class="form-group">
+                                                    <input id="subject_3" type="text" name="position2" class="form-control" required value="<?php echo e($applicantsDetails -> position2); ?>" autofocus>
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <div class="form-group">
+                                                    <input id="subject_3" type="text" name="institution2" class="form-control" required value="<?php echo e($applicantsDetails -> institution2); ?>" autofocus>
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <div class="form-group">
+                                                    <input id="subject_3" type="text" name="email2" class="form-control" required value="<?php echo e($applicantsDetails -> email1); ?>" autofocus>
+                                                </div>
+                                            </div>
+                                            
+                                            <hr>
+                                            <div class="form-group">
+                                                <div class="form-group">
+                                                    <input id="subject_3" type="text" name="name3" class="form-control" required value="<?php echo e($applicantsDetails -> name3); ?>" autofocus>
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <div class="form-group">
+                                                    <input id="subject_3" type="text" name="position3" class="form-control" required value="<?php echo e($applicantsDetails -> position3); ?>" autofocus>
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <div class="form-group">
+                                                    <input id="subject_3" type="text" name="institution3" class="form-control" required value="<?php echo e($applicantsDetails -> institution1); ?>" autofocus>
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <div class="form-group">
+                                                    <input id="subject_3" type="text" name="email3" class="form-control" required value="<?php echo e($applicantsDetails -> email1); ?>" autofocus>
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group">
+                                                <div class="form-group">
+
+                                                    
+                                                    <button type="submit" class="btn btn-success">
+                                                        <?php echo e(__('Update')); ?>
+
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>
+
+                                    <div class="tab-pane fade" id="profile3-tab-pane" role="tabpanel" aria-labelledby="profile3-tab" tabindex="0">
+                                        <form method="POST" action="/editutmeuploads"enctype="multipart/form-data"
+                                        class="p-3">
                                         <?php echo csrf_field(); ?>
-
-                                        <div class="form-group">
-
-                                            <div class="form-group">
-                                                <input id="score" type="text" name="jamb_reg_no" class="form-control" value="<?php echo e($applicantsDetails -> jamb_reg_no); ?>" autofocus>
-                                            </div>
-                                        </div>
-                                        <div class="form-group">
-                                            <div class="form-group">
-                                                <label for="refferal"><?php echo e(__('Course of Study')); ?> </label>
-                                                <select class="form-select" name="course_applied">
-                                                    <option value="<?php echo e($applicantsDetails -> course_applied); ?>"><?php echo e($applicantsDetails -> course_applied); ?></option>
-                                                    <?php $__currentLoopData = $programs; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $program): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-
-                                                    <option value="<?php echo e($program->name); ?>"><?php echo e($program->name); ?></option>
-                                                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-                                                </select>
-
-                                            </div>
-                                        </div>
-                                        <div class="form-group">
-                                            <div class="form-group">
-                                                <label for="refferal"><?php echo e(__('University First Choice')); ?> </label>
-                                                <input id="first_choice" type="text" name="first_choice" class="form-control" value="<?php echo e($applicantsDetails -> first_choice); ?>" autofocus>
-                                            </div>
-                                        </div>
-                                        <div class="form-group">
-                                            <div class="form-group">
-                                                <label for="refferal"><?php echo e(__('University Second Choice')); ?> </label>
-                                                <input id="second_choice" type="text" name="second_choice" class="form-control" value="<?php echo e($applicantsDetails -> second_choice); ?>" autofocus>
-                                            </div>
-                                        </div>
-
-                                        <div class="form-group">
-                                            <div class="form-group">
-                                                <label for="refferal"><?php echo e(__('Subject One')); ?> </label>
-                                                <input id="subject_1" type="text" name="subject_1" class="form-control" value="<?php echo e($applicantsDetails -> subject_1); ?>" autofocus>
-                                            </div>
-                                        </div>
-                                        <div class="form-group">
-                                            <div class="form-group">
-                                                <label for="refferal"><?php echo e(__('Subject Two')); ?> </label>
-                                                <input id="subject_2" type="text" name="subject_2" class="form-control" value="<?php echo e($applicantsDetails -> subject_2); ?>" autofocus>
-                                            </div>
-                                        </div>
-                                        <div class="form-group">
-                                            <div class="form-group">
-                                                <label for="refferal"><?php echo e(__('Subject Three')); ?> </label>
-                                                <input id="subject_3" type="text" name="subject_3" class="form-control" value="<?php echo e($applicantsDetails -> subject_3); ?>" autofocus>
-                                            </div>
-                                        </div>
-                                        <div class="form-group">
-                                            <div class="form-group">
-                                                <label for="refferal"><?php echo e(__('Subject Four')); ?> </label>
-                                                <input id="subject_4" type="text" class="form-control" name="subject_4" value="<?php echo e($applicantsDetails -> subject_1); ?>" autofocus>
-                                            </div>
-                                        </div>
-                                        <div class="form-group">
-
-                                            <div class="form-group">
-                                                <input id="score" type="text" name="score" class="form-control" value="<?php echo e($applicantsDetails -> score); ?>" autofocus>
-                                            </div>
-                                        </div>
-                                        <div class="form-group">
-                                            <div class="form-group">
-
-
-                                                <button type="submit" class="btn btn-success">
-                                                    <?php echo e(__('Update')); ?>
-
-                                                </button>
-                                            </div>
-                                        </div>
-                                    </form>
-                                </div>
-
-                                <div class="tab-pane fade" id="profile3-tab-pane" role="tabpanel" aria-labelledby="profile3-tab" tabindex="0">
-
-                                    <form method="POST" action="/editutmeuploads"enctype="multipart/form-data"
-                                    class="p-3">
-                                    <?php echo csrf_field(); ?>
-
-  <div class="row">
+   <div class="row">
                                                     <div class="col"> <img class="mx-auto d-block"
                                                             src="data:image/jpeg;base64,<?php echo e($applicantsDetails->jamb); ?>"
                                                             alt="Transcipt" style="height: 300px; width:300px;" /></div>
@@ -667,82 +775,85 @@ unset($__errorArgs, $__bag); ?>
                                                             src="data:image/jpeg;base64,<?php echo e($applicantsDetails->olevel2); ?>"
                                                             alt="" style="height: 300px; width:300px;" /></div>
                                                 </div>
-                                    <div class="form-group">
-
-                                        <?php if(session('statusMsg')): ?>
-                                            <?php echo session('statusMsg'); ?>
-
-                                        <?php endif; ?>
-                                        <label for="passport"><?php echo e(__('Edit jamb Result')); ?>
-
-                                        </label>
 
                                         <div class="form-group">
-                                            <input id="jamb" type="file" class="form-control"
-                                                name="jamb">
+
+                                            <?php if(session('statusMsg')): ?>
+                                                <?php echo session('statusMsg'); ?>
+
+                                            <?php endif; ?>
+                                            <label for="passport"><?php echo e(__('Edit  Degree Certificate')); ?>
+
+                                            </label>
+
+                                            <div class="form-group">
+                                                <input id="jamb" type="file" class="form-control"
+                                                    name="jamb">
+                                            </div>
                                         </div>
-                                    </div>
 
-                                    
+                                        
 
-                                    
-                                    <div class="form-group">
-                                        <label for="passport"><?php echo e(__('Edit Olevel Result')); ?>
-
-                                        </label>
-
+                                        
                                         <div class="form-group">
-                                            <input id="olevel1" type="file" class="form-control"
-                                                name="olevel1">
-                                        </div>
-                                    </div>
-                                    
-                                    <div class="form-group">
+                                            <label for="passport"><?php echo e(__('Edit Olevel Result')); ?>
 
-                                        <p>Edit Olevel Result  <b class="text-danger">(  if any)</b></p>
-                                        <div class="form-group">
-                                            <input id="olevel2" type="file" class="form-control"
-                                                name="olevel2">
+                                            </label>
+
+                                            <div class="form-group">
+                                                <input id="olevel1" type="file" class="form-control"
+                                                    name="olevel1">
+                                            </div>
                                         </div>
-                                    </div>
-                                    <div class="form-group">
+                                        
                                         <div class="form-group">
 
-                                            
-                                            <button type="submit" class="btn btn-success">
-                                                <?php echo e(__('update')); ?>
-
-                                            </button>
+                                            <p>Edit Olevel Result  <b class="text-danger">(  if any)</b></p>
+                                            <div class="form-group">
+                                                <input id="olevel2" type="file" class="form-control"
+                                                    name="olevel2">
+                                            </div>
                                         </div>
+                                        <div class="form-group">
+                                            <div class="form-group">
+
+                                                
+                                                <button type="submit" class="btn btn-success">
+                                                    <?php echo e(__('update')); ?>
+
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </form>
+                                        
+
+                                                        
+                                                        
                                     </div>
-                                </form>
-                                    
-                                                    
                                 </div>
 
                             </div>
                         </div>
-
-                        <!-- Pie Chart -->
-
                     </div>
 
                 </div>
-                <!-- End of Main Content -->
-
-                <!-- Footer -->
-                <?php echo $__env->make('layouts.footer', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
-                <!-- End of Footer -->
+                <!-- /.container-fluid -->
 
             </div>
-            <!-- End of Content Wrapper -->
+            <!-- End of Main Content -->
+
+            <!-- Footer -->
+            <?php echo $__env->make('layouts.footer', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
+            <!-- End of Footer -->
+
         </div>
-
+        <!-- End of Content Wrapper -->
     </div>
-    <!-- End of Content Wrapper -->
 
-    
 
-    <?php $__env->stopSection(); ?>
+</div>
 
-<?php echo $__env->make('layouts.userapp', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH /Users/lifeofrence/Documents/laraproject/resources/views/admissions//editUTME.blade.php ENDPATH**/ ?>
+
+<?php $__env->stopSection(); ?>
+
+<?php echo $__env->make('layouts.userapp', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH /Users/lifeofrence/Documents/laraproject/resources/views/admissions//editPG.blade.php ENDPATH**/ ?>

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Category;
 use App\FeeType;
 //use App\program;
+use Illuminate\Support\Facades\Validator;
 use App\Http\Controllers\Controller;
 use App\Mail\Confirmsignup;
 use App\Mail\forgotpassword;
@@ -2292,6 +2293,66 @@ class ApplicantController extends Controller
 
     //*****************************************EDIT PROFILE ******************************************************
 
+    public function editpassword()
+    {
+        $applicantsDetails = "";
+        if (session('usersType') == 'UTME') {
+            $applicantsDetails = DB::table('users')->where('users.applicant_type', 'UTME')
+                ->where('users.id', session('userid'))
+                ->leftJoin('usersbiodata', 'usersbiodata.user_id', '=', 'users.id')
+                ->leftJoin('utme', 'utme.user_id', '=', 'users.id')
+                ->leftJoin('sponsors', 'sponsors.user_id', '=', 'users.id')
+                ->leftJoin('olevel', 'olevel.user_id', '=', 'users.id')
+                ->leftJoin('uploads', 'uploads.user_id', '=', 'users.id')
+                ->select('users.*', 'usersbiodata.*', 'sponsors.*', 'utme.*', 'olevel.*','uploads.*')
+                ->first();
+            $programs = Program::orderBy('name', 'ASC')->get();
+            $subjects = subjects::orderBy('subject_name', 'ASC')->get();
+            return view('admissions./changeuserpassword', compact('applicantsDetails'), ['programs' => $programs, 'subjects' => $subjects]);
+        } elseif (session('usersType') == 'DE') {
+            $applicantsDetails = DB::table('users')->where('users.applicant_type', 'DE')
+                ->where('users.id', session('userid'))
+                ->leftJoin('usersbiodata', 'usersbiodata.user_id', '=', 'users.id')
+                ->leftJoin('de', 'de.user_id', '=', 'users.id')
+                ->leftJoin('sponsors', 'sponsors.user_id', '=', 'users.id')
+                ->leftJoin('olevel', 'olevel.user_id', '=', 'users.id')
+                ->leftJoin('uploads', 'uploads.user_id', '=', 'users.id')
+                ->select('users.*', 'usersbiodata.*', 'sponsors.*', 'de.*', 'olevel.*','uploads.*')
+                ->first();
+            $programs = Program::orderBy('name', 'ASC')->get();
+            $subjects = subjects::orderBy('subject_name', 'ASC')->get();
+            return view('admissions./changeuserpassword', compact('applicantsDetails'), ['programs' => $programs, 'subjects' => $subjects]);
+        } elseif (session('usersType') == 'Transfer') {
+            $applicantsDetails = DB::table('users')->where('users.applicant_type', 'Transfer')
+                ->where('users.id', session('userid'))
+                ->leftJoin('usersbiodata', 'usersbiodata.user_id', '=', 'users.id')
+                ->leftJoin('transfers', 'transfers.user_id', '=', 'users.id')
+                ->leftJoin('sponsors', 'sponsors.user_id', '=', 'users.id')
+                ->leftJoin('uploads','uploads.user_id', '=', 'users.id')
+                ->leftJoin('olevel', 'olevel.user_id', '=', 'users.id')
+                ->select('users.*', 'usersbiodata.*', 'sponsors.*', 'transfers.*', 'olevel.*', 'uploads.*')
+                ->first();
+            $programs = Program::orderBy('name', 'ASC')->get();
+            $subjects = subjects::orderBy('subject_name', 'ASC')->get();
+            return view('admissions./changeuserpassword', compact('applicantsDetails'), ['programs' => $programs, 'subjects' => $subjects]);
+        } elseif (session('usersType') == 'PG') {
+            $applicantsDetails = DB::table('users')->where('users.applicant_type', 'PG')
+                ->where('users.id', session('userid'))
+                ->leftJoin('usersbiodata', 'usersbiodata.user_id', '=', 'users.id')
+                ->leftJoin('pgs', 'pgs.user_id', '=', 'users.id')
+                ->leftJoin('sponsors', 'sponsors.user_id', '=', 'users.id')
+                ->leftJoin('pg_referees', 'pg_referees.user_id', '=', 'users.id')
+                ->leftJoin('pg_educations', 'pg_educations.user_id', '=', 'users.id')
+                ->leftJoin('olevel', 'olevel.user_id', '=', 'users.id')
+                ->leftJoin('uploads', 'uploads.user_id', '=', 'users.id')
+                ->select('users.*', 'usersbiodata.*', 'sponsors.*', 'pgs.*', 'olevel.*', 'pg_referees.*', 'pg_educations.*', 'uploads.*')
+                ->first();
+            $programs = Program::orderBy('name', 'ASC')->get();
+            $subjects = subjects::orderBy('subject_name', 'ASC')->get();
+            return view('admissions./changeuserpassword', compact('applicantsDetails'), ['programs' => $programs, 'subjects' => $subjects]);
+    }
+}
+
     public function editprofile()
     {
 
@@ -2305,7 +2366,8 @@ class ApplicantController extends Controller
                 ->leftJoin('utme', 'utme.user_id', '=', 'users.id')
                 ->leftJoin('sponsors', 'sponsors.user_id', '=', 'users.id')
                 ->leftJoin('olevel', 'olevel.user_id', '=', 'users.id')
-                ->select('users.*', 'usersbiodata.*', 'sponsors.*', 'utme.*', 'olevel.*')
+                ->leftJoin('uploads', 'uploads.user_id', '=', 'users.id')
+                ->select('users.*', 'usersbiodata.*', 'sponsors.*', 'utme.*', 'olevel.*','uploads.*')
                 ->first();
             $programs = Program::orderBy('name', 'ASC')->get();
             $subjects = subjects::orderBy('subject_name', 'ASC')->get();
@@ -2317,7 +2379,8 @@ class ApplicantController extends Controller
                 ->leftJoin('de', 'de.user_id', '=', 'users.id')
                 ->leftJoin('sponsors', 'sponsors.user_id', '=', 'users.id')
                 ->leftJoin('olevel', 'olevel.user_id', '=', 'users.id')
-                ->select('users.*', 'usersbiodata.*', 'sponsors.*', 'de.*', 'olevel.*')
+                ->leftJoin('uploads', 'uploads.user_id', '=', 'users.id')
+                ->select('users.*', 'usersbiodata.*', 'sponsors.*', 'de.*', 'olevel.*','uploads.*')
                 ->first();
             $programs = Program::orderBy('name', 'ASC')->get();
             $subjects = subjects::orderBy('subject_name', 'ASC')->get();
@@ -2328,8 +2391,9 @@ class ApplicantController extends Controller
                 ->leftJoin('usersbiodata', 'usersbiodata.user_id', '=', 'users.id')
                 ->leftJoin('transfers', 'transfers.user_id', '=', 'users.id')
                 ->leftJoin('sponsors', 'sponsors.user_id', '=', 'users.id')
+                ->leftJoin('uploads','uploads.user_id', '=', 'users.id')
                 ->leftJoin('olevel', 'olevel.user_id', '=', 'users.id')
-                ->select('users.*', 'usersbiodata.*', 'sponsors.*', 'transfers.*', 'olevel.*')
+                ->select('users.*', 'usersbiodata.*', 'sponsors.*', 'transfers.*', 'olevel.*', 'uploads.*')
                 ->first();
             $programs = Program::orderBy('name', 'ASC')->get();
             $subjects = subjects::orderBy('subject_name', 'ASC')->get();
@@ -2343,7 +2407,8 @@ class ApplicantController extends Controller
                 ->leftJoin('pg_referees', 'pg_referees.user_id', '=', 'users.id')
                 ->leftJoin('pg_educations', 'pg_educations.user_id', '=', 'users.id')
                 ->leftJoin('olevel', 'olevel.user_id', '=', 'users.id')
-                ->select('users.*', 'usersbiodata.*', 'sponsors.*', 'pgs.*', 'olevel.*', 'pg_referees.*', 'pg_educations.*')
+                ->leftJoin('uploads', 'uploads.user_id', '=', 'users.id')
+                ->select('users.*', 'usersbiodata.*', 'sponsors.*', 'pgs.*', 'olevel.*', 'pg_referees.*', 'pg_educations.*', 'uploads.*')
                 ->first();
             $programs = Program::orderBy('name', 'ASC')->get();
             $subjects = subjects::orderBy('subject_name', 'ASC')->get();
@@ -2374,105 +2439,93 @@ class ApplicantController extends Controller
     //EDIT UTME PROFILE
 
     public function editbiodata(Request $req)
-    {
-        //  dd($req);
-        $this->validate($req, [
+{
+    $this->validate($req, [
+        'gender' => 'required|string|max:6',
+        'dob' => 'required|string|max:50',
+        'nationality' => 'required|string|max:100',
+        'state_origin' => 'required|string|max:50',
+        'religion' => 'required|string|max:50',
+        'address' => 'required|string|max:200',
+        'passport' => 'image|mimes:jpeg,png,jpg,gif,svg|max:1048|dimensions:min_width=300',
+    ], $messages = [
+        'passport.dimensions' => 'Passport Image is too small. Must be at least 400px wide.',
+    ]);
 
-            'gender' => 'required|string|max:6',
-            'dob' => 'required|string|max:50',
-            'nationality' => 'required|string|max:100',
-            'state_origin' => 'required|string|max:50',
-            // 'lga_name' => 'required|string|max:100',
-            'religion' => 'required|string|max:50',
-            'address' => 'required|string|max:200',
-            'passport' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:1048|dimensions:min_width=300',
-        ],
-            $messages = [
-                'passport.dimensions' => 'Passport Image is too small. Must be at least 400px wide.',
+    DB::beginTransaction();
 
+    try {
+        // Check if passport image is uploaded
+        if ($req->hasFile('passport')) {
+            $img1 = Image::make($req->file('passport'))->resize(300, null, function ($constraint) {
+                $constraint->aspectRatio();
+            });
+            $passport = base64_encode($img1->encode()->encoded);
+            $img = $passport;
+
+            // Update passport image and other biodata fields
+            DB::table('users')->where('id', session('userid'))->update([
+                'id' => session('userid'),
+                'surname' => $req->surname,
+                'first_name' => $req->first_name,
+                'phone' => $req->phone,
+                'email' => $req->email,
             ]);
-        DB::beginTransaction();
 
-        try {
+            DB::table('usersbiodata')->where('user_id', session('userid'))->update([
+                'user_id' => session('userid'),
+                'middle_name' => $req->middle_name,
+                'gender' => $req->gender,
+                'religion' => $req->religion,
+                'dob' => $req->dob,
+                'nationality' => $req->nationality,
+                'lga' => $req->lga,
+                'state_origin' => $req->state_origin,
+                'address' => $req->address,
+                'passport' => $img,
+                'referral' => $req->referral,
+            ]);
+        } else {
+            // Update other biodata fields without changing the passport image
+            DB::table('users')->where('id', session('userid'))->update([
+                'id' => session('userid'),
+                'surname' => $req->surname,
+                'first_name' => $req->first_name,
+                'phone' => $req->phone,
+                'email' => $req->email,
+            ]);
 
-            $img = array("", "");
-            if ($req->hasFile('passport')) {
+            DB::table('usersbiodata')->where('user_id', session('userid'))->update([
+                'user_id' => session('userid'),
+                'middle_name' => $req->middle_name,
+                'gender' => $req->gender,
+                'religion' => $req->religion,
+                'dob' => $req->dob,
+                'nationality' => $req->nationality,
+                'lga' => $req->lga,
+                'state_origin' => $req->state_origin,
+                'address' => $req->address,
+                'referral' => $req->referral,
+            ]);
+        }
 
-            //     $img = $this->getBinaryImagepg();
-                // DB::beginTransaction();
-                //try and catch to get the errors
-                if ($req->hasFile('passport')) {
-                    $img1 = Image::make($req->file('passport'))->resize(300, null, function ($constraint) {
-                        $constraint->aspectRatio();
-                    });
-                    $passport = base64_encode($img1->encode()->encoded);
-                    $img = $passport;
-                } // end Passport
-                DB::table('users')->where('id', session('userid'))->update([
-                    'id' => session('userid'),
-                    'surname' => $req->surname,
-                    'first_name' => $req->first_name,
-                    'phone' => $req->phone,
-                    'email' => $req->email,
+        DB::commit();
 
-                ]);
-
-                DB::table('usersbiodata')->where('user_id', session('userid'))->update([
-                    'user_id' => session('userid'),
-                    'middle_name' => $req->middle_name,
-                    'gender' => $req->gender,
-                    'religion' => $req->religion,
-                    'dob' => $req->dob,
-                    'nationality' => $req->nationality,
-                    'lga' => $req->lga,
-                    'state_origin' => $req->state_origin,
-                    'address' => $req->address,
-                    'passport' => $img,
-                    // 'passport_type' => $img[1],
-                    'referral' => $req->referral,
-                    //   'passport'=>$req->passport,'passportype'=>$file_extension
-                ]);
-            } else {
-                DB::table('users')->where('id', session('userid'))->update([
-                    'id' => session('userid'),
-                    'surname' => $req->surname,
-                    'first_name' => $req->first_name,
-                    'phone' => $req->phone,
-                    'email' => $req->email,
-
-                ]);
-                DB::table('usersbiodata')->where('user_id', session('userid'))->update([
-                    'user_id' => session('userid'),
-                    'middle_name' => $req->middle_name,
-                    'gender' => $req->gender,
-                    'religion' => $req->religion,
-                    'dob' => $req->dob,
-                    'nationality' => $req->nationality,
-                    'lga' => $req->lga,
-                    'state_origin' => $req->state_origin,
-                    'address' => $req->address,
-                    'referral' => $req->referral,
-                    //   'passport'=>$req->passport,'passportype'=>$file_extension
-                ]);
-
-                //  Mail::to($req->email)->send(new Confirmsignup($mailData));
-                DB::commit();
-
-                $signUpMsg = '<div class="alert alert-success alert-dismissible"><button type="button" class="close" data-dismiss="alert">&times;</button><strong>Success!</strong> Your have sucessfully updated your Biodata</div>';
-                return redirect('/editprofile')->with('signUpMsg', $signUpMsg);
-            }
-        } catch (QueryException $e) {
-            DB::rollBack();
-            $error_code = $e->errorInfo[1];
-            if ($error_code == 1062) {
-                $signUpMsg = '<div class="alert alert-danger alert-dismissible"><button type="button" class="close" data-dismiss="alert">&times;</button><strong>Error!</strong> Unsecessful try again </div>';
-                return redirect('/editprofile')->with('signUpMsg', $signUpMsg);
-            } else {
-                $signUpMsg = '<div class="alert alert-danger alert-dismissible"><button type="button" class="close" data-dismiss="alert">&times;</button><strong>Error!</strong> Unsecessful try again' . $e->getMessage() . '</div>';
-                return redirect('/editprofile')->with('signUpMsg', $signUpMsg);
-            }
+        $signUpMsg = '<div class="alert alert-success alert-dismissible"><button type="button" class="close" data-dismiss="alert">&times;</button><strong>Success!</strong> Your have successfully updated your Biodata</div>';
+        return redirect('/editprofile')->with('signUpMsg', $signUpMsg);
+    } catch (QueryException $e) {
+        DB::rollBack();
+        $error_code = $e->errorInfo[1];
+        if ($error_code == 1062) {
+            $signUpMsg = '<div class="alert alert-danger alert-dismissible"><button type="button" class="close" data-dismiss="alert">&times;</button><strong>Error!</strong> Unsuccessful, please try again</div>';
+            return redirect('/editprofile')->with('signUpMsg', $signUpMsg);
+        } else {
+            $signUpMsg = '<div class="alert alert-danger alert-dismissible"><button type="button" class="close" data-dismiss="alert">&times;</button><strong>Error!</strong> Unsuccessful, please try again' . $e->getMessage() . '</div>';
+            return redirect('/editprofile')->with('signUpMsg', $signUpMsg);
         }
     }
+}
+
     public function editsponsors(Request $req)
     {
         // dd($req);
@@ -2512,108 +2565,76 @@ class ApplicantController extends Controller
     public function editutmeuploads(Request $req)
     {
         $this->validate($req, [
-        'jamb' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:1048|dimensions:min_width=300',
-            'olevel1' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:1048|dimensions:min_width=300',
+            'jamb' => 'image|mimes:jpeg,png,jpg,gif,svg|max:1048|dimensions:min_width=300',
+            'olevel1' => 'image|mimes:jpeg,png,jpg,gif,svg|max:1048|dimensions:min_width=300',
             'olevel2' => 'image|mimes:jpeg,png,jpg,gif,svg|max:1048|dimensions:min_width=300',
         ],
-            $messages = [
-                'jamb.dimensions' => 'Result Image is too small. Must be at least 400px wide.',
-                'olevel1.dimensions' => 'Olevel Image is too small. Must be at least 400px wide.',
-                'olevel2.dimensions' => 'Olevel Image is too small. Must be at least 400px wide.',
+        $messages = [
+            'jamb.dimensions' => 'Result Image is too small. Must be at least 400px wide.',
+            'olevel1.dimensions' => 'Olevel Image is too small. Must be at least 400px wide.',
+            'olevel2.dimensions' => 'Olevel Image is too small. Must be at least 400px wide.',
+        ]);
 
-            ]);
-        // dd($req);
         DB::beginTransaction();
 
         try {
+            // Process result upload
+            if ($req->hasFile('jamb')) {
+                $img1 = Image::make($req->file('jamb'))->resize(300, null, function ($constraint) {
+                    $constraint->aspectRatio();
+                });
+                $passport = base64_encode($img1->encode()->encoded);
+                $img = $passport;
 
-            // $img0 = array("", "");
-            // if ($req->hasFile('jamb')) {
-
-            //     $img0 = $this->getBinaryImagejamb();
-
-            //     $img1 = array("", "");
-            //     if ($req->hasFile('olevel1')) {
-
-            //         $img1 = $this->getBinaryImageolevel1();
-            //     }
-            //     $img2 = array("", "");
-            //     if ($req->hasFile('olevel2')) {
-
-            //         $img2 = $this->getBinaryImageolevel2();
-            //     }
-             //process result upload
-             $img = "";
-             if ($req->hasFile('jamb')) {
-                 $img1 = Image::make($req->file('jamb'))->resize(300, null, function ($constraint) {
-                     $constraint->aspectRatio();
-                 });
-                 $passport = base64_encode($img1->encode()->encoded);
-                 $img = $passport;
-             } // end result
-
-             $img1 = "";
-             if ($req->hasFile('olevel1')) {
-                 $img2 = Image::make($req->file('olevel1'))->resize(300, null, function ($constraint) {
-                     $constraint->aspectRatio();
-                 });
-                 $passport = base64_encode($img2->encode()->encoded);
-                 $img1 = $passport;
-             } // end result
-
-             $img2 = "";
-             if ($req->hasFile('olevel2')) {
-                 $img3 = Image::make($req->file('olevel2'))->resize(300, null, function ($constraint) {
-                     $constraint->aspectRatio();
-                 });
-                 $passport = base64_encode($img3->encode()->encoded);
-                 $img2 = $passport;
-             } // end result
                 DB::table('uploads')->where('user_id', session('userid'))->update([
-                    'user_id' => session('userid'),
                     'jamb' => $img,
-                    // 'jamb_type' => $img0[1],
-                    'olevel1' => $img1,
-                    // 'olevel1_type' => $img1[1],
-                    'olevel2' => $img2,
-                    // 'olevel2_type' => $img2[1],
-                    'olevel_awaiting' => $req->olevel_awaiting,
-
-                    //   'passport'=>$req->passport,'passportype'=>$file_extension
                 ]);
-            // } else {
-            //     $img0 = array("", "");
-            //     if ($req->hasFile('jamb')) {
+            }
 
-            //         $img0 = $this->getBinaryImagejamb();
+            // Process olevel1 upload
+            if ($req->hasFile('olevel1')) {
+                $img2 = Image::make($req->file('olevel1'))->resize(300, null, function ($constraint) {
+                    $constraint->aspectRatio();
+                });
+                $passport = base64_encode($img2->encode()->encoded);
+                $img1 = $passport;
 
-            //         DB::table('uploads')->where('user_id', session('userid'))->update([
-            //             'user_id' => session('userid'),
-            //             'jamb' => $img0[0],
-            //             'jamb_type' => $img0[1],
-            //             'olevel_awaiting' => $req->olevel_awaiting,
-            //         ]);
-            //     }
-            // }
+                DB::table('uploads')->where('user_id', session('userid'))->update([
+                    'olevel1' => $img1,
+                ]);
+            }
 
-            //  Mail::to($req->email)->send(new Confirmsignup($mailData));
+            // Process olevel2 upload
+            if ($req->hasFile('olevel2')) {
+                $img3 = Image::make($req->file('olevel2'))->resize(300, null, function ($constraint) {
+                    $constraint->aspectRatio();
+                });
+                $passport = base64_encode($img3->encode()->encoded);
+                $img2 = $passport;
+
+                DB::table('uploads')->where('user_id', session('userid'))->update([
+                    'olevel2' => $img2,
+                ]);
+            }
+
             DB::commit();
 
-            $signUpMsg = '<div class="alert alert-success alert-dismissible"><button type="button" class="close" data-dismiss="alert">&times;</button><strong>Success!</strong> Your have sucessfully updated your certificate</div>';
+            $signUpMsg = '<div class="alert alert-success alert-dismissible"><button type="button" class="close" data-dismiss="alert">&times;</button><strong>Success!</strong> Your have successfully updated your certificate</div>';
             return redirect('/editprofile')->with('signUpMsg', $signUpMsg);
 
         } catch (QueryException $e) {
             DB::rollBack();
             $error_code = $e->errorInfo[1];
             if ($error_code == 1062) {
-                $signUpMsg = '<div class="alert alert-danger alert-dismissible"><button type="button" class="close" data-dismiss="alert">&times;</button><strong>Error!</strong> Unsecessful try again </div>';
+                $signUpMsg = '<div class="alert alert-danger alert-dismissible"><button type="button" class="close" data-dismiss="alert">&times;</button><strong>Error!</strong> Unsuccessful, please try again</div>';
                 return redirect('/editprofile')->with('signUpMsg', $signUpMsg);
             } else {
-                $signUpMsg = '<div class="alert alert-danger alert-dismissible"><button type="button" class="close" data-dismiss="alert">&times;</button><strong>Error!</strong> Unsecessful try again' . $e->getMessage() . '</div>';
+                $signUpMsg = '<div class="alert alert-danger alert-dismissible"><button type="button" class="close" data-dismiss="alert">&times;</button><strong>Error!</strong> Unsuccessful, please try again' . $e->getMessage() . '</div>';
                 return redirect('/editprofile')->with('signUpMsg', $signUpMsg);
             }
         }
     }
+
 
     // function editolevel(Request $req)
     // {

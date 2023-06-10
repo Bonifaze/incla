@@ -49,7 +49,12 @@ if (!session('userid')) {
                                                         <div class="item-label mb-2">
                                                             <strong>Photo</strong>
                                                         </div>
-                                                        
+                                                        <div class="rounded-circle">
+                                                            <img class="rounded-circle p-3 mx-auto d-block"
+                                                                src="data:image/jpeg;base64,<?php echo e($applicantsDetails->passport); ?>"
+                                                                alt="Applicant Passport"
+                                                                style="height: 180px; width:200px;" />
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
@@ -277,7 +282,7 @@ if (!session('userid')) {
                                                         <div class="">
 
                                                             <img class=" mx-auto d-block"
-                                                                src="data:image/<?php echo e($applicantsDetails->olevel2_type); ?>;base64,<?php echo e(base64_encode($applicantsDetails->olevel2)); ?>"
+                                                                        src="data:image/jpeg;base64,<?php echo e($applicantsDetails->olevel2); ?>"
                                                                 alt="Olevel second sitting"
                                                                 style="height: 500px; width:400px;" />
                                                         </div>

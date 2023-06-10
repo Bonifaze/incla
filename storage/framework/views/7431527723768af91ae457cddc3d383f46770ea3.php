@@ -47,7 +47,12 @@ if (!session('userid')) {
                                                         <div class="item-label mb-2">
                                                             <strong>Photo</strong>
                                                         </div>
-                                                         
+                                                         <div class="rounded-circle">
+                                                            <img class="rounded-circle p-3 mx-auto d-block"
+                                                                src="data:image/jpeg;base64,<?php echo e($applicantsDetails->passport); ?>"
+                                                                alt="Applicant Passport"
+                                                                style="height: 180px; width:200px;" />
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>

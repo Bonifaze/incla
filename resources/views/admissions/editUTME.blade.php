@@ -642,7 +642,17 @@ exit;
                                     class="p-3">
                                     @csrf
 
-
+  <div class="row">
+                                                    <div class="col"> <img class="mx-auto d-block"
+                                                            src="data:image/jpeg;base64,{{ $applicantsDetails->jamb }}"
+                                                            alt="Transcipt" style="height: 300px; width:300px;" /></div>
+                                                    <div class="col"> <img class="mx-auto d-block"
+                                                            src="data:image/jpeg;base64,{{ $applicantsDetails->olevel1 }}"
+                                                            alt="Olevel" style="height: 300px; width:300px;" /></div>
+                                                    <div class="col"> <img class=" mx-auto d-block"
+                                                            src="data:image/jpeg;base64,{{ $applicantsDetails->olevel2 }}"
+                                                            alt="" style="height: 300px; width:300px;" /></div>
+                                                </div>
                                     <div class="form-group">
 
                                         @if (session('statusMsg'))

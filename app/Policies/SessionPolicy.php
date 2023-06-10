@@ -44,4 +44,8 @@ class SessionPolicy
     {
         return $staff->hasPermission(54);
     }
+    public function searchapplicant(Staff $staff)
+    {
+        return $staff->hasPermission(152);
+    }
 } // end Policy

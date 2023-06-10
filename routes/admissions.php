@@ -182,6 +182,7 @@ Route::get('/viewprofile', 'App\Http\Controllers\ApplicantController@viewprofile
 
 //EDIT PROFILE
 Route::get('/editprofile', 'App\Http\Controllers\ApplicantController@editprofile');
+Route::get('/editpassword', 'App\Http\Controllers\ApplicantController@editpassword');
 //EDIT PROFILE UTME
 Route::post('/editbiodata', 'App\Http\Controllers\ApplicantController@editbiodata');
 Route::post('/editsponsers', 'App\Http\Controllers\ApplicantController@editsponsors');

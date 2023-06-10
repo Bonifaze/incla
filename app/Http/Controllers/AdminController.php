@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use App\Remita;
 use App\FeeType;
 use App\Program;
 use App\Session;
+use App\Setting;
 use App\programs;
 use App\subjects;
 use Carbon\Carbon;
@@ -20,30 +22,34 @@ use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Bus;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Models\SemesterRemarkCourses;
 use App\Computations\ResultComputation;
 use App\Exports\RegisteredCourseExport;
+// use App\Policies\AdmissionPolicy;
 use App\Imports\RegisteredCourseImport;
 use Illuminate\Database\QueryException;
 use Illuminate\Support\Facades\Redirect;
 
 class AdminController extends Controller
 {
+    use AuthorizesRequests;
   //
-  public function authorize()
-  {
-      return true;
-  }
+  /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
 
     protected $resultComputation;
 
-    public function __construct(ResultComputation $resultComputation)
+    public function __construct()
     {
         $this->middleware('auth:staff');
-        $this->resultComputation = $resultComputation;
+        // $this->resultComputation = $resultComputation;
     }
 
     public function courseUpload()
@@ -455,6 +461,7 @@ class AdminController extends Controller
     // View All Applicants
     public function allApplicants()
     {
+        $this->authorize('listallApplicant',AdmissionPolicy::class);
         $currentSessionId = $this->getCurrentAdmissionSession();
             $allAppli = array();
             $allApplicants = DB::table('approved_applicants')->get();
@@ -599,7 +606,9 @@ class AdminController extends Controller
     public function adminAllUsers()
     {
         $staff = Auth::guard('staff')->user();
-         if ($this->hasPriviledge("adminAllPayments",  $staff->id)) {
+        $this->authorize('listalluser',AdmissionPolicy::class);
+        $currentSessionId = $this->getCurrentAdmissionSession();
+        //  if ($this->hasPriviledge("adminAllPayments",  $staff->id)) {
             // $allAppli = array();
             // $allApplicants = DB::table('users')->get();
             // $approvedArr = array();
@@ -610,15 +619,16 @@ class AdminController extends Controller
             // }
 
             $allApplicants = DB::table('users')
+            ->where('users.session_id', $currentSessionId)
                 ->select('users.*')
                 ->get();
 
             $fullName = session('adminFirstName') . " " . session('adminsurname');
           return view('admissions.allUsers', compact('allApplicants', 'fullName'));
-            } else {
-                        $loginMsg = '<div class="alert alert-danger alert-dismissible" role="alert"> <button type="button" class="close" data-dismiss="alert"> &times; </button> You dont\'t have access to this task, please see the ICT</div>';
-                       return view('admissions.error', compact('loginMsg'));
-                    }
+            // } else {
+            //             $loginMsg = '<div class="alert alert-danger alert-dismissible" role="alert"> <button type="button" class="close" data-dismiss="alert"> &times; </button> You dont\'t have access to this task, please see the ICT</div>';
+            //            return view('admissions.error', compact('loginMsg'));
+            //         }
     }
     //To view all Payment from Remita
     public function adminAllPayments()
@@ -649,6 +659,7 @@ class AdminController extends Controller
 
     public function allApprovedApplicants($user_type)
     {
+        $this->authorize('allapprovedapplicant',AdmissionPolicy::class);
         $currentSessionId = $this->getCurrentAdmissionSession();
 
             $allApplicants = "";
@@ -695,7 +706,9 @@ class AdminController extends Controller
     public function DE()
     {
         $staff = Auth::guard('staff')->user();
-        if ($this->hasPriviledge("DE",  $staff->id)) {
+        $this->authorize('undergraduateapplicant',AdmissionPolicy::class);
+        // if ($this->hasPriviledge("DE",  $staff->id)) {
+            $currentSessionId = $this->getCurrentAdmissionSession();
             $deApplicants = DB::table('approved_applicants')->get();
             $approvedArr = array();
             $counter = 0;
@@ -704,6 +717,7 @@ class AdminController extends Controller
                 $counter++;
             }
             $deApplicants = DB::table('users')->where('applicant_type', 'de')
+            ->where('users.session_id', $currentSessionId)
                 ->whereNotIn('users.id', $approvedArr)
                 ->join('usersbiodata', 'usersbiodata.user_id', '=', 'users.id')
                 ->join('de', 'de.user_id', '=', 'users.id')
@@ -711,16 +725,18 @@ class AdminController extends Controller
                 ->get();
             $fullName = session('adminFirstName') . " " . session('adminsurname');
            return view('admissions.deApplicants', compact('deApplicants', 'fullName'));
-        } else {
-            $loginMsg = '<div class="alert alert-danger alert-dismissible" role="alert"> <button type="button" class="close" data-dismiss="alert"> &times; </button> You dont\'t have access to this task, please see the ICT</div>';
-           return view('admissions.error', compact('loginMsg'));
-        }
+        // } else {
+        //     $loginMsg = '<div class="alert alert-danger alert-dismissible" role="alert"> <button type="button" class="close" data-dismiss="alert"> &times; </button> You dont\'t have access to this task, please see the ICT</div>';
+        //    return view('admissions.error', compact('loginMsg'));
+        // }
     }
 
     public function PG()
     {
         $staff = Auth::guard('staff')->user();
-        if ($this->hasPriviledge("PG",  $staff->id)) {
+        $this->authorize('postgraduateapplicant',AdmissionPolicy::class);
+        // if ($this->hasPriviledge("PG",  $staff->id)) {
+            $currentSessionId = $this->getCurrentAdmissionSession();
             $pgApplicants = DB::table('approved_applicants')->get();
             $approvedArr = array();
             $counter = 0;
@@ -729,6 +745,7 @@ class AdminController extends Controller
                 $counter++;
             }
             $pgApplicants = DB::table('users')->where('applicant_type', 'pg')
+            ->where('users.session_id', $currentSessionId)
                 ->whereNotIn('users.id', $approvedArr)
                 ->join('usersbiodata', 'usersbiodata.user_id', '=', 'users.id')
                 ->join('pgs', 'pgs.user_id', '=', 'users.id')
@@ -736,16 +753,18 @@ class AdminController extends Controller
                 ->get();
             $fullName = session('adminFirstName') . " " . session('adminsurname');
            return view('admissions.pgApplicants', compact('pgApplicants', 'fullName'));
-        } else {
-            $loginMsg = '<div class="alert alert-danger alert-dismissible" role="alert"> <button type="button" class="close" data-dismiss="alert"> &times; </button> You dont\'t have access to this task, please see the ICT</div>';
-           return view('admissions.error', compact('loginMsg'));
-        }
+        // } else {
+        //     $loginMsg = '<div class="alert alert-danger alert-dismissible" role="alert"> <button type="button" class="close" data-dismiss="alert"> &times; </button> You dont\'t have access to this task, please see the ICT</div>';
+        //    return view('admissions.error', compact('loginMsg'));
+        // }
     }
 
     public function transfer()
     {
         $staff = Auth::guard('staff')->user();
-        if ($this->hasPriviledge("transfer",  $staff->id)) {
+        $this->authorize('undergraduateapplicant',AdmissionPolicy::class);
+        $currentSessionId = $this->getCurrentAdmissionSession();
+        // if ($this->hasPriviledge("transfer",  $staff->id)) {
             $transferApplicants = DB::table('approved_applicants')->get();
             $approvedArr = array();
             $counter = 0;
@@ -754,6 +773,7 @@ class AdminController extends Controller
                 $counter++;
             }
             $transferApplicants = DB::table('users')->where('applicant_type', 'transfer')
+            ->where('users.session_id', $currentSessionId)
                 ->whereNotIn('users.id', $approvedArr)
                 ->join('usersbiodata', 'usersbiodata.user_id', '=', 'users.id')
                 ->join('transfers', 'transfers.user_id', '=', 'users.id')
@@ -761,17 +781,17 @@ class AdminController extends Controller
                 ->get();
             $fullName = session('adminFirstName') . " " . session('adminsurname');
            return view('admissions.transferApplicants', compact('transferApplicants', 'fullName'));
-        } else {
-            $loginMsg = '<div class="alert alert-danger alert-dismissible" role="alert"> <button type="button" class="close" data-dismiss="alert"> &times; </button> You dont\'t have access to this task, please see the ICT</div>';
-           return view('admissions.error', compact('loginMsg'));
-        }
+        // } else {
+        //     $loginMsg = '<div class="alert alert-danger alert-dismissible" role="alert"> <button type="button" class="close" data-dismiss="alert"> &times; </button> You dont\'t have access to this task, please see the ICT</div>';
+        //    return view('admissions.error', compact('loginMsg'));
+        // }
     }
 
     public function utme()
     {
+        $this->authorize('undergraduateapplicant',AdmissionPolicy::class);
         $currentSessionId = $this->getCurrentAdmissionSession();
 
-        $this->authorize('reset', Staff::class);
             $utmeApplicants = DB::table('approved_applicants')->get();
             $approvedArr = array();
             $counter = 0;
@@ -910,7 +930,8 @@ class AdminController extends Controller
      public function approved($pageLink, Request $req, $id)
     {
         $staff = Auth::guard('staff')->user();
-        if ($this->hasPriviledge("approved",  $staff->id)) {
+        $this->authorize('approveapplicant',AdmissionPolicy::class);
+        // if ($this->hasPriviledge("approved",  $staff->id)) {
             $app_id = base64_decode(urldecode($id));
 
             try {
@@ -934,16 +955,17 @@ class AdminController extends Controller
                     return  Redirect()->back()->with('approvalMsg', $approvalMsg);
                 }
             }
-        } else {
-            $loginMsg = '<div class="alert alert-danger alert-dismissible" role="alert"> <button type="button" class="close" data-dismiss="alert"> &times; </button> You dont\'t have access to this task, please see the ICT</div>';
-            return redirect('error')->with('loginMsg', $loginMsg);
-        }
+        // } else {
+        //     $loginMsg = '<div class="alert alert-danger alert-dismissible" role="alert"> <button type="button" class="close" data-dismiss="alert"> &times; </button> You dont\'t have access to this task, please see the ICT</div>';
+        //     return redirect('error')->with('loginMsg', $loginMsg);
+        // }
     }
 
     public function recommend($pageLink, $id)
     {
         $staff = Auth::guard('staff')->user();
-        if ($this->hasPriviledge("recommend",  $staff->id)) {
+        $this->authorize('recommendapplicant',AdmissionPolicy::class);
+        // if ($this->hasPriviledge("recommend",  $staff->id)) {
             $app_id = base64_decode(urldecode($id));
 
             try {
@@ -967,17 +989,18 @@ class AdminController extends Controller
                     return redirect('/recommended/'. $pageLink)->with('approvalMsg', $approvalMsg);
                 }
             }
-        } else {
-            $loginMsg = '<div class="alert alert-danger alert-dismissible" role="alert"> <button type="button" class="close" data-dismiss="alert"> &times; </button> You dont\'t have access to this task, please see the ICT</div>';
-            return redirect('error')->with('loginMsg', $loginMsg);
-        }
+        // } else {
+        //     $loginMsg = '<div class="alert alert-danger alert-dismissible" role="alert"> <button type="button" class="close" data-dismiss="alert"> &times; </button> You dont\'t have access to this task, please see the ICT</div>';
+        //     return redirect('error')->with('loginMsg', $loginMsg);
+        // }
     }
 
     // Force Approval of Applicants
     public function forceApproved($pageLink, $id)
     {
         $staff = Auth::guard('staff')->user();
-        if ($this->hasPriviledge("forceApproved",  $staff->id)) {
+        // if ($this->hasPriviledge("forceApproved",  $staff->id)) {
+            $this->authorize('forceapproveapplicant',AdmissionPolicy::class);
             $app_id = base64_decode(urldecode($id));
 
             try {
@@ -999,17 +1022,18 @@ class AdminController extends Controller
                     return redirect('/unqualified/' . $pageLink)->with('approvalMsg', $approvalMsg);
                 }
             }
-        } else {
-            $loginMsg = '<div class="alert alert-danger alert-dismissible" role="alert"> <button type="button" class="close" data-dismiss="alert"> &times; </button> You dont\'t have access to this task, please see the ICT</div>';
-            return redirect('error')->with('loginMsg', $loginMsg);
-        }
+        // } else {
+        //     $loginMsg = '<div class="alert alert-danger alert-dismissible" role="alert"> <button type="button" class="close" data-dismiss="alert"> &times; </button> You dont\'t have access to this task, please see the ICT</div>';
+        //     return redirect('error')->with('loginMsg', $loginMsg);
+        // }
     }
 
     // Rejection of Applications
     public function rejection($pageLink, Request $req, $id)
     {
         $staff = Auth::guard('staff')->user();
-        if ($this->hasPriviledge("rejection",  $staff->id)) {
+        // if ($this->hasPriviledge("rejection",  $staff->id)) {
+            $this->authorize('rejectapplicant',AdmissionPolicy::class);
             $app_id = base64_decode(urldecode($id));
 
             try {
@@ -1035,16 +1059,17 @@ class AdminController extends Controller
                     return redirect('/qualified/' . $pageLink)->with('approvalMsg', $approvalMsg);
                 }
             }
-        } else {
-            $loginMsg = '<div class="alert alert-danger alert-dismissible" role="alert"> <button type="button" class="close" data-dismiss="alert"> &times; </button> You dont\'t have access to this task, please see the ICT</div>';
-            return redirect('/qualified/')->with('loginMsg', $loginMsg);
-        }
+        // } else {
+        //     $loginMsg = '<div class="alert alert-danger alert-dismissible" role="alert"> <button type="button" class="close" data-dismiss="alert"> &times; </button> You dont\'t have access to this task, please see the ICT</div>';
+        //     return redirect('/qualified/')->with('loginMsg', $loginMsg);
+        // }
     }
     //View applicant's full details
     public function viewApplicants($applicantType, $id)
     {
         $staff = Auth::guard('staff')->user();
-        if ($this->hasPriviledge("viewApplicants",  $staff->id)) {
+        // if ($this->hasPriviledge("viewApplicants",  $staff->id)) {
+            $this->authorize('viewapplicant',AdmissionPolicy::class);
             $app_id = base64_decode(urldecode($id));
             $applicantsDetails = "";
             if ($applicantType ==  'UTME') {
@@ -1102,17 +1127,17 @@ class AdminController extends Controller
                     $subjects = subjects::orderBy('subject_name', 'ASC')->get();
                return view('admissions.layouts.viewPgApplicants',  compact('applicantsDetails', 'app_id'), ['programs' => $programs, 'subjects' => $subjects]);
             }
-        } else {
-            $loginMsg = '<div class="alert alert-danger alert-dismissible" role="alert"> <button type="button" class="close" data-dismiss="alert"> &times; </button> You dont\'t have access to this task, please see the ICT</div>';
-           return view('admissions./error', compact('loginMsg'));
-        }
+        // } else {
+        //     $loginMsg = '<div class="alert alert-danger alert-dismissible" role="alert"> <button type="button" class="close" data-dismiss="alert"> &times; </button> You dont\'t have access to this task, please see the ICT</div>';
+        //    return view('admissions./error', compact('loginMsg'));
+        // }
     }
 //To chanage applicant course of study
  public function changecourse(Request $req)
     {
         $staff = Auth::guard('staff')->user();
-        if ($this->hasPriviledge("changecourse",  $staff->id)) {
-
+        // if ($this->hasPriviledge("changecourse",  $staff->id)) {
+            $this->authorize('changeapplicantcourse',AdmissionPolicy::class);
         try {
             DB::table('utme')->where('jamb_reg_no', $req->jamb_reg_no)
                 ->update([
@@ -1128,10 +1153,10 @@ $approvalMsg = '<div class="alert alert-success alert-dismissible" role="alert">
             return Redirect::back()->with('approvalMsg', $approvalMsg);
             // return redirect('/newPayment/')->with('mgs',$statusMsg);
         }
- } else {
-            $loginMsg = '<div class="alert alert-danger alert-dismissible" role="alert"> <button type="button" class="close" data-dismiss="alert"> &times; </button> You dont\'t have access to this task, please see the ICT</div>';
-           return view('admissions./error', compact('loginMsg'));
-        }
+//  } else {
+//             $loginMsg = '<div class="alert alert-danger alert-dismissible" role="alert"> <button type="button" class="close" data-dismiss="alert"> &times; </button> You dont\'t have access to this task, please see the ICT</div>';
+//            return view('admissions./error', compact('loginMsg'));
+//         }
     }
 
         public function changecourseDE(Request $req)
@@ -1203,7 +1228,7 @@ public function changecourseTransfer(Request $req)
     public function viewQualifiedApplicants($user_type)
     {
         $currentSessionId = $this->getCurrentAdmissionSession();
-        $this->authorize('reset', Staff::class);
+        $this->authorize('viewqualifiedapplicant',AdmissionPolicy::class);
             $allAppli = array();
             $utmeApplicants = DB::table('approved_applicants')->get();
             $approvedArr = array();
@@ -1260,7 +1285,7 @@ public function changecourseTransfer(Request $req)
     //View Recommended Applicants
     public function viewRecommendedApplicants($user_type){
         $staff = Auth::guard('staff')->user();
-        if ($this->hasPriviledge("allApprovedApplicants",  $staff->id)) {
+        // if ($this->hasPriviledge("allApprovedApplicants",  $staff->id)) {
             $allApplicants = "";
             if ($user_type == "UTME") {
                 $allApplicants = DB::table('recommended_applicants')
@@ -1295,17 +1320,17 @@ public function changecourseTransfer(Request $req)
 
             $fullName = session('adminFirstName') . " " . session('adminsurname');
            return view('admissions.viewRecommendedUtmeApplicants', compact('allApplicants', 'fullName', 'user_type'));
-        } else {
-            $loginMsg = '<div class="alert alert-danger alert-dismissible" role="alert"> <button type="button" class="close" data-dismiss="alert"> &times; </button> You dont\'t have access to this task, please see the ICT</div>';
-           return view('admissions.error', compact('loginMsg'));
-        }
+        // } else {
+        //     $loginMsg = '<div class="alert alert-danger alert-dismissible" role="alert"> <button type="button" class="close" data-dismiss="alert"> &times; </button> You dont\'t have access to this task, please see the ICT</div>';
+        //    return view('admissions.error', compact('loginMsg'));
+        // }
     }
 
     // Approve All Qualified Applicants
     public function approveAllQualifiedApplicants($user_type)
     {
         $staff = Auth::guard('staff')->user();
-        if ($this->hasPriviledge("approveAllQualifiedApplicants",  $staff->id)) {
+        // if ($this->hasPriviledge("approveAllQualifiedApplicants",  $staff->id)) {
             $allAppli = array();
             $utmeApplicants = DB::table('approved_applicants')->get();
             $approvedArr = array();
@@ -1373,17 +1398,17 @@ public function changecourseTransfer(Request $req)
             }
             $approvalMsg = '<div class="alert alert-success alert-dismissible" role="alert"> <button type="button" class="close" data-dismiss="alert"> &times; </button> Students have been approved </div>';
             return redirect('/qualified/' . $user_type)->with('approvalMsg', $approvalMsg);
-        } else {
-            $loginMsg = '<div class="alert alert-danger alert-dismissible" role="alert"> <button type="button" class="close" data-dismiss="alert"> &times; </button> You dont\'t have access to this task, please see the ICT</div>';
-            return redirect('/qualified/')->with('loginMsg', $loginMsg);
-        }
+        // } else {
+        //     $loginMsg = '<div class="alert alert-danger alert-dismissible" role="alert"> <button type="button" class="close" data-dismiss="alert"> &times; </button> You dont\'t have access to this task, please see the ICT</div>';
+        //     return redirect('/qualified/')->with('loginMsg', $loginMsg);
+        // }
     }
 
     // View all Unqualified Applicants
     public function viewAllUnqualifiedApplicants($user_type)
     {
         $staff = Auth::guard('staff')->user();
-        if ($this->hasPriviledge("viewAllUnqualifiedApplicants",  $staff->id)) {
+        // if ($this->hasPriviledge("viewAllUnqualifiedApplicants",  $staff->id)) {
             $allAppli = array();
             $utmeApplicants = DB::table('rejected_applicants')->get();
             $utmeApprovedApplicants = DB::table('approved_applicants')->get();
@@ -1436,17 +1461,17 @@ public function changecourseTransfer(Request $req)
             }
             $fullName = session('adminFirstName') . " " . session('adminsurname');
            return view('admissions.unqualifiedApplicants', compact('allAppli', 'fullName', 'user_type'));
-        } else {
-            $loginMsg = '<div class="alert alert-danger alert-dismissible" role="alert"> <button type="button" class="close" data-dismiss="alert"> &times; </button> You dont\'t have access to this task, please see the ICT</div>';
-           return view('admissions.error', compact('loginMsg'));
-        }
+        // } else {
+        //     $loginMsg = '<div class="alert alert-danger alert-dismissible" role="alert"> <button type="button" class="close" data-dismiss="alert"> &times; </button> You dont\'t have access to this task, please see the ICT</div>';
+        //    return view('admissions.error', compact('loginMsg'));
+        // }
     }
 
     // Reject All Unqualified Applicants
     public function rejectAllUnqualifiedApplicants($user_type)
     {
         $staff = Auth::guard('staff')->user();
-        if ($this->hasPriviledge("rejectAllUnqualifiedApplicants",  $staff->id)) {
+        // if ($this->hasPriviledge("rejectAllUnqualifiedApplicants",  $staff->id)) {
             $allAppli = array();
             $utmeApplicants = DB::table('rejected_applicants')->get();
             $approvedArr = array();
@@ -1514,10 +1539,10 @@ public function changecourseTransfer(Request $req)
             }
             $rejectionMsg = '<div class="alert alert-danger alert-dismissible" role="alert"> <button type="button" class="close" data-dismiss="alert"> &times; </button> Students have been rejected </div>';
             return redirect('/unqualified/' . $user_type)->with('rejectionMsg', $rejectionMsg);
-        } else {
-            $loginMsg = '<div class="alert alert-danger alert-dismissible" role="alert"> <button type="button" class="close" data-dismiss="alert"> &times; </button> You dont\'t have access to this task, please see the ICT</div>';
-            return redirect('/unqualified/')->with('loginMsg', $loginMsg);
-        }
+        // } else {
+        //     $loginMsg = '<div class="alert alert-danger alert-dismissible" role="alert"> <button type="button" class="close" data-dismiss="alert"> &times; </button> You dont\'t have access to this task, please see the ICT</div>';
+        //     return redirect('/unqualified/')->with('loginMsg', $loginMsg);
+        // }
     }
 
     // Get qualified applicants
@@ -1569,7 +1594,7 @@ public function changecourseTransfer(Request $req)
     public function filterPgApplicants(Request $request)
     {
         $staff = Auth::guard('staff')->user();
-        if ($this->hasPriviledge("filterPgApplicants",  $staff->id)) {
+        // if ($this->hasPriviledge("filterPgApplicants",  $staff->id)) {
             $pgApplicants = DB::table('approved_applicants')->get();
             $approvedArr = array();
             $counter = 0;
@@ -1586,16 +1611,16 @@ public function changecourseTransfer(Request $req)
                 ->get();
             $fullName = session('adminFirstName') . " " . session('adminsurname');
            return view('admissions.pgApplicants', compact('pgApplicants', 'fullName'));
-        } else {
-            $loginMsg = '<div class="alert alert-danger alert-dismissible" role="alert"> <button type="button" class="close" data-dismiss="alert"> &times; </button> You dont\'t have access to this task, please see the ICT</div>';
-           return view('admissions.error', compact('loginMsg'));
-        }
+        // } else {
+        //     $loginMsg = '<div class="alert alert-danger alert-dismissible" role="alert"> <button type="button" class="close" data-dismiss="alert"> &times; </button> You dont\'t have access to this task, please see the ICT</div>';
+        //    return view('admissions.error', compact('loginMsg'));
+        // }
     }
 
     public function filterUtmeApplicants(Request $request)
     {
         $staff = Auth::guard('staff')->user();
-        if ($this->hasPriviledge("filterUtmeApplicants",  $staff->id)) {
+        // if ($this->hasPriviledge("filterUtmeApplicants",  $staff->id)) {
             $utmeApplicants = DB::table('approved_applicants')->get();
             $approvedArr = array();
             $counter = 0;
@@ -1613,16 +1638,16 @@ public function changecourseTransfer(Request $req)
 
             $fullName = session('adminFirstName') . " " . session('adminsurname');
            return view('admissions.utmeApplicants', compact('utmeApplicants', 'fullName'));
-        } else {
-            $loginMsg = '<div class="alert alert-danger alert-dismissible" role="alert"> <button type="button" class="close" data-dismiss="alert"> &times; </button> You dont\'t have access to this task, please see the ICT</div>';
-           return view('admissions.error', compact('loginMsg'));
-        }
+        // } else {
+        //     $loginMsg = '<div class="alert alert-danger alert-dismissible" role="alert"> <button type="button" class="close" data-dismiss="alert"> &times; </button> You dont\'t have access to this task, please see the ICT</div>';
+        //    return view('admissions.error', compact('loginMsg'));
+        // }
     }
 
     public function filterDeApplicants(Request $request)
     {
         $staff = Auth::guard('staff')->user();
-        if ($this->hasPriviledge("filterDeApplicants",  $staff->id)) {
+        // if ($this->hasPriviledge("filterDeApplicants",  $staff->id)) {
             $deApplicants = DB::table('approved_applicants')->get();
             $approvedArr = array();
             $counter = 0;
@@ -1640,16 +1665,16 @@ public function changecourseTransfer(Request $req)
 
             $fullName = session('adminFirstName') . " " . session('adminsurname');
            return view('admissions.deApplicants', compact('deApplicants', 'fullName'));
-        } else {
-            $loginMsg = '<div class="alert alert-danger alert-dismissible" role="alert"> <button type="button" class="close" data-dismiss="alert"> &times; </button> You dont\'t have access to this task, please see the ICT</div>';
-           return view('admissions.error', compact('loginMsg'));
-        }
+        // } else {
+        //     $loginMsg = '<div class="alert alert-danger alert-dismissible" role="alert"> <button type="button" class="close" data-dismiss="alert"> &times; </button> You dont\'t have access to this task, please see the ICT</div>';
+        //    return view('admissions.error', compact('loginMsg'));
+        // }
     }
 
     public function filterTransferApplicants(Request $request)
     {
         $staff = Auth::guard('staff')->user();
-        if ($this->hasPriviledge("filterTransferApplicants",  $staff->id)) {
+        // if ($this->hasPriviledge("filterTransferApplicants",  $staff->id)) {
 
             $transferApplicants = DB::table('approved_applicants')->get();
             $approvedArr = array();
@@ -1668,10 +1693,10 @@ public function changecourseTransfer(Request $req)
 
             $fullName = session('adminFirstName') . " " . session('adminsurname');
            return view('admissions.transferApplicants', compact('transferApplicants', 'fullName'));
-        } else {
-            $loginMsg = '<div class="alert alert-danger alert-dismissible" role="alert"> <button type="button" class="close" data-dismiss="alert"> &times; </button> You dont\'t have access to this task, please see the ICT</div>';
-           return view('admissions.error', compact('loginMsg'));
-        }
+        // } else {
+        //     $loginMsg = '<div class="alert alert-danger alert-dismissible" role="alert"> <button type="button" class="close" data-dismiss="alert"> &times; </button> You dont\'t have access to this task, please see the ICT</div>';
+        //    return view('admissions.error', compact('loginMsg'));
+        // }
     }
 
     public function adminRole(Request $req)
@@ -2023,7 +2048,8 @@ public function changecourseTransfer(Request $req)
  public function editusers($id)
     {
         $staff = Auth::guard('staff')->user();
-        if ($this->hasPriviledge("editusersinfo",  $staff->id)) {
+        $this->authorize('editapplicant',AdmissionPolicy::class);
+        // if ($this->hasPriviledge("editusersinfo",  $staff->id)) {
             // $allAppli = array();
             // $allApplicants = DB::table('users')->get();
             // $approvedArr = array();
@@ -2040,16 +2066,16 @@ public function changecourseTransfer(Request $req)
 
             $fullName = session('adminFirstName') . " " . session('adminsurname');
            return view('admissions./editusers', compact('allApp', 'fullName'));
-        }
-        else {
-           $loginMsg = '<div class="alert alert-danger alert-dismissible" role="alert"> <button type="button" class="close" data-dismiss="alert"> &times; </button> You dont\'t have access to this task, please see the ICT</div>';
-          return view('admissions.error', compact('loginMsg'));
-        }
+        // }
+        // else {
+        //    $loginMsg = '<div class="alert alert-danger alert-dismissible" role="alert"> <button type="button" class="close" data-dismiss="alert"> &times; </button> You dont\'t have access to this task, please see the ICT</div>';
+        //   return view('admissions.error', compact('loginMsg'));
+        // }
     }
 
     public function editusersinfo(Request $req){
         $staff = Auth::guard('staff')->user();
-        if ($this->hasPriviledge("editusersinfo",  $staff->id)) {
+        // if ($this->hasPriviledge("editusersinfo",  $staff->id)) {
 
         try {
             DB::table('users')->where('email', $req->email)
@@ -2071,18 +2097,18 @@ public function changecourseTransfer(Request $req)
             return redirect('/admissons/students/search')->with('approvalMsg', $approvalMsg);
             // return redirect('/newPayment/')->with('mgs',$statusMsg);
         }
-    }
-    else {
-       $loginMsg = '<div class="alert alert-danger alert-dismissible" role="alert"> <button type="button" class="close" data-dismiss="alert"> &times; </button> You dont\'t have access to this task, please see the ICT</div>';
-      return view('admissions.error', compact('loginMsg'));
-    }
+    // }
+    // // else {
+    // // //    $loginMsg = '<div class="alert alert-danger alert-dismissible" role="alert"> <button type="button" class="close" data-dismiss="alert"> &times; </button> You dont\'t have access to this task, please see the ICT</div>';
+    // // //   return view('admissions.error', compact('loginMsg'));
+    // // // }
 }
 
     public function resetuserspassword(Request $req)
     {
         $staff = Auth::guard('staff')->user();
-        if ($this->hasPriviledge("resetuserpassword",  $staff->id)) {
-
+        // if ($this->hasPriviledge("resetuserpassword",  $staff->id)) {
+            $this->authorize('resetapplicantpassword',AdmissionPolicy::class);
         try {
             $newpass='welcome';
             // dd($newpass);
@@ -2103,11 +2129,11 @@ public function changecourseTransfer(Request $req)
             return redirect('/admissons/students/search')->with('approvalMsg', $approvalMsg);
             // return redirect('/newPayment/')->with('mgs',$statusMsg);
         }
-    }
- else {
-    $loginMsg = '<div class="alert alert-danger alert-dismissible" role="alert"> <button type="button" class="close" data-dismiss="alert"> &times; </button> You dont\'t have access to this task, please see the ICT</div>';
-   return view('admissions.error', compact('loginMsg'));
- }
+//     }
+//  else {
+//     $loginMsg = '<div class="alert alert-danger alert-dismissible" role="alert"> <button type="button" class="close" data-dismiss="alert"> &times; </button> You dont\'t have access to this task, please see the ICT</div>';
+//    return view('admissions.error', compact('loginMsg'));
+//  }
  }
 
  public function resetadminpassword(Request $req)
@@ -2143,18 +2169,19 @@ return view('admissions.error', compact('loginMsg'));
     // ADD REMITA SERVICE TYPE
 public function viewaddRemitasServiceType(){
     $staff = Auth::guard('staff')->user();
-        if ($this->hasPriviledge("addRemitaServiceType",  $staff->id)) {
+        // if ($this->hasPriviledge("addRemitaServiceType",  $staff->id)) {
+            $this->authorize('addremitaservicetype',AdmissionPolicy::class);
            return view('admissions.addRemitaServiceType');
-        }
-        else {
-           $loginMsg = '<div class="alert alert-danger alert-dismissible" role="alert"> <button type="button" class="close" data-dismiss="alert"> &times; </button> You dont\'t have access to this task, please see the ICT</div>';
-          return view('admissions.error', compact('loginMsg'));
-        }
+        // }
+        // else {
+        //    $loginMsg = '<div class="alert alert-danger alert-dismissible" role="alert"> <button type="button" class="close" data-dismiss="alert"> &times; </button> You dont\'t have access to this task, please see the ICT</div>';
+        //   return view('admissions.error', compact('loginMsg'));
+        // }
     }
     public function addRemitaServiceType(Request $req){
         $staff = Auth::guard('staff')->user();
-        if ($this->hasPriviledge("addRemitaServiceType",  $staff->id)) {
-
+        // if ($this->hasPriviledge("addRemitaServiceType",  $staff->id)) {
+            // $this->authorize('addremitaservicetype',AdmissionPolicy::class);
 
             // dd($req);
             DB::beginTransaction();
@@ -2197,15 +2224,16 @@ public function viewaddRemitasServiceType(){
                     return redirect('/addRemitaServiceType')->with('signUpMsg', $signUpMsg);
                 }
             }
-        }
-        else {
-           $loginMsg = '<div class="alert alert-danger alert-dismissible" role="alert"> <button type="button" class="close" data-dismiss="alert"> &times; </button> You dont\'t have access to this task, please see the ICT</div>';
-          return view('admissions.error', compact('loginMsg'));
-        }
+        // }
+        // else {
+        //    $loginMsg = '<div class="alert alert-danger alert-dismissible" role="alert"> <button type="button" class="close" data-dismiss="alert"> &times; </button> You dont\'t have access to this task, please see the ICT</div>';
+        //   return view('admissions.error', compact('loginMsg'));
+        // }
         }
     public function viewRemitaServiceType(){
         $staff = Auth::guard('staff')->user();
-        if ($this->hasPriviledge("viewRemitaServiceType",  $staff->id)) {
+        $this->authorize('viewremitaservicetype',AdmissionPolicy::class);
+        // if ($this->hasPriviledge("viewRemitaServiceType",  $staff->id)) {
         $fee_types = fee_types::orderBy('status', 'ASC')
         ->where('status', 1)
         ->get();
@@ -2213,31 +2241,32 @@ public function viewaddRemitasServiceType(){
         ->where('status', 2)
         ->get();
        return view('admissions./viewRemitaServiceType', compact('fee_typess'), ['fee_types' => $fee_types,  ['fee_types' => $fee_typess]]);
-    }
-    else {
-       $loginMsg = '<div class="alert alert-danger alert-dismissible" role="alert"> <button type="button" class="close" data-dismiss="alert"> &times; </button> You dont\'t have access to this task, please see the ICT</div>';
-      return view('admissions.error', compact('loginMsg'));
-    }
+    // }
+    // else {
+    //    $loginMsg = '<div class="alert alert-danger alert-dismissible" role="alert"> <button type="button" class="close" data-dismiss="alert"> &times; </button> You dont\'t have access to this task, please see the ICT</div>';
+    //   return view('admissions.error', compact('loginMsg'));
+    // }
     }
 
     public function editRemitaServiceType(Request $req, $id){
         $staff = Auth::guard('staff')->user();
-        if ($this->hasPriviledge("editRemitaServiceType",  $staff->id)) {
+        $this->authorize('addremitaservicetype',AdmissionPolicy::class);
+        // if ($this->hasPriviledge("editRemitaServiceType",  $staff->id)) {
         $fee_types = DB::table('fee_types')
         ->where('provider_code', $id)
         ->select('fee_types.*')
         ->first();
        return view('admissions./editRemitaServiceType', compact('fee_types'), ['fee_types' => $fee_types]);
-    }
-    else {
-       $loginMsg = '<div class="alert alert-danger alert-dismissible" role="alert"> <button type="button" class="close" data-dismiss="alert"> &times; </button> You dont\'t have access to this task, please see the ICT</div>';
-      return view('admissions.error', compact('loginMsg'));
-    }
+    // }
+    // else {
+    //    $loginMsg = '<div class="alert alert-danger alert-dismissible" role="alert"> <button type="button" class="close" data-dismiss="alert"> &times; </button> You dont\'t have access to this task, please see the ICT</div>';
+    //   return view('admissions.error', compact('loginMsg'));
+    // }
     }
 
     public function editRemitaServiceTypefee(Request $req){
         $staff = Auth::guard('staff')->user();
-        if ($this->hasPriviledge("editRemitaServiceType",  $staff->id)) {
+        // if ($this->hasPriviledge("editRemitaServiceType",  $staff->id)) {
         try {
 
             DB::table('fee_types')->where('provider_code', $req->provider_code)
@@ -2256,17 +2285,18 @@ public function viewaddRemitasServiceType(){
             return redirect('viewRemitaServiceType')->with('signUpMsg', $signUpMsg);
             // return redirect('/newPayment/')->with('mgs',$statusMsg);
         }
-    }
-    else {
-       $loginMsg = '<div class="alert alert-danger alert-dismissible" role="alert"> <button type="button" class="close" data-dismiss="alert"> &times; </button> You dont\'t have access to this task, please see the ICT</div>';
-      return view('admissions.error', compact('loginMsg'));
-    }
+    // }
+    // else {
+    //    $loginMsg = '<div class="alert alert-danger alert-dismissible" role="alert"> <button type="button" class="close" data-dismiss="alert"> &times; </button> You dont\'t have access to this task, please see the ICT</div>';
+    //   return view('admissions.error', compact('loginMsg'));
+    // }
     }
 
 
    public function suspendRemitaServiceType(Request $req){
     $staff = Auth::guard('staff')->user();
-    if ($this->hasPriviledge("suspendRemitaServiceType",  $staff->id)) {
+    // if ($this->hasPriviledge("suspendRemitaServiceType",  $staff->id)) {
+        $this->authorize('activesuspendremitaservicetype',AdmissionPolicy::class);
     try {
         DB::table('fee_types')->where('provider_code', $req->provider_code)
             ->update([
@@ -2282,11 +2312,11 @@ public function viewaddRemitasServiceType(){
         return redirect('viewRemitaServiceType')->with('signUpMsg', $signUpMsg);
         // return redirect('/newPayment/')->with('mgs',$statusMsg);
     }
-}
-else {
-   $loginMsg = '<div class="alert alert-danger alert-dismissible" role="alert"> <button type="button" class="close" data-dismiss="alert"> &times; </button> You dont\'t have access to this task, please see the ICT</div>';
-  return view('admissions.error', compact('loginMsg'));
-}
+// }
+// else {
+//    $loginMsg = '<div class="alert alert-danger alert-dismissible" role="alert"> <button type="button" class="close" data-dismiss="alert"> &times; </button> You dont\'t have access to this task, please see the ICT</div>';
+//   return view('admissions.error', compact('loginMsg'));
+// }
 
 
    }
@@ -2294,7 +2324,8 @@ else {
 
    public function activeRemitaServiceType(Request $req){
     $staff = Auth::guard('staff')->user();
-    if ($this->hasPriviledge("activeRemitaServiceType",  $staff->id)) {
+    $this->authorize('activesuspendremitaservicetype',AdmissionPolicy::class);
+    // if ($this->hasPriviledge("activeRemitaServiceType",  $staff->id)) {
     try {
         DB::table('fee_types')->where('provider_code', $req->provider_code)
             ->update([
@@ -2310,12 +2341,11 @@ else {
         return redirect('viewRemitaServiceType')->with('signUpMsg', $signUpMsg);
         // return redirect('/newPayment/')->with('mgs',$statusMsg);
     }
-}
-else {
-   $loginMsg = '<div class="alert alert-danger alert-dismissible" role="alert"> <button type="button" class="close" data-dismiss="alert"> &times; </button> You dont\'t have access to this task, please see the ICT</div>';
-  return view('admissions.error', compact('loginMsg'));
-}
-
+// }
+// else {
+//    $loginMsg = '<div class="alert alert-danger alert-dismissible" role="alert"> <button type="button" class="close" data-dismiss="alert"> &times; </button> You dont\'t have access to this task, please see the ICT</div>';
+//   return view('admissions.error', compact('loginMsg'));
+// }
 
    }
 
@@ -2330,17 +2360,19 @@ else {
 
    public function search()
     {
-        // $this->authorize('search', Student::class);
-        return view('admissions.students.admin.search');
-    } //end search
+        $admission = new AdminController(); // Replace with your Admission model
+        $this->authorize('searchapplicant',AdmissionPolicy::class);
 
+            return view('admissions.students.admin.search');
+       
+    }
 
     public function find(Request $request)
     {
         $currentSessionId = $this->getCurrentAdmissionSession();
 
         $users = DB::table('users')
-            ->where('session_id', $currentSessionId)
+           // ->where('session_id', $currentSessionId)
             ->where(function ($query) use ($request) {
                 $query->where('surname', 'like', '%' . $request->data . '%')
                     ->orWhere('id', $request->data)

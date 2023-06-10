@@ -645,7 +645,17 @@ unset($__errorArgs, $__bag); ?>
                                         <form method="POST" action="/editutmeuploads"enctype="multipart/form-data"
                                         class="p-3">
                                         <?php echo csrf_field(); ?>
-
+                                      <div class="row">
+                                                    <div class="col"> <img class="mx-auto d-block"
+                                                            src="data:image/jpeg;base64,<?php echo e($applicantsDetails->jamb); ?>"
+                                                            alt="Transcipt" style="height: 300px; width:300px;" /></div>
+                                                    <div class="col"> <img class="mx-auto d-block"
+                                                            src="data:image/jpeg;base64,<?php echo e($applicantsDetails->olevel1); ?>"
+                                                            alt="Olevel" style="height: 300px; width:300px;" /></div>
+                                                    <div class="col"> <img class=" mx-auto d-block"
+                                                            src="data:image/jpeg;base64,<?php echo e($applicantsDetails->olevel2); ?>"
+                                                            alt="" style="height: 300px; width:300px;" /></div>
+                                                </div>
 
                                         <div class="form-group">
 

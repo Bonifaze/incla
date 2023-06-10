@@ -1422,7 +1422,7 @@ unset($__errorArgs, $__bag); ?>" name="surname"
                             <label for="passport">Direct Entry Result :</label>
                             <?php echo Form::file('passport', [
                                 'class' => 'form-control file-loading',
-                                'id' => 'passport',
+                                'id' => 'jamb',
                                 'placeholder' => 'Choose profile pic',
                                 'name' => 'jamb',
                                 'accept' => 'image/*',
@@ -1436,7 +1436,7 @@ unset($__errorArgs, $__bag); ?>" name="surname"
                             <label for="passport">Olevel Result :</label>
                             <?php echo Form::file('passport', [
                                 'class' => 'form-control file-loading',
-                                'id' => 'passport',
+                                'id' => 'olevel1',
                                 'placeholder' => 'Choose profile pic',
                                 'name' => 'olevel1',
                                 'accept' => 'image/*',
@@ -1450,7 +1450,7 @@ unset($__errorArgs, $__bag); ?>" name="surname"
                             <label for="passport"> Result <b class="text-danger">( if any)</b>:</label>
                             <?php echo Form::file('passport', [
                                 'class' => 'form-control file-loading',
-                                'id' => 'passport',
+                                'id' => 'olevel2',
                                 'placeholder' => 'Choose profile pic',
                                 'name' => 'olevel2',
                                 'accept' => 'image/*',

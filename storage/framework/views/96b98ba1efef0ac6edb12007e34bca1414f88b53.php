@@ -657,23 +657,34 @@ unset($__errorArgs, $__bag); ?>
                                         <form method="POST" action="/editutmeuploads"enctype="multipart/form-data"
                                         class="p-3">
                                         <?php echo csrf_field(); ?>
-
-
-                                        <div class="form-group">
-
-                                            <?php if(session('statusMsg')): ?>
-                                                <?php echo session('statusMsg'); ?>
-
-                                            <?php endif; ?>
-                                            <label for="passport"><?php echo e(__('Edit jamb Result')); ?>
-
-                                            </label>
-
-                                            <div class="form-group">
-                                                <input id="jamb" type="file" class="form-control"
-                                                    name="jamb">
-                                            </div>
+                                        <div class="row">
+                                        <div class="col"> <img class="mx-auto d-block"
+                                                                src="data:image/jpeg;base64,<?php echo e($applicantsDetails->jamb); ?>"
+                                                            alt="Transcipt" style="height: 300px; width:300px;" /></div>
+                                        <div class="col">  <img class="mx-auto d-block"
+src="data:image/jpeg;base64,<?php echo e($applicantsDetails->olevel1); ?>"
+                                                                alt="Olevel"
+                                                                style="height: 300px; width:300px;" /></div>
+                                        <div class="col"> <img class=" mx-auto d-block"
+                                                                    src="data:image/jpeg;base64,<?php echo e($applicantsDetails->olevel2); ?>"
+                                                            alt=""
+                                                            style="height: 300px; width:300px;" /></div>
                                         </div>
+
+     <div class="form-group">
+
+                                <?php if(session('statusMsg')): ?>
+                                <?php echo session('statusMsg'); ?>
+
+                                <?php endif; ?>
+                                <p>Upload Transcript
+                                
+                                </p>
+
+                                <div class="form-group">
+                                    <input id="jamb" type="file" class="form-control" name="jamb">
+                                </div>
+                            </div>
 
                                         
 
