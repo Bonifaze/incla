@@ -155,7 +155,7 @@
 
                         <p class="link-text"><a href="/register" class="text-success active-link">Click Here </a> if you do not have an account</p>
                         <p class="link-text"> Forgot password ?<a href="/forgotpassword" class="text-danger active-link"> Click here</a> to reset </p>
-                        <p class="link-text"> <a href="https://tawk.to/chat/6452e8b94247f20fefef3648/1gvhtq6f7" class=" active-link text-success">Chat with us</a></p>
+                        
 
                     </form>
                 </div>
@@ -192,4 +192,5 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous">
     </script>
     <?php $__env->stopSection(); ?>
+
 <?php echo $__env->make('layouts.plain', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH C:\Users\hp\Documents\WEB DEV\Work-VUNA\laraproject\resources\views/admissions/login.blade.php ENDPATH**/ ?>

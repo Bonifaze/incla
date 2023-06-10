@@ -86,7 +86,6 @@ require_once "admin_students.php";
 //Security routes
 require_once "security.php";
 
-
 // Student routes
 require_once "students.php";
 

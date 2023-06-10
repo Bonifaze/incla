@@ -1,33 +1,34 @@
-@extends('layouts.adminsials')
 
-@section('pagetitle')
+
+<?php $__env->startSection('pagetitle'); ?>
 Home
-@endsection
+<?php $__env->stopSection(); ?>
 
 <!-- Sidebar Links -->
 <!-- Treeview -->
-@section('student-open')
+<?php $__env->startSection('student-open'); ?>
 menu-open
-@endsection
+<?php $__env->stopSection(); ?>
 
-@section('student')
+<?php $__env->startSection('student'); ?>
 active
-@endsection
+<?php $__env->stopSection(); ?>
 
 <!-- Page -->
-@section('home')
+<?php $__env->startSection('home'); ?>
 active
-@endsection
+<?php $__env->stopSection(); ?>
 <!-- End Sidebar links -->
 
-@section('content')
+<?php $__env->startSection('content'); ?>
 <div class="content-wrapper bg-white">
     <!-- Content Header (Page header) -->
     <section class="content">
 
-        @if (session('signUpMsg'))
-        {!! session('signUpMsg') !!}
-        @endif
+        <?php if(session('signUpMsg')): ?>
+        <?php echo session('signUpMsg'); ?>
+
+        <?php endif; ?>
 
         <div class="card mb-4">
             <h1 class="app-page-title text-uppercase h5 font-weight-bold p-2 mb-2 shadow-sm text-center text-success border">
@@ -36,42 +37,49 @@ active
             <div class="card-body p-5">
                 <ul class="nav nav-tabs" id="myTab" role="tablist">
                     <li class="nav-item" role="presentation">
-                        <button class="nav-link{{ $pg->status == 0 ? ' active' : '' }} text-success fw-bold text-capitalize" id="home-tab" data-bs-toggle="tab" data-bs-target="#home-tab-pane" type="button" role="tab" aria-controls="home-tab-pane" aria-selected="{{ $pg->status  == 0 ? 'true' : 'false' }}">Bio
+                        <button class="nav-link<?php echo e($pg->status == 0 ? ' active' : ''); ?> text-success fw-bold text-capitalize" id="home-tab" data-bs-toggle="tab" data-bs-target="#home-tab-pane" type="button" role="tab" aria-controls="home-tab-pane" aria-selected="<?php echo e($pg->status  == 0 ? 'true' : 'false'); ?>">Bio
                             Data</button>
                     </li>
                     <li class="nav-item" role="presentation">
-                        <button class="nav-link{{ $pg->status  == 1 ? ' active' : '' }} text-success fw-bold text-capitalize" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile-tab-pane" type="button" role="tab" aria-controls="profile-tab-pane" aria-selected="{{ $pg->status  == 1 ? 'true' : 'false' }}">Sponsor Information</button>
+                        <button class="nav-link<?php echo e($pg->status  == 1 ? ' active' : ''); ?> text-success fw-bold text-capitalize" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile-tab-pane" type="button" role="tab" aria-controls="profile-tab-pane" aria-selected="<?php echo e($pg->status  == 1 ? 'true' : 'false'); ?>">Sponsor Information</button>
                     </li>
                     <li class="nav-item" role="presentation">
-                        <button class="nav-link{{ $pg->status  == 2 ? ' active' : '' }} text-success fw-bold text-capitalize" id="profile2-tab" data-bs-toggle="tab" data-bs-target="#profile2-tab-pane" type="button" role="tab" aria-controls="profile2-tab-pane" aria-selected="{{ $pg->status  == 2 ? 'true' : 'false' }}">Post Graduate Information</button>
+                        <button class="nav-link<?php echo e($pg->status  == 2 ? ' active' : ''); ?> text-success fw-bold text-capitalize" id="profile2-tab" data-bs-toggle="tab" data-bs-target="#profile2-tab-pane" type="button" role="tab" aria-controls="profile2-tab-pane" aria-selected="<?php echo e($pg->status  == 2 ? 'true' : 'false'); ?>">Post Graduate Information</button>
                     </li>
                     <li class="nav-item" role="presentation">
-                        <button class="nav-link{{ $pg->status  == 3 ? ' active' : '' }} text-success fw-bold text-capitalize" id="profile3-tab" data-bs-toggle="tab" data-bs-target="#profile3-tab-pane" type="button" role="tab" aria-controls="profile3-tab-pane" aria-selected="{{ $pg->status  == 3 ? 'true' : 'false' }}">Upload Documents</button>
+                        <button class="nav-link<?php echo e($pg->status  == 3 ? ' active' : ''); ?> text-success fw-bold text-capitalize" id="profile3-tab" data-bs-toggle="tab" data-bs-target="#profile3-tab-pane" type="button" role="tab" aria-controls="profile3-tab-pane" aria-selected="<?php echo e($pg->status  == 3 ? 'true' : 'false'); ?>">Upload Documents</button>
                     </li>
                 </ul>
 
 
                 <div class="tab-content" id="myTabContent">
 
-                    <div class="tab-pane fade{{ $pg->status == 0 ? ' show active' : '' }}" id="home-tab-pane" role="tabpanel" aria-labelledby="home-tab">
+                    <div class="tab-pane fade<?php echo e($pg->status == 0 ? ' show active' : ''); ?>" id="home-tab-pane" role="tabpanel" aria-labelledby="home-tab">
                         <form method="POST" action="/pgbiodata" enctype="multipart/form-data" class="p-3">
-                            @csrf
+                            <?php echo csrf_field(); ?>
 
-                            <label for="">{{ __('Surname') }} </label>
+                            <label for=""><?php echo e(__('Surname')); ?> </label>
 
                             <div class="form-group">
 
                                 <div class="form-group">
-                                    <input id="surname" type="text" class="form-control @error('surname') is-invalid @enderror" name="surname" placeholder="{{ $pg->surname}}" readonly autofocus>
-                                    <input id="status" type="hidden" class="form-control " name="status" value="{{ $pg->status }}" readonly autofocus>
+                                    <input id="surname" type="text" class="form-control <?php $__errorArgs = ['surname'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?> is-invalid <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>" name="surname" placeholder="<?php echo e($pg->surname); ?>" readonly autofocus>
+                                    <input id="status" type="hidden" class="form-control " name="status" value="<?php echo e($pg->status); ?>" readonly autofocus>
 
 
                                 </div>
                             </div>
                             <div class="form-group">
                                 <div class="form-group">
-                                    <label for="">{{ __('First Name') }} </label>
-                                    <input id="first_name" type="text" class="form-control" name="first_name" placeholder="{{ $pg->first_name}}" readonly autofocus>
+                                    <label for=""><?php echo e(__('First Name')); ?> </label>
+                                    <input id="first_name" type="text" class="form-control" name="first_name" placeholder="<?php echo e($pg->first_name); ?>" readonly autofocus>
 
 
                                 </div>
@@ -79,16 +87,16 @@ active
                             </div>
                             <div class="form-group">
                                 <div class="form-group">
-                                    <label for="">{{ __('Email') }} </label>
-                                    <input id="email" type="email" class="form-control " name="email" placeholder="{{ $pg->email}}" readonly autofocus>
+                                    <label for=""><?php echo e(__('Email')); ?> </label>
+                                    <input id="email" type="email" class="form-control " name="email" placeholder="<?php echo e($pg->email); ?>" readonly autofocus>
 
 
                                 </div>
                             </div>
                             <div class="form-group">
                                 <div class="form-group">
-                                    <label for="">{{ __('Phone') }} </label>
-                                    <input id="phone" type="phone" class="form-control" name="phone" autocomplete="phone" placeholder="{{ $pg->phone}}" readonly autofocus>
+                                    <label for=""><?php echo e(__('Phone')); ?> </label>
+                                    <input id="phone" type="phone" class="form-control" name="phone" autocomplete="phone" placeholder="<?php echo e($pg->phone); ?>" readonly autofocus>
 
 
                                 </div>
@@ -127,7 +135,7 @@ active
                             </div>
 
                             <div class="form-group">
-                                <label for="dob">{{ __('Date of Birth') }} </label>
+                                <label for="dob"><?php echo e(__('Date of Birth')); ?> </label>
 
                                 <div class="form-group">
                                     <input id="dob" type="date" class="form-control" name="dob" required>
@@ -135,7 +143,7 @@ active
                             </div>
 
                             <div class="form-group">
-                                <label for="refferal">{{ __('Nationality') }} </label>
+                                <label for="refferal"><?php echo e(__('Nationality')); ?> </label>
 
                                 <div class="form-group">
                                     <select class="form-select" name="nationality" id="nationality">
@@ -409,7 +417,7 @@ active
                             </div>
 
                             <div class="form-group">
-                                <label for="passport">{{ __('Upload Passport Photograph') }} </label>
+                                <label for="passport"><?php echo e(__('Upload Passport Photograph')); ?> </label>
 
                                 <div class="form-group">
                                     <input id="passport" type="file" class="form-control" name="passport">
@@ -417,7 +425,7 @@ active
                             </div>
 
                             <div class="form-group">
-                                <label for="refferal">{{ __('How did you hear about us') }} </label>
+                                <label for="refferal"><?php echo e(__('How did you hear about us')); ?> </label>
 
                                 <div class="form-group">
                                     <select class="form-select" name="referral">
@@ -433,11 +441,10 @@ active
                             <div class="form-group">
                                 <div class="form-group">
 
-                                    {{-- @if (session('signUpMsg'))
-                                                        {!! session('signUpMsg') !!}
-                                                        @endif  --}}
+                                    
                                     <button type="submit" class="btn btn-success">
-                                        {{ __('Save and continue') }}
+                                        <?php echo e(__('Save and continue')); ?>
+
                                     </button>
                                 </div>
                             </div>
@@ -446,49 +453,48 @@ active
                     </div>
 
 
-                    <div class="tab-pane fade{{ $pg->status == 1 ? ' show active' : '' }}" id="profile-tab-pane" role="tabpanel" aria-labelledby="profile-tab">
+                    <div class="tab-pane fade<?php echo e($pg->status == 1 ? ' show active' : ''); ?>" id="profile-tab-pane" role="tabpanel" aria-labelledby="profile-tab">
                         <form method="POST" action="/pgssponsors" enctype="multipart/form-data" class="p-3">
-                            @csrf
+                            <?php echo csrf_field(); ?>
                             <div class="form-group">
                                 <div class="form-group">
-                                    <label for="">{{ __('First Name') }} </label>
+                                    <label for=""><?php echo e(__('First Name')); ?> </label>
                                     <input id="fname" type="text" name="name" class="form-control" placeholder="Full Name" autofocus>
                                 </div>
                             </div>
 
                             <div class="form-group">
                                 <div class="form-group">
-                                    <label for="">{{ __('Phone Number') }} </label>
+                                    <label for=""><?php echo e(__('Phone Number')); ?> </label>
                                     <input id="phone" type="text" name="sponsors_phone" class="form-control" placeholder="Phone Number" autofocus>
                                 </div>
                             </div>
 
                             <div class="form-group">
                                 <div class="form-group">
-                                    <label for="">{{ __('Email') }} </label>
+                                    <label for=""><?php echo e(__('Email')); ?> </label>
                                     <input id="foccupation" type="text" name="sponsors_email" class="form-control" placeholder="Email" autofocus>
                                 </div>
                             </div>
 
                             <div class="form-group">
                                 <div class="form-group">
-                                    <label for="">{{ __('Address') }} </label>
+                                    <label for=""><?php echo e(__('Address')); ?> </label>
                                     <textarea id="address" type="text" class="form-control" name="sponsors_address" required placeholder="Address"></textarea>
                                 </div>
                             </div>
 
                             <div class="form-group">
-                                <label for="">{{ __('Occupation') }} </label>
+                                <label for=""><?php echo e(__('Occupation')); ?> </label>
                                 <input id="foccupation" type="text" name="occupation" class="form-control" placeholder="Occupation" autofocus>
                             </div>
 
                             <div class="form-group">
                                 <div class="form-group">
-                                    {{-- @if (session('signUpMsg'))
-                                    {!! session('signUpMsg') !!}
-                                    @endif --}}
+                                    
                                     <button type="submit" class="btn btn-success mt-5">
-                                        {{ __('Save and continue') }}
+                                        <?php echo e(__('Save and continue')); ?>
+
                                     </button>
                                 </div>
                             </div>
@@ -496,9 +502,9 @@ active
                     </div>
 
 
-                    <div class="tab-pane fade{{ $pg->status == 2 ? ' show active' : '' }}" id="profile2-tab-pane" role="tabpanel" aria-labelledby="profile2-tab">
+                    <div class="tab-pane fade<?php echo e($pg->status == 2 ? ' show active' : ''); ?>" id="profile2-tab-pane" role="tabpanel" aria-labelledby="profile2-tab">
                         <form method="POST" action="/pginformation" class="p-3">
-                            @csrf
+                            <?php echo csrf_field(); ?>
                             <div class="form-group">
 
                                 <div class="form-group">
@@ -532,12 +538,12 @@ active
                             </div>
                             <div class="form-group">
                                 <div class="form-group">
-                                    <label for="refferal">{{ __('Program') }} </label>
+                                    <label for="refferal"><?php echo e(__('Program')); ?> </label>
                                     <select class="form-select" name="course_applied">
-                                        @foreach($programs as $program)
+                                        <?php $__currentLoopData = $programs; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $program): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
 
-                                        <option value="{{$program->name}}">{{$program->name}}</option>
-                                        @endforeach
+                                        <option value="<?php echo e($program->name); ?>"><?php echo e($program->name); ?></option>
+                                        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                                     </select>
 
                                 </div>
@@ -547,14 +553,14 @@ active
                             <h5 class="h6 text-success text-center fw-bold my-4 pt-2 text-uppercase">Post Secondary Education and Certifications </h5>
 
                             <div class="form-group">
-                                <label for="refferal">{{ __('Institution') }} </label>
+                                <label for="refferal"><?php echo e(__('Institution')); ?> </label>
                                 <div class="form-group">
                                     <input id="second_choice" type="text" class="form-control" name="institution" placeholder="Institution" required autofocus>
                                 </div>
                             </div>
 
                             <div class="form-group">
-                                <label for="refferal">{{ __('Period') }} </label>
+                                <label for="refferal"><?php echo e(__('Period')); ?> </label>
                                 <div class="form-group">
                                     <input id="subject_1" type="text" name="period" class="form-control" placeholder="August 2015 - july 2017" autofocus required>
                                 </div>
@@ -592,7 +598,7 @@ active
                             </div>
                             <h5 class="h6 text-success text-center fw-bold mb-2 pt-2">REFEREES </h5>
                             <h6 class="h6 text-warning text-center fw-small mb-4 pt-2"> Provide three (3) referees, two (2) must be your former lecturers. </h6>
-                            {{-- First Referee  --}}
+                            
                             <br>
                             <br>
                             <br>
@@ -617,7 +623,7 @@ active
                                     <input id="subject_3" type="text" name="email1" class="form-control" required placeholder="Email Address" autofocus>
                                 </div>
                             </div>
-                            {{-- Second referee  --}}
+                            
                             <br>
                             <br>
                             <br>
@@ -642,7 +648,7 @@ active
                                     <input id="subject_3" type="text" name="email2" class="form-control" required placeholder="Email Address" autofocus>
                                 </div>
                             </div>
-                            {{-- third referees  --}}
+                            
                             <br>
                             <br>
                             <br>
@@ -671,11 +677,10 @@ active
                             <div class="form-group">
                                 <div class="form-group">
 
-                                    {{-- @if (session('signUpMsg'))
-                                                    {!! session('signUpMsg') !!}
-                                                    @endif  --}}
+                                    
                                     <button type="submit" class="btn btn-success mt-5">
-                                        {{ __('Save and continue') }}
+                                        <?php echo e(__('Save and continue')); ?>
+
                                     </button>
                                 </div>
                             </div>
@@ -683,15 +688,17 @@ active
                     </div>
 
 
-                    <div class="tab-pane fade{{ $pg->status == 3 ? ' show active' : '' }}" id="profile3-tab-pane" role="tabpanel" aria-labelledby="profile3-tab">
+                    <div class="tab-pane fade<?php echo e($pg->status == 3 ? ' show active' : ''); ?>" id="profile3-tab-pane" role="tabpanel" aria-labelledby="profile3-tab">
                         <form method="POST" action="/utmeuploads" enctype="multipart/form-data" class="p-3">
-                            @csrf
+                            <?php echo csrf_field(); ?>
                             <div class="form-group">
 
-                                @if (session('statusMsg'))
-                                {!! session('statusMsg') !!}
-                                @endif
-                                <label for="passport">{{ __('Upload Degree Certificate (Picture-PNG, JPG or JPEG)') }}
+                                <?php if(session('statusMsg')): ?>
+                                <?php echo session('statusMsg'); ?>
+
+                                <?php endif; ?>
+                                <label for="passport"><?php echo e(__('Upload Degree Certificate (Picture-PNG, JPG or JPEG)')); ?>
+
                                 </label>
 
                                 <div class="form-group">
@@ -700,7 +707,8 @@ active
                             </div>
 
                             <div class="form-group">
-                                <label for="passport">{{ __('Upload Olevel Result (Picture-PNG, JPG or JPEG)') }}
+                                <label for="passport"><?php echo e(__('Upload Olevel Result (Picture-PNG, JPG or JPEG)')); ?>
+
                                 </label>
 
                                 <div class="form-group">
@@ -717,11 +725,10 @@ active
                             <div class="form-group">
                                 <div class="form-group">
 
-                                    {{-- @if (session('signUpMsg'))
-                                                    {!! session('signUpMsg') !!}
-                                                @endif --}}
+                                    
                                     <button type="submit" class="btn btn-success mt-5">
-                                        {{ __('Save') }}
+                                        <?php echo e(__('Save')); ?>
+
                                     </button>
                                 </div>
                             </div>
@@ -733,23 +740,23 @@ active
     </section>
 </div>
 
-@endsection
+<?php $__env->stopSection(); ?>
 
-@section('pagescript')
+<?php $__env->startSection('pagescript'); ?>
 <!-- External JavaScripts
             ============================================= -->
-<script src="{{ asset('js/jquery.js') }}"></script>
+<script src="<?php echo e(asset('js/jquery.js')); ?>"></script>
 <!-- bootstrap datepicker -->
-<script src="{{ asset('dist/js/components/bootstrap-datepicker.js') }}"></script>
+<script src="<?php echo e(asset('dist/js/components/bootstrap-datepicker.js')); ?>"></script>
 <!-- Bootstrap File Upload Plugin -->
-<script src="{{ asset('dist/js/components/bs-filestyle.js') }}"></script>
+<script src="<?php echo e(asset('dist/js/components/bs-filestyle.js')); ?>"></script>
 
-<script src="{{ asset('js/jquery.js') }}"></script>
+<script src="<?php echo e(asset('js/jquery.js')); ?>"></script>
 
 <!-- bootstrap datepicker -->
-<script src="{{ asset('dist/js/components/bootstrap-datepicker.js') }}"></script>
+<script src="<?php echo e(asset('dist/js/components/bootstrap-datepicker.js')); ?>"></script>
 <!-- Bootstrap File Upload Plugin -->
-<script src="{{ asset('dist/js/components/bs-filestyle.js') }}"></script>
+<script src="<?php echo e(asset('dist/js/components/bs-filestyle.js')); ?>"></script>
 
 <script type="text/javascript">
     //Date picker
@@ -853,4 +860,5 @@ active
 
     });
 </script>
-@endsection
+<?php $__env->stopSection(); ?>
+<?php echo $__env->make('layouts.adminsials', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH C:\Users\hp\Documents\WEB DEV\Work-VUNA\laraproject\resources\views/admissions//pg.blade.php ENDPATH**/ ?>
