@@ -2391,4 +2391,79 @@
 
         });
     </script>
+
+    <script type="text/javascript">
+        $(document).on('ready', function() {
+
+            $("#jamb").fileinput({
+                mainClass: "input-group-md",
+                showUpload: false,
+                previewFileType: "image",
+                browseClass: "btn btn-success",
+                browseLabel: "Pick Image",
+                browseIcon: "<i class=\"fas fa-user\"></i>",
+                removeClass: "btn btn-danger",
+                removeLabel: "Delete",
+                removeIcon: "<i class=\"icon-trash\"></i> ",
+                allowedFileExtensions: ["jpg", "jpeg", "gif", "png"],
+                elErrorContainer: "#errorBlock"
+
+
+
+            });
+
+
+
+        });
+    </script>
+
+    <script type="text/javascript">
+        $(document).on('ready', function() {
+
+            $("#olevel1").fileinput({
+                mainClass: "input-group-md",
+                showUpload: false,
+                previewFileType: "image",
+                browseClass: "btn btn-success",
+                browseLabel: "Pick Image",
+                browseIcon: "<i class=\"fas fa-user\"></i>",
+                removeClass: "btn btn-danger",
+                removeLabel: "Delete",
+                removeIcon: "<i class=\"icon-trash\"></i> ",
+                allowedFileExtensions: ["jpg", "jpeg", "gif", "png"],
+                elErrorContainer: "#errorBlock"
+
+
+
+            });
+
+
+
+        });
+    </script>
+
+    <script type="text/javascript">
+        $(document).on('ready', function() {
+
+            $("#olevel2").fileinput({
+                mainClass: "input-group-md",
+                showUpload: false,
+                previewFileType: "image",
+                browseClass: "btn btn-success",
+                browseLabel: "Pick Image",
+                browseIcon: "<i class=\"fas fa-user\"></i>",
+                removeClass: "btn btn-danger",
+                removeLabel: "Delete",
+                removeIcon: "<i class=\"icon-trash\"></i> ",
+                allowedFileExtensions: ["jpg", "jpeg", "gif", "png"],
+                elErrorContainer: "#errorBlock"
+
+
+
+            });
+
+
+
+        });
+    </script>
 @endsection

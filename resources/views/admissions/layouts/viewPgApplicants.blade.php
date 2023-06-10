@@ -184,7 +184,7 @@
                                                                 </div>
                                                                 <div class="">
                                                                     <img class="mx-auto d-block"
-                                                                        src="data:image/{{ $applicantsDetails->jamb_type }};base64,{{ base64_encode($applicantsDetails->jamb) }}"
+                                                                            src="data:image/jpeg;base64,{{$applicantsDetails->jamb}}"
                                                                         alt="JAMB "
                                                                         style="height: 510px; width:400px;" />
                                                                 </div>
@@ -243,7 +243,7 @@
                                                                 </div>
                                                                 <div class="">
                                                                     <img class="mx-auto d-block"
-                                                                        src="data:image/{{ $applicantsDetails->olevel1_type }};base64,{{ base64_encode($applicantsDetails->olevel1) }}"
+        src="data:image/jpeg;base64,{{$applicantsDetails->olevel1}}"
                                                                         alt="Olevel"
                                                                         style="height: 510px; width:400px;" />
                                                                 </div>
@@ -279,7 +279,7 @@
                                                             <div class="">
 
                                                                 <img class=" mx-auto d-block"
-                                                                    src="data:image/{{ $applicantsDetails->olevel2_type }};base64,{{ base64_encode($applicantsDetails->olevel2) }}"
+                                                                            src="data:image/jpeg;base64,{{$applicantsDetails->olevel2}}"
                                                                     alt="Olevel second sitting"
                                                                     style="height: 500px; width:400px;" />
                                                             </div>

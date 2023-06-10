@@ -1,4 +1,4 @@
-@php
+<?php
 
 if(!session('userid'))
 {
@@ -6,16 +6,16 @@ if(!session('userid'))
 header('location: /');
 exit;
 }
-@endphp
-@extends('layouts.userapp')
+?>
 
-@section('content')
+
+<?php $__env->startSection('content'); ?>
 <div class="row justify-content-center">
 
 
     <!-- Page Wrapper -->
     <div id="wrapper">
-        @include('layouts.usersidebar')
+        <?php echo $__env->make('layouts.usersidebar', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
         <!-- Content Wrapper -->
         <div id="content-wrapper" class="d-flex flex-column">
 
@@ -51,18 +51,8 @@ exit;
                                         <li class="nav-item" role="presentation">
                                             <button class="nav-link text-success fw-bold text-capitalize" id="profile2-tab" data-bs-toggle="tab" data-bs-target="#profile2-tab-pane" type="button" role="tab" aria-controls="profile2-tab-pane" aria-selected="false">Direct Entry Information</button>
                                         </li>
-                                        {{-- <li class="nav-item" role="presentation">
-                                                    <button class="nav-link" id="contact-tab" data-bs-toggle="tab"
-                                                        data-bs-target="#contact-tab-pane" type="button" role="tab"
-                                                        aria-controls="contact-tab-pane"
-                                                        aria-selected="false">Academic Information</button>
-                                                </li>  --}}
-                                        {{-- <li class="nav-item" role="presentation">
-                                                    <button class="nav-link" id="contact2-tab" data-bs-toggle="tab"
-                                                        data-bs-target="#contact2-tab-pane" type="button" role="tab"
-                                                        aria-controls="contact2-tab-pane"
-                                                        aria-selected="false">Olevel</button>
-                                                </li>  --}}
+                                        
+                                        
                                         <li class="nav-item" role="presentation">
                                             <button class="nav-link text-success fw-bold text-capitalize" id="profile3-tab" data-bs-toggle="tab" data-bs-target="#profile3-tab-pane" type="button" role="tab" aria-controls="profile3-tab-pane" aria-selected="false">Uploaded Documents</button>
                                         </li>
@@ -74,10 +64,11 @@ exit;
                                     <div class="tab-content" id="myTabContent">
                                         <div class="tab-pane fade show active" id="home-tab-pane" role="tabpanel" aria-labelledby="home-tab" tabindex="0">
                                             <form method="POST" action="/editbiodata" enctype="multipart/form-data" class="p-3">
-                                                @csrf
-                                                  @if (session('signUpMsg'))
-                                                    {!! session('signUpMsg') !!}
-                                                    @endif
+                                                <?php echo csrf_field(); ?>
+                                                  <?php if(session('signUpMsg')): ?>
+                                                    <?php echo session('signUpMsg'); ?>
+
+                                                    <?php endif; ?>
                                                 <div class="item border-bottom py-3">
                                             <div class="row justify-content-between align-items-center">
                                                 <div class="col-auto">
@@ -86,7 +77,7 @@ exit;
                                                     </div>
                                                     <div class="rounded-circle">
                                                             <img class="rounded-circle p-3 mx-auto d-block"
-                                                                src="data:image/jpeg;base64,{{$applicantsDetails->passport }}"
+                                                                src="data:image/jpeg;base64,<?php echo e($applicantsDetails->passport); ?>"
                                                                 alt="Applicant Passport"
                                                                 style="height: 180px; width:200px;" />
                                                         </div>
@@ -94,40 +85,40 @@ exit;
                                             </div>
                                         </div>
 <div class="form-group">
-                                                    <label for="passport">{{ __('Upload Passport Photograph') }} </label>
+                                                    <label for="passport"><?php echo e(__('Upload Passport Photograph')); ?> </label>
 
                                                     <div class="form-group">
                                                         <input id="passport" type="file" class="form-control" name="passport">
                                                     </div>
                                                 </div>
-                                                <label for="">{{ __('Surname') }} </label>
+                                                <label for=""><?php echo e(__('Surname')); ?> </label>
                                                 <div class="form-group">
                                                     <div class="form-group">
-                                                        <input id="surname" type="text" class="form-control" name="surname" value="{{$applicantsDetails -> surname}}"  autofocus>
+                                                        <input id="surname" type="text" class="form-control" name="surname" value="<?php echo e($applicantsDetails -> surname); ?>"  autofocus>
 
 
                                                     </div>
                                                 </div>
                                                 <div class="form-group">
                                                     <div class="form-group">
-                                                        <label for="">{{ __('First Name') }} </label>
-                                                        <input id="first_name" type="text" class="form-control" name="first_name" value="{{ $applicantsDetails->first_name}}"  autofocus>
+                                                        <label for=""><?php echo e(__('First Name')); ?> </label>
+                                                        <input id="first_name" type="text" class="form-control" name="first_name" value="<?php echo e($applicantsDetails->first_name); ?>"  autofocus>
 
 
                                                     </div>
                                                 </div>
                                                 <div class="form-group">
                                                     <div class="form-group">
-                                                        <label for="">{{ __('Email') }} </label>
-                                                        <input id="email" type="email" class="form-control " name="email" value="{{ $applicantsDetails->email}}"  autofocus>
+                                                        <label for=""><?php echo e(__('Email')); ?> </label>
+                                                        <input id="email" type="email" class="form-control " name="email" value="<?php echo e($applicantsDetails->email); ?>"  autofocus>
 
 
                                                     </div>
                                                 </div>
                                                 <div class="form-group">
                                                     <div class="form-group">
-                                                        <label for="">{{ __('Phone') }} </label>
-                                                        <input id="phone" type="phone" class="form-control" name="phone" autocomplete="phone" value="{{ $applicantsDetails->phone}}"  autofocus>
+                                                        <label for=""><?php echo e(__('Phone')); ?> </label>
+                                                        <input id="phone" type="phone" class="form-control" name="phone" autocomplete="phone" value="<?php echo e($applicantsDetails->phone); ?>"  autofocus>
 
 
                                                     </div>
@@ -136,16 +127,16 @@ exit;
 
                                                 <div class="form-group">
                                                     <div class="form-group">
-                                                              <label for="">{{ __('Other Name') }} </label>
-                                                        <input id="middle_name" type="text" class="form-control" name="middle_name" value="{{ $applicantsDetails->middle_name}}" autofocus>
+                                                              <label for=""><?php echo e(__('Other Name')); ?> </label>
+                                                        <input id="middle_name" type="text" class="form-control" name="middle_name" value="<?php echo e($applicantsDetails->middle_name); ?>" autofocus>
                                                     </div>
                                                 </div>
 
                                                 <div class="form-group">
                                                     <div class="form-group">
-                                                      <label for="">{{ __('Gender') }} </label>
+                                                      <label for=""><?php echo e(__('Gender')); ?> </label>
                                                         <select class="form-select" name="gender">
-                                                            <option value="{{$applicantsDetails -> gender}}">{{$applicantsDetails -> gender}}</option>
+                                                            <option value="<?php echo e($applicantsDetails -> gender); ?>"><?php echo e($applicantsDetails -> gender); ?></option>
                                                             <option value="Male">Male</option>
                                                             <option value="Female">Female</option>
                                                         </select>
@@ -155,9 +146,9 @@ exit;
                                                 <div class="form-group">
 
                                                     <div class="form-group">
-                                                      <label for="">{{ __('Religion') }} </label>
+                                                      <label for=""><?php echo e(__('Religion')); ?> </label>
                                                         <select class="form-select" name="religion">
-                                                            <option value="{{$applicantsDetails -> religion}}">{{$applicantsDetails -> religion}}</option>
+                                                            <option value="<?php echo e($applicantsDetails -> religion); ?>"><?php echo e($applicantsDetails -> religion); ?></option>
                                                             <option value="Christian (Catholic)">Christian (Catholic)</option>
                                                             <option value="Christian (non-catholic)">Christian (non-catholic)</option>
                                                             <option value="Muslim">Muslim</option>
@@ -167,19 +158,19 @@ exit;
                                                 </div>
 
                                                 <div class="form-group">
-                                                    <label for="dob">{{ __('Date of Birth') }} </label>
+                                                    <label for="dob"><?php echo e(__('Date of Birth')); ?> </label>
 
                                                     <div class="form-group">
-                                                        <input id="dob" type="date" class="form-control" name="dob"  value="{{$applicantsDetails -> dob}}"required>
+                                                        <input id="dob" type="date" class="form-control" name="dob"  value="<?php echo e($applicantsDetails -> dob); ?>"required>
                                                     </div>
                                                 </div>
 
                                                <div class="form-group">
-                                                    <label for="refferal">{{ __('Nationality') }} </label>
+                                                    <label for="refferal"><?php echo e(__('Nationality')); ?> </label>
 
                                                     <div class="form-group">
                                                         <select class="form-select" name="nationality" id="nationality">
-                                                            <option value="{{$applicantsDetails-> nationality}}">{{$applicantsDetails-> nationality}}</option>
+                                                            <option value="<?php echo e($applicantsDetails-> nationality); ?>"><?php echo e($applicantsDetails-> nationality); ?></option>
                                                             <option value="Åland Islands">Åland Islands</option>
                                                             <option value="Albania">Albania</option>
                                                             <option value="Algeria">Algeria</option>
@@ -430,35 +421,35 @@ exit;
                                                 <div class="form-group">
 
                                                     <div class="form-group">
-                                                      <label for="">{{ __('State of Origin') }} </label>
-                                                        <input id="state_origin" type="text" class="form-control" name="state_origin"  value="{{$applicantsDetails-> state_origin}}">
+                                                      <label for=""><?php echo e(__('State of Origin')); ?> </label>
+                                                        <input id="state_origin" type="text" class="form-control" name="state_origin"  value="<?php echo e($applicantsDetails-> state_origin); ?>">
                                                     </div>
                                                 </div>
 
                                                 <div class="form-group">
 
                                                     <div class="form-group">
-                                                      <label for="">{{ __('Local Government Area') }} </label>
-                                                        <input id="lga" type="text" class="form-control" name="lga" value="{{$applicantsDetails-> lga}}">
+                                                      <label for=""><?php echo e(__('Local Government Area')); ?> </label>
+                                                        <input id="lga" type="text" class="form-control" name="lga" value="<?php echo e($applicantsDetails-> lga); ?>">
                                                     </div>
                                                 </div>
 
                                                 <div class="form-group">
 
                                                     <div class="form-group">
-                                                      <label for="">{{ __('Address') }} </label>
-                                                        <input id="address" type="text" class="form-control" name="address" value="{{$applicantsDetails-> address}}">
+                                                      <label for=""><?php echo e(__('Address')); ?> </label>
+                                                        <input id="address" type="text" class="form-control" name="address" value="<?php echo e($applicantsDetails-> address); ?>">
                                                     </div>
                                                 </div>
 
 
 
                                                 <div class="form-group">
-                                                    <label for="refferal">{{ __('How did you hear about us') }} </label>
+                                                    <label for="refferal"><?php echo e(__('How did you hear about us')); ?> </label>
 
                                                     <div class="form-group">
                                                         <select class="form-select" name="referral">
-                                                        <option value="{{$applicantsDetails-> referral}}">{{$applicantsDetails-> referral}}</option>
+                                                        <option value="<?php echo e($applicantsDetails-> referral); ?>"><?php echo e($applicantsDetails-> referral); ?></option>
                                                             <option value="Social Media"> Social Media</option>
                                                             <option value="Friend">From a friend</option>
                                                             <option value="Google">Google</option>
@@ -471,11 +462,10 @@ exit;
                                                 <div class="form-group">
                                                     <div class="form-group">
 
-                                                        {{--  @if (session('signUpMsg'))
-                                                        {!! session('signUpMsg') !!}
-                                                        @endif  --}}
+                                                        
                                                         <button type="submit" class="btn btn-success">
-                                                            {{ __('Update') }}
+                                                            <?php echo e(__('Update')); ?>
+
                                                         </button>
                                                     </div>
                                                 </div>
@@ -484,50 +474,49 @@ exit;
                                         </div>
                                         <div class="tab-pane fade" id="profile-tab-pane" role="tabpanel" aria-labelledby="profile-tab" tabindex="0">
 
-                                            {{-- 2nd table div  --}}
+                                            
                                             <form method="POST" action="/editsponsers" class="p-3">
-                                            @csrf
+                                            <?php echo csrf_field(); ?>
                                             <div class="form-group">
                                                 <div class="form-group">
-                                                    <label for="">{{ __(' Name') }} </label>
-                                                    <input id="fname" type="text" name="name" class="form-control" value="{{$applicantsDetails -> name}}" autofocus>
+                                                    <label for=""><?php echo e(__(' Name')); ?> </label>
+                                                    <input id="fname" type="text" name="name" class="form-control" value="<?php echo e($applicantsDetails -> name); ?>" autofocus>
                                                 </div>
                                             </div>
 
                                             <div class="form-group">
                                                 <div class="form-group">
-                                                    <label for="">{{ __('Phone No.') }} </label>
-                                                    <input id="phone" type="text" name="sponsors_phone" class="form-control" value="{{$applicantsDetails -> sponsors_phone}}" autofocus>
+                                                    <label for=""><?php echo e(__('Phone No.')); ?> </label>
+                                                    <input id="phone" type="text" name="sponsors_phone" class="form-control" value="<?php echo e($applicantsDetails -> sponsors_phone); ?>" autofocus>
                                                 </div>
                                             </div>
 
                                             <div class="form-group">
                                                 <div class="form-group">
-                                                    <label for="">{{ __('Sponsor email') }} </label>
-                                                    <input id="foccupation" type="text" name="sponsors_email" class="form-control" value="{{$applicantsDetails -> sponsors_email}}" autofocus>
+                                                    <label for=""><?php echo e(__('Sponsor email')); ?> </label>
+                                                    <input id="foccupation" type="text" name="sponsors_email" class="form-control" value="<?php echo e($applicantsDetails -> sponsors_email); ?>" autofocus>
                                                 </div>
                                             </div>
 
                                             <div class="form-group">
                                                 <div class="form-group">
-                                                    <label for="">{{ __('Address') }} </label>
-                                                    <input id="address" type="text" class="form-control" name="sponsors_address" value="{{$applicantsDetails -> sponsors_address}}">
+                                                    <label for=""><?php echo e(__('Address')); ?> </label>
+                                                    <input id="address" type="text" class="form-control" name="sponsors_address" value="<?php echo e($applicantsDetails -> sponsors_address); ?>">
                                                 </div>
                                             </div>
                                             <div class="form-group">
                                                 <div class="form-group">
-                                                    <label for="">{{ __(' Occupation') }} </label>
-                                                    <input id="foccupation" type="text" name="occupation" class="form-control" value="{{$applicantsDetails -> occupation}}" autofocus>
+                                                    <label for=""><?php echo e(__(' Occupation')); ?> </label>
+                                                    <input id="foccupation" type="text" name="occupation" class="form-control" value="<?php echo e($applicantsDetails -> occupation); ?>" autofocus>
                                                 </div>
 
                                                 <div class="form-group">
                                                     <div class="form-group">
 
-                                                        {{-- @if (session('signUpMsg'))
-                                                                {!! session('signUpMsg') !!}
-                                                            @endif  --}}
+                                                        
                                                         <button type="submit" class="btn btn-success">
-                                                            {{ __('Update') }}
+                                                            <?php echo e(__('Update')); ?>
+
                                                         </button>
                                                     </div>
                                                 </div>
@@ -536,20 +525,34 @@ exit;
                                     </div>
                                     <div class="tab-pane fade" id="profile4-tab-pane" role="tabpanel" aria-labelledby="profile4-tab" tabindex="0">
 
-                                            {{-- 2nd table div  --}}
+                                            
                     <form method="POST" action="/editpassword" class="p-3">
-                                        @csrf
-                                          <input id="email" type="hidden" class="form-input form-control"  name="email" value="{{$applicantsDetails -> email}}">
+                                        <?php echo csrf_field(); ?>
+                                          <input id="email" type="hidden" class="form-input form-control"  name="email" value="<?php echo e($applicantsDetails -> email); ?>">
 
                                         <div class="form-group">
                                             <div class="form-group">
-                                                <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required placeholder="New Password" autocomplete="new-password">
+                                                <input id="password" type="password" class="form-control <?php $__errorArgs = ['password'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?> is-invalid <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>" name="password" required placeholder="New Password" autocomplete="new-password">
 
-                                                @error('password')
+                                                <?php $__errorArgs = ['password'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?>
                                                 <span class="invalid-feedback" role="alert">
-                                                    <strong>{{ $message }}</strong>
+                                                    <strong><?php echo e($message); ?></strong>
                                                 </span>
-                                                @enderror
+                                                <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>
                                             </div>
                                         </div>
 
@@ -562,33 +565,32 @@ exit;
                                         <div class="form-group">
                                             <div class="form-group">
 
-                                                {{-- @if (session('signUpMsg'))
-                                                                {!! session('signUpMsg') !!}
-                                                            @endif  --}}
+                                                
                                                 <button type="submit" class="btn btn-success">
-                                                    {{ __('Update') }}
+                                                    <?php echo e(__('Update')); ?>
+
                                                 </button>
                                             </div>
                                         </div>
                                     </form>
                                         </div>
                                     <div class="tab-pane fade" id="profile2-tab-pane" role="tabpanel" aria-labelledby="profile2-tab" tabindex="0">
-                                        {{-- 3rd div  --}}
+                                        
 
                                         <form method="POST" action="/editdeinformation" class="p-3">
-                                            @csrf
+                                            <?php echo csrf_field(); ?>
 
                                             <div class="form-group">
 
                                                 <div class="form-group">
-                                                 <label for="refferal">{{ __('Jamb DE No.') }} </label>
-                                                    <input id="score" type="text" name="jamb_de_no" class="form-control" value="{{$applicantsDetails -> jamb_de_no}}">
+                                                 <label for="refferal"><?php echo e(__('Jamb DE No.')); ?> </label>
+                                                    <input id="score" type="text" name="jamb_de_no" class="form-control" value="<?php echo e($applicantsDetails -> jamb_de_no); ?>">
                                                 </div>
                                             </div>
                                             <div class="form-group">
- <label for="refferal">{{ __('Qualification') }} </label>
+ <label for="refferal"><?php echo e(__('Qualification')); ?> </label>
                                                 <select class="form-select" name="qualification">
-                                                    <option value="{{$applicantsDetails -> qualification}}">{{$applicantsDetails -> qualification}} </option>
+                                                    <option value="<?php echo e($applicantsDetails -> qualification); ?>"><?php echo e($applicantsDetails -> qualification); ?> </option>
                                                     <option value="ALEVEL">ALEVEL</option>
                                                     <option value="IJMB">IJMB</option>
                                                     <option value="JUPEB">JUPEB</option>
@@ -600,13 +602,13 @@ exit;
                                             </div>
                                             <div class="form-group">
                                                 <div class="form-group">
-                                                    <label for="refferal">{{ __('Course of Study') }} </label>
+                                                    <label for="refferal"><?php echo e(__('Course of Study')); ?> </label>
                                                     <select class="form-select" name="course_applied">
-                                                    <option value="{{$applicantsDetails -> course_applied}}">{{$applicantsDetails -> course_applied}}</option>
-                                                        @foreach($programs as $program)
+                                                    <option value="<?php echo e($applicantsDetails -> course_applied); ?>"><?php echo e($applicantsDetails -> course_applied); ?></option>
+                                                        <?php $__currentLoopData = $programs; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $program): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
 
-                                                        <option value="{{$program->name}}">{{$program->name}}</option>
-                                                        @endforeach
+                                                        <option value="<?php echo e($program->name); ?>"><?php echo e($program->name); ?></option>
+                                                        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                                                     </select>
 
                                                 </div>
@@ -614,14 +616,14 @@ exit;
                                             <div class="form-group">
 
                                                 <div class="form-group">
-                                                  <label for="refferal">{{ __('Year Qaulification was Obtained') }} </label>
-                                                    <input id="first_choice" type="text" name="qualification_year" class="form-control" value="{{$applicantsDetails -> qualification_year}}" autofocus>
+                                                  <label for="refferal"><?php echo e(__('Year Qaulification was Obtained')); ?> </label>
+                                                    <input id="first_choice" type="text" name="qualification_year" class="form-control" value="<?php echo e($applicantsDetails -> qualification_year); ?>" autofocus>
                                                 </div>
                                             </div>
                                             <div class="form-group">
-                                              <label for="refferal">{{ __('Qaulification No.') }} </label>
+                                              <label for="refferal"><?php echo e(__('Qaulification No.')); ?> </label>
                                                 <div class="form-group">
-                                                    <input id="second_choice" type="text" name="qualification_number" class="form-control" value="{{$applicantsDetails -> qualification_number}}" autofocus>
+                                                    <input id="second_choice" type="text" name="qualification_number" class="form-control" value="<?php echo e($applicantsDetails -> qualification_number); ?>" autofocus>
                                                 </div>
                                             </div>
 
@@ -629,11 +631,10 @@ exit;
                                             <div class="form-group">
                                                 <div class="form-group">
 
-                                                    {{--  @if (session('signUpMsg'))
-                                                    {!! session('signUpMsg') !!}
-                                                    @endif  --}}
+                                                    
                                                     <button type="submit" class="btn btn-success">
-                                                        {{ __('Update') }}
+                                                        <?php echo e(__('Update')); ?>
+
                                                     </button>
                                                 </div>
                                             </div>
@@ -643,15 +644,17 @@ exit;
                                     <div class="tab-pane fade" id="profile3-tab-pane" role="tabpanel" aria-labelledby="profile3-tab" tabindex="0">
                                         <form method="POST" action="/editutmeuploads"enctype="multipart/form-data"
                                         class="p-3">
-                                        @csrf
+                                        <?php echo csrf_field(); ?>
 
 
                                         <div class="form-group">
 
-                                            @if (session('statusMsg'))
-                                                {!! session('statusMsg') !!}
-                                            @endif
-                                            <label for="passport">{{ __('Edit jamb Result') }}
+                                            <?php if(session('statusMsg')): ?>
+                                                <?php echo session('statusMsg'); ?>
+
+                                            <?php endif; ?>
+                                            <label for="passport"><?php echo e(__('Edit jamb Result')); ?>
+
                                             </label>
 
                                             <div class="form-group">
@@ -660,29 +663,12 @@ exit;
                                             </div>
                                         </div>
 
-                                        {{--  <div class="form-check mb-3">
-                                            <input class="form-check-input" type="checkbox"
-                                                name="olevel_awaiting" value="Awaiting Result"
-                                                id="flexCheckDefault">
-                                            <label class="form-check-label" for="flexCheckDefault">
-                                                Awaiting Result
-                                            </label>
-                                        </div>  --}}
+                                        
 
-                                        {{--  <div class="item border-bottom py-3">
-                                            <div class="row justify-content-between align-items-center">
-                                                <div class="col-auto">
-                                                    <div class="item-label mb-2">
-                                                        Photo
-                                                    </div>
-                                                    <div class="rounded-circle">
-                                                        <img class="rounded-circle p-3 mx-auto d-block" src="data:image/{{ $applicantsDetails ->olevel1_type }};base64,{{ base64_encode($applicantsDetails ->olevel1) }}" alt="Applicant Passport" style="height: 180px; width:200px;" />
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>  --}}
+                                        
                                         <div class="form-group">
-                                            <label for="passport">{{ __('Edit Olevel Result') }}
+                                            <label for="passport"><?php echo e(__('Edit Olevel Result')); ?>
+
                                             </label>
 
                                             <div class="form-group">
@@ -690,18 +676,7 @@ exit;
                                                     name="olevel1">
                                             </div>
                                         </div>
-                                        {{--  <div class="item border-bottom py-3">
-                                            <div class="row justify-content-between align-items-center">
-                                                <div class="col-auto">
-                                                    <div class="item-label mb-2">
-                                                        Photo
-                                                    </div>
-                                                    <div class="rounded-circle">
-                                                        <img class="rounded-circle p-3 mx-auto d-block" src="data:image/{{ $applicantsDetails ->olevel2_type }};base64,{{ base64_encode($applicantsDetails ->olevel2) }}" alt="Applicant Passport" style="height: 180px; width:200px;" />
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>  --}}
+                                        
                                         <div class="form-group">
 
                                             <p>Edit Olevel Result  <b class="text-danger">(  if any)</b></p>
@@ -713,417 +688,18 @@ exit;
                                         <div class="form-group">
                                             <div class="form-group">
 
-                                                {{-- @if (session('signUpMsg'))
-                                                    {!! session('signUpMsg') !!}
-                                                @endif --}}
+                                                
                                                 <button type="submit" class="btn btn-success">
-                                                    {{ __('update') }}
+                                                    <?php echo e(__('update')); ?>
+
                                                 </button>
                                             </div>
                                         </div>
                                     </form>
-                                        {{--  <form method="POST" action="/editolevel" enctype="multipart/form-data" class="p-3">
-                                            @csrf
-<p class="fw-bold text-warning">Please to Edit your olevel result kindly Submit result again</p <br>
+                                        
 
-                                            <div class="form-grop sbj1 mt-3">
-                                                <div class="btn-group">
-<select class="form-select bg-light mx-1"                name="subject_1" >
-                                                        <option selected value="General Mathematics" selected class="bg-secondary">General Mathematics</option readonly>
-                                                        @foreach($subjects as $subject)
-
-                                                        <option disabled>{{$subject->subject_name}}</option>
-                                                        @endforeach
-                                                    </select>
-
-
-                                                    <select class="form-select mx-1" name="exam_1">
-                                                        <option disabled selected>Exam </option>
-                                                        <option value="WAEC">WAEC</option>
-                                                        <option value="NECO">NECO</option>
-                                                        <option value="SSCE">SSCE</option>
-                                                        <option value="NABTEB">NABTEB</option>
-                                                    </select>
-                                                    <select class="form-select" name="grade_1">
-                                                        <option disabled selected>Grade</option>
-                                                        <option value="A1">A1</option>
-                                                        <option value="B2">B2</option>
-                                                        <option value="B3">B3</option>
-                                                        <option value="C4">C4</option>
-                                                        <option value="C5">C5</option>
-                                                        <option value="C6">C6</option>
-                                                        <option value="D7">D7</option>
-                                                        <option value="E8">E8</option>
-                                                        <option value="F9">F9</option>
-                                                    </select>
-                                                </div>
-                                            </div>
-                                            <div class="form-grop sbj2 mt-3">
-                                                <div class="btn-group">
-
-                                                     <select class="form-select bg-light mx-1"                name="subject_2" >
-                                                        <option selected value="English Language" selected class="bg-secondary">English Language</option readonly>
-                                                        @foreach($subjects as $subject)
-
-                                                        <option disabled>{{$subject->subject_name}}</option>
-                                                        @endforeach
-                                                    </select>
-
-                                                    <select class="form-select mx-1" name="exam_2">
-                                                        <option disabled selected>Exam </option>
-                                                        <option value="WAEC">WAEC</option>
-                                                        <option value="NECO">NECO</option>
-                                                        <option value="SSCE">SSCE</option>
-                                                        <option value="NABTEB">NABTEB</option>
-                                                    </select>
-                                                    <select class="form-select" name="grade_2">
-                                                        <option disabled selected>Grade</option>
-                                                        <option value="A1">A1</option>
-                                                        <option value="B2">B2</option>
-                                                        <option value="B3">B3</option>
-                                                        <option value="C4">C4</option>
-                                                        <option value="C5">C5</option>
-                                                        <option value="C6">C6</option>
-                                                        <option value="D7">D7</option>
-                                                        <option value="E8">E8</option>
-                                                        <option value="F9">F9</option>
-                                                    </select>
-                                                </div>
-                                            </div>
-                                            <div class="form-grop sbj3 mt-3">
-                                                <div class="btn-group">
-
-                                                    <select class="form-select mx-1" name="subject_3">
-                                                        <option disabled selected>Select Subject</option>
-                                                        @foreach($subjects as $subject)
-
-                                                        <option value="{{$subject->subject_name}}">{{$subject->subject_name}}</option>
-                                                        @endforeach
-                                                    </select>
-                                                    <select class="form-select mx-1" name="exam_3">
-                                                        <option disabled selected>Exam </option>
-                                                        <option value="WAEC">WAEC</option>
-                                                        <option value="NECO">NECO</option>
-                                                        <option value="SSCE">SSCE</option>
-                                                        <option value="NABTEB">NABTEB</option>
-                                                    </select>
-                                                    <select class="form-select" name="grade_3">
-                                                        <option disabled selected>Grade</option>
-                                                        <option value="A1">A1</option>
-                                                        <option value="B2">B2</option>
-                                                        <option value="B3">B3</option>
-                                                        <option value="C4">C4</option>
-                                                        <option value="C5">C5</option>
-                                                        <option value="C6">C6</option>
-                                                        <option value="D7">D7</option>
-                                                        <option value="E8">E8</option>
-                                                        <option value="F9">F9</option>
-                                                    </select>
-                                                </div>
-                                            </div>
-                                            <div class="form-grop sbj4 mt-3">
-                                                <div class="btn-group">
-
-                                                    <select class="form-select mx-1" name="subject_4">
-                                                        <option disabled selected>Select Subject</option>
-                                                        @foreach($subjects as $subject)
-
-                                                        <option value="{{$subject->subject_name}}">{{$subject->subject_name}}</option>
-                                                        @endforeach
-                                                    </select>
-                                                    <select class="form-select mx-1" name="exam_4">
-                                                        <option disabled selected>Exam </option>
-                                                        <option value="WAEC">WAEC</option>
-                                                        <option value="NECO">NECO</option>
-                                                        <option value="SSCE">SSCE</option>
-                                                        <option value="NABTEB">NABTEB</option>
-                                                    </select>
-                                                    <select class="form-select" name="grade_4">
-                                                        <option disabled selected>Grade</option>
-                                                        <option value="A1">A1</option>
-                                                        <option value="B2">B2</option>
-                                                        <option value="B3">B3</option>
-                                                        <option value="C4">C4</option>
-                                                        <option value="C5">C5</option>
-                                                        <option value="C6">C6</option>
-                                                        <option value="D7">D7</option>
-                                                        <option value="E8">E8</option>
-                                                        <option value="F9">F9</option>
-                                                    </select>
-                                                </div>
-                                            </div>
-                                            <div class="form-grop sbj5 mt-3">
-                                                <div class="btn-group">
-
-                                                    <select class="form-select mx-1" name="subject_5">
-                                                        <option disabled selected>Select Subject</option>
-                                                        @foreach($subjects as $subject)
-
-                                                        <option value="{{$subject->subject_name}}">{{$subject->subject_name}}</option>
-                                                        @endforeach
-                                                    </select>
-                                                    <select class="form-select mx-1" name="exam_5">
-                                                        <option disabled selected>Exam </option>
-                                                        <option value="WAEC">WAEC</option>
-                                                        <option value="NECO">NECO</option>
-                                                        <option value="SSCE">SSCE</option>
-                                                        <option value="NABTEB">NABTEB</option>
-                                                    </select>
-                                                    <select class="form-select mx-1" name="grade_5">
-                                                        <option disabled selected>Grade</option>
-                                                        <option value="A1">A1</option>
-                                                        <option value="B2">B2</option>
-                                                        <option value="B3">B3</option>
-                                                        <option value="C4">C4</option>
-                                                        <option value="C5">C5</option>
-                                                        <option value="C6">C6</option>
-                                                        <option value="D7">D7</option>
-                                                        <option value="E8">E8</option>
-                                                        <option value="F9">F9</option>
-                                                    </select>
-                                                </div>
-                                            </div>
-                                            <div class="form-grop sbj6 mt-3">
-                                                <div class="btn-group">
-
-                                                    <select class="form-select mx-1" name="subject_6">
-                                                        <option disabled selected>Select Subject</option>
-                                                        @foreach($subjects as $subject)
-
-                                                        <option value="{{$subject->subject_name}}">{{$subject->subject_name}}</option>
-                                                        @endforeach
-                                                    </select>
-                                                    <select class="form-select mx-1" name="exam_6">
-                                                        <option disabled selected>Exam </option>
-                                                        <option value="WAEC">WAEC</option>
-                                                        <option value="NECO">NECO</option>
-                                                        <option value="SSCE">SSCE</option>
-                                                        <option value="NABTEB">NABTEB</option>
-                                                    </select>
-                                                    <select class="form-select " name="grade_6">
-                                                        <option disabled selected>Grade</option>
-                                                        <option value="A1">A1</option>
-                                                        <option value="B2">B2</option>
-                                                        <option value="B3">B3</option>
-                                                        <option value="C4">C4</option>
-                                                        <option value="C5">C5</option>
-                                                        <option value="C6">C6</option>
-                                                        <option value="D7">D7</option>
-                                                        <option value="E8">E8</option>
-                                                        <option value="F9">F9</option>
-                                                    </select>
-                                                </div>
-                                            </div>
-                                            <div class="form-grop sbj7 mt-3">
-                                                <div class="btn-group">
-
-                                                    <select class="form-select mx-1" name="subject_7">
-                                                        <option disabled selected>Select Subject</option>
-                                                        @foreach($subjects as $subject)
-
-                                                        <option value="{{$subject->subject_name}}">{{$subject->subject_name}}</option>
-                                                        @endforeach
-                                                    </select>
-                                                    <select class="form-select mx-1" name="exam_7">
-                                                        <option disabled selected>Exam </option>
-                                                        <option value="WAEC">WAEC</option>
-                                                        <option value="NECO">NECO</option>
-                                                        <option value="SSCE">SSCE</option>
-                                                        <option value="NABTEB">NABTEB</option>
-                                                    </select>
-                                                    <select class="form-select" name="grade_7">
-                                                        <option disabled selected>Grade</option>
-                                                        <option value="A1">A1</option>
-                                                        <option value="B2">B2</option>
-                                                        <option value="B3">B3</option>
-                                                        <option value="C4">C4</option>
-                                                        <option value="C5">C5</option>
-                                                        <option value="C6">C6</option>
-                                                        <option value="D7">D7</option>
-                                                        <option value="E8">E8</option>
-                                                        <option value="F9">F9</option>
-                                                    </select>
-                                                </div>
-                                            </div>
-                                            <div class="form-grop sbj8 mt-3">
-                                                <div class="btn-group">
-
-                                                    <select class="form-select mx-1" name="subject_8">
-                                                        <option disabled selected>Select Subject</option>
-                                                        @foreach($subjects as $subject)
-
-                                                        <option value="{{$subject->subject_name}}">{{$subject->subject_name}}</option>
-                                                        @endforeach
-                                                    </select>
-                                                    <select class="form-select mx-1" name="exam_8">
-                                                        <option disabled selected>Exam </option>
-                                                        <option value="WAEC">WAEC</option>
-                                                        <option value="NECO">NECO</option>
-                                                        <option value="SSCE">SSCE</option>
-                                                        <option value="NABTEB">NABTEB</option>
-                                                    </select>
-                                                    <select class="form-select" name="grade_8">
-                                                        <option disabled selected>Grade</option>
-                                                        <option value="A1">A1</option>
-                                                        <option value="B2">B2</option>
-                                                        <option value="B3">B3</option>
-                                                        <option value="C4">C4</option>
-                                                        <option value="C5">C5</option>
-                                                        <option value="C6">C6</option>
-                                                        <option value="D7">D7</option>
-                                                        <option value="E8">E8</option>
-                                                        <option value="F9">F9</option>
-                                                    </select>
-                                                </div>
-                                            </div>
-                                            <div class="form-grop sbj9 mt-3">
-                                                <div class="btn-group">
-
-                                                    <select class="form-select mx-1" name="subject_9">
-                                                        <option disabled selected>Select Subject</option>
-                                                        @foreach($subjects as $subject)
-
-                                                        <option value="{{$subject->subject_name}}">{{$subject->subject_name}}</option>
-                                                        @endforeach
-                                                    </select>
-                                                    <select class="form-select mx-1" name="exam_9">
-                                                        <option disabled selected>Exam </option>
-                                                        <option value="WAEC">WAEC</option>
-                                                        <option value="NECO">NECO</option>
-                                                        <option value="SSCE">SSCE</option>
-                                                        <option value="NABTEB">NABTEB</option>
-                                                    </select>
-                                                    <select class="form-select" name="grade_9">
-                                                        <option disabled selected>Grade</option>
-                                                        <option value="A1">A1</option>
-                                                        <option value="B2">B2</option>
-                                                        <option value="B3">B3</option>
-                                                        <option value="C4">C4</option>
-                                                        <option value="C5">C5</option>
-                                                        <option value="C6">C6</option>
-                                                        <option value="D7">D7</option>
-                                                        <option value="E8">E8</option>
-                                                        <option value="F9">F9</option>
-                                                    </select>
-                                                </div>
-                                            </div>
-                                            <div class="form-grop sbj10 mt-3">
-                                                <div class="btn-group">
-
-                                                    <select class="form-select mx-1" name="subject_10">
-                                                        <option disabled selected>Select Subject</option>
-                                                        @foreach($subjects as $subject)
-
-                                                        <option value="{{$subject->subject_name}}">{{$subject->subject_name}}</option>
-                                                        @endforeach
-                                                    </select>
-                                                    <select class="form-select mx-1" name="exam_10">
-                                                        <option disabled selected>Exam </option>
-                                                        <option value="WAEC">WAEC</option>
-                                                        <option value="NECO">NECO</option>
-                                                        <option value="SSCE">SSCE</option>
-                                                        <option value="NABTEB">NABTEB</option>
-                                                    </select>
-                                                    <select class="form-select" name="grade_10">
-                                                        <option disabled selected>Grade</option>
-                                                        <option value="A1">A1</option>
-                                                        <option value="B2">B2</option>
-                                                        <option value="B3">B3</option>
-                                                        <option value="C4">C4</option>
-                                                        <option value="C5">C5</option>
-                                                        <option value="C6">C6</option>
-                                                        <option value="D7">D7</option>
-                                                        <option value="E8">E8</option>
-                                                        <option value="F9">F9</option>
-                                                    </select>
-                                                </div>
-                                            </div>
-                                            <div class="form-grop sbj11 mt-3">
-                                                <div class="btn-group">
-
-                                                    <select class="form-select mx-1" name="subject_11">
-                                                        <option disabled selected>Select Subject</option>
-                                                        @foreach($subjects as $subject)
-
-                                                        <option value="{{$subject->subject_name}}">{{$subject->subject_name}}</option>
-                                                        @endforeach
-                                                    </select>
-                                                    <select class="form-select mx-1" name="exam_11">
-                                                        <option disabled selected>Exam </option>
-                                                        <option value="WAEC">WAEC</option>
-                                                        <option value="NECO">NECO</option>
-                                                        <option value="SSCE">SSCE</option>
-                                                        <option value="NABTEB">NABTEB</option>
-                                                    </select>
-                                                    <select class="form-select" name="grade_11">
-                                                        <option disabled selected>Grade</option>
-                                                        <option value="A1">A1</option>
-                                                        <option value="B2">B2</option>
-                                                        <option value="B3">B3</option>
-                                                        <option value="C4">C4</option>
-                                                        <option value="C5">C5</option>
-                                                        <option value="C6">C6</option>
-                                                        <option value="D7">D7</option>
-                                                        <option value="E8">E8</option>
-                                                        <option value="F9">F9</option>
-                                                    </select>
-                                                </div>
-                                            </div>
-                                            <div class="form-grop sbj12 mt-3">
-                                                <div class="btn-group">
-
-                                                    <select class="form-select mx-1" name="subject_12">
-                                                        <option disabled selected>Select Subject</option>
-                                                        @foreach($subjects as $subject)
-
-                                                        <option value="{{$subject->subject_name}}">{{$subject->subject_name}}</option>
-                                                        @endforeach
-                                                    </select>
-                                                    <select class="form-select mx-1" name="exam_12">
-                                                        <option disabled selected>Exam </option>
-                                                        <option value="WAEC">WAEC</option>
-                                                        <option value="NECO">NECO</option>
-                                                        <option value="SSCE">SSCE</option>
-                                                        <option value="NABTEB">NABTEB</option>
-                                                    </select>
-                                                    <select class="form-select" name="grade_12">
-                                                        <option disabled selected>Grade</option>
-                                                        <option value="A1">A1</option>
-                                                        <option value="B2">B2</option>
-                                                        <option value="B3">B3</option>
-                                                        <option value="C4">C4</option>
-                                                        <option value="C5">C5</option>
-                                                        <option value="C6">C6</option>
-                                                        <option value="D7">D7</option>
-                                                        <option value="E8">E8</option>
-                                                        <option value="F9">F9</option>
-                                                    </select>
-                                                </div>
-
-                                                <div class="form-group">
-                                                    <label for="refferal">{{ __('Number of Sittings') }} </label>
-
-                                                    <div class="form-group col-10">
-                                                        <select class="form-select" name="sitting">
-                                                            <option value=1>1</option>
-                                                            <option value=2>2</option>
-                                                            <option value=3>3</option>
-                                                        </select>
-                                                    </div>
-                                                </div>
-
-                                                <div class="form-group">
-                                                    <div class="form-group">  --}}
-
-                                                        {{--  @if (session('signUpMsg'))
-                                                        {!! session('signUpMsg') !!}
-                                                        @endif  --}}
-                                                        {{--  <button type="submit" class="btn btn-success">
-                                                            {{ __('Submit') }}
-                                                        </button>
-                                                    </div>
-                                                </div>
-                                        </form>  --}}
+                                                        
+                                                        
                                     </div>
                                 </div>
 
@@ -1139,13 +715,15 @@ exit;
             <!-- End of Main Content -->
 
             <!-- Footer -->
-            @include('layouts.footer')
+            <?php echo $__env->make('layouts.footer', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
             <!-- End of Footer -->
 
         </div>
         <!-- End of Content Wrapper -->
     </div>
 </div>
-{{-- JAVASCRIPT FOR DOING THE MOST  --}}
 
-@endsection
+
+<?php $__env->stopSection(); ?>
+
+<?php echo $__env->make('layouts.userapp', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH /Users/lifeofrence/Documents/laraproject/resources/views/admissions//editDE.blade.php ENDPATH**/ ?>

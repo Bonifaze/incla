@@ -281,7 +281,7 @@ if (!session('userid')) {
                                                         <div class="">
 
                                                             <img class=" mx-auto d-block"
-                                                                src="data:image/{{ $applicantsDetails->olevel2_type }};base64,{{ base64_encode($applicantsDetails->olevel2) }}"
+                                                                        src="data:image/jpeg;base64,{{$applicantsDetails->olevel2}}"
                                                                 alt="Olevel second sitting"
                                                                 style="height: 500px; width:400px;" />
                                                         </div>

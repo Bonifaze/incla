@@ -2,28 +2,27 @@
 
 namespace App\Http\Controllers;
 
-use Exception;
+use App\Category;
 use App\FeeType;
 //use App\program;
-use App\Program;
-use App\Category;
-use App\subjects;
-use Carbon\Carbon;
-use App\Mail\Referee;
-use App\Models\Remitas;
-use App\Models\fee_types;
+use App\Http\Controllers\Controller;
 use App\Mail\Confirmsignup;
 use App\Mail\forgotpassword;
-use Illuminate\Http\Request;
+use App\Mail\Referee;
 use App\Models\admissionType;
-use Illuminate\Support\Facades\DB;
-use App\Http\Controllers\Controller;
 use App\Models\CountryCodes;
+use App\Models\fee_types;
+use App\Models\Remitas;
+use App\Program;
+use App\subjects;
+use Carbon\Carbon;
+use Exception;
+use Illuminate\Database\QueryException;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
-use Illuminate\Database\QueryException;
 use Intervention\Image\ImageManagerStatic as Image;
-
 
 //use Intervention\Image\ImageManagerStatic as Image;
 
@@ -38,7 +37,6 @@ class ApplicantController extends Controller
         $currentadmissionsession = $ses;
         return $currentadmissionsession;
     }
-
 
     //Mail base URL
     public function getBaseurl()
@@ -63,7 +61,7 @@ class ApplicantController extends Controller
                     'middile_name' => $req->middile_name,
                     'phone' => $req->phone,
                     'email' => $req->email,
-                    'session_id'=>$this->getCurrentAdmissionSession(),
+                    'session_id' => $this->getCurrentAdmissionSession(),
                     //Hash::make to encrpty or hash the password
                     'password' => Hash::make($req->password),
 
@@ -309,7 +307,8 @@ class ApplicantController extends Controller
     // END OF LOGOUT FUNCTION
 
     // HOME FUNCTION PASSING PARAMETER USEFUL FOR THE BLADE
-    public function sidebaradmission(){
+    public function sidebaradmission()
+    {
         $admissiontype = admissionType::where('status', 1)->orderBy('id', 'ASC')->paginate(20);
         return redirect('adminsials.sidebar', compact('admissiontype'));
     }
@@ -355,7 +354,7 @@ class ApplicantController extends Controller
             ->select('users.surname', 'users.first_name', 'users.middle_name', 'users.phone', 'users.email', 'usersbiodata.status', )->first();
         $programs = Program::orderBy('name', 'ASC')->get();
         $subjects = subjects::orderBy('subject_name', 'ASC')->get();
-        $country = CountryCodes::orderByRaw("CASE WHEN countryname = 'Nigeria' THEN -1 ELSE countryname END")->pluck('countryname', 'countryname' );
+        $country = CountryCodes::orderByRaw("CASE WHEN countryname = 'Nigeria' THEN -1 ELSE countryname END")->pluck('countryname', 'countryname');
 
         $utmeremita = DB::table('users')->where('users.id', session('userid')) //-> where('remitas.status_code', '01')
             ->leftJoin('usersbiodata', 'usersbiodata.user_id', '=', 'users.id')
@@ -364,7 +363,7 @@ class ApplicantController extends Controller
 
         foreach ($utmeremita as $utm) {
             if ($utm->status_code == '01' && $utm->fee_type == 'Application Fee (Under Graduate) (₦4500)') {
-                return view('admissions./utme', compact('utme', 'utmeremita','admissiontype'), ['programs' => $programs, 'subjects' => $subjects, 'country' => $country]);
+                return view('admissions./utme', compact('utme', 'utmeremita', 'admissiontype'), ['programs' => $programs, 'subjects' => $subjects, 'country' => $country]);
             }
         }
         $signUpMsg = '<div class="alert alert-success text-align-center alert-dismissible"><button type="button" class="close" data-dismiss="alert">&times;</button><strong>You Have to make payment before filling out your application form, Please kindly generate RRR to continue</strong></div>';
@@ -733,8 +732,9 @@ class ApplicantController extends Controller
         $de = DB::table('users')->where('users.id', session('userid')) //-> where('remitas.status_code', '01')
             ->leftJoin('usersbiodata', 'usersbiodata.user_id', '=', 'users.id')
         //->leftJoin('remitas', 'remitas.user_id', '=', 'users.id')
-            ->select('users.surname', 'users.first_name', 'users.phone', 'users.email', 'usersbiodata.status', )->first();
+            ->select('users.surname', 'users.first_name', 'users.phone', 'users.middle_name', 'users.email', 'usersbiodata.status', )->first();
         $programs = Program::orderBy('name', 'ASC')->get();
+        $country = CountryCodes::orderByRaw("CASE WHEN countryname = 'Nigeria' THEN -1 ELSE countryname END")->pluck('countryname', 'countryname');
         $subjects = subjects::orderBy('subject_name', 'ASC')->get();
         $deremita = DB::table('users')->where('users.id', session('userid')) //-> where('remitas.status_code', '01')
             ->leftJoin('usersbiodata', 'usersbiodata.user_id', '=', 'users.id')
@@ -743,7 +743,7 @@ class ApplicantController extends Controller
 
         foreach ($deremita as $der) {
             if ($der->status_code == '01' && $der->fee_type == 'Application Fee (Under Graduate) (₦4500)') {
-                return view('admissions./de', compact('de', 'deremita'), ['programs' => $programs, 'subjects' => $subjects]);
+                return view('admissions./de', compact('de', 'deremita'), ['programs' => $programs, 'subjects' => $subjects, 'country' => $country]);
             }
         }
         $signUpMsg = '<div class="alert alert-success text-align-center alert-dismissible"><button type="button" class="close" data-dismiss="alert">&times;</button><strong>You Have to make payment before filling out your application form, Please kindly generate RRR to continue</strong></div>';
@@ -757,8 +757,9 @@ class ApplicantController extends Controller
         $transfers = DB::table('users')->where('users.id', session('userid')) //-> where('remitas.status_code', '01')
             ->leftJoin('usersbiodata', 'usersbiodata.user_id', '=', 'users.id')
         // ->leftJoin('remitas', 'remitas.user_id', '=', 'users.id')
-            ->select('users.surname', 'users.first_name', 'users.phone', 'users.email', 'usersbiodata.status')->first();
+            ->select('users.surname', 'users.first_name', 'users.phone', 'users.middle_name', 'users.email', 'usersbiodata.status')->first();
         $programs = Program::orderBy('name', 'ASC')->get();
+        $country = CountryCodes::orderByRaw("CASE WHEN countryname = 'Nigeria' THEN -1 ELSE countryname END")->pluck('countryname', 'countryname');
         $subjects = subjects::orderBy('subject_name', 'ASC')->get();
 
         $transfersremita = DB::table('users')->where('users.id', session('userid')) //-> where('remitas.status_code', '01')
@@ -768,7 +769,7 @@ class ApplicantController extends Controller
 
         foreach ($transfersremita as $utm) {
             if ($utm->status_code == '01' && $utm->fee_type == 'Application Fee (Under Graduate) (₦4500)') {
-                return view('admissions./transfers', compact('transfers', 'transfersremita'), ['programs' => $programs, 'subjects' => $subjects]);
+                return view('admissions./transfers', compact('transfers', 'transfersremita'), ['programs' => $programs, 'subjects' => $subjects, 'country' => $country]);
             }
         }
 
@@ -783,8 +784,9 @@ class ApplicantController extends Controller
         $pg = DB::table('users')->where('users.id', session('userid')) //-> where('remitas.status_code', '01')
             ->leftJoin('usersbiodata', 'usersbiodata.user_id', '=', 'users.id')
         //  ->leftJoin('remitas', 'remitas.user_id', '=', 'users.id')
-            ->select('users.surname', 'users.first_name', 'users.phone', 'users.email', 'usersbiodata.status', )->first();
+            ->select('users.surname', 'users.first_name', 'users.phone', 'users.middle_name', 'users.email', 'usersbiodata.status', )->first();
         $programs = Program::orderBy('name', 'ASC')->get();
+        $country = CountryCodes::orderByRaw("CASE WHEN countryname = 'Nigeria' THEN -1 ELSE countryname END")->pluck('countryname', 'countryname');
         $subjects = subjects::orderBy('subject_name', 'ASC')->get();
         $pgremita = DB::table('users')->where('users.id', session('userid')) //-> where('remitas.status_code', '01')
             ->leftJoin('usersbiodata', 'usersbiodata.user_id', '=', 'users.id')
@@ -793,7 +795,7 @@ class ApplicantController extends Controller
 
         foreach ($pgremita as $utm) {
             if ($utm->status_code == '01' && $utm->fee_type == 'Application Fees (Postgraduate) (₦10000)') {
-                return view('admissions./pg', compact('pg', 'pgremita'), ['programs' => $programs, 'subjects' => $subjects]);
+                return view('admissions./pg', compact('pg', 'pgremita'), ['programs' => $programs, 'subjects' => $subjects, 'country' => $country]);
             }
         }
         $signUpMsg = '<div class="alert alert-success text-align-center alert-dismissible"><button type="button" class="close" data-dismiss="alert">&times;</button><strong>You Have to make payment before filling out your application form, Please kindly generate RRR to continue</strong></div>';
@@ -864,7 +866,6 @@ class ApplicantController extends Controller
             throw new Exception('Sorry, only JPG, JPEG, and PNG files are allowed to upload.');
         }
     }
-
 
     // END OF Function to covert image into binary for **UTME** SO the image can be uploaded
 
@@ -972,17 +973,16 @@ class ApplicantController extends Controller
     {
         $this->validate($req, [
 
-
             'jamb' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:1048|dimensions:min_width=300',
-            'olevel1'  => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:1048|dimensions:min_width=300',
-            'olevel2'  => 'image|mimes:jpeg,png,jpg,gif,svg|max:1048|dimensions:min_width=300',
+            'olevel1' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:1048|dimensions:min_width=300',
+            'olevel2' => 'image|mimes:jpeg,png,jpg,gif,svg|max:1048|dimensions:min_width=300',
         ],
-        $messages = [
-            'jamb.dimensions'    => 'Result Image is too small. Must be at least 400px wide.',
-            'olevel1.dimensions' => 'Olevel Image is too small. Must be at least 400px wide.',
-            'olevel2.dimensions' => 'Olevel Image is too small. Must be at least 400px wide.',
+            $messages = [
+                'jamb.dimensions' => 'Result Image is too small. Must be at least 400px wide.',
+                'olevel1.dimensions' => 'Olevel Image is too small. Must be at least 400px wide.',
+                'olevel2.dimensions' => 'Olevel Image is too small. Must be at least 400px wide.',
 
-        ]);
+            ]);
         // dd($req);
         DB::beginTransaction();
 
@@ -1003,47 +1003,46 @@ class ApplicantController extends Controller
 
             //         $img2 = $this->getBinaryImageolevel2();
             //     }
-                   //process result upload
-                   $img = "";
-                   if($req->hasFile('jamb'))
-                   {
-                       $img1 = Image::make($req->file('jamb'))->resize(300, null, function ($constraint) {
-                           $constraint->aspectRatio();
-                       });
-                           $passport = base64_encode($img1->encode()->encoded);
-                           $img = $passport;
-                   } // end result
-                   $img1 = "";
-                   if($req->hasFile('olevel1'))
-                   {
-                       $img2 = Image::make($req->file('olevel1'))->resize(300, null, function ($constraint) {
-                           $constraint->aspectRatio();
-                       });
-                           $passport = base64_encode($img2->encode()->encoded);
-                           $img1 = $passport;
-                   } // end result
-                   $img2 = "";
-                   if($req->hasFile('olevel2'))
-                   {
-                       $img3 = Image::make($req->file('olevel2'))->resize(300, null, function ($constraint) {
-                           $constraint->aspectRatio();
-                       });
-                           $passport = base64_encode($img3->encode()->encoded);
-                           $img1 = $passport;
-                   } // end result
+            //process result upload
+            $img = "";
+            if ($req->hasFile('jamb')) {
+                $img1 = Image::make($req->file('jamb'))->resize(300, null, function ($constraint) {
+                    $constraint->aspectRatio();
+                });
+                $passport = base64_encode($img1->encode()->encoded);
+                $img = $passport;
+            } // end result
 
-                DB::table('uploads')->insert([
-                    'user_id' => session('userid'),
-                    'jamb' => $img,
-                    // 'jamb_type' => $img0[1],
-                    'olevel1' => $img1,
-                    // 'olevel1_type' => $img1[1],
-                    'olevel2' => $img2,
-                    // 'olevel2_type' => $img2[1],
-                    'olevel_awaiting' => $req->olevel_awaiting,
+            $img1 = "";
+            if ($req->hasFile('olevel1')) {
+                $img2 = Image::make($req->file('olevel1'))->resize(300, null, function ($constraint) {
+                    $constraint->aspectRatio();
+                });
+                $passport = base64_encode($img2->encode()->encoded);
+                $img1 = $passport;
+            } // end result
 
-                    //   'passport'=>$req->passport,'passportype'=>$file_extension
-                ]);
+            $img2 = "";
+            if ($req->hasFile('olevel2')) {
+                $img3 = Image::make($req->file('olevel2'))->resize(300, null, function ($constraint) {
+                    $constraint->aspectRatio();
+                });
+                $passport = base64_encode($img3->encode()->encoded);
+                $img2 = $passport;
+            } // end result
+
+            DB::table('uploads')->insert([
+                'user_id' => session('userid'),
+                'jamb' => $img,
+                // 'jamb_type' => $img0[1],
+                'olevel1' => $img1,
+                // 'olevel1_type' => $img1[1],
+                'olevel2' => $img2,
+                // 'olevel2_type' => $img2[1],
+                'olevel_awaiting' => $req->olevel_awaiting,
+
+                //   'passport'=>$req->passport,'passportype'=>$file_extension
+            ]);
 
             // } else {
             //     $img0 = array("", "");
@@ -1150,7 +1149,7 @@ class ApplicantController extends Controller
     // FUNCTION TO UPLOAD INTO THE USERSBIODATE OF A UTME APPLICANT
     public function utmebiodata(Request $req)
     {
-         dd($req);
+        // dd($req);
         $this->validate($req, [
 
             'gender' => 'required|string|max:6',
@@ -1162,10 +1161,10 @@ class ApplicantController extends Controller
             'address' => 'required|string|max:200',
             'passport' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:1048|dimensions:min_width=300',
         ],
-        $messages = [
-            'passport.dimensions'    => 'Passport Image is too small. Must be at least 400px wide.',
+            $messages = [
+                'passport.dimensions' => 'Passport Image is too small. Must be at least 400px wide.',
 
-        ]);
+            ]);
         DB::beginTransaction();
 
         try {
@@ -1175,17 +1174,15 @@ class ApplicantController extends Controller
 
             //     $img = $this->getBinaryImage();
             // }
-              //process Passport upload
-              $img = "";
-        if($req->hasFile('passport'))
-        {
-            $img1 = Image::make($req->file('passport'))->resize(300, null, function ($constraint) {
-                $constraint->aspectRatio();
-            });
+            //process Passport upload
+            $img = "";
+            if ($req->hasFile('passport')) {
+                $img1 = Image::make($req->file('passport'))->resize(300, null, function ($constraint) {
+                    $constraint->aspectRatio();
+                });
                 $passport = base64_encode($img1->encode()->encoded);
                 $img = $passport;
-        } // end Passport
-
+            } // end Passport
 
             DB::table('usersbiodata')->insert([
                 'user_id' => session('userid'),
@@ -1197,7 +1194,7 @@ class ApplicantController extends Controller
                 'lga' => $req->lga,
                 'state_origin' => $req->state_origin,
                 'address' => $req->address,
-                'session_id'=>$this->getCurrentAdmissionSession(),
+                'session_id' => $this->getCurrentAdmissionSession(),
                 'passport' => $img,
                 // 'passport_type' => $img[1],
                 'referral' => $req->referral,
@@ -1212,7 +1209,6 @@ class ApplicantController extends Controller
                 'status' => 1,
 
             ]);
-
 
             //  Mail::to($req->email)->send(new Confirmsignup($mailData));
             DB::commit();
@@ -1432,15 +1428,39 @@ class ApplicantController extends Controller
     public function debiodata(Request $req)
     {
         // dd($req);
+        $this->validate($req, [
+
+            'gender' => 'required|string|max:6',
+            'dob' => 'required|string|max:50',
+            'nationality' => 'required|string|max:100',
+            'state_origin' => 'required|string|max:50',
+            // 'lga_name' => 'required|string|max:100',
+            'religion' => 'required|string|max:50',
+            'address' => 'required|string|max:200',
+            'passport' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:1048|dimensions:min_width=300',
+        ],
+            $messages = [
+                'passport.dimensions' => 'Passport Image is too small. Must be at least 400px wide.',
+
+            ]);
         DB::beginTransaction();
 
         try {
 
-            $img = array("", "");
-            if ($req->hasFile('passport')) {
+            // $img = array("", "");
+            // if ($req->hasFile('passport')) {
 
-                $img = $this->getBinaryImagede();
-            }
+            //     $img = $this->getBinaryImagede();
+            // }
+            $img = "";
+            if ($req->hasFile('passport')) {
+                $img1 = Image::make($req->file('passport'))->resize(300, null, function ($constraint) {
+                    $constraint->aspectRatio();
+                });
+                $passport = base64_encode($img1->encode()->encoded);
+                $img = $passport;
+            } // end Passport
+
             DB::table('usersbiodata')->insert([
                 'user_id' => session('userid'),
                 'middle_name' => $req->middle_name,
@@ -1451,8 +1471,9 @@ class ApplicantController extends Controller
                 'lga' => $req->lga,
                 'state_origin' => $req->state_origin,
                 'address' => $req->address,
-                'passport' => $img[0],
-                'passport_type' => $img[1],
+                'session_id' => $this->getCurrentAdmissionSession(),
+                'passport' => $img,
+                // 'passport_type' => $img[1],
                 'referral' => $req->referral,
                 //   'passport'=>$req->passport,'passportype'=>$file_extension
             ]);
@@ -1660,15 +1681,38 @@ class ApplicantController extends Controller
     public function transfersbiodata(Request $req)
     {
         // dd($req);
+        $this->validate($req, [
+
+            'gender' => 'required|string|max:6',
+            'dob' => 'required|string|max:50',
+            'nationality' => 'required|string|max:100',
+            'state_origin' => 'required|string|max:50',
+            // 'lga_name' => 'required|string|max:100',
+            'religion' => 'required|string|max:50',
+            'address' => 'required|string|max:200',
+            'passport' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:1048|dimensions:min_width=300',
+        ],
+            $messages = [
+                'passport.dimensions' => 'Passport Image is too small. Must be at least 400px wide.',
+
+            ]);
         DB::beginTransaction();
 
         try {
 
-            $img = array("", "");
-            if ($req->hasFile('passport')) {
+            // $img = array("", "");
+            // if ($req->hasFile('passport')) {
 
-                $img = $this->getBinaryImagetransfer();
-            }
+            //     $img = $this->getBinaryImagetransfer();
+            // }
+            $img = "";
+            if ($req->hasFile('passport')) {
+                $img1 = Image::make($req->file('passport'))->resize(300, null, function ($constraint) {
+                    $constraint->aspectRatio();
+                });
+                $passport = base64_encode($img1->encode()->encoded);
+                $img = $passport;
+            } // end Passport
             DB::table('usersbiodata')->insert([
                 'user_id' => session('userid'),
                 'middle_name' => $req->middle_name,
@@ -1679,8 +1723,10 @@ class ApplicantController extends Controller
                 'lga' => $req->lga,
                 'state_origin' => $req->state_origin,
                 'address' => $req->address,
-                'passport' => $img[0],
-                'passport_type' => $img[1],
+                'session_id' => $this->getCurrentAdmissionSession(),
+                'passport' => $img,
+                // 'passport' => $img[0],
+                // 'passport_type' => $img[1],
                 'referral' => $req->referral,
                 //   'passport'=>$req->passport,'passportype'=>$file_extension
             ]);
@@ -1896,15 +1942,38 @@ class ApplicantController extends Controller
     public function pgbiodata(Request $req)
     {
         // dd($req);
+        $this->validate($req, [
+
+            'gender' => 'required|string|max:6',
+            'dob' => 'required|string|max:50',
+            'nationality' => 'required|string|max:100',
+            'state_origin' => 'required|string|max:50',
+            // 'lga_name' => 'required|string|max:100',
+            'religion' => 'required|string|max:50',
+            'address' => 'required|string|max:200',
+            'passport' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:1048|dimensions:min_width=300',
+        ],
+            $messages = [
+                'passport.dimensions' => 'Passport Image is too small. Must be at least 400px wide.',
+
+            ]);
         DB::beginTransaction();
 
         try {
 
-            $img = array("", "");
-            if ($req->hasFile('passport')) {
+            // $img = array("", "");
+            // if ($req->hasFile('passport')) {
 
-                $img = $this->getBinaryImagepg();
-            }
+            //     $img = $this->getBinaryImagepg();
+            // }
+            if ($req->hasFile('passport')) {
+                $img1 = Image::make($req->file('passport'))->resize(300, null, function ($constraint) {
+                    $constraint->aspectRatio();
+                });
+                $passport = base64_encode($img1->encode()->encoded);
+                $img = $passport;
+            } // end Passport
+
             DB::table('usersbiodata')->insert([
                 'user_id' => session('userid'),
                 'middle_name' => $req->middle_name,
@@ -1915,8 +1984,10 @@ class ApplicantController extends Controller
                 'lga' => $req->lga,
                 'state_origin' => $req->state_origin,
                 'address' => $req->address,
-                'passport' => $img[0],
-                'passport_type' => $img[1],
+                'session_id' => $this->getCurrentAdmissionSession(),
+                'passport' => $img,
+                // 'passport' => $img[0],
+                // 'passport_type' => $img[1],
                 'referral' => $req->referral,
                 //   'passport'=>$req->passport,'passportype'=>$file_extension
             ]);
@@ -2304,7 +2375,22 @@ class ApplicantController extends Controller
 
     public function editbiodata(Request $req)
     {
-        // dd($req);
+        //  dd($req);
+        $this->validate($req, [
+
+            'gender' => 'required|string|max:6',
+            'dob' => 'required|string|max:50',
+            'nationality' => 'required|string|max:100',
+            'state_origin' => 'required|string|max:50',
+            // 'lga_name' => 'required|string|max:100',
+            'religion' => 'required|string|max:50',
+            'address' => 'required|string|max:200',
+            'passport' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:1048|dimensions:min_width=300',
+        ],
+            $messages = [
+                'passport.dimensions' => 'Passport Image is too small. Must be at least 400px wide.',
+
+            ]);
         DB::beginTransaction();
 
         try {
@@ -2312,10 +2398,16 @@ class ApplicantController extends Controller
             $img = array("", "");
             if ($req->hasFile('passport')) {
 
-                $img = $this->getBinaryImagepg();
-                DB::beginTransaction();
+            //     $img = $this->getBinaryImagepg();
+                // DB::beginTransaction();
                 //try and catch to get the errors
-
+                if ($req->hasFile('passport')) {
+                    $img1 = Image::make($req->file('passport'))->resize(300, null, function ($constraint) {
+                        $constraint->aspectRatio();
+                    });
+                    $passport = base64_encode($img1->encode()->encoded);
+                    $img = $passport;
+                } // end Passport
                 DB::table('users')->where('id', session('userid'))->update([
                     'id' => session('userid'),
                     'surname' => $req->surname,
@@ -2335,8 +2427,8 @@ class ApplicantController extends Controller
                     'lga' => $req->lga,
                     'state_origin' => $req->state_origin,
                     'address' => $req->address,
-                    'passport' => $img[0],
-                    'passport_type' => $img[1],
+                    'passport' => $img,
+                    // 'passport_type' => $img[1],
                     'referral' => $req->referral,
                     //   'passport'=>$req->passport,'passportype'=>$file_extension
                 ]);
@@ -2420,65 +2512,89 @@ class ApplicantController extends Controller
     public function editutmeuploads(Request $req)
     {
         $this->validate($req, [
-
-            'gender' => 'required|string|max:6',
-            'dob' => 'required|string|max:50',
-            'nationality' => 'required|string|max:100',
-            'state_origin' => 'required|string|max:50',
-            // 'lga_name' => 'required|string|max:100',
-            'religion' => 'required|string|max:50',
-            'address' => 'required|string|max:200',
-            'passport' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:1048|dimensions:min_width=300',
+        'jamb' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:1048|dimensions:min_width=300',
+            'olevel1' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:1048|dimensions:min_width=300',
+            'olevel2' => 'image|mimes:jpeg,png,jpg,gif,svg|max:1048|dimensions:min_width=300',
         ],
-        $messages = [
-            'passport.dimensions'    => 'Passport Image is too small. Must be at least 400px wide.',
+            $messages = [
+                'jamb.dimensions' => 'Result Image is too small. Must be at least 400px wide.',
+                'olevel1.dimensions' => 'Olevel Image is too small. Must be at least 400px wide.',
+                'olevel2.dimensions' => 'Olevel Image is too small. Must be at least 400px wide.',
 
-        ]);
+            ]);
+        // dd($req);
         DB::beginTransaction();
 
         try {
 
-            $img0 = array("", "");
-            if ($req->hasFile('jamb')) {
+            // $img0 = array("", "");
+            // if ($req->hasFile('jamb')) {
 
-                $img0 = $this->getBinaryImagejamb();
+            //     $img0 = $this->getBinaryImagejamb();
 
-                $img1 = array("", "");
-                if ($req->hasFile('olevel1')) {
+            //     $img1 = array("", "");
+            //     if ($req->hasFile('olevel1')) {
 
-                    $img1 = $this->getBinaryImageolevel1();
-                }
-                $img2 = array("", "");
-                if ($req->hasFile('olevel2')) {
+            //         $img1 = $this->getBinaryImageolevel1();
+            //     }
+            //     $img2 = array("", "");
+            //     if ($req->hasFile('olevel2')) {
 
-                    $img2 = $this->getBinaryImageolevel2();
-                }
+            //         $img2 = $this->getBinaryImageolevel2();
+            //     }
+             //process result upload
+             $img = "";
+             if ($req->hasFile('jamb')) {
+                 $img1 = Image::make($req->file('jamb'))->resize(300, null, function ($constraint) {
+                     $constraint->aspectRatio();
+                 });
+                 $passport = base64_encode($img1->encode()->encoded);
+                 $img = $passport;
+             } // end result
+
+             $img1 = "";
+             if ($req->hasFile('olevel1')) {
+                 $img2 = Image::make($req->file('olevel1'))->resize(300, null, function ($constraint) {
+                     $constraint->aspectRatio();
+                 });
+                 $passport = base64_encode($img2->encode()->encoded);
+                 $img1 = $passport;
+             } // end result
+
+             $img2 = "";
+             if ($req->hasFile('olevel2')) {
+                 $img3 = Image::make($req->file('olevel2'))->resize(300, null, function ($constraint) {
+                     $constraint->aspectRatio();
+                 });
+                 $passport = base64_encode($img3->encode()->encoded);
+                 $img2 = $passport;
+             } // end result
                 DB::table('uploads')->where('user_id', session('userid'))->update([
                     'user_id' => session('userid'),
-                    'jamb' => $img0[0],
-                    'jamb_type' => $img0[1],
-                    'olevel1' => $img1[0],
-                    'olevel1_type' => $img1[1],
-                    'olevel2' => $img2[0],
-                    'olevel2_type' => $img2[1],
+                    'jamb' => $img,
+                    // 'jamb_type' => $img0[1],
+                    'olevel1' => $img1,
+                    // 'olevel1_type' => $img1[1],
+                    'olevel2' => $img2,
+                    // 'olevel2_type' => $img2[1],
                     'olevel_awaiting' => $req->olevel_awaiting,
 
                     //   'passport'=>$req->passport,'passportype'=>$file_extension
                 ]);
-            } else {
-                $img0 = array("", "");
-                if ($req->hasFile('jamb')) {
+            // } else {
+            //     $img0 = array("", "");
+            //     if ($req->hasFile('jamb')) {
 
-                    $img0 = $this->getBinaryImagejamb();
+            //         $img0 = $this->getBinaryImagejamb();
 
-                    DB::table('uploads')->where('user_id', session('userid'))->update([
-                        'user_id' => session('userid'),
-                        'jamb' => $img0[0],
-                        'jamb_type' => $img0[1],
-                        'olevel_awaiting' => $req->olevel_awaiting,
-                    ]);
-                }
-            }
+            //         DB::table('uploads')->where('user_id', session('userid'))->update([
+            //             'user_id' => session('userid'),
+            //             'jamb' => $img0[0],
+            //             'jamb_type' => $img0[1],
+            //             'olevel_awaiting' => $req->olevel_awaiting,
+            //         ]);
+            //     }
+            // }
 
             //  Mail::to($req->email)->send(new Confirmsignup($mailData));
             DB::commit();

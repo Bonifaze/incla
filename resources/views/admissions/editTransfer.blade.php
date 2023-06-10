@@ -88,7 +88,7 @@ exit;
                                                                 <strong>Photo</strong>
                                                             </div>
                                                             <div class="rounded-circle">
-                                                                <img class="rounded-circle p-3 mx-auto d-block" src="data:image/{{ $applicantsDetails ->passport_type }};base64,{{ base64_encode($applicantsDetails ->passport) }}" alt="Applicant Passport" style="height: 180px; width:200px;" />
+                                                                <img class="rounded-circle p-3 mx-auto d-block" src="data:image/jpeg;base64,{{$applicantsDetails ->passport}}" alt="Applicant Passport" style="height: 180px; width:200px;" />
                                                             </div>
                                                         </div>
                                                     </div>
@@ -103,14 +103,14 @@ exit;
                                                 <label for="">{{ __('Surname') }} </label>
                                                 <div class="form-group">
                                                     <div class="form-group">
-                                                        <input id="surname" type="text" class="form-control " name="surname" value="{{ $applicantsDetails->surname}}" autofocus>
+                                                        <input id="surname" type="text" class="form-control " name="surname" value="{{ $applicantsDetails->surname}}" autofocus readonly>
 
                                                     </div>
                                                 </div>
                                                 <div class="form-group">
                                                     <div class="form-group">
                                                         <label for="">{{ __('First Name') }} </label>
-                                                        <input id="first_name" type="text" class="form-control" name="first_name" value="{{ $applicantsDetails->first_name}}" autofocus>
+                                                        <input id="first_name" type="text" class="form-control" name="first_name" value="{{ $applicantsDetails->first_name}}" autofocus readonly>
 
 
                                                     </div>
@@ -118,7 +118,7 @@ exit;
                                                 <div class="form-group">
                                                     <div class="form-group">
                                                         <label for="">{{ __('Email') }} </label>
-                                                        <input id="email" type="email" class="form-control " name="email" value="{{ $applicantsDetails->email}}">
+                                                        <input id="email" type="email" class="form-control " name="email" value="{{ $applicantsDetails->email}}" readonly>
 
 
                                                     </div>

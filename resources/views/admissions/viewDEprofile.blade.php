@@ -47,9 +47,9 @@ if (!session('userid')) {
                                                         <div class="item-label mb-2">
                                                             <strong>Photo</strong>
                                                         </div>
-                                                        <div class="rounded-circle">
+                                                         <div class="rounded-circle">
                                                             <img class="rounded-circle p-3 mx-auto d-block"
-                                                                src="data:image/{{ $applicantsDetails->passport_type }};base64,{{ base64_encode($applicantsDetails->passport) }}"
+                                                                src="data:image/jpeg;base64,{{$applicantsDetails->passport }}"
                                                                 alt="Applicant Passport"
                                                                 style="height: 180px; width:200px;" />
                                                         </div>
@@ -175,7 +175,7 @@ if (!session('userid')) {
                                                         </div>
                                                         <div class="">
                                                             <img class="mx-auto d-block"
-                                                                src="data:image/{{ $applicantsDetails->jamb_type }};base64,{{ base64_encode($applicantsDetails->jamb) }}"
+                                                                src="data:image/jpeg;base64,{{$applicantsDetails->jamb}}"
                                                                 alt="Olevel" style="height: 510px; width:400px;" />
                                                         </div>
                                                         <div class="item-data card-title text-success">
@@ -238,7 +238,7 @@ if (!session('userid')) {
                                                         <div class="">
 
                                                             <img class=" mx-auto d-block"
-                                                                src="data:image/{{ $applicantsDetails->olevel1_type }};base64,{{ base64_encode($applicantsDetails->olevel1) }}"
+                                                                src="data:image/jpeg;base64,{{$applicantsDetails->olevel1}}"
                                                                 alt="Olevel second sitting"
                                                                 style="height: 500px; width:400px;" />
                                                         </div>
@@ -266,7 +266,7 @@ if (!session('userid')) {
                                                             <div class="">
 
                                                                 <img class=" mx-auto d-block"
-                                                                    src="data:image/{{ $applicantsDetails->olevel2_type }};base64,{{ base64_encode($applicantsDetails->olevel2) }}"
+                                                                    src="data:image/jpeg;base64,{{$applicantsDetails->olevel2}}"
                                                                     alt="Olevel second sitting"
                                                                     style="height: 500px; width:400px;" />
                                                             </div>

@@ -14,7 +14,7 @@
 if(!session('userid'))
 {
 
-header('location: /');
+header('location: /admissions/login');
 exit;
 }
 @endphp
