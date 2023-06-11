@@ -1,32 +1,33 @@
-@extends('layouts.adminsials')
 
-@section('pagetitle')
+
+<?php $__env->startSection('pagetitle'); ?>
 Home
-@endsection
+<?php $__env->stopSection(); ?>
 
 <!-- Sidebar Links -->
 <!-- Treeview -->
-@section('student-open')
+<?php $__env->startSection('student-open'); ?>
 menu-open
-@endsection
+<?php $__env->stopSection(); ?>
 
-@section('student')
+<?php $__env->startSection('student'); ?>
 active
-@endsection
+<?php $__env->stopSection(); ?>
 
 <!-- Page -->
-@section('home')
+<?php $__env->startSection('home'); ?>
 active
-@endsection
+<?php $__env->stopSection(); ?>
 <!-- End Sidebar links -->
 
-@section('content')
+<?php $__env->startSection('content'); ?>
 <div class="content-wrapper bg-white">
     <section class="content p-5">
 
-        @if (session('signUpMsg'))
-        {!! session('signUpMsg') !!}
-        @endif
+        <?php if(session('signUpMsg')): ?>
+        <?php echo session('signUpMsg'); ?>
+
+        <?php endif; ?>
 
         <div class="card p-5 shadow">
             <ul class="nav nav-tabs" id="myTab" role="tablist">
@@ -51,10 +52,8 @@ active
             <div class="tab-content" id="myTabContent">
                 <div class="tab-pane fade show active" id="home-tab-pane" role="tabpanel" aria-labelledby="home-tab" tabindex="0">
                     <form method="POST" action="/editbiodata" enctype="multipart/form-data" class="p-3">
-                        @csrf
-                        {{-- @if (session('signUpMsg'))
-                        {!! session('signUpMsg') !!}
-                        @endif  --}}
+                        <?php echo csrf_field(); ?>
+                        
                         <div class="item border-bottom py-3">
                             <div class="row justify-content-between align-items-center">
                                 <div class="col-auto">
@@ -62,43 +61,45 @@ active
                                         <strong>Photo</strong>
                                     </div>
                                     <div class="rounded-circle">
-                                        <img class="rounded-circle p-3 mx-auto d-block" src="data:image/jpeg;base64,{{ $applicantsDetails->passport }}" alt="Applicant Passport" style="height: 180px; width:200px;" />
+                                        <img class="rounded-circle p-3 mx-auto d-block" src="data:image/jpeg;base64,<?php echo e($applicantsDetails->passport); ?>" alt="Applicant Passport" style="height: 180px; width:200px;" />
                                     </div>
                                 </div>
                             </div>
                         </div>
                         <div class="form-group">
-                            <label for="passport">{{ __('Upload Passport Photograph') }}
+                            <label for="passport"><?php echo e(__('Upload Passport Photograph')); ?>
+
                             </label>
                             <input id="passport" type="file" class="form-control" name="passport">
                         </div>
-                        <label for="">{{ __('Surname') }} </label>
+                        <label for=""><?php echo e(__('Surname')); ?> </label>
                         <div class="form-group">
-                            <input id="surname" type="text" class="form-control " name="surname" value="{{ $applicantsDetails->surname }}" autofocus readonly>
+                            <input id="surname" type="text" class="form-control " name="surname" value="<?php echo e($applicantsDetails->surname); ?>" autofocus readonly>
                         </div>
                         <div class="form-group">
-                            <label for="">{{ __('First Name') }} </label>
-                            <input id="first_name" type="text" class="form-control" name="first_name" value="{{ $applicantsDetails->first_name }}" autofocus readonly>
+                            <label for=""><?php echo e(__('First Name')); ?> </label>
+                            <input id="first_name" type="text" class="form-control" name="first_name" value="<?php echo e($applicantsDetails->first_name); ?>" autofocus readonly>
                         </div>
                         <div class="form-group">
-                            <label for="">{{ __('Email') }} </label>
-                            <input id="email" type="email" class="form-control " name="email" value="{{ $applicantsDetails->email }}" readonly>
+                            <label for=""><?php echo e(__('Email')); ?> </label>
+                            <input id="email" type="email" class="form-control " name="email" value="<?php echo e($applicantsDetails->email); ?>" readonly>
                         </div>
                         <div class="form-group">
-                            <label for="">{{ __('Phone') }} </label>
-                            <input id="phone" type="phone" class="form-control" name="phone" value="{{ $applicantsDetails->phone }}" autofocus>
-                        </div>
-
-                        <div class="form-group">
-                            <label for="">{{ __('Other Name') }} </label>
-                            <input id="middle_name" type="text" class="form-control" name="middle_name" value="{{ $applicantsDetails->middle_name }}" autofocus>
+                            <label for=""><?php echo e(__('Phone')); ?> </label>
+                            <input id="phone" type="phone" class="form-control" name="phone" value="<?php echo e($applicantsDetails->phone); ?>" autofocus>
                         </div>
 
                         <div class="form-group">
-                            <label for="">{{ __('Gender') }} </label>
+                            <label for=""><?php echo e(__('Other Name')); ?> </label>
+                            <input id="middle_name" type="text" class="form-control" name="middle_name" value="<?php echo e($applicantsDetails->middle_name); ?>" autofocus>
+                        </div>
+
+                        <div class="form-group">
+                            <label for=""><?php echo e(__('Gender')); ?> </label>
                             <select class="form-control" name="gender">
-                                <option value="{{ $applicantsDetails->gender }}">
-                                    {{ $applicantsDetails->gender }}
+                                <option value="<?php echo e($applicantsDetails->gender); ?>">
+                                    <?php echo e($applicantsDetails->gender); ?>
+
                                 </option>
                                 <option value="Male">Male</option>
                                 <option value="Female">Female</option>
@@ -106,7 +107,7 @@ active
                         </div>
 
                         <div class="form-group">
-                            <label for="">{{ __('Religion') }} </label>
+                            <label for=""><?php echo e(__('Religion')); ?> </label>
                             <select class="form-control" name="religion">
                                 <option value="Christian (Catholic)">Christian (Catholic)
                                 </option>
@@ -117,16 +118,17 @@ active
                         </div>
 
                         <div class="form-group">
-                            <label for="dob">{{ __('Date of Birth') }} </label>
-                            <input id="dob" type="date" class="form-control" name="dob" value="{{ $applicantsDetails->dob }}">
+                            <label for="dob"><?php echo e(__('Date of Birth')); ?> </label>
+                            <input id="dob" type="date" class="form-control" name="dob" value="<?php echo e($applicantsDetails->dob); ?>">
                         </div>
 
                         <div class="form-group">
                             <div class="form-group">
-                                <label for="">{{ __('Nationality') }} </label>
+                                <label for=""><?php echo e(__('Nationality')); ?> </label>
                                 <select class="form-control" name="nationality" id="nationality">
-                                    <option value="{{ $applicantsDetails->nationality }}">
-                                        {{ $applicantsDetails->nationality }}
+                                    <option value="<?php echo e($applicantsDetails->nationality); ?>">
+                                        <?php echo e($applicantsDetails->nationality); ?>
+
                                     </option>
                                     <option value="Åland Islands">Åland Islands</option>
                                     <option value="Albania">Albania</option>
@@ -416,30 +418,33 @@ active
                         </div>
 
                         <div class="form-group">
-                            <label for="refferal">{{ __('Statr of Origin') }} </label>
-                            <input id="state_origin" type="text" class="form-control" name="state_origin" value="{{ $applicantsDetails->state_origin }}">
+                            <label for="refferal"><?php echo e(__('Statr of Origin')); ?> </label>
+                            <input id="state_origin" type="text" class="form-control" name="state_origin" value="<?php echo e($applicantsDetails->state_origin); ?>">
                         </div>
 
                         <div class="form-group">
-                            <label for="refferal">{{ __('Local Government Area') }}
+                            <label for="refferal"><?php echo e(__('Local Government Area')); ?>
+
                             </label>
-                            <input id="lga" type="text" class="form-control" name="lga" value="{{ $applicantsDetails->lga }}">
+                            <input id="lga" type="text" class="form-control" name="lga" value="<?php echo e($applicantsDetails->lga); ?>">
                         </div>
 
                         <div class="form-group">
-                            <label for="refferal">{{ __('Address') }} </label>
-                            <input id="address" type="text" class="form-control" name="address" value="{{ $applicantsDetails->address }}">
+                            <label for="refferal"><?php echo e(__('Address')); ?> </label>
+                            <input id="address" type="text" class="form-control" name="address" value="<?php echo e($applicantsDetails->address); ?>">
                         </div>
 
 
                         <div class="form-group">
-                            <label for="refferal">{{ __('How did you hear about us') }}
+                            <label for="refferal"><?php echo e(__('How did you hear about us')); ?>
+
                             </label>
 
                             <div class="form-group">
                                 <select class="form-control" name="referral">
-                                    <option value="{{ $applicantsDetails->referral }}">
-                                        {{ $applicantsDetails->referral }}
+                                    <option value="<?php echo e($applicantsDetails->referral); ?>">
+                                        <?php echo e($applicantsDetails->referral); ?>
+
                                     </option>
                                     <option value="Social Media"> Social Media</option>
                                     <option value="Friend">From a friend</option>
@@ -452,7 +457,8 @@ active
 
                         <div class="form-group">
                             <button type="submit" class="btn btn-success mt-5">
-                                {{ __('Update') }}
+                                <?php echo e(__('Update')); ?>
+
                             </button>
                         </div>
 
@@ -461,52 +467,67 @@ active
                 <div class="tab-pane fade" id="profile-tab-pane" role="tabpanel" aria-labelledby="profile-tab" tabindex="0">
 
                     <form method="POST" action="/editsponsers" class="p-3">
-                        @csrf
+                        <?php echo csrf_field(); ?>
                         <div class="form-group">
-                            <label for="">{{ __(' Name') }} </label>
-                            <input id="fname" type="text" name="name" class="form-control" value="{{ $applicantsDetails->name }}" autofocus>
+                            <label for=""><?php echo e(__(' Name')); ?> </label>
+                            <input id="fname" type="text" name="name" class="form-control" value="<?php echo e($applicantsDetails->name); ?>" autofocus>
                         </div>
 
                         <div class="form-group">
-                            <label for="">{{ __('Phone No.') }} </label>
-                            <input id="phone" type="text" name="sponsors_phone" class="form-control" value="{{ $applicantsDetails->sponsors_phone }}" autofocus>
+                            <label for=""><?php echo e(__('Phone No.')); ?> </label>
+                            <input id="phone" type="text" name="sponsors_phone" class="form-control" value="<?php echo e($applicantsDetails->sponsors_phone); ?>" autofocus>
                         </div>
 
                         <div class="form-group">
-                            <label for="">{{ __('Sponsor email') }} </label>
-                            <input id="foccupation" type="text" name="sponsors_email" class="form-control" value="{{ $applicantsDetails->sponsors_email }}" autofocus>
+                            <label for=""><?php echo e(__('Sponsor email')); ?> </label>
+                            <input id="foccupation" type="text" name="sponsors_email" class="form-control" value="<?php echo e($applicantsDetails->sponsors_email); ?>" autofocus>
                         </div>
 
                         <div class="form-group">
-                            <label for="">{{ __('Address') }} </label>
-                            <input id="address" type="text" class="form-control" name="sponsors_address" value="{{ $applicantsDetails->sponsors_address }}">
+                            <label for=""><?php echo e(__('Address')); ?> </label>
+                            <input id="address" type="text" class="form-control" name="sponsors_address" value="<?php echo e($applicantsDetails->sponsors_address); ?>">
                         </div>
                         <div class="form-group">
-                            <label for="">{{ __(' Occupation') }} </label>
-                            <input id="foccupation" type="text" name="occupation" class="form-control" value="{{ $applicantsDetails->occupation }}" autofocus>
+                            <label for=""><?php echo e(__(' Occupation')); ?> </label>
+                            <input id="foccupation" type="text" name="occupation" class="form-control" value="<?php echo e($applicantsDetails->occupation); ?>" autofocus>
                         </div>
 
                         <div class="form-group">
                             <button type="submit" class="btn btn-success mt-5">
-                                {{ __('Update') }}
+                                <?php echo e(__('Update')); ?>
+
                             </button>
                         </div>
                     </form>
                 </div>
                 <div class="tab-pane fade" id="profile4-tab-pane" role="tabpanel" aria-labelledby="profile4-tab" tabindex="0">
 
-                    {{-- 2nd table div  --}}
+                    
                     <form method="POST" action="/editpassword" class="p-3">
-                        @csrf
-                        <input id="email" type="hidden" class="form-input form-control" name="email" value="{{ $applicantsDetails->email }}">
+                        <?php echo csrf_field(); ?>
+                        <input id="email" type="hidden" class="form-input form-control" name="email" value="<?php echo e($applicantsDetails->email); ?>">
 
                         <div class="form-group">
-                            <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required placeholder="New Password" autocomplete="new-password">
-                            @error('password')
+                            <input id="password" type="password" class="form-control <?php $__errorArgs = ['password'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?> is-invalid <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>" name="password" required placeholder="New Password" autocomplete="new-password">
+                            <?php $__errorArgs = ['password'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?>
                             <span class="invalid-feedback" role="alert">
-                                <strong>{{ $message }}</strong>
+                                <strong><?php echo e($message); ?></strong>
                             </span>
-                            @enderror
+                            <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>
                         </div>
 
                         <div class="form-group">
@@ -515,7 +536,8 @@ active
 
                         <div class="form-group">
                             <button type="submit" class="btn btn-success mt-5">
-                                {{ __('Update') }}
+                                <?php echo e(__('Update')); ?>
+
                             </button>
                         </div>
                     </form>
@@ -523,24 +545,25 @@ active
 
                 <div class="tab-pane fade" id="profile2-tab-pane" role="tabpanel" aria-labelledby="profile2-tab" tabindex="0">
                     <form method="POST" action="/edittransfersinformation" class="p-3">
-                        @csrf
+                        <?php echo csrf_field(); ?>
                         <div class="form-group">
-                            <label for="refferal">{{ __('Previous Institution') }} </label>
-                            <input id="institution" type="text" class="form-control" name="institution" value="{{ $applicantsDetails->institution }}" required autofocus>
+                            <label for="refferal"><?php echo e(__('Previous Institution')); ?> </label>
+                            <input id="institution" type="text" class="form-control" name="institution" value="<?php echo e($applicantsDetails->institution); ?>" required autofocus>
                         </div>
                         <div class="form-group">
-                            <label for="refferal">{{ __('Matriculation No.') }} </label>
-                            <input id="score" type="text" class="form-control" name="matric_no" value="{{ $applicantsDetails->matric_no }}" autofocus required>
+                            <label for="refferal"><?php echo e(__('Matriculation No.')); ?> </label>
+                            <input id="score" type="text" class="form-control" name="matric_no" value="<?php echo e($applicantsDetails->matric_no); ?>" autofocus required>
                         </div>
                         <div class="form-group">
-                            <label for="refferal">{{ __('Entry Year') }} </label>
-                            <input id="first_choice" type="text" name="entry_year" class="form-control" value="{{ $applicantsDetails->entry_year }}" autofocus required>
+                            <label for="refferal"><?php echo e(__('Entry Year')); ?> </label>
+                            <input id="first_choice" type="text" name="entry_year" class="form-control" value="<?php echo e($applicantsDetails->entry_year); ?>" autofocus required>
                         </div>
                         <div class="form-group">
-                            <label for="refferal">{{ __('Level') }} </label>
+                            <label for="refferal"><?php echo e(__('Level')); ?> </label>
                             <select class="form-select" name="level">
-                                <option value="{{ $applicantsDetails->level }}">
-                                    {{ $applicantsDetails->level }}
+                                <option value="<?php echo e($applicantsDetails->level); ?>">
+                                    <?php echo e($applicantsDetails->level); ?>
+
                                 </option>
                                 <option value="100">100</option>
                                 <option value="200">200</option>
@@ -550,30 +573,34 @@ active
                         </div>
 
                         <div class="form-group">
-                            <label for="refferal">{{ __('Previous Course Offered') }} </label>
-                            <input id="course" type="text" class="form-control" name="course" value="{{ $applicantsDetails->course }}" autofocus required>
+                            <label for="refferal"><?php echo e(__('Previous Course Offered')); ?> </label>
+                            <input id="course" type="text" class="form-control" name="course" value="<?php echo e($applicantsDetails->course); ?>" autofocus required>
                         </div>
                         <div class="form-group">
-                            <label for="refferal">{{ __('CGPA') }} </label>
-                            <input id="cpga" type="text" class="form-control" name="cgpa" value="{{ $applicantsDetails->cgpa }}" autofocus required>
+                            <label for="refferal"><?php echo e(__('CGPA')); ?> </label>
+                            <input id="cpga" type="text" class="form-control" name="cgpa" value="<?php echo e($applicantsDetails->cgpa); ?>" autofocus required>
                         </div>
                         <div class="form-group">
-                            <label for="refferal">{{ __('Proposed Course of Study') }}
+                            <label for="refferal"><?php echo e(__('Proposed Course of Study')); ?>
+
                             </label>
                             <select class="form-control" name="course_applied">
-                                <option value="{{ $applicantsDetails->course_applied }}">
-                                    {{ $applicantsDetails->course_applied }}
+                                <option value="<?php echo e($applicantsDetails->course_applied); ?>">
+                                    <?php echo e($applicantsDetails->course_applied); ?>
+
                                 </option>
-                                @foreach ($programs as $program)
-                                <option value="{{ $program->name }}">{{ $program->name }}
+                                <?php $__currentLoopData = $programs; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $program): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                <option value="<?php echo e($program->name); ?>"><?php echo e($program->name); ?>
+
                                 </option>
-                                @endforeach
+                                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                             </select>
                         </div>
 
                         <div class="form-group">
                             <button type="submit" class="btn btn-success mt-5">
-                                {{ __('Update') }}
+                                <?php echo e(__('Update')); ?>
+
                             </button>
                         </div>
                     </form>
@@ -581,20 +608,21 @@ active
 
                 <div class="tab-pane fade" id="profile3-tab-pane" role="tabpanel" aria-labelledby="profile3-tab" tabindex="0">
                     <form method="POST" action="/editutmeuploads" enctype="multipart/form-data" class="p-3">
-                        @csrf
+                        <?php echo csrf_field(); ?>
                         <div class="row">
-                            <div class="col"> <img class="mx-auto d-block" src="data:image/jpeg;base64,{{ $applicantsDetails->jamb }}" alt="Transcipt" style="height: 300px; width:300px;" /></div>
-                            <div class="col"> <img class="mx-auto d-block" src="data:image/jpeg;base64,{{ $applicantsDetails->olevel1 }}" alt="Olevel" style="height: 300px; width:300px;" /></div>
-                            <div class="col"> <img class=" mx-auto d-block" src="data:image/jpeg;base64,{{ $applicantsDetails->olevel2 }}" alt="" style="height: 300px; width:300px;" /></div>
+                            <div class="col"> <img class="mx-auto d-block" src="data:image/jpeg;base64,<?php echo e($applicantsDetails->jamb); ?>" alt="Transcipt" style="height: 300px; width:300px;" /></div>
+                            <div class="col"> <img class="mx-auto d-block" src="data:image/jpeg;base64,<?php echo e($applicantsDetails->olevel1); ?>" alt="Olevel" style="height: 300px; width:300px;" /></div>
+                            <div class="col"> <img class=" mx-auto d-block" src="data:image/jpeg;base64,<?php echo e($applicantsDetails->olevel2); ?>" alt="" style="height: 300px; width:300px;" /></div>
                         </div>
 
                         <div class="form-group">
 
-                            @if (session('statusMsg'))
-                            {!! session('statusMsg') !!}
-                            @endif
+                            <?php if(session('statusMsg')): ?>
+                            <?php echo session('statusMsg'); ?>
+
+                            <?php endif; ?>
                             <p>Upload Transcript
-                                {{-- <b class="text-danger">(front page)</b> <b class="text-warning"> (Picture format .jpeg, .png, .jpg)</b>  --}}
+                                
                             </p>
 
                             <div class="form-group">
@@ -603,7 +631,8 @@ active
                         </div>
 
                         <div class="form-group">
-                            <label for="passport">{{ __('Edit Olevel Result') }}
+                            <label for="passport"><?php echo e(__('Edit Olevel Result')); ?>
+
                             </label>
 
                             <div class="form-group">
@@ -619,7 +648,8 @@ active
                         </div>
                         <div class="form-group">
                             <button type="submit" class="btn btn-success mt-5">
-                                {{ __('update') }}
+                                <?php echo e(__('update')); ?>
+
                             </button>
                         </div>
                     </form>
@@ -638,4 +668,5 @@ active
     });
 </script>
 
-@endsection
+<?php $__env->stopSection(); ?>
+<?php echo $__env->make('layouts.adminsials', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH C:\Users\hp\Documents\WEB DEV\Work-VUNA\laraproject\resources\views/admissions//editTransfer.blade.php ENDPATH**/ ?>

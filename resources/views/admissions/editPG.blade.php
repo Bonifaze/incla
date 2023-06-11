@@ -69,15 +69,11 @@ active
                         <div class="form-group">
                             <label for="passport">{{ __('Upload Passport Photograph') }} </label>
 
-                            <div class="form-group">
                                 <input id="passport" type="file" class="form-control" name="passport" value="">
-                            </div>
                         </div>
                         <label for="">{{ __('Surname') }} </label>
-                        <div class="form-group">
                             <div class="form-group">
                                 <input id="surname" type="text" class="form-control " name="surname" value="{{ $applicantsDetails->surname}}" autofocus readonly>
-                            </div>
                         </div>
                         <div class="form-group">
                             <div class="form-group"> readonly
@@ -86,47 +82,31 @@ active
                             </div>
                         </div>
                         <div class="form-group">
-                            <div class="form-group">
                                 <label for="">{{ __('Email') }} </label>
                                 <input id="email" type="email" class="form-control " name="email" value="{{ $applicantsDetails->email}}" autofocus readonly>
-
-
-                            </div>
                         </div>
                         <div class="form-group">
-                            <div class="form-group">
                                 <label for="">{{ __('Phone') }} </label>
                                 <input id="phone" type="phone" class="form-control" name="phone" autocomplete="phone" placeholder="{{ $applicantsDetails->phone}}" autofocus>
-
-
-                            </div>
                         </div>
-
-                        <div class="form-group">
 
                             <div class="form-group">
                                 <label for="">{{ __('Other Name') }} </label>
                                 <input id="middle_name" type="text" class="form-control" name="middle_name" value="{{$applicantsDetails -> middle_name}}" autofocus>
-                            </div>
                         </div>
 
                         <div class="form-group">
-
-                            <div class="form-group">
                                 <label for="">{{ __('Gender') }} </label>
-                                <select class="form-select col-12 text-lg" name="gender">
+                                <select class="form-control" name="gender">
                                     <option value="{{$applicantsDetails -> gender}}">{{$applicantsDetails -> gender}}</option>
                                     <option value="Male">Male</option>
                                     <option value="Female">Female</option>
                                 </select>
-                            </div>
                         </div>
-
-                        <div class="form-group">
 
                             <div class="form-group">
                                 <label for="">{{ __('Religion') }} </label>
-                                <select class="form-select col-12 text-lg" name="religion">
+                                <select class="form-control" name="religion">
                                     <label for="">{{ __('Religion') }} </label>
                                     <option value="{{$applicantsDetails -> religion}}">{{$applicantsDetails -> religion}}</option>
                                     <option value="Christian (Catholic)">Christian (Catholic)</option>
@@ -134,7 +114,6 @@ active
                                     <option value="Muslim">Muslim</option>
 
                                 </select>
-                            </div>
                         </div>
 
                         <div class="form-group">
@@ -148,7 +127,7 @@ active
                         <div class="form-group">
                             <div class="form-group">
                                 <label for="">{{ __('Nationality') }} </label>
-                                <select class="form-select col-12 text-lg" name="nationality" id="nationality">
+                                <select class="form-control" name="nationality" id="nationality">
                                     <option value="{{$applicantsDetails-> nationality}}">{{$applicantsDetails-> nationality}}</option>
                                     <option value="Åland Islands">Åland Islands</option>
                                     <option value="Albania">Albania</option>
@@ -426,7 +405,7 @@ active
                             <label for="refferal">{{ __('How did you hear about us') }} </label>
 
                             <div class="form-group">
-                                <select class="form-select col-12 text-lg" name="referral">
+                                <select class="form-control" name="referral">
                                     <option value="{{$applicantsDetails-> referral}}">{{$applicantsDetails-> referral}}</option>
                                     <option value="Social Media"> Social Media</option>
                                     <option value="Friend">From a friend</option>
@@ -438,15 +417,9 @@ active
                         </div>
 
                         <div class="form-group">
-                            <div class="form-group">
-                                {{--
-                                                        @if (session('signUpMsg'))
-                                                        {!! session('signUpMsg') !!}
-                                                        @endif  --}}
-                                <button type="submit" class="btn btn-success">
+                                <button type="submit" class="btn btn-success mt-5">
                                     {{ __('Update') }}
                                 </button>
-                            </div>
                         </div>
 
 
@@ -459,28 +432,18 @@ active
                         @csrf
 
                         <div class="form-group">
-
-                            <div class="form-group">
                                 <label for="refferal">{{ __('Name') }} </label>
                                 <input id="fname" type="text" name="name" class="form-control" value="{{$applicantsDetails -> name}}" autofocus>
-                            </div>
                         </div>
                         <div class="form-group">
-
-                            <div class="form-group">
                                 <label for="refferal">{{ __('Phone') }} </label>
                                 <input id="phone" type="text" name="sponsors_phone" class="form-control" value="{{$applicantsDetails -> sponsors_phone}}" autofocus>
-                            </div>
                         </div>
                         <div class="form-group">
-
-                            <div class="form-group">
                                 <label for="refferal">{{ __('email') }} </label>
                                 <input id="foccupation" type="text" name="sponsors_email" class="form-control" value="{{$applicantsDetails -> sponsors_email}}" autofocus>
-                            </div>
                         </div>
                         <div class="form-group">
-
                             <div class="form-group">
                                 <label for="refferal">{{ __('Address') }} </label>
                                 <input id="address" type="text" class="form-control" name="sponsors_address" required value="{{$applicantsDetails -> sponsors_address}}">
@@ -497,7 +460,7 @@ active
                                 <div class="form-group">
 
 
-                                    <button type="submit" class="btn btn-success">
+                                    <button type="submit" class="btn btn-success mt-5">
                                         {{ __('Update') }}
                                     </button>
                                 </div>
@@ -536,7 +499,7 @@ active
                             {{-- @if (session('signUpMsg'))
                                                                 {!! session('signUpMsg') !!}
                                                             @endif  --}}
-                            <button type="submit" class="btn btn-success">
+                            <button type="submit" class="btn btn-success mt-5">
                                 {{ __('Update') }}
                             </button>
                         </div>
@@ -723,7 +686,7 @@ active
                             {{-- @if (session('signUpMsg'))
                                                     {!! session('signUpMsg') !!}
                                                     @endif  --}}
-                            <button type="submit" class="btn btn-success">
+                            <button type="submit" class="btn btn-success mt-5">
                                 {{ __('Update') }}
                             </button>
                         </div>
@@ -775,7 +738,7 @@ active
                             {{-- @if (session('signUpMsg'))
                                                     {!! session('signUpMsg') !!}
                                                 @endif --}}
-                            <button type="submit" class="btn btn-success">
+                            <button type="submit" class="btn btn-success mt-5">
                                 {{ __('update') }}
                             </button>
                         </div>

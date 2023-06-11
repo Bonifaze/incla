@@ -1,33 +1,34 @@
-@extends('layouts.adminsials')
 
-@section('pagetitle')
+
+<?php $__env->startSection('pagetitle'); ?>
 Home
-@endsection
+<?php $__env->stopSection(); ?>
 
 <!-- Sidebar Links -->
 <!-- Treeview -->
-@section('student-open')
+<?php $__env->startSection('student-open'); ?>
 menu-open
-@endsection
+<?php $__env->stopSection(); ?>
 
-@section('student')
+<?php $__env->startSection('student'); ?>
 active
-@endsection
+<?php $__env->stopSection(); ?>
 
 <!-- Page -->
-@section('home')
+<?php $__env->startSection('home'); ?>
 active
-@endsection
+<?php $__env->stopSection(); ?>
 <!-- End Sidebar links -->
 
-@section('content')
+<?php $__env->startSection('content'); ?>
 <div class="content-wrapper bg-white">
     <!-- Content Header (Page header) -->
     <section class="content" style="overflow-x: hidden;">
 
-        @if (session('signUpMsg'))
-        {!! session('signUpMsg') !!}
-        @endif
+        <?php if(session('signUpMsg')): ?>
+        <?php echo session('signUpMsg'); ?>
+
+        <?php endif; ?>
         <!-- Begin Page Content -->
         <div class="container-fluid">
             <!-- Page Heading -->
@@ -36,7 +37,7 @@ active
             </h3>
             <div class="d-sm-flex align-items-center justify-content-between mb-4">
 
-                {{-- <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-success shadow-sm"><i class="fas fa-download fa-sm text-white-50"></i> Edit</a>  --}}
+                
             </div>
             <div class="row card">
                 <div class="card-body d-sm-flex align-items-center justify-content-between">
@@ -56,7 +57,7 @@ active
                                                 <strong>Photo</strong>
                                             </div>
                                             <div class="rounded-circle">
-                                                <img class="rounded-circle p-3 mx-auto d-block" src="data:image/jpeg;base64,{{ $applicantsDetails->passport }}" alt="Applicant Passport" style="height: 180px; width:200px;" />
+                                                <img class="rounded-circle p-3 mx-auto d-block" src="data:image/jpeg;base64,<?php echo e($applicantsDetails->passport); ?>" alt="Applicant Passport" style="height: 180px; width:200px;" />
                                             </div>
                                         </div>
                                     </div>
@@ -66,7 +67,7 @@ active
                                     <div class="row justify-content-between align-items-center">
                                         <div class="col-auto">
                                             <div class="item-label"><strong>Surname</strong></div>
-                                            <div class="item-data">{{ $applicantsDetails->surname }}</div>
+                                            <div class="item-data"><?php echo e($applicantsDetails->surname); ?></div>
                                         </div>
                                     </div>
                                 </div>
@@ -74,7 +75,7 @@ active
                                     <div class="row justify-content-between align-items-center">
                                         <div class="col-auto">
                                             <div class="item-label"><strong>First Name</strong></div>
-                                            <div class="item-data">{{ $applicantsDetails->first_name }}</div>
+                                            <div class="item-data"><?php echo e($applicantsDetails->first_name); ?></div>
                                         </div>
                                     </div>
                                 </div>
@@ -82,7 +83,7 @@ active
                                     <div class="row justify-content-between align-items-center">
                                         <div class="col-auto">
                                             <div class="item-label"><strong>Other Name</strong></div>
-                                            <div class="item-data">{{ $applicantsDetails->middle_name }}</div>
+                                            <div class="item-data"><?php echo e($applicantsDetails->middle_name); ?></div>
                                         </div>
                                     </div>
                                 </div>
@@ -104,7 +105,7 @@ active
                                     <div class="row justify-content-between align-items-center">
                                         <div class="col-auto">
                                             <div class="item-label"><strong>Email</strong></div>
-                                            <div class="item-data">{{ $applicantsDetails->email }}</div>
+                                            <div class="item-data"><?php echo e($applicantsDetails->email); ?></div>
                                         </div>
                                     </div>
                                 </div>
@@ -112,7 +113,7 @@ active
                                     <div class="row justify-content-between align-items-center">
                                         <div class="col-auto">
                                             <div class="item-label"><strong>Phone Number</strong></div>
-                                            <div class="item-data">{{ $applicantsDetails->phone }}</div>
+                                            <div class="item-data"><?php echo e($applicantsDetails->phone); ?></div>
                                         </div>
                                     </div>
                                 </div>
@@ -120,7 +121,7 @@ active
                                     <div class="row justify-content-between align-items-center">
                                         <div class="col-auto">
                                             <div class="item-label"><strong>Gender</strong></div>
-                                            <div class="item-data">{{ $applicantsDetails->gender }}</div>
+                                            <div class="item-data"><?php echo e($applicantsDetails->gender); ?></div>
                                         </div>
                                     </div>
                                 </div>
@@ -128,7 +129,7 @@ active
                                     <div class="row justify-content-between align-items-center">
                                         <div class="col-auto">
                                             <div class="item-label"><strong>Date of Birth</strong></div>
-                                            <div class="item-data">{{ $applicantsDetails->dob }}</div>
+                                            <div class="item-data"><?php echo e($applicantsDetails->dob); ?></div>
                                         </div>
                                     </div>
                                 </div>
@@ -136,7 +137,7 @@ active
                                     <div class="row justify-content-between align-items-center">
                                         <div class="col-auto">
                                             <div class="item-label"><strong>State of Origin</strong></div>
-                                            <div class="item-data">{{ $applicantsDetails->state_origin }}</div>
+                                            <div class="item-data"><?php echo e($applicantsDetails->state_origin); ?></div>
                                         </div>
                                     </div>
                                 </div>
@@ -144,7 +145,7 @@ active
                                     <div class="row justify-content-between align-items-center">
                                         <div class="col-auto">
                                             <div class="item-label"><strong>Nationality</strong></div>
-                                            <div class="item-data">{{ $applicantsDetails->nationality }}</div>
+                                            <div class="item-data"><?php echo e($applicantsDetails->nationality); ?></div>
                                         </div>
                                     </div>
                                 </div>
@@ -158,9 +159,9 @@ active
             <div class="row card">
                 <div class="card-body d-sm-flex align-items-center justify-content-between">
                     <h5 class="card-title text-success">Uploaded Document</h5> <br>
-                    {{-- edit profile button --}}
-                    {{-- <a href="/editprofile" class="d-none d-sm-inline-block btn btn-sm btn-success shadow-sm"><i  --}}
-                    {{-- class="fas fa-edit fa-sm text-white-50"></i> Edit</a>  --}}
+                    
+                    
+                    
                 </div>
 
                 <div class="row gy-4 mb-4 mt-1">
@@ -175,7 +176,7 @@ active
                                                 <strong>Degree Result</strong>
                                             </div>
                                             <div class="">
-                                                <img class="mx-auto d-block" src="data:image/jpeg;base64,{{ $applicantsDetails->jamb }}" alt="JAMB " style="height: 510px; width:400px;" />
+                                                <img class="mx-auto d-block" src="data:image/jpeg;base64,<?php echo e($applicantsDetails->jamb); ?>" alt="JAMB " style="height: 510px; width:400px;" />
                                             </div>
                                         </div>
                                     </div>
@@ -196,34 +197,34 @@ active
                                     <div class="">
                                         <ul class="list-group list-group-flush">
                                             <li class="list-group-item">Intitution Attended:
-                                                <b>{{ $applicantsDetails->institution }}</b>
+                                                <b><?php echo e($applicantsDetails->institution); ?></b>
                                             </li>
                                             <li class="list-group-item">Period:
-                                                <b>{{ $applicantsDetails->period }}</b>
+                                                <b><?php echo e($applicantsDetails->period); ?></b>
                                             </li>
                                             <li class="list-group-item">Course:
-                                                <b>{{ $applicantsDetails->course }}</b>
+                                                <b><?php echo e($applicantsDetails->course); ?></b>
                                             </li>
                                             <li class="list-group-item">Certificate Name:
-                                                <b>{{ $applicantsDetails->certificate_name }}</b>
+                                                <b><?php echo e($applicantsDetails->certificate_name); ?></b>
                                             </li>
                                             <li class="list-group-item">Certificate Type:
-                                                <b>{{ $applicantsDetails->certificate_type }}</b>
+                                                <b><?php echo e($applicantsDetails->certificate_type); ?></b>
                                             </li>
                                             <li class="list-group-item">Class Honour:
-                                                <b>{{ $applicantsDetails->class_honour }}</b>
+                                                <b><?php echo e($applicantsDetails->class_honour); ?></b>
                                             </li>
                                             <li class="list-group-item">Program Mode:
-                                                <b>{{ $applicantsDetails->mode }}</b>
+                                                <b><?php echo e($applicantsDetails->mode); ?></b>
                                             </li>
                                             <li class="list-group-item">Program Type:
-                                                <b>{{ $applicantsDetails->type }}</b>
+                                                <b><?php echo e($applicantsDetails->type); ?></b>
                                             </li>
                                             <li class="list-group-item">Research Topic:
-                                                <b>{{ $applicantsDetails->research_topic }}</b>
+                                                <b><?php echo e($applicantsDetails->research_topic); ?></b>
                                             </li>
                                             <li class="list-group-item">Course Applied:
-                                                <b>{{ $applicantsDetails->course_applied }}</b>
+                                                <b><?php echo e($applicantsDetails->course_applied); ?></b>
                                             </li>
                                         </ul>
                                     </div>
@@ -243,10 +244,11 @@ active
                                                 <strong>Olevel Result</strong>
                                             </div>
                                             <div class="">
-                                                <img class="mx-auto d-block" src="data:image/jpeg;base64,{{ $applicantsDetails->olevel1 }}" alt="Olevel" style="height: 510px; width:400px;" />
+                                                <img class="mx-auto d-block" src="data:image/jpeg;base64,<?php echo e($applicantsDetails->olevel1); ?>" alt="Olevel" style="height: 510px; width:400px;" />
                                             </div>
                                             <div class="item-data card-title text-success">
-                                                {{ $applicantsDetails->olevel_awaiting }}
+                                                <?php echo e($applicantsDetails->olevel_awaiting); ?>
+
                                             </div>
                                         </div>
                                     </div>
@@ -267,7 +269,7 @@ active
                                                 <strong>Olevel Result (second sitting)</strong>
                                             </div>
                                             <div class="">
-                                                <img class=" mx-auto d-block" src="data:image/jpeg;base64,{{ $applicantsDetails->olevel2 }}" alt="Olevel second sitting" style="height: 500px; width:400px;" />
+                                                <img class=" mx-auto d-block" src="data:image/jpeg;base64,<?php echo e($applicantsDetails->olevel2); ?>" alt="Olevel second sitting" style="height: 500px; width:400px;" />
                                             </div>
                                         </div>
                                     </div>
@@ -285,26 +287,26 @@ active
                     <div class="row">
                         <div class="col-sm-12 col-md-4 mb-5">
                             <ul class="list-group list-group-flush">
-                                <li class="list-group-item">Name: <b>{{ $applicantsDetails->name1 }}</b></li>
-                                <li class="list-group-item">Position: <b>{{ $applicantsDetails->position1 }}</b></li>
-                                <li class="list-group-item">Institution: <b>{{ $applicantsDetails->institution1 }}</b></li>
-                                <li class="list-group-item">Email: <b>{{ $applicantsDetails->email1 }}</b></li>
+                                <li class="list-group-item">Name: <b><?php echo e($applicantsDetails->name1); ?></b></li>
+                                <li class="list-group-item">Position: <b><?php echo e($applicantsDetails->position1); ?></b></li>
+                                <li class="list-group-item">Institution: <b><?php echo e($applicantsDetails->institution1); ?></b></li>
+                                <li class="list-group-item">Email: <b><?php echo e($applicantsDetails->email1); ?></b></li>
                             </ul>
                         </div>
                         <div class="col-sm-12 col-md-4 mb-5">
                             <ul class="list-group list-group-flush">
-                                <li class="list-group-item">Name: <b>{{ $applicantsDetails->name2 }}</b></li>
-                                <li class="list-group-item">Position: <b>{{ $applicantsDetails->position2 }}</b></li>
-                                <li class="list-group-item">Institution: <b>{{ $applicantsDetails->institution2 }}</b></li>
-                                <li class="list-group-item">Email: <b>{{ $applicantsDetails->email2 }}</b></li>
+                                <li class="list-group-item">Name: <b><?php echo e($applicantsDetails->name2); ?></b></li>
+                                <li class="list-group-item">Position: <b><?php echo e($applicantsDetails->position2); ?></b></li>
+                                <li class="list-group-item">Institution: <b><?php echo e($applicantsDetails->institution2); ?></b></li>
+                                <li class="list-group-item">Email: <b><?php echo e($applicantsDetails->email2); ?></b></li>
                             </ul>
                         </div>
                         <div class="col-sm-12 col-md-4 mb-5">
                             <ul class="list-group list-group-flush">
-                                <li class="list-group-item">Name: <b>{{ $applicantsDetails->name3 }}</b></li>
-                                <li class="list-group-item">Position: <b>{{ $applicantsDetails->position3 }}</b></li>
-                                <li class="list-group-item">Institution: <b>{{ $applicantsDetails->institution3 }}</b></li>
-                                <li class="list-group-item">Email: <b>{{ $applicantsDetails->email3 }}</b></li>
+                                <li class="list-group-item">Name: <b><?php echo e($applicantsDetails->name3); ?></b></li>
+                                <li class="list-group-item">Position: <b><?php echo e($applicantsDetails->position3); ?></b></li>
+                                <li class="list-group-item">Institution: <b><?php echo e($applicantsDetails->institution3); ?></b></li>
+                                <li class="list-group-item">Email: <b><?php echo e($applicantsDetails->email3); ?></b></li>
                             </ul>
                         </div>
                     </div>
@@ -317,12 +319,12 @@ active
                 <div class="card-body d-sm-flex align-items-center justify-content-between">
                 </div>
                 <ul class="list-group list-group-flush">
-                    <li class="list-group-item">Name: <b>{{ $applicantsDetails->name }}</b></li>
-                    <li class="list-group-item">Email: <b>{{ $applicantsDetails->sponsors_email }}</b></li>
-                    <li class="list-group-item">Phone Number: <b>{{ $applicantsDetails->sponsors_phone }}</b>
+                    <li class="list-group-item">Name: <b><?php echo e($applicantsDetails->name); ?></b></li>
+                    <li class="list-group-item">Email: <b><?php echo e($applicantsDetails->sponsors_email); ?></b></li>
+                    <li class="list-group-item">Phone Number: <b><?php echo e($applicantsDetails->sponsors_phone); ?></b>
                     </li>
-                    <li class="list-group-item">Address: <b>{{ $applicantsDetails->sponsors_address }}</b></li>
-                    <li class="list-group-item">Occupation: <b>{{ $applicantsDetails->occupation }}</b></li>
+                    <li class="list-group-item">Address: <b><?php echo e($applicantsDetails->sponsors_address); ?></b></li>
+                    <li class="list-group-item">Occupation: <b><?php echo e($applicantsDetails->occupation); ?></b></li>
                 </ul>
             </div>
         </div>
@@ -331,4 +333,5 @@ active
 </div>
 </section>
 </div>
-@endsection
+<?php $__env->stopSection(); ?>
+<?php echo $__env->make('layouts.adminsials', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH C:\Users\hp\Documents\WEB DEV\Work-VUNA\laraproject\resources\views/admissions//viewPGprofile.blade.php ENDPATH**/ ?>

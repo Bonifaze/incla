@@ -1207,19 +1207,9 @@ active
                                 }
                             </script>
                             <div class="form-group">
-                                <div class="col-md-12 form-group">
-                                    <div @if ($errors->has('eaddress')) class ='has-error form-group' @endif>
-
-                                        <label for="address">Address :</label>
-                                        {!! Form::textarea('address', null, [
-                                        'placeholder' => '',
-                                        'rows' => '5',
-                                        'class' => 'form-control',
-                                        'id' => 'address',
-                                        'required' => 'required',
-                                        ]) !!}
-                                        <span class="text-danger"> {{ $errors->first('address') }}</span>
-                                    </div>
+                                <div class="form-group">
+                                    <label for="">{{ __('Address') }} </label>
+                                    <textarea id="address" type="text" class="form-control" name="address" required placeholder="Address"> </textarea>
                                 </div>
                             </div>
 
