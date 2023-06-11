@@ -4,6 +4,7 @@
 Home
 @endsection
 
+<!-- Sidebar Links -->
 <!-- Treeview -->
 @section('student-open')
 menu-open
@@ -21,11 +22,13 @@ active
 
 @section('content')
 <div class="content-wrapper bg-white">
-    <section class="content">
+    <section class="content p-5">
+
         @if (session('signUpMsg'))
         {!! session('signUpMsg') !!}
         @endif
-        <div class="card mb-4">
+
+        <div class="card p-5 shadow">
             <ul class="nav nav-tabs" id="myTab" role="tablist">
                 <li class="nav-item" role="presentation">
                     <button class="nav-link active text-success fw-bold text-capitalize" id="home-tab" data-bs-toggle="tab" data-bs-target="#home-tab-pane" type="button" role="tab" aria-controls="home-tab-pane" aria-selected="true">Bio Data</button>
@@ -47,7 +50,7 @@ active
                 <div class="tab-pane fade show active" id="home-tab-pane" role="tabpanel" aria-labelledby="home-tab" tabindex="0">
                     <form method="POST" action="/editbiodata" enctype="multipart/form-data" class="p-3">
                         @csrf
-                        {{--  @if (session('signUpMsg'))
+                        {{-- @if (session('signUpMsg'))
                         {!! session('signUpMsg') !!}
                         @endif  --}}
 
@@ -122,7 +125,7 @@ active
                         <div class="form-group">
 
                             <div class="form-group">
-                            <label for="">{{ __('Religion') }} </label>
+                                <label for="">{{ __('Religion') }} </label>
                                 <select class="form-select col-12 text-lg" name="religion">
                                     <label for="">{{ __('Religion') }} </label>
                                     <option value="{{$applicantsDetails -> religion}}">{{$applicantsDetails -> religion}}</option>
@@ -783,5 +786,12 @@ active
     </section>
 </div>
 
-
+<script>
+    $(document).ready(function() {
+        $('#myTab a').on('click', function(e) {
+            e.preventDefault();
+            $(this).tab('show');
+        });
+    });
+</script>
 @endsection
