@@ -165,6 +165,12 @@
                                         </tbody>
 
                                     </table>
+                                                     <div class="dropdown no-arrow  btn btn-sm btn-success shadow-sm">
+
+                                        <a href="<?php echo e(route('student.feespayment')); ?>"
+                                            class="nav-link <?php echo $__env->yieldContent('results'); ?>">
+                                            <i class="fa fa-plus nav-icon"></i> Generate RRR
+                                    </div>
                                 </div>
                             </div>
                             <div class="modal" id="myModal">

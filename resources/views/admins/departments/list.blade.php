@@ -65,10 +65,12 @@
 							  <td>{{ $loop->iteration }}</td>
 							  <td>{{ $department->name }}</td>
 							 <td>{{ $department->parent->name }}</td>
-
+@can('ICTOfficers', 'App\StudentResult')
 							 <td><a class="btn btn-info" href="{{ route('admin.department.staff_list',$department->id) }}"> Staff List </td>
                              <td><a class="btn btn-warning" href="{{ route('admin.department.edit',$department->id) }}"> <i class="fa fa-edit"></i> Edit </td>
-
+@else
+<td></td>
+@endcan
                                 {{--  <td>
 							{!! Form::open(['method' => 'Delete', 'route' => 'admin.department.delete', 'id'=>'deleteDepartmentForm'.$department->id]) !!}
 				    		{{ Form::hidden('id', $department->id) }}

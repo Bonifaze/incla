@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Category;
 use App\FeeType;
 //use App\program;
-use Illuminate\Support\Facades\Validator;
 use App\Http\Controllers\Controller;
 use App\Mail\Confirmsignup;
 use App\Mail\forgotpassword;
@@ -387,21 +386,111 @@ class ApplicantController extends Controller
 
         return view('admissions.newPayment', compact('payment'), ['fee_types' => $fee_types, 'fee_typess' => $fee_typess]);
     }
+    private function getdptcollegid($course_applied)
+    {
+        $deptCol = array();
+        $getdptcollege = DB::table('programs')->where('programs.name', $course_applied)
+            ->join('academic_departments', 'programs.academic_department_id', '=', 'academic_departments.id')->first();
+
+        $deptCol['dept'] = $getdptcollege->id;
+
+        $getdptcollege = DB::table('colleges')->where('id', $getdptcollege->college_id)->first();
+
+        $deptCol['col'] = $getdptcollege->id;
+
+        return $deptCol;
+    }
     public function schoolfeespayment()
     {
         $payment = DB::table('users')->where('users.id', session('userid'))
-            ->leftJoin('usersbiodata', 'usersbiodata.user_id', '=', 'users.id')->get();
+            ->leftJoin('usersbiodata', 'usersbiodata.user_id', '=', 'users.id')->first();
+        if ($payment && ($payment->applicant_type == 'UTME' || $payment->applicant_type == 'DE' || $payment->applicant_type == 'Transfer')) {
+            $utmeadmission = DB::table('users')->where('users.id', session('userid'))
+                ->leftJoin('usersbiodata', 'usersbiodata.user_id', '=', 'users.id')
+                ->join('approved_applicants', 'approved_applicants.user_id', '=', 'users.id')
+                ->leftJoin('utme', 'utme.user_id', '=', 'users.id')
+                ->leftJoin('academic_departments', 'academic_departments.id', '=', 'users.id')
+                ->leftJoin('colleges', 'colleges.id', '=', 'users.id')
+                ->leftJoin('programs', 'programs.id', '=', 'users.id')
+                ->select('users.*', 'usersbiodata.middle_name', 'approved_applicants.approval_date', 'utme.course_applied', 'academic_departments.name', 'colleges.name', 'programs.duration')->get();
 
-        $fee_types = fee_types::orderBy('status', 'ASC')
-            ->where('status', 1)
-            ->where('category', 3)
-            ->get();
-        $fee_typess = fee_types::orderBy('status', 'ASC')
-            ->where('status', 1)
-            ->where('category', 3)
-            ->get();
+            //$programs= programs::orderBy('name','ASC')->get();
+            $facultyAndDept = array();
+            foreach ($utmeadmission as $ca) {
+                $facultyAndDept = $this->getdptcollegid($ca->course_applied);
+            }
+            $deadmission = DB::table('users')->where('users.id', session('userid'))
+                ->leftJoin('usersbiodata', 'usersbiodata.user_id', '=', 'users.id')
+                ->join('approved_applicants', 'approved_applicants.user_id', '=', 'users.id')
+                ->leftJoin('de', 'de.user_id', '=', 'users.id')
+                ->leftJoin('academic_departments', 'academic_departments.id', '=', 'users.id')
+                ->leftJoin('colleges', 'colleges.id', '=', 'users.id')
+                ->leftJoin('programs', 'programs.id', '=', 'users.id')
+                ->select('users.*', 'usersbiodata.middle_name', 'approved_applicants.approval_date', 'de.course_applied', 'academic_departments.name', 'colleges.name', 'programs.duration')->get();
 
-        return view('admissions.schoolfeespayment', compact('payment'), ['fee_types' => $fee_types, 'fee_typess' => $fee_typess]);
+            //$programs= programs::orderBy('name','ASC')->get();
+
+            $facultyAndDept = array();
+            foreach ($deadmission as $ca) {
+                $facultyAndDept = $this->getdptcollegid($ca->course_applied);
+            }
+            $transferadmission = DB::table('users')->where('users.id', session('userid'))
+                ->leftJoin('usersbiodata', 'usersbiodata.user_id', '=', 'users.id')
+                ->join('approved_applicants', 'approved_applicants.user_id', '=', 'users.id')
+                ->leftJoin('transfers', 'transfers.user_id', '=', 'users.id')
+                ->leftJoin('academic_departments', 'academic_departments.id', '=', 'users.id')
+                ->leftJoin('colleges', 'colleges.id', '=', 'users.id')
+                ->leftJoin('programs', 'programs.id', '=', 'users.id')
+                ->select('users.*', 'usersbiodata.middle_name', 'approved_applicants.approval_date', 'transfers.course_applied', 'academic_departments.name', 'colleges.name', 'programs.duration')->get();
+
+            //$programs= programs::orderBy('name','ASC')->get();
+
+            $facultyAndDept = array();
+            foreach ($transferadmission as $ca) {
+                $facultyAndDept = $this->getdptcollegid($ca->course_applied);
+            }
+
+            $fee_types = fee_types::orderBy('status', 'ASC')
+                ->where('status', 1)
+                ->where('category', 3)
+                ->where('college_id', $facultyAndDept['col'])
+                ->get();
+            $fee_typess = fee_types::orderBy('status', 'ASC')
+                ->where('status', 1)
+                ->where('category', 3)
+                ->get();
+
+            return view('admissions.schoolfeespayment', compact('payment'), ['fee_types' => $fee_types, 'fee_typess' => $fee_typess]);
+
+        } else {
+            $pgadmission = DB::table('users')->where('users.id', session('userid'))
+                ->leftJoin('usersbiodata', 'usersbiodata.user_id', '=', 'users.id')
+                ->join('approved_applicants', 'approved_applicants.user_id', '=', 'users.id')
+                ->leftJoin('pgs', 'pgs.user_id', '=', 'users.id')
+                ->leftJoin('academic_departments', 'academic_departments.id', '=', 'users.id')
+                ->leftJoin('colleges', 'colleges.id', '=', 'users.id')
+                ->leftJoin('programs', 'programs.id', '=', 'users.id')
+                ->select('users.*', 'usersbiodata.middle_name', 'approved_applicants.approval_date', 'pgs.course_applied', 'academic_departments.name', 'colleges.name', 'programs.duration')->get();
+
+            //$programs= programs::orderBy('name','ASC')->get();
+
+            $facultyAndDept = array();
+            foreach ($pgadmission as $ca) {
+                $facultyAndDept = $this->getdptcollegid($ca->course_applied);
+            }
+            $fee_types = fee_types::orderBy('status', 'ASC')
+                ->where('status', 1)
+                ->where('category', 5)
+               // ->where('college_id', $facultyAndDept['col'])
+                ->get();
+            $fee_typess = fee_types::orderBy('status', 'ASC')
+                ->where('status', 1)
+                ->where('category', 3)
+                ->get();
+
+            return view('admissions.schoolfeespayment', compact('payment'), ['fee_types' => $fee_types, 'fee_typess' => $fee_typess]);
+        }
+
     }
 
     public function payremi(Request $req)
@@ -2304,7 +2393,7 @@ class ApplicantController extends Controller
                 ->leftJoin('sponsors', 'sponsors.user_id', '=', 'users.id')
                 ->leftJoin('olevel', 'olevel.user_id', '=', 'users.id')
                 ->leftJoin('uploads', 'uploads.user_id', '=', 'users.id')
-                ->select('users.*', 'usersbiodata.*', 'sponsors.*', 'utme.*', 'olevel.*','uploads.*')
+                ->select('users.*', 'usersbiodata.*', 'sponsors.*', 'utme.*', 'olevel.*', 'uploads.*')
                 ->first();
             $programs = Program::orderBy('name', 'ASC')->get();
             $subjects = subjects::orderBy('subject_name', 'ASC')->get();
@@ -2317,7 +2406,7 @@ class ApplicantController extends Controller
                 ->leftJoin('sponsors', 'sponsors.user_id', '=', 'users.id')
                 ->leftJoin('olevel', 'olevel.user_id', '=', 'users.id')
                 ->leftJoin('uploads', 'uploads.user_id', '=', 'users.id')
-                ->select('users.*', 'usersbiodata.*', 'sponsors.*', 'de.*', 'olevel.*','uploads.*')
+                ->select('users.*', 'usersbiodata.*', 'sponsors.*', 'de.*', 'olevel.*', 'uploads.*')
                 ->first();
             $programs = Program::orderBy('name', 'ASC')->get();
             $subjects = subjects::orderBy('subject_name', 'ASC')->get();
@@ -2328,7 +2417,7 @@ class ApplicantController extends Controller
                 ->leftJoin('usersbiodata', 'usersbiodata.user_id', '=', 'users.id')
                 ->leftJoin('transfers', 'transfers.user_id', '=', 'users.id')
                 ->leftJoin('sponsors', 'sponsors.user_id', '=', 'users.id')
-                ->leftJoin('uploads','uploads.user_id', '=', 'users.id')
+                ->leftJoin('uploads', 'uploads.user_id', '=', 'users.id')
                 ->leftJoin('olevel', 'olevel.user_id', '=', 'users.id')
                 ->select('users.*', 'usersbiodata.*', 'sponsors.*', 'transfers.*', 'olevel.*', 'uploads.*')
                 ->first();
@@ -2350,8 +2439,8 @@ class ApplicantController extends Controller
             $programs = Program::orderBy('name', 'ASC')->get();
             $subjects = subjects::orderBy('subject_name', 'ASC')->get();
             return view('admissions./changeuserpassword', compact('applicantsDetails'), ['programs' => $programs, 'subjects' => $subjects]);
+        }
     }
-}
 
     public function editprofile()
     {
@@ -2367,7 +2456,7 @@ class ApplicantController extends Controller
                 ->leftJoin('sponsors', 'sponsors.user_id', '=', 'users.id')
                 ->leftJoin('olevel', 'olevel.user_id', '=', 'users.id')
                 ->leftJoin('uploads', 'uploads.user_id', '=', 'users.id')
-                ->select('users.*', 'usersbiodata.*', 'sponsors.*', 'utme.*', 'olevel.*','uploads.*')
+                ->select('users.*', 'usersbiodata.*', 'sponsors.*', 'utme.*', 'olevel.*', 'uploads.*')
                 ->first();
             $programs = Program::orderBy('name', 'ASC')->get();
             $subjects = subjects::orderBy('subject_name', 'ASC')->get();
@@ -2380,7 +2469,7 @@ class ApplicantController extends Controller
                 ->leftJoin('sponsors', 'sponsors.user_id', '=', 'users.id')
                 ->leftJoin('olevel', 'olevel.user_id', '=', 'users.id')
                 ->leftJoin('uploads', 'uploads.user_id', '=', 'users.id')
-                ->select('users.*', 'usersbiodata.*', 'sponsors.*', 'de.*', 'olevel.*','uploads.*')
+                ->select('users.*', 'usersbiodata.*', 'sponsors.*', 'de.*', 'olevel.*', 'uploads.*')
                 ->first();
             $programs = Program::orderBy('name', 'ASC')->get();
             $subjects = subjects::orderBy('subject_name', 'ASC')->get();
@@ -2391,7 +2480,7 @@ class ApplicantController extends Controller
                 ->leftJoin('usersbiodata', 'usersbiodata.user_id', '=', 'users.id')
                 ->leftJoin('transfers', 'transfers.user_id', '=', 'users.id')
                 ->leftJoin('sponsors', 'sponsors.user_id', '=', 'users.id')
-                ->leftJoin('uploads','uploads.user_id', '=', 'users.id')
+                ->leftJoin('uploads', 'uploads.user_id', '=', 'users.id')
                 ->leftJoin('olevel', 'olevel.user_id', '=', 'users.id')
                 ->select('users.*', 'usersbiodata.*', 'sponsors.*', 'transfers.*', 'olevel.*', 'uploads.*')
                 ->first();
@@ -2439,92 +2528,92 @@ class ApplicantController extends Controller
     //EDIT UTME PROFILE
 
     public function editbiodata(Request $req)
-{
-    $this->validate($req, [
-        'gender' => 'required|string|max:6',
-        'dob' => 'required|string|max:50',
-        'nationality' => 'required|string|max:100',
-        'state_origin' => 'required|string|max:50',
-        'religion' => 'required|string|max:50',
-        'address' => 'required|string|max:200',
-        'passport' => 'image|mimes:jpeg,png,jpg,gif,svg|max:1048|dimensions:min_width=300',
-    ], $messages = [
-        'passport.dimensions' => 'Passport Image is too small. Must be at least 400px wide.',
-    ]);
+    {
+        $this->validate($req, [
+            'gender' => 'required|string|max:6',
+            'dob' => 'required|string|max:50',
+            'nationality' => 'required|string|max:100',
+            'state_origin' => 'required|string|max:50',
+            'religion' => 'required|string|max:50',
+            'address' => 'required|string|max:200',
+            'passport' => 'image|mimes:jpeg,png,jpg,gif,svg|max:1048|dimensions:min_width=300',
+        ], $messages = [
+            'passport.dimensions' => 'Passport Image is too small. Must be at least 400px wide.',
+        ]);
 
-    DB::beginTransaction();
+        DB::beginTransaction();
 
-    try {
-        // Check if passport image is uploaded
-        if ($req->hasFile('passport')) {
-            $img1 = Image::make($req->file('passport'))->resize(300, null, function ($constraint) {
-                $constraint->aspectRatio();
-            });
-            $passport = base64_encode($img1->encode()->encoded);
-            $img = $passport;
+        try {
+            // Check if passport image is uploaded
+            if ($req->hasFile('passport')) {
+                $img1 = Image::make($req->file('passport'))->resize(300, null, function ($constraint) {
+                    $constraint->aspectRatio();
+                });
+                $passport = base64_encode($img1->encode()->encoded);
+                $img = $passport;
 
-            // Update passport image and other biodata fields
-            DB::table('users')->where('id', session('userid'))->update([
-                'id' => session('userid'),
-                'surname' => $req->surname,
-                'first_name' => $req->first_name,
-                'phone' => $req->phone,
-                'email' => $req->email,
-            ]);
+                // Update passport image and other biodata fields
+                DB::table('users')->where('id', session('userid'))->update([
+                    'id' => session('userid'),
+                    'surname' => $req->surname,
+                    'first_name' => $req->first_name,
+                    'phone' => $req->phone,
+                    'email' => $req->email,
+                ]);
 
-            DB::table('usersbiodata')->where('user_id', session('userid'))->update([
-                'user_id' => session('userid'),
-                'middle_name' => $req->middle_name,
-                'gender' => $req->gender,
-                'religion' => $req->religion,
-                'dob' => $req->dob,
-                'nationality' => $req->nationality,
-                'lga' => $req->lga,
-                'state_origin' => $req->state_origin,
-                'address' => $req->address,
-                'passport' => $img,
-                'referral' => $req->referral,
-            ]);
-        } else {
-            // Update other biodata fields without changing the passport image
-            DB::table('users')->where('id', session('userid'))->update([
-                'id' => session('userid'),
-                'surname' => $req->surname,
-                'first_name' => $req->first_name,
-                'phone' => $req->phone,
-                'email' => $req->email,
-            ]);
+                DB::table('usersbiodata')->where('user_id', session('userid'))->update([
+                    'user_id' => session('userid'),
+                    'middle_name' => $req->middle_name,
+                    'gender' => $req->gender,
+                    'religion' => $req->religion,
+                    'dob' => $req->dob,
+                    'nationality' => $req->nationality,
+                    'lga' => $req->lga,
+                    'state_origin' => $req->state_origin,
+                    'address' => $req->address,
+                    'passport' => $img,
+                    'referral' => $req->referral,
+                ]);
+            } else {
+                // Update other biodata fields without changing the passport image
+                DB::table('users')->where('id', session('userid'))->update([
+                    'id' => session('userid'),
+                    'surname' => $req->surname,
+                    'first_name' => $req->first_name,
+                    'phone' => $req->phone,
+                    'email' => $req->email,
+                ]);
 
-            DB::table('usersbiodata')->where('user_id', session('userid'))->update([
-                'user_id' => session('userid'),
-                'middle_name' => $req->middle_name,
-                'gender' => $req->gender,
-                'religion' => $req->religion,
-                'dob' => $req->dob,
-                'nationality' => $req->nationality,
-                'lga' => $req->lga,
-                'state_origin' => $req->state_origin,
-                'address' => $req->address,
-                'referral' => $req->referral,
-            ]);
-        }
+                DB::table('usersbiodata')->where('user_id', session('userid'))->update([
+                    'user_id' => session('userid'),
+                    'middle_name' => $req->middle_name,
+                    'gender' => $req->gender,
+                    'religion' => $req->religion,
+                    'dob' => $req->dob,
+                    'nationality' => $req->nationality,
+                    'lga' => $req->lga,
+                    'state_origin' => $req->state_origin,
+                    'address' => $req->address,
+                    'referral' => $req->referral,
+                ]);
+            }
 
-        DB::commit();
+            DB::commit();
 
-        $signUpMsg = '<div class="alert alert-success alert-dismissible"><button type="button" class="close" data-dismiss="alert">&times;</button><strong>Success!</strong> Your have successfully updated your Biodata</div>';
-        return redirect('/editprofile')->with('signUpMsg', $signUpMsg);
-    } catch (QueryException $e) {
-        DB::rollBack();
-        $error_code = $e->errorInfo[1];
-        if ($error_code == 1062) {
-            $signUpMsg = '<div class="alert alert-danger alert-dismissible"><button type="button" class="close" data-dismiss="alert">&times;</button><strong>Error!</strong> Unsuccessful, please try again</div>';
+            $signUpMsg = '<div class="alert alert-success alert-dismissible"><button type="button" class="close" data-dismiss="alert">&times;</button><strong>Success!</strong> Your have successfully updated your Biodata</div>';
             return redirect('/editprofile')->with('signUpMsg', $signUpMsg);
-        } else {
-            $signUpMsg = '<div class="alert alert-danger alert-dismissible"><button type="button" class="close" data-dismiss="alert">&times;</button><strong>Error!</strong> Unsuccessful, please try again' . $e->getMessage() . '</div>';
-            return redirect('/editprofile')->with('signUpMsg', $signUpMsg);
+        } catch (QueryException $e) {
+            DB::rollBack();
+            $error_code = $e->errorInfo[1];
+            if ($error_code == 1062) {
+                $signUpMsg = '<div class="alert alert-danger alert-dismissible"><button type="button" class="close" data-dismiss="alert">&times;</button><strong>Error!</strong> Unsuccessful, please try again</div>';
+                return redirect('/editprofile')->with('signUpMsg', $signUpMsg);
+            } else {
+                $signUpMsg = '<div class="alert alert-danger alert-dismissible"><button type="button" class="close" data-dismiss="alert">&times;</button><strong>Error!</strong> Unsuccessful, please try again' . $e->getMessage() . '</div>';
+                return redirect('/editprofile')->with('signUpMsg', $signUpMsg);
+            }
         }
     }
-}
 
     public function editsponsors(Request $req)
     {
@@ -2569,11 +2658,11 @@ class ApplicantController extends Controller
             'olevel1' => 'image|mimes:jpeg,png,jpg,gif,svg|max:1048|dimensions:min_width=300',
             'olevel2' => 'image|mimes:jpeg,png,jpg,gif,svg|max:1048|dimensions:min_width=300',
         ],
-        $messages = [
-            'jamb.dimensions' => 'Result Image is too small. Must be at least 400px wide.',
-            'olevel1.dimensions' => 'Olevel Image is too small. Must be at least 400px wide.',
-            'olevel2.dimensions' => 'Olevel Image is too small. Must be at least 400px wide.',
-        ]);
+            $messages = [
+                'jamb.dimensions' => 'Result Image is too small. Must be at least 400px wide.',
+                'olevel1.dimensions' => 'Olevel Image is too small. Must be at least 400px wide.',
+                'olevel2.dimensions' => 'Olevel Image is too small. Must be at least 400px wide.',
+            ]);
 
         DB::beginTransaction();
 
@@ -2634,7 +2723,6 @@ class ApplicantController extends Controller
             }
         }
     }
-
 
     // function editolevel(Request $req)
     // {

@@ -86,9 +86,9 @@
  <?php else: ?>
             <div></div>
         <?php endif; ?>
+
+                 <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('approveResultSBC', 'App\ProgramCourse')): ?>
         <li class="nav-item dropdown">
-
-
 
             <a id="dropdownSubMenu1" style="color: #218c74;" href="#" data-toggle="dropdown" aria-haspopup="true"
                 aria-expanded="false" class="nav-link dropdown-toggle">Results</a>
@@ -146,6 +146,9 @@
                         </ul>
                     </li>
                     </ul>
+                     <?php else: ?>
+            <div></div>
+        <?php endif; ?>
 
 
                 <li class="dropdown-submenu dropdown-hover">

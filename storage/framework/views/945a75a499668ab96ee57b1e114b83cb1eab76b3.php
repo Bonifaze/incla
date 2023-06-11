@@ -61,10 +61,12 @@
 							  <td><?php echo e($loop->iteration); ?></td>
 							  <td><?php echo e($department->name); ?></td>
 							 <td><?php echo e($department->parent->name); ?></td>
-
+<?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('ICTOfficers', 'App\StudentResult')): ?>
 							 <td><a class="btn btn-info" href="<?php echo e(route('admin.department.staff_list',$department->id)); ?>"> Staff List </td>
                              <td><a class="btn btn-warning" href="<?php echo e(route('admin.department.edit',$department->id)); ?>"> <i class="fa fa-edit"></i> Edit </td>
-
+<?php else: ?> 
+<td></td>
+<?php endif; ?>
                                 
 							</tr>
 

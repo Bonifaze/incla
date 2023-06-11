@@ -41,12 +41,12 @@ active
 
             </head>
 
-          
+
             <form action="" method="POST" onsubmit="event.preventDefault();" class="p-5">
                 <?php echo csrf_field(); ?>
                 <div class="form-group container-fluid mt-5 p-5 border border-success shadow shadow-lg rounded rounded-lg">
                     <label for="exampleFormControlSelect1" class="text-success fw-bold mb-2">School Fee Type</label>
-                    
+
                     <select class="form-select" id="pmtype" onChange="update()">
                         <?php $__currentLoopData = $fee_types; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $fee_types): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                         <option value="<?php echo e($fee_types->provider_code); ?>, <?php echo e($fee_types->id); ?>" id="<?php echo e($fee_types->amount); ?>">
@@ -62,22 +62,22 @@ active
                     <input type="hidden" class="form-control mt-2" id="provider_code" readonly>
                     <input type="hidden" class="form-control mt-2" id="fee_type_id" readonly>
                     <input type="text" class="form-control mt-2" id="id" readonly>
-                    <?php $__currentLoopData = $payment; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $utm): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                    
                     <div class="form-floating mb-3 mt-3">
-                        <input type="hidden" class="form-control" id="js-firstName" placeholder="<?php echo e($utm->first_name . ' ' . $utm->middle_name . ' ' . $utm->surname); ?>" value="<?php echo e($utm->first_name . ' ' . $utm->middle_name . ' ' . $utm->surname); ?>" name="firstName" readonly>
+                        <input type="hidden" class="form-control" id="js-firstName" placeholder="<?php echo e($payment->first_name . ' ' . $payment->middle_name . ' ' . $payment->surname); ?>" value="<?php echo e($payment->first_name . ' ' . $payment->middle_name . ' ' . $payment->surname); ?>" name="firstName" readonly>
                         <label for="email"></label>
                     </div>
 
                     <div class="form-floating mb-3 mt-3">
-                        <input type="hidden" class="form-control" id="js-email" placeholder="<?php echo e($utm->email); ?>" value="<?php echo e($utm->email); ?>" name="email" readonly hidden>
+                        <input type="hidden" class="form-control" id="js-email" placeholder="<?php echo e($payment->email); ?>" value="<?php echo e($payment->email); ?>" name="email" readonly hidden>
                         <label for="email"></label>
                     </div>
 
                     <div class="form-floating mb-3 mt-3">
-                        <input type="hidden" class="form-control" id="js-phone" placeholder="<?php echo e($utm->phone); ?>" value="<?php echo e($utm->phone); ?>" name="email" readonly>
+                        <input type="hidden" class="form-control" id="js-phone" placeholder="<?php echo e($payment->phone); ?>" value="<?php echo e($payment->phone); ?>" name="email" readonly>
                         <label for="email"></label>
                     </div>
-                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                    
 
                     
                     <!-- <div class="form-floating mt-3 mb-3">
@@ -300,4 +300,5 @@ active
 </div>
 
 <?php $__env->stopSection(); ?>
+
 <?php echo $__env->make('layouts.adminsials', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH /Users/lifeofrence/Documents/laraproject/resources/views/admissions/schoolfeespayment.blade.php ENDPATH**/ ?>

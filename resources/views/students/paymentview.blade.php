@@ -171,6 +171,12 @@
                                         </tbody>
 
                                     </table>
+                                                     <div class="dropdown no-arrow  btn btn-sm btn-success shadow-sm">
+
+                                        <a href="{{ route('student.feespayment') }}"
+                                            class="nav-link @yield('results')">
+                                            <i class="fa fa-plus nav-icon"></i> Generate RRR
+                                    </div>
                                 </div>
                             </div>
                             <div class="modal" id="myModal">

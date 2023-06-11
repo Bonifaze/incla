@@ -2,17 +2,17 @@
 
 namespace App\Http\Controllers;
 
-use App\Remita;
 use App\FeeType;
+use App\Models\CourseRegistrations;
+use App\Models\fee_types;
+use App\Models\Remitas;
+use App\Remita;
 use App\Student;
 use Carbon\Carbon;
-use App\Models\Remitas;
-use App\Models\fee_types;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
-use App\Models\CourseRegistrations;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Database\QueryException;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class StudentPaymentsController extends Controller
 {
@@ -26,9 +26,7 @@ class StudentPaymentsController extends Controller
     {
         $this->middleware('auth:student');
     }
-
     public function feespayment()
-
     {
         $courseReg = CourseRegistrations::where('status', 1)->orderBy('id', 'ASC')->paginate(20);
         // $payment = DB::table('students')->where('id', session('userid'))->get();
@@ -38,36 +36,58 @@ class StudentPaymentsController extends Controller
         // dd($student);
         $contact = $student->contact;
         $academic = $student->academic;
+        if ($level = $student->academic->level < 600) {
+            $gender = $payment->gender;
 
-$gender = $payment->gender;
+            $gender_code = ($gender == 'male') ? 2 : 1;
 
-$gender_code = ($gender == 'male') ? 2 : 1;
+            // ->leftJoin('usersbiodata', 'usersbiodata.user_id', '=', 'users.id')->get();
 
-        // ->leftJoin('usersbiodata', 'usersbiodata.user_id', '=', 'users.id')->get();
+            $fee_types = FeeType::orderBy('status', 'ASC')
+            // ->select('id', 'name', 'amount', 'status', 'category', 'gender_code')
+                ->where('status', 1)
+                ->where(function ($query) use ($gender_code) {
+                    $query->where('gender_code', $gender_code)
+                        ->orWhere('gender_code', 0);
+                })
+                ->where('category', '>', 2)
+                ->whereHas('college', function ($query) use ($academic) {
+                    $query->where('id', $academic->college()->id);
+                })
+                ->get();
 
-        $fee_types = FeeType::orderBy('status', 'ASC')
-        ->select('id', 'name', 'amount', 'status', 'category', 'gender_code')
-        ->where('status', 1)
-        ->where(function ($query) use ($gender_code) {
-            $query->where('gender_code', $gender_code)
-                ->orWhere('gender_code', 0);
-        })
-        // ->where('category', '>', 2)
-        ->whereHas('college', function ($query) use ($academic) {
-            $query->where('id', $academic->college()->id);
-        })
-        ->get();
+            $fee_typess = fee_types::orderBy('status', 'ASC')
+                ->where('status', 1)
+                ->where('category', 4)
+                ->get();
 
+            return view('students.RemitaPayment', compact('payment'), ['fee_types' => $fee_types, 'fee_typess' => $fee_typess, 'courseReg' => $courseReg]);
+        }else{
+            $fee_types = fee_types::orderBy('status', 'ASC')
+            ->where('status', 1)
+            ->where('category', 5)
+            ->get();
 
-        $fee_typess = fee_types::orderBy('status', 'ASC')
+            $fee_typess = fee_types::orderBy('status', 'ASC')
             ->where('status', 1)
             ->where('category', 4)
             ->get();
 
-        return view('students.RemitaPayment', compact('payment'), ['fee_types' => $fee_types, 'fee_typess' => $fee_typess, 'courseReg'=>$courseReg]);
+        return view('students.RemitaPayment', compact('payment'), ['fee_types' => $fee_types, 'fee_typess' => $fee_typess, 'courseReg' => $courseReg]);
+        }
     }
 
-//To INSERT THE GENERATE RRR INTO THE DB
+    public function Otherfees()
+    {
+        $courseReg = CourseRegistrations::where('status', 1)->orderBy('id', 'ASC')->paginate(20);
+        $payment = Auth::guard('student')->user();
+        $fee_typess = fee_types::orderBy('status', 'ASC')
+            ->where('status', 1)
+            ->where('category', 4)
+            ->get();
+        return view('students.RemitaPaymentOtherfee', compact('payment'), ['fee_typess' => $fee_typess, 'courseReg' => $courseReg]);
+    }
+
     public function payremi(Request $req)
     {
         $student_id = Auth::guard('student')->user()->id;
@@ -145,7 +165,7 @@ $gender_code = ($gender == 'male') ? 2 : 1;
             $jsonstring = json_encode($json, JSON_HEX_TAG);
             echo $jsonstring;
         } catch (QueryException $e) {
-            $statusMsg = '<div class="alert alert-danger alert-dismissible"><button type="button" class="close" data-dismiss="alert">&times;</button><strong>Error!</strong> RRR  Logged successfuly, please contact ICT ' . $e->getMessage() . "###" . $req->rrr . '</div>';
+            $statusMsg = '<div class="alert alert-danger alert-dismissible"><button type="button" class="close" data-dismiss="alert">&times;</button><strong>Error!</strong> RRR not generated successfuly, please try again ' . $e->getMessage() . "###" . $req->rrr . '</div>';
 
             $json = array('success' => false, 'route' => '/students/remita/feestype', 'msg' => $statusMsg);
             $jsonstring = json_encode($json, JSON_HEX_TAG);
@@ -156,14 +176,14 @@ $gender_code = ($gender == 'male') ? 2 : 1;
 
     public function viewpayment($id)
     {
-        $courseReg = CourseRegistrations::where('status', 1)->orderBy('id', 'ASC')->paginate(20);
+    $courseReg = CourseRegistrations::where('status', 1)->orderBy('id', 'ASC')->paginate(20);
 
         $viewpayment = DB::table('remitas')->where('student_id', Auth::guard('student')->user()->id)
             ->orderBy('status_code', 'ASC')->orderBy('created_at', 'DESC')
             ->get();
 
         $verifyResponse = $this->verifyRRRALL();
-        return view('students.paymentview', compact('viewpayment', 'verifyResponse','courseReg'));
+        return view('students.paymentview', compact('viewpayment', 'verifyResponse', 'courseReg' ));
     }
     public function verifyRRRALL()
     {
@@ -204,10 +224,9 @@ $gender_code = ($gender == 'male') ? 2 : 1;
 
     public function receipt($rrr)
     {
-
         $receipt = DB::table('remitas')->where('rrr', $rrr)
             ->leftJoin('students', 'remitas.student_id', '=', 'students.id')
-            ->select('remitas.*','students.surname','students.first_name','students.middle_name','students.gender','students.email','students.phone',)
+            ->select('remitas.*', 'students.surname', 'students.first_name', 'students.middle_name', 'students.gender', 'students.email', 'students.phone', )
         // ->leftjoin('usersbiodata', 'usersbiodata.user_id', '=', 'users.id')
             ->first();
         return view('students.receipt', compact('receipt'));
@@ -317,7 +336,7 @@ $gender_code = ($gender == 'male') ? 2 : 1;
         } else {
             // dd($response);
             $remita->status_code = "025";
-            $remita->status = "Payment Reference generatedd";
+            $remita->status = "Payment Reference generated";
             // dd($response);
             //verify transaction time and transaction date
             $update = "RRR " . $remita->rrr . " Payment pending or NOT PAID.";

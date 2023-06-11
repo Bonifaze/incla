@@ -95,16 +95,16 @@
                                     <i class="right fas fa-angle-left"></i>
                                 </p>
                             </a>
-                            
+
                             <ul class="nav nav-treeview">
-                           
+
                                 <li class="nav-item">
                                     <a href="<?php echo e(route('course.create')); ?>" class="nav-link <?php echo $__env->yieldContent('exam-remark'); ?>">
                                         <i class="fa fa-plus nav-icon"></i>
                                         <p>Create Course</p>
                                     </a>
                                 </li>
-                               
+
 
                                 <li class="nav-item">
                                     <a href="<?php echo e(route('program_course.create')); ?>"
@@ -519,7 +519,12 @@
                                 <p>List Staff</p>
                             </a>
                         </li>
-                        
+                          <li class="nav-item">
+                            <a href="<?php echo e(route('admin.department.list')); ?>" class="nav-link <?php echo $__env->yieldContent('departments'); ?>">
+                                <i class="fas fa-list-alt nav-icon"></i>
+                                <p>List Staff Dept/Unit</p>
+                            </a>
+                        </li>
                     </ul>
                 </li>
 

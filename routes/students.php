@@ -78,3 +78,5 @@ Route::get('/students/course-form/{encode}', 'StudentsController@courseFormstude
 
 // Route::get('/paymentview/{id}', 'App\Http\Controllers\ApplicantController@Viewpayment');
 Route::delete('/student/remita/studentupaid/{remita}', 'StudentsController@destroy')->name('studentremita.find-studentunpaidrrr.destroy');
+
+Route::get('/students/remita/otherfeestype', 'StudentPaymentsController@Otherfees')->name('student.otherfeespayment');

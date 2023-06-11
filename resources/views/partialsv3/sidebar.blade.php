@@ -108,16 +108,16 @@
                                     <i class="right fas fa-angle-left"></i>
                                 </p>
                             </a>
-                            
+
                             <ul class="nav nav-treeview">
-                           
+
                                 <li class="nav-item">
                                     <a href="{{ route('course.create') }}" class="nav-link @yield('exam-remark')">
                                         <i class="fa fa-plus nav-icon"></i>
                                         <p>Create Course</p>
                                     </a>
                                 </li>
-                               
+
 
                                 <li class="nav-item">
                                     <a href="{{ route('program_course.create') }}"
@@ -606,12 +606,12 @@
                                 <p>List Staff</p>
                             </a>
                         </li>
-                        {{--  <li class="nav-item">
-                            <a href="" class="nav-link @yield('departments')">
+                          <li class="nav-item">
+                            <a href="{{ route('admin.department.list') }}" class="nav-link @yield('departments')">
                                 <i class="fas fa-list-alt nav-icon"></i>
-                                <p>Get Contact List</p>
+                                <p>List Staff Dept/Unit</p>
                             </a>
-                        </li>  --}}
+                        </li>
                     </ul>
                 </li>
 
