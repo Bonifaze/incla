@@ -49,9 +49,9 @@ active
                 <div class="tab-pane fade show active" id="home-tab-pane" role="tabpanel" aria-labelledby="home-tab" tabindex="0">
                     <form method="POST" action="/editbiodata" enctype="multipart/form-data" class="p-3">
                         @csrf
-                        @if (session('signUpMsg'))
+                        {{--  @if (session('signUpMsg'))
                         {!! session('signUpMsg') !!}
-                        @endif
+                        @endif  --}}
                         <div class="item border-bottom py-3">
                             <div class="row justify-content-between align-items-center">
                                 <div class="col-auto">
@@ -116,7 +116,7 @@ active
 
                             <div class="form-group">
                                 <label for="">{{ __('Gender') }} </label>
-                                <select class="form-select" name="gender">
+                                <select class="form-select text-lg col-12" name="gender">
                                     <option value="{{ $applicantsDetails->gender }}">
                                         {{ $applicantsDetails->gender }}
                                     </option>
@@ -129,7 +129,7 @@ active
                         <div class="form-group">
 
                             <div class="form-group"> <label for="">{{ __('Religion') }} </label>
-                                <select class="form-select" name="religion">
+                                <select class="form-select text-lg col-12" name="religion">
 
                                     <option value="{{ $applicantsDetails->religion }}">
                                         {{ $applicantsDetails->religion }}
@@ -155,7 +155,7 @@ active
                         <div class="form-group">
                             <div class="form-group">
                                 <label for="">{{ __('Nationality') }} </label>
-                                <select class="form-select" name="nationality" id="nationality">
+                                <select class="form-select text-lg col-12" name="nationality" id="nationality">
                                     <option value="{{ $applicantsDetails->nationality }}">
                                         {{ $applicantsDetails->nationality }}
                                     </option>
@@ -477,7 +477,7 @@ active
                             </label>
 
                             <div class="form-group">
-                                <select class="form-select" name="referral">
+                                <select class="form-select text-lg col-12" name="referral">
                                     <option value="{{ $applicantsDetails->referral }}">
                                         {{ $applicantsDetails->referral }}
                                     </option>
@@ -654,7 +654,7 @@ active
                             <div class="form-group">
                                 <label for="refferal">{{ __('Proposed Course of Study') }}
                                 </label>
-                                <select class="form-select" name="course_applied">
+                                <select class="form-select text-lg col-12" name="course_applied">
                                     <option value="{{ $applicantsDetails->course_applied }}">
                                         {{ $applicantsDetails->course_applied }}
                                     </option>

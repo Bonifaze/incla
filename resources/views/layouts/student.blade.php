@@ -1,13 +1,13 @@
 <!DOCTYPE html>
 <html>
 <head>
- 
+
 <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
  <title> @yield('pagetitle') | Veritas University, Abuja </title>
  <link rel="shortcut icon" href="{{ asset('img/letter_logo.png') }}" >
- 
+
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
 
@@ -36,7 +36,7 @@
 
 
 @yield('css')
- 	
+
 
 </head>
 <body class="hold-transition sidebar-mini layout-fixed">
@@ -44,35 +44,35 @@
 
   <!-- Navbar -->
    @include("spartials.navbar")
-  
+
   <!-- /.navbar -->
-  
+
 
   <!-- Main Sidebar Container -->
    @include("spartials.sidebar")
-   
-  
+
+
 
   <!-- Content Wrapper. Contains page content -->
    @yield('content')
-    
+
   <!-- /.content-wrapper -->
-  
-  
-  
-  
-  
-  
+
+
+
+
+
+
 <!-- Footer starts -->
-  
-  
+
+
  @include("spartials.footer")
-  
-  
-  
-  
-  
-  
+
+
+
+
+
+
 
 
 
@@ -115,6 +115,14 @@
 <!-- AdminLTE App -->
 <script src="{{ asset('v3/dist/js/adminlte.js')}}"></script>
 <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
+
+     <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"
+        integrity="sha512-2ImtlRlf2VVmiGZsjm9bEyhjGW4dU7B6TNwh/hx/iSByxNENtj3WVE6o/9Lj4TJeVXPi4bnOIMXFIJJAeufa0A=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+<script>
+   {{--  $('#pmtype').select2();  --}}
+</script>
 
 <!-- AdminLTE for demo purposes -->
 <script src="{{ asset('v3/dist/js/demo.js')}}"></script>

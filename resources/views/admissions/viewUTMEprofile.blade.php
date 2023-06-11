@@ -1,7 +1,14 @@
-active
+@extends('layouts.adminsials')
+
+@section('pagetitle')
+    Home
 @endsection
 
-<!-- Page -->
+<!-- Sidebar Links -->
+<!-- Treeview -->
+@section('student-open')
+    menu-open
+@endsection
 @section('home')
 active
 @endsection
@@ -20,10 +27,12 @@ active
 
             <!-- Page Heading -->
             <div class="d-sm-flex align-items-center justify-content-between mb-4">
-                <h1 class="h3 mb-1 p-2 text-black-800 fw-bold text-capitalize">UTME Profile</h1> <br>
+                {{--  <h1 class="h3 mb-1 p-2 text-black-800 fw-bold text-capitalize">UTME Profile</h1> <br>  --}}
                 {{-- <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-success shadow-sm"><i class="fas fa-download fa-sm text-white-50"></i> Edit</a> --}}
             </div>
-
+ <h3 class="app-page-title text-uppercase h5 font-weight-bold p-2 mb-2 shadow-sm text-center text-success border">
+           UTME Profile
+            </h3>
             <!-- Content Row -->
             <div class="row card">
                 <div class="card-body d-sm-flex align-items-center justify-content-between">
@@ -268,6 +277,7 @@ active
                                         </div>
                                     </div>
                                 </div>
+                            </div>
                             </div>
                             <!-- Divider -->
                             {{-- <hr class="sidebar-divider">  --}}

@@ -142,7 +142,7 @@
 
                     <li class="dropdown-submenu dropdown-hover">
                         <a id="dropdownSubMenu2" href="#" role="button" data-toggle="dropdown" aria-haspopup="true"
-                            aria-expanded="false" class="dropdown-item dropdown-toggle">Staff/Students</a>
+                            aria-expanded="false" class="dropdown-item dropdown-toggle">Access Control</a>
                         <ul aria-labelledby="dropdownSubMenu2" class="dropdown-menu border-0 shadow">
 
                             <!-- Level two dropdown-->
@@ -155,8 +155,8 @@
                     <!-- End Level two -->
                     <!-- Level two dropdown-->
                     <li class="dropdown-submenu dropdown-hover">
-                        <a id="dropdownSubMenu2" href="#" role="button" data-toggle="dropdown" aria-haspopup="true"
-                            aria-expanded="false" class="dropdown-item dropdown-toggle">Applicants</a>
+                        {{--  <a id="dropdownSubMenu2" href="#" role="button" data-toggle="dropdown" aria-haspopup="true"
+                            aria-expanded="false" class="dropdown-item dropdown-toggle">Applicants</a>  --}}
                         <ul aria-labelledby="dropdownSubMenu2" class="dropdown-menu border-0 shadow">
 
                             <!-- Level two dropdown-->
@@ -184,46 +184,38 @@
         @else
             <div></div>
         @endcan
+         @can('ICTOfficers', 'App\StudentResult')
         <li class="nav-item dropdown">
             <a id="dropdownSubMenu1"style="color: #218c74;" href="#" data-toggle="dropdown" aria-haspopup="true"
                 aria-expanded="false" class="nav-link dropdown-toggle">HR</a>
             <ul aria-labelledby="dropdownSubMenu1" class="dropdown-menu border-0 shadow">
-                <li><a href="{{ route('admin.department.create') }}" class="dropdown-item">New Admin Dept </a></li>
-                <li><a href="{{ route('admin.department.list') }}" class="dropdown-item">List Admin Depts</a></li>
-                {{--  <li><a href="#" class="dropdown-item">Assign Head*</a></li>  --}}
-                {{--  <li><a href="#" class="dropdown-item">New Staff Position*</a></li>
-                <li><a href="#" class="dropdown-item">List Staff Positions*</a></li>  --}}
-                {{--    <li><a href="#" class="dropdown-item">New Grade Scales*</a></li>
-                <li><a href="#" class="dropdown-item">List Grade Scales*</a></li>  --}}
+                <li><a href="{{ route('admin.department.create') }}" class="dropdown-item">Create Dept/Unit </a></li>
+                <li><a href="{{ route('admin.department.list') }}" class="dropdown-item">List Dept/Unit Staff</a></li>
+             <li><a href="#" class="dropdown-item">Assign HoD</a></li>
+                <li><a href="#" class="dropdown-item">New Staff Position</a></li>
+                <li><a href="#" class="dropdown-item">List Staff Positions</a></li>
+                 <li><a href="#" class="dropdown-item">New Grade Scales</a></li>
+                <li><a href="#" class="dropdown-item">List Grade Scales</a></li>
             </ul>
         </li>
-
+ @else
+            <div></div>
+        @endcan
         <li class="nav-item dropdown">
+
+
+
             <a id="dropdownSubMenu1" style="color: #218c74;" href="#" data-toggle="dropdown" aria-haspopup="true"
                 aria-expanded="false" class="nav-link dropdown-toggle">Results</a>
-            <ul aria-labelledby="dropdownSubMenu1" class="dropdown-menu border-0 shadow">
-                {{--  <li><a href="{{ route('admin.course_upload') }}" class="dropdown-item">Staff Score Upload </a></li>  --}}
-                {{--  <li><a href="{{ route('admin.approve_scores') }}" class="dropdown-item">Courses Result
-                        </a></li>  --}}
 
-                {{--  <li><a href="{{ route('admin.show_compute') }}" class="dropdown-item">Compute Result
-                        </a></li>  --}}
-                {{--  <li><a href="{{ route('result.search_student') }}" class="dropdown-item">ICT Upload Results </a></li>  --}}
-                {{--  <li><a href="{{ route('result.program_search_student') }}" class="dropdown-item">ICT Manage All
-                        Results</a></li>  --}}
-                {{--  <li><a href="{{ route('program_course.results_status') }}" class="dropdown-item">Program Result
-                        Status</a></li>
-                <li><a href="{{ route('result.program_search_student') }}" class="dropdown-item">Manage All
-                        Results</a></li>
-                <li><a href="{{ route('utility.result.status', 0) }}" class="dropdown-item" target="_blank">Ongoing
-                        Courses</a></li>
-                <li><a href="{{ route('utility.result.status', 1) }}" class="dropdown-item" target="_blank">Awaiting
-                        Department</a></li>
-                <li><a href="{{ route('utility.result.status', 2) }}" class="dropdown-item" target="_blank">Awaiting
-                        Faculty</a></li>
-                <li><a href="{{ route('utility.result.status', 3) }}" class="dropdown-item" target="_blank">Awaiting
-                        VC</a></li>  --}}
-                <li><a href="{{ route('program_course.sbc_level', 100) }}" class="dropdown-item">100L SBC Approval</a>
+<ul aria-labelledby="dropdownSubMenu1" class="dropdown-menu border-0 shadow">
+                    <li class="dropdown-submenu dropdown-hover">
+                        <a id="dropdownSubMenu2" href="#" role="button" data-toggle="dropdown" aria-haspopup="true"
+                            aria-expanded="false" class="dropdown-item dropdown-toggle">SBC</a>
+                        <ul aria-labelledby="dropdownSubMenu2" class="dropdown-menu border-0 shadow">
+
+                            <!-- Level two dropdown-->
+<li><a href="{{ route('program_course.sbc_level', 100) }}" class="dropdown-item">100L SBC Approval</a>
                 </li>
                 <li><a href="{{ route('program_course.sbc_level', 200) }}" class="dropdown-item">200L SBC Approval</a>
                 </li>
@@ -241,6 +233,15 @@
                 </li>
                 <li><a href="{{ route('program_course.sbc_level', 900) }}" class="dropdown-item">PhD SBC Approval</a>
                 </li>
+
+                        </ul>
+                    </li>
+
+                    <li class="dropdown-submenu dropdown-hover">
+                        <a id="dropdownSubMenu2" href="#" role="button" data-toggle="dropdown" aria-haspopup="true"
+                            aria-expanded="false" class="dropdown-item dropdown-toggle">Vice Chancellor</a>
+                        <ul aria-labelledby="dropdownSubMenu2" class="dropdown-menu border-0 shadow">
+
                 <li><a href="{{ route('program_course.vc_level', 100) }}" class="dropdown-item">100L VC Approval</a>
                 </li>
                 <li><a href="{{ route('program_course.vc_level', 200) }}" class="dropdown-item">200L VC Approval</a>
@@ -259,6 +260,11 @@
                 </li>
                 <li><a href="{{ route('program_course.vc_level', 900) }}" class="dropdown-item">PhD VC Approval</a>
                 </li>
+                        </ul>
+                    </li>
+                    </ul>
+
+
                 <li class="dropdown-submenu dropdown-hover">
                     {{--  <a id="dropdownSubMenu2" href="#" role="button" data-toggle="dropdown" aria-haspopup="true"
                         aria-expanded="false" class="dropdown-item dropdown-toggle">ICT View Result</a>  --}}
@@ -298,6 +304,8 @@
                         <li><a href="{{ route('admin.notuploaded_scores') }}"
                                 class="dropdown-item text-warning">Courses Result<br>not Upload
                             </a></li>
+
+
                     </ul>
                 </li>
 
@@ -359,7 +367,11 @@
                          <li><a href="{{ route('admin.notuploaded_scores') }}" class="dropdown-item text-warning">Courses
                         not Upload
                         </a></li>
+
                         </ul>
+                        <li><a href="{{ route('staff.assign.courses') }}"
+                                class="dropdown-item "> Assigned Courses
+                            </a></li>
                     </li>
 
 

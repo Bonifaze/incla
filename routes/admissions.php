@@ -73,7 +73,7 @@ Route::post('/logoutUser', 'App\Http\Controllers\ApplicantController@logoutUsers
 Route::post('/login', 'App\Http\Controllers\ApplicantController@login');
 Route::get('/dashboard', 'App\Http\Controllers\ApplicantController@admissionstatus');
 Route::get('/completeadmissions', 'App\Http\Controllers\ApplicantController@completeadmissions');
-Route::get('/generatematricnumber2', 'App\Http\Controllers\AdminStudentsControllerApplicant@create');
+Route::get('/generatematricnumber', 'App\Http\Controllers\AdminStudentsControllerApplicant@create');
 
 
 Route::post('/admissions/students/store', 'App\Http\Controllers\AdminStudentsControllerApplicant@store')->name('admissions.student.store');

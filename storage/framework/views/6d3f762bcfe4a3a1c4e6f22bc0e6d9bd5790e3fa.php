@@ -1,13 +1,13 @@
 <!DOCTYPE html>
 <html>
 <head>
- 
+
 <!-- CSRF Token -->
     <meta name="csrf-token" content="<?php echo e(csrf_token()); ?>">
 
  <title> <?php echo $__env->yieldContent('pagetitle'); ?> | Veritas University, Abuja </title>
  <link rel="shortcut icon" href="<?php echo e(asset('img/letter_logo.png')); ?>" >
- 
+
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
 
@@ -36,7 +36,7 @@
 
 
 <?php echo $__env->yieldContent('css'); ?>
- 	
+
 
 </head>
 <body class="hold-transition sidebar-mini layout-fixed">
@@ -44,35 +44,35 @@
 
   <!-- Navbar -->
    <?php echo $__env->make("spartials.navbar", \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
-  
+
   <!-- /.navbar -->
-  
+
 
   <!-- Main Sidebar Container -->
    <?php echo $__env->make("spartials.sidebar", \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
-   
-  
+
+
 
   <!-- Content Wrapper. Contains page content -->
    <?php echo $__env->yieldContent('content'); ?>
-    
+
   <!-- /.content-wrapper -->
-  
-  
-  
-  
-  
-  
+
+
+
+
+
+
 <!-- Footer starts -->
-  
-  
+
+
  <?php echo $__env->make("spartials.footer", \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
-  
-  
-  
-  
-  
-  
+
+
+
+
+
+
 
 
 
@@ -115,6 +115,14 @@
 <!-- AdminLTE App -->
 <script src="<?php echo e(asset('v3/dist/js/adminlte.js')); ?>"></script>
 <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
+
+     <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"
+        integrity="sha512-2ImtlRlf2VVmiGZsjm9bEyhjGW4dU7B6TNwh/hx/iSByxNENtj3WVE6o/9Lj4TJeVXPi4bnOIMXFIJJAeufa0A=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+<script>
+   
+</script>
 
 <!-- AdminLTE for demo purposes -->
 <script src="<?php echo e(asset('v3/dist/js/demo.js')); ?>"></script>

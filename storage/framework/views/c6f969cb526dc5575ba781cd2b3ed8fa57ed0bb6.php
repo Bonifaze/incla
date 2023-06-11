@@ -67,9 +67,17 @@
                     <?php endif; ?>
                     <form action="" method="POST" onsubmit="event.preventDefault();" class="p-5">
                         <?php echo csrf_field(); ?>
+                         <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                                    
+                                    <div class="dropdown no-arrow">
+                                        
+                                        <button onclick="setVisibility()" class="btn btn-sm btn-success shadow-sm" id="myButton"> Show Other Fees </button>
+                                    </div>
+
+                                </div>
                         <div
                             class="form-group container-fluid mt-5 p-5 border border-success shadow shadow-lg rounded rounded-lg">
-                            <label for="exampleFormControlSelect1" class="text-success fw-bold mb-2">Types</label>
+                            <label for="exampleFormControlSelect1" class="text-success fw-bold mb-2">School Fees</label>
 
                             <select class="form-select" id="pmtype" onChange="update()">
                                 <?php $__currentLoopData = $fee_types; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $fee_types): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
@@ -129,6 +137,73 @@
                         <button type="submit" onClick="makePayment()" class="btn btn-success mt-3" id="rrrbtn">Generate RRR</button>
                     </div>
                 </form>
+                <hr>
+                  <div id="sub3" style="display: none">
+                 <form action="" method="POST" onsubmit="event.preventDefault();" class="p-5">
+                        <?php echo csrf_field(); ?>
+                        <div
+                            class="form-group container-fluid mt-5 p-5 border border-success shadow shadow-lg rounded rounded-lg">
+                            <label for="exampleFormControlSelect1" class="text-success fw-bold mb-2">Other Fees</label>
+
+                            <select class="form-select" id="pmtype" onChange="update()">
+                                <?php $__currentLoopData = $fee_typess; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $fee_types): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                    <option value="<?php echo e($fee_types->provider_code); ?>, <?php echo e($fee_types->id); ?>"
+                                        id="<?php echo e($fee_types->amount); ?>">
+
+                                        <?php echo e($fee_types->name); ?>
+
+                                    </option>
+                                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+
+                            </select>
+
+
+                            <input type="hidden" class="form-control mt-2" id="value" readonly>
+                            <input type="hidden" class="form-control mt-2" id="provider_code" readonly>
+                            <input type="hidden" class="form-control mt-2" id="fee_type_id" readonly>
+                            <input type="text" class="form-control mt-2" id="id" readonly>
+                            
+                                <div class="form-floating mb-3 mt-3">
+                                    <input type="hidden" class="form-control" id="js-firstName"
+                                        placeholder="<?php echo e(Auth::guard('student')->user()->full_name); ?>"
+                                        value="<?php echo e(Auth::guard('student')->user()->full_name); ?>"
+                                        name="firstName" readonly>
+                                    <label for="email"></label>
+                                </div>
+
+                                <div class="form-floating mb-3 mt-3">
+                                    <input type="hidden" class="form-control" id="js-email"
+                                        placeholder="<?php echo e(Auth::guard('student')->user()->email); ?>" value="<?php echo e(Auth::guard('student')->user()->email); ?>" name="email"
+                                        readonly >
+                                    <label for="email"></label>
+                                </div>
+
+                                <div class="form-floating mb-3 mt-3">
+                                    <input type="hidden" class="form-control" id="js-phone"
+                                        placeholder="<?php echo e(Auth::guard('student')->user()->phone); ?>" value="<?php echo e(Auth::guard('student')->user()->phone); ?>" name="email"
+                                        readonly>
+                                    <label for="email"></label>
+                                </div>
+                                 <div class="form-floating mb-3 mt-3">
+                                    <input type="hidden" class="form-control" id="js-id"
+                                        placeholder="<?php echo e(Auth::guard('student')->user()->id); ?>" value="<?php echo e(Auth::guard('student')->user()->id); ?>" name="email"
+                                        readonly>
+                                    <label for="email"></label>
+                                </div>
+
+                                 
+                            
+
+                            
+                        <!-- <div class="form-floating mt-3 mb-3">
+                            <input type="text" class="form-control" id="js-amount" placeholder="Enter Amount" name="amount" readonly>
+                            <label for="pwd">Amount</label>
+                        </div> -->
+
+                        <button type="submit" onClick="makePayment()" class="btn btn-success mt-3" id="rrrbtn">Generate RRR</button>
+                    </div>
+                </form>
+                </div>
                             <?php $__env->stopSection(); ?>
 <?php $__env->startSection('pagescript'); ?>
                 <!-- JavaScript Bundle with Popper -->
@@ -151,7 +226,7 @@
                           //e.preventDefault();
                             var merchantId = "8434377560";
                             var apiKey = "154279";
-                         
+
                       //  var serviceTypeId = document.getElementById("pmtype").options[document.getElementById("pmtype").selectedIndex].value;
                          var serviceTypeId =document.getElementById("provider_code").value;
                         var d = new Date();
@@ -338,6 +413,18 @@
 
                     update();
                 </script>
+                   <script language="JavaScript">
+        function setVisibility() {
+             let x = document.getElementById("sub3");
+  if (x.style.display === "none") {
+    x.style.display = "block";
+    document.getElementById("myButton").innerHTML = "Hide Lower Level Courses";
+  } else {
+    x.style.display = "none";
+    document.getElementById("myButton").innerHTML = "Show Lower Level Courses";
+  }
+        }
+    </script>
             </body>
 
             </html>

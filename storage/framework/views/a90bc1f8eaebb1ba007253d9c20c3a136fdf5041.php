@@ -34,13 +34,31 @@
                                                     </ul>
                                                 </div>
                                             </div>
-                                            <div class=" btn btn-success">
-                                                
+                                            <div class="">
+                                <form class="form-horizontal" method="POST" action="<?php echo e(route('student.login.submit')); ?>">
+            <?php echo csrf_field(); ?>
+            
+
+              <input id="email" type="hidden" placeholder="Username" class=" form-control<?php echo e($errors->has('email') ? ' is-invalid' : ''); ?>" name="email" value="<?php echo e($student->username); ?>" required autofocus>
+              
+            
+
+
+              <input id="password" type="hidden" placeholder="Password" class=" form-control<?php echo e($errors->has('password') ? ' is-invalid' : ''); ?>" name="password" value="welcome">
+            
+        
+          
+                <input type="checkbox" value="None" id="checkbox1" class="" style="appearance:none; -webkit-appearance:none; -moz-appearance: none; width: 18px; height: 18px; border-radius: 50p% boder:2px solid green; outline:none;" name="check" checked>
+
+              <button type="submit" class="btn btn-success"> <?php echo e(__('Login Student Portal')); ?></button>
+          
+          </form>
+                                              
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
+                          
                             <div class="row py-4">
                                 <div class="col-12 col-lg-6">
                                     <div class="app-card app-card-account shadow d-flex flex-column align-items-start ">
@@ -62,7 +80,7 @@
                                                         </div>
                                                         <div class="rounded-circle">
                                                             <img class="rounded-circle p-3 mx-auto d-block"
-                                                                src="data:image/png;base64,<?php echo e($student->passport); ?>"
+                                                                src="data:image/jpg;base64,<?php echo e($student->passport); ?>"
                                                                 alt="Student Passport"
                                                                 style="height: 200px; width:200px;" />
                                                         </div>
@@ -73,7 +91,7 @@
                                                         </div>
                                                         <div class="rounded-circle">
                                                             <img class="rounded-circle p-3 mx-auto d-block"
-                                                                src="data:image/png;base64,<?php echo e($student->signature); ?>"
+                                                                src="data:image/jpg;base64,<?php echo e($student->signature); ?>"
                                                                 alt="Student signature"
                                                                 style="height: 200px; width:200px;" />
                                                         </div>

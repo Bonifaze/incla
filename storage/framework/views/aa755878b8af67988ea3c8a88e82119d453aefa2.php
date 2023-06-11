@@ -1368,9 +1368,9 @@ unset($__errorArgs, $__bag); ?>" name="surname"
                             </div>
                         </div>
                         <div class="form-group">
-                            <label for=""><?php echo e(__('Qualification')); ?> </label>
-                            <select class="form-select" name="qualification">
-                                <option disabled selected>Qualification </option>
+                            <label for=""><?php echo e(__('Qualification:')); ?> </label>
+                            <select class="form-select text-lg col-12" name="qualification">
+                                
                                 <option value="ALEVEL">ALEVEL</option>
                                 <option value="IJMB">IJMB</option>
                                 <option value="JUPEB">JUPEB</option>
@@ -1381,8 +1381,8 @@ unset($__errorArgs, $__bag); ?>" name="surname"
                             </select>
                         </div>
                         <div class="form-group">
-                            <label for="refferal"><?php echo e(__('Course of Study')); ?> </label>
-                            <select class="form-select" name="course_applied">
+                            <label for="refferal"><?php echo e(__('Course of Study:')); ?> </label>
+                            <select class="form-select col-12 text-lg" name="course_applied">
                                 <?php $__currentLoopData = $programs; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $program): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                     <option value="<?php echo e($program->name); ?>"><?php echo e($program->name); ?></option>
                                 <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>

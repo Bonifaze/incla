@@ -34,7 +34,7 @@
                 <div class="col_full">
                     <h1
                         class="app-page-title text-uppercase h5 font-weight-bold p-2 mb-2 shadow-sm text-center text-success border">
-                        Staff Courses
+                        Staff Asdigned Courses
                     </h1>
 
                     <div class="card shadow border border-success">
@@ -52,6 +52,8 @@
                                             <thead>
                                                 <tr>
                                                     <th>S/N</th>
+                                                    <th>Name</th>
+                                                    <th>Phone</th>
                                                      <th>Course Code</th>
                                                     <th>Course Title</th>
                                                     <th>Semester</th>
@@ -68,6 +70,8 @@
                                                 <?php $__currentLoopData = $staff_courses; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $staff_course): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                                     <tr>
                                                         <td><?php echo e($loop->iteration); ?></td>
+                                                         <td><?php echo e($staff_course->staff_name); ?></td>
+                                                        <td><?php echo e($staff_course->staff_phone); ?></td>
                                                         <td><?php echo e($staff_course->course_code); ?></td>
                                                         <td><?php echo e($staff_course->course_title); ?></td>
                                                           <td >
@@ -92,9 +96,9 @@
                                                         method="POST">
                                                         <?php echo csrf_field(); ?>
                                                         <?php echo method_field('DELETE'); ?>
-                                                        <button type="submit" class="btn btn-danger" onclick="return confirm('Are you sure you want to drop this course?')" data-bs-toggle="modal"
+                                                        <button type="submit" class="btn btn-danger" data-bs-toggle="modal"
                                                             data-bs-target="#myModal"> <i class="fas fa-solid fa-trash"></i>
-                                                            DROP</button>
+                                                            Delete</button>
 
                                                     </form>
                                                 </td>
@@ -125,4 +129,4 @@
 
 <?php $__env->stopSection(); ?>
 
-<?php echo $__env->make('layouts.mini', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH /Users/lifeofrence/Documents/laraproject/resources/views/results/course_upload.blade.php ENDPATH**/ ?>
+<?php echo $__env->make('layouts.mini', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH /Users/lifeofrence/Documents/laraproject/resources/views/results/courseassigned.blade.php ENDPATH**/ ?>

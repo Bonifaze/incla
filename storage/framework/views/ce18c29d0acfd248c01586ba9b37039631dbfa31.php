@@ -5,11 +5,11 @@
 <!-- Sidebar Links -->
 
 <!-- Treeview -->
-<?php $__env->startSection('results-open'); ?>
+<?php $__env->startSection('results-openuj'); ?>
     menu-open
 <?php $__env->stopSection(); ?>
 
-<?php $__env->startSection('results'); ?>
+<?php $__env->startSection('resulhts'); ?>
     active
 <?php $__env->stopSection(); ?>
 

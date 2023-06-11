@@ -65,6 +65,7 @@
                                                        <th>SBC Approval</th>
                                                     <th>VC Approval</th>
                                                     <th>Lecturer</th>
+                                                    <th>Phone</th>
                                                     {{--  <th>Action</th>  --}}
                                                 </tr>
                                             </thead>
@@ -89,6 +90,7 @@
                                                            <td>{{ $staff_course->sbc_approval }}</td>
                                                         <td>{{ $staff_course->vc_senate_approval }}</td>
                                                         <td>{{ $staff_course->staffName}}</td>
+                                                           <td>{{ $staff_course->staff_phone }}</td>
                                                         <td><a href="{{ route('admin.view_scores', $staff_course->course_id) }}"
                                                                 class="btn btn-primary">View Scores</a></td>
                                                     </tr>

@@ -9,11 +9,11 @@
 <!-- Sidebar Links -->
 
 <!-- Treeview -->
-@section('results-open')
+@section('results-openuj')
     menu-open
 @endsection
 
-@section('results')
+@section('resulhts')
     active
 @endsection
 

@@ -98,55 +98,9 @@
                             </a>
                         </li>  --}}
 
-                        <li class="nav-item has-treeview @yield('exam-officers-open') ml-4">
-                            <a href="#" class="nav-link @yield('results')">
-                                <i class="nav-icon fas fa-graduation-cap"></i>
-                                <p>
-                                    Establishment
-                                    <i class="right fas fa-angle-left"></i>
-                                </p>
-                            </a>
 
-                            <ul class="nav nav-treeview">
-
-                                <li class="nav-item">
-                                    <a href="{{ route('academia.college.list') }}" class="nav-link @yield('exam-remark')">
-                                        <i class="fas fa-list-alt nav-icon"></i>
-                                        <p>List
-                                            Faculty</p>
-                                    </a>
-                                </li>
-                                <li class="nav-item"><a href="{{ route('academia.department.list') }}"
-                                        class="nav-link @yield('exam-remark')"> <i class="fas fa-list-alt nav-icon"></i>
-                                        <p>List
-                                            Departments</p>
-                                    </a></li>
-                                <li class="nav-item"><a href="{{ route('academia.program.list') }}"
-                                        class="nav-link @yield('exam-remark')"> <i class="fas fa-list-alt nav-icon"></i>
-                                        <p>List
-                                            Programs</p>
-                                    </a></li>
-                                <li class="nav-item"><a href="{{ route('academia.college.create') }}"
-                                        class="nav-link @yield('exam-remark')"> <i class="fa fa-plus nav-icon"></i>
-                                        <p>Create
-                                            Faculty</p>
-                                    </a></li>
-                                <li class="nav-item"><a href="{{ route('academia.department.create') }}"
-                                        class="nav-link @yield('exam-remark')"> <i class="fa fa-plus nav-icon"></i>
-                                        <p>Create
-                                            Department</p>
-                                    </a></li>
-                                <li class="nav-item"><a href="{{ route('academia.program.create') }}"
-                                        class="nav-link @yield('exam-remark')"> <i class="fa fa-plus nav-icon"></i>
-                                        <p>Create
-                                            Program</p>
-                                    </a>
-                                </li>
-
-                            </ul>
-                        </li>
-
-                        <li class="nav-item has-treeview @yield('exam-officers-open') ml-4">
+                         @can('gstallocate', 'App\ProgramCourse')
+                        <li class="nav-item has-treeview @yield('exam-officers-open') ml-1">
                             <a href="#" class="nav-link @yield('results')">
                                 <i class="nav-icon fas fa-graduation-cap"></i>
                                 <p>
@@ -154,18 +108,22 @@
                                     <i class="right fas fa-angle-left"></i>
                                 </p>
                             </a>
+                            
                             <ul class="nav nav-treeview">
+                           
                                 <li class="nav-item">
                                     <a href="{{ route('course.create') }}" class="nav-link @yield('exam-remark')">
                                         <i class="fa fa-plus nav-icon"></i>
                                         <p>Create Course</p>
                                     </a>
                                 </li>
+                               
+
                                 <li class="nav-item">
                                     <a href="{{ route('program_course.create') }}"
                                         class="nav-link @yield('exam-remark')">
                                         <i class="fa fa-plus nav-icon"></i>
-                                        <p>Assign Course to Program </p>
+                                        <p>Assign Program Course </p>
                                     </a>
                                 </li>
                                 <li class="nav-item">
@@ -177,7 +135,7 @@
                                 </li>
                                 <li class="nav-item">
                                     <a href="{{ route('program_course.list') }}" class="nav-link @yield('exam-remark')">
-                                        <i class="fa fa-plus nav-icon"></i>
+                                        <i class="fa fa-eye nav-icon"></i>
                                         <p>Allocted Courses </p>
                                     </a>
                                 </li>
@@ -200,23 +158,34 @@
                             </ul>
 
                         </li>
+                         @else
+                          <li></li>
+                          @endcan
                     </ul>
 
                     <ul class="nav nav-treeview">
-                        <li class="nav-item ml-4">
+                    @can('programs', 'App\College')
+                        <li class="nav-item ">
                             <a href="{{ route('academia.college.programs') }}" class="nav-link @yield('faculties')">
                                 <i class="fas fa-search-dollar nav-icon"></i>
                                 <p>Faculties</p>
                             </a>
                         </li>
-                        <li class="nav-item ml-4">
+                             @else
+                          <li></li>
+        @endcan
+                                @can('programs', 'App\AcademicDepartment')
+                        <li class="nav-item ">
                             <a href="{{ route('academia.department.programs') }}"
                                 class="nav-link @yield('departments')">
                                 <i class="fas fa-list-alt nav-icon"></i>
                                 <p>Departments</p>
                             </a>
                         </li>
-
+                         @else
+                          <li></li>
+        @endcan
+ @can('examOfficer', 'App\StudentResult')
                         <li class="nav-item has-treeview @yield('exam-officers-open')">
                             <a href="#" class="nav-link @yield('results')">
                                 <i class="nav-icon fas fa-graduation-cap"></i>
@@ -243,6 +212,9 @@
 
 
                             </ul>
+                             @else
+            <div></div>
+        @endcan
                     </ul>
 
                 </li>
@@ -303,7 +275,7 @@
 
                             </ul>
                         </li>  --}}
-
+        @can('searchapplicant', 'App\Session')
                 <li class="nav-item has-treeview @yield('results-open')">
                     <a href="#" class="nav-link @yield('results')">
                         <i class="nav-icon fas fa-graduation-cap"></i>
@@ -341,6 +313,7 @@
                                 </p>
                             </a>
                             <ul class="nav nav-treeview">
+                               @can('undergraduateapplicant', 'App\Session')
                                 <li class="nav-item">
                                     <a href="/adminutme" class="nav-link @yield('exam-remark')">
                                         <i class="fa fa-eye nav-icon"></i>
@@ -359,17 +332,77 @@
                                         <p>TRANSFER</p>
                                     </a>
                                 </li>
+                                 @else
+            <li></li>
+        @endcan
+         @can('postgraduateapplicant', 'App\Session')
                                 <li class="nav-item">
                                     <a href="/adminpg" class="nav-link @yield('exam-download')">
                                         <i class="fa fa-eye nav-icon"></i>
                                         <p>Postgraduate</p>
                                     </a>
                                 </li>
-
+ <li></li>
+        @endcan
                             </ul>
                         </li>
                     </ul>
                 </li>
+ @else
+            <div></div>
+        @endcan
+
+        {{--  @can('ICTOfficers', 'App\StudentResult')  --}}
+                        <li class="nav-item has-treeview @yield('exam-officers-open')">
+                            <a href="#" class="nav-link @yield('results')">
+                                <i class="nav-icon fas fa-graduation-cap"></i>
+                                <p>
+                                    Establishment
+                                    <i class="right fas fa-angle-left"></i>
+                                </p>
+                            </a>
+
+                            <ul class="nav nav-treeview ml-4">
+
+                                <li class="nav-item">
+                                    <a href="{{ route('academia.college.list') }}" class="nav-link @yield('exam-remark')">
+                                        <i class="fas fa-list-alt nav-icon"></i>
+                                        <p>List
+                                            Faculty</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item"><a href="{{ route('academia.department.list') }}"
+                                        class="nav-link @yield('exam-remark')"> <i class="fas fa-list-alt nav-icon"></i>
+                                        <p>List
+                                            Departments</p>
+                                    </a></li>
+                                <li class="nav-item"><a href="{{ route('academia.program.list') }}"
+                                        class="nav-link @yield('exam-remark')"> <i class="fas fa-list-alt nav-icon"></i>
+                                        <p>List
+                                            Programs</p>
+                                    </a></li>
+                                {{--  <li class="nav-item"><a href="{{ route('academia.college.create') }}"
+                                        class="nav-link @yield('exam-remark')"> <i class="fa fa-plus nav-icon"></i>
+                                        <p>Create
+                                            Faculty</p>
+                                    </a></li>
+                                <li class="nav-item"><a href="{{ route('academia.department.create') }}"
+                                        class="nav-link @yield('exam-remark')"> <i class="fa fa-plus nav-icon"></i>
+                                        <p>Create
+                                            Department</p>
+                                    </a></li>
+                                <li class="nav-item"><a href="{{ route('academia.program.create') }}"
+                                        class="nav-link @yield('exam-remark')"> <i class="fa fa-plus nav-icon"></i>
+                                        <p>Create
+                                            Program</p>  --}}
+                                    </a>
+                                </li>
+
+                            </ul>
+                        </li>
+                        {{--  @else
+            <div></div>
+        @endcan  --}}
 
                 <li class="nav-item has-treeview @yield('results-open')">
                     <a href="#" class="nav-link @yield('results')">
@@ -618,7 +651,7 @@
                         </li>
                     </ul>
                 </li>  --}}
-
+ @can('search', 'App\Bursary')
                 <li class="nav-item has-treeview @yield('bursary-open')">
                     <a href="#" class="nav-link @yield('bursary')">
                         <i class="nav-icon fas fa-money-bill-wave"></i>
@@ -724,7 +757,9 @@
 
                     </ul>
                 </li>
-
+   @else
+            <div></div>
+        @endcan
 
 
 

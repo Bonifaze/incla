@@ -78,4 +78,8 @@ class FeeType extends Model implements Auditable
         $paidpart = Remita::where('fee_type_id',$this->id)->where('status_code',1)->where('installment',1)->get();
         return $paidpart->sum('amount');
     }
+    public function college()
+{
+    return $this->belongsTo(College::class);
+}
 } //end Class

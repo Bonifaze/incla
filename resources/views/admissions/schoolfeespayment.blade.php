@@ -42,18 +42,12 @@ active
 
             </head>
 
-            @endif
+          
             <form action="" method="POST" onsubmit="event.preventDefault();" class="p-5">
                 @csrf
                 <div class="form-group container-fluid mt-5 p-5 border border-success shadow shadow-lg rounded rounded-lg">
                     <label for="exampleFormControlSelect1" class="text-success fw-bold mb-2">School Fee Type</label>
-                    <!-- <select class="form-control" id="pmtype">
-                            <option>Select Payment </option>
-                            <option value="4430731">Application for UTME </option>
-                            <option value="4430731">Application for DE</option>
-                            <option value="4430731">Application for Transfer</option>
-                            <option value="4430731">Application for Post Graduate</option>
-                        </select> -->
+                    
                     <select class="form-select" id="pmtype" onChange="update()">
                         @foreach ($fee_types as $fee_types)
                         <option value="{{$fee_types->provider_code}}, {{$fee_types->id}}" id="{{$fee_types->amount}}">

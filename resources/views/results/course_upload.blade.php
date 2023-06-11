@@ -66,6 +66,8 @@
                                                     <th>Upload Status</th>
                                                     <th>HoD Approval</th>
                                                     <th>Action</th>
+                                                     <th>Action</th>
+
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -87,10 +89,27 @@
                                                         <td>{{ $staff_course->hod_approval }}</td>
                                                         <td>@if ($staff_course->hod_approval != 'approved') <a href="{{ route('admin.scores_upload', $staff_course->id) }}"
                                                                 class="btn btn-primary">Upload Scores</a> @else <p class="text-warning text-bold ">Kindly Ask HoD TO REVOKE</p> @endif</td>
+                                                                 @if ($staff_course->hod_approval == 'approved')
+                                                <td></td>
+                                            @else
+                                                <td>
+                                                    <form
+                                                        action="{{ route('staff.assign.destroy', $staff_course->id) }}"
+                                                        method="POST">
+                                                        @csrf
+                                                        @method('DELETE')
+                                                        <button type="submit" class="btn btn-danger" onclick="return confirm('Are you sure you want to drop this course?')" data-bs-toggle="modal"
+                                                            data-bs-target="#myModal"> <i class="fas fa-solid fa-trash"></i>
+                                                            DROP</button>
+
+                                                    </form>
+                                                </td>
+                                            @endif
                                                     </tr>
                                                 @endforeach
                                             </tbody>
                                         </table>
+
                                     </div>
                                 </div>
                             </div>
@@ -108,4 +127,6 @@
 
 @section('pagescript')
     <script src="<?php echo asset('dist/js/bootbox.min.js'); ?>"></script>
+
+
 @endsection

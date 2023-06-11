@@ -1650,9 +1650,9 @@
                             </div>
                         </div>
                         <div class="form-group">
-                            <label for="">{{ __('Qualification') }} </label>
-                            <select class="form-select" name="qualification">
-                                <option disabled selected>Qualification </option>
+                            <label for="">{{ __('Qualification:') }} </label>
+                            <select class="form-select text-lg col-12" name="qualification">
+                                {{--  <option disabled selected>Qualification </option>  --}}
                                 <option value="ALEVEL">ALEVEL</option>
                                 <option value="IJMB">IJMB</option>
                                 <option value="JUPEB">JUPEB</option>
@@ -1663,8 +1663,8 @@
                             </select>
                         </div>
                         <div class="form-group">
-                            <label for="refferal">{{ __('Course of Study') }} </label>
-                            <select class="form-select" name="course_applied">
+                            <label for="refferal">{{ __('Course of Study:') }} </label>
+                            <select class="form-select col-12 text-lg" name="course_applied">
                                 @foreach ($programs as $program)
                                     <option value="{{ $program->name }}">{{ $program->name }}</option>
                                 @endforeach

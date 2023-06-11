@@ -1,30 +1,34 @@
-<?php $__env->startSection('pagetitle'); ?>
+@extends('layouts.mini')
+
+
+
+@section('pagetitle')
     Staff Courses
-<?php $__env->stopSection(); ?>
+@endsection
 
 
 
 <!-- Sidebar Links -->
 
 <!-- Treeview -->
-<?php $__env->startSection('staff-open'); ?>
+@section('staff-open')
     menu-open
-<?php $__env->stopSection(); ?>
+@endsection
 
-<?php $__env->startSection('staff'); ?>
+@section('staff')
     active
-<?php $__env->stopSection(); ?>
+@endsection
 
 <!-- Page -->
-<?php $__env->startSection('staff-home'); ?>
+@section('staff-home')
     active
-<?php $__env->stopSection(); ?>
+@endsection
 
 <!-- End Sidebar links -->
 
 
 
-<?php $__env->startSection('content'); ?>
+@section('content')
     <div class="content-wrapper bg-white">
 
         <!-- Main content -->
@@ -34,7 +38,7 @@
                 <div class="col_full">
                     <h1
                         class="app-page-title text-uppercase h5 font-weight-bold p-2 mb-2 shadow-sm text-center text-success border">
-                        Staff Courses
+                        Staff Asdigned Courses
                     </h1>
 
                     <div class="card shadow border border-success">
@@ -45,13 +49,17 @@
                         <div class="card">
                             <div class="card-body">
                                 <div class="body">
-                                    
+                                    {{--  <h4 class="card-title">
+                                        Staff Course
+                                    </h4>  --}}
                                     <div class="table-responsive mt-5">
                                         <table class="table  table-striped table-hover tbl" id="dataTable" width="100%"
                                         cellspacing="0">
                                             <thead>
                                                 <tr>
                                                     <th>S/N</th>
+                                                    <th>Name</th>
+                                                    <th>Phone</th>
                                                      <th>Course Code</th>
                                                     <th>Course Title</th>
                                                     <th>Semester</th>
@@ -65,42 +73,44 @@
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                <?php $__currentLoopData = $staff_courses; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $staff_course): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                                @foreach ($staff_courses as $staff_course)
                                                     <tr>
-                                                        <td><?php echo e($loop->iteration); ?></td>
-                                                        <td><?php echo e($staff_course->course_code); ?></td>
-                                                        <td><?php echo e($staff_course->course_title); ?></td>
+                                                        <td>{{ $loop->iteration }}</td>
+                                                         <td>{{ $staff_course->staff_name }}</td>
+                                                        <td>{{ $staff_course->staff_phone }}</td>
+                                                        <td>{{ $staff_course->course_code }}</td>
+                                                        <td>{{ $staff_course->course_title }}</td>
                                                           <td >
-                                                          <?php if($staff_course->semester==1): ?>
+                                                          @if ($staff_course->semester==1)
                                                                 First
-                                                          <?php else: ?>
+                                                          @else
                                                                 Second
-                                                          <?php endif; ?>
+                                                          @endif
                                                           </td>
-                                                        <th><?php echo e($staff_course->total_students); ?></th>
-                                                        <th><?php echo e($staff_course->program->name ?? null); ?></th>
-                                                        <td><?php echo e($staff_course->upload_status); ?></td>
-                                                        <td><?php echo e($staff_course->hod_approval); ?></td>
-                                                        <td><?php if($staff_course->hod_approval != 'approved'): ?> <a href="<?php echo e(route('admin.scores_upload', $staff_course->id)); ?>"
-                                                                class="btn btn-primary">Upload Scores</a> <?php else: ?> <p class="text-warning text-bold ">Kindly Ask HoD TO REVOKE</p> <?php endif; ?></td>
-                                                                 <?php if($staff_course->hod_approval == 'approved'): ?>
+                                                        <th>{{ $staff_course->total_students }}</th>
+                                                        <th>{{ $staff_course->program->name ?? null }}</th>
+                                                        <td>{{ $staff_course->upload_status }}</td>
+                                                        <td>{{ $staff_course->hod_approval }}</td>
+                                                        <td>@if ($staff_course->hod_approval != 'approved') <a href="{{ route('admin.scores_upload', $staff_course->id) }}"
+                                                                class="btn btn-primary">Upload Scores</a> @else <p class="text-warning text-bold ">Kindly Ask HoD TO REVOKE</p> @endif</td>
+                                                                 @if ($staff_course->hod_approval == 'approved')
                                                 <td></td>
-                                            <?php else: ?>
+                                            @else
                                                 <td>
                                                     <form
-                                                        action="<?php echo e(route('staff.assign.destroy', $staff_course->id)); ?>"
+                                                        action="{{ route('staff.assign.destroy', $staff_course->id) }}"
                                                         method="POST">
-                                                        <?php echo csrf_field(); ?>
-                                                        <?php echo method_field('DELETE'); ?>
-                                                        <button type="submit" class="btn btn-danger" onclick="return confirm('Are you sure you want to drop this course?')" data-bs-toggle="modal"
+                                                        @csrf
+                                                        @method('DELETE')
+                                                        <button type="submit" class="btn btn-danger" data-bs-toggle="modal"
                                                             data-bs-target="#myModal"> <i class="fas fa-solid fa-trash"></i>
-                                                            DROP</button>
+                                                            Delete</button>
 
                                                     </form>
                                                 </td>
-                                            <?php endif; ?>
+                                            @endif
                                                     </tr>
-                                                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                                                @endforeach
                                             </tbody>
                                         </table>
 
@@ -117,12 +127,10 @@
             </div>
         </section>
     </div>
-<?php $__env->stopSection(); ?>
+@endsection
 
-<?php $__env->startSection('pagescript'); ?>
+@section('pagescript')
     <script src="<?php echo asset('dist/js/bootbox.min.js'); ?>"></script>
 
 
-<?php $__env->stopSection(); ?>
-
-<?php echo $__env->make('layouts.mini', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH /Users/lifeofrence/Documents/laraproject/resources/views/results/course_upload.blade.php ENDPATH**/ ?>
+@endsection

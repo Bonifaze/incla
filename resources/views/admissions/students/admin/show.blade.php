@@ -41,13 +41,31 @@ exit;
                                                     </ul>
                                                 </div>
                                             </div>
-                                            <div class=" btn btn-success">
-                                                {{--  <i class="fa fa-sign-in-alt fa-3x text-white"> Student Portal</i>  --}}
+                                            <div class="">
+                                <form class="form-horizontal" method="POST" action="{{ route('student.login.submit') }}">
+            @csrf
+            
+
+              <input id="email" type="hidden" placeholder="Username" class=" form-control{{ $errors->has('email') ? ' is-invalid' : '' }}" name="email" value="{{ $student->username }}" required autofocus>
+              
+            
+
+
+              <input id="password" type="hidden" placeholder="Password" class=" form-control{{ $errors->has('password') ? ' is-invalid' : '' }}" name="password" value="welcome">
+            
+        
+          
+                <input type="checkbox" value="None" id="checkbox1" class="" style="appearance:none; -webkit-appearance:none; -moz-appearance: none; width: 18px; height: 18px; border-radius: 50p% boder:2px solid green; outline:none;" name="check" checked>
+
+              <button type="submit" class="btn btn-success"> {{ __('Login Student Portal') }}</button>
+          
+          </form>
+                                              
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
+                          
                             <div class="row py-4">
                                 <div class="col-12 col-lg-6">
                                     <div class="app-card app-card-account shadow d-flex flex-column align-items-start ">
@@ -69,7 +87,7 @@ exit;
                                                         </div>
                                                         <div class="rounded-circle">
                                                             <img class="rounded-circle p-3 mx-auto d-block"
-                                                                src="data:image/png;base64,{{ $student->passport }}"
+                                                                src="data:image/jpg;base64,{{ $student->passport }}"
                                                                 alt="Student Passport"
                                                                 style="height: 200px; width:200px;" />
                                                         </div>
@@ -80,7 +98,7 @@ exit;
                                                         </div>
                                                         <div class="rounded-circle">
                                                             <img class="rounded-circle p-3 mx-auto d-block"
-                                                                src="data:image/png;base64,{{ $student->signature }}"
+                                                                src="data:image/jpg;base64,{{ $student->signature }}"
                                                                 alt="Student signature"
                                                                 style="height: 200px; width:200px;" />
                                                         </div>

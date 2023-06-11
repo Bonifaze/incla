@@ -1,4 +1,17 @@
-active
+@extends('layouts.adminsials')
+
+@section('pagetitle')
+    Home
+@endsection
+
+<!-- Sidebar Links -->
+<!-- Treeview -->
+@section('student-open')
+    menu-open
+@endsection
+
+@section('student')
+    active
 @endsection
 
 <!-- Page -->
@@ -27,7 +40,7 @@ active
                             <div class="dropdown no-arrow">
                                 <a href="/generatematricnumber" class=" btn btn-sm btn-success shadow-sm"><i class="fas fa-print text-white-50"></i> Generate
                                     Matriculation Number</a>
-                                {{-- <a href="#" class=" btn btn-sm btn-success shadow-sm"><i class="fas fa-print text-white-50"></i> Generate Matriculation Number (comming soon)</a>  --}}
+
                             </div>
                         </div>
                     </div>
@@ -63,7 +76,7 @@ active
                                                 <strong>Photo</strong>
                                             </div>
                                             <div class="rounded-circle">
-                                                <img class="rounded-circle p-3 mx-auto d-block" src="data:image/{{ $utm->passport_type }};base64,{{ base64_encode($utm->passport) }}" alt="Applicant Passport" style="height: 180px; width:200px;" />
+                                                <img class="rounded-circle p-3 mx-auto d-block" src="data:image/jpg;base64,{{$utm->passport}}" alt="Applicant Passport" style="height: 180px; width:200px;" />
                                             </div>
                                         </div>
                                     </div>

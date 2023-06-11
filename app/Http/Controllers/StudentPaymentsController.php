@@ -28,22 +28,43 @@ class StudentPaymentsController extends Controller
     }
 
     public function feespayment()
+
     {
+        $courseReg = CourseRegistrations::where('status', 1)->orderBy('id', 'ASC')->paginate(20);
         // $payment = DB::table('students')->where('id', session('userid'))->get();
         $payment = Auth::guard('student')->user();
+        // $id=  $payment->id
+        $student = Student::findOrFail($payment->id);
+        // dd($student);
+        $contact = $student->contact;
+        $academic = $student->academic;
+
+$gender = $payment->gender;
+
+$gender_code = ($gender == 'male') ? 2 : 1;
+
         // ->leftJoin('usersbiodata', 'usersbiodata.user_id', '=', 'users.id')->get();
 
-        $fee_types = fee_types::orderBy('status', 'ASC')
-            ->where('status', 1)
-            ->where('category', '>', '2')
-        // ->where('category', 3)
-            ->get();
+        $fee_types = FeeType::orderBy('status', 'ASC')
+        ->select('id', 'name', 'amount', 'status', 'category', 'gender_code')
+        ->where('status', 1)
+        ->where(function ($query) use ($gender_code) {
+            $query->where('gender_code', $gender_code)
+                ->orWhere('gender_code', 0);
+        })
+        // ->where('category', '>', 2)
+        ->whereHas('college', function ($query) use ($academic) {
+            $query->where('id', $academic->college()->id);
+        })
+        ->get();
+
+
         $fee_typess = fee_types::orderBy('status', 'ASC')
             ->where('status', 1)
             ->where('category', 4)
             ->get();
 
-        return view('students.RemitaPayment', compact('payment'), ['fee_types' => $fee_types, 'fee_typess' => $fee_typess]);
+        return view('students.RemitaPayment', compact('payment'), ['fee_types' => $fee_types, 'fee_typess' => $fee_typess, 'courseReg'=>$courseReg]);
     }
 
 //To INSERT THE GENERATE RRR INTO THE DB

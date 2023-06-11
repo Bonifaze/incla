@@ -118,8 +118,13 @@
                                                             @endif  --}}
 
                                                             @if ($session->status == 1)
+                                                               @if ($session->id == 1)
 
-	                                                            <td>Current Status</td>
+	                                                            <td class="text-success">Currently Open</td>
+                                                                 @elseif ($session->id == 2)
+                                                                 <td class="text-danger">Currently Close</td>
+                                                                 @endif
+	                                                            {{--  <td>Current Status</td>  --}}
                                                             @elseif($session->status == 0)
                                                                 <td>
                                                                     {!! Form::open([

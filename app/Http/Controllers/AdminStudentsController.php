@@ -314,6 +314,7 @@ class AdminStudentsController extends Controller
 
     public function listLevel($level)
     {
+        $this->authorize('search', Student::class);
         $sum = "LIST OF $level LEVEL STUDENTS";
         $students = Student::with(['contact', 'academic', 'medical', 'academic.program'])
             ->whereHas('academic', function ($query) use ($level)
@@ -327,6 +328,7 @@ class AdminStudentsController extends Controller
 
     public function listSession($level)
     {
+        $this->authorize('search', Student::class);
         $students = Student::with(['contact', 'academic', 'medical', 'academic.program'])
             ->whereHas('academic', function ($query) use ($level)
         {
@@ -338,6 +340,7 @@ class AdminStudentsController extends Controller
 
     public function listLevelRegistered($level)
     {
+        $this->authorize('search', Student::class);
         $session = new Session();
         $students = Student::distinct('students.id')->with(['contact','academic'])
             ->join('student_academics', 'students.id', '=', 'student_academics.student_id')

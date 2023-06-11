@@ -28,7 +28,7 @@
 
                     <li class="dropdown-submenu dropdown-hover">
                         <a id="dropdownSubMenu2" href="#" role="button" data-toggle="dropdown" aria-haspopup="true"
-                            aria-expanded="false" class="dropdown-item dropdown-toggle">Staff/Students</a>
+                            aria-expanded="false" class="dropdown-item dropdown-toggle">Access Control</a>
                         <ul aria-labelledby="dropdownSubMenu2" class="dropdown-menu border-0 shadow">
 
                             <!-- Level two dropdown-->
@@ -41,8 +41,7 @@
                     <!-- End Level two -->
                     <!-- Level two dropdown-->
                     <li class="dropdown-submenu dropdown-hover">
-                        <a id="dropdownSubMenu2" href="#" role="button" data-toggle="dropdown" aria-haspopup="true"
-                            aria-expanded="false" class="dropdown-item dropdown-toggle">Applicants</a>
+                        
                         <ul aria-labelledby="dropdownSubMenu2" class="dropdown-menu border-0 shadow">
 
                             <!-- Level two dropdown-->
@@ -70,30 +69,38 @@
         <?php else: ?>
             <div></div>
         <?php endif; ?>
+         <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('ICTOfficers', 'App\StudentResult')): ?>
         <li class="nav-item dropdown">
             <a id="dropdownSubMenu1"style="color: #218c74;" href="#" data-toggle="dropdown" aria-haspopup="true"
                 aria-expanded="false" class="nav-link dropdown-toggle">HR</a>
             <ul aria-labelledby="dropdownSubMenu1" class="dropdown-menu border-0 shadow">
-                <li><a href="<?php echo e(route('admin.department.create')); ?>" class="dropdown-item">New Admin Dept </a></li>
-                <li><a href="<?php echo e(route('admin.department.list')); ?>" class="dropdown-item">List Admin Depts</a></li>
-                
-                
-                
+                <li><a href="<?php echo e(route('admin.department.create')); ?>" class="dropdown-item">Create Dept/Unit </a></li>
+                <li><a href="<?php echo e(route('admin.department.list')); ?>" class="dropdown-item">List Dept/Unit Staff</a></li>
+             <li><a href="#" class="dropdown-item">Assign HoD</a></li>
+                <li><a href="#" class="dropdown-item">New Staff Position</a></li>
+                <li><a href="#" class="dropdown-item">List Staff Positions</a></li>
+                 <li><a href="#" class="dropdown-item">New Grade Scales</a></li>
+                <li><a href="#" class="dropdown-item">List Grade Scales</a></li>
             </ul>
         </li>
-
+ <?php else: ?>
+            <div></div>
+        <?php endif; ?>
         <li class="nav-item dropdown">
+
+
+
             <a id="dropdownSubMenu1" style="color: #218c74;" href="#" data-toggle="dropdown" aria-haspopup="true"
                 aria-expanded="false" class="nav-link dropdown-toggle">Results</a>
-            <ul aria-labelledby="dropdownSubMenu1" class="dropdown-menu border-0 shadow">
-                
-                
 
-                
-                
-                
-                
-                <li><a href="<?php echo e(route('program_course.sbc_level', 100)); ?>" class="dropdown-item">100L SBC Approval</a>
+<ul aria-labelledby="dropdownSubMenu1" class="dropdown-menu border-0 shadow">
+                    <li class="dropdown-submenu dropdown-hover">
+                        <a id="dropdownSubMenu2" href="#" role="button" data-toggle="dropdown" aria-haspopup="true"
+                            aria-expanded="false" class="dropdown-item dropdown-toggle">SBC</a>
+                        <ul aria-labelledby="dropdownSubMenu2" class="dropdown-menu border-0 shadow">
+
+                            <!-- Level two dropdown-->
+<li><a href="<?php echo e(route('program_course.sbc_level', 100)); ?>" class="dropdown-item">100L SBC Approval</a>
                 </li>
                 <li><a href="<?php echo e(route('program_course.sbc_level', 200)); ?>" class="dropdown-item">200L SBC Approval</a>
                 </li>
@@ -110,6 +117,15 @@
                 </li>
                 <li><a href="<?php echo e(route('program_course.sbc_level', 900)); ?>" class="dropdown-item">PhD SBC Approval</a>
                 </li>
+
+                        </ul>
+                    </li>
+
+                    <li class="dropdown-submenu dropdown-hover">
+                        <a id="dropdownSubMenu2" href="#" role="button" data-toggle="dropdown" aria-haspopup="true"
+                            aria-expanded="false" class="dropdown-item dropdown-toggle">Vice Chancellor</a>
+                        <ul aria-labelledby="dropdownSubMenu2" class="dropdown-menu border-0 shadow">
+
                 <li><a href="<?php echo e(route('program_course.vc_level', 100)); ?>" class="dropdown-item">100L VC Approval</a>
                 </li>
                 <li><a href="<?php echo e(route('program_course.vc_level', 200)); ?>" class="dropdown-item">200L VC Approval</a>
@@ -127,6 +143,11 @@
                 </li>
                 <li><a href="<?php echo e(route('program_course.vc_level', 900)); ?>" class="dropdown-item">PhD VC Approval</a>
                 </li>
+                        </ul>
+                    </li>
+                    </ul>
+
+
                 <li class="dropdown-submenu dropdown-hover">
                     
                     <ul aria-labelledby="dropdownSubMenu2" class="dropdown-menu border-0 shadow">
@@ -165,6 +186,8 @@
                         <li><a href="<?php echo e(route('admin.notuploaded_scores')); ?>"
                                 class="dropdown-item text-warning">Courses Result<br>not Upload
                             </a></li>
+
+
                     </ul>
                 </li>
 
@@ -226,7 +249,11 @@
                          <li><a href="<?php echo e(route('admin.notuploaded_scores')); ?>" class="dropdown-item text-warning">Courses
                         not Upload
                         </a></li>
+
                         </ul>
+                        <li><a href="<?php echo e(route('staff.assign.courses')); ?>"
+                                class="dropdown-item "> Assigned Courses
+                            </a></li>
                     </li>
 
 

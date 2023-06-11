@@ -179,7 +179,7 @@ class AdminController extends Controller
     {
         $staff = Auth::guard('staff')->user();
         // if ($this->hasPriviledge("approveScores",  $staff->id)) {
-            $this->authorize('approveScores',Student::class);
+            // $this->authorize('approveScores',Student::class);
 
         $staff_courses = StaffCourse::where('upload_status', 'uploaded')->where('session_id', $this->getCurrentSession())->orderBy('updated_at', 'DESC')->get();
         return view('results.approve_scores', ['staff_courses' => $staff_courses]);
@@ -461,7 +461,7 @@ class AdminController extends Controller
     // View All Applicants
     public function allApplicants()
     {
-        $this->authorize('listallApplicant',AdmissionPolicy::class);
+        $this->authorize('listallApplicant',Session::class);
         $currentSessionId = $this->getCurrentAdmissionSession();
             $allAppli = array();
             $allApplicants = DB::table('approved_applicants')->get();
@@ -606,7 +606,7 @@ class AdminController extends Controller
     public function adminAllUsers()
     {
         $staff = Auth::guard('staff')->user();
-        $this->authorize('listalluser',AdmissionPolicy::class);
+        $this->authorize('listalluser',Session::class);
         $currentSessionId = $this->getCurrentAdmissionSession();
         //  if ($this->hasPriviledge("adminAllPayments",  $staff->id)) {
             // $allAppli = array();
@@ -659,7 +659,7 @@ class AdminController extends Controller
 
     public function allApprovedApplicants($user_type)
     {
-        $this->authorize('allapprovedapplicant',AdmissionPolicy::class);
+        $this->authorize('allapprovedapplicant',Session::class);
         $currentSessionId = $this->getCurrentAdmissionSession();
 
             $allApplicants = "";
@@ -706,7 +706,7 @@ class AdminController extends Controller
     public function DE()
     {
         $staff = Auth::guard('staff')->user();
-        $this->authorize('undergraduateapplicant',AdmissionPolicy::class);
+        $this->authorize('undergraduateapplicant',Session::class);
         // if ($this->hasPriviledge("DE",  $staff->id)) {
             $currentSessionId = $this->getCurrentAdmissionSession();
             $deApplicants = DB::table('approved_applicants')->get();
@@ -734,7 +734,7 @@ class AdminController extends Controller
     public function PG()
     {
         $staff = Auth::guard('staff')->user();
-        $this->authorize('postgraduateapplicant',AdmissionPolicy::class);
+        $this->authorize('postgraduateapplicant',Session::class);
         // if ($this->hasPriviledge("PG",  $staff->id)) {
             $currentSessionId = $this->getCurrentAdmissionSession();
             $pgApplicants = DB::table('approved_applicants')->get();
@@ -762,7 +762,7 @@ class AdminController extends Controller
     public function transfer()
     {
         $staff = Auth::guard('staff')->user();
-        $this->authorize('undergraduateapplicant',AdmissionPolicy::class);
+        $this->authorize('undergraduateapplicant',Session::class);
         $currentSessionId = $this->getCurrentAdmissionSession();
         // if ($this->hasPriviledge("transfer",  $staff->id)) {
             $transferApplicants = DB::table('approved_applicants')->get();
@@ -789,7 +789,7 @@ class AdminController extends Controller
 
     public function utme()
     {
-        $this->authorize('undergraduateapplicant',AdmissionPolicy::class);
+        $this->authorize('undergraduateapplicant',Session::class);
         $currentSessionId = $this->getCurrentAdmissionSession();
 
             $utmeApplicants = DB::table('approved_applicants')->get();
@@ -930,7 +930,7 @@ class AdminController extends Controller
      public function approved($pageLink, Request $req, $id)
     {
         $staff = Auth::guard('staff')->user();
-        $this->authorize('approveapplicant',AdmissionPolicy::class);
+        $this->authorize('approveapplicant',Session::class);
         // if ($this->hasPriviledge("approved",  $staff->id)) {
             $app_id = base64_decode(urldecode($id));
 
@@ -964,7 +964,7 @@ class AdminController extends Controller
     public function recommend($pageLink, $id)
     {
         $staff = Auth::guard('staff')->user();
-        $this->authorize('recommendapplicant',AdmissionPolicy::class);
+        $this->authorize('recommendapplicant',Session::class);
         // if ($this->hasPriviledge("recommend",  $staff->id)) {
             $app_id = base64_decode(urldecode($id));
 
@@ -1000,7 +1000,7 @@ class AdminController extends Controller
     {
         $staff = Auth::guard('staff')->user();
         // if ($this->hasPriviledge("forceApproved",  $staff->id)) {
-            $this->authorize('forceapproveapplicant',AdmissionPolicy::class);
+            $this->authorize('forceapproveapplicant',Session::class);
             $app_id = base64_decode(urldecode($id));
 
             try {
@@ -1033,7 +1033,7 @@ class AdminController extends Controller
     {
         $staff = Auth::guard('staff')->user();
         // if ($this->hasPriviledge("rejection",  $staff->id)) {
-            $this->authorize('rejectapplicant',AdmissionPolicy::class);
+            $this->authorize('rejectapplicant',Session::class);
             $app_id = base64_decode(urldecode($id));
 
             try {
@@ -1069,7 +1069,7 @@ class AdminController extends Controller
     {
         $staff = Auth::guard('staff')->user();
         // if ($this->hasPriviledge("viewApplicants",  $staff->id)) {
-            $this->authorize('viewapplicant',AdmissionPolicy::class);
+            $this->authorize('viewapplicant',Session::class);
             $app_id = base64_decode(urldecode($id));
             $applicantsDetails = "";
             if ($applicantType ==  'UTME') {
@@ -1137,7 +1137,7 @@ class AdminController extends Controller
     {
         $staff = Auth::guard('staff')->user();
         // if ($this->hasPriviledge("changecourse",  $staff->id)) {
-            $this->authorize('changeapplicantcourse',AdmissionPolicy::class);
+            $this->authorize('changeapplicantcourse',Session::class);
         try {
             DB::table('utme')->where('jamb_reg_no', $req->jamb_reg_no)
                 ->update([
@@ -1228,7 +1228,7 @@ public function changecourseTransfer(Request $req)
     public function viewQualifiedApplicants($user_type)
     {
         $currentSessionId = $this->getCurrentAdmissionSession();
-        $this->authorize('viewqualifiedapplicant',AdmissionPolicy::class);
+        $this->authorize('viewqualifiedapplicant',Session::class);
             $allAppli = array();
             $utmeApplicants = DB::table('approved_applicants')->get();
             $approvedArr = array();
@@ -2048,7 +2048,7 @@ public function changecourseTransfer(Request $req)
  public function editusers($id)
     {
         $staff = Auth::guard('staff')->user();
-        $this->authorize('editapplicant',AdmissionPolicy::class);
+        $this->authorize('editapplicant',Session::class);
         // if ($this->hasPriviledge("editusersinfo",  $staff->id)) {
             // $allAppli = array();
             // $allApplicants = DB::table('users')->get();
@@ -2108,7 +2108,7 @@ public function changecourseTransfer(Request $req)
     {
         $staff = Auth::guard('staff')->user();
         // if ($this->hasPriviledge("resetuserpassword",  $staff->id)) {
-            $this->authorize('resetapplicantpassword',AdmissionPolicy::class);
+            $this->authorize('resetapplicantpassword',Session::class);
         try {
             $newpass='welcome';
             // dd($newpass);
@@ -2170,7 +2170,7 @@ return view('admissions.error', compact('loginMsg'));
 public function viewaddRemitasServiceType(){
     $staff = Auth::guard('staff')->user();
         // if ($this->hasPriviledge("addRemitaServiceType",  $staff->id)) {
-            $this->authorize('addremitaservicetype',AdmissionPolicy::class);
+            $this->authorize('addremitaservicetype',Session::class);
            return view('admissions.addRemitaServiceType');
         // }
         // else {
@@ -2181,7 +2181,7 @@ public function viewaddRemitasServiceType(){
     public function addRemitaServiceType(Request $req){
         $staff = Auth::guard('staff')->user();
         // if ($this->hasPriviledge("addRemitaServiceType",  $staff->id)) {
-            // $this->authorize('addremitaservicetype',AdmissionPolicy::class);
+            // $this->authorize('addremitaservicetype',Session::class);
 
             // dd($req);
             DB::beginTransaction();
@@ -2232,7 +2232,7 @@ public function viewaddRemitasServiceType(){
         }
     public function viewRemitaServiceType(){
         $staff = Auth::guard('staff')->user();
-        $this->authorize('viewremitaservicetype',AdmissionPolicy::class);
+        $this->authorize('viewremitaservicetype',Session::class);
         // if ($this->hasPriviledge("viewRemitaServiceType",  $staff->id)) {
         $fee_types = fee_types::orderBy('status', 'ASC')
         ->where('status', 1)
@@ -2250,7 +2250,7 @@ public function viewaddRemitasServiceType(){
 
     public function editRemitaServiceType(Request $req, $id){
         $staff = Auth::guard('staff')->user();
-        $this->authorize('addremitaservicetype',AdmissionPolicy::class);
+        $this->authorize('addremitaservicetype',Session::class);
         // if ($this->hasPriviledge("editRemitaServiceType",  $staff->id)) {
         $fee_types = DB::table('fee_types')
         ->where('provider_code', $id)
@@ -2296,7 +2296,7 @@ public function viewaddRemitasServiceType(){
    public function suspendRemitaServiceType(Request $req){
     $staff = Auth::guard('staff')->user();
     // if ($this->hasPriviledge("suspendRemitaServiceType",  $staff->id)) {
-        $this->authorize('activesuspendremitaservicetype',AdmissionPolicy::class);
+        $this->authorize('activesuspendremitaservicetype',Session::class);
     try {
         DB::table('fee_types')->where('provider_code', $req->provider_code)
             ->update([
@@ -2324,7 +2324,7 @@ public function viewaddRemitasServiceType(){
 
    public function activeRemitaServiceType(Request $req){
     $staff = Auth::guard('staff')->user();
-    $this->authorize('activesuspendremitaservicetype',AdmissionPolicy::class);
+    $this->authorize('activesuspendremitaservicetype',Session::class);
     // if ($this->hasPriviledge("activeRemitaServiceType",  $staff->id)) {
     try {
         DB::table('fee_types')->where('provider_code', $req->provider_code)
@@ -2361,10 +2361,10 @@ public function viewaddRemitasServiceType(){
    public function search()
     {
         $admission = new AdminController(); // Replace with your Admission model
-        $this->authorize('searchapplicant',AdmissionPolicy::class);
+        $this->authorize('searchapplicant',Session::class);
 
             return view('admissions.students.admin.search');
-       
+
     }
 
     public function find(Request $request)
@@ -2391,6 +2391,36 @@ public function viewaddRemitasServiceType(){
             $request->session()->flash('message', 'No Matching Applicants record found. Try to search again!');
             return view('admissions.students.admin.search');
         }
+    }
+
+    public function destroy(Request $request, StaffCourse $staffCourse)
+    {
+        // dd( $staffCourse);
+        $this->authorize('searchapplicant',Session::class);
+        $staffCourse->delete();
+
+        if ($request->method() === 'GET') {
+            // Redirect to a specific URL with an error message
+            return redirect()->back()->with('error', 'The GET method is not supported for this route. Please use the POST method instead.');
+        }
+
+        return redirect()->back()->with('success','Assigned Course deleted successfully');
+    }
+    public function courseAssigned()
+    {
+
+        $staff_courses = StaffCourse::distinct()
+    ->where('staff_courses.session_id', $this->getCurrentSession())
+    // ->where('staff_courses.staff_id', $staff->id)
+    ->leftJoin('courses', 'staff_courses.course_id', '=', 'courses.id')
+    ->leftJoin('program_courses', 'courses.id', '=', 'program_courses.course_id')
+    ->where('program_courses.semester', $this->getCurrentSemester())
+    ->select('staff_courses.*', 'courses.course_title', 'courses.course_code', 'program_courses.semester')
+    ->orderBy('courses.course_code', 'ASC')
+    ->get();
+
+        return view('results.courseassigned', ['staff_courses' => $staff_courses]);
+
     }
 
 

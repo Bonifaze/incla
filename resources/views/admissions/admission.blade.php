@@ -48,7 +48,7 @@ active
 
                         </div>
 
-                        <div class="mt-3 m-0 p-3 font-weight-bold text-primary">
+                        <div class="mt-1 m-0 p-3 font-weight-bold text-primary">
                             <div class="dropdown no-arrow">
 
                                 @php

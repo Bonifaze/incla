@@ -1324,6 +1324,7 @@ unset($__errorArgs, $__bag); ?>" name="surname" placeholder="<?php echo e($trans
                     <div class="tab-pane fade<?php echo e($transfers->status == 2 ? ' show active' : ''); ?>" id="profile2-tab-pane" role="tabpanel" aria-labelledby="profile2-tab">
                           <form method="POST" action="/transfersinformation" class="p-3">
                                             <?php echo csrf_field(); ?>
+                                                                            <label for="refferal"><?php echo e(__('Previous University Information:')); ?> </label>
                                             <div class="form-group">
 
                                                 <div class="form-group">
@@ -1346,7 +1347,7 @@ unset($__errorArgs, $__bag); ?>" name="surname" placeholder="<?php echo e($trans
 
 
                                                  <div class="form-group">
-                            <label for="religion">Year of Study :</label>
+                            
                             <?php echo e(Form::select(
                                 'level',
                                 [
@@ -1379,8 +1380,8 @@ unset($__errorArgs, $__bag); ?>" name="surname" placeholder="<?php echo e($trans
                                             </div>
                                             <div class="form-group">
                                                 <div class="form-group">
-                                                    <label for="refferal"><?php echo e(__('Proposed Course of Study')); ?> </label>
-                                                    <select class="form-select text-lg" name="course_applied">
+                                                    <label for="refferal"><?php echo e(__('Proposed Course of Study:')); ?> </label>
+                                                    <select class="form-select col-12 text-lg" name="course_applied">
                                                         <?php $__currentLoopData = $programs; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $program): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
 
                                                         <option value="<?php echo e($program->name); ?>"><?php echo e($program->name); ?></option>

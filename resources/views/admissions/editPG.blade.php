@@ -47,9 +47,9 @@ active
                 <div class="tab-pane fade show active" id="home-tab-pane" role="tabpanel" aria-labelledby="home-tab" tabindex="0">
                     <form method="POST" action="/editbiodata" enctype="multipart/form-data" class="p-3">
                         @csrf
-                        @if (session('signUpMsg'))
+                        {{--  @if (session('signUpMsg'))
                         {!! session('signUpMsg') !!}
-                        @endif
+                        @endif  --}}
 
                         <div class="item border-bottom py-3">
                             <div class="row justify-content-between align-items-center">
@@ -58,7 +58,7 @@ active
                                         <strong>Photo</strong>
                                     </div>
                                     <div class="rounded-circle">
-                                        <img class="rounded-circle p-3 mx-auto d-block" src="data:image/jpeg;base64,{{$applicantsDetails->passport}}" alt="Applicant Passport" style="height: 180px; width:200px;" />
+                                        <img class="rounded-circle p-3 mx-auto d-block" src="data:image/jpeg;base64,{{$applicantsDetails->passport}}" alt="Applicant Passport" style="height: 250px; width:250px;" />
                                     </div>
                                 </div>
                             </div>
@@ -73,19 +73,19 @@ active
                         <label for="">{{ __('Surname') }} </label>
                         <div class="form-group">
                             <div class="form-group">
-                                <input id="surname" type="text" class="form-control " name="surname" value="{{ $applicantsDetails->surname}}" autofocus>
+                                <input id="surname" type="text" class="form-control " name="surname" value="{{ $applicantsDetails->surname}}" autofocus readonly>
                             </div>
                         </div>
                         <div class="form-group">
-                            <div class="form-group">
+                            <div class="form-group"> readonly
                                 <label for="">{{ __('First Name') }} </label>
-                                <input id="first_name" type="text" class="form-control" name="first_name" value="{{ $applicantsDetails->first_name}}" autofocus>
+                                <input id="first_name" type="text" class="form-control" name="first_name" value="{{ $applicantsDetails->first_name}}" autofocus readonly>
                             </div>
                         </div>
                         <div class="form-group">
                             <div class="form-group">
                                 <label for="">{{ __('Email') }} </label>
-                                <input id="email" type="email" class="form-control " name="email" value="{{ $applicantsDetails->email}}" autofocus>
+                                <input id="email" type="email" class="form-control " name="email" value="{{ $applicantsDetails->email}}" autofocus readonly>
 
 
                             </div>
@@ -111,7 +111,7 @@ active
 
                             <div class="form-group">
                                 <label for="">{{ __('Gender') }} </label>
-                                <select class="form-select" name="gender">
+                                <select class="form-select col-12 text-lg" name="gender">
                                     <option value="{{$applicantsDetails -> gender}}">{{$applicantsDetails -> gender}}</option>
                                     <option value="Male">Male</option>
                                     <option value="Female">Female</option>
@@ -122,7 +122,8 @@ active
                         <div class="form-group">
 
                             <div class="form-group">
-                                <select class="form-select" name="religion">
+                            <label for="">{{ __('Religion') }} </label>
+                                <select class="form-select col-12 text-lg" name="religion">
                                     <label for="">{{ __('Religion') }} </label>
                                     <option value="{{$applicantsDetails -> religion}}">{{$applicantsDetails -> religion}}</option>
                                     <option value="Christian (Catholic)">Christian (Catholic)</option>
@@ -144,7 +145,7 @@ active
                         <div class="form-group">
                             <div class="form-group">
                                 <label for="">{{ __('Nationality') }} </label>
-                                <select class="form-select" name="nationality" id="nationality">
+                                <select class="form-select col-12 text-lg" name="nationality" id="nationality">
                                     <option value="{{$applicantsDetails-> nationality}}">{{$applicantsDetails-> nationality}}</option>
                                     <option value="Åland Islands">Åland Islands</option>
                                     <option value="Albania">Albania</option>
@@ -422,7 +423,7 @@ active
                             <label for="refferal">{{ __('How did you hear about us') }} </label>
 
                             <div class="form-group">
-                                <select class="form-select" name="referral">
+                                <select class="form-select col-12 text-lg" name="referral">
                                     <option value="{{$applicantsDetails-> referral}}">{{$applicantsDetails-> referral}}</option>
                                     <option value="Social Media"> Social Media</option>
                                     <option value="Friend">From a friend</option>

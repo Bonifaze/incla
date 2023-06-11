@@ -115,8 +115,13 @@
                                                             
 
                                                             <?php if($session->status == 1): ?>
+                                                               <?php if($session->id == 1): ?>
 
-	                                                            <td>Current Status</td>
+	                                                            <td class="text-success">Currently Open</td>
+                                                                 <?php elseif($session->id == 2): ?>
+                                                                 <td class="text-danger">Currently Close</td>
+                                                                 <?php endif; ?>
+	                                                            
                                                             <?php elseif($session->status == 0): ?>
                                                                 <td>
                                                                     <?php echo Form::open([

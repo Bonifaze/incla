@@ -55,9 +55,9 @@ active
                 <div class="tab-pane fade show active" id="home-tab-pane" role="tabpanel" aria-labelledby="home-tab" tabindex="0">
                     <form method="POST" action="/editbiodata" enctype="multipart/form-data" class="p-3">
                         @csrf
-                        @if (session('signUpMsg'))
+                        {{--  @if (session('signUpMsg'))
                         {!! session('signUpMsg') !!}
-                        @endif
+                        @endif  --}}
                         <div class="item border-bottom py-3">
                             <div class="row justify-content-between align-items-center">
                                 <div class="col-auto">
@@ -122,8 +122,8 @@ active
 
                         <div class="form-group">
                             <div class="form-group">
-                                <label for="">{{ __('Gender') }} </label>
-                                <select class="form-select" name="gender">
+                                <label for="">{{ __('Gender:') }} </label>
+                                <select class="form-select text-lg col-12" name="gender">
                                     <option value="{{$applicantsDetails -> gender}}">{{$applicantsDetails -> gender}}</option>
                                     <option value="Male">Male</option>
                                     <option value="Female">Female</option>
@@ -134,7 +134,7 @@ active
                         <div class="form-group">
                             <div class="form-group">
                                 <label for="">{{ __('Religion') }} </label>
-                                <select class="form-select" name="religion">
+                                <select class="form-select col-12 text-lg" name="religion">
                                     <option value="{{$applicantsDetails -> gender}}">{{$applicantsDetails-> religion}}</option>
                                     <option value="Christian (Catholic)">Christian (Catholic)</option>
                                     <option value="Christian (non-catholic)">Christian (non-catholic)</option>
@@ -156,7 +156,7 @@ active
                             <label for="refferal">{{ __('Nationality') }}</label>
 
                             <div class="form-group">
-                                <select class="form-select" name="nationality" id="nationality">
+                                <select class="form-selec col-12 text-lg" name="nationality" id="nationality">
                                     <option value="{{$applicantsDetails-> nationality}}">{{$applicantsDetails-> nationality}}</option>
                                     <option value="Afghanistan">Afghanistan</option>
                                     <option value="Åland Islands">Åland Islands</option>
@@ -433,7 +433,7 @@ active
                             <label for="refferal">{{ __('How did you hear about us') }} </label>
 
                             <div class="form-group">
-                                <select class="form-select" name="referral">
+                                <select class="form-select text-lg col-12" name="referral">
                                     <option value="{{$applicantsDetails -> referral}}">{{$applicantsDetails -> referral}}</option>
                                     <option value="Social Media"> Social Media</option>
                                     <option value="Friend">From a friend</option>

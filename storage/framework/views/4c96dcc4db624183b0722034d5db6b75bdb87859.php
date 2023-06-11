@@ -145,9 +145,11 @@
        $('#admin').select2();
        $('#hod_id').select2();
        $('#lecturer_id').select2();
+        $('#pmtype').select2();
        $(document).ready(function(){
         $('#dataTable').DataTable();
        });
+
     </script>
 
 

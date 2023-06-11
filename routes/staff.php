@@ -52,4 +52,7 @@ Route::get('/staff-work/edit/{id}', 'StaffWorkProfilesController@edit')->name('s
 
 Route::patch('/staff-work/edit/{id}', 'StaffWorkProfilesController@update')->name('staff-work.update');
 
+Route::delete('/staff/assign/remove/{staffCourse}', 'AdminController@destroy')->name('staff.assign.destroy');
+
+Route::get('/staff/assign/courses', 'AdminController@courseAssigned')->name('staff.assign.courses');
 

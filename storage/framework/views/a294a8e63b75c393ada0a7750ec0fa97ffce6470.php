@@ -1,226 +1,219 @@
-<?php
+<?php $__env->startSection('pagetitle'); ?>
+Home
+<?php $__env->stopSection(); ?>
 
-if(!session('userid'))
-{
+<!-- Sidebar Links -->
+<!-- Treeview -->
+<?php $__env->startSection('student-open'); ?>
+menu-open
+<?php $__env->stopSection(); ?>
 
-header('location: /');
-exit;
-}
-?>
+<?php $__env->startSection('student'); ?>
+active
+<?php $__env->stopSection(); ?>
 
+<!-- Page -->
+<?php $__env->startSection('home'); ?>
+active
+<?php $__env->stopSection(); ?>
+<!-- End Sidebar links -->
 
 <?php $__env->startSection('content'); ?>
-<div class="row justify-content-center">
+<div class="content-wrapper bg-white">
+    <!-- Content Header (Page header) -->
+    <section class="content">
 
+        <?php if(session('signUpMsg')): ?>
+        <?php echo session('signUpMsg'); ?>
 
-    <!-- Page Wrapper -->
-    <form>
-        <div id="wrapper">
-            <?php echo $__env->make('layouts.usersidebar', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
-            <!-- Content Wrapper -->
-            <div id="content-wrapper" class="d-flex flex-column">
-                <!-- Content Wrapper -->
-                <div id="content-wrapper" class="d-flex flex-column">
+        <?php endif; ?>
+        <!-- Begin Page Content -->
+        <div class="container-fluid">
 
-                    <body>
-                        <!-- Main Content -->
-                        <div id="content">
+            <div class="row">
+                <div class="col-12">
+                    <div class="card shadow mb-4">
+                        <!-- Card Header - Dropdown -->
+                        <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                            <h6 class="m-0 font-weight-bold text-success">Admission Status : <?php echo e($status); ?></h6>
+                            <div class="dropdown no-arrow">
 
-                            <!-- Begin Page Content -->
-                            <div class="container-fluid">
+                                <?php echo $status=="Successful"?'
 
-
-                                <div class="row">
-
-                                    <!-- Area Chart -->
-                                    <div class="col-12">
-                                        <div class="card shadow mb-4">
-                                            <!-- Card Header - Dropdown -->
-                                            <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                                                <h6 class="m-0 font-weight-bold text-success">Admission Status : <?php echo e($status); ?></h6>
-                                                 <div class="dropdown no-arrow">
-
-                                                    <?php echo $status=="Successful"?'
-
-                                                    ':''; ?>
+                                ':''; ?>
 
 
 
-                                                </div>
-
-                                            </div>
-
-                                            <div class="mt-3 m-0 p-3 font-weight-bold text-primary">
-                                                <div class="dropdown no-arrow">
-
-                                                    <?php
-                                                    $fees = array("UTME"=>80000, "DE"=>80000, "Transfer"=>80000, "PG"=>50000 or 30000);
-                                                    ?>
-                                                    <?php $__currentLoopData = $admission; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $utm): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                                                    <input type="hidden" class="form-control" id="js-firstName" placeholder="<?php echo e($utm->first_name." ".$utm->middle_name." ".$utm->surname); ?>" value="<?php echo e($utm->first_name." ".$utm->middle_name." ".$utm->surname); ?>" name="firstName" readonly>
-                                                    <input type="hidden" class="form-control" id="js-email" placeholder="<?php echo e($utm->email); ?>" value="<?php echo e($utm->email); ?>" name="email" readonly hidden>
-                                                    <input type="hidden" class="form-control" id="js-phone" placeholder="<?php echo e($utm->phone); ?>" value="<?php echo e($utm->phone); ?>" name="email" readonly>
-                                                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-                                                    <?php $__currentLoopData = $admission; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $utm): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                                                    <?php echo $status=="Successful"?'
-                                                    <form action="" method="POST" onsubmit="event.preventDefault();" class="p-5">
-                                                        <div class="form-group container-fluid mt-5 p-5 border border-success shadow shadow-lg rounded text-success rounded-lg">
-                                                            <?php echo csrf_field(); ?>
-                                                            Congratulation you have been offerred provisional admission into veritas univeristy kindly click the button to pay your acceptance fee<br>
-                                                            <a href="acceptancepayment" class="btn btn-success mt-3"> <i class=" fa fa-credit-card fa-sm text-white-50 p-2"></i>Pay (₦'.$fees[$utm->applicant_type].')</a>
-
-
-                                                        </div>
-                                                    </form>':' '; ?>
-
-                                                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-
-                                                    
-                                                </div>
-
-
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-    </form>
-
-
-    <!-- Pie Chart -->
-    <div class="col-12">
-        <div class="card shadow mb-4">
-            <!-- Card Header - Dropdown -->
-            <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                <h6 class="m-0 font-weight-bold text-success">Applicant Profile</h6>
-                <div class="dropdown no-arrow">
-                    <a href="/viewprofile" class="d-none d-sm-inline-block btn btn-sm btn-success shadow-sm"><i class="fas fa-id-badge text-white-50"></i> Full Profile</a>
-
-                </div>
-            </div>
-            <!-- Card Body -->
-
-
-            <?php $__currentLoopData = $admission; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $utm): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-
-
-            <div class="row gy-4">
-                <div class="col-12 col-lg-6">
-                    <div class="app-card app-card-account shadow d-flex flex-column align-items-start ">
-
-                        <div class="app-card-body px-4 w-100">
-                            <div class="item border-bottom py-3">
-                                <div class="row justify-content-between align-items-center">
-                                    <div class="col-auto">
-                                        <div class="item-label mb-2">
-                                            <strong>Photo</strong>
-                                        </div>
-                                       <div class="rounded-circle">
-    <img class="rounded-circle p-3 mx-auto d-block" src="data:image/jpeg;base64,<?php echo e($utm->passport); ?>" alt="Applicant Passport" style="height: 180px; width: 200px;">
-</div>
-
-                                    </div>
-                                </div>
                             </div>
 
-                            <div class="item border-bottom py-3">
-                                <div class="row justify-content-between align-items-center">
-                                    <div class="col-auto">
-                                        <div class="item-label"><strong>Surname</strong></div>
-                                        <div class="item-data"><?php echo e($utm -> surname); ?></div>
+                        </div>
+
+                        <div class="mt-1 m-0 p-3 font-weight-bold text-primary">
+                            <div class="dropdown no-arrow">
+
+                                <?php
+                                $fees = array("UTME"=>80000, "DE"=>80000, "Transfer"=>80000, "PG"=>50000 or 30000);
+                                ?>
+                                <?php $__currentLoopData = $admission; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $utm): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                <input type="hidden" class="form-control" id="js-firstName" placeholder="<?php echo e($utm->first_name." ".$utm->middle_name." ".$utm->surname); ?>" value="<?php echo e($utm->first_name." ".$utm->middle_name." ".$utm->surname); ?>" name="firstName" readonly>
+                                <input type="hidden" class="form-control" id="js-email" placeholder="<?php echo e($utm->email); ?>" value="<?php echo e($utm->email); ?>" name="email" readonly hidden>
+                                <input type="hidden" class="form-control" id="js-phone" placeholder="<?php echo e($utm->phone); ?>" value="<?php echo e($utm->phone); ?>" name="email" readonly>
+                                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                                <?php $__currentLoopData = $admission; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $utm): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                <?php echo $status=="Successful"?'
+                                <form action="" method="POST" onsubmit="event.preventDefault();" class="p-5">
+                                    <div class="form-group container-fluid mt-5 p-5 border border-success shadow shadow-lg rounded text-success rounded-lg">
+                                        <?php echo csrf_field(); ?>
+                                        Congratulation you have been offerred provisional admission into veritas univeristy kindly click the button to pay your acceptance fee<br>
+                                        <a href="acceptancepayment" class="btn btn-success mt-3"> <i class=" fa fa-credit-card fa-sm text-white-50 p-2"></i>Pay (₦'.$fees[$utm->applicant_type].')</a>
+
+
                                     </div>
-                                </div>
-                            </div>
-                            <div class="item border-bottom py-3">
-                                <div class="row justify-content-between align-items-center">
-                                    <div class="col-auto">
-                                        <div class="item-label"><strong>First Name</strong></div>
-                                        <div class="item-data"><?php echo e($utm -> first_name); ?></div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="item border-bottom py-3">
-                                <div class="row justify-content-between align-items-center">
-                                    <div class="col-auto">
-                                        <div class="item-label"><strong>Other Name</strong></div>
-                                        <div class="item-data"><?php echo e($utm -> middle_name); ?></div>
-                                    </div>
-                                </div>
+                                </form>':' '; ?>
+
+                                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+
+                                
                             </div>
 
 
                         </div>
                     </div>
-                    <!--//app-card-->
                 </div>
-                <!--//col-->
-                <div class="col-12 col-lg-6">
-                    <div class="app-card app-card-account shadow d-flex flex-column align-items-start">
+            </div>
 
-                        <!--//app-card-header-->
-                        <div class="app-card-body px-4 w-100">
+            <div class="col-12">
+                <div class="card shadow mb-4">
+                    <!-- Card Header - Dropdown -->
+                    <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                        <h6 class="m-0 font-weight-bold text-success">Applicant Profile</h6>
+                        <div class="dropdown no-arrow">
+                            <a href="/viewprofile" class="d-none d-sm-inline-block btn btn-sm btn-success shadow-sm"><i class="fas fa-id-badge text-white-50"></i> Full Profile</a>
 
-                            <div class="item border-bottom py-3">
-                                <div class="row justify-content-between align-items-center">
-                                    <div class="col-auto">
-                                        <div class="item-label"><strong>Email</strong></div>
-                                        <div class="item-data"><?php echo e($utm -> email); ?></div>
-                                    </div>
-                                </div>
-                            </div>
+                        </div>
+                    </div>
+                    <!-- Card Body -->
 
-                            <div class="item border-bottom py-3">
-                                <div class="row justify-content-between align-items-center">
-                                    <div class="col-auto">
-                                        <div class="item-label"><strong>Phone Number</strong></div>
-                                        <div class="item-data"><?php echo e($utm -> phone); ?></div>
+
+                    <?php $__currentLoopData = $admission; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $utm): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+
+
+                    <div class="row gy-4">
+                        <div class="col-12 col-lg-6">
+                            <div class="app-card app-card-account shadow d-flex flex-column align-items-start ">
+
+                                <div class="app-card-body px-4 w-100">
+                                    <div class="item border-bottom py-3">
+                                        <div class="row justify-content-between align-items-center">
+                                            <div class="col-auto">
+                                                <div class="item-label mb-2">
+                                                    <strong>Photo</strong>
+                                                </div>
+                                                <div class="rounded-circle">
+                                                    <img class="rounded-circle p-3 mx-auto d-block" src="data:image/jpeg;base64,<?php echo e($utm->passport); ?>" alt="Applicant Passport" style="height: 180px; width: 200px;">
+                                                </div>
+
+                                            </div>
+                                        </div>
                                     </div>
+
+                                    <div class="item border-bottom py-3">
+                                        <div class="row justify-content-between align-items-center">
+                                            <div class="col-auto">
+                                                <div class="item-label"><strong>Surname</strong></div>
+                                                <div class="item-data"><?php echo e($utm -> surname); ?></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="item border-bottom py-3">
+                                        <div class="row justify-content-between align-items-center">
+                                            <div class="col-auto">
+                                                <div class="item-label"><strong>First Name</strong></div>
+                                                <div class="item-data"><?php echo e($utm -> first_name); ?></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="item border-bottom py-3">
+                                        <div class="row justify-content-between align-items-center">
+                                            <div class="col-auto">
+                                                <div class="item-label"><strong>Other Name</strong></div>
+                                                <div class="item-data"><?php echo e($utm -> middle_name); ?></div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+
                                 </div>
                             </div>
-                            <div class="item border-bottom py-3">
-                                <div class="row justify-content-between align-items-center">
-                                    <div class="col-auto">
-                                        <div class="item-label"><strong>Gender</strong></div>
-                                        <div class="item-data"><?php echo e($utm -> gender); ?></div>
+                            <!--//app-card-->
+                        </div>
+                        <!--//col-->
+                        <div class="col-12 col-lg-6">
+                            <div class="app-card app-card-account shadow d-flex flex-column align-items-start">
+
+                                <!--//app-card-header-->
+                                <div class="app-card-body px-4 w-100">
+
+                                    <div class="item border-bottom py-3">
+                                        <div class="row justify-content-between align-items-center">
+                                            <div class="col-auto">
+                                                <div class="item-label"><strong>Email</strong></div>
+                                                <div class="item-data"><?php echo e($utm -> email); ?></div>
+                                            </div>
+                                        </div>
                                     </div>
-                                </div>
-                            </div>
-                            <div class="item border-bottom py-3">
-                                <div class="row justify-content-between align-items-center">
-                                    <div class="col-auto">
-                                        <div class="item-label"><strong>Date of Birth</strong></div>
-                                        <div class="item-data"><?php echo e($utm -> dob); ?></div>
+
+                                    <div class="item border-bottom py-3">
+                                        <div class="row justify-content-between align-items-center">
+                                            <div class="col-auto">
+                                                <div class="item-label"><strong>Phone Number</strong></div>
+                                                <div class="item-data"><?php echo e($utm -> phone); ?></div>
+                                            </div>
+                                        </div>
                                     </div>
-                                </div>
-                            </div>
-                            <div class="item border-bottom py-3">
-                                <div class="row justify-content-between align-items-center">
-                                    <div class="col-auto">
-                                        <div class="item-label"><strong>State of Origin</strong></div>
-                                        <div class="item-data"><?php echo e($utm -> state_origin); ?></div>
+                                    <div class="item border-bottom py-3">
+                                        <div class="row justify-content-between align-items-center">
+                                            <div class="col-auto">
+                                                <div class="item-label"><strong>Gender</strong></div>
+                                                <div class="item-data"><?php echo e($utm -> gender); ?></div>
+                                            </div>
+                                        </div>
                                     </div>
-                                </div>
-                            </div>
-                            <div class="item border-bottom py-3">
-                                <div class="row justify-content-between align-items-center">
-                                    <div class="col-auto">
-                                        <div class="item-label"><strong>Nationality</strong></div>
-                                        <div class="item-data"><?php echo e($utm -> nationality); ?></div>
+                                    <div class="item border-bottom py-3">
+                                        <div class="row justify-content-between align-items-center">
+                                            <div class="col-auto">
+                                                <div class="item-label"><strong>Date of Birth</strong></div>
+                                                <div class="item-data"><?php echo e($utm -> dob); ?></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="item border-bottom py-3">
+                                        <div class="row justify-content-between align-items-center">
+                                            <div class="col-auto">
+                                                <div class="item-label"><strong>State of Origin</strong></div>
+                                                <div class="item-data"><?php echo e($utm -> state_origin); ?></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="item border-bottom py-3">
+                                        <div class="row justify-content-between align-items-center">
+                                            <div class="col-auto">
+                                                <div class="item-label"><strong>Nationality</strong></div>
+                                                <div class="item-data"><?php echo e($utm -> nationality); ?></div>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
+                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                 </div>
             </div>
-            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+
         </div>
-    </div>
+    </section>
 
-</div>
-<!-- End of Main Content -->
-
-</div>
-<!-- End of Content Wrapper -->
 </div>
 
 <!-- JavaScript Bundle with Popper -->
@@ -347,5 +340,4 @@ exit;
 </script>
 </body>
 <?php $__env->stopSection(); ?>
-
-<?php echo $__env->make('layouts.userapp', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH /Users/lifeofrence/Documents/laraproject/resources/views/admissions//admission.blade.php ENDPATH**/ ?>
+<?php echo $__env->make('layouts.adminsials', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH /Users/lifeofrence/Documents/laraproject/resources/views/admissions//admission.blade.php ENDPATH**/ ?>
