@@ -1234,9 +1234,21 @@ active
                     <div class="tab-pane fade{{ $de->status == 1 ? ' show active' : '' }}" id="profile-tab-pane" role="tabpanel" aria-labelledby="profile-tab">
                         <form method="POST" action="/desponsors" enctype="multipart/form-data" class="p-3">
                             @csrf
+                             <div class="form-group">
+                                <div class="form-group">
+                                    <label for="">{{ __('Tile') }} </label>
+                                    <input id="fname" type="text" name="sponsor_title" class="form-control" placeholder="" autofocus>
+                                </div>
+                            </div>
+                             <div class="form-group">
+                                <div class="form-group">
+                                    <label for="">{{ __('Relationship') }} </label>
+                                    <input id="fname" type="text" name="sponsor_relationship" class="form-control" placeholder="" autofocus>
+                                </div>
+                            </div>
                             <div class="form-group">
                                 <div class="form-group">
-                                    <label for="">{{ __('First Name') }} </label>
+                                    <label for="">{{ __('Full Name') }} </label>
                                     <input id="fname" type="text" name="name" class="form-control" placeholder="Full Name" autofocus>
                                 </div>
                             </div>

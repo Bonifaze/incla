@@ -1,71 +1,100 @@
-{{--  @php
+@extends('layouts.adminsials')
 
-if(!session('userid'))
-{
 
-header('location: /');
-exit;
-}
-@endphp  --}}
-@extends('layouts.userapp')
+
+@section('pagetitle')
+    Home
+@endsection
+
+
+
+<!-- Sidebar Links -->
+
+<!-- Treeview -->
+@section('student-open')
+    menu-open
+@endsection
+
+@section('student')
+    active
+@endsection
+
+<!-- Page -->
+@section('home')
+    active
+@endsection
+
+<!-- End Sidebar links -->
+
+
 
 @section('content')
-    <div class="row justify-content-center">
-        <!-- Page Wrapper -->
-        <div id="wrapper">
-            @include('layouts.usersidebar')
+    <div class="content-wrapper">
+        <!-- Content Header (Page header) -->
 
 
-            <!-- left column -->
+        <!-- Main content -->
+        <section class="content">
             <div class="container-fluid">
+                <!-- left column -->
+                <div class="col_full">
 
-                <div class="app-wrapper">
-                    <div class="app-content pt-3 p-md-3 p-lg-4">
-                        <div class="container-xl">
-                            <h1 class="app-page-title h5 fw-bold p-2 shadow-sm text-center text-success mb-4 border">
-                                Students Information</h1>
+                    <div class="card">
+                        <h1
+                            class="app-page-title text-uppercase h5 font-weight-bold p-2 mb-2 shadow-sm text-center text-success border">
+                            Show Student Information
+                        </h1>
 
-                            <div class="col-auto">
-                                <div class="card border-left-success shadow h-100 py-3">
-                                    <div class="card-body">
-                                        <div class="row no-gutters align-items-center">
-                                            <div class="col mr-2">
-                                                <div class="h4 text-success";>
-                                                    <ul>
-                                                        <li>Matric Number: <span class="text-black">
-                                                                {{ $academic->mat_no }}</span> </li>
-                                                        <li>Username: <span class="text-black"> {{ $student->username }}
-                                                            </span></li>
-                                                        <li>Password: <span class="text-black">welcome </span></li>
 
-                                                    </ul>
-                                                </div>
+                        <div class="col-auto">
+                            <div class="card border-left-success shadow h-100 py-3">
+                                <div class="card-body">
+                                    <div class="row no-gutters align-items-center">
+                                        <div class="col mr-2">
+                                            <div class="h4 text-success";>
+                                                <ul>
+                                                    <li>Matric Number: <span class="text-black">
+                                                            {{ $academic->mat_no }}</span> </li>
+                                                    <li>Username: <span class="text-black"> {{ $student->username }}
+                                                        </span></li>
+                                                    <li>Password: <span class="text-black">welcome </span></li>
+
+                                                </ul>
                                             </div>
-                                            <div class="">
-                                <form class="form-horizontal" method="POST" action="{{ route('student.login.submit') }}">
-            @csrf
-            
-
-              <input id="email" type="hidden" placeholder="Username" class=" form-control{{ $errors->has('email') ? ' is-invalid' : '' }}" name="email" value="{{ $student->username }}" required autofocus>
-              
-            
+                                        </div>
+                                        <div class="">
+                                            <form class="form-horizontal" method="POST"
+                                                action="{{ route('student.login.submit') }}">
+                                                @csrf
 
 
-              <input id="password" type="hidden" placeholder="Password" class=" form-control{{ $errors->has('password') ? ' is-invalid' : '' }}" name="password" value="welcome">
-            
-        
-          
-                <input type="checkbox" value="None" id="checkbox1" class="" style="appearance:none; -webkit-appearance:none; -moz-appearance: none; width: 18px; height: 18px; border-radius: 50p% boder:2px solid green; outline:none;" name="check" checked>
+                                                <input id="email" type="hidden" placeholder="Username"
+                                                    class=" form-control{{ $errors->has('email') ? ' is-invalid' : '' }}"
+                                                    name="email" value="{{ $student->username }}" required autofocus>
 
-              <button type="submit" class="btn btn-success"> {{ __('Login Student Portal') }}</button>
-          
-          </form>
-                                              
-                                            </div>
+
+
+
+                                                <input id="password" type="hidden" placeholder="Password"
+                                                    class=" form-control{{ $errors->has('password') ? ' is-invalid' : '' }}"
+                                                    name="password" value="welcome">
+
+
+
+                                                <input type="checkbox" value="None" id="checkbox1" class=""
+                                                    style="appearance:none; -webkit-appearance:none; -moz-appearance: none; width: 18px; height: 18px; border-radius: 50p% boder:2px solid green; outline:none;"
+                                                    name="check" checked>
+
+                                                <button type="submit" class="btn btn-success">
+                                                    {{ __('Login Student Portal') }}</button>
+
+                                            </form>
+
                                         </div>
                                     </div>
                                 </div>
-                          
+                            </div>
+
                             <div class="row py-4">
                                 <div class="col-12 col-lg-6">
                                     <div class="app-card app-card-account shadow d-flex flex-column align-items-start ">
@@ -89,7 +118,7 @@ exit;
                                                             <img class="rounded-circle p-3 mx-auto d-block"
                                                                 src="data:image/jpg;base64,{{ $student->passport }}"
                                                                 alt="Student Passport"
-                                                                style="height: 200px; width:200px;" />
+                                                                style="height: 220px; width:220px;" />
                                                         </div>
                                                     </div>
                                                     <div class="col-auto">
@@ -100,7 +129,7 @@ exit;
                                                             <img class="rounded-circle p-3 mx-auto d-block"
                                                                 src="data:image/jpg;base64,{{ $student->signature }}"
                                                                 alt="Student signature"
-                                                                style="height: 200px; width:200px;" />
+                                                                style="height: 220px; width:220px;" />
                                                         </div>
                                                     </div>
                                                 </div>
@@ -135,17 +164,7 @@ exit;
                                                     </div>
                                                 </div>
                                             </div>
-
-                                        </div>
-                                    </div>
-                                    <!--//app-card-->
-                                </div>
-                                <!--//col-->
-                                <div class="col-12 col-lg-6">
-                                    <div class="app-card app-card-account shadow d-flex flex-column align-items-start">
-                                        <!--//app-card-header-->
-                                        <div class="app-card-body px-4 w-100">
-                                            <div class="item border-bottom py-3">
+                                             <div class="item border-bottom py-3">
                                                 <div class="row justify-content-between align-items-center">
                                                     <div class="col-auto">
                                                         <div class="item-label"><strong>Username</strong></div>
@@ -156,20 +175,19 @@ exit;
                                                 </div>
                                             </div>
 
-                                            <div class="item border-bottom py-3">
-                                                <div class="row justify-content-between align-items-center">
-                                                    <div class="col-auto">
-                                                        <div class="item-label"><strong>Phone Number</strong></div>
-                                                        <div class="item-data">{{ $student->phone }}
-                                                        </div>
-                                                    </div>
-                                                    <!--//col-->
-                                                    <!-- <div class="col text-end">
-                                                                                        <a class="btn btn-success" href="#">Change</a>
-                                                                                    </div> -->
-                                                    <!--//col-->
-                                                </div>
-                                            </div>
+
+                                        </div>
+                                    </div>
+                                    <!--//app-card-->
+                                </div>
+                                <!--//col-->
+                                <div class="col-12 col-lg-6">
+                                    <div class="app-card app-card-account shadow d-flex flex-column align-items-start">
+                                        <!--//app-card-header-->
+                                        <div class="app-card-body px-4 w-100">
+
+
+
 
                                             <div class="item border-bottom py-3">
                                                 <div class="row justify-content-between align-items-center">
@@ -261,7 +279,7 @@ exit;
 
                                 <div class="row gy-4 mb-4 mt-1">
 
-                                    <div class="col-12 mt-3">
+                                    <div class="col mt-3">
                                         <div class="app-card app-card-account shadow d-flex flex-column align-items-start">
                                             <div class="app-card-header p-3 border-bottom-0">
                                                 <div class="row align-items-center px-3">
@@ -560,17 +578,61 @@ exit;
             </div>
             <!--/.col (left) -->
 
-        </div>
-        <!-- /.row -->
-        </section>
-        <!-- /.content -->
     </div>
+    <!-- /.row -->
+    </section>
+    <!-- /.content -->
+    </div>
+@endsection
 
+@section('pagescript')
+    <script src="{{ asset('js/bootbox.min.js') }}"></script>
 
+    <!-- jQuery UI -->
+    <script src="{{ asset('v3/plugins/jquery-ui/jquery-ui.min.js') }}"></script>
+    <!-- Ekko Lightbox -->
+    <script src="{{ asset('v3/plugins/ekko-lightbox/ekko-lightbox.min.js') }}"></script>
 
+    <script>
+        $(function() {
+            $(document).on('click', '[data-toggle="lightbox"]', function(event) {
+                event.preventDefault();
+                $(this).ekkoLightbox({
+                    alwaysShowClose: true
+                });
+            });
 
+            $('.filter-container').filterizr({
+                gutterPixels: 3
+            });
+            $('.btn[data-filter]').on('click', function() {
+                $('.btn[data-filter]').removeClass('active');
+                $(this).addClass('active');
+            });
+        })
+    </script>
 
+    <script>
+        function resetPassword(id) {
+            bootbox.dialog({
+                message: "<h4>Confirm you want to Reset this students password?</h4>",
+                buttons: {
+                    confirm: {
+                        label: 'Yes',
+                        className: 'btn-success',
+                        callback: function() {
+                            document.getElementById("resetPasswordForm" + id).submit();
+                        }
+                    },
+                    cancel: {
+                        label: 'No',
+                        className: 'btn-danger',
+                    }
+                },
+                callback: function(result) {}
 
-
-    @include('layouts.footer')
+            });
+            // e.preventDefault(); // avoid to execute the actual submit of the form if onsubmit is used.
+        }
+    </script>
 @endsection

@@ -1253,7 +1253,19 @@ active
                             @csrf
                             <div class="form-group">
                                 <div class="form-group">
-                                    <label for="">{{ __('First Name') }} </label>
+                                    <label for="">{{ __('Tile') }} </label>
+                                    <input id="fname" type="text" name="sponsor_title" class="form-control" placeholder="" autofocus>
+                                </div>
+                            </div>
+                             <div class="form-group">
+                                <div class="form-group">
+                                    <label for="">{{ __('Relationship') }} </label>
+                                    <input id="fname" type="text" name="sponsor_relationship" class="form-control" placeholder="" autofocus>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="form-group">
+                                    <label for="">{{ __('Full Name') }} </label>
                                     <input id="fname" type="text" name="name" class="form-control" placeholder="Full Name" autofocus>
                                 </div>
                             </div>

@@ -1,21 +1,50 @@
+<?php $__env->startSection('pagetitle'); ?>
+    Home
+<?php $__env->stopSection(); ?>
+
+
+
+<!-- Sidebar Links -->
+
+<!-- Treeview -->
+<?php $__env->startSection('student-open'); ?>
+    menu-open
+<?php $__env->stopSection(); ?>
+
+<?php $__env->startSection('student'); ?>
+    active
+<?php $__env->stopSection(); ?>
+
+<!-- Page -->
+<?php $__env->startSection('home'); ?>
+    active
+<?php $__env->stopSection(); ?>
+
+<!-- End Sidebar links -->
+
+
+
 <?php $__env->startSection('content'); ?>
-    <div class="row justify-content-center">
-        <!-- Page Wrapper -->
-        <div id="wrapper">
-            <?php echo $__env->make('layouts.usersidebar', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
 
-            <!-- left column -->
-            <div class="col_full col-10">
+<div class="content-wrapper">
+    <!-- Content Header (Page header) -->
 
-                <div class="card card-primary">
-                    <div class="card-header">
-                        <h3 class="m-0 font-weight-bold text-success">Generate Matriculation Number</h3>
-                        <?php if(session('approvalMsg')): ?>
-                            <?php echo session('approvalMsg'); ?>
 
-                        <?php endif; ?>
+    <!-- Main content -->
+    <section class="content">
+      <div class="container-fluid">
+        <!-- left column -->
+        <div class="col_full">
 
-                    </div>
+            <div class="card">
+                <h1
+                        class="app-page-title text-uppercase h5 font-weight-bold p-2 mb-2 shadow-sm text-center text-success border">
+                      Generate Matriculation Number
+                    </h1>
+
+
+              <!-- /.card-header -->
+            <!-- form start -->
 
                     <form method="POST" action="/admissions/students/store" enctype="multipart/form-data" class="p-3">
                         <?php echo csrf_field(); ?>
@@ -23,10 +52,13 @@
                         <div class="card-body">
 
                             
+                        <?php if(session('approvalMsg')): ?>
+                            <?php echo session('approvalMsg'); ?>
 
+                        <?php endif; ?>
                             <div class="box-body">
                                 <div class="">
-                                    <h3 class="box-title">Bio-Data</h3>
+                                    
                                 </div>
                                     <div class="row">
                                     <div class="col-md-12 form-group">
@@ -36,7 +68,7 @@
                                         <?php echo e(Form::select('program_id', $programs, null, ['placeholder'=>'SELECT COURSE OF STUDY', 'class' => 'form-control', 'id' => 'program_id', 'name' => 'program_id'])); ?>
 
                                         <span class="text-danger"> <?php echo e($errors->first('program_id')); ?></span>
-                                        <label class="text-warning font-weight-bold">Please ensure you select your correct course of study
+                                        
                                         </label>
                                     </div>
                                 </div>
@@ -87,8 +119,9 @@
                                         </div>
                                     </div>
                                     <div class="row">
-                                        <div class="col-md-6 form-group">
-                                            <label for="passport">Passport :</label>
+                                        <div class="col-12 form-group">
+                                        <label class="text-warning font-weight-bold">Please ensure your Passport is white Background</label><br>
+                                            <label for="passport">Passport : </label>
                                             <?php echo Form::file('passport', [
                                                 'class' => 'form-control file-loading',
                                                 'id' => 'passport',
@@ -101,7 +134,8 @@
                                             <span class="text-danger"> <?php echo e($errors->first('passport')); ?></span>
                                         </div>
 
-                                        <div class="col-md-6 form-group">
+
+                                        <div class="col-12 form-group">
                                             <label for="signature">Signature :</label>
                                             <?php echo Form::file('signature', [
                                                 'class' => 'form-control file-loading',
@@ -116,11 +150,11 @@
                                         </div>
 
                                     </div>
-                                    <div class="col-md-4 form-group">
-                                        <div <?php if($errors->has('surname')): ?> class ='has-error form-group' <?php endif; ?>>
-                                            <label for="surname">Surname :</label>
+                                    
+                                        
+                                            
 
-                                            <?php echo Form::text('surname', $applicantsDetails->surname, [
+                                            <?php echo Form::hidden('surname', $applicantsDetails->surname, [
                                                 'placeholder' => '',
                                                 'class' => 'form-control',
                                                 'id' => 'surname',
@@ -128,15 +162,12 @@
                                                 'readonly',
                                             ]); ?>
 
-                                            <span class="text-danger"> <?php echo e($errors->first('surname')); ?></span>
-                                        </div>
-                                    </div>
+                                            
 
 
-                                    <div class="col-md-4 form-group">
-                                        <div <?php if($errors->has('first_name')): ?> class ='has-error form-group' <?php endif; ?>>
-                                            <label for="first_name">First Name :</label>
-                                            <?php echo Form::text('first_name', $applicantsDetails->first_name, [
+                                    
+                                            
+                                            <?php echo Form::hidden('first_name', $applicantsDetails->first_name, [
                                                 'placeholder' => '',
                                                 'class' => 'form-control',
                                                 'id' => 'first_name',
@@ -144,32 +175,26 @@
                                                 'readonly',
                                             ]); ?>
 
-                                            <span class="text-danger"> <?php echo e($errors->first('first_name')); ?></span>
-                                        </div>
-                                    </div>
+                                            
 
 
-                                    <div class="col-md-4 form-group">
-                                        <div <?php if($errors->has('middle_name')): ?> class ='has-error form-group' <?php endif; ?>>
-                                            <label for="middle_name">Middle Name :</label>
-                                            <?php echo Form::text('middle_name', $applicantsDetails->middle_name, [
+                                    
+                                            
+                                            <?php echo Form::hidden('middle_name', $applicantsDetails->middle_name, [
                                                 'placeholder' => '',
                                                 'class' => 'form-control',
                                                 'id' => 'middle_name',
                                                 'readonly',
                                             ]); ?>
 
-                                            <span class="text-danger"> <?php echo e($errors->first('middle_name')); ?></span>
-                                        </div>
-                                    </div>
+                                            
 
 
                                 </div>
 
-                                <div class="row">
-                                    <div class="col-md-4 form-group">
-                                        <label for="type">Gender :</label>
-                                        <?php echo Form::text('gender', $applicantsDetails->gender, [
+                                
+                                        
+                                        <?php echo Form::hidden('gender', $applicantsDetails->gender, [
                                             'placeholder' => '',
                                             'class' => 'form-control',
                                             'id' => 'middle_name',
@@ -177,13 +202,10 @@
                                         ]); ?>
 
 
-                                    </div>
+                                    
+                                            
 
-                                    <div class="col-md-4 form-group">
-                                        <div <?php if($errors->has('phone')): ?> class ='has-error form-group' <?php endif; ?>>
-                                            <label for="phone">Phone :</label>
-
-                                            <?php echo Form::text('phone', $applicantsDetails->phone, [
+                                            <?php echo Form::hidden('phone', $applicantsDetails->phone, [
                                                 'placeholder' => '080xxxxx',
                                                 'class' => 'form-control',
                                                 'id' => 'phone',
@@ -192,12 +214,10 @@
                                                 'readonly',
                                             ]); ?>
 
-                                            <span class="text-danger"> <?php echo e($errors->first('phone')); ?></span>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-4 form-group">
-                                        <label for="dob">Date of Birth :</label>
-                                        <?php echo Form::text('dob', $applicantsDetails->dob, [
+                                            
+                                    
+                                        
+                                        <?php echo Form::hidden('dob', $applicantsDetails->dob, [
                                             'placeholder' => '',
                                             'class' => 'form-control',
                                             'id' => 'dob',
@@ -205,16 +225,12 @@
                                             'readonly',
                                         ]); ?>
 
-                                        <span class="text-danger"> <?php echo e($errors->first('dob')); ?></span>
-                                    </div>
-                                </div>
+                                        
 
-                                <div class="row">
-                                    <div class="col-md-4 form-group">
-                                        <div <?php if($errors->has('email')): ?> class ='has-error form-group' <?php endif; ?>>
-                                            <label for="email">Email :</label>
+                                
+                                            
 
-                                            <?php echo Form::email('email', $applicantsDetails->email, [
+                                            <?php echo Form::hidden('email', $applicantsDetails->email, [
                                                 'placeholder' => 'john@doe.com',
                                                 'class' => 'form-control',
                                                 'id' => 'email',
@@ -222,14 +238,10 @@
                                                 'readonly',
                                             ]); ?>
 
-                                            <span class="text-danger"> <?php echo e($errors->first('email')); ?></span>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-4 form-group">
-                                        <div <?php if($errors->has('nationality')): ?> class ='has-error form-group' <?php endif; ?>>
-                                            <label for="nationality">Nationality :</label>
+                                            
+                                    
 
-                                            <?php echo Form::text('nationality', $applicantsDetails->nationality, [
+                                            <?php echo Form::hidden('nationality', $applicantsDetails->nationality, [
                                                 'placeholder' => 'Nigeria',
                                                 'class' => 'form-control',
                                                 'id' => 'nationality',
@@ -238,14 +250,11 @@
                                                 'readonly',
                                             ]); ?>
 
-                                            <span class="text-danger"> <?php echo e($errors->first('nationality')); ?></span>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-4 form-group">
-                                        <div <?php if($errors->has('state')): ?> class ='has-error form-group' <?php endif; ?>>
-                                            <label for="state">State of Origin :</label>
+                                            
+                                    
+                                            
 
-                                            <?php echo Form::text('state', $applicantsDetails->state_origin, [
+                                            <?php echo Form::hidden('state', $applicantsDetails->state_origin, [
                                                 'placeholder' => 'Imo',
                                                 'class' => 'form-control',
                                                 'id' => 'state',
@@ -254,18 +263,13 @@
                                                 'readonly',
                                             ]); ?>
 
-                                            <span class="text-danger"> <?php echo e($errors->first('state')); ?></span>
-                                        </div>
-                                    </div>
-                                </div>
+                                            
 
 
-                                <div class="row">
-                                    <div class="col-md-4 form-group">
-                                        <div <?php if($errors->has('lga_name')): ?> class ='has-error form-group' <?php endif; ?>>
-                                            <label for="lga_name">LGA :</label>
+                                
+                                            
 
-                                            <?php echo Form::text('lga_name', $applicantsDetails->lga, [
+                                            <?php echo Form::hidden('lga_name', $applicantsDetails->lga, [
                                                 'placeholder' => 'Ahiazu-Mbaise',
                                                 'class' => 'form-control',
                                                 'id' => 'lga_name',
@@ -274,12 +278,10 @@
                                                 'readonly',
                                             ]); ?>
 
-                                            <span class="text-danger"> <?php echo e($errors->first('lga_name')); ?></span>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-4 form-group">
-                                        <label for="religion">Religion :</label>
-                                        <?php echo Form::text('religion', $applicantsDetails->religion, [
+                                            
+                                    
+                                        
+                                        <?php echo Form::hidden('religion', $applicantsDetails->religion, [
                                             'placeholder' => 'Cooking',
                                             'class' => 'form-control',
                                             'id' => 'religion',
@@ -287,13 +289,12 @@
                                             'readonly',
                                         ]); ?>
 
-                                    </div>
+                                    
 
-                                    <div class="col-md-4 form-group">
-                                        <div <?php if($errors->has('address')): ?> class ='has-error form-group' <?php endif; ?>>
+                                    
 
-                                            <label for="address">Address :</label>
-                                            <?php echo Form::text('address', $applicantsDetails->address, [
+                                            
+                                            <?php echo Form::hidden('address', $applicantsDetails->address, [
                                                 'placeholder' => '',
                                                 'rows' => '3',
                                                 'class' => 'form-control',
@@ -302,47 +303,35 @@
                                                 'readonly',
                                             ]); ?>
 
-                                            <span class="text-danger"> <?php echo e($errors->first('address')); ?></span>
-                                        </div>
-                                    </div>
+                                            
 
 
                                 </div>
 
-                                <div class="row">
+                                
                                     
-                                </div>
+                                
 
-                                <div class="row">
-                                </div>
+                                
 
-                                <div class="box-header">
-                                    <h3 class="box-title">&nbsp;</h3>
-                                </div>
+                                
 
 
-                                <div class="box-header">
-                                    <h3 class="box-title">Emergency Contact / Sponsor Information</h3>
-                                </div>
+                                
 
-                                <div class="row">
-                                    <div class="col-md-4 form-group">
-                                        <div <?php if($errors->has('etitle')): ?> class ='has-error form-group' <?php endif; ?>>
-                                            <label for="etitle">Title :</label>
-                                            <?php echo Form::text('etitle', null, [
+                                
+                                            
+                                            <?php echo Form::hidden('etitle', $applicantsDetails->sponsor_title, [
                                                 'placeholder' => '',
                                                 'class' => 'form-control',
                                                 'id' => 'etitle',
                                                 'required' => 'required',
                                             ]); ?>
 
-                                            <span class="text-danger"> <?php echo e($errors->first('etitle')); ?></span>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-4 form-group">
-                                        <div <?php if($errors->has('relationship')): ?> class ='has-error form-group' <?php endif; ?>>
-                                            <label for="relationship">Relationship with Contact / Sponsor :</label>
-                                            <?php echo Form::text('relationship', null, [
+                                            
+                                    
+                                            
+                                            <?php echo Form::hidden('relationship', $applicantsDetails->sponsor_relationship, [
                                                 'placeholder' => '',
                                                 'class' => 'form-control',
                                                 'id' => 'relationship',
@@ -350,44 +339,36 @@
                                             ]); ?>
 
                                             <span class="text-danger"> <?php echo e($errors->first('relationship')); ?></span>
-                                        </div>
-                                    </div>
-
-                                    <div class="col-md-4 form-group">
-                                        <div <?php if($errors->has('esurname')): ?> class ='has-error form-group' <?php endif; ?>>
-                                            <label for="esurname">Name :</label>
-                                            <?php echo Form::text('esurname', $applicantsDetails->name, [
+                                        
+                                            
+                                            <?php echo Form::hidden('esurname', $applicantsDetails->name, [
                                                 'placeholder' => '',
                                                 'class' => 'form-control',
                                                 'id' => 'esurname',
                                                 'required' => 'required',
                                             ]); ?>
 
-                                            <span class="text-danger"> <?php echo e($errors->first('esurname')); ?></span>
-                                        </div>
-                                    </div>
+                                            
 
 
                                     
 
 
-                                </div>
+                                
 
 
-                                <div class="row">
+                                
 
 
                                     
 
 
-                                </div>
+                                
 
-                                <div class="row">
-                                    <div class="col-md-6 form-group">
-                                        <div <?php if($errors->has('eemail')): ?> class ='has-error form-group' <?php endif; ?>>
-                                            <label for="eemail">Email :</label>
+                                
+                                            
 
-                                            <?php echo Form::email('eemail', $applicantsDetails->sponsors_email, [
+                                            <?php echo Form::hidden('eemail', $applicantsDetails->sponsors_email, [
                                                 'placeholder' => 'john@doe.com',
                                                 'class' => 'form-control',
                                                 'id' => 'eemail',
@@ -395,16 +376,13 @@
                                                 'readonly',
                                             ]); ?>
 
-                                            <span class="text-danger"> <?php echo e($errors->first('eemail')); ?></span>
-                                        </div>
-                                    </div>
+                                            
 
 
-                                    <div class="col-md-6 form-group">
-                                        <div <?php if($errors->has('ephone')): ?> class ='has-error form-group' <?php endif; ?>>
-                                            <label for="ephone">Phone :</label>
+                                    
+                                            
 
-                                            <?php echo Form::text('ephone', $applicantsDetails->sponsors_phone, [
+                                            <?php echo Form::hidden('ephone', $applicantsDetails->sponsors_phone, [
                                                 'placeholder' => '080xxxxx',
                                                 'class' => 'form-control',
                                                 'id' => 'ephone',
@@ -413,17 +391,12 @@
                                                 'readonly',
                                             ]); ?>
 
-                                            <span class="text-danger"> <?php echo e($errors->first('ephone')); ?></span>
-                                        </div>
-                                    </div>
-                                </div>
+                                            
 
-                                <div class="row">
-                                    <div class="col-md-12 form-group">
-                                        <div <?php if($errors->has('eaddress')): ?> class ='has-error form-group' <?php endif; ?>>
+                                
 
-                                            <label for="eaddress">Address :</label>
-                                            <?php echo Form::textarea('eaddress', $applicantsDetails->sponsors_address, [
+                                            
+                                            <?php echo Form::hidden('eaddress', $applicantsDetails->sponsors_address, [
                                                 'placeholder' => '',
                                                 'rows' => '4',
                                                 'class' => 'form-control',
@@ -432,20 +405,12 @@
                                                 'readonly',
                                             ]); ?>
 
-                                            <span class="text-danger"> <?php echo e($errors->first('eaddress')); ?></span>
-                                        </div>
-                                    </div>
+                                            
 
-                                </div>
-
-                                <div class="box-header">
-                                    <h3 class="box-title">&nbsp;</h3>
-                                </div>
+                                
 
 
-                                <div class="box-header">
-                                    <h3 class="box-title">Academic Information</h3>
-                                </div>
+                                
 
 
 
@@ -460,22 +425,20 @@
                                     ]); ?>
 
                                     
-                                    <div class="col-md-4 form-group">
-                                        <label for="mode_of_study">Mode of Study :</label>
-                                        <?php echo e(Form::select(
-                                            'mode_of_study',
-                                            [
-                                                'Full Time' => 'Full Time',
-                                                'Part Time' => 'Part Time',
-                                                'Sandwich' => 'Sandwich',
-                                                'Distance Learning' => 'Distance Learning',
-                                            ],
-                                            'Full Time',
-                                            ['class' => 'form-control select2'],
-                                        )); ?>
+                                    
+                                        
+                                        
+                                        <?php echo Form::hidden('mode_of_study', 'Full Time', [
+                                                'placeholder' => '',
+                                                'rows' => '4',
+                                                'class' => 'form-control',
+                                                'id' => 'eaddress',
+                                                'required' => 'required',
+                                                'readonly',
+                                            ]); ?>
 
 
-                                    </div>
+                                    
                                     <div class="col-md-4 form-group">
                                         <label for="level">Level :</label>
                                         <?php echo e(Form::select(
@@ -516,6 +479,13 @@
 
 
                                     </div>
+                                         <div class="col-md-4 form-group">
+                                        <label for="entry_session_id">Entry Session :</label>
+                                        <?php echo e(Form::select('entry_session_id', $sessions, null, ['class' => 'form-control', 'id' => 'entry_session_id', 'name' => 'entry_session_id', 'readonly'])); ?>
+
+                                        <span class="text-danger"> <?php echo e($errors->first('entry_session_id')); ?></span>
+
+                                    </div>
 
 
 
@@ -525,8 +495,8 @@
 
                                     <div class="col-md-4 form-group">
                                         <div <?php if($errors->has('jamb_no')): ?> class ='has-error form-group' <?php endif; ?>>
-                                            <label for="jamb_no">Jamb Number :</label>
-                                            <?php echo Form::text(
+                                            
+                                            <?php echo Form::hidden(
                                                 'jamb_no',
                                                 $applicantsDetails->jamb_reg_no ?? ($applicantsDetails->jamb_de_no ?? ($applicantDetails->matric_no ?? null)),
                                                 ['placeholder' => '', 'class' => 'form-control', 'id' => 'jamb_no', 'readonly'],
@@ -537,8 +507,8 @@
                                     </div>
                                     <div class="col-md-4 form-group">
                                         <div <?php if($errors->has('jamb_score')): ?> class ='has-error form-group' <?php endif; ?>>
-                                            <label for="jamb_score">Jamb Score :</label>
-                                            <?php echo Form::text(
+                                            
+                                            <?php echo Form::hidden(
                                                 'jamb_score',
                                                 $applicantsDetails->score ?? ($applicantsDetails->qualification_number ?? ($applicantsDetails->cgpa ?? null)),
                                                 ['placeholder' => '', 'class' => 'form-control', 'id' => 'jamb_score', 'readonly'],
@@ -549,13 +519,7 @@
                                     </div>
 
                                     
-                                    <div class="col-md-4 form-group">
-                                        <label for="entry_session_id">Entry Session :</label>
-                                        <?php echo e(Form::select('entry_session_id', $sessions, null, ['class' => 'form-control', 'id' => 'entry_session_id', 'name' => 'entry_session_id', 'readonly'])); ?>
 
-                                        <span class="text-danger"> <?php echo e($errors->first('entry_session_id')); ?></span>
-
-                                    </div>
                                 </div>
 
                                 <div class="box-header">
@@ -660,16 +624,18 @@
                                     </div>
 
                                 </div>
-                            </div>
-
-                            <div class="position-relative mt-5">
-                                <button type="button" class="btn btn-success mt-5 position-absolute bottom-0 end-0"
+                                 <div class="position-relative mt-5">
+                                <button type="button" class="btn btn-success "
                                     data-bs-toggle="modal"
                                     data-bs-target="#myModal"><?php echo e(__('Generate Matric Number')); ?></button>
                                 
                             </div>
 
+                            </div>
+
+
                         </div>
+
 
 
                         <div class="modal" id="myModal">
@@ -874,7 +840,7 @@ ele1.innerHTML = ele1.innerHTML +
     </script>
 
 
-    <?php echo $__env->make('layouts.footer', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
+
 <?php $__env->stopSection(); ?>
 
-<?php echo $__env->make('layouts.userapp', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH /Users/lifeofrence/Documents/laraproject/resources/views/admissions/students/admin/create.blade.php ENDPATH**/ ?>
+<?php echo $__env->make('layouts.adminsials', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH /Users/lifeofrence/Documents/laraproject/resources/views/admissions/students/admin/create.blade.php ENDPATH**/ ?>
