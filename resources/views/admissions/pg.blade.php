@@ -36,23 +36,21 @@ active
             <div class="card-body p-5">
                 <ul class="nav nav-tabs" id="myTab" role="tablist">
                     <li class="nav-item" role="presentation">
-                        <button class="nav-link{{ $pg->status == 0 ? ' active' : '' }} text-success fw-bold text-capitalize" id="home-tab" data-bs-toggle="tab" data-bs-target="#home-tab-pane" type="button" role="tab" aria-controls="home-tab-pane" aria-selected="{{ $pg->status  == 0 ? 'true' : 'false' }}">Bio
-                            Data</button>
+                        <button class="nav-link{{ $pg->status == 0 ? ' active' : '' }} text-success fw-bold text-capitalize" id="home-tab" type="button" role="tab" aria-controls="home-tab-pane" aria-selected="{{ $pg->status  == 0 ? 'true' : 'false' }}">Bio Data</button>
                     </li>
                     <li class="nav-item" role="presentation">
-                        <button class="nav-link{{ $pg->status  == 1 ? ' active' : '' }} text-success fw-bold text-capitalize" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile-tab-pane" type="button" role="tab" aria-controls="profile-tab-pane" aria-selected="{{ $pg->status  == 1 ? 'true' : 'false' }}">Sponsor Information</button>
+                        <button class="nav-link{{ $pg->status  == 1 ? ' active' : '' }} text-success fw-bold text-capitalize" id="profile-tab" type="button" role="tab" aria-controls="profile-tab-pane" aria-selected="{{ $pg->status  == 1 ? 'true' : 'false' }}">Sponsor Information</button>
                     </li>
                     <li class="nav-item" role="presentation">
-                        <button class="nav-link{{ $pg->status  == 2 ? ' active' : '' }} text-success fw-bold text-capitalize" id="profile2-tab" data-bs-toggle="tab" data-bs-target="#profile2-tab-pane" type="button" role="tab" aria-controls="profile2-tab-pane" aria-selected="{{ $pg->status  == 2 ? 'true' : 'false' }}">Post Graduate Information</button>
+                        <button class="nav-link{{ $pg->status  == 2 ? ' active' : '' }} text-success fw-bold text-capitalize" id="profile2-tab" type="button" role="tab" aria-controls="profile2-tab-pane" aria-selected="{{ $pg->status  == 2 ? 'true' : 'false' }}">Post Graduate Information</button>
                     </li>
                     <li class="nav-item" role="presentation">
-                        <button class="nav-link{{ $pg->status  == 3 ? ' active' : '' }} text-success fw-bold text-capitalize" id="profile3-tab" data-bs-toggle="tab" data-bs-target="#profile3-tab-pane" type="button" role="tab" aria-controls="profile3-tab-pane" aria-selected="{{ $pg->status  == 3 ? 'true' : 'false' }}">Upload Documents</button>
+                        <button class="nav-link{{ $pg->status  == 3 ? ' active' : '' }} text-success fw-bold text-capitalize" id="profile3-tab" type="button" role="tab" aria-controls="profile3-tab-pane" aria-selected="{{ $pg->status  == 3 ? 'true' : 'false' }}">Upload Documents</button>
                     </li>
                 </ul>
 
 
                 <div class="tab-content" id="myTabContent">
-
                     <div class="tab-pane fade{{ $pg->status == 0 ? ' show active' : '' }}" id="home-tab-pane" role="tabpanel" aria-labelledby="home-tab">
                         <form method="POST" action="/pgbiodata" enctype="multipart/form-data" class="p-3">
                             @csrf
@@ -1222,7 +1220,6 @@ active
                         </form>
                     </div>
 
-
                     <div class="tab-pane fade{{ $pg->status == 1 ? ' show active' : '' }}" id="profile-tab-pane" role="tabpanel" aria-labelledby="profile-tab">
                         <form method="POST" action="/pgssponsors" enctype="multipart/form-data" class="p-3">
                             @csrf
@@ -1464,20 +1461,15 @@ active
 @endsection
 
 @section('pagescript')
-<!-- External JavaScripts
-            ============================================= -->
-<script src="{{ asset('js/jquery.js') }}"></script>
-<!-- bootstrap datepicker -->
-<script src="{{ asset('dist/js/components/bootstrap-datepicker.js') }}"></script>
-<!-- Bootstrap File Upload Plugin -->
-<script src="{{ asset('dist/js/components/bs-filestyle.js') }}"></script>
-
+<!-- External JavaScripts  -->
 <script src="{{ asset('js/jquery.js') }}"></script>
 
 <!-- bootstrap datepicker -->
 <script src="{{ asset('dist/js/components/bootstrap-datepicker.js') }}"></script>
+
 <!-- Bootstrap File Upload Plugin -->
 <script src="{{ asset('dist/js/components/bs-filestyle.js') }}"></script>
+
 
 <script type="text/javascript">
     //Date picker
@@ -1489,7 +1481,6 @@ active
 
 <script type="text/javascript">
     $(document).on('ready', function() {
-
         $("#passport").fileinput({
             mainClass: "input-group-md",
             showUpload: false,
@@ -1503,13 +1494,11 @@ active
             allowedFileExtensions: ["jpg", "jpeg", "gif", "png"],
             elErrorContainer: "#errorBlock"
         });
-
     });
 </script>
 
 <script type="text/javascript">
     $(document).on('ready', function() {
-
         $("#jamb").fileinput({
             mainClass: "input-group-md",
             showUpload: false,
@@ -1522,19 +1511,12 @@ active
             removeIcon: "<i class=\"icon-trash\"></i> ",
             allowedFileExtensions: ["jpg", "jpeg", "gif", "png"],
             elErrorContainer: "#errorBlock"
-
-
-
         });
-
-
-
     });
 </script>
 
 <script type="text/javascript">
     $(document).on('ready', function() {
-
         $("#olevel1").fileinput({
             mainClass: "input-group-md",
             showUpload: false,
@@ -1547,19 +1529,12 @@ active
             removeIcon: "<i class=\"icon-trash\"></i> ",
             allowedFileExtensions: ["jpg", "jpeg", "gif", "png"],
             elErrorContainer: "#errorBlock"
-
-
-
         });
-
-
-
     });
 </script>
 
 <script type="text/javascript">
     $(document).on('ready', function() {
-
         $("#olevel2").fileinput({
             mainClass: "input-group-md",
             showUpload: false,
@@ -1572,13 +1547,7 @@ active
             removeIcon: "<i class=\"icon-trash\"></i> ",
             allowedFileExtensions: ["jpg", "jpeg", "gif", "png"],
             elErrorContainer: "#errorBlock"
-
-
-
         });
-
-
-
     });
 </script>
 @endsection
