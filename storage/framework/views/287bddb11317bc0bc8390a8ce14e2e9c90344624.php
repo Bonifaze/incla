@@ -557,21 +557,57 @@ unset($__errorArgs, $__bag); ?>
                             <div class="col"> <img class="mx-auto d-block" src="data:image/jpeg;base64,<?php echo e($applicantsDetails->olevel1); ?>" alt="Olevel" style="height: 300px; width:300px;" /></div>
                             <div class="col"> <img class=" mx-auto d-block" src="data:image/jpeg;base64,<?php echo e($applicantsDetails->olevel2); ?>" alt="" style="height: 300px; width:300px;" /></div>
                         </div>
+<div class="col-md-12 form-group">
+                                <label for="passport">Direct Entry Result :</label>
+                                <?php echo Form::file('passport', [
+                                'class' => 'form-control file-loading',
+                                'id' => 'jamb',
+                                'placeholder' => 'Choose profile pic',
+                                'name' => 'jamb',
+                                'accept' => 'image/*',
+                                'required' => 'required',
+                                ]); ?>
 
-                        <div class="form-group">
-                            <?php if(session('statusMsg')): ?>
-                            <?php echo session('statusMsg'); ?>
+                                <span class="text-danger"> <?php echo e($errors->first('passport')); ?></span>
+                            </div>
 
-                            <?php endif; ?>
-                            <label for="passport"><?php echo e(__('Edit jamb Result')); ?>
+                            <div class="col-md-12 form-group">
+                                <label for="passport">Olevel Result :</label>
+                                <?php echo Form::file('passport', [
+                                'class' => 'form-control file-loading',
+                                'id' => 'olevel1',
+                                'placeholder' => 'Choose profile pic',
+                                'name' => 'olevel1',
+                                'accept' => 'image/*',
+                                'required' => 'required',
+                                ]); ?>
 
-                            </label>
+                                <span class="text-danger"> <?php echo e($errors->first('passport')); ?></span>
+                            </div>
+
+                            <div class="col-md-12 form-group">
+                                <label for="passport"> Result <b class="text-danger">( if any)</b>:</label>
+                                <?php echo Form::file('passport', [
+                                'class' => 'form-control file-loading',
+                                'id' => 'olevel2',
+                                'placeholder' => 'Choose profile pic',
+                                'name' => 'olevel2',
+                                'accept' => 'image/*',
+                                ]); ?>
+
+                                <span class="text-danger"> <?php echo e($errors->first('passport')); ?></span>
+                            </div>
 
                             <div class="form-group">
-                                <input id="jamb" type="file" class="form-control" name="jamb">
+                                <div class="form-group">
+
+                                    
+                                    <button type="submit" class="btn btn-success mt-5">
+                                        <?php echo e(__('Save')); ?>
+
+                                    </button>
+                                </div>
                             </div>
-                        </div>
-                    </form>
                 </div>
             </div>
         </div>
@@ -587,5 +623,64 @@ unset($__errorArgs, $__bag); ?>
         });
     });
 </script>
+
+<script type="text/javascript">
+    $(document).on('ready', function() {
+
+        $("#jamb").fileinput({
+            mainClass: "input-group-md",
+            showUpload: false,
+            previewFileType: "image",
+            browseClass: "btn btn-success",
+            browseLabel: "Pick Image",
+            browseIcon: "<i class=\"fas fa-user\"></i>",
+            removeClass: "btn btn-danger",
+            removeLabel: "Delete",
+            removeIcon: "<i class=\"icon-trash\"></i> ",
+            allowedFileExtensions: ["jpg", "jpeg", "gif", "png"],
+            elErrorContainer: "#errorBlock"
+        });
+    });
+</script>
+
+<script type="text/javascript">
+    $(document).on('ready', function() {
+
+        $("#olevel1").fileinput({
+            mainClass: "input-group-md",
+            showUpload: false,
+            previewFileType: "image",
+            browseClass: "btn btn-success",
+            browseLabel: "Pick Image",
+            browseIcon: "<i class=\"fas fa-user\"></i>",
+            removeClass: "btn btn-danger",
+            removeLabel: "Delete",
+            removeIcon: "<i class=\"icon-trash\"></i> ",
+            allowedFileExtensions: ["jpg", "jpeg", "gif", "png"],
+            elErrorContainer: "#errorBlock"
+        });
+    });
+</script>
+
+<script type="text/javascript">
+    $(document).on('ready', function() {
+
+        $("#olevel2").fileinput({
+            mainClass: "input-group-md",
+            showUpload: false,
+            previewFileType: "image",
+            browseClass: "btn btn-success",
+            browseLabel: "Pick Image",
+            browseIcon: "<i class=\"fas fa-user\"></i>",
+            removeClass: "btn btn-danger",
+            removeLabel: "Delete",
+            removeIcon: "<i class=\"icon-trash\"></i> ",
+            allowedFileExtensions: ["jpg", "jpeg", "gif", "png"],
+            elErrorContainer: "#errorBlock"
+        });
+    });
+</script>
+
 <?php $__env->stopSection(); ?>
+
 <?php echo $__env->make('layouts.adminsials', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH /Users/lifeofrence/Documents/laraproject/resources/views/admissions//editDE.blade.php ENDPATH**/ ?>

@@ -543,25 +543,79 @@ active
                             <div class="col"> <img class="mx-auto d-block" src="data:image/jpeg;base64,{{ $applicantsDetails->olevel1 }}" alt="Olevel" style="height: 300px; width:300px;" /></div>
                             <div class="col"> <img class=" mx-auto d-block" src="data:image/jpeg;base64,{{ $applicantsDetails->olevel2 }}" alt="" style="height: 300px; width:300px;" /></div>
                         </div>
-
-                        <div class="form-group">
-                            @if (session('statusMsg'))
+<div class="col-md-12 form-group">
+ @if (session('statusMsg'))
                             {!! session('statusMsg') !!}
                             @endif
-                            <label for="passport">{{ __('Edit jamb Result') }}
-                            </label>
+                                <label for="passport">Direct Entry Result :</label>
+                                {!! Form::file('passport', [
+                                'class' => 'form-control file-loading',
+                                'id' => 'jamb',
+                                'placeholder' => 'Choose profile pic',
+                                'name' => 'jamb',
+                                'accept' => 'image/*',
+                                'required' => 'required',
+                                ]) !!}
+                                <span class="text-danger"> {{ $errors->first('passport') }}</span>
+                            </div>
+
+                            <div class="col-md-12 form-group">
+                                <label for="passport">Olevel Result :</label>
+                                {!! Form::file('passport', [
+                                'class' => 'form-control file-loading',
+                                'id' => 'olevel1',
+                                'placeholder' => 'Choose profile pic',
+                                'name' => 'olevel1',
+                                'accept' => 'image/*',
+                                'required' => 'required',
+                                ]) !!}
+                                <span class="text-danger"> {{ $errors->first('passport') }}</span>
+                            </div>
+
+                            <div class="col-md-12 form-group">
+                                <label for="passport"> Result <b class="text-danger">( if any)</b>:</label>
+                                {!! Form::file('passport', [
+                                'class' => 'form-control file-loading',
+                                'id' => 'olevel2',
+                                'placeholder' => 'Choose profile pic',
+                                'name' => 'olevel2',
+                                'accept' => 'image/*',
+                                ]) !!}
+                                <span class="text-danger"> {{ $errors->first('passport') }}</span>
+                            </div>
 
                             <div class="form-group">
-                                <input id="jamb" type="file" class="form-control" name="jamb">
+                                <div class="form-group">
+
+                                    {{-- @if (session('signUpMsg'))
+                                                    {!! session('signUpMsg') !!}
+                                                @endif --}}
+                                    <button type="submit" class="btn btn-success mt-5">
+                                        {{ __('Update') }}
+                                    </button>
+                                </div>
                             </div>
-                        </div>
-                    </form>
                 </div>
             </div>
         </div>
 
     </section>
 </div>
+@section('pagescript')
+<!-- External JavaScripts
+                ============================================= -->
+<script src="{{ asset('js/jquery.js') }}"></script>
+<!-- bootstrap datepicker -->
+<script src="{{ asset('dist/js/components/bootstrap-datepicker.js') }}"></script>
+<!-- Bootstrap File Upload Plugin -->
+<script src="{{ asset('dist/js/components/bs-filestyle.js') }}"></script>
+
+<script src="{{ asset('js/jquery.js') }}"></script>
+
+<!-- bootstrap datepicker -->
+<script src="{{ asset('dist/js/components/bootstrap-datepicker.js') }}"></script>
+<!-- Bootstrap File Upload Plugin -->
+<script src="{{ asset('dist/js/components/bs-filestyle.js') }}"></script>
 
 <script>
     $(document).ready(function() {
@@ -571,4 +625,82 @@ active
         });
     });
 </script>
+
+<script type="text/javascript">
+    $(document).on('ready', function() {
+
+        $("#passport").fileinput({
+            mainClass: "input-group-md",
+            showUpload: false,
+            previewFileType: "image",
+            browseClass: "btn btn-success",
+            browseLabel: "Pick Image",
+            browseIcon: "<i class=\"fas fa-user\"></i>",
+            removeClass: "btn btn-danger",
+            removeLabel: "Delete",
+            removeIcon: "<i class=\"icon-trash\"></i> ",
+            allowedFileExtensions: ["jpg", "jpeg", "gif", "png"],
+            elErrorContainer: "#errorBlock"
+        });
+
+    });
+</script>
+
+<script type="text/javascript">
+    $(document).on('ready', function() {
+
+        $("#jamb").fileinput({
+            mainClass: "input-group-md",
+            showUpload: false,
+            previewFileType: "image",
+            browseClass: "btn btn-success",
+            browseLabel: "Pick Image",
+            browseIcon: "<i class=\"fas fa-user\"></i>",
+            removeClass: "btn btn-danger",
+            removeLabel: "Delete",
+            removeIcon: "<i class=\"icon-trash\"></i> ",
+            allowedFileExtensions: ["jpg", "jpeg", "gif", "png"],
+            elErrorContainer: "#errorBlock"
+        });
+    });
+</script>
+
+<script type="text/javascript">
+    $(document).on('ready', function() {
+
+        $("#olevel1").fileinput({
+            mainClass: "input-group-md",
+            showUpload: false,
+            previewFileType: "image",
+            browseClass: "btn btn-success",
+            browseLabel: "Pick Image",
+            browseIcon: "<i class=\"fas fa-user\"></i>",
+            removeClass: "btn btn-danger",
+            removeLabel: "Delete",
+            removeIcon: "<i class=\"icon-trash\"></i> ",
+            allowedFileExtensions: ["jpg", "jpeg", "gif", "png"],
+            elErrorContainer: "#errorBlock"
+        });
+    });
+</script>
+
+<script type="text/javascript">
+    $(document).on('ready', function() {
+
+        $("#olevel2").fileinput({
+            mainClass: "input-group-md",
+            showUpload: false,
+            previewFileType: "image",
+            browseClass: "btn btn-success",
+            browseLabel: "Pick Image",
+            browseIcon: "<i class=\"fas fa-user\"></i>",
+            removeClass: "btn btn-danger",
+            removeLabel: "Delete",
+            removeIcon: "<i class=\"icon-trash\"></i> ",
+            allowedFileExtensions: ["jpg", "jpeg", "gif", "png"],
+            elErrorContainer: "#errorBlock"
+        });
+    });
+</script>
+
 @endsection

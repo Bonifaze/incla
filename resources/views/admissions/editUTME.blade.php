@@ -532,18 +532,54 @@ active
                             <div class="col"> <img class=" mx-auto d-block" src="data:image/jpeg;base64,{{ $applicantsDetails->olevel2 }}" alt="" style="height: 300px; width:300px;" /></div>
                         </div>
                         <div class="form-group">
-                            @if (session('statusMsg'))
-                            {!! session('statusMsg') !!}
-                            @endif
-                            <label for="passport">{{ __('Edit jamb Result') }}
-                            </label>
+
+                                @if (session('statusMsg'))
+                                {!! session('statusMsg') !!}
+                                @endif
+                                <label for="passport">{{ __('Jamb Result:') }}
+                                    {{-- <b class="text-danger"> (Picture format)</b>  --}}
+                                </label>
+
+                                <div class="form-group">
+                                    <input id="jamb" type="file" class="form-control" name="jamb">
+                                </div>
+                            </div>
+
+                            <div class="d-flex align-items-center mb-5">
+                                <input class="" type="checkbox" name="olevel_awaiting" value="Awaiting Result" id="flexCheckDefault">
+                                <label class="form-check-label text-bold px-2" for="flexCheckDefault">
+                                    Awaiting Result
+                                </label>
+                            </div>
+
 
                             <div class="form-group">
-                                <input id="jamb" type="file" class="form-control" name="jamb">
-                            </div>
-                        </div>
+                                <label>{{ __('Upload Olevel Result:') }}</label>
 
-                    </form>
+                                <div class="form-group">
+                                    <input id="olevel1" type="file" class="form-control" name="olevel1">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label>{{ __('Upload Additional Olevel Result - If any:') }}</label>
+                                <div class="form-group">
+                                    <input id="olevel2" type="file" class="form-control" name="olevel2">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="form-group">
+
+                                    {{-- @if (session('signUpMsg'))
+                                                                {!! session('signUpMsg') !!}
+                                                            @endif --}}
+                                    <button type="submit" class="btn btn-success">
+                                        {{ __('Update') }}
+                                    </button>
+                                </div>
+                            </div>
+
+
+         </form>
                 </div>
             </div>
         </div>
@@ -551,11 +587,107 @@ active
     </section>
 </div>
 
+@endsection
+
+@section('pagescript')
+<!-- External JavaScripts
+            ============================================= -->
+<script src="{{ asset('js/jquery.js') }}"></script>
+<!-- bootstrap datepicker -->
+<script src="{{ asset('dist/js/components/bootstrap-datepicker.js') }}"></script>
+<!-- Bootstrap File Upload Plugin -->
+<script src="{{ asset('dist/js/components/bs-filestyle.js') }}"></script>
+
+<script src="{{ asset('js/jquery.js') }}"></script>
+
+<!-- bootstrap datepicker -->
+<script src="{{ asset('dist/js/components/bootstrap-datepicker.js') }}"></script>
+<!-- Bootstrap File Upload Plugin -->
+<script src="{{ asset('dist/js/components/bs-filestyle.js') }}"></script>
+
+
 <script>
     $(document).ready(function() {
         $('#myTab a').on('click', function(e) {
             e.preventDefault();
             $(this).tab('show');
+        });
+    });
+</script>
+
+<script type="text/javascript">
+    $(document).on('ready', function() {
+
+        $("#passport").fileinput({
+            mainClass: "input-group-md",
+            showUpload: false,
+            previewFileType: "image",
+            browseClass: "btn btn-success",
+            browseLabel: "Pick Image",
+            browseIcon: "<i class=\"fas fa-user\"></i>",
+            removeClass: "btn btn-danger",
+            removeLabel: "Delete",
+            removeIcon: "<i class=\"icon-trash\"></i> ",
+            allowedFileExtensions: ["jpg", "jpeg", "gif", "png"],
+            elErrorContainer: "#errorBlock"
+        });
+
+    });
+</script>
+
+<script type="text/javascript">
+    $(document).on('ready', function() {
+
+        $("#jamb").fileinput({
+            mainClass: "input-group-md",
+            showUpload: false,
+            previewFileType: "image",
+            browseClass: "btn btn-success",
+            browseLabel: "Pick Image",
+            browseIcon: "<i class=\"fas fa-user\"></i>",
+            removeClass: "btn btn-danger",
+            removeLabel: "Delete",
+            removeIcon: "<i class=\"icon-trash\"></i> ",
+            allowedFileExtensions: ["jpg", "jpeg", "gif", "png"],
+            elErrorContainer: "#errorBlock"
+        });
+    });
+</script>
+
+<script type="text/javascript">
+    $(document).on('ready', function() {
+
+        $("#olevel1").fileinput({
+            mainClass: "input-group-md",
+            showUpload: false,
+            previewFileType: "image",
+            browseClass: "btn btn-success",
+            browseLabel: "Pick Image",
+            browseIcon: "<i class=\"fas fa-user\"></i>",
+            removeClass: "btn btn-danger",
+            removeLabel: "Delete",
+            removeIcon: "<i class=\"icon-trash\"></i> ",
+            allowedFileExtensions: ["jpg", "jpeg", "gif", "png"],
+            elErrorContainer: "#errorBlock"
+        });
+    });
+</script>
+
+<script type="text/javascript">
+    $(document).on('ready', function() {
+
+        $("#olevel2").fileinput({
+            mainClass: "input-group-md",
+            showUpload: false,
+            previewFileType: "image",
+            browseClass: "btn btn-success",
+            browseLabel: "Pick Image",
+            browseIcon: "<i class=\"fas fa-user\"></i>",
+            removeClass: "btn btn-danger",
+            removeLabel: "Delete",
+            removeIcon: "<i class=\"icon-trash\"></i> ",
+            allowedFileExtensions: ["jpg", "jpeg", "gif", "png"],
+            elErrorContainer: "#errorBlock"
         });
     });
 </script>

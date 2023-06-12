@@ -749,12 +749,134 @@ active
     </section>
 </div>
 
+@endsection
+
+@section('pagescript')
+<!-- External JavaScripts
+            ============================================= -->
+<script src="{{ asset('js/jquery.js') }}"></script>
+<!-- bootstrap datepicker -->
+<script src="{{ asset('dist/js/components/bootstrap-datepicker.js') }}"></script>
+<!-- Bootstrap File Upload Plugin -->
+<script src="{{ asset('dist/js/components/bs-filestyle.js') }}"></script>
+
+<script src="{{ asset('js/jquery.js') }}"></script>
+
+<!-- bootstrap datepicker -->
+<script src="{{ asset('dist/js/components/bootstrap-datepicker.js') }}"></script>
+<!-- Bootstrap File Upload Plugin -->
+<script src="{{ asset('dist/js/components/bs-filestyle.js') }}"></script>
+
+<script type="text/javascript">
+    //Date picker
+    $('#dob').datepicker({
+        format: 'yyyy-mm-dd',
+        autoclose: true
+    })
+</script>
+
 <script>
     $(document).ready(function() {
         $('#myTab a').on('click', function(e) {
             e.preventDefault();
             $(this).tab('show');
         });
+    });
+</script>
+
+
+<script type="text/javascript">
+    $(document).on('ready', function() {
+
+        $("#passport").fileinput({
+            mainClass: "input-group-md",
+            showUpload: false,
+            previewFileType: "image",
+            browseClass: "btn btn-success",
+            browseLabel: "Pick Image",
+            browseIcon: "<i class=\"fas fa-user\"></i>",
+            removeClass: "btn btn-danger",
+            removeLabel: "Delete",
+            removeIcon: "<i class=\"icon-trash\"></i> ",
+            allowedFileExtensions: ["jpg", "jpeg", "gif", "png"],
+            elErrorContainer: "#errorBlock"
+        });
+
+    });
+</script>
+
+<script type="text/javascript">
+    $(document).on('ready', function() {
+
+        $("#jamb").fileinput({
+            mainClass: "input-group-md",
+            showUpload: false,
+            previewFileType: "image",
+            browseClass: "btn btn-success",
+            browseLabel: "Pick Image",
+            browseIcon: "<i class=\"fas fa-user\"></i>",
+            removeClass: "btn btn-danger",
+            removeLabel: "Delete",
+            removeIcon: "<i class=\"icon-trash\"></i> ",
+            allowedFileExtensions: ["jpg", "jpeg", "gif", "png"],
+            elErrorContainer: "#errorBlock"
+
+
+
+        });
+
+
+
+    });
+</script>
+
+<script type="text/javascript">
+    $(document).on('ready', function() {
+
+        $("#olevel1").fileinput({
+            mainClass: "input-group-md",
+            showUpload: false,
+            previewFileType: "image",
+            browseClass: "btn btn-success",
+            browseLabel: "Pick Image",
+            browseIcon: "<i class=\"fas fa-user\"></i>",
+            removeClass: "btn btn-danger",
+            removeLabel: "Delete",
+            removeIcon: "<i class=\"icon-trash\"></i> ",
+            allowedFileExtensions: ["jpg", "jpeg", "gif", "png"],
+            elErrorContainer: "#errorBlock"
+
+
+
+        });
+
+
+
+    });
+</script>
+
+<script type="text/javascript">
+    $(document).on('ready', function() {
+
+        $("#olevel2").fileinput({
+            mainClass: "input-group-md",
+            showUpload: false,
+            previewFileType: "image",
+            browseClass: "btn btn-success",
+            browseLabel: "Pick Image",
+            browseIcon: "<i class=\"fas fa-user\"></i>",
+            removeClass: "btn btn-danger",
+            removeLabel: "Delete",
+            removeIcon: "<i class=\"icon-trash\"></i> ",
+            allowedFileExtensions: ["jpg", "jpeg", "gif", "png"],
+            elErrorContainer: "#errorBlock"
+
+
+
+        });
+
+
+
     });
 </script>
 @endsection
