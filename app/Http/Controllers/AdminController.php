@@ -2417,7 +2417,7 @@ public function viewaddRemitasServiceType(){
     ->where('program_courses.semester', $this->getCurrentSemester())
     ->select('staff_courses.*', 'courses.course_title', 'courses.course_code', 'program_courses.semester')
     ->orderBy('courses.course_code', 'ASC')
-    ->get();
+    ->paginate(200);
 
         return view('results.courseassigned', ['staff_courses' => $staff_courses]);
 

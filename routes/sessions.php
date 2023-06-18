@@ -33,3 +33,19 @@ Route::patch('/openAdmissionType', 'SessionsController@openAdmissionType')->name
 Route::patch('/closeAdmissionType', 'SessionsController@closeAdmissionType')->name('closeAdmissionType');
 
 Route::patch('/courseReg/setCourseReg', 'SessionsController@setCourseReg')->name('session.setcourseReg');
+
+//THIS PART IS FOR BURSARY SESSION
+
+
+Route::get('/Bursarysessions/create', 'SessionsController@createBursary')->name('session.createBursary');
+
+Route::get('/Bursarysessions/list', 'SessionsController@indexBursary')->name('session.listBursary');
+
+Route::post('/Bursarysessions/store', 'SessionsController@storeBursary')->name('session.storeBursary');
+
+Route::get('/Bursarysessions/edit/{id}', 'SessionsController@editBursary')->name('session.editBursary');
+
+Route::patch('/Bursarysessions/edit/{id}', 'SessionsController@updateBursary')->name('session.updateBursary');
+
+Route::patch('/Bursarysessions/set-current', 'SessionsController@setCurrentBursary')->name('session.set_currentBursary');
+

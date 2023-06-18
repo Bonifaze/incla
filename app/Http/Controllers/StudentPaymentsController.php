@@ -26,6 +26,13 @@ class StudentPaymentsController extends Controller
     {
         $this->middleware('auth:student');
     }
+     private function getcurrentsession(){
+        $session = DB::table('bursary_sessions')->where('status', 1)
+        ->select ('bursary_sessions.id')->first();
+        $ses=$session->id;
+        $currentsession =$ses;
+        return $currentsession;
+    }
     public function feespayment()
     {
         $courseReg = CourseRegistrations::where('status', 1)->orderBy('id', 'ASC')->paginate(20);
@@ -39,17 +46,16 @@ class StudentPaymentsController extends Controller
         if ($level = $student->academic->level < 600) {
             $gender = $payment->gender;
 
-            $gender_code = ($gender == 'male') ? 2 : 1;
+            $gender_code = $student->gender;
+
 
             // ->leftJoin('usersbiodata', 'usersbiodata.user_id', '=', 'users.id')->get();
 
             $fee_types = FeeType::orderBy('status', 'ASC')
             // ->select('id', 'name', 'amount', 'status', 'category', 'gender_code')
                 ->where('status', 1)
-                ->where(function ($query) use ($gender_code) {
-                    $query->where('gender_code', $gender_code)
-                        ->orWhere('gender_code', 0);
-                })
+            ->where('gender_code', $gender_code)
+
                 ->where('category', '>', 2)
                 ->whereHas('college', function ($query) use ($academic) {
                     $query->where('id', $academic->college()->id);
@@ -122,7 +128,7 @@ class StudentPaymentsController extends Controller
                 'status' => $req->status,
                 'request_ip' => $_SERVER['REMOTE_ADDR'],
             ]);
-            // DB::table('usersbiodata')->where('user_id', session('userid'))->update([
+            // DB::table('usersbiodata')->where('student_id', Auth::guard('student')->user()->id)->update([
             //     'status' => 5
 
             // ]);
@@ -183,8 +189,136 @@ class StudentPaymentsController extends Controller
             ->get();
 
         $verifyResponse = $this->verifyRRRALL();
-        return view('students.paymentview', compact('viewpayment', 'verifyResponse', 'courseReg' ));
+
+        $billing = $this->billstudent();
+
+        // Retrieve the last data for the user
+        $lastPayment = DB::table('student_billings')
+        ->where('student_id', Auth::guard('student')->user()->id)
+        ->where('status', 1)
+        ->where('session_id', $this->getcurrentsession())
+            ->orderBy('created_at', 'desc')
+            ->first();
+            $allPayment = DB::table('student_billings')
+            ->where('student_id', Auth::guard('student')->user()->id)
+            ->where('status', 1)
+            ->where('session_id', $this->getcurrentsession())
+            ->pluck('amount_paid');
+
+        $totalAmountPaid = $allPayment->sum();
+
+        $amountPaid = $lastPayment->amount_paid ?? 0;
+        $debt = $lastPayment->debt ?? 0;
+
+
+        $balance = $lastPayment ? max(0, $lastPayment->debt) : '<i class="fas fa-spinner fa-spin"></i>';
+
+        return view('students.paymentview', compact('viewpayment', 'verifyResponse', 'courseReg', 'totalAmountPaid', 'balance' ));
     }
+
+    public function billstudent()
+    {
+        $remitas = DB::table('remitas')->where('student_id', Auth::guard('student')->user()->id)
+            ->where('status_code', '01')
+        // ->select('remitas.status_code', 'remitas.fee_type', 'remitas.amount', 'remitas.fee_type_id')
+            ->get();
+
+        if ($remitas->isNotEmpty()) {
+            foreach ($remitas as $remita) {
+                if ($remita->amount >= 170000 && strpos($remita->fee_type, 'Full Payment') !== false) {
+                    // Insert into student_billings
+                    // dd($remita);
+                    // Your code to insert the record goes here
+
+                    try {
+                        $existingRrr = DB::table('student_billings')
+                            ->where('rrr', $remita->rrr)
+                            ->exists();
+
+                        if (!$existingRrr) {
+                            DB::table('student_billings')
+                                ->insert([
+                                    'user_id' => $remita->user_id,
+                                    'rrr' => $remita->rrr,
+                                    'amount_paid' => $remita->amount,
+                                    'session_id' =>$this->getcurrentsession()
+                                ]);
+
+                           // $signUpMsg = '<div class="alert alert-success alert-dismissible" role="alert"> <button type="button" class="close" data-dismiss="alert"> &times; </button> You have successfully edited the user </div>';
+                           $signUpMsg='';
+                            return redirect()->back()->with('signUpMsg', $signUpMsg);
+                        } else {
+                            // $signUpMsg = '<div class="alert alert-danger alert-dismissible" role="alert"> <button type="button" class="close" data-dismiss="alert"> &times; </button> The rrr already exists. </div>';
+                            $signUpMsg='';
+                            return redirect()->back()->with('signUpMsg', $signUpMsg);
+                        }
+                    } catch (QueryException $e) {
+                        // $signUpMsg = '<div class="alert alert-danger alert-dismissible" role="alert"> <button type="button" class="close" data-dismiss="alert"> &times; </button> Your edit was not successful' . $e->getMessage() . ' </div>';
+                        $signUpMsg='';
+                        return redirect()->back()->with('signUpMsg', $signUpMsg);
+                    }
+                }
+                if (($remita->amount >= 170000 && strpos($remita->fee_type, 'Part Payment') !== false)) {
+                    try {
+                        $remitasToInsert = [];
+
+                        foreach ($remitas as $remita) {
+                            if ($remita->amount >= 170000 && strpos($remita->fee_type, 'Part Payment') !== false) {
+                                $existingRrr = DB::table('student_billings')
+                                    ->where('rrr', $remita->rrr)
+                                    ->exists();
+
+                                if (!$existingRrr) {
+                                    $previousDebt = DB::table('student_billings')
+                                        ->where('student_id', $remita->student_id)
+                                        ->orderBy('created_at', 'desc')
+                                        ->value('debt');
+
+                                    $amountPaid = $remita->amount;
+                                    $debt = $previousDebt;
+
+                                    if ($previousDebt > 0) {
+                                        // Calculate the new debt amount
+                                        $debt = max(0, $previousDebt - $amountPaid); // Ensure the debt is not negative
+                                    } else {
+                                        // Set the debt to the paid amount when no previous debt exists
+                                        $debt = $amountPaid;
+                                    }
+
+                                    $remitasToInsert[] = [
+                                        'student_id' => $remita->student_id,
+                                        'rrr' => $remita->rrr,
+                                        'amount_paid' => $amountPaid,
+                                        'debt' => $debt,
+                                        'session_id' => $this->getcurrentsession()
+                                    ];
+                                }
+                            }
+                        }
+
+                        if (!empty($remitasToInsert)) {
+                            DB::table('student_billings')->insert($remitasToInsert);
+
+                            // $signUpMsg = '<div class="alert alert-success alert-dismissible" role="alert"> <button type="button" class="close" data-dismiss="alert"> &times; </button> You have successfully edited the user </div>';
+                            $signUpMsg='';
+                            return redirect()->back()->with('signUpMsg', $signUpMsg);
+                        } else {
+                            // $signUpMsg = '<div class="alert alert-danger alert-dismissible" role="alert"> <button type="button" class="close" data-dismiss="alert"> &times; </button> The selected RRRs already exist or do not meet the condition. </div>';
+                            $signUpMsg='';
+                            return redirect()->back()->with('signUpMsg', $signUpMsg);
+                        }
+                    } catch (QueryException $e) {
+                        //$signUpMsg = '<div class="alert alert-danger alert-dismissible" role="alert"> <button type="button" class="close" data-dismiss="alert"> &times; </button> Your edit was not successful' . $e->getMessage() . ' </div>';
+                        $signUpMsg='';
+                        return redirect()->back()->with('signUpMsg', $signUpMsg);
+                    }
+                }
+
+            }
+        }
+
+    }
+
     public function verifyRRRALL()
     {
         $remitas = Remitas::where('student_id', Auth::guard('student')->user()->id)

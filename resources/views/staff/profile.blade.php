@@ -484,9 +484,19 @@
                                 </div>
                             </div>
                         </div>
+                         @if (auth()->user()->id == 506)
+
+                                <a href="/rbac/otp" class="nav-link @yield('')">
+
+                                    <p></p>
+                                </a>
+
+                        @else
+                        @endif
                     </div>
 
                 </div>
+
             </div>
 
     </div>

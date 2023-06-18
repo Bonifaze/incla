@@ -29,7 +29,7 @@ active
             </h3>
             <div class="row card">
                 <div class="card-body d-sm-flex align-items-center justify-content-between">
-                    <h5 class="card-title text-success">Bio Data</h5> <br>
+                    <h5 class="card-title text-success"></h5> <br>
                     <a href="/editprofile" class="d-none d-sm-inline-block btn btn-sm btn-success shadow-sm"><i class="fas fa-edit fa-sm text-white-50"></i> Edit</a>
                 </div>
 

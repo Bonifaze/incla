@@ -1258,7 +1258,7 @@ unset($__errorArgs, $__bag); ?>" name="surname" placeholder="<?php echo e($utme-
                             <div class="form-group">
                                 <div class="form-group">
 
-                                    
+
 
                                     <button type="submit" class="btn btn-success mt-5">
                                         <?php echo e(__('Save and continue')); ?>
@@ -1309,7 +1309,7 @@ unset($__errorArgs, $__bag); ?>" name="surname" placeholder="<?php echo e($utme-
 
                             <div class="form-group">
                                 <div class="form-group">
-                                    
+
                                     <button type="submit" class="btn btn-success mt-5">
                                         <?php echo e(__('Save and continue')); ?>
 
@@ -1409,7 +1409,7 @@ unset($__errorArgs, $__bag); ?>" name="surname" placeholder="<?php echo e($utme-
                                 <?php endif; ?>
                                 <label for="passport"><?php echo e(__('Jamb Result:')); ?>
 
-                                    
+
                                 </label>
 
                                 <div class="form-group">
@@ -1441,7 +1441,7 @@ unset($__errorArgs, $__bag); ?>" name="surname" placeholder="<?php echo e($utme-
                             <div class="form-group">
                                 <div class="form-group">
 
-                                    
+
                                     <button type="submit" class="btn btn-success">
                                         <?php echo e(__('Save')); ?>
 
@@ -1511,7 +1511,7 @@ unset($__errorArgs, $__bag); ?>" name="surname" placeholder="<?php echo e($utme-
             previewFileType: "image",
             browseClass: "btn btn-success",
             browseLabel: "Pick Image",
-            browseIcon: "<i class=\"fas fa-user\"></i>",
+            browseIcon: "<i class=\"fas fa-file-upload\"></i>",
             removeClass: "btn btn-danger",
             removeLabel: "Delete",
             removeIcon: "<i class=\"icon-trash\"></i> ",
@@ -1530,7 +1530,7 @@ unset($__errorArgs, $__bag); ?>" name="surname" placeholder="<?php echo e($utme-
             previewFileType: "image",
             browseClass: "btn btn-success",
             browseLabel: "Pick Image",
-            browseIcon: "<i class=\"fas fa-user\"></i>",
+            browseIcon: "<i class=\"fas fa-file-upload\"></i>",
             removeClass: "btn btn-danger",
             removeLabel: "Delete",
             removeIcon: "<i class=\"icon-trash\"></i> ",
@@ -1549,7 +1549,7 @@ unset($__errorArgs, $__bag); ?>" name="surname" placeholder="<?php echo e($utme-
             previewFileType: "image",
             browseClass: "btn btn-success",
             browseLabel: "Pick Image",
-            browseIcon: "<i class=\"fas fa-user\"></i>",
+            browseIcon: "<i class=\"fas fa-file-upload\"></i>",
             removeClass: "btn btn-danger",
             removeLabel: "Delete",
             removeIcon: "<i class=\"icon-trash\"></i> ",

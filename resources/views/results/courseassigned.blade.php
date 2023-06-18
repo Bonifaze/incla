@@ -120,7 +120,7 @@
                         </div>
                     </div>
                 </div>
-
+{!! $staff_courses->render() !!}
                     </div>
                 </div>
 

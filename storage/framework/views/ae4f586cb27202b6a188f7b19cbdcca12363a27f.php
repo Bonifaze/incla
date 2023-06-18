@@ -30,7 +30,7 @@ active
         <div class="card p-5 shadow">
             <ul class="nav nav-tabs" id="myTab" role="tablist">
                 <li class="nav-item" role="presentation">
-                    <button class="nav-link active text-success fw-bold text-capitalize" id="home-tab" data-bs-toggle="tab" data-bs-target="#home-tab-pane" type="button" role="tab" aria-controls="home-tab-pane" aria-selected="true">Bio Data</button>
+                    <button class="nav-link active text-success fw-bold text-capitalize" id="home-tab" data-bs-toggle="tab" data-bs-target="#home-tab-pane" type="button" role="tab" aria-controls="home-tab-pane" aria-selected="true">Biodata</button>
                 </li>
                 <li class="nav-item" role="presentation">
                     <button class="nav-link text-success fw-bold text-capitalize" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile-tab-pane" type="button" role="tab" aria-controls="profile-tab-pane" aria-selected="false">Sponsor Information</button>
@@ -408,7 +408,7 @@ active
                 </div>
 
                 <div class="tab-pane fade" id="profile-tab-pane" role="tabpanel" aria-labelledby="profile-tab">
-                    
+
                     <form method="POST" action="/editsponsers" class="p-3">
                         <?php echo csrf_field(); ?>
                         <div class="form-group">
@@ -557,7 +557,7 @@ unset($__errorArgs, $__bag); ?>
                                 <?php endif; ?>
                                 <label for="passport"><?php echo e(__('Jamb Result:')); ?>
 
-                                    
+
                                 </label>
 
                                 <div class="form-group">
@@ -589,7 +589,7 @@ unset($__errorArgs, $__bag); ?>
                             <div class="form-group">
                                 <div class="form-group">
 
-                                    
+
                                     <button type="submit" class="btn btn-success">
                                         <?php echo e(__('Update')); ?>
 
@@ -663,7 +663,7 @@ unset($__errorArgs, $__bag); ?>
             previewFileType: "image",
             browseClass: "btn btn-success",
             browseLabel: "Pick Image",
-            browseIcon: "<i class=\"fas fa-user\"></i>",
+            browseIcon: "<i class=\"fas fa-file-upload\"></i>",
             removeClass: "btn btn-danger",
             removeLabel: "Delete",
             removeIcon: "<i class=\"icon-trash\"></i> ",
@@ -682,7 +682,7 @@ unset($__errorArgs, $__bag); ?>
             previewFileType: "image",
             browseClass: "btn btn-success",
             browseLabel: "Pick Image",
-            browseIcon: "<i class=\"fas fa-user\"></i>",
+            browseIcon: "<i class=\"fas fa-file-upload\"></i>",
             removeClass: "btn btn-danger",
             removeLabel: "Delete",
             removeIcon: "<i class=\"icon-trash\"></i> ",
@@ -701,7 +701,7 @@ unset($__errorArgs, $__bag); ?>
             previewFileType: "image",
             browseClass: "btn btn-success",
             browseLabel: "Pick Image",
-            browseIcon: "<i class=\"fas fa-user\"></i>",
+            browseIcon: "<i class=\"fas fa-file-upload\"></i>",
             removeClass: "btn btn-danger",
             removeLabel: "Delete",
             removeIcon: "<i class=\"icon-trash\"></i> ",

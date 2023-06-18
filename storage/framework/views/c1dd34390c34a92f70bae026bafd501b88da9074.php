@@ -63,7 +63,7 @@
                                 <p>Change Password</p>
                             </a>
                         </li>
-                        
+
                     </ul>
                 </li>
 
@@ -593,6 +593,19 @@
                                 <p>Show Remita Fee Type</p>
                             </a>
                         </li>
+                        <li class="nav-item has-treeview <?php echo $__env->yieldContent('bursary-open'); ?>">
+                    <a href="#" class="nav-link <?php echo $__env->yieldContent('bursary'); ?>">
+                        <i class="nav-icon far fa-calendar-alt"></i>
+                        <p>
+                            Session
+                            <i class="right fas fa-angle-right"></i>
+                        </p>
+                    </a>
+                    <ul class="nav nav-treeview">
+
+                     <li class="nav-item" ><a href="<?php echo e(route('session.createBursary')); ?>" class="nav-link <?php echo $__env->yieldContent('remita-list3'); ?>"> <i class="fa fa-plus nav-icon"></i>Create Sessions</a></li>
+                    <li class="nav-item" ><a href="<?php echo e(route('session.listBursary')); ?>" class="nav-link <?php echo $__env->yieldContent('remita-list3'); ?>"> <i class="fa fa-eye nav-icon"></i>List Sessions</a></li>
+                    </ul>
                         
 
                     </ul>

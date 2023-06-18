@@ -37,7 +37,7 @@ active
             <div class="card-body p-5">
                 <ul class="nav nav-tabs" id="myTab" role="tablist">
                     <li class="nav-item" role="presentation">
-                        <button class="nav-link<?php echo e($pg->status == 0 ? ' active' : ''); ?> text-success fw-bold text-capitalize" id="home-tab" type="button" role="tab" aria-controls="home-tab-pane" aria-selected="<?php echo e($pg->status  == 0 ? 'true' : 'false'); ?>">Bio Data</button>
+                        <button class="nav-link<?php echo e($pg->status == 0 ? ' active' : ''); ?> text-success fw-bold text-capitalize" id="home-tab" type="button" role="tab" aria-controls="home-tab-pane" aria-selected="<?php echo e($pg->status  == 0 ? 'true' : 'false'); ?>">Biodata</button>
                     </li>
                     <li class="nav-item" role="presentation">
                         <button class="nav-link<?php echo e($pg->status  == 1 ? ' active' : ''); ?> text-success fw-bold text-capitalize" id="profile-tab" type="button" role="tab" aria-controls="profile-tab-pane" aria-selected="<?php echo e($pg->status  == 1 ? 'true' : 'false'); ?>">Sponsor Information</button>
@@ -1279,7 +1279,7 @@ unset($__errorArgs, $__bag); ?>" name="surname" placeholder="<?php echo e($pg->s
                             <div class="form-group">
                                 <label for="refferal"><?php echo e(__('PROGRAM:')); ?> </label>
                                 <select class="form-control" name="mode">
-                                    
+
                                     <option value="PGD">PGD</option>
                                     <option value="MBA">MBA</option>
                                     <option value="M.Sc">M.Sc</option>
@@ -1337,7 +1337,7 @@ unset($__errorArgs, $__bag); ?>" name="surname" placeholder="<?php echo e($pg->s
                                 <label for="refferal"><?php echo e(__('Certificate Obtained:')); ?> </label>
                                 <div class="form-group">
                                     <select class="form-control" name="certificate_type">
-                                        
+
                                         <option value="Degree">Degree</option>
                                         <option value="PGD">PGD</option>
                                         <option value="M.Sc">M.Sc</option>
@@ -1363,7 +1363,7 @@ unset($__errorArgs, $__bag); ?>" name="surname" placeholder="<?php echo e($pg->s
                                 REFEREES
                             </h3>
                             <h6 class="h6 text-warning text-center fw-small pt-2"> Provide three (3) referees, two (2) must be your former lecturers. </h6>
-                            
+
                             <br>
                             <br>
 
@@ -1380,7 +1380,7 @@ unset($__errorArgs, $__bag); ?>" name="surname" placeholder="<?php echo e($pg->s
                             <div class="form-group">
                                 <input id="subject_3" type="text" name="email1" class="form-control" required placeholder="Email Address" autofocus>
                             </div>
-                            
+
 
                             <br>
                             <label for="refferal"><?php echo e(__('Second Refree:')); ?> </label>
@@ -1393,7 +1393,7 @@ unset($__errorArgs, $__bag); ?>" name="surname" placeholder="<?php echo e($pg->s
                             <div class="form-group">
                                 <input id="subject_3" type="text" name="email2" class="form-control" required placeholder="Email Address" autofocus>
                             </div>
-                            
+
 
                             <br>
                             <label for="refferal"><?php echo e(__('Third Refree:')); ?> </label>
@@ -1412,7 +1412,7 @@ unset($__errorArgs, $__bag); ?>" name="surname" placeholder="<?php echo e($pg->s
 
                             <div class="form-group">
 
-                                
+
                                 <button type="submit" class="btn btn-success mt-5">
                                     <?php echo e(__('Save and continue')); ?>
 
@@ -1459,7 +1459,7 @@ unset($__errorArgs, $__bag); ?>" name="surname" placeholder="<?php echo e($pg->s
                             <div class="form-group">
                                 <div class="form-group">
 
-                                    
+
                                     <button type="submit" class="btn btn-success mt-5">
                                         <?php echo e(__('Save')); ?>
 

@@ -38,7 +38,7 @@
                     <div class="card">
                         <h1
                             class="app-page-title text-uppercase h5 font-weight-bold p-2 mb-2 shadow-sm text-center text-success border">
-                            Show Student Information
+                         Student Information
                         </h1>
 
 
@@ -49,17 +49,17 @@
                                         <div class="col mr-2">
                                             <div class="h4 text-success";>
                                                 <ul>
-                                                    <li>Matric Number: <span class="text-black">
+                                                    <li>Matric Number: <span class="text-dark font-weight-bold">
                                                             <?php echo e($academic->mat_no); ?></span> </li>
-                                                    <li>Username: <span class="text-black"> <?php echo e($student->username); ?>
+                                                    <li>Username: <span class="text-primary font-weight-bold font-italic"> <?php echo e($student->username); ?>
 
                                                         </span></li>
-                                                    <li>Password: <span class="text-black">welcome </span></li>
+                                                    <li>Password: <span class="text-dark font-weight-bold">welcome </span></li>
 
                                                 </ul>
                                             </div>
                                         </div>
-                                        <div class="">
+                                        <div class="mt-4">
                                             <form class="form-horizontal" method="POST"
                                                 action="<?php echo e(route('student.login.submit')); ?>">
                                                 <?php echo csrf_field(); ?>
@@ -82,7 +82,7 @@
                                                     style="appearance:none; -webkit-appearance:none; -moz-appearance: none; width: 18px; height: 18px; border-radius: 50p% boder:2px solid green; outline:none;"
                                                     name="check" checked>
 
-                                                <button type="submit" class="btn btn-success">
+                                                <button type="submit" class="shadow-sm btn btn-success shadow-lg p-3 mb-5 bg rounded font-weight-bold "><i class="fas fa-solid fa-door-open"></i>
                                                     <?php echo e(__('Login Student Portal')); ?></button>
 
                                             </form>
@@ -99,7 +99,7 @@
                                         <div class="app-card-header p-3 border-bottom-0">
                                             <div class="row align-items-center gx-3">
                                                 <div class="col-auto">
-                                                    <h4 class="app-card-title">Bio Data</h4>
+                                                    
                                                 </div>
                                             </div>
                                         </div>
@@ -115,7 +115,7 @@
                                                             <img class="rounded-circle p-3 mx-auto d-block"
                                                                 src="data:image/jpg;base64,<?php echo e($student->passport); ?>"
                                                                 alt="Student Passport"
-                                                                style="height: 220px; width:220px;" />
+                                                                style="height: 250px; width:225px;" />
                                                         </div>
                                                     </div>
                                                     <div class="col-auto">
@@ -126,7 +126,7 @@
                                                             <img class="rounded-circle p-3 mx-auto d-block"
                                                                 src="data:image/jpg;base64,<?php echo e($student->signature); ?>"
                                                                 alt="Student signature"
-                                                                style="height: 220px; width:220px;" />
+                                                                style="height: 250px; width:225px;" />
                                                         </div>
                                                     </div>
                                                 </div>
@@ -286,318 +286,7 @@
                                 </div>
 
 
-                                <div class="row gy-4 mb-4 mt-1">
-
-                                    <div class="col mt-3">
-                                        <div class="app-card app-card-account shadow d-flex flex-column align-items-start">
-                                            <div class="app-card-header p-3 border-bottom-0">
-                                                <div class="row align-items-center px-3">
-                                                    <div class="col-auto">
-                                                        <h4 class="app-card-title">Sponsor Details</h4>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="app-card-body px-4 w-100">
-                                                <div class="item border-bottom py-3">
-                                                    <div class="row justify-content-between align-items-center">
-                                                        <div class="col-auto">
-                                                            <div class="item-label">
-                                                                <strong>Title</strong>
-                                                            </div>
-                                                            <div class="item-data">
-                                                                <?php echo e($contact->title); ?>
-
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="app-card-body px-4 w-100">
-                                                <div class="item border-bottom py-3">
-                                                    <div class="row justify-content-between align-items-center">
-                                                        <div class="col-auto">
-                                                            <div class="item-label">
-                                                                <strong>Surname</strong>
-                                                            </div>
-                                                            <div class="item-data">
-                                                                <?php echo e($contact->surname); ?>
-
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="app-card-body px-4 w-100">
-                                                <div class="item border-bottom py-3">
-                                                    <div class="row justify-content-between align-items-center">
-                                                        <div class="col-auto">
-                                                            <div class="item-label">
-                                                                <strong>Surname</strong>
-                                                            </div>
-                                                            <div class="item-data">
-                                                                <?php echo e($contact->other_names); ?>
-
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="app-card-body px-4 w-100">
-                                                <div class="item border-bottom py-3">
-                                                    <div class="row justify-content-between align-items-center">
-                                                        <div class="col-auto">
-                                                            <div class="item-label">
-                                                                <strong>Email </strong>
-                                                            </div>
-                                                            <div class="item-data">
-                                                                <?php echo e($contact->email); ?>
-
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="app-card-body px-4 w-100">
-                                                <div class="item border-bottom py-3">
-                                                    <div class="row justify-content-between align-items-center">
-                                                        <div class="col-auto">
-                                                            <div class="item-label">
-                                                                <strong>Phone Number </strong>
-                                                            </div>
-                                                            <div class="item-data">
-                                                                <?php echo e($contact->phone); ?>
-
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-
-                                        </div>
-                                    </div>
-
-                                    <div class="col-12 mt-3">
-                                        <div class="app-card app-card-account shadow d-flex flex-column align-items-start">
-                                            <div class="app-card-header p-3 border-bottom-0">
-                                                <div class="row align-items-center px-3">
-                                                    <div class="col-auto">
-                                                        <h4 class="app-card-title">Academic Information</h4>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="app-card-body px-4 w-100">
-                                                <div class="item border-bottom py-3">
-                                                    <div class="row justify-content-between align-items-center">
-                                                        <div class="col-auto">
-                                                            <div class="item-label">
-                                                                <strong>Mode of Entry</strong>
-                                                            </div>
-                                                            <div class="item-data">
-                                                                <?php echo e($academic->mode_of_entry); ?>
-
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="app-card-body px-4 w-100">
-                                                <div class="item border-bottom py-3">
-                                                    <div class="row justify-content-between align-items-center">
-                                                        <div class="col-auto">
-                                                            <div class="item-label">
-                                                                <strong>Mode of Study</strong>
-                                                            </div>
-                                                            <div class="item-data">
-                                                                <?php echo e($academic->mode_of_study); ?>
-
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="app-card-body px-4 w-100">
-                                                <div class="item border-bottom py-3">
-                                                    <div class="row justify-content-between align-items-center">
-                                                        <div class="col-auto">
-                                                            <div class="item-label">
-                                                                <strong>Matric Number</strong>
-                                                            </div>
-                                                            <div class="item-data">
-
-                                                                <?php echo e($academic->mat_no); ?>
-
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="app-card-body px-4 w-100">
-                                                <div class="item border-bottom py-3">
-                                                    <div class="row justify-content-between align-items-center">
-                                                        <div class="col-auto">
-                                                            <div class="item-label">
-                                                                <strong>Program </strong>
-                                                            </div>
-                                                            <div class="item-data">
-                                                                <?php echo e($academic->program->name); ?>
-
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="app-card-body px-4 w-100">
-                                                <div class="item border-bottom py-3">
-                                                    <div class="row justify-content-between align-items-center">
-                                                        <div class="col-auto">
-                                                            <div class="item-label">
-                                                                <strong>Level </strong>
-                                                            </div>
-                                                            <div class="item-data">
-                                                                <?php echo e($academic->level); ?>
-
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="app-card-body px-4 w-100">
-                                                <div class="item border-bottom py-3">
-                                                    <div class="row justify-content-between align-items-center">
-                                                        <div class="col-auto">
-                                                            <div class="item-label">
-                                                                <strong>Entry Session </strong>
-                                                            </div>
-                                                            <div class="item-data">
-                                                                <?php echo e($academic->session->name); ?>
-
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="app-card-body px-4 w-100">
-                                                <div class="item border-bottom py-3">
-                                                    <div class="row justify-content-between align-items-center">
-                                                        <div class="col-auto">
-                                                            <div class="item-label">
-                                                                <strong>Jamb No </strong>
-                                                            </div>
-                                                            <div class="item-data">
-                                                                <?php echo e($academic->jamb_no); ?>
-
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="app-card-body px-4 w-100">
-                                                <div class="item border-bottom py-3">
-                                                    <div class="row justify-content-between align-items-center">
-                                                        <div class="col-auto">
-                                                            <div class="item-label">
-                                                                <strong>Jamb Score </strong>
-                                                            </div>
-                                                            <div class="item-data">
-                                                                <?php echo e($academic->jamb_score); ?>
-
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-
-                                        </div>
-                                    </div>
-                                    <div class="col-12 mt-3">
-                                        <div class="app-card app-card-account shadow d-flex flex-column align-items-start">
-                                            <div class="app-card-header p-3 border-bottom-0">
-                                                <div class="row align-items-center px-3">
-                                                    <div class="col-auto">
-                                                        <h4 class="app-card-title">Medical Information</h4>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="app-card-body px-4 w-100">
-                                                <div class="item border-bottom py-3">
-                                                    <div class="row justify-content-between align-items-center">
-                                                        <div class="col-auto">
-                                                            <div class="item-label">
-                                                                <strong>Physical Status</strong>
-                                                            </div>
-                                                            <div class="item-data">
-                                                                <?php echo e($medical->physical); ?>
-
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="app-card-body px-4 w-100">
-                                                <div class="item border-bottom py-3">
-                                                    <div class="row justify-content-between align-items-center">
-                                                        <div class="col-auto">
-                                                            <div class="item-label">
-                                                                <strong>Blood Group</strong>
-                                                            </div>
-                                                            <div class="item-data">
-                                                                <?php echo e($medical->blood_group); ?>
-
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="app-card-body px-4 w-100">
-                                                <div class="item border-bottom py-3">
-                                                    <div class="row justify-content-between align-items-center">
-                                                        <div class="col-auto">
-                                                            <div class="item-label">
-                                                                <strong>Genotype</strong>
-                                                            </div>
-                                                            <div class="item-data">
-                                                                <?php echo e($medical->genotype); ?>
-
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="app-card-body px-4 w-100">
-                                                <div class="item border-bottom py-3">
-                                                    <div class="row justify-content-between align-items-center">
-                                                        <div class="col-auto">
-                                                            <div class="item-label">
-                                                                <strong>Known Medical Condition</strong>
-                                                            </div>
-                                                            <div class="item-data">
-                                                                <?php echo e($medical->condition); ?>
-
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="app-card-body px-4 w-100">
-                                                <div class="item border-bottom py-3">
-                                                    <div class="row justify-content-between align-items-center">
-                                                        <div class="col-auto">
-                                                            <div class="item-label">
-                                                                <strong>Allergies</strong>
-                                                            </div>
-                                                            <div class="item-data">
-                                                                <?php echo e($medical->allergies); ?>
-
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-
-                                        </div>
-                                    </div>
-
-                                </div>
+                                
                             </div>
                         </div>
                     </div>

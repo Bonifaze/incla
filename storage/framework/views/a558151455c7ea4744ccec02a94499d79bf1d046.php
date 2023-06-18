@@ -44,7 +44,7 @@
               <!-- form start -->
 
 
-						<?php echo Form::open(array('route' => 'session.storeAdmission', 'method'=>'POST', 'class' => 'nobottommargin')); ?>
+						<?php echo Form::open(array('route' => 'session.storeBursary', 'method'=>'POST', 'class' => 'nobottommargin')); ?>
 
 <div class="card-body">
               <div class="box-body">
@@ -138,4 +138,4 @@
 <?php $__env->stopSection(); ?>
 
 
-<?php echo $__env->make('layouts.mini', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH /Users/lifeofrence/Documents/laraproject/resources/views//sessions/createAdmission.blade.php ENDPATH**/ ?>
+<?php echo $__env->make('layouts.mini', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH /Users/lifeofrence/Documents/laraproject/resources/views//sessions/createBursary.blade.php ENDPATH**/ ?>

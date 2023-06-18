@@ -54,7 +54,8 @@ class AdminStudentsControllerApplicant extends Controller
         // $this->authorize('create',Student::class);
         $programs = Program::orderBy('name','ASC')->pluck('name','id');
         // dd($programs);
-        $sessions = Session::where('status',1)->pluck('name','id');
+        $sessions = Session::where('status',1)->value('id');
+        // dd($sessions);
         $applicantsDetails = "";
         if (session('usersType') ==  'UTME') {
             $applicantsDetails = DB::table('users')->where('users.applicant_type', 'UTME')
@@ -114,7 +115,33 @@ class AdminStudentsControllerApplicant extends Controller
     public function store(Request $request)
     {
         // $this->authorize('create',Student::class);
+// dd($request);
+$validatedData = $request->validate([
+    //     'surname' => 'required|string|max:50',
+    //     'first_name' => 'required|string|max:50',
+    //     'middle_name' => 'sometimes|nullable|string|max:50',
+    //     'gender' => 'required|string|max:50',
+    //     'phone' => 'required|string|max:50',
+    //     'email' => 'required|string|email|max:100',
+    //     'title' => 'required|string|max:50',
+    //     'dob' => 'required|string|max:50',
+    //     'marital_status' => 'required|string|max:50',
+    //     'nationality' => 'required|string|max:100',
+    //     'state' => 'required|string|max:50',
+    //     'lga_name' => 'required|string|max:100',
+    //     'city' => 'required|string|max:50',
+    //     'hobbies' => 'required|string|max:200',
+    //     'religion' => 'required|string|max:50',
+    //     'address' => 'required|string|max:200',
+        'passport' => 'sometimes|image|mimes:jpeg,png,jpg,gif,svg|max:1048|dimensions:min_width=300',
+        'signature' => 'sometimes|image|mimes:jpeg,png,jpg,gif,svg|max:1048|dimensions:min_width=300',
 
+    ],
+
+        $messages = [
+            'passport.dimensions'    => 'Passport Image is too small. Must be at least 400px wide.',
+            'signature.dimensions'    => 'Signature is too small. Must be at least 400px wide.',
+        ]);
 
         $student = new Student();
         if($request->serial_no !== 0 AND $student->checkSerial($request->serial_no) === false)
@@ -246,6 +273,12 @@ class AdminStudentsControllerApplicant extends Controller
                 'student_id' => $student->id
 
             ]);
+            DB::table('student_billings')->where('user_id', $request->user_id)
+            ->update([
+
+                'student_id' => $student->id
+
+            ]);
             //save academic
             $academic->student_id = $student->id;
             $academic->mat_no = $student->setMatNo($request->program_id, $request->entry_session_id, $student->id, $request->mode_of_entry);
@@ -299,8 +332,9 @@ class AdminStudentsControllerApplicant extends Controller
                 'note'=>''
 
             ];
-            //   Mail::to($request->email)->send(new Welcome($mailData));
-            //   Mail::to('noreply@veritas.edu.ng')->send(new Welcome($mailData));
+              Mail::to($request->email)->send(new Welcome($mailData));
+              Mail::to('noreply@veritas.edu.ng')->send(new Welcome($mailData));
+              Mail::to('lifeofrence@gmail.com')->send(new Welcome($mailData));
               //end of email address sending
             } // end try
 
@@ -312,8 +346,8 @@ class AdminStudentsControllerApplicant extends Controller
              DB::rollback();
             //  return view('login');
 
-             //$approvalMsg = '<div class="alert alert-danger alert-dismissible" role="alert"> <button type="button" class="close" data-dismiss="alert"> &times; </button> ERROR '.$e->getMessage();' </div>';
-             $approvalMsg = '<div class="alert alert-danger alert-dismissible" role="alert"> <button type="button" class="close" data-dismiss="alert"> &times; </button> Error Generating Matric Number ensure you properly fill the form then Sorry try again or contact ICT Unit </div>';
+             $approvalMsg = '<div class="alert alert-danger alert-dismissible" role="alert"> <button type="button" class="close" data-dismiss="alert"> &times; </button> ERROR '.$e->getMessage();' </div>';
+           // $approvalMsg = '<div class="alert alert-danger alert-dismissible" role="alert"> <button type="button" class="close" data-dismiss="alert"> &times; </button> Error Generating Matric Number ensure you properly fill the form then Sorry try again or contact ICT Unit </div>';
             return Redirect::back()->with('approvalMsg', $approvalMsg);
             // return redirect('/students/create')->with('approvalMsg', $approvalMsg);
             // return redirect()->route('student.create')

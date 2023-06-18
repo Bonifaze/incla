@@ -122,7 +122,7 @@ class ApplicantController extends Controller
         $users = DB::table('users')->where('email', $request->email)
             ->leftJoin('usersbiodata', 'usersbiodata.user_id', '=', 'users.id')
             ->leftJoin('remitas', 'remitas.user_id', '=', 'users.id')
-            ->select('users.*', 'usersbiodata.status', 'usersbiodata.user_id', 'remitas.status_code', 'remitas.fee_type', 'remitas.amount')
+            ->select('users.*', 'usersbiodata.status', 'usersbiodata.user_id', 'remitas.status_code', 'remitas.fee_type', 'remitas.amount', 'remitas.fee_type_id')
             ->get();
         if ($users->isEmpty()) {
             // Email not found in database
@@ -132,10 +132,11 @@ class ApplicantController extends Controller
 
         // $admission = DB::table('users') -> where('users.id', session('userid'))->get();
         if ($users) {
+            // dd($users);
 
             foreach ($users as $users) {
 
-                if ($users->status_code == '01' && $users->amount >= 170000) {
+                if ($users->status_code == '01' && ($users->amount >= 170000 && $users->fee_type_id != '2' || $users->fee_type_id != '4' || $users->fee_type_id != '118')) {
                     if (Hash::check($request->password, $users->password)) {
 
                         if ($users->email_verified_at != null) {
@@ -453,6 +454,7 @@ class ApplicantController extends Controller
             $fee_types = fee_types::orderBy('status', 'ASC')
                 ->where('status', 1)
                 ->where('category', 3)
+                ->where('gender_code', $payment->gender)
                 ->where('college_id', $facultyAndDept['col'])
                 ->get();
             $fee_typess = fee_types::orderBy('status', 'ASC')
@@ -481,7 +483,7 @@ class ApplicantController extends Controller
             $fee_types = fee_types::orderBy('status', 'ASC')
                 ->where('status', 1)
                 ->where('category', 5)
-               // ->where('college_id', $facultyAndDept['col'])
+            // ->where('college_id', $facultyAndDept['col'])
                 ->get();
             $fee_typess = fee_types::orderBy('status', 'ASC')
                 ->where('status', 1)
@@ -546,6 +548,13 @@ class ApplicantController extends Controller
             // return redirect('/newPayment/')->with('mgs',$statusMsg);
         }
     }
+    private function getcurrentsession(){
+        $session = DB::table('bursary_sessions')->where('status', 1)
+        ->select ('bursary_sessions.id')->first();
+        $ses=$session->id;
+        $currentsession =$ses;
+        return $currentsession;
+    }
 
     public function viewpayment($id)
     {
@@ -554,8 +563,126 @@ class ApplicantController extends Controller
             ->get();
 
         $verifyResponse = $this->verifyRRRALL();
+        $billing = $this->billstudent();
 
-        return view('admissions.paymentview', compact('viewpayment', 'verifyResponse'));
+        // Retrieve the last data for the user
+        $lastPayment = DB::table('student_billings')
+            ->where('user_id', session('userid'))
+            ->where('status', 1)
+            ->where('session_id', $this->getcurrentsession())
+            ->orderBy('created_at', 'desc')
+            ->first();
+            $allPayment = DB::table('student_billings')
+            ->where('user_id', session('userid'))
+            ->where('status', 1)
+            ->where('session_id', $this->getcurrentsession())
+            ->pluck('amount_paid');
+
+        $totalAmountPaid = $allPayment->sum();
+
+        $amountPaid = $lastPayment->amount_paid ?? 0;
+        $debt = $lastPayment->debt ?? 0;
+
+
+        $balance = $lastPayment ? max(0, $lastPayment->debt) : '<i class="fas fa-spinner fa-spin"></i>';
+
+        return view('admissions.paymentview', compact('viewpayment', 'verifyResponse', 'totalAmountPaid', 'balance'));
+    }
+    public function billstudent()
+    {
+        $remitas = DB::table('remitas')->where('user_id', session('userid'))
+            ->where('status_code', '01')
+        // ->select('remitas.status_code', 'remitas.fee_type', 'remitas.amount', 'remitas.fee_type_id')
+            ->get();
+
+        if ($remitas->isNotEmpty()) {
+            foreach ($remitas as $remita) {
+                if ($remita->amount >= 170000 && strpos($remita->fee_type, 'Full Payment') !== false) {
+                    // Insert into student_billings
+                    // dd($remita);
+                    // Your code to insert the record goes here
+
+                    try {
+                        $existingRrr = DB::table('student_billings')
+                            ->where('rrr', $remita->rrr)
+                            ->exists();
+
+                        if (!$existingRrr) {
+                            DB::table('student_billings')
+                                ->insert([
+                                    'user_id' => $remita->user_id,
+                                    'rrr' => $remita->rrr,
+                                    'amount_paid' => $remita->amount,
+                                    'session_id' =>$this->getcurrentsession()
+                                ]);
+
+                            $signUpMsg = '<div class="alert alert-success alert-dismissible" role="alert"> <button type="button" class="close" data-dismiss="alert"> &times; </button> You have successfully edited the user </div>';
+                            return redirect()->back()->with('signUpMsg', $signUpMsg);
+                        } else {
+                            $signUpMsg = '<div class="alert alert-danger alert-dismissible" role="alert"> <button type="button" class="close" data-dismiss="alert"> &times; </button> The rrr already exists. </div>';
+                            return redirect()->back()->with('signUpMsg', $signUpMsg);
+                        }
+                    } catch (QueryException $e) {
+                        $signUpMsg = '<div class="alert alert-danger alert-dismissible" role="alert"> <button type="button" class="close" data-dismiss="alert"> &times; </button> Your edit was not successful' . $e->getMessage() . ' </div>';
+                        return redirect()->back()->with('signUpMsg', $signUpMsg);
+                    }
+                }
+                if (($remita->amount >= 170000 && strpos($remita->fee_type, 'Part Payment') !== false)) {
+                    try {
+                        $remitasToInsert = [];
+
+                        foreach ($remitas as $remita) {
+                            if ($remita->amount >= 170000 && strpos($remita->fee_type, 'Part Payment') !== false) {
+                                $existingRrr = DB::table('student_billings')
+                                    ->where('rrr', $remita->rrr)
+                                    ->exists();
+
+                                if (!$existingRrr) {
+                                    $previousDebt = DB::table('student_billings')
+                                        ->where('user_id', $remita->user_id)
+                                        ->orderBy('created_at', 'desc')
+                                        ->value('debt');
+
+                                    $amountPaid = $remita->amount;
+                                    $debt = $previousDebt;
+
+                                    if ($previousDebt > 0) {
+                                        // Calculate the new debt amount
+                                        $debt = max(0, $previousDebt - $amountPaid); // Ensure the debt is not negative
+                                    } else {
+                                        // Set the debt to the paid amount when no previous debt exists
+                                        $debt = $amountPaid;
+                                    }
+
+                                    $remitasToInsert[] = [
+                                        'user_id' => $remita->user_id,
+                                        'rrr' => $remita->rrr,
+                                        'amount_paid' => $amountPaid,
+                                        'debt' => $debt,
+                                        'session_id' =>$this->getcurrentsession()
+                                    ];
+                                }
+                            }
+                        }
+
+                        if (!empty($remitasToInsert)) {
+                            DB::table('student_billings')->insert($remitasToInsert);
+
+                            $signUpMsg = '<div class="alert alert-success alert-dismissible" role="alert"> <button type="button" class="close" data-dismiss="alert"> &times; </button> You have successfully edited the user </div>';
+                            return redirect()->back()->with('signUpMsg', $signUpMsg);
+                        } else {
+                            $signUpMsg = '<div class="alert alert-danger alert-dismissible" role="alert"> <button type="button" class="close" data-dismiss="alert"> &times; </button> The selected RRRs already exist or do not meet the condition. </div>';
+                            return redirect()->back()->with('signUpMsg', $signUpMsg);
+                        }
+                    } catch (QueryException $e) {
+                        $signUpMsg = '<div class="alert alert-danger alert-dismissible" role="alert"> <button type="button" class="close" data-dismiss="alert"> &times; </button> Your edit was not successful' . $e->getMessage() . ' </div>';
+                        return redirect()->back()->with('signUpMsg', $signUpMsg);
+                    }
+                }
+
+            }
+        }
+
     }
 
     public function verifyRRRALL()
@@ -1551,6 +1678,11 @@ class ApplicantController extends Controller
                 });
                 $passport = base64_encode($img1->encode()->encoded);
                 $img = $passport;
+                // if (filesize($req->file('passport')) > 900 * 1024) {
+                //     $signUpMsg = ' <div class="alert alert-danger alert-dismissible"><button type="button" class="close" data-dismiss="alert">&times;</button><strong>Error! </strong>Passport image size exceeds the maximum allowed limit of 300KB. please try again</div>'
+                //     ;
+                //     return redirect('/editprofile')->with('signUpMsg', $signUpMsg);
+                // }
             } // end Passport
 
             DB::table('usersbiodata')->insert([
@@ -2537,16 +2669,17 @@ class ApplicantController extends Controller
 
     public function editbiodata(Request $req)
     {
-        $this->validate($req, [
+        $validatedData = $req->validate([
             'gender' => 'required|string|max:6',
             'dob' => 'required|string|max:50',
             'nationality' => 'required|string|max:100',
             'state_origin' => 'required|string|max:50',
             'religion' => 'required|string|max:50',
             'address' => 'required|string|max:200',
-            'passport' => 'image|mimes:jpeg,png,jpg,gif,svg|max:1048|dimensions:min_width=300',
+            // 'passport' => 'image|mimes:jpeg,png,jpg,gif,svg|max:1048|dimensions:min_width=300',
         ], $messages = [
             'passport.dimensions' => 'Passport Image is too small. Must be at least 400px wide.',
+            'passport.max' => 'Passport Image size exceeds the allowed limit. Maximum file size is 1048KB.',
         ]);
 
         DB::beginTransaction();
@@ -2559,6 +2692,12 @@ class ApplicantController extends Controller
                 });
                 $passport = base64_encode($img1->encode()->encoded);
                 $img = $passport;
+
+                if (filesize($req->file('passport')) > 900 * 1024) {
+                    $signUpMsg = ' <div class="alert alert-danger alert-dismissible"><button type="button" class="close" data-dismiss="alert">&times;</button><strong>Error! </strong>Passport image size exceeds the maximum allowed limit of 300KB. please try again</div>'
+                    ;
+                    return redirect('/editprofile')->with('signUpMsg', $signUpMsg);
+                }
 
                 // Update passport image and other biodata fields
                 DB::table('users')->where('id', session('userid'))->update([

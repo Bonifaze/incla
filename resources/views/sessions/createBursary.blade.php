@@ -49,7 +49,7 @@
               <!-- form start -->
 
 
-						{!! Form::open(array('route' => 'session.storeAdmission', 'method'=>'POST', 'class' => 'nobottommargin')) !!}
+						{!! Form::open(array('route' => 'session.storeBursary', 'method'=>'POST', 'class' => 'nobottommargin')) !!}
 <div class="card-body">
               <div class="box-body">
 

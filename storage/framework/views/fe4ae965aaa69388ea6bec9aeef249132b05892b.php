@@ -44,7 +44,7 @@
                         
                         <br><br>
                         <?php if(isset($sum)): ?>
-                            <?php echo e('Total: N' . number_format($sum)); ?>
+                            <?php echo e($sum); ?>
 
                         <?php else: ?>
                             Remita Details
@@ -59,74 +59,30 @@
 
                         <table class="table table-striped">
                             <thead>
-
                                 <th>S/N</th>
                                 <th>RRR</th>
-                                <th>Student Name</th>
-                                <th>Matric Number</th>
-                                <th>Service Type</th>
-                                <th>Amount</th>
-                                <th>Generated</th>
+                                
+                                <th>Amout Paid</th>
+                                <th>Debt</th>
+                                <th>Date</th>
+
                                 <th>Action</th>
                             </thead>
-                            <tbody class="">
-                                <?php $__currentLoopData = $remitas; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $key => $remita): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                                    <tr>
-                                        <td><?php echo e($loop->iteration); ?></td>
-                                        <td><?php echo e($remita->rrr); ?></td>
-                                        <td><?php echo e($remita->student->fullname ?? null); ?></td>
-                                        <td><?php echo e($remita->student->academic->mat_no ?? null); ?></td>
-                                        <td><?php echo e($remita->feeType->name ?? null); ?></td>
-                                        <td>&#8358;<?php echo e(number_format($remita->amount)); ?></td>
-                                        <td><?php echo e($remita->created_at->format('d-M-Y')); ?></td>
-                                        <td>
-                                            <?php if($remita->status_code == 1): ?>
-                                                <a class="btn btn-info" target="_blank"
-                                                    href="<?php echo e(route('remita.print-rrr', $remita->id)); ?>"><i
-                                                        class="fas fa-print text-white-50"></i> Print Receipt </a>
-                                            <?php else: ?>
-                                                <?php echo e($remita->status); ?>
-
-                                            <?php endif; ?>
-                                        </td>
-
-                                    </tr>
-                                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-
-                                </tr>
-                                <thead></thead>
+                            <?php $__currentLoopData = $remitas; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $key => $remita): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                 <tr>
-                                    <th colspan="3">School Fees</th>
-                                    <th colspan="2">School Fee paid</th>
-                                    <th colspan="2">School Fees Debt</th>
-                                    <th colspan="2">Action</th>
-                                </tr>
-                                </thead>
-                            <tbody class="">
-                                <tr>
-                                    <td colspan="3">
-                                        <?php if($balance === '<i class="fas fa-spinner fa-spin"></i>'): ?>
-                                            <i class="fa fa-spinner fa-spin"></i>
-                                        <?php else: ?>
-                                            &#8358;<?php echo e(number_format($totalAmountPaid + (int) $balance, 2)); ?>
+                                    <td><?php echo e($key + 1); ?></td>
+                                    <td><?php echo e($remita->rrr); ?></td>
+                                    
+                                    
+                                    <td>&#8358;<?php echo e(number_format($remita->amount_paid)); ?></td>
+                                    <td>&#8358;<?php echo e(number_format($remita->debt)); ?></td>
+                                    <td><?php echo e($remita->created_at); ?></td>
 
-                                        <?php endif; ?>
-                                    </td>
-                                    <td colspan="2" class=" text-success">₦<?php echo $totalAmountPaid != 0 ? $totalAmountPaid : html_entity_decode('<i class="fa fa-spinner fa-spin"></i>'); ?></td>
-                                    <td colspan="2" class="text-bold  text-success">₦<?php echo html_entity_decode($balance); ?></td>
                                     <td>
                                         <a class="btn btn-info edit-button" data-toggle="modal" data-target="#editModal">
                                             <i class="fas fa-edit text-white-50"></i> Edit
                                         </a>
-                                    </td>
-
-                                </tr>
-                            </tbody>
-                        </table>
-
-
-                    </div>
-                    <div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="editModalLabel"
+                                        <div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="editModalLabel"
                         aria-hidden="true">
                         <div class="modal-dialog" role="document">
                             <div class="modal-content">
@@ -140,21 +96,21 @@
                                     <form id="editDebtForm" action="<?php echo e(route('remita.update-debt')); ?>" method="POST">
                                         <?php echo csrf_field(); ?>
                                         <!-- Form inputs for editing debt and amount paid -->
-                                        <input type="hidden" name="student_id" value="<?php echo e($remita->student->id); ?>">
+                                        <input type="hidden" name="student_id" value="<?php echo e($remita->student_id); ?>">
                                         <input type="hidden" name="staff_id" value="<?php echo e(auth()->user()->id); ?>">
                                         <div class="form-group">
                                             <label for="debt">Debt:</label>
                                             <input type="text" class="form-control" id="debt" name="debt"
-                                                value="<?php echo e($balance); ?>">
+                                                value="<?php echo e($remita->debt); ?>">
                                             <input type="hidden" class="form-control" id="debt" name="old_debt"
-                                                value="<?php echo e($balance); ?>">
+                                                value="<?php echo e($remita->debt); ?>">
                                         </div>
                                         <div class="form-group">
                                             <label for="amountPaid">Amount Paid:</label>
                                             <input type="text" class="form-control" id="amountPaid" name="amount_paid"
-                                                value="<?php echo e($totalAmountPaid); ?>">
+                                                value="<?php echo e($remita->amount_paid); ?>">
                                             <input type="hidden" class="form-control" id="amountPaid"
-                                                name="old_amount_paid" value="<?php echo e($totalAmountPaid / 2); ?>">
+                                                name="old_amount_paid" value="<?php echo e($remita->amount_paid); ?>">
                                         </div>
                                 </div>
                                 <div class="modal-footer">
@@ -166,19 +122,39 @@
                             </div>
                         </div>
                     </div>
+                                    </td>
+                                    <td>
+                                         <?php echo Form::open([
+                                                            'method' => 'patch',
+                                                            'action' => 'RemitaController@disable',
+                                                            'id' => 'disableUForm' . $remita->id,
+                                                        ]); ?>
+
+                                                        <?php echo e(Form::hidden('id', $remita->id)); ?>
+
+                                                        <?php echo e(Form::hidden('status', 0)); ?>
+
+                                                        <?php echo e(Form::hidden('action', 'disabled')); ?>
+
+
+
+                                                        <button type="submit" class="btn btn-danger"><span
+                                                                class="icon-line2-trash"></span><i
+                                                                class="fas fa-solid fa-trash"></i> Disable</button>
+                                                        <?php echo Form::close(); ?>
+
+                                    </td>
+                                </tr>
+                            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+
+                        </table>
+
+
+                    </div>
+
+
+
                 </div>
-                                                    <div class="dropdown no-arrow  btn btn-sm shadow-sm">
-
-                                        <a href="<?php echo e(route('remita.find-studentdebt', $remita->student->id)); ?>}"
-                                            class="nav-link <?php echo $__env->yieldContent('results'); ?>">
-                                            <i class="fa fa-eye nav-icon"></i>Show Payment History
-                                        </a>
-                                    </div>
-
-                                    <div><a class="btn btn-warning" target="_blank"
-                                                        href="<?php echo e(route('remita.find-studentunpaidrrr', $remita->student->id)); ?>"> <i
-                                                            class="fa fa-eye"></i> Unpaid RRR </a>
-                                    </div>
                 <!-- /.box -->
 
             </div>
@@ -243,4 +219,4 @@
     </script>
 <?php $__env->stopSection(); ?>
 
-<?php echo $__env->make('layouts.mini', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH /Users/lifeofrence/Documents/laraproject/resources/views/bursary/remita_list.blade.php ENDPATH**/ ?>
+<?php echo $__env->make('layouts.mini', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH /Users/lifeofrence/Documents/laraproject/resources/views/bursary/remita_listdebt.blade.php ENDPATH**/ ?>

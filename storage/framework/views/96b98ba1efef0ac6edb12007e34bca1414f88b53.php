@@ -2,6 +2,7 @@
 Home
 <?php $__env->stopSection(); ?>
 
+<!-- Sidebar Links -->
 <!-- Treeview -->
 <?php $__env->startSection('student-open'); ?>
 menu-open
@@ -19,15 +20,17 @@ active
 
 <?php $__env->startSection('content'); ?>
 <div class="content-wrapper bg-white">
-    <section class="content">
+    <section class="content p-5">
+
         <?php if(session('signUpMsg')): ?>
         <?php echo session('signUpMsg'); ?>
 
         <?php endif; ?>
-        <div class="card mb-4">
+
+        <div class="card p-5 shadow">
             <ul class="nav nav-tabs" id="myTab" role="tablist">
                 <li class="nav-item" role="presentation">
-                    <button class="nav-link active text-success fw-bold text-capitalize" id="home-tab" data-bs-toggle="tab" data-bs-target="#home-tab-pane" type="button" role="tab" aria-controls="home-tab-pane" aria-selected="true">Bio Data</button>
+                    <button class="nav-link active text-success fw-bold text-capitalize" id="home-tab" data-bs-toggle="tab" data-bs-target="#home-tab-pane" type="button" role="tab" aria-controls="home-tab-pane" aria-selected="true">Biodata</button>
                 </li>
                 <li class="nav-item" role="presentation">
                     <button class="nav-link text-success fw-bold text-capitalize" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile-tab-pane" type="button" role="tab" aria-controls="profile-tab-pane" aria-selected="false">Sponsor Information</button>
@@ -48,7 +51,7 @@ active
                 <div class="tab-pane fade show active" id="home-tab-pane" role="tabpanel" aria-labelledby="home-tab" tabindex="0">
                     <form method="POST" action="/editbiodata" enctype="multipart/form-data" class="p-3">
                         <?php echo csrf_field(); ?>
-                        
+
                         <div class="item border-bottom py-3">
                             <div class="row justify-content-between align-items-center">
                                 <div class="col-auto">
@@ -65,97 +68,62 @@ active
                             <label for="passport"><?php echo e(__('Upload Passport Photograph')); ?>
 
                             </label>
-
-                            <div class="form-group">
-                                <input id="passport" type="file" class="form-control" name="passport">
-                            </div>
+                            <input id="passport" type="file" class="form-control" name="passport">
                         </div>
                         <label for=""><?php echo e(__('Surname')); ?> </label>
                         <div class="form-group">
-                            <div class="form-group">
-                                <input id="surname" type="text" class="form-control " name="surname" value="<?php echo e($applicantsDetails->surname); ?>" autofocus readonly>
-
-                            </div>
+                            <input id="surname" type="text" class="form-control " name="surname" value="<?php echo e($applicantsDetails->surname); ?>" autofocus readonly>
                         </div>
                         <div class="form-group">
-                            <div class="form-group">
-                                <label for=""><?php echo e(__('First Name')); ?> </label>
-                                <input id="first_name" type="text" class="form-control" name="first_name" value="<?php echo e($applicantsDetails->first_name); ?>" autofocus readonly>
-
-
-                            </div>
+                            <label for=""><?php echo e(__('First Name')); ?> </label>
+                            <input id="first_name" type="text" class="form-control" name="first_name" value="<?php echo e($applicantsDetails->first_name); ?>" autofocus readonly>
                         </div>
                         <div class="form-group">
-                            <div class="form-group">
-                                <label for=""><?php echo e(__('Email')); ?> </label>
-                                <input id="email" type="email" class="form-control " name="email" value="<?php echo e($applicantsDetails->email); ?>" readonly>
-
-
-                            </div>
+                            <label for=""><?php echo e(__('Email')); ?> </label>
+                            <input id="email" type="email" class="form-control " name="email" value="<?php echo e($applicantsDetails->email); ?>" readonly>
                         </div>
                         <div class="form-group">
-                            <div class="form-group">
-                                <label for=""><?php echo e(__('Phone')); ?> </label>
-                                <input id="phone" type="phone" class="form-control" name="phone" value="<?php echo e($applicantsDetails->phone); ?>" autofocus>
-
-
-                            </div>
+                            <label for=""><?php echo e(__('Phone')); ?> </label>
+                            <input id="phone" type="phone" class="form-control" name="phone" value="<?php echo e($applicantsDetails->phone); ?>" autofocus>
                         </div>
 
                         <div class="form-group">
-
-                            <div class="form-group">
-                                <label for=""><?php echo e(__('Other Name')); ?> </label>
-                                <input id="middle_name" type="text" class="form-control" name="middle_name" value="<?php echo e($applicantsDetails->middle_name); ?>" autofocus>
-                            </div>
+                            <label for=""><?php echo e(__('Other Name')); ?> </label>
+                            <input id="middle_name" type="text" class="form-control" name="middle_name" value="<?php echo e($applicantsDetails->middle_name); ?>" autofocus>
                         </div>
 
                         <div class="form-group">
+                            <label for=""><?php echo e(__('Gender')); ?> </label>
+                            <select class="form-control" name="gender">
+                                <option value="<?php echo e($applicantsDetails->gender); ?>">
+                                    <?php echo e($applicantsDetails->gender); ?>
 
-                            <div class="form-group">
-                                <label for=""><?php echo e(__('Gender')); ?> </label>
-                                <select class="form-select text-lg col-12" name="gender">
-                                    <option value="<?php echo e($applicantsDetails->gender); ?>">
-                                        <?php echo e($applicantsDetails->gender); ?>
-
-                                    </option>
-                                    <option value="Male">Male</option>
-                                    <option value="Female">Female</option>
-                                </select>
-                            </div>
+                                </option>
+                                <option value="Male">Male</option>
+                                <option value="Female">Female</option>
+                            </select>
                         </div>
 
                         <div class="form-group">
-
-                            <div class="form-group"> <label for=""><?php echo e(__('Religion')); ?> </label>
-                                <select class="form-select text-lg col-12" name="religion">
-
-                                    <option value="<?php echo e($applicantsDetails->religion); ?>">
-                                        <?php echo e($applicantsDetails->religion); ?>
-
-                                    </option>
-                                    <option value="Christian (Catholic)">Christian (Catholic)
-                                    </option>
-                                    <option value="Christian (non-catholic)">Christian
-                                        (non-catholic)</option>
-                                    <option value="Muslim">Muslim</option>
-
-                                </select>
-                            </div>
+                            <label for=""><?php echo e(__('Religion')); ?> </label>
+                            <select class="form-control" name="religion">
+                                <option value="Christian (Catholic)">Christian (Catholic)
+                                </option>
+                                <option value="Christian (non-catholic)">Christian
+                                    (non-catholic)</option>
+                                <option value="Muslim">Muslim</option>
+                            </select>
                         </div>
 
                         <div class="form-group">
                             <label for="dob"><?php echo e(__('Date of Birth')); ?> </label>
-
-                            <div class="form-group">
-                                <input id="dob" type="date" class="form-control" name="dob" value="<?php echo e($applicantsDetails->dob); ?>">
-                            </div>
+                            <input id="dob" type="date" class="form-control" name="dob" value="<?php echo e($applicantsDetails->dob); ?>">
                         </div>
 
                         <div class="form-group">
                             <div class="form-group">
                                 <label for=""><?php echo e(__('Nationality')); ?> </label>
-                                <select class="form-select text-lg col-12" name="nationality" id="nationality">
+                                <select class="form-control" name="nationality" id="nationality">
                                     <option value="<?php echo e($applicantsDetails->nationality); ?>">
                                         <?php echo e($applicantsDetails->nationality); ?>
 
@@ -448,29 +416,20 @@ active
                         </div>
 
                         <div class="form-group">
-
-                            <div class="form-group">
-                                <label for="refferal"><?php echo e(__('Statr of Origin')); ?> </label>
-                                <input id="state_origin" type="text" class="form-control" name="state_origin" value="<?php echo e($applicantsDetails->state_origin); ?>">
-                            </div>
+                            <label for="refferal"><?php echo e(__('Statr of Origin')); ?> </label>
+                            <input id="state_origin" type="text" class="form-control" name="state_origin" value="<?php echo e($applicantsDetails->state_origin); ?>">
                         </div>
 
                         <div class="form-group">
+                            <label for="refferal"><?php echo e(__('Local Government Area')); ?>
 
-                            <div class="form-group">
-                                <label for="refferal"><?php echo e(__('Local Government Area')); ?>
-
-                                </label>
-                                <input id="lga" type="text" class="form-control" name="lga" value="<?php echo e($applicantsDetails->lga); ?>">
-                            </div>
+                            </label>
+                            <input id="lga" type="text" class="form-control" name="lga" value="<?php echo e($applicantsDetails->lga); ?>">
                         </div>
 
                         <div class="form-group">
-
-                            <div class="form-group">
-                                <label for="refferal"><?php echo e(__('Address')); ?> </label>
-                                <input id="address" type="text" class="form-control" name="address" value="<?php echo e($applicantsDetails->address); ?>">
-                            </div>
+                            <label for="refferal"><?php echo e(__('Address')); ?> </label>
+                            <input id="address" type="text" class="form-control" name="address" value="<?php echo e($applicantsDetails->address); ?>">
                         </div>
 
 
@@ -480,7 +439,7 @@ active
                             </label>
 
                             <div class="form-group">
-                                <select class="form-select text-lg col-12" name="referral">
+                                <select class="form-control" name="referral">
                                     <option value="<?php echo e($applicantsDetails->referral); ?>">
                                         <?php echo e($applicantsDetails->referral); ?>
 
@@ -495,77 +454,59 @@ active
                         </div>
 
                         <div class="form-group">
-                            <div class="form-group">
-                                
-                                <button type="submit" class="btn btn-success">
-                                    <?php echo e(__('Update')); ?>
+                            <button type="submit" class="btn btn-success mt-5">
+                                <?php echo e(__('Update')); ?>
 
-                                </button>
-                            </div>
+                            </button>
                         </div>
 
                     </form>
                 </div>
                 <div class="tab-pane fade" id="profile-tab-pane" role="tabpanel" aria-labelledby="profile-tab" tabindex="0">
 
-                    
                     <form method="POST" action="/editsponsers" class="p-3">
                         <?php echo csrf_field(); ?>
                         <div class="form-group">
-                            <div class="form-group">
-                                <label for=""><?php echo e(__(' Name')); ?> </label>
-                                <input id="fname" type="text" name="name" class="form-control" value="<?php echo e($applicantsDetails->name); ?>" autofocus>
-                            </div>
+                            <label for=""><?php echo e(__(' Name')); ?> </label>
+                            <input id="fname" type="text" name="name" class="form-control" value="<?php echo e($applicantsDetails->name); ?>" autofocus>
                         </div>
 
                         <div class="form-group">
-                            <div class="form-group">
-                                <label for=""><?php echo e(__('Phone No.')); ?> </label>
-                                <input id="phone" type="text" name="sponsors_phone" class="form-control" value="<?php echo e($applicantsDetails->sponsors_phone); ?>" autofocus>
-                            </div>
+                            <label for=""><?php echo e(__('Phone No.')); ?> </label>
+                            <input id="phone" type="text" name="sponsors_phone" class="form-control" value="<?php echo e($applicantsDetails->sponsors_phone); ?>" autofocus>
                         </div>
 
                         <div class="form-group">
-                            <div class="form-group">
-                                <label for=""><?php echo e(__('Sponsor email')); ?> </label>
-                                <input id="foccupation" type="text" name="sponsors_email" class="form-control" value="<?php echo e($applicantsDetails->sponsors_email); ?>" autofocus>
-                            </div>
+                            <label for=""><?php echo e(__('Sponsor email')); ?> </label>
+                            <input id="foccupation" type="text" name="sponsors_email" class="form-control" value="<?php echo e($applicantsDetails->sponsors_email); ?>" autofocus>
                         </div>
 
                         <div class="form-group">
-                            <div class="form-group">
-                                <label for=""><?php echo e(__('Address')); ?> </label>
-                                <input id="address" type="text" class="form-control" name="sponsors_address" value="<?php echo e($applicantsDetails->sponsors_address); ?>">
-                            </div>
+                            <label for=""><?php echo e(__('Address')); ?> </label>
+                            <input id="address" type="text" class="form-control" name="sponsors_address" value="<?php echo e($applicantsDetails->sponsors_address); ?>">
                         </div>
                         <div class="form-group">
-                            <div class="form-group">
-                                <label for=""><?php echo e(__(' Occupation')); ?> </label>
-                                <input id="foccupation" type="text" name="occupation" class="form-control" value="<?php echo e($applicantsDetails->occupation); ?>" autofocus>
-                            </div>
+                            <label for=""><?php echo e(__(' Occupation')); ?> </label>
+                            <input id="foccupation" type="text" name="occupation" class="form-control" value="<?php echo e($applicantsDetails->occupation); ?>" autofocus>
+                        </div>
 
-                            <div class="form-group">
-                                <div class="form-group">
+                        <div class="form-group">
+                            <button type="submit" class="btn btn-success mt-5">
+                                <?php echo e(__('Update')); ?>
 
-                                    
-                                    <button type="submit" class="btn btn-success">
-                                        <?php echo e(__('Update')); ?>
-
-                                    </button>
-                                </div>
-                            </div>
+                            </button>
+                        </div>
                     </form>
                 </div>
                 <div class="tab-pane fade" id="profile4-tab-pane" role="tabpanel" aria-labelledby="profile4-tab" tabindex="0">
 
-                    
+
                     <form method="POST" action="/editpassword" class="p-3">
                         <?php echo csrf_field(); ?>
                         <input id="email" type="hidden" class="form-input form-control" name="email" value="<?php echo e($applicantsDetails->email); ?>">
 
                         <div class="form-group">
-                            <div class="form-group">
-                                <input id="password" type="password" class="form-control <?php $__errorArgs = ['password'];
+                            <input id="password" type="password" class="form-control <?php $__errorArgs = ['password'];
 $__bag = $errors->getBag($__errorArgs[1] ?? 'default');
 if ($__bag->has($__errorArgs[0])) :
 if (isset($message)) { $__messageOriginal = $message; }
@@ -573,127 +514,92 @@ $message = $__bag->first($__errorArgs[0]); ?> is-invalid <?php unset($message);
 if (isset($__messageOriginal)) { $message = $__messageOriginal; }
 endif;
 unset($__errorArgs, $__bag); ?>" name="password" required placeholder="New Password" autocomplete="new-password">
-
-                                <?php $__errorArgs = ['password'];
+                            <?php $__errorArgs = ['password'];
 $__bag = $errors->getBag($__errorArgs[1] ?? 'default');
 if ($__bag->has($__errorArgs[0])) :
 if (isset($message)) { $__messageOriginal = $message; }
 $message = $__bag->first($__errorArgs[0]); ?>
-                                <span class="invalid-feedback" role="alert">
-                                    <strong><?php echo e($message); ?></strong>
-                                </span>
-                                <?php unset($message);
+                            <span class="invalid-feedback" role="alert">
+                                <strong><?php echo e($message); ?></strong>
+                            </span>
+                            <?php unset($message);
 if (isset($__messageOriginal)) { $message = $__messageOriginal; }
 endif;
 unset($__errorArgs, $__bag); ?>
-                            </div>
                         </div>
 
                         <div class="form-group">
-                            <div class="form-group">
-                                <input id="password-confirm" type="password" class="form-control" name="password_confirmation" required placeholder="Confirm Password" autocomplete="new-password">
-                            </div>
+                            <input id="password-confirm" type="password" class="form-control" name="password_confirmation" required placeholder="Confirm Password" autocomplete="new-password">
                         </div>
 
                         <div class="form-group">
-                            <div class="form-group">
+                            <button type="submit" class="btn btn-success mt-5">
+                                <?php echo e(__('Update')); ?>
 
-                                
-                                <button type="submit" class="btn btn-success">
-                                    <?php echo e(__('Update')); ?>
-
-                                </button>
-                            </div>
+                            </button>
                         </div>
                     </form>
                 </div>
 
                 <div class="tab-pane fade" id="profile2-tab-pane" role="tabpanel" aria-labelledby="profile2-tab" tabindex="0">
-                    
-
                     <form method="POST" action="/edittransfersinformation" class="p-3">
                         <?php echo csrf_field(); ?>
                         <div class="form-group">
-
-                            <div class="form-group">
-                                <label for="refferal"><?php echo e(__('Previous Institution')); ?> </label>
-                                <input id="institution" type="text" class="form-control" name="institution" value="<?php echo e($applicantsDetails->institution); ?>" required autofocus>
-                            </div>
+                            <label for="refferal"><?php echo e(__('Previous Institution')); ?> </label>
+                            <input id="institution" type="text" class="form-control" name="institution" value="<?php echo e($applicantsDetails->institution); ?>" required autofocus>
                         </div>
                         <div class="form-group">
-
-                            <div class="form-group">
-                                <label for="refferal"><?php echo e(__('Matriculation No.')); ?> </label>
-                                <input id="score" type="text" class="form-control" name="matric_no" value="<?php echo e($applicantsDetails->matric_no); ?>" autofocus required>
-                            </div>
+                            <label for="refferal"><?php echo e(__('Matriculation No.')); ?> </label>
+                            <input id="score" type="text" class="form-control" name="matric_no" value="<?php echo e($applicantsDetails->matric_no); ?>" autofocus required>
                         </div>
                         <div class="form-group">
-
-                            <div class="form-group">
-                                <label for="refferal"><?php echo e(__('Entry Year')); ?> </label>
-                                <input id="first_choice" type="text" name="entry_year" class="form-control" value="<?php echo e($applicantsDetails->entry_year); ?>" autofocus required>
-                            </div>
+                            <label for="refferal"><?php echo e(__('Entry Year')); ?> </label>
+                            <input id="first_choice" type="text" name="entry_year" class="form-control" value="<?php echo e($applicantsDetails->entry_year); ?>" autofocus required>
                         </div>
                         <div class="form-group">
+                            <label for="refferal"><?php echo e(__('Level')); ?> </label>
+                            <select class="form-select" name="level">
+                                <option value="<?php echo e($applicantsDetails->level); ?>">
+                                    <?php echo e($applicantsDetails->level); ?>
 
-                            <div class="form-group">
-                                <label for="refferal"><?php echo e(__('Level')); ?> </label>
-                                <select class="form-select" name="level">
-                                    <option value="<?php echo e($applicantsDetails->level); ?>">
-                                        <?php echo e($applicantsDetails->level); ?>
-
-                                    </option>
-                                    <option value="100">100</option>
-                                    <option value="200">200</option>
-                                    <option value="300">300</option>
-                                    <option value="400">400</option>
-                                </select>
-                            </div>
+                                </option>
+                                <option value="100">100</option>
+                                <option value="200">200</option>
+                                <option value="300">300</option>
+                                <option value="400">400</option>
+                            </select>
                         </div>
 
                         <div class="form-group">
-
-                            <div class="form-group">
-                                <label for="refferal"><?php echo e(__('Previous Course Offered')); ?> </label>
-                                <input id="course" type="text" class="form-control" name="course" value="<?php echo e($applicantsDetails->course); ?>" autofocus required>
-                            </div>
+                            <label for="refferal"><?php echo e(__('Previous Course Offered')); ?> </label>
+                            <input id="course" type="text" class="form-control" name="course" value="<?php echo e($applicantsDetails->course); ?>" autofocus required>
                         </div>
                         <div class="form-group">
-
-                            <div class="form-group">
-                                <label for="refferal"><?php echo e(__('CGPA')); ?> </label>
-                                <input id="cpga" type="text" class="form-control" name="cgpa" value="<?php echo e($applicantsDetails->cgpa); ?>" autofocus required>
-                            </div>
+                            <label for="refferal"><?php echo e(__('CGPA')); ?> </label>
+                            <input id="cpga" type="text" class="form-control" name="cgpa" value="<?php echo e($applicantsDetails->cgpa); ?>" autofocus required>
                         </div>
                         <div class="form-group">
-                            <div class="form-group">
-                                <label for="refferal"><?php echo e(__('Proposed Course of Study')); ?>
+                            <label for="refferal"><?php echo e(__('Proposed Course of Study')); ?>
 
-                                </label>
-                                <select class="form-select text-lg col-12" name="course_applied">
-                                    <option value="<?php echo e($applicantsDetails->course_applied); ?>">
-                                        <?php echo e($applicantsDetails->course_applied); ?>
+                            </label>
+                            <select class="form-control" name="course_applied">
+                                <option value="<?php echo e($applicantsDetails->course_applied); ?>">
+                                    <?php echo e($applicantsDetails->course_applied); ?>
 
-                                    </option>
-                                    <?php $__currentLoopData = $programs; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $program): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                                    <option value="<?php echo e($program->name); ?>"><?php echo e($program->name); ?>
+                                </option>
+                                <?php $__currentLoopData = $programs; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $program): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                <option value="<?php echo e($program->name); ?>"><?php echo e($program->name); ?>
 
-                                    </option>
-                                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-                                </select>
-
-                            </div>
+                                </option>
+                                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                            </select>
                         </div>
 
                         <div class="form-group">
-                            <div class="form-group">
+                            <button type="submit" class="btn btn-success mt-5">
+                                <?php echo e(__('Update')); ?>
 
-                                
-                                <button type="submit" class="btn btn-success">
-                                    <?php echo e(__('Update')); ?>
-
-                                </button>
-                            </div>
+                            </button>
                         </div>
                     </form>
                 </div>
@@ -714,7 +620,7 @@ unset($__errorArgs, $__bag); ?>
 
                             <?php endif; ?>
                             <p>Upload Transcript
-                                
+
                             </p>
 
                             <div class="form-group">
@@ -739,14 +645,10 @@ unset($__errorArgs, $__bag); ?>
                             </div>
                         </div>
                         <div class="form-group">
-                            <div class="form-group">
+                            <button type="submit" class="btn btn-success mt-5">
+                                <?php echo e(__('update')); ?>
 
-                                
-                                <button type="submit" class="btn btn-success">
-                                    <?php echo e(__('update')); ?>
-
-                                </button>
-                            </div>
+                            </button>
                         </div>
                     </form>
                 </div>
@@ -754,6 +656,139 @@ unset($__errorArgs, $__bag); ?>
         </div>
     </section>
 </div>
-
 <?php $__env->stopSection(); ?>
+
+<?php $__env->startSection('pagescript'); ?>
+<!-- External JavaScripts
+            ============================================= -->
+<script src="<?php echo e(asset('js/jquery.js')); ?>"></script>
+<!-- bootstrap datepicker -->
+<script src="<?php echo e(asset('dist/js/components/bootstrap-datepicker.js')); ?>"></script>
+<!-- Bootstrap File Upload Plugin -->
+<script src="<?php echo e(asset('dist/js/components/bs-filestyle.js')); ?>"></script>
+
+<script src="<?php echo e(asset('js/jquery.js')); ?>"></script>
+
+<!-- bootstrap datepicker -->
+<script src="<?php echo e(asset('dist/js/components/bootstrap-datepicker.js')); ?>"></script>
+<!-- Bootstrap File Upload Plugin -->
+<script src="<?php echo e(asset('dist/js/components/bs-filestyle.js')); ?>"></script>
+
+<script type="text/javascript">
+    //Date picker
+    $('#dob').datepicker({
+        format: 'yyyy-mm-dd',
+        autoclose: true
+    })
+</script>
+<script>
+    $(document).ready(function() {
+        $('#myTab a').on('click', function(e) {
+            e.preventDefault();
+            $(this).tab('show');
+        });
+    });
+</script>
+
+
+
+<script type="text/javascript">
+    $(document).on('ready', function() {
+
+        $("#passport").fileinput({
+            mainClass: "input-group-md",
+            showUpload: false,
+            previewFileType: "image",
+            browseClass: "btn btn-success",
+            browseLabel: "Pick Image",
+            browseIcon: "<i class=\"fas fa-user\"></i>",
+            removeClass: "btn btn-danger",
+            removeLabel: "Delete",
+            removeIcon: "<i class=\"icon-trash\"></i> ",
+            allowedFileExtensions: ["jpg", "jpeg", "gif", "png"],
+            elErrorContainer: "#errorBlock"
+        });
+
+    });
+</script>
+
+<script type="text/javascript">
+    $(document).on('ready', function() {
+
+        $("#jamb").fileinput({
+            mainClass: "input-group-md",
+            showUpload: false,
+            previewFileType: "image",
+            browseClass: "btn btn-success",
+            browseLabel: "Pick Image",
+            browseIcon: "<i class=\"fas fa-user\"></i>",
+            removeClass: "btn btn-danger",
+            removeLabel: "Delete",
+            removeIcon: "<i class=\"icon-trash\"></i> ",
+            allowedFileExtensions: ["jpg", "jpeg", "gif", "png"],
+            elErrorContainer: "#errorBlock"
+
+
+
+        });
+
+
+
+    });
+</script>
+
+<script type="text/javascript">
+    $(document).on('ready', function() {
+
+        $("#olevel1").fileinput({
+            mainClass: "input-group-md",
+            showUpload: false,
+            previewFileType: "image",
+            browseClass: "btn btn-success",
+            browseLabel: "Pick Image",
+            browseIcon: "<i class=\"fas fa-user\"></i>",
+            removeClass: "btn btn-danger",
+            removeLabel: "Delete",
+            removeIcon: "<i class=\"icon-trash\"></i> ",
+            allowedFileExtensions: ["jpg", "jpeg", "gif", "png"],
+            elErrorContainer: "#errorBlock"
+
+
+
+        });
+
+
+
+    });
+</script>
+
+<script type="text/javascript">
+    $(document).on('ready', function() {
+
+        $("#olevel2").fileinput({
+            mainClass: "input-group-md",
+            showUpload: false,
+            previewFileType: "image",
+            browseClass: "btn btn-success",
+            browseLabel: "Pick Image",
+            browseIcon: "<i class=\"fas fa-user\"></i>",
+            removeClass: "btn btn-danger",
+            removeLabel: "Delete",
+            removeIcon: "<i class=\"icon-trash\"></i> ",
+            allowedFileExtensions: ["jpg", "jpeg", "gif", "png"],
+            elErrorContainer: "#errorBlock"
+
+
+
+        });
+
+
+
+    });
+</script>
+<?php $__env->stopSection(); ?>
+
+
+
+
 <?php echo $__env->make('layouts.adminsials', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH /Users/lifeofrence/Documents/laraproject/resources/views/admissions//editTransfer.blade.php ENDPATH**/ ?>

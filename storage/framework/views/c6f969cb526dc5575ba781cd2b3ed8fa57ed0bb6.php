@@ -73,6 +73,7 @@
                                         <a href="<?php echo e(route('student.otherfeespayment')); ?>"
                                             class="nav-link <?php echo $__env->yieldContent('results'); ?>">
                                             <i class="fa fa-eye nav-icon"></i>Show Other Fees
+                                        </a>
                                     </div>
                                 <?php echo csrf_field(); ?>
                                 <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">

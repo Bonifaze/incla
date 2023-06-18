@@ -83,6 +83,7 @@
                                         <a href="{{ route('student.otherfeespayment') }}"
                                             class="nav-link @yield('results')">
                                             <i class="fa fa-eye nav-icon"></i>Show Other Fees
+                                        </a>
                                     </div>
                                 @csrf
                                 <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">

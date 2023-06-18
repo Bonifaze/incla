@@ -29,97 +29,126 @@
 
 
 @section('content')
-
-<div class="content-wrapper">
-    <!-- Content Header (Page header) -->
-
-
-    <!-- Main content -->
-    <section class="content">
-      <div class="container-fluid">
-        <!-- left column -->
-        <div class="col_full">
-
-            <div class="card">
-                <h1
-                        class="app-page-title text-uppercase h5 font-weight-bold p-2 mb-2 shadow-sm text-center text-success border">
-                      Generate Matriculation Number
-                    </h1>
+    <div class="content-wrapper">
+        <!-- Content Header (Page header) -->
 
 
-              <!-- /.card-header -->
-            <!-- form start -->
+        <!-- Main content -->
+        <section class="content">
+            <div class="container-fluid">
+                <!-- left column -->
+                <div class="col_full">
 
-                    <form method="POST" action="/admissions/students/store" enctype="multipart/form-data" class="p-3">
-                        @csrf
+                    <div class="card">
+                        <h1
+                            class="app-page-title text-uppercase h5 font-weight-bold p-2 mb-2 shadow-sm text-center text-success border">
+                            Generate Matriculation Number
+                        </h1>
 
-                        <div class="card-body">
 
-                            {{--  @include('partialsv3.flash')  --}}
-                        @if (session('approvalMsg'))
-                            {!! session('approvalMsg') !!}
-                        @endif
-                            <div class="box-body">
-                                <div class="">
-                                    {{--  <h3 class="box-title">Bio-Data</h3>  --}}
-                                </div>
+                        <!-- /.card-header -->
+                        <!-- form start -->
+
+                        <form method="POST" action="/admissions/students/store" enctype="multipart/form-data" class="p-3">
+                            @csrf
+
+                            <div class="card-body">
+
+                                {{--  @include('partialsv3.flash')  --}}
+                                @if (session('approvalMsg'))
+                                    {!! session('approvalMsg') !!}
+                                @endif
+                                <div class="box-body">
+                                    <div class="">
+                                        {{--  <h3 class="box-title">Bio-Data</h3>  --}}
+                                    </div>
                                     <div class="row">
-                                    <div class="col-md-12 form-group">
-                                        <b> <label for="program_id" class="text-danger"> Course of Study : <span
-                                                    class=text-warning> </span>
-                                               </label> </b>
-                                        {{ Form::select('program_id', $programs, null, ['placeholder'=>'SELECT COURSE OF STUDY', 'class' => 'form-control', 'id' => 'program_id', 'name' => 'program_id']) }}
-                                        <span class="text-danger"> {{ $errors->first('program_id') }}</span>
-                                        {{--  <label class="text-warning font-weight-bold">Please ensure you select your correct course of study  --}}
-                                        </label>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-md-4 form-group">
-                                        <div @if ($errors->has('title')) class ='has-error form-group' @endif>
-                                            <label for="title">Title :</label>
-
-                                            {!! Form::text('title', null, [
-                                                'placeholder' => '',
-                                                'class' => 'form-control',
-                                                'id' => 'title',
-                                                'name' => 'title',
-                                                'required' => 'required',
-                                            ]) !!}
-                                            <span class="text-danger"> {{ $errors->first('title') }}</span>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-4 form-group">
-                                        <label for="marital_status">Marital Status :</label>
-                                        {{ Form::select(
-                                            'marital_status',
-                                            [
-                                                'Single' => 'Single',
-                                                'Religious' => 'Religious',
-                                                'Married' => 'Married',
-                                            ],
-                                            'Single',
-                                            ['class' => 'form-control select2'],
-                                        ) }}
-
-                                    </div>
-
-                                    <div class="col-md-4 form-group">
-                                        <div @if ($errors->has('hobbies')) class ='has-error form-group' @endif>
-                                            <label for="hobbies">Hobbies :</label>
-
-                                            {!! Form::text('hobbies', null, [
-                                                'placeholder' => '',
-                                                'class' => 'form-control',
-                                                'id' => 'hobbies',
-                                                'name' => 'hobbies',
-                                            ]) !!}
-                                            <span class="text-danger"> {{ $errors->first('hobbies') }}</span>
+                                        <div class="col-md-12 form-group">
+                                            <b> <label for="program_id" class=""> Course of Study : <span
+                                                        class=text-warning> </span>
+                                                </label> </b>
+                                            {{ Form::select('program_id', $programs, null, ['placeholder' => 'SELECT YOUR COURSE OF STUDY', 'class' => 'form-control ', 'id' => 'program_id', 'name' => 'program_id']) }}
+                                            <span class="text-danger"> {{ $errors->first('program_id') }}</span>
+                                            {{--  <label class="text-warning font-weight-bold">Please ensure you select your correct course of study  --}}
+                                            </label>
                                         </div>
                                     </div>
                                     <div class="row">
-                                        <div class="col-12 form-group">
-                                        <label class="text-warning font-weight-bold">Please ensure your Passport is white Background</label><br>
+                                        <div class="col-md-2 form-group">
+                                            <div @if ($errors->has('title')) class ='has-error form-group' @endif>
+                                                <label for="title">Title :</label>
+
+                                                {!! Form::text('title', null, [
+                                                    'placeholder' => 'Mr',
+                                                    'class' => 'form-control',
+                                                    'id' => 'title',
+                                                    'name' => 'title',
+                                                    'required' => 'required',
+                                                ]) !!}
+                                                <span class="text-danger"> {{ $errors->first('title') }}</span>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-2 form-group">
+                                            <label for="marital_status">Marital Status :</label>
+                                            {{ Form::select(
+                                                'marital_status',
+                                                [
+                                                    'Single' => 'Single',
+                                                    'Religious' => 'Religious',
+                                                    'Married' => 'Married',
+                                                ],
+                                                'Single',
+                                                ['class' => 'form-control select2'],
+                                            ) }}
+
+                                        </div>
+
+                                        <div class="col-md-4 form-group">
+                                            <div @if ($errors->has('hobbies')) class ='has-error form-group' @endif>
+                                                <label for="hobbies">Hobbies :</label>
+
+                                                {!! Form::text('hobbies', null, [
+                                                    'placeholder' => 'Reading, Dancing.....',
+                                                    'class' => 'form-control',
+                                                    'id' => 'hobbies',
+                                                    'name' => 'hobbies',
+                                                ]) !!}
+                                                <span class="text-danger"> {{ $errors->first('hobbies') }}</span>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-3 form-group">
+                                            <label for="mode_of_entry">Mode of Entry <Span class="text-danger">*</Span>
+                                                :
+                                            </label>
+                                            {{ Form::select(
+                                                'mode_of_entry',
+                                                [
+                                                    ' ' => 'Select Mode of Entry',
+                                                    'UTME' => 'UTME',
+                                                    'DE' => 'Direct Entry',
+                                                    'TRANSFER' => 'Transfer',
+                                                    'PGD' => 'PGD',
+                                                    'MSc' => 'MSc',
+                                                    'MPA' => 'MPA',
+                                                    'MBA' => 'MBA',
+                                                    'PhD' => 'PhD',
+                                                ],
+                                                ' ',
+                                                ['class' => 'form-control select2', 'id' => 'mode-of-entry-select'],
+                                            ) }}
+
+                                        </div>
+                                        <div class="col-md-1 form-group">
+                                            <label for="level">Level :</label>
+                                            <input type="text" name="level" id="level-select" class="form-control"
+                                                readonly>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-6 form-group">
+                                            {{--  <label class="text-warning font-weight-bold">Please ensure your Passport is white Background</label><br>  --}}
                                             <label for="passport">Passport : </label>
                                             {!! Form::file('passport', [
                                                 'class' => 'form-control file-loading',
@@ -130,10 +159,12 @@
                                                 'required' => 'required',
                                             ]) !!}
                                             <span class="text-danger"> {{ $errors->first('passport') }}</span>
+                                            <span class="text-warning "> Please ensure your Passport is white Background
+                                            </span>
                                         </div>
 
 
-                                        <div class="col-12 form-group">
+                                        <div class="col-6 form-group">
                                             <label for="signature">Signature :</label>
                                             {!! Form::file('signature', [
                                                 'class' => 'form-control file-loading',
@@ -146,182 +177,182 @@
                                             <span class="text-danger"> {{ $errors->first('signature') }}</span>
                                         </div>
 
-                                    </div>
-                                    {{--  <div class="col-md-4 form-group">  --}}
+
+                                        {{--  <div class="col-md-4 form-group">  --}}
                                         {{--  <div @if ($errors->has('surname')) class ='has-error form-group' @endif>  --}}
-                                            {{--  <label for="surname">Surname :</label>  --}}
+                                        {{--  <label for="surname">Surname :</label>  --}}
 
-                                            {!! Form::hidden('surname', $applicantsDetails->surname, [
-                                                'placeholder' => '',
-                                                'class' => 'form-control',
-                                                'id' => 'surname',
-                                                'required' => 'required',
-                                                'readonly',
-                                            ]) !!}
-                                            {{--  <span class="text-danger"> {{ $errors->first('surname') }}</span>
+                                        {!! Form::hidden('surname', $applicantsDetails->surname, [
+                                            'placeholder' => '',
+                                            'class' => 'form-control',
+                                            'id' => 'surname',
+                                            'required' => 'required',
+                                            'readonly',
+                                        ]) !!}
+                                        {{--  <span class="text-danger"> {{ $errors->first('surname') }}</span>
                                         </div>
                                     </div>  --}}
 
 
-                                    {{--  <div class="col-md-4 form-group">
+                                        {{--  <div class="col-md-4 form-group">
                                         <div @if ($errors->has('first_name')) class ='has-error form-group' @endif>  --}}
-                                            {{--  <label for="first_name">First Name :</label>  --}}
-                                            {!! Form::hidden('first_name', $applicantsDetails->first_name, [
-                                                'placeholder' => '',
-                                                'class' => 'form-control',
-                                                'id' => 'first_name',
-                                                'required' => 'required',
-                                                'readonly',
-                                            ]) !!}
-                                            {{--  <span class="text-danger"> {{ $errors->first('first_name') }}</span>
+                                        {{--  <label for="first_name">First Name :</label>  --}}
+                                        {!! Form::hidden('first_name', $applicantsDetails->first_name, [
+                                            'placeholder' => '',
+                                            'class' => 'form-control',
+                                            'id' => 'first_name',
+                                            'required' => 'required',
+                                            'readonly',
+                                        ]) !!}
+                                        {{--  <span class="text-danger"> {{ $errors->first('first_name') }}</span>
                                         </div>
                                     </div>  --}}
 
 
-                                    {{--  <div class="col-md-4 form-group">
+                                        {{--  <div class="col-md-4 form-group">
                                         <div @if ($errors->has('middle_name')) class ='has-error form-group' @endif>  --}}
-                                            {{--  <label for="middle_name">Middle Name :</label>  --}}
-                                            {!! Form::hidden('middle_name', $applicantsDetails->middle_name, [
-                                                'placeholder' => '',
-                                                'class' => 'form-control',
-                                                'id' => 'middle_name',
-                                                'readonly',
-                                            ]) !!}
-                                            {{--  <span class="text-danger"> {{ $errors->first('middle_name') }}</span>
-                                        </div>
-                                    </div>  --}}
-
-
-                                </div>
-
-                                {{--  <div class="row">
-                                    <div class="col-md-4 form-group">  --}}
-                                        {{--  <label for="type">Gender :</label>  --}}
-                                        {!! Form::hidden('gender', $applicantsDetails->gender, [
+                                        {{--  <label for="middle_name">Middle Name :</label>  --}}
+                                        {!! Form::hidden('middle_name', $applicantsDetails->middle_name, [
                                             'placeholder' => '',
                                             'class' => 'form-control',
                                             'id' => 'middle_name',
                                             'readonly',
                                         ]) !!}
+                                        {{--  <span class="text-danger"> {{ $errors->first('middle_name') }}</span>
+                                        </div>
+                                    </div>  --}}
+
+
+                                    </div>
+
+                                    {{--  <div class="row">
+                                    <div class="col-md-4 form-group">  --}}
+                                    {{--  <label for="type">Gender :</label>  --}}
+                                    {!! Form::hidden('gender', $applicantsDetails->gender, [
+                                        'placeholder' => '',
+                                        'class' => 'form-control',
+                                        'id' => 'middle_name',
+                                        'readonly',
+                                    ]) !!}
 
                                     {{--  </div>
 
                                     <div class="col-md-4 form-group">
                                         <div @if ($errors->has('phone')) class ='has-error form-group' @endif>  --}}
-                                            {{--  <label for="phone">Phone :</label>  --}}
+                                    {{--  <label for="phone">Phone :</label>  --}}
 
-                                            {!! Form::hidden('phone', $applicantsDetails->phone, [
-                                                'placeholder' => '080xxxxx',
-                                                'class' => 'form-control',
-                                                'id' => 'phone',
-                                                'name' => 'phone',
-                                                'required' => 'required',
-                                                'readonly',
-                                            ]) !!}
-                                            {{--  <span class="text-danger"> {{ $errors->first('phone') }}</span>
+                                    {!! Form::hidden('phone', $applicantsDetails->phone, [
+                                        'placeholder' => '080xxxxx',
+                                        'class' => 'form-control',
+                                        'id' => 'phone',
+                                        'name' => 'phone',
+                                        'required' => 'required',
+                                        'readonly',
+                                    ]) !!}
+                                    {{--  <span class="text-danger"> {{ $errors->first('phone') }}</span>
                                         </div>
                                     </div>  --}}
                                     {{--  <div class="col-md-4 form-group">  --}}
-                                        {{--  <label for="dob">Date of Birth :</label>  --}}
-                                        {!! Form::hidden('dob', $applicantsDetails->dob, [
-                                            'placeholder' => '',
-                                            'class' => 'form-control',
-                                            'id' => 'dob',
-                                            'name' => 'dob',
-                                            'readonly',
-                                        ]) !!}
-                                        {{--  <span class="text-danger"> {{ $errors->first('dob') }}</span>
+                                    {{--  <label for="dob">Date of Birth :</label>  --}}
+                                    {!! Form::hidden('dob', $applicantsDetails->dob, [
+                                        'placeholder' => '',
+                                        'class' => 'form-control',
+                                        'id' => 'dob',
+                                        'name' => 'dob',
+                                        'readonly',
+                                    ]) !!}
+                                    {{--  <span class="text-danger"> {{ $errors->first('dob') }}</span>
                                     </div>
                                 </div>  --}}
 
-                                {{--  <div class="row">
+                                    {{--  <div class="row">
                                     <div class="col-md-4 form-group">
                                         <div @if ($errors->has('email')) class ='has-error form-group' @endif>  --}}
-                                            {{--  <label for="email">Email :</label>  --}}
+                                    {{--  <label for="email">Email :</label>  --}}
 
-                                            {!! Form::hidden('email', $applicantsDetails->email, [
-                                                'placeholder' => 'john@doe.com',
-                                                'class' => 'form-control',
-                                                'id' => 'email',
-                                                'name' => 'email',
-                                                'readonly',
-                                            ]) !!}
-                                            {{--  <span class="text-danger"> {{ $errors->first('email') }}</span>
+                                    {!! Form::hidden('email', $applicantsDetails->email, [
+                                        'placeholder' => 'john@doe.com',
+                                        'class' => 'form-control',
+                                        'id' => 'email',
+                                        'name' => 'email',
+                                        'readonly',
+                                    ]) !!}
+                                    {{--  <span class="text-danger"> {{ $errors->first('email') }}</span>
                                         </div>
                                     </div>  --}}
                                     {{--  <div class="col-md-4 form-group">
                                         <div @if ($errors->has('nationality')) class ='has-error form-group' @endif>
                                             <label for="nationality">Nationality :</label>  --}}
 
-                                            {!! Form::hidden('nationality', $applicantsDetails->nationality, [
-                                                'placeholder' => 'Nigeria',
-                                                'class' => 'form-control',
-                                                'id' => 'nationality',
-                                                'name' => 'nationality',
-                                                'required' => 'required',
-                                                'readonly',
-                                            ]) !!}
-                                            {{--  <span class="text-danger"> {{ $errors->first('nationality') }}</span>
+                                    {!! Form::hidden('nationality', $applicantsDetails->nationality, [
+                                        'placeholder' => 'Nigeria',
+                                        'class' => 'form-control',
+                                        'id' => 'nationality',
+                                        'name' => 'nationality',
+                                        'required' => 'required',
+                                        'readonly',
+                                    ]) !!}
+                                    {{--  <span class="text-danger"> {{ $errors->first('nationality') }}</span>
                                         </div>
                                     </div>  --}}
                                     {{--  <div class="col-md-4 form-group">
                                         <div @if ($errors->has('state')) class ='has-error form-group' @endif>  --}}
-                                            {{--  <label for="state">State of Origin :</label>  --}}
+                                    {{--  <label for="state">State of Origin :</label>  --}}
 
-                                            {!! Form::hidden('state', $applicantsDetails->state_origin, [
-                                                'placeholder' => 'Imo',
-                                                'class' => 'form-control',
-                                                'id' => 'state',
-                                                'name' => 'state',
-                                                'required' => 'required',
-                                                'readonly',
-                                            ]) !!}
-                                            {{--  <span class="text-danger"> {{ $errors->first('state') }}</span>
+                                    {!! Form::hidden('state', $applicantsDetails->state_origin, [
+                                        'placeholder' => 'Imo',
+                                        'class' => 'form-control',
+                                        'id' => 'state',
+                                        'name' => 'state',
+                                        'required' => 'required',
+                                        'readonly',
+                                    ]) !!}
+                                    {{--  <span class="text-danger"> {{ $errors->first('state') }}</span>
                                         </div>
                                     </div>
                                 </div>  --}}
 
 
-                                {{--  <div class="row">
+                                    {{--  <div class="row">
                                     <div class="col-md-4 form-group">
                                         <div @if ($errors->has('lga_name')) class ='has-error form-group' @endif>  --}}
-                                            {{--  <label for="lga_name">LGA :</label>  --}}
+                                    {{--  <label for="lga_name">LGA :</label>  --}}
 
-                                            {!! Form::hidden('lga_name', $applicantsDetails->lga, [
-                                                'placeholder' => 'Ahiazu-Mbaise',
-                                                'class' => 'form-control',
-                                                'id' => 'lga_name',
-                                                'name' => 'lga_name',
-                                                'required' => 'required',
-                                                'readonly',
-                                            ]) !!}
-                                            {{--  <span class="text-danger"> {{ $errors->first('lga_name') }}</span>
+                                    {!! Form::hidden('lga_name', $applicantsDetails->lga, [
+                                        'placeholder' => 'Ahiazu-Mbaise',
+                                        'class' => 'form-control',
+                                        'id' => 'lga_name',
+                                        'name' => 'lga_name',
+                                        'required' => 'required',
+                                        'readonly',
+                                    ]) !!}
+                                    {{--  <span class="text-danger"> {{ $errors->first('lga_name') }}</span>
                                         </div>
                                     </div>  --}}
                                     {{--  <div class="col-md-4 form-group">  --}}
-                                        {{--  <label for="religion">Religion :</label>  --}}
-                                        {!! Form::hidden('religion', $applicantsDetails->religion, [
-                                            'placeholder' => 'Cooking',
-                                            'class' => 'form-control',
-                                            'id' => 'religion',
-                                            'name' => 'religion',
-                                            'readonly',
-                                        ]) !!}
+                                    {{--  <label for="religion">Religion :</label>  --}}
+                                    {!! Form::hidden('religion', $applicantsDetails->religion, [
+                                        'placeholder' => 'Cooking',
+                                        'class' => 'form-control',
+                                        'id' => 'religion',
+                                        'name' => 'religion',
+                                        'readonly',
+                                    ]) !!}
                                     {{--  </div>  --}}
 
                                     {{--  <div class="col-md-4 form-group">
                                         <div @if ($errors->has('address')) class ='has-error form-group' @endif>  --}}
 
-                                            {{--  <label for="address">Address :</label>  --}}
-                                            {!! Form::hidden('address', $applicantsDetails->address, [
-                                                'placeholder' => '',
-                                                'rows' => '3',
-                                                'class' => 'form-control',
-                                                'id' => 'address',
-                                                'required' => 'required',
-                                                'readonly',
-                                            ]) !!}
-                                            {{--  <span class="text-danger"> {{ $errors->first('address') }}</span>
+                                    {{--  <label for="address">Address :</label>  --}}
+                                    {!! Form::hidden('address', $applicantsDetails->address, [
+                                        'placeholder' => '',
+                                        'rows' => '3',
+                                        'class' => 'form-control',
+                                        'id' => 'address',
+                                        'required' => 'required',
+                                        'readonly',
+                                    ]) !!}
+                                    {{--  <span class="text-danger"> {{ $errors->first('address') }}</span>
                                         </div>
                                     </div>  --}}
 
@@ -329,7 +360,7 @@
                                 </div>
 
                                 {{--  <div class="row">  --}}
-                                    {{--  <div class="col-md-4 form-group">
+                                {{--  <div class="col-md-4 form-group">
 								<label for="city">City of Residence :</label>
 								{!! Form::text('city', null, array('placeholder' => 'Abuja', 'class' => 'form-control', 'id' => 'city', 'name' => 'city')) !!}
 								<span class="text-danger"> {{ $errors->first('city') }}</span>
@@ -351,44 +382,44 @@
                                 {{--  <div class="row">
                                     <div class="col-md-4 form-group">
                                         <div @if ($errors->has('etitle')) class ='has-error form-group' @endif>  --}}
-                                            {{--  <label for="etitle">Title :</label>  --}}
-                                            {!! Form::hidden('etitle', $applicantsDetails->sponsor_title, [
-                                                'placeholder' => '',
-                                                'class' => 'form-control',
-                                                'id' => 'etitle',
-                                                'required' => 'required',
-                                            ]) !!}
-                                            {{--  <span class="text-danger"> {{ $errors->first('etitle') }}</span>
+                                {{--  <label for="etitle">Title :</label>  --}}
+                                {!! Form::hidden('etitle', $applicantsDetails->sponsor_title, [
+                                    'placeholder' => '',
+                                    'class' => 'form-control',
+                                    'id' => 'etitle',
+                                    'required' => 'required',
+                                ]) !!}
+                                {{--  <span class="text-danger"> {{ $errors->first('etitle') }}</span>
                                         </div>
                                     </div>  --}}
-                                    {{--  <div class="col-md-4 form-group">
+                                {{--  <div class="col-md-4 form-group">
                                         <div @if ($errors->has('relationship')) class ='has-error form-group' @endif>  --}}
-                                            {{--  <label for="relationship">Relationship with Contact / Sponsor :</label>  --}}
-                                            {!! Form::hidden('relationship', $applicantsDetails->sponsor_relationship, [
-                                                'placeholder' => '',
-                                                'class' => 'form-control',
-                                                'id' => 'relationship',
-                                                'required' => 'required',
-                                            ]) !!}
-                                            <span class="text-danger"> {{ $errors->first('relationship') }}</span>
-                                        {{--  </div>
+                                {{--  <label for="relationship">Relationship with Contact / Sponsor :</label>  --}}
+                                {!! Form::hidden('relationship', $applicantsDetails->sponsor_relationship, [
+                                    'placeholder' => '',
+                                    'class' => 'form-control',
+                                    'id' => 'relationship',
+                                    'required' => 'required',
+                                ]) !!}
+                                <span class="text-danger"> {{ $errors->first('relationship') }}</span>
+                                {{--  </div>
                                     </div>
 
                                     <div class="col-md-4 form-group">
                                         <div @if ($errors->has('esurname')) class ='has-error form-group' @endif>  --}}
-                                            {{--  <label for="esurname">Name :</label>  --}}
-                                            {!! Form::hidden('esurname', $applicantsDetails->name, [
-                                                'placeholder' => '',
-                                                'class' => 'form-control',
-                                                'id' => 'esurname',
-                                                'required' => 'required',
-                                            ]) !!}
-                                            {{--  <span class="text-danger"> {{ $errors->first('esurname') }}</span>
+                                {{--  <label for="esurname">Name :</label>  --}}
+                                {!! Form::hidden('esurname', $applicantsDetails->name, [
+                                    'placeholder' => '',
+                                    'class' => 'form-control',
+                                    'id' => 'esurname',
+                                    'required' => 'required',
+                                ]) !!}
+                                {{--  <span class="text-danger"> {{ $errors->first('esurname') }}</span>
                                         </div>
                                     </div>  --}}
 
 
-                                    {{-- <div class="col-md-4 form-group">
+                                {{-- <div class="col-md-4 form-group">
                                     <div  @if ($errors->has('eother_names')) class ='has-error form-group' @endif>
                                         <label for="eother_names">Other Names :</label>
                                         {!! Form::text('eother_names', null, array('placeholder' => '', 'class' => 'form-control', 'id' => 'eother_names', 'required' => 'required')) !!}
@@ -403,7 +434,7 @@
                                 {{--  <div class="row">  --}}
 
 
-                                    {{--  <div class="col-md-4 form-group">
+                                {{--  <div class="col-md-4 form-group">
               			<div  @if ($errors->has('estate')) class ='has-error form-group' @endif>
 								<label for="estate">State of Residence :</label>
 								{!! Form::text('estate', null, array( 'placeholder' => '','class' => 'form-control', 'id' => 'estate', 'required' => 'required')) !!}
@@ -426,33 +457,33 @@
                                 {{--  <div class="row">
                                     <div class="col-md-6 form-group">
                                         <div @if ($errors->has('eemail')) class ='has-error form-group' @endif>  --}}
-                                            {{--  <label for="eemail">Email :</label>  --}}
+                                {{--  <label for="eemail">Email :</label>  --}}
 
-                                            {!! Form::hidden('eemail', $applicantsDetails->sponsors_email, [
-                                                'placeholder' => 'john@doe.com',
-                                                'class' => 'form-control',
-                                                'id' => 'eemail',
-                                                'name' => 'eemail',
-                                                'readonly',
-                                            ]) !!}
-                                            {{--  <span class="text-danger"> {{ $errors->first('eemail') }}</span>
+                                {!! Form::hidden('eemail', $applicantsDetails->sponsors_email, [
+                                    'placeholder' => 'john@doe.com',
+                                    'class' => 'form-control',
+                                    'id' => 'eemail',
+                                    'name' => 'eemail',
+                                    'readonly',
+                                ]) !!}
+                                {{--  <span class="text-danger"> {{ $errors->first('eemail') }}</span>
                                         </div>
                                     </div>  --}}
 
 
-                                    {{--  <div class="col-md-6 form-group">
+                                {{--  <div class="col-md-6 form-group">
                                         <div @if ($errors->has('ephone')) class ='has-error form-group' @endif>  --}}
-                                            {{--  <label for="ephone">Phone :</label>  --}}
+                                {{--  <label for="ephone">Phone :</label>  --}}
 
-                                            {!! Form::hidden('ephone', $applicantsDetails->sponsors_phone, [
-                                                'placeholder' => '080xxxxx',
-                                                'class' => 'form-control',
-                                                'id' => 'ephone',
-                                                'name' => 'ephone',
-                                                'required' => 'required',
-                                                'readonly',
-                                            ]) !!}
-                                            {{--  <span class="text-danger"> {{ $errors->first('ephone') }}</span>
+                                {!! Form::hidden('ephone', $applicantsDetails->sponsors_phone, [
+                                    'placeholder' => '080xxxxx',
+                                    'class' => 'form-control',
+                                    'id' => 'ephone',
+                                    'name' => 'ephone',
+                                    'required' => 'required',
+                                    'readonly',
+                                ]) !!}
+                                {{--  <span class="text-danger"> {{ $errors->first('ephone') }}</span>
                                         </div>
                                     </div>
                                 </div>  --}}
@@ -461,16 +492,16 @@
                                     <div class="col-md-12 form-group">
                                         <div @if ($errors->has('eaddress')) class ='has-error form-group' @endif>  --}}
 
-                                            {{--  <label for="eaddress">Address :</label>  --}}
-                                            {!! Form::hidden('eaddress', $applicantsDetails->sponsors_address, [
-                                                'placeholder' => '',
-                                                'rows' => '4',
-                                                'class' => 'form-control',
-                                                'id' => 'eaddress',
-                                                'required' => 'required',
-                                                'readonly',
-                                            ]) !!}
-                                            {{--  <span class="text-danger"> {{ $errors->first('eaddress') }}</span>
+                                {{--  <label for="eaddress">Address :</label>  --}}
+                                {!! Form::hidden('eaddress', $applicantsDetails->sponsors_address, [
+                                    'placeholder' => '',
+                                    'rows' => '4',
+                                    'class' => 'form-control',
+                                    'id' => 'eaddress',
+                                    'required' => 'required',
+                                    'readonly',
+                                ]) !!}
+                                {{--  <span class="text-danger"> {{ $errors->first('eaddress') }}</span>
                                         </div>
                                     </div>
 
@@ -502,8 +533,8 @@
                                         </div>
                                     </div>  --}}
                                     {{--  <div class="col-md-6 form-group">  --}}
-                                        {{--  <label for="mode_of_study">Mode of Study :</label>  --}}
-                                        {{--  {{ Form::hidden(
+                                    {{--  <label for="mode_of_study">Mode of Study :</label>  --}}
+                                    {{--  {{ Form::hidden(
                                             'mode_of_study',
                                             [
                                                 'Full Time' => 'Full Time',
@@ -514,17 +545,17 @@
                                             'Full Time',
                                             ['class' => 'form-control select2'],
                                         ) }}  --}}
-                                        {!! Form::hidden('mode_of_study', 'Full Time', [
-                                                'placeholder' => '',
-                                                'rows' => '4',
-                                                'class' => 'form-control',
-                                                'id' => 'eaddress',
-                                                'required' => 'required',
-                                                'readonly',
-                                            ]) !!}
+                                    {!! Form::hidden('mode_of_study', 'Full Time', [
+                                        'placeholder' => '',
+                                        'rows' => '4',
+                                        'class' => 'form-control',
+                                        'id' => 'eaddress',
+                                        'required' => 'required',
+                                        'readonly',
+                                    ]) !!}
 
                                     {{--  </div>  --}}
-                                    <div class="col-md-4 form-group">
+                                    {{--  <div class="col-md-4 form-group ">
                                         <label for="level">Level :</label>
                                         {{ Form::select(
                                             'level',
@@ -537,38 +568,33 @@
                                                 '900' => 'PhD',
                                             ],
                                             ' ',
-                                            ['class' => 'form-control select2'],
+                                            ['class' => 'form-control select2', 'id' => 'level-select'],
                                         ) }}
 
-                                    </div>
+                                    </div>  --}}
+
+
+
+
+
 
                                     <div class="col-md-4 form-group">
-                                        <label for="mode_of_entry">Mode of Entry <Span class="text-danger">*</Span> : </label>
-                                        {{ Form::select(
-                                            'mode_of_entry',
-                                            [
-                                                 ' ' => 'Select Mode of Entry',
-                                                'UTME' => 'UTME',
-                                                'DE' => 'Direct Entry',
-                                                'TRANSFER' => 'Transfer',
-                                                'PGD' => 'PGD',
-                                                'MSc' => 'Masters',
-                                                'MPA' => 'MPA',
-                                                'MBA' => 'MBA',
-                                                'PhD' => 'PhD',
-                                            ],
-                                            ' ',
-                                            ['class' => 'form-control select2'],
-                                        ) }}
 
+                                        {!! Form::hidden('entry_session_id', $sessions, [
+                                            'placeholder' => '',
+                                            'rows' => '4',
+                                            'class' => 'form-control',
+                                            'id' => 'entry_session_id',
+                                            'required' => 'required',
+                                            'readonly',
+                                        ]) !!}
+                                        {{--  <div class="col-md-4 form-group">
+                                    <label for="entry_session_id">Entry Session :</label>
+                                    {{ Form::select('entry_session_id', $sessions, null, ['class' => 'form-control', 'id' => 'entry_session_id', 'name' => 'entry_session_id', 'readonly']) }}
+                                    <span class="text-danger"> {{ $errors->first('entry_session_id') }}</span>
+
+                                </div>  --}}
                                     </div>
-                                         <div class="col-md-4 form-group">
-                                        <label for="entry_session_id">Entry Session :</label>
-                                        {{ Form::select('entry_session_id', $sessions, null, ['class' => 'form-control', 'id' => 'entry_session_id', 'name' => 'entry_session_id', 'readonly']) }}
-                                        <span class="text-danger"> {{ $errors->first('entry_session_id') }}</span>
-
-                                    </div>
-
 
 
                                 </div>
@@ -616,15 +642,13 @@
 
                                 </div>
 
-                                <div class="box-header">
-                                    <h3 class="box-title">&nbsp;</h3>
-                                </div>
+                                {{--  <div class="box-header">
+                                <h3 class="box-title">&nbsp;</h3>
+                            </div>  --}}
 
-                                <div class="box-header">
-                                    <h3 class="box-title">Medical Information</h3>
-                                </div>
-
-
+                                {{--  <div class="box-header">
+                                <h3 class="box-title">Medical Information</h3>
+                            </div>  --}}
 
                                 <div class="row">
                                     <div class="col-md-4 form-group">
@@ -714,128 +738,179 @@
                                     </div>
 
                                 </div>
-                                 <div class="position-relative mt-5">
-                                <button type="button" class="btn btn-success "
-                                    data-bs-toggle="modal"
-                                    data-bs-target="#myModal">{{ __('Generate Matric Number') }}</button>
-                                {{--  <button type="submit" onclick="deleteCourse()" class="btn btn-success position-absolute bottom-0 end-0" data-bs-toggle="modal" data-bs-target="#myModal">{{ __('Generate Matric Number') }}</button>  --}}
-                            </div>
-
-                            </div>
-
-
-                        </div>
-
-
-
-                        <div class="modal" id="myModal">
-                            <div class="modal-dialog">
-                                <div class="modal-content">
-
-                                    <!-- Modal Header -->
-                                    <div class="modal-header">
-                                        <h4 class="modal-title bold">Are you sure?</h4>
-                                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-                                    </div>
-
-                                    <!-- Modal body -->
-                                    <div class="modal-body">
-                                        Please confirm your course of Study and information before proceeding
-                                    </div>
-
-                                    <!-- Modal footer -->
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn fw-bolder text-danger"
-                                            data-bs-dismiss="modal">Go Back</button>
-                                        <button type="submit" class="btn btn-success"
-                                            data-bs-dismiss="modal">Proceed</button>
-                                    </div>
-
+                                <div class="position-relative mt-5">
+                                    <button type="button" class="btn btn-success " data-bs-toggle="modal"
+                                        data-bs-target="#myModal"><i class="fas fa-cogs"></i>
+                                        {{ __('Generate Matric Number') }}</button>
+                                    {{--  <button type="submit" onclick="deleteCourse()" class="btn btn-success position-absolute bottom-0 end-0" data-bs-toggle="modal" data-bs-target="#myModal">{{ __('Generate Matric Number') }}</button>  --}}
                                 </div>
+
+                            </div>
+
+
+                    </div>
+
+
+
+                    <div class="modal" id="myModal">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+
+                                <!-- Modal Header -->
+                                <div class="modal-header">
+                                    <h4 class="modal-title bold">Are you sure?</h4>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                                </div>
+
+                                <!-- Modal body -->
+                                <div class="modal-body">
+                                    Please confirm your course of Study and information before proceeding
+                                </div>
+
+                                <!-- Modal footer -->
+                                <div class="modal-footer">
+                                    <button type="button" class="btn fw-bolder text-danger" data-bs-dismiss="modal">Go
+                                        Back</button>
+                                    <button type="submit" class="btn btn-success" data-bs-dismiss="modal"><i
+                                            class="fas fa-arrow-right"></i>
+                                        Proceed</button>
+                                </div>
+
                             </div>
                         </div>
+                    </div>
                     </form>
 
                 </div>
             </div>
             {!! Form::close() !!}
-        </div>
+    </div>
     </div>
     </section>
     </div>
-    @endsection
+@endsection
 @section('pagescript')
-
     <!-- External JavaScripts
-                 ============================================= -->
+                             ============================================= -->
     <script src="{{ asset('js/jquery.js') }}"></script>
 
-<script type="text/javascript">
 
-var ngst = [
-{"ID": "0", "Name": "----Mode of Entry----"},
-{"ID": "UTME", "Name": "UTME"},
-{"ID": "DE", "Name": "DE"},
-{"ID": "TRANSFER", "Name": "TRANSFER"},
-{"ID": "PGD", "Name": "PGD"},
-{"ID": "MSc", "Name": "MSc"},
-{"ID": "PhD", "Name": "PhD"},
+    <script type="text/javascript">
+        $(document).ready(function() {
+            // Define the level options based on mode of study
+            var levelOptions = {
+                "UTME": "100",
+                "DE": "200",
+                "TRANSFER": "200",
+                "PGD": "700",
+                "PhD": "900",
+                "MBA": "800",
+                "MPA": "800",
+                "MSc": "800"
+            };
 
+            // Handle mode of study change event
+            $('#mode-of-entry-select').change(function() {
+                var selectedMode = $(this).val();
+                var level = levelOptions[selectedMode] || '';
 
-];
-
-var ele = document.getElementById('state');
-for (var i = 0; i < ngst.length; i++) {
-
-ele.innerHTML = ele.innerHTML +
-    '<option value="' + ngst[i]['ID'] + '">' + ngst[i]['Name'] + '</option>';
-}
-
-
-function show(ele) {
-
-$("#slga").empty();
-$('#writew').val('');
-
-var parts =
-  {
-    "UTME": [
-      "100"
-    ],
-    "DE": [
-      "200"
-    ],
-    "TRANSFER": [
-      "200"
-    ],
-    "PGD": [
-      "700"
-    ],
-     "PhD": [
-      "900"
-    ],
-    "MSc": [
-      "800"
-    ]
-  };
-
-var msg = ele.value;
-
-var ele1 = document.getElementById('slga');
-
-for (i = 0; i < parts[msg].length; i++) {
-
-  $('#slga1').show();
-  $('#writew1').show();
-
-ele1.innerHTML = ele1.innerHTML +
-    '<option value="' + parts[msg][i] + '">' + parts[msg][i] + '</option>';
-}
+                $('#level-select').val(level);
+            });
+        });
+    </script>
 
 
-    }
 
-</script>
+
+    <script type="text/javascript">
+        var ngst = [{
+                "ID": "0",
+                "Name": "----Mode of Entry----"
+            },
+            {
+                "ID": "UTME",
+                "Name": "UTME"
+            },
+            {
+                "ID": "DE",
+                "Name": "DE"
+            },
+            {
+                "ID": "TRANSFER",
+                "Name": "TRANSFER"
+            },
+            {
+                "ID": "PGD",
+                "Name": "PGD"
+            },
+            {
+                "ID": "MSc",
+                "Name": "MSc"
+            },
+            {
+                "ID": "PhD",
+                "Name": "PhD"
+            },
+
+
+        ];
+
+        var ele = document.getElementById('state');
+        for (var i = 0; i < ngst.length; i++) {
+
+            ele.innerHTML = ele.innerHTML +
+                '<option value="' + ngst[i]['ID'] + '">' + ngst[i]['Name'] + '</option>';
+        }
+
+
+        function show(ele) {
+
+            $("#slga").empty();
+            $('#writew').val('');
+
+            var parts = {
+                "UTME": [
+                    "100"
+                ],
+                "DE": [
+                    "200"
+                ],
+                "TRANSFER": [
+                    "200"
+                ],
+                "PGD": [
+                    "700"
+                ],
+                "PhD": [
+                    "900"
+                ],
+                "MPA": [
+                    "900"
+                ],
+                "MBA": [
+                    "800"
+                ],
+                "MSc": [
+                    "800"
+                ]
+            };
+
+            var msg = ele.value;
+
+            var ele1 = document.getElementById('slga');
+
+            for (i = 0; i < parts[msg].length; i++) {
+
+                $('#slga1').show();
+                $('#writew1').show();
+
+                ele1.innerHTML = ele1.innerHTML +
+                    '<option value="' + parts[msg][i] + '">' + parts[msg][i] + '</option>';
+            }
+
+
+        }
+    </script>
     <script>
         //    var myModal = new bootstrap.Modal(document.getElementById('myModal'), {})
         //  myModal.show()
@@ -927,7 +1002,4 @@ ele1.innerHTML = ele1.innerHTML +
 
         });
     </script>
-
-
-
 @endsection

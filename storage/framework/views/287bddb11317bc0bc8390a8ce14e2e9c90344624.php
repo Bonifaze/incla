@@ -30,7 +30,7 @@ active
         <div class="card p-5 shadow">
             <ul class="nav nav-tabs" id="myTab" role="tablist">
                 <li class="nav-item" role="presentation">
-                    <button class="nav-link active text-success fw-bold text-capitalize" id="home-tab" data-bs-toggle="tab" data-bs-target="#home-tab-pane" type="button" role="tab" aria-controls="home-tab-pane" aria-selected="true">Bio Data</button>
+                    <button class="nav-link active text-success fw-bold text-capitalize" id="home-tab" data-bs-toggle="tab" data-bs-target="#home-tab-pane" type="button" role="tab" aria-controls="home-tab-pane" aria-selected="true">Biodata</button>
                 </li>
                 <li class="nav-item" role="presentation">
                     <button class="nav-link text-success fw-bold text-capitalize" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile-tab-pane" type="button" role="tab" aria-controls="profile-tab-pane" aria-selected="false">Sponsor Information</button>
@@ -558,6 +558,10 @@ unset($__errorArgs, $__bag); ?>
                             <div class="col"> <img class=" mx-auto d-block" src="data:image/jpeg;base64,<?php echo e($applicantsDetails->olevel2); ?>" alt="" style="height: 300px; width:300px;" /></div>
                         </div>
 <div class="col-md-12 form-group">
+ <?php if(session('statusMsg')): ?>
+                            <?php echo session('statusMsg'); ?>
+
+                            <?php endif; ?>
                                 <label for="passport">Direct Entry Result :</label>
                                 <?php echo Form::file('passport', [
                                 'class' => 'form-control file-loading',
@@ -603,7 +607,7 @@ unset($__errorArgs, $__bag); ?>
 
                                     
                                     <button type="submit" class="btn btn-success mt-5">
-                                        <?php echo e(__('Save')); ?>
+                                        <?php echo e(__('Update')); ?>
 
                                     </button>
                                 </div>
@@ -614,6 +618,21 @@ unset($__errorArgs, $__bag); ?>
 
     </section>
 </div>
+<?php $__env->startSection('pagescript'); ?>
+<!-- External JavaScripts
+                ============================================= -->
+<script src="<?php echo e(asset('js/jquery.js')); ?>"></script>
+<!-- bootstrap datepicker -->
+<script src="<?php echo e(asset('dist/js/components/bootstrap-datepicker.js')); ?>"></script>
+<!-- Bootstrap File Upload Plugin -->
+<script src="<?php echo e(asset('dist/js/components/bs-filestyle.js')); ?>"></script>
+
+<script src="<?php echo e(asset('js/jquery.js')); ?>"></script>
+
+<!-- bootstrap datepicker -->
+<script src="<?php echo e(asset('dist/js/components/bootstrap-datepicker.js')); ?>"></script>
+<!-- Bootstrap File Upload Plugin -->
+<script src="<?php echo e(asset('dist/js/components/bs-filestyle.js')); ?>"></script>
 
 <script>
     $(document).ready(function() {
@@ -627,13 +646,33 @@ unset($__errorArgs, $__bag); ?>
 <script type="text/javascript">
     $(document).on('ready', function() {
 
-        $("#jamb").fileinput({
+        $("#passport").fileinput({
             mainClass: "input-group-md",
             showUpload: false,
             previewFileType: "image",
             browseClass: "btn btn-success",
             browseLabel: "Pick Image",
             browseIcon: "<i class=\"fas fa-user\"></i>",
+            removeClass: "btn btn-danger",
+            removeLabel: "Delete",
+            removeIcon: "<i class=\"icon-trash\"></i> ",
+            allowedFileExtensions: ["jpg", "jpeg", "gif", "png"],
+            elErrorContainer: "#errorBlock"
+        });
+
+    });
+</script>
+
+<script type="text/javascript">
+    $(document).on('ready', function() {
+
+        $("#jamb").fileinput({
+            mainClass: "input-group-md",
+            showUpload: false,
+            previewFileType: "image",
+            browseClass: "btn btn-success",
+            browseLabel: "Pick Image",
+            browseIcon: "<i class=\"fas fa-file-upload\"></i>",
             removeClass: "btn btn-danger",
             removeLabel: "Delete",
             removeIcon: "<i class=\"icon-trash\"></i> ",
@@ -652,7 +691,7 @@ unset($__errorArgs, $__bag); ?>
             previewFileType: "image",
             browseClass: "btn btn-success",
             browseLabel: "Pick Image",
-            browseIcon: "<i class=\"fas fa-user\"></i>",
+            browseIcon: "<i class=\"fas fa-file-upload\"></i>",
             removeClass: "btn btn-danger",
             removeLabel: "Delete",
             removeIcon: "<i class=\"icon-trash\"></i> ",
@@ -671,7 +710,7 @@ unset($__errorArgs, $__bag); ?>
             previewFileType: "image",
             browseClass: "btn btn-success",
             browseLabel: "Pick Image",
-            browseIcon: "<i class=\"fas fa-user\"></i>",
+            browseIcon: "<i class=\"fas fa-file-upload\"></i>",
             removeClass: "btn btn-danger",
             removeLabel: "Delete",
             removeIcon: "<i class=\"icon-trash\"></i> ",

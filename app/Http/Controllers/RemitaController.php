@@ -11,6 +11,7 @@ use App\StudentAcademic;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
+use App\Models\StudentBilling;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Database\QueryException;
 use Illuminate\Support\Facades\Redirect;
@@ -283,6 +284,14 @@ return view('admissions.error', compact('loginMsg'));
 
     // } // end feeType
 
+    private function getcurrentsession(){
+        $session = DB::table('bursary_sessions')->where('status', 1)
+        ->select ('bursary_sessions.id')->first();
+        $ses=$session->id;
+        $currentsession =$ses;
+        return $currentsession;
+    }
+
     public function findStudent(Request $request)
     {
         // $this->authorize('remitaSearch',Remita::class);
@@ -300,7 +309,28 @@ return view('admissions.error', compact('loginMsg'));
             $remitas = Remita::with(['feeType','student','student.academic'])->where('student_id',$academic->student_id)->where('status_code',1)
                 ->orderBy('updated_at','DESC')->get();
             $sum = $remitas->sum('amount');
-            return view('bursary.remita_list',compact('remitas','sum','academic'));
+             // Retrieve the last data for the user
+        $lastPayment = DB::table('student_billings')
+        ->where('student_id', $request->data)
+        ->where('status', 1)
+        ->where('session_id', $this->getcurrentsession())
+        ->orderBy('created_at', 'desc')
+        ->first();
+        $allPayment = DB::table('student_billings')
+        ->where('student_id', $request->data)
+        ->where('status', 1)
+        ->where('session_id', $this->getcurrentsession())
+        ->pluck('amount_paid');
+
+    $totalAmountPaid = $allPayment->sum();
+
+    $amountPaid = $lastPayment->amount_paid ?? 0;
+    $debt = $lastPayment->debt ?? 0;
+
+
+    $balance = $lastPayment ? max(0, $lastPayment->debt) : '<i class="fas fa-spinner fa-spin"></i>';
+
+            return view('bursary.remita_list',compact('remitas','sum','academic', 'totalAmountPaid', 'balance'));
         }
         else{
             $error = "Student Record not found";
@@ -340,5 +370,68 @@ return view('admissions.error', compact('loginMsg'));
 
         return redirect()->back()->with('success','Unpaid RRR deleted successfully');
     }
+
+
+
+public function updateDebt(Request $request)
+{
+    $studentId = $request->student_id;
+    $oldAmountPaid = $request->old_amount_paid;
+    $oldDebt = $request->old_debt;
+
+    // Perform the update query
+    try {
+    DB::table('student_billings')
+        ->where('student_id', $studentId)
+        ->where('status', 1)
+        // ->where('amount_paid', $oldAmountPaid)
+        ->where('debt', $oldDebt)
+        ->update([
+            'amount_paid' => $request->amount_paid,
+            'debt' => $request->debt,
+            'modify_by'=>$request->staff_id
+        ]);
+
+        return redirect()->route('remita.search-rrr')->with('success','Debt Edited successfully');
+    } catch (QueryException $e) {
+        $signUpMsg = '<div class="alert alert-danger alert-dismissible" role="alert"> <button type="button" class="close" data-dismiss="alert"> &times; </button> Your edit was not successful' . $e->getMessage() . ' </div>';
+        return redirect()->back()->with('signUpMsg', $signUpMsg);
+    }
+
+}
+
+//to find student debt AND DELETE THEM
+public function findStudentdebt($id)
+{
+    // $this->authorize('remitaSearch',Remita::class);
+
+    $academic= StudentAcademic::where('student_id', $id)->first();
+
+    if($academic){
+        $remitas =  DB::table('student_billings')
+        ->where('student_id',$academic->student_id)
+        ->where('status', 1)
+            // ->orderBy('created_at','DESC')
+            ->get();
+        $sum = "Cuurent Session Student Payment History";
+        return view('bursary.remita_listdebt',compact('remitas','sum','academic'));
+    }
+    else{
+        $error = "Student Record not found";
+        return redirect()->route('remita.search-rrr')
+            ->with('error',$error);
+    }
+} // end findStudent
+
+public function disable(Request $request)
+{
+    // $this->authorize('disable', Student::class);
+    $studentbilling = StudentBilling::findOrFail($request->id);
+
+    $studentbilling->status = $request->status;
+    $studentbilling->save();
+    return redirect()->back()
+        ->with('success', $request->action.' successfully');
+}
 
 } // end Controller

@@ -31,7 +31,7 @@ active
             <div class="card-body p-5">
                 <ul class="nav nav-tabs" id="myTab" role="tablist">
                     <li class="nav-item" role="presentation">
-                        <button class="nav-link{{ $de->status == 0 ? ' active' : '' }} text-success fw-bold text-capitalize" id="home-tab" type="button" role="tab" aria-controls="home-tab-pane" aria-selected="{{ $de->status == 0 ? 'true' : 'false' }}">Bio Data</button>
+                        <button class="nav-link{{ $de->status == 0 ? ' active' : '' }} text-success fw-bold text-capitalize" id="home-tab" type="button" role="tab" aria-controls="home-tab-pane" aria-selected="{{ $de->status == 0 ? 'true' : 'false' }}">Biodata</button>
                     </li>
                     <li class="nav-item" role="presentation">
                         <button class="nav-link{{ $de->status == 1 ? ' active' : '' }} text-success fw-bold text-capitalize" id="profile-tab" type="button" role="tab" aria-controls="profile-tab-pane" aria-selected="{{ $de->status == 1 ? 'true' : 'false' }}">Sponsor Information</button>
@@ -92,7 +92,7 @@ active
                                 'required' => 'required',
                                 ]) !!}
                                 <span class="text-danger"> {{ $errors->first('passport') }}</span>
-                                <span class="text-danger">The passport should not be greater than 1mb</span>
+                                <span class="text-danger">The passport should not be greater than 300kb</span>
                             </div>
                             <div class="form-group">
                                 <div class=" form-group">
@@ -1458,7 +1458,7 @@ active
             previewFileType: "image",
             browseClass: "btn btn-success",
             browseLabel: "Pick Image",
-            browseIcon: "<i class=\"fas fa-user\"></i>",
+            browseIcon: "<i class=\"fas fa-file-upload\"></i>",
             removeClass: "btn btn-danger",
             removeLabel: "Delete",
             removeIcon: "<i class=\"icon-trash\"></i> ",
@@ -1477,7 +1477,7 @@ active
             previewFileType: "image",
             browseClass: "btn btn-success",
             browseLabel: "Pick Image",
-            browseIcon: "<i class=\"fas fa-user\"></i>",
+            browseIcon: "<i class=\"fas fa-file-upload\"></i>",
             removeClass: "btn btn-danger",
             removeLabel: "Delete",
             removeIcon: "<i class=\"icon-trash\"></i> ",
@@ -1496,7 +1496,7 @@ active
             previewFileType: "image",
             browseClass: "btn btn-success",
             browseLabel: "Pick Image",
-            browseIcon: "<i class=\"fas fa-user\"></i>",
+            browseIcon: "<i class=\"fas fa-file-upload\"></i>",
             removeClass: "btn btn-danger",
             removeLabel: "Delete",
             removeIcon: "<i class=\"icon-trash\"></i> ",

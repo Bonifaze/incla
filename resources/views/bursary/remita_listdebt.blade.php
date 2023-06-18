@@ -48,7 +48,7 @@
                         {{--  {{ $academic->student->full_name}} ({{ $academic->mat_no}})  --}}
                         <br><br>
                         @isset($sum)
-                            {{ 'Total: N' . number_format($sum) }}
+                            {{ $sum }}
                         @else
                             Remita Details
                         @endisset
@@ -62,72 +62,31 @@
 
                         <table class="table table-striped">
                             <thead>
-
                                 <th>S/N</th>
                                 <th>RRR</th>
-                                <th>Student Name</th>
-                                <th>Matric Number</th>
-                                <th>Service Type</th>
-                                <th>Amount</th>
-                                <th>Generated</th>
+                                {{--  <th>Student Name</th>
+							  <th>Matric Number</th>  --}}
+                                <th>Amout Paid</th>
+                                <th>Debt</th>
+                                <th>Date</th>
+
                                 <th>Action</th>
                             </thead>
-                            <tbody class="">
-                                @foreach ($remitas as $key => $remita)
-                                    <tr>
-                                        <td>{{ $loop->iteration }}</td>
-                                        <td>{{ $remita->rrr }}</td>
-                                        <td>{{ $remita->student->fullname ?? null }}</td>
-                                        <td>{{ $remita->student->academic->mat_no ?? null }}</td>
-                                        <td>{{ $remita->feeType->name ?? null }}</td>
-                                        <td>&#8358;{{ number_format($remita->amount) }}</td>
-                                        <td>{{ $remita->created_at->format('d-M-Y') }}</td>
-                                        <td>
-                                            @if ($remita->status_code == 1)
-                                                <a class="btn btn-info" target="_blank"
-                                                    href="{{ route('remita.print-rrr', $remita->id) }}"><i
-                                                        class="fas fa-print text-white-50"></i> Print Receipt </a>
-                                            @else
-                                                {{ $remita->status }}
-                                            @endif
-                                        </td>
-
-                                    </tr>
-                                @endforeach
-
-                                </tr>
-                                <thead></thead>
+                            @foreach ($remitas as $key => $remita)
                                 <tr>
-                                    <th colspan="3">School Fees</th>
-                                    <th colspan="2">School Fee paid</th>
-                                    <th colspan="2">School Fees Debt</th>
-                                    <th colspan="2">Action</th>
-                                </tr>
-                                </thead>
-                            <tbody class="">
-                                <tr>
-                                    <td colspan="3">
-                                        @if ($balance === '<i class="fas fa-spinner fa-spin"></i>')
-                                            <i class="fa fa-spinner fa-spin"></i>
-                                        @else
-                                            &#8358;{{ number_format($totalAmountPaid + (int) $balance, 2) }}
-                                        @endif
-                                    </td>
-                                    <td colspan="2" class=" text-success">₦{!! $totalAmountPaid != 0 ? $totalAmountPaid : html_entity_decode('<i class="fa fa-spinner fa-spin"></i>') !!}</td>
-                                    <td colspan="2" class="text-bold  text-success">₦{!! html_entity_decode($balance) !!}</td>
+                                    <td>{{ $key + 1 }}</td>
+                                    <td>{{ $remita->rrr }}</td>
+                                    {{--  <td>{{$remita->student->fullname?? null}}</td>  --}}
+                                    {{--  <td>{{$remita->student->academic->mat_no?? null}}</td>  --}}
+                                    <td>&#8358;{{ number_format($remita->amount_paid) }}</td>
+                                    <td>&#8358;{{ number_format($remita->debt) }}</td>
+                                    <td>{{ $remita->created_at }}</td>
+
                                     <td>
                                         <a class="btn btn-info edit-button" data-toggle="modal" data-target="#editModal">
                                             <i class="fas fa-edit text-white-50"></i> Edit
                                         </a>
-                                    </td>
-
-                                </tr>
-                            </tbody>
-                        </table>
-
-
-                    </div>
-                    <div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="editModalLabel"
+                                        <div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="editModalLabel"
                         aria-hidden="true">
                         <div class="modal-dialog" role="document">
                             <div class="modal-content">
@@ -141,21 +100,21 @@
                                     <form id="editDebtForm" action="{{ route('remita.update-debt') }}" method="POST">
                                         @csrf
                                         <!-- Form inputs for editing debt and amount paid -->
-                                        <input type="hidden" name="student_id" value="{{ $remita->student->id }}">
+                                        <input type="hidden" name="student_id" value="{{ $remita->student_id }}">
                                         <input type="hidden" name="staff_id" value="{{ auth()->user()->id }}">
                                         <div class="form-group">
                                             <label for="debt">Debt:</label>
                                             <input type="text" class="form-control" id="debt" name="debt"
-                                                value="{{ $balance }}">
+                                                value="{{$remita->debt}}">
                                             <input type="hidden" class="form-control" id="debt" name="old_debt"
-                                                value="{{ $balance }}">
+                                                value="{{$remita->debt}}">
                                         </div>
                                         <div class="form-group">
                                             <label for="amountPaid">Amount Paid:</label>
                                             <input type="text" class="form-control" id="amountPaid" name="amount_paid"
-                                                value="{{ $totalAmountPaid }}">
+                                                value="{{$remita->amount_paid}}">
                                             <input type="hidden" class="form-control" id="amountPaid"
-                                                name="old_amount_paid" value="{{ $totalAmountPaid / 2 }}">
+                                                name="old_amount_paid" value="{{$remita->amount_paid}}">
                                         </div>
                                 </div>
                                 <div class="modal-footer">
@@ -167,19 +126,34 @@
                             </div>
                         </div>
                     </div>
+                                    </td>
+                                    <td>
+                                         {!! Form::open([
+                                                            'method' => 'patch',
+                                                            'action' => 'RemitaController@disable',
+                                                            'id' => 'disableUForm' . $remita->id,
+                                                        ]) !!}
+                                                        {{ Form::hidden('id', $remita->id) }}
+                                                        {{ Form::hidden('status', 0) }}
+                                                        {{ Form::hidden('action', 'disabled') }}
+
+
+                                                        <button type="submit" class="btn btn-danger"><span
+                                                                class="icon-line2-trash"></span><i
+                                                                class="fas fa-solid fa-trash"></i> Disable</button>
+                                                        {!! Form::close() !!}
+                                    </td>
+                                </tr>
+                            @endforeach
+
+                        </table>
+
+
+                    </div>
+
+
+
                 </div>
-                                                    <div class="dropdown no-arrow  btn btn-sm shadow-sm">
-
-                                        <a href="{{ route('remita.find-studentdebt', $remita->student->id) }}}"
-                                            class="nav-link @yield('results')">
-                                            <i class="fa fa-eye nav-icon"></i>Show Payment History
-                                        </a>
-                                    </div>
-
-                                    <div><a class="btn btn-warning" target="_blank"
-                                                        href="{{ route('remita.find-studentunpaidrrr', $remita->student->id) }}"> <i
-                                                            class="fa fa-eye"></i> Unpaid RRR </a>
-                                    </div>
                 <!-- /.box -->
 
             </div>

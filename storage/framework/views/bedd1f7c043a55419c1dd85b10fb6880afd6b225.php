@@ -114,6 +114,7 @@
                         </div>
                     </div>
                 </div>
+<?php echo $staff_courses->render(); ?>
 
                     </div>
                 </div>

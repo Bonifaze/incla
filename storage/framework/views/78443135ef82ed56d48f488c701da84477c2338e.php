@@ -35,17 +35,16 @@ active
             <div class="card-body p-5">
                 <ul class="nav nav-tabs" id="myTab" role="tablist">
                     <li class="nav-item" role="presentation">
-                        <button class="nav-link<?php echo e($utme->status == 0 ? ' active' : ''); ?> text-success fw-bold text-capitalize" id="home-tab" data-bs-toggle="tab" data-bs-target="#home-tab-pane" type="button" role="tab" aria-controls="home-tab-pane" aria-selected="<?php echo e($utme->status  == 0 ? 'true' : 'false'); ?>">Bio
-                            Data</button>
+                        <button class="nav-link<?php echo e($utme->status == 0 ? ' active' : ''); ?> text-success fw-bold text-capitalize" id="home-tab" type="button" role="tab" aria-controls="home-tab-pane" aria-selected="<?php echo e($utme->status  == 0 ? 'true' : 'false'); ?>">Biodata</button>
                     </li>
                     <li class="nav-item" role="presentation">
-                        <button class="nav-link<?php echo e($utme->status  == 1 ? ' active' : ''); ?> text-success fw-bold text-capitalize" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile-tab-pane" type="button" role="tab" aria-controls="profile-tab-pane" aria-selected="<?php echo e($utme->status  == 1 ? 'true' : 'false'); ?>">Sponsor Information</button>
+                        <button class="nav-link<?php echo e($utme->status  == 1 ? ' active' : ''); ?> text-success fw-bold text-capitalize" id="profile-tab" type="button" role="tab" aria-controls="profile-tab-pane" aria-selected="<?php echo e($utme->status  == 1 ? 'true' : 'false'); ?>">Sponsor Information</button>
                     </li>
                     <li class="nav-item" role="presentation">
-                        <button class="nav-link<?php echo e($utme->status  == 2 ? ' active' : ''); ?> text-success fw-bold text-capitalize" id="profile2-tab" data-bs-toggle="tab" data-bs-target="#profile2-tab-pane" type="button" role="tab" aria-controls="profile2-tab-pane" aria-selected="<?php echo e($utme->status  == 2 ? 'true' : 'false'); ?>">Jamb Information</button>
+                        <button class="nav-link<?php echo e($utme->status  == 2 ? ' active' : ''); ?> text-success fw-bold text-capitalize" id="profile2-tab" type="button" role="tab" aria-controls="profile2-tab-pane" aria-selected="<?php echo e($utme->status  == 2 ? 'true' : 'false'); ?>">Jamb Information</button>
                     </li>
                     <li class="nav-item" role="presentation">
-                        <button class="nav-link<?php echo e($utme->status  == 3 ? ' active' : ''); ?> text-success fw-bold text-capitalize" id="profile3-tab" data-bs-toggle="tab" data-bs-target="#profile3-tab-pane" type="button" role="tab" aria-controls="profile3-tab-pane" aria-selected="<?php echo e($utme->status  == 3 ? 'true' : 'false'); ?>">Upload Documents</button>
+                        <button class="nav-link<?php echo e($utme->status  == 3 ? ' active' : ''); ?> text-success fw-bold text-capitalize" id="profile3-tab" type="button" role="tab" aria-controls="profile3-tab-pane" aria-selected="<?php echo e($utme->status  == 3 ? 'true' : 'false'); ?>">Upload Documents</button>
                     </li>
                 </ul>
 
@@ -1510,7 +1509,7 @@ unset($__errorArgs, $__bag); ?>" name="surname" placeholder="<?php echo e($utme-
             previewFileType: "image",
             browseClass: "btn btn-success",
             browseLabel: "Pick Image",
-            browseIcon: "<i class=\"fas fa-user\"></i>",
+            browseIcon: "<i class=\"fas fa-file-upload\"></i>",
             removeClass: "btn btn-danger",
             removeLabel: "Delete",
             removeIcon: "<i class=\"icon-trash\"></i> ",
@@ -1529,7 +1528,7 @@ unset($__errorArgs, $__bag); ?>" name="surname" placeholder="<?php echo e($utme-
             previewFileType: "image",
             browseClass: "btn btn-success",
             browseLabel: "Pick Image",
-            browseIcon: "<i class=\"fas fa-user\"></i>",
+            browseIcon: "<i class=\"fas fa-file-upload\"></i>",
             removeClass: "btn btn-danger",
             removeLabel: "Delete",
             removeIcon: "<i class=\"icon-trash\"></i> ",
@@ -1548,7 +1547,7 @@ unset($__errorArgs, $__bag); ?>" name="surname" placeholder="<?php echo e($utme-
             previewFileType: "image",
             browseClass: "btn btn-success",
             browseLabel: "Pick Image",
-            browseIcon: "<i class=\"fas fa-user\"></i>",
+            browseIcon: "<i class=\"fas fa-file-upload\"></i>",
             removeClass: "btn btn-danger",
             removeLabel: "Delete",
             removeIcon: "<i class=\"icon-trash\"></i> ",

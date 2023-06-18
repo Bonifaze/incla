@@ -460,7 +460,7 @@ class AdminStudentsController extends Controller
     public function update(Request $request, $id)
     {
         $this->authorize('edit',Student::class);
-        // $this->validate($request, [
+        $validatedData = $request->validate([
         //     'surname' => 'required|string|max:50',
         //     'first_name' => 'required|string|max:50',
         //     'middle_name' => 'sometimes|nullable|string|max:50',
@@ -477,15 +477,15 @@ class AdminStudentsController extends Controller
         //     'hobbies' => 'required|string|max:200',
         //     'religion' => 'required|string|max:50',
         //     'address' => 'required|string|max:200',
-        //     'passport' => 'sometimes|image|mimes:jpeg,png,jpg,gif,svg|max:1048|dimensions:min_width=300',
-        //     'signature' => 'sometimes|image|mimes:jpeg,png,jpg,gif,svg|max:1048|dimensions:min_width=300',
+            'passport' => 'sometimes|image|mimes:jpeg,png,jpg,gif,svg|max:1048|dimensions:min_width=300',
+            'signature' => 'sometimes|image|mimes:jpeg,png,jpg,gif,svg|max:1048|dimensions:min_width=300',
 
-        // ],
+        ],
 
-        //     $messages = [
-        //         'passport.dimensions'    => 'Passport Image is too small. Must be at least 400px wide.',
-        //         'signature.dimensions'    => 'Signature is too small. Must be at least 400px wide.',
-        //     ]);
+            $messages = [
+                'passport.dimensions'    => 'Passport Image is too small. Must be at least 400px wide.',
+                'signature.dimensions'    => 'Signature is too small. Must be at least 400px wide.',
+            ]);
 
         $student = Student::findOrFail($id);
 

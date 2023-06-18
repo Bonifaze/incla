@@ -350,7 +350,7 @@ Route::get('/bursary/remita/fee-typesrrr', 'App\Http\Controllers\RemitaControlle
 Route::get('/bursary/remita/fee-type/{fee_type_id}', 'App\Http\Controllers\RemitaController@feeType')->name('remita.fee-type');
 Route::get('/bursary/remita/fee-typerrr/{fee_type_id}', 'App\Http\Controllers\RemitaController@feeTyperrr')->name('remita.fee-typerrr');
 
-Route::post('/bursary/remita/find-student', 'App\Http\Controllers\RemitaController@findStudent')->name('remita.find-student');
+Route::post('/bursary/remita/find-student', 'App\Http\Controllers\RemitaController@findStudent')->name('remita.find-studentS');
 
 // Bursary routes
 // require_once "bursary.php";

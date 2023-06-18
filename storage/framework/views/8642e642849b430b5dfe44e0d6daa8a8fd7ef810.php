@@ -1,4 +1,4 @@
-<footer class="main-footer fixed-bottom">
+<footer class="main-footer">
   <div class="container">
     <div class="row">
       <div class="col-12">
@@ -13,4 +13,5 @@
       </div>
     </div>
   </div>
-</footer><?php /**PATH /Users/lifeofrence/Documents/laraproject/resources/views/adminsials/footer.blade.php ENDPATH**/ ?>
+</footer>
+<?php /**PATH /Users/lifeofrence/Documents/laraproject/resources/views/adminsials/footer.blade.php ENDPATH**/ ?>

@@ -39,3 +39,10 @@ Route::post('/bursary/remita/student', 'RemitaController@findStudent')->name('re
 Route::Get('/bursary/remita/studentupaid/{id}', 'RemitaController@findStudentUnpaidRRR')->name('remita.find-studentunpaidrrr');
 
 Route::delete('/bursary/remita/studentupaid/{remita}', 'RemitaController@destroy')->name('remita.find-studentunpaidrrr.destroy');
+
+Route::post('/bursary/remita/updatedebt', 'RemitaController@updateDebt')->name('remita.update-debt');
+
+Route::Get('/bursary/remita/studentdebt/{id}', 'RemitaController@findStudentdebt')->name('remita.find-studentdebt');
+
+Route::patch('/bursary/remita/studentdebt/disable', 'RemitaController@disable')->name('remitasstudentdebt.disable');
+

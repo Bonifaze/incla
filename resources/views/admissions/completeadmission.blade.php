@@ -35,7 +35,7 @@ active
                     <div class="card shadow mb-4">
                         <!-- Card Header - Dropdown -->
                         <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                            <h6 class="m-0 font-weight-bold text-success invisible">Admission Status
+                            <h6 class="m-0 font-weight-bold text-success invisible">Admission Status MIGTH BE PENDING OR
                                 :</h6>
                             <div class="dropdown no-arrow">
                                 <a href="/generatematricnumber" class=" btn btn-sm btn-success shadow-sm"><i class="fas fa-print text-white-50"></i> Generate
@@ -53,10 +53,10 @@ active
         <div class="col-12">
             <div class="card shadow mb-4">
                 <!-- Card Header - Dropdown -->
-                <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                    <h6 class="m-0 font-weight-bold text-success">Applicant Profile</h6>
+                <div class="card-header py-3 d-flex flex-row float-left">
+                    <h6 class="m-0 font-weight-bold text-success"></h6>
                     <div class="dropdown no-arrow">
-                        <a href="/viewprofile" class="btn btn-sm btn-success shadow-sm"><i class="fas fa-id-badge text-white-50"></i> Full Profile</a>
+                        <a href="/viewprofile" class="btn btn-sm btn-success shadow-sm float-right"><i class="fas fa-id-badge text-white-50"></i> Full Profile</a>
 
                     </div>
                 </div>

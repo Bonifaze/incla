@@ -32,7 +32,7 @@ active
         <div class="card p-5 shadow">
             <ul class="nav nav-tabs" id="myTab" role="tablist">
                 <li class="nav-item" role="presentation">
-                    <button class="nav-link active text-success fw-bold text-capitalize" id="home-tab" data-bs-toggle="tab" data-bs-target="#home-tab-pane" type="button" role="tab" aria-controls="home-tab-pane" aria-selected="true">Bio Data</button>
+                    <button class="nav-link active text-success fw-bold text-capitalize" id="home-tab" data-bs-toggle="tab" data-bs-target="#home-tab-pane" type="button" role="tab" aria-controls="home-tab-pane" aria-selected="true">Biodata</button>
                 </li>
                 <li class="nav-item" role="presentation">
                     <button class="nav-link text-success fw-bold text-capitalize" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile-tab-pane" type="button" role="tab" aria-controls="profile-tab-pane" aria-selected="false">Sponsor Information</button>
@@ -53,7 +53,7 @@ active
                 <div class="tab-pane fade show active" id="home-tab-pane" role="tabpanel" aria-labelledby="home-tab" tabindex="0">
                     <form method="POST" action="/editbiodata" enctype="multipart/form-data" class="p-3">
                         <?php echo csrf_field(); ?>
-                        
+
                         <div class="item border-bottom py-3">
                             <div class="row justify-content-between align-items-center">
                                 <div class="col-auto">
@@ -502,7 +502,7 @@ active
                 </div>
                 <div class="tab-pane fade" id="profile4-tab-pane" role="tabpanel" aria-labelledby="profile4-tab" tabindex="0">
 
-                    
+
                     <form method="POST" action="/editpassword" class="p-3">
                         <?php echo csrf_field(); ?>
                         <input id="email" type="hidden" class="form-input form-control" name="email" value="<?php echo e($applicantsDetails->email); ?>">
@@ -622,7 +622,7 @@ unset($__errorArgs, $__bag); ?>
 
                             <?php endif; ?>
                             <p>Upload Transcript
-                                
+
                             </p>
 
                             <div class="form-group">

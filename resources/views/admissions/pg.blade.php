@@ -31,18 +31,18 @@ active
 
         <div class="card mb-4">
             <h1 class="app-page-title text-uppercase h5 font-weight-bold p-2 mb-2 shadow-sm text-center text-success border">
-                POST GRADUATE INFORMATION
+                POSTGRADUATE INFORMATION
             </h1>
             <div class="card-body p-5">
                 <ul class="nav nav-tabs" id="myTab" role="tablist">
                     <li class="nav-item" role="presentation">
-                        <button class="nav-link{{ $pg->status == 0 ? ' active' : '' }} text-success fw-bold text-capitalize" id="home-tab" type="button" role="tab" aria-controls="home-tab-pane" aria-selected="{{ $pg->status  == 0 ? 'true' : 'false' }}">Bio Data</button>
+                        <button class="nav-link{{ $pg->status == 0 ? ' active' : '' }} text-success fw-bold text-capitalize" id="home-tab" type="button" role="tab" aria-controls="home-tab-pane" aria-selected="{{ $pg->status  == 0 ? 'true' : 'false' }}">Biodata</button>
                     </li>
                     <li class="nav-item" role="presentation">
                         <button class="nav-link{{ $pg->status  == 1 ? ' active' : '' }} text-success fw-bold text-capitalize" id="profile-tab" type="button" role="tab" aria-controls="profile-tab-pane" aria-selected="{{ $pg->status  == 1 ? 'true' : 'false' }}">Sponsor Information</button>
                     </li>
                     <li class="nav-item" role="presentation">
-                        <button class="nav-link{{ $pg->status  == 2 ? ' active' : '' }} text-success fw-bold text-capitalize" id="profile2-tab" type="button" role="tab" aria-controls="profile2-tab-pane" aria-selected="{{ $pg->status  == 2 ? 'true' : 'false' }}">Post Graduate Information</button>
+                        <button class="nav-link{{ $pg->status  == 2 ? ' active' : '' }} text-success fw-bold text-capitalize" id="profile2-tab" type="button" role="tab" aria-controls="profile2-tab-pane" aria-selected="{{ $pg->status  == 2 ? 'true' : 'false' }}">PostGraduate Information</button>
                     </li>
                     <li class="nav-item" role="presentation">
                         <button class="nav-link{{ $pg->status  == 3 ? ' active' : '' }} text-success fw-bold text-capitalize" id="profile3-tab" type="button" role="tab" aria-controls="profile3-tab-pane" aria-selected="{{ $pg->status  == 3 ? 'true' : 'false' }}">Upload Documents</button>
@@ -1430,7 +1430,7 @@ active
                                 @if (session('statusMsg'))
                                 {!! session('statusMsg') !!}
                                 @endif
-                                <label for="passport">{{ __('Upload Degree Certificate (Picture-PNG, JPG or JPEG)') }}
+                                <label for="passport">{{ __('Upload Degree Certificate ') }}
                                 </label>
 
                                 <div class="form-group">
@@ -1439,7 +1439,7 @@ active
                             </div>
 
                             <div class="form-group">
-                                <label for="passport">{{ __('Upload Olevel Result (Picture-PNG, JPG or JPEG)') }}
+                                <label for="passport">{{ __('Upload Olevel Result ') }}
                                 </label>
 
                                 <div class="form-group">
@@ -1448,7 +1448,8 @@ active
                             </div>
                             <div class="form-group">
 
-                                <p>Upload Olevel <b class="text-danger">( if any)</b></p>
+                              <label for="passport">{{ __('Upload  Result (if any)') }}
+                                </label>
                                 <div class="form-group">
                                     <input id="olevel2" type="file" class="form-control" name="olevel2">
                                 </div>
@@ -1513,13 +1514,14 @@ active
 
 <script type="text/javascript">
     $(document).on('ready', function() {
+
         $("#jamb").fileinput({
             mainClass: "input-group-md",
             showUpload: false,
             previewFileType: "image",
             browseClass: "btn btn-success",
             browseLabel: "Pick Image",
-            browseIcon: "<i class=\"fas fa-user\"></i>",
+            browseIcon: "<i class=\"fas fa-file-upload\"></i>",
             removeClass: "btn btn-danger",
             removeLabel: "Delete",
             removeIcon: "<i class=\"icon-trash\"></i> ",
@@ -1531,13 +1533,14 @@ active
 
 <script type="text/javascript">
     $(document).on('ready', function() {
+
         $("#olevel1").fileinput({
             mainClass: "input-group-md",
             showUpload: false,
             previewFileType: "image",
             browseClass: "btn btn-success",
             browseLabel: "Pick Image",
-            browseIcon: "<i class=\"fas fa-user\"></i>",
+            browseIcon: "<i class=\"fas fa-file-upload\"></i>",
             removeClass: "btn btn-danger",
             removeLabel: "Delete",
             removeIcon: "<i class=\"icon-trash\"></i> ",
@@ -1549,13 +1552,14 @@ active
 
 <script type="text/javascript">
     $(document).on('ready', function() {
+
         $("#olevel2").fileinput({
             mainClass: "input-group-md",
             showUpload: false,
             previewFileType: "image",
             browseClass: "btn btn-success",
             browseLabel: "Pick Image",
-            browseIcon: "<i class=\"fas fa-user\"></i>",
+            browseIcon: "<i class=\"fas fa-file-upload\"></i>",
             removeClass: "btn btn-danger",
             removeLabel: "Delete",
             removeIcon: "<i class=\"icon-trash\"></i> ",
