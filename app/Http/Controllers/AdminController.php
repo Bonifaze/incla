@@ -746,7 +746,7 @@ class AdminController extends Controller
                 $counter++;
             }
             $pgApplicants = DB::table('users')->where('applicant_type', 'pg')
-            ->where('users.session_id', $currentSessionId)
+            // ->where('users.session_id', $currentSessionId)
                 ->whereNotIn('users.id', $approvedArr)
                 ->join('usersbiodata', 'usersbiodata.user_id', '=', 'users.id')
                 ->join('pgs', 'pgs.user_id', '=', 'users.id')
