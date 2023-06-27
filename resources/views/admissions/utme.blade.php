@@ -53,7 +53,7 @@ active
                 <div class="tab-content" id="myTabContent">
 
                     <div class="tab-pane fade{{ $utme->status == 0 ? ' show active' : '' }}" id="home-tab-pane" role="tabpanel" aria-labelledby="home-tab">
-                        <form method="POST" action="/transfersbiodata" enctype="multipart/form-data" class="p-3">
+                        <form method="POST" action="/utmebiodata" enctype="multipart/form-data" class="p-3">
                             @csrf
                             <label for="">{{ __('Surname') }} </label>
                             <div class="form-group">

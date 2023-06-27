@@ -408,7 +408,7 @@ active
                 </div>
 
                 <div class="tab-pane fade" id="profile-tab-pane" role="tabpanel" aria-labelledby="profile-tab">
-
+                    
                     <form method="POST" action="/editsponsers" class="p-3">
                         <?php echo csrf_field(); ?>
                         <div class="form-group">
@@ -557,7 +557,7 @@ unset($__errorArgs, $__bag); ?>
                                 <?php endif; ?>
                                 <label for="passport"><?php echo e(__('Jamb Result:')); ?>
 
-
+                                    
                                 </label>
 
                                 <div class="form-group">
@@ -589,7 +589,7 @@ unset($__errorArgs, $__bag); ?>
                             <div class="form-group">
                                 <div class="form-group">
 
-
+                                    
                                     <button type="submit" class="btn btn-success">
                                         <?php echo e(__('Update')); ?>
 

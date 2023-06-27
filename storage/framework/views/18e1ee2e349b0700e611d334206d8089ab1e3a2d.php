@@ -101,7 +101,10 @@
                                     ?>
                                     <tr>
 
-                                        <td><?php echo e($loop->iteration); ?> <input type="checkbox"></td>
+                                        <td><?php echo e($loop->iteration); ?>
+
+                                        
+                                        </td>
                                         <td><?php echo e($res->course_code); ?></td>
                                         <td><?php echo e($res->course_title); ?></td>
                                         
@@ -127,9 +130,10 @@
                                             <?php echo e(Form::hidden('level', $level)); ?>
 
 
-                                            <button onclick="removeRCForm(<?php echo e($res->id); ?>)" type="button"
+                                            <button onclick="removeRCForm(<?php echo e($res->id); ?>)" type="submit"
                                                 class="<?php echo e($res->id); ?> btn btn-danger"><span
-                                                    class="icon-line2-trash"></span> Drop</button>
+                                                    class="icon-line2-trash"></span><i
+                                                                class="fas fa-solid fa-trash"></i>  Drop</button>
                                             <?php echo Form::close(); ?>
 
                                         </td>
@@ -163,10 +167,7 @@
 
 
                         </table>
-                        <button type="submit" class="btn btn-danger">
-                            <?php echo e(__('Drop courses')); ?>
-
-                        </button>
+                        
 
 
                     </div>
@@ -208,7 +209,10 @@
 
                                 <?php $__currentLoopData = $fresh_courses; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $key => $fcourse): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                     <tr>
-                                        <td><?php echo e($loop->iteration); ?> <input type="checkbox"></td>
+                                        <td><?php echo e($loop->iteration); ?>
+
+                                        
+                                        </td>
                                         <td><?php echo e($fcourse->course->course_code); ?></td>
                                         <td><?php echo e($fcourse->course->course_title); ?></td>
                                         <td><?php echo e($fcourse->level); ?></td>
@@ -235,9 +239,9 @@
 
 
 
-                                            <button onclick="addFCourse(<?php echo e($fcourse->id); ?>)" type="button"
+                                            <button onclick="addFCourse(<?php echo e($fcourse->id); ?>)" type="submit"
                                                 class="<?php echo e($fcourse->id); ?> btn btn-success"><span class="icon-plus"></span>
-                                                Add</button>
+                                               <i class="fas fa-plus"></i>  Add</button>
                                             <?php echo Form::close(); ?>
 
                                         </td>
@@ -249,10 +253,7 @@
 
 
                         </table>
-                        <button type="submit" class="btn btn-info">
-                            <?php echo e(__('Add courses')); ?>
-
-                        </button>
+                        
 
                     </div>
 
@@ -281,7 +282,10 @@
 
                                 <?php $__currentLoopData = $carry_over; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $key => $co): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                     <tr>
-                                        <td> <?php echo e($loop->iteration); ?> <input type="checkbox"></td>
+                                        <td> <?php echo e($loop->iteration); ?>
+
+                                        
+                                        </td>
                                         <td><?php echo e($co->course->course_code ?? null); ?></td>
                                         <td><?php echo e($co->course->course_title ?? null); ?></td>
                                         <td><?php echo e($co->level ?? null); ?></td>
@@ -302,9 +306,9 @@
                                             <?php echo e(Form::hidden('program_id', $student->academic->program_id)); ?>
 
 
-                                            <button onclick="addCOver(<?php echo e($co->id); ?>)" type="button"
+                                            <button onclick="addCOver(<?php echo e($co->id); ?>)" type="submit"
                                                 class="<?php echo e($co->id); ?> btn btn-success"><span class="icon-plus"></span>
-                                                Add</button>
+                                                 <i class="fas fa-plus"></i> Add</button>
                                             <?php echo Form::close(); ?>
 
                                         </td>
@@ -316,10 +320,7 @@
 
 
                         </table>
-                        <button type="submit" class="btn btn-info">
-                            <?php echo e(__('Add courses')); ?>
-
-                        </button>
+                        
 
 
                     </div>

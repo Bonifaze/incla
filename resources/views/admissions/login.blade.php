@@ -14,7 +14,7 @@
 <style>
     body {
         background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
-        url("{{ asset('/css/default.jpg') }}") center center no-repeat;
+        url("{{ asset('/css/defaultadd.jpg') }}") center center no-repeat;
         background-size: cover;
         padding-top: 10px;
         display: flex;

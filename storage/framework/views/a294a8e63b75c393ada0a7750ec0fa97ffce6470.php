@@ -39,6 +39,7 @@ active
                             <div class="dropdown no-arrow">
 
                                 <?php echo $status=="Successful"?'
+                                      <a href="/letter" class="btn btn-success mt-3"> <i class=" fas fa-envelope fa-sm text-white-50 p-2"></i>Print Letter</a>
 
                                 ':''; ?>
 
@@ -48,11 +49,11 @@ active
 
                         </div>
 
-                        <div class="mt-1 m-0 p-3 font-weight-bold text-primary">
+                        <div class="font-weight-bold text-primary">
                             <div class="dropdown no-arrow">
 
                                 <?php
-                                $fees = array("UTME"=>80000, "DE"=>80000, "Transfer"=>80000, "PG"=>50000 or 30000);
+                                $fees = array("UTME"=>80000, "DE"=>80000, "Transfer"=>80000, "PG"=>'50000 or ₦30000');
                                 ?>
                                 <?php $__currentLoopData = $admission; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $utm): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                 <input type="hidden" class="form-control" id="js-firstName" placeholder="<?php echo e($utm->first_name." ".$utm->middle_name." ".$utm->surname); ?>" value="<?php echo e($utm->first_name." ".$utm->middle_name." ".$utm->surname); ?>" name="firstName" readonly>
@@ -64,8 +65,9 @@ active
                                 <form action="" method="POST" onsubmit="event.preventDefault();" class="p-5">
                                     <div class="form-group container-fluid mt-5 p-5 border border-success shadow shadow-lg rounded text-success rounded-lg">
                                         <?php echo csrf_field(); ?>
-                                        Congratulation you have been offerred provisional admission into veritas univeristy kindly click the button to pay your acceptance fee<br>
-                                        <a href="acceptancepayment" class="btn btn-success mt-3"> <i class=" fa fa-credit-card fa-sm text-white-50 p-2"></i>Pay (₦'.$fees[$utm->applicant_type].')</a>
+                                        Congratulation you have been offerred provisional admission into veritas univeristy kindly click the button to pay your Acceptance Fee<br>
+                                        <a href="acceptancepayment" class="btn btn-success mt-3"> <i class=" fa fa-credit-card fa-sm text-white-50 p-2"></i>Pay (₦'.$fees[$utm->applicant_type].')</a>  
+
 
 
                                     </div>
@@ -340,4 +342,5 @@ active
 </script>
 </body>
 <?php $__env->stopSection(); ?>
+
 <?php echo $__env->make('layouts.adminsials', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH /Users/lifeofrence/Documents/laraproject/resources/views/admissions//admission.blade.php ENDPATH**/ ?>

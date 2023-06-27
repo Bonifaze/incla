@@ -141,7 +141,7 @@
                                 </tr>
                                 <thead></thead>
                                 <tr>
-                                    <th colspan="3">School Fees</th>
+                                    <th colspan="3"></th>
                                     <th colspan="2">School Fee paid</th>
                                     <th colspan="2">School Fees Debt</th>
                                     <th colspan="2">Toal Paid Amount</th>
@@ -149,6 +149,8 @@
                                 </thead>
                             <tbody class="">
                                 <tr>
+                                <td colspan="3">
+                                </td>
                                     <td colspan="3">
                                         <?php if($balance === '<i class="fas fa-spinner fa-spin"></i>'): ?>
                                             <i class="fa fa-spinner fa-spin"></i>

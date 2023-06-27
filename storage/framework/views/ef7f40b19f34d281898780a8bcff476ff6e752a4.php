@@ -28,6 +28,7 @@ active
             <!-- Content Row -->
             <div class="row card">
                 <div class="card-body d-sm-flex align-items-center justify-content-evenly">
+                <h5 class="card-title text-success"></h5> <br>
                     <a href="/editprofile" class="btn btn-sm btn-success shadow-sm"><i class="fas fa-edit fa-sm text-white-50"></i> Edit</a>
                 </div>
                 <div class="row gy-4 mb-4 mt-1">
@@ -303,7 +304,7 @@ active
                                             </div>
                                         </div>
                                     </div>
-                                </div>  
+                                </div>
                             </div>
                         </div>
                         <div class="col-12 col-lg-4 mt-5">
@@ -349,4 +350,5 @@ active
     </section>
 </div>
 <?php $__env->stopSection(); ?>
+
 <?php echo $__env->make('layouts.adminsials', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH /Users/lifeofrence/Documents/laraproject/resources/views/admissions//viewUTMEprofile.blade.php ENDPATH**/ ?>

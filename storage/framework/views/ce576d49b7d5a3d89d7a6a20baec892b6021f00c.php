@@ -11,7 +11,7 @@
 <style>
     body {
         background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
-        url("<?php echo e(asset('/css/default.jpg')); ?>") center center no-repeat;
+        url("<?php echo e(asset('/css/defaultadd.jpg')); ?>") center center no-repeat;
         background-size: cover;
         padding-top: 10px;
         display: flex;

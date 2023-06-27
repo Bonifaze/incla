@@ -18,27 +18,27 @@ class StudentContactsController extends Controller
     {
         $this->middleware('auth:staff');
     }
-    
+
     public function edit($id)
     {
         $this->authorize('edit', Student::class);
         $contact = StudentContact::findOrFail($id);
         return view('students.admin.contact.edit',compact('contact'));
     } // end edit
-    
-    
+
+
     public function update(Request $request, $id)
     {
         $this->authorize('edit', Student::class);
         $this->validate($request, [
             'surname' => 'required|string|max:100',
-            'other_names' => 'required|string|max:100',
+            // 'other_names' => 'required|string|max:100',
             'phone' => 'required|string|max:20',
-            'email' => 'sometimes|nullable|string|email|max:100',
+            // 'email' => 'sometimes|nullable|string|email|max:100',
             'title' => 'required|string|max:50',
             'relationship' => 'required|string|max:50',
-            'state' => 'required|string|max:100',
-            'address' => 'required|string|max:200',
+            // 'state' => 'required|string|max:100',
+            // 'address' => 'required|string|max:200',
         ]);
 
         // emergency contacts or sponsor
@@ -65,5 +65,5 @@ class StudentContactsController extends Controller
         return redirect()->route('student.show', $contact->student_id)
         ->with('success','Student Contact updated successfully');
     } //end update
-    
+
 } // end Class

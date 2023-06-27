@@ -14,11 +14,32 @@
 <!-- <link rel="stylesheet" href="{{ asset('plugins/iCheck/square/blue.css')}}"> -->
 
 <style>
-  body {
+  {{--  body {
     background:linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
-    url("{{ asset('/css/default.jpg') }}") center center no-repeat;
+    url("{{ asset('/css/defaults.jpg') }}") center center no-repeat;
     background-size: cover;
     padding-top: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }  --}}
+
+
+  .day-background {
+    background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
+      url("{{ asset('/css/default-day.jpg') }}") center center no-repeat;
+    background-size: cover;
+      padding-top: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .night-background {
+    background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
+      url("{{ asset('/css/default-night.jpg') }}") center center no-repeat;
+    background-size: cover;
+         padding-top: 10px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -58,7 +79,7 @@
 
 @section('content')
 
-<body>
+<body onload="setBackground()" class="{{ (date('H') >= 6 && date('H') < 11) ? 'day-background' : 'night-background' }}">
   <div class="container">
     <div class="row">
       <div class="col-md-6 offset-md-2 d-flex aligns-items-center justify-content-center">
@@ -74,7 +95,7 @@
               @if ($errors->has('email'))
               <span class="invalid-feedback"> <strong>{{ $errors->first('email') }}</strong> </span>
               @endif
-              <!-- <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small> -->
+              <!-- <small id="emailHelp" class="form-text text-muted">We will never share your email with anyone else.</small> -->
             </div>
             <div class="form-group mt-3">
               <label for="exampleInputPassword1">Password</label>
@@ -110,6 +131,22 @@
       });
     });
   </script> -->
+
+  <script>
+function setBackground() {
+    var now = new Date();
+    var hour = now.getHours();
+
+    var body = document.querySelector('body');
+    if (hour >= 6 && hour < 16) {
+        body.classList.add('day-background');
+        body.classList.remove('night-background');
+    } else {
+        body.classList.add('night-background');
+        body.classList.remove('day-background');
+    }
+}
+</script>
 
   <!-- jQuery first, then Popper.js, then Bootstrap JS -->
   <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>

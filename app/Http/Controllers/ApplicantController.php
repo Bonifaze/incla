@@ -58,7 +58,7 @@ class ApplicantController extends Controller
 
                     'surname' => $req->surname,
                     'first_name' => $req->first_name,
-                    'middile_name' => $req->middile_name,
+                    'middle_name' => $req->middle_name,
                     'phone' => $req->phone,
                     'email' => $req->email,
                     'session_id' => $this->getCurrentAdmissionSession(),
@@ -86,7 +86,7 @@ class ApplicantController extends Controller
                 Mail::to($req->email)->send(new Confirmsignup($mailData));
                 DB::commit();
 
-                $signUpMsg = '<div class="alert alert-success alert-dismissible"><button type="button" class="close" data-dismiss="alert">&times;</button><strong>Success!</strong> ' . $req->surname . ' Your Registration was successful, please follow the instruction sent to your mail ' . $req->email . ' to complete the process</div>';
+                $signUpMsg = '<div class="alert alert-success alert-dismissible text-lg"><button type="button" class="close" data-dismiss="alert">&times;</button><strong>Success!</strong> ' . $req->surname . ' Your Registration was successful, please follow the instruction sent to your mail ' . $req->email . ' to complete the process</div>';
                 return redirect('/register')->with('signUpMsg', $signUpMsg);
             } catch (QueryException $e) {
                 DB::rollBack();
@@ -95,6 +95,7 @@ class ApplicantController extends Controller
                     $signUpMsg = '<div class="alert alert-danger alert-dismissible"><button type="button" class="close" data-dismiss="alert">&times;</button><strong>Error!</strong> You have registered before</div>';
                     return redirect('/register')->with('signUpMsg', $signUpMsg);
                 } else {
+                    // $signUpMsg =$e->getMessage();
                     $signUpMsg = '<div class="alert alert-danger alert-dismissible"><button type="button" class="close" data-dismiss="alert">&times;</button><strong>Error!</strong> Your registration was not successful, please try again later or Veritas Univeristy help line</div>';
                     return redirect('/register')->with('signUpMsg', $signUpMsg);
                 }
@@ -119,6 +120,7 @@ class ApplicantController extends Controller
     // Begin of Login function
     public function login(Request $request)
     {
+        $admissiontype = admissionType::where('status', 1)->orderBy('id', 'ASC');
         $users = DB::table('users')->where('email', $request->email)
             ->leftJoin('usersbiodata', 'usersbiodata.user_id', '=', 'users.id')
             ->leftJoin('remitas', 'remitas.user_id', '=', 'users.id')
@@ -153,8 +155,8 @@ class ApplicantController extends Controller
                             session(['fee_type' => $users->fee_type]);
                         }
                     }
-
-                    return redirect('/completeadmissions');
+                    $billing = $this->paymen();
+                    // return redirect('/completeadmissions');
                 }
                 if ($users->status_code == '01' && ($users->fee_type == 'Acceptance fees (Undergraduate ) (₦80000)' || $users->fee_type == 'Acceptance Fees (Postgraduate) (₦50000)')) {
                     if (Hash::check($request->password, $users->password)) {
@@ -206,8 +208,11 @@ class ApplicantController extends Controller
 
                         return redirect('/admission');
                     }
+
+                    return $this->paymen();
                     // return redirect('/adminHome') ->with ('name', $fullName);
-                    return view('admissions./home', compact('fullName'));
+                    // return view('admissions/home', compact('fullName','admissiontype'));
+
                 } else {
                     $loginMsg = '<div class="alert alert-danger alert-dismissible" role="alert"> <button type="button" class="close" data-dismiss="alert"> &times; </button>  Your Acount have not been Activated, Kindly Check your Mail to Verify your Account </div>';
 
@@ -230,8 +235,8 @@ class ApplicantController extends Controller
 
     public function home()
     {
-        $sessions = admissionType::where('status', 1)->orderBy('id', 'ASC');
-        return view('admissions/home', compact('sessions'));
+        $admissiontype = admissionType::where('status', 1)->orderBy('id', 'ASC');
+        return view('admissions/home', compact('admissiontype'));
     }
     //FORGOT PASSWORD
 
@@ -390,17 +395,29 @@ class ApplicantController extends Controller
     private function getdptcollegid($course_applied)
     {
         $deptCol = array();
+
         $getdptcollege = DB::table('programs')->where('programs.name', $course_applied)
             ->join('academic_departments', 'programs.academic_department_id', '=', 'academic_departments.id')->first();
+
+        if (!$getdptcollege) {
+            // Handle the case when no matching program is found
+            return null;
+        }
 
         $deptCol['dept'] = $getdptcollege->id;
 
         $getdptcollege = DB::table('colleges')->where('id', $getdptcollege->college_id)->first();
 
+        if (!$getdptcollege) {
+            // Handle the case when no matching college is found
+            return null;
+        }
+
         $deptCol['col'] = $getdptcollege->id;
 
         return $deptCol;
     }
+
     public function schoolfeespayment()
     {
         $payment = DB::table('users')->where('users.id', session('userid'))
@@ -454,8 +471,8 @@ class ApplicantController extends Controller
             $fee_types = fee_types::orderBy('status', 'ASC')
                 ->where('status', 1)
                 ->where('category', 3)
-                ->where('gender_code', $payment->gender)
-                ->where('college_id', $facultyAndDept['col'])
+                // ->where('gender_code', $payment->gender)
+                // ->where('college_id', $facultyAndDept['col'])
                 ->get();
             $fee_typess = fee_types::orderBy('status', 'ASC')
                 ->where('status', 1)

@@ -20,6 +20,11 @@ Route::get('/', function () {
     return view('default');
 });
 
+//MAINTAINCE PAGE
+Route::get('/maitiance', function () {
+    return view('admissions.layouts.Maintance');
+});
+
 Route::get('/classroom/init', 'GoogleClassroomsController@init')->name('classroom.init');
 
 Route::post('/api/students/remita/confirm', 'APIController@confirmationNotification')->name('api.student.remita-confirm');

@@ -2,15 +2,15 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
+use programs;
 use App\Remita;
 use App\FeeType;
 use App\Program;
 use App\Session;
 use App\Setting;
-use App\programs;
 use App\subjects;
 use Carbon\Carbon;
+use App\Mail\Welcome;
 use App\Models\Course;
 use App\Models\fee_types;
 use App\Mail\Confirmsignup;
@@ -33,6 +33,7 @@ use App\Exports\RegisteredCourseExport;
 use App\Imports\RegisteredCourseImport;
 use Illuminate\Database\QueryException;
 use Illuminate\Support\Facades\Redirect;
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 
 class AdminController extends Controller
 {
@@ -925,6 +926,11 @@ class AdminController extends Controller
            return view('admissions.error', compact('loginMsg'));
         }
     }
+    //Mail base URL
+    function getloginApplicanturl()
+    {
+        return 'https://admissions.veritas.edu.ng/students/login';
+    }
 
     // Approval of Applicants
      public function approved($pageLink, Request $req, $id)
@@ -934,17 +940,42 @@ class AdminController extends Controller
         // if ($this->hasPriviledge("approved",  $staff->id)) {
             $app_id = base64_decode(urldecode($id));
 
+            $usersEmail = DB::table('users')->where('id', $app_id)
+            ->first();
+
             try {
-                DB::table('approved_applicants')->insert([
+               $appove= DB::table('approved_applicants')->insert([
                     'user_id' => $app_id,
                     // 'approval_date' => Carbon::now(),
                     'approved_by' => $staff->id,
                     'comment' => $req->comment,
                 ]);
 
+                $mailData = [
+                    'title' => 'CONGRATULATION ',
+                    'msg' => 'You have been offerred provisional admission into Veritas Univeristy Abuja kindly click the button below to Login and print your Admission Letter',
+                    'url' => $this->getloginApplicantUrl() ,
+                    // 'url' => $this->getBaseUrl().'/='.base64_encode($req->idcard),
+                     'surname'=>$usersEmail ->surname." ".$usersEmail ->first_name." ".$usersEmail ->middle_name,
+                    'email' => $usersEmail->email,
+                    'name_no'=>'',
+                    'identity_no'=> '',
+                    'password' => 'Remains thesame',
+                    'note'=>''
+
+                ];
+                  Mail::to($usersEmail->email)->send(new Welcome($mailData));
+                  Mail::to('noreply@veritas.edu.ng')->send(new Welcome($mailData));
+                //   Mail::to('lifeofrence@gmail.com')->send(new Welcome($mailData));
+                  //end of email address sending
+                // end try
+
+
                 $approvalMsg = '<div class="alert alert-success alert-dismissible" role="alert"> <button type="button" class="close" data-dismiss="alert"> &times; </button> Student has been approved </div>';
                  return Redirect::back()->with('approvalMsg', $approvalMsg);
                 //return redirect ('/recommended/' . $pageLink)->with('approvalMsg', $approvalMsg);
+
+
             } catch (QueryException $e) {
                 $error_code = $e->errorInfo[1];
                 if ($error_code == 1062) {
@@ -1002,13 +1033,33 @@ class AdminController extends Controller
         // if ($this->hasPriviledge("forceApproved",  $staff->id)) {
             $this->authorize('forceapproveapplicant',Session::class);
             $app_id = base64_decode(urldecode($id));
-
+            $usersEmail = DB::table('users')->where('id', $app_id)
+            ->first();
             try {
                 DB::table('approved_applicants')->insert([
                     'user_id' => $app_id,
                     'approval_date' => today(),
                     'approved_by' => $staff->id,
                 ]);
+                $mailData = [
+                    'title' => 'CONGRATULATION ',
+                    'msg' => 'You have been offerred provisional admission into Veritas Univeristy Abuja kindly click the button below to Login and print your Admission Letter',
+                    'url' => $this->getloginApplicantUrl() ,
+                    // 'url' => $this->getBaseUrl().'/='.base64_encode($req->idcard),
+                     'surname'=>$usersEmail ->surname." ".$usersEmail ->first_name." ".$usersEmail ->middle_name,
+                    'email' => $usersEmail->email,
+                    'name_no'=>'',
+                    'identity_no'=> '',
+                    'password' => 'Remains thesame',
+                    'note'=>''
+
+                ];
+                  Mail::to($usersEmail->email)->send(new Welcome($mailData));
+                  Mail::to('noreply@veritas.edu.ng')->send(new Welcome($mailData));
+                //   Mail::to('lifeofrence@gmail.com')->send(new Welcome($mailData));
+                  //end of email address sending
+                // end try
+
 
                 $approvalMsg = '<div class="alert alert-success alert-dismissible" role="alert"> <button type="button" class="close" data-dismiss="alert"> &times; </button> Student has been approved </div>';
                 return redirect('/unqualified/' . $pageLink)->with('approvalMsg', $approvalMsg);
@@ -1082,7 +1133,7 @@ class AdminController extends Controller
                     ->leftJoin('olevel', 'olevel.user_id', '=', 'users.id')
                     ->select('users.*', 'usersbiodata.*', 'sponsors.*', 'utme.*', 'olevel.*', 'uploads.*')
                     ->first();
-                     $programs = programs::orderBy('name', 'ASC')->get();
+                     $programs = program::orderBy('name', 'ASC')->get();
                     $subjects = subjects::orderBy('subject_name', 'ASC')->get();
                return view('admissions.layouts.viewUtmeApplicants', compact('applicantsDetails', 'app_id'), ['programs' => $programs, 'subjects' => $subjects]);
             } elseif ($applicantType ==  'DE') {
@@ -1095,7 +1146,7 @@ class AdminController extends Controller
                     ->leftJoin('olevel', 'olevel.user_id', '=', 'users.id')
                     ->select('users.*', 'usersbiodata.*', 'sponsors.*', 'de.*', 'olevel.*', 'uploads.*')
                     ->first();
-                     $programs = programs::orderBy('name', 'ASC')->get();
+                     $programs = program::orderBy('name', 'ASC')->get();
                     $subjects = subjects::orderBy('subject_name', 'ASC')->get();
                return view('admissions.layouts.viewDeApplicants',  compact('applicantsDetails', 'app_id'), ['programs' => $programs, 'subjects' => $subjects]);
             } elseif ($applicantType ==  'Transfer') {
@@ -1108,7 +1159,7 @@ class AdminController extends Controller
                     ->leftJoin('olevel', 'olevel.user_id', '=', 'users.id')
                     ->select('users.*', 'usersbiodata.*', 'sponsors.*', 'transfers.*', 'olevel.*', 'uploads.*')
                     ->first();
-                     $programs = programs::orderBy('name', 'ASC')->get();
+                     $programs = program::orderBy('name', 'ASC')->get();
                     $subjects = subjects::orderBy('subject_name', 'ASC')->get();
                return view('admissions.layouts.viewTransferApplicants',  compact('applicantsDetails', 'app_id'), ['programs' => $programs, 'subjects' => $subjects]);
             } elseif ($applicantType ==  'PG') {
@@ -1123,7 +1174,7 @@ class AdminController extends Controller
                     ->leftJoin('olevel', 'olevel.user_id', '=', 'users.id')
                     ->select('users.*', 'usersbiodata.*', 'sponsors.*', 'pgs.*', 'olevel.*', 'pg_referees.*', 'pg_educations.*', 'uploads.*')
                     ->first();
-                     $programs = programs::orderBy('name', 'ASC')->get();
+                     $programs = program::orderBy('name', 'ASC')->get();
                     $subjects = subjects::orderBy('subject_name', 'ASC')->get();
                return view('admissions.layouts.viewPgApplicants',  compact('applicantsDetails', 'app_id'), ['programs' => $programs, 'subjects' => $subjects]);
             }
@@ -1378,6 +1429,8 @@ public function changecourseTransfer(Request $req)
             }
 
             foreach ($allAppli as $Allapp) {
+                $usersEmail = DB::table('users')->where('id', $Allapp['id'])
+                ->first();
 
                 try {
                     DB::table('approved_applicants')->insert([
@@ -1385,6 +1438,26 @@ public function changecourseTransfer(Request $req)
                         'approval_date' => today(),
                         'approved_by' => $staff->id,
                     ]);
+
+                    $mailData = [
+                        'title' => 'CONGRATULATION ',
+                        'msg' => 'You have been offerred provisional admission into Veritas Univeristy Abuja kindly click the button below to Login and print your Admission Letter',
+                        'url' => $this->getloginApplicantUrl() ,
+                        // 'url' => $this->getBaseUrl().'/='.base64_encode($req->idcard),
+                         'surname'=>$usersEmail ->surname." ".$usersEmail ->first_name." ".$usersEmail ->middle_name,
+                        'email' => $usersEmail->email,
+                        'name_no'=>'',
+                        'identity_no'=> '',
+                        'password' => 'Remains thesame',
+                        'note'=>''
+
+                    ];
+                      Mail::to($usersEmail->email)->send(new Welcome($mailData));
+                      Mail::to('noreply@veritas.edu.ng')->send(new Welcome($mailData));
+                    //   Mail::to('lifeofrence@gmail.com')->send(new Welcome($mailData));
+                      //end of email address sending
+                    // end try
+
                 } catch (QueryException $e) {
                     $error_code = $e->errorInfo[1];
                     if ($error_code == 1062) {

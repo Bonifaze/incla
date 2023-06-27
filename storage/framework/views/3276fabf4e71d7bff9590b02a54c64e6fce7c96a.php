@@ -8,6 +8,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Veritas University|Home</title>
   <style>
+
     .hero-full-screen {
       height: 100vh;
       display: -webkit-flex;
@@ -22,10 +23,29 @@
       -webkit-justify-content: center;
       -ms-flex-pack: justify;
       justify-content: center;
-      background:linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
-      url("<?php echo e(asset('/css/default.jpg')); ?>") center center no-repeat;
-      background-size: cover;
+      background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
+    url("<?php echo e(asset('/css/default-day.jpg')); ?>") center center no-repeat;
+    background-size: cover;
     }
+
+ .hero-full-screen.night {
+      height: 100vh;
+      display: -webkit-flex;
+      display: -ms-flexbox;
+      display: flex;
+      -webkit-flex-direction: column;
+      -ms-flex-direction: column;
+      flex-direction: column;
+      -webkit-align-items: center;
+      -ms-flex-align: center;
+      align-items: center;
+      -webkit-justify-content: center;
+      -ms-flex-pack: justify;
+      justify-content: center;
+      background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
+    url("<?php echo e(asset('/css/default-night.jpg')); ?>");
+    background-size: cover;
+}
 
     .hero-full-screen .middle-content-section {
       text-align: center;
@@ -74,7 +94,7 @@
 
 </head>
 
-<body>
+<body class="night">
 
   <div class="hero-full-screen">
 
@@ -103,6 +123,31 @@ s1.charset='UTF-8';
 s1.setAttribute('crossorigin','*');
 s0.parentNode.insertBefore(s1,s0);
 })();
+
+</script>
+
+<script>
+function setBackground() {
+  var now = new Date();
+  var hour = now.getHours();
+
+  var body = document.querySelector("body");
+  var heroSection = document.querySelector(".hero-full-screen");
+
+  if (hour >= 6 && hour < 16) {
+    body.classList.remove("night");
+    heroSection.classList.remove("night");
+  } else {
+    body.classList.add("night");
+    heroSection.classList.add("night");
+  }
+}
+
+// Call the function initially to set the background
+setBackground();
+
+// Set an interval to update the background image every minute
+setInterval(setBackground, 60000);
 </script>
 <!--End of Tawk.to Script-->
 

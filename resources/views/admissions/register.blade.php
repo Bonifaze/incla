@@ -34,7 +34,7 @@
     <link rel="stylesheet" href="{{ asset('css/style.css')}}">
 </head>
 
-<body style="background-image: url('../img/gate.jpeg'); opacity: 0.9;">
+<body style="background-image: url('../img/register.jpg'); opacity: 0.9;">
     <div class="main">
         <div class=" signup">
             <div class="container">
@@ -71,9 +71,9 @@
                         </div>
                            <div class="form-group">
                             <div class="form-group">
-                                <input id="first_name" type="text" class="form-control @error('first_name') is-invalid @enderror" name="middle_name"  placeholder="Other Name" autocomplete="other_name" autofocus>
+                                <input id="other_name" type="text" class="form-control @error('first_name') is-invalid @enderror" name="middle_name"  placeholder="Other Name" autocomplete="other_name" autofocus>
 
-                                @error('first_name')
+                                @error('other_name')
                                 <span class="invalid-feedback" role="alert">
                                     <strong>{{ $message }}</strong>
                                 </span>

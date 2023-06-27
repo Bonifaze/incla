@@ -57,7 +57,7 @@
 							<div class="col-md-4 form-group">
 							<div  @if($errors->has('other_names')) class ='has-error form-group' @endif>
 								<label for="other_names">Other Names :</label>
-								{!! Form::text('other_names', null, array('placeholder' => '', 'class' => 'form-control', 'id' => 'other_names', 'required' => 'required')) !!}
+								{!! Form::text('other_names', null, array('placeholder' => '', 'class' => 'form-control', 'id' => 'other_names')) !!}
 							 <span class="text-danger"> {{ $errors->first('other_names') }}</span>
 							</div>
 							</div>
@@ -78,7 +78,7 @@
 							<div class="col-md-4 form-group">
               			<div  @if($errors->has('state')) class ='has-error form-group' @endif>
 								<label for="state">State of Residence :</label>
-								{!! Form::text('state', null, array( 'placeholder' => '','class' => 'form-control', 'id' => 'state', 'required' => 'required')) !!}
+								{!! Form::text('state', null, array( 'placeholder' => '','class' => 'form-control', 'id' => 'state')) !!}
 							 <span class="text-danger"> {{ $errors->first('state') }}</span>
 							 </div>
 							</div>
@@ -87,7 +87,7 @@
 							<div class="col-md-4 form-group">
 							<div  @if($errors->has('city')) class ='has-error form-group' @endif>
 								<label for="city">City of Residence :</label>
-								{!! Form::text('city', null, array('placeholder' => '', 'class' => 'form-control', 'id' => 'city', 'required' => 'required')) !!}
+								{!! Form::text('city', null, array('placeholder' => '', 'class' => 'form-control', 'id' => 'city')) !!}
 							 <span class="text-danger"> {{ $errors->first('city') }}</span>
 							</div>
 							</div>
@@ -125,7 +125,7 @@
 							<div  @if($errors->has('address')) class ='has-error form-group' @endif>
 
 								<label for="address">Address :</label>
-								 {!! Form::textarea('address', null, array('placeholder' => '','rows'=>'4', 'class' => 'form-control', 'id' => 'address', 'required' => 'required')) !!}
+								 {!! Form::textarea('address', null, array('placeholder' => '','rows'=>'4', 'class' => 'form-control', 'id' => 'address')) !!}
 								<span class="text-danger"> {{ $errors->first('address') }}</span>
 								</div>
 							</div>

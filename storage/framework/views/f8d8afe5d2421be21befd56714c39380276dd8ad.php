@@ -14,11 +14,24 @@
 <!-- <link rel="stylesheet" href="<?php echo e(asset('plugins/iCheck/square/blue.css')); ?>"> -->
 
 <style>
-  body {
-    background:linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
-    url("<?php echo e(asset('/css/default.jpg')); ?>") center center no-repeat;
+
+
+
+  .day-background {
+    background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
+      url("<?php echo e(asset('/css/default-day.jpg')); ?>") center center no-repeat;
     background-size: cover;
-    padding-top: 10px;
+      padding-top: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .night-background {
+    background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
+      url("<?php echo e(asset('/css/default-night.jpg')); ?>") center center no-repeat;
+    background-size: cover;
+         padding-top: 10px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -176,7 +189,7 @@
 
 <?php $__env->startSection('content'); ?>
 
-<body>
+<body onload="setBackground()" class="<?php echo e((date('H') >= 6 && date('H') < 12) ? 'day-background' : 'night-background'); ?>">
 
     <div class="container">
       <div class="row">
@@ -190,7 +203,7 @@
               <?php if($errors->has('email')): ?>
               <span class="invalid-feedback"> <strong><?php echo e($errors->first('email')); ?></strong> </span>
               <?php endif; ?>
-              <!-- <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small> -->
+              <!-- <small id="emailHelp" class="form-text text-muted">We will never share your email with anyone else.</small> -->
             </div>
             <div class="form-group">
               <label for="exampleInputPassword1">Password</label>
@@ -229,6 +242,21 @@
     });
   </script> -->
 
+<script>
+function setBackground() {
+    var now = new Date();
+    var hour = now.getHours();
+
+    var body = document.querySelector('body');
+    if (hour >= 6 && hour < 16) {
+        body.classList.add('day-background');
+        body.classList.remove('night-background');
+    } else {
+        body.classList.add('night-background');
+        body.classList.remove('day-background');
+    }
+}
+</script>
 <!-- jQuery first, then Popper.js, then Bootstrap JS -->
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>

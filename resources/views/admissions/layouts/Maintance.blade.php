@@ -18,6 +18,11 @@
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.min.js" integrity="sha384-Atwg2Pkwv9vp0ygtn1JAojH0nYbwNJLPhwyoVbhoPwBhjQPR5VtM2+xf0Uwh9KtT" crossorigin="anonymous"></script></head>
     <style>
+    #background-image {
+  background-image: url('../css/default-day.jpg');
+  opacity: 0.9;
+  transition: background-image 0.5s;
+}
         @media (min-width:320px) {
             body {
                 height: 100vh;
@@ -40,7 +45,9 @@
   </style>
 </head>
 @section('content')
-<body style="background-image: url('../img/signup-bg.jpg'); opacity: 0.9;" >
+{{--  <body style="background-image: url('../img/signup-bg.jpg'); opacity: 0.9;" >  --}}
+<body id="background-image" style="background-image: url('../css/default.jpg'); opacity: 0.9;" >
+
     <div class="">
         <div class="signup">
 
@@ -70,7 +77,7 @@
     </div>
 <script>
 // Set the date we're counting down to
-var countDownDate = new Date("oct 3, 2022 18:00:00").getTime();
+var countDownDate = new Date("june 25, 2023 23:00:00").getTime();
 
 // Update the count down every 1 second
 var x = setInterval(function() {
@@ -97,6 +104,26 @@ var x = setInterval(function() {
     document.getElementById("demo").innerHTML = "EXPIRED";
   }
 }, 1000);
+
+
+// Function to set the background image based on the current time
+function setBackground() {
+  var now = new Date();
+  var hour = now.getHours();
+
+  // Check if it's daytime or nighttime
+  if (hour >= 6 && hour < 16) {
+    document.getElementById("background-image").style.backgroundImage = "url('../css/default-day.jpg')";
+  } else {
+    document.getElementById("background-image").style.backgroundImage = "url('../css/default-night.jpg')";
+  }
+}
+
+// Call the function initially to set the background
+setBackground();
+
+// Set an interval to update the background image every minute
+setInterval(setBackground, 60000);
 </script>
 </body>
 @endsection

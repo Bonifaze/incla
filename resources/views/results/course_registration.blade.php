@@ -166,7 +166,9 @@
                                     @endphp
                                     <tr>
 
-                                        <td>{{ $loop->iteration }} <input type="checkbox"></td>
+                                        <td>{{ $loop->iteration }}
+                                        {{--  <input type="checkbox">  --}}
+                                        </td>
                                         <td>{{ $res->course_code }}</td>
                                         <td>{{ $res->course_title }}</td>
                                         {{--  <td>{{ $res->level }}</td>  --}}
@@ -192,9 +194,10 @@
                                             {{ Form::hidden('semester', $semester) }}
                                             {{ Form::hidden('level', $level) }}
 
-                                            <button onclick="removeRCForm({{ $res->id }})" type="button"
+                                            <button onclick="removeRCForm({{ $res->id }})" type="submit"
                                                 class="{{ $res->id }} btn btn-danger"><span
-                                                    class="icon-line2-trash"></span> Drop</button>
+                                                    class="icon-line2-trash"></span><i
+                                                                class="fas fa-solid fa-trash"></i>  Drop</button>
                                             {!! Form::close() !!}
                                         </td>
                                     </tr>
@@ -227,9 +230,9 @@
 
 
                         </table>
-                        <button type="submit" class="btn btn-danger">
+                        {{--  <button type="submit" class="btn btn-danger">
                             {{ __('Drop courses') }}
-                        </button>
+                        </button>  --}}
 
 
                     </div>
@@ -271,7 +274,9 @@
 
                                 @foreach ($fresh_courses as $key => $fcourse)
                                     <tr>
-                                        <td>{{ $loop->iteration }} <input type="checkbox"></td>
+                                        <td>{{ $loop->iteration }}
+                                        {{--  <input type="checkbox">  --}}
+                                        </td>
                                         <td>{{ $fcourse->course->course_code }}</td>
                                         <td>{{ $fcourse->course->course_title }}</td>
                                         <td>{{ $fcourse->level }}</td>
@@ -291,9 +296,9 @@
                                             {{ Form::hidden('program_id', $student->academic->program_id) }}
 
 
-                                            <button onclick="addFCourse({{ $fcourse->id }})" type="button"
+                                            <button onclick="addFCourse({{ $fcourse->id }})" type="submit"
                                                 class="{{ $fcourse->id }} btn btn-success"><span class="icon-plus"></span>
-                                                Add</button>
+                                               <i class="fas fa-plus"></i>  Add</button>
                                             {!! Form::close() !!}
                                         </td>
                                     </tr>
@@ -304,9 +309,9 @@
 
 
                         </table>
-                        <button type="submit" class="btn btn-info">
+                        {{--  <button type="submit" class="btn btn-info">
                             {{ __('Add courses') }}
-                        </button>
+                        </button>  --}}
 
                     </div>
 
@@ -335,7 +340,9 @@
 
                                 @foreach ($carry_over as $key => $co)
                                     <tr>
-                                        <td> {{ $loop->iteration }} <input type="checkbox"></td>
+                                        <td> {{ $loop->iteration }}
+                                        {{--  <input type="checkbox">  --}}
+                                        </td>
                                         <td>{{ $co->course->course_code ?? null }}</td>
                                         <td>{{ $co->course->course_title ?? null }}</td>
                                         <td>{{ $co->level ?? null }}</td>
@@ -349,9 +356,9 @@
                                             {{ Form::hidden('level', $level) }}
                                             {{ Form::hidden('program_id', $student->academic->program_id) }}
 
-                                            <button onclick="addCOver({{ $co->id }})" type="button"
+                                            <button onclick="addCOver({{ $co->id }})" type="submit"
                                                 class="{{ $co->id }} btn btn-success"><span class="icon-plus"></span>
-                                                Add</button>
+                                                 <i class="fas fa-plus"></i> Add</button>
                                             {!! Form::close() !!}
                                         </td>
                                     </tr>
@@ -362,9 +369,9 @@
 
 
                         </table>
-                        <button type="submit" class="btn btn-info">
+                        {{--  <button type="submit" class="btn btn-info">
                             {{ __('Add courses') }}
-                        </button>
+                        </button>  --}}
 
 
                     </div>

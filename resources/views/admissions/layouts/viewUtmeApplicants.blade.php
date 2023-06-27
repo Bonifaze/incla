@@ -85,7 +85,8 @@ if(!session('adminId'))
                                                                 </div>
                                                                 <div class="rounded-circle">
                                                                     <img class="rounded-circle p-3 mx-auto d-block"
-                                                                        src="data:image/{{ $applicantsDetails->passport_type }};base64,{{ base64_encode($applicantsDetails->passport) }}"
+                                                                      src="data:image/jpg;base64,{{ $applicantsDetails->passport }}"
+                                                                       // src="data:image/{{ $applicantsDetails->passport_type }};base64,{{ base64_encode($applicantsDetails->passport) }}"
                                                                         alt="Applicant Passport"
                                                                         style="height: 200px; width:200px;" />
                                                                 </div>
