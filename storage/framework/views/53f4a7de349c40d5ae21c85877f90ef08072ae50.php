@@ -1233,7 +1233,7 @@ unset($__errorArgs, $__bag); ?>" name="surname" placeholder="<?php echo e($pg->s
                     </div>
 
                     <div class="tab-pane fade<?php echo e($pg->status == 1 ? ' show active' : ''); ?>" id="profile-tab-pane" role="tabpanel" aria-labelledby="profile-tab">
-                        <form method="POST" action="/pgssponsors" enctype="multipart/form-data" class="p-3">
+                        <form method="POST" action="/pgsponsors" enctype="multipart/form-data" class="p-3">
                             <?php echo csrf_field(); ?>
                             <div class="form-group">
                                 <div class="form-group">
@@ -1396,6 +1396,9 @@ unset($__errorArgs, $__bag); ?>" name="surname" placeholder="<?php echo e($pg->s
 
                             <br>
                             <label for="refferal"><?php echo e(__('Second Refree:')); ?> </label>
+                             <div class="form-group">
+                                <input id="subject_3" type="text" name="name2" class="form-control" required placeholder="Name" autofocus>
+                            </div>
                             <div class="form-group">
                                 <input id="subject_3" type="text" name="position2" class="form-control" required placeholder="Position" autofocus>
                             </div>
@@ -1501,13 +1504,7 @@ unset($__errorArgs, $__bag); ?>" name="surname" placeholder="<?php echo e($pg->s
 <script src="<?php echo e(asset('dist/js/components/bs-filestyle.js')); ?>"></script>
 
 
-<script type="text/javascript">
-    //Date picker
-    $('#dob').datepicker({
-        format: 'yyyy-mm-dd',
-        autoclose: true
-    })
-</script>
+
 
 <script type="text/javascript">
     $(document).on('ready', function() {

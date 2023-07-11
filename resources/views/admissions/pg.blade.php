@@ -1221,7 +1221,7 @@ active
                     </div>
 
                     <div class="tab-pane fade{{ $pg->status == 1 ? ' show active' : '' }}" id="profile-tab-pane" role="tabpanel" aria-labelledby="profile-tab">
-                        <form method="POST" action="/pgssponsors" enctype="multipart/form-data" class="p-3">
+                        <form method="POST" action="/pgsponsors" enctype="multipart/form-data" class="p-3">
                             @csrf
                             <div class="form-group">
                                 <div class="form-group">
@@ -1383,6 +1383,9 @@ active
 
                             <br>
                             <label for="refferal">{{ __('Second Refree:') }} </label>
+                             <div class="form-group">
+                                <input id="subject_3" type="text" name="name2" class="form-control" required placeholder="Name" autofocus>
+                            </div>
                             <div class="form-group">
                                 <input id="subject_3" type="text" name="position2" class="form-control" required placeholder="Position" autofocus>
                             </div>
@@ -1486,13 +1489,13 @@ active
 <script src="{{ asset('dist/js/components/bs-filestyle.js') }}"></script>
 
 
-<script type="text/javascript">
+{{--  <script type="text/javascript">
     //Date picker
     $('#dob').datepicker({
         format: 'yyyy-mm-dd',
         autoclose: true
     })
-</script>
+</script>  --}}
 
 <script type="text/javascript">
     $(document).on('ready', function() {

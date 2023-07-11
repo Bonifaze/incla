@@ -1474,7 +1474,7 @@ class ApplicantController extends Controller
             DB::table('sponsors')->insert([
                 'user_id' => session('userid'),
                 'sponsor_title' => $req->sponsor,
-                'sponsor_relationship' => $req->namesponsor_relationship,
+                'sponsor_relationship' => $req->sponsor_relationship,
                 'name' => $req->name,
                 'sponsors_phone' => $req->sponsors_phone,
                 'sponsors_email' => $req->sponsors_email,
@@ -2275,7 +2275,7 @@ class ApplicantController extends Controller
             DB::table('sponsors')->insert([
                 'user_id' => session('userid'),
                 'sponsor_title' => $req->sponsor,
-                'sponsor_relationship' => $req->namesponsor_relationship,
+                'sponsor_relationship' => $req->sponsor_relationship,
                 'name' => $req->name,
                 'sponsors_phone' => $req->sponsors_phone,
                 'sponsors_email' => $req->sponsors_email,
