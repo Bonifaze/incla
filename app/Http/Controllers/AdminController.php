@@ -718,9 +718,10 @@ class AdminController extends Controller
                 $counter++;
             }
             $deApplicants = DB::table('users')->where('applicant_type', 'de')
-            ->where('users.session_id', $currentSessionId)
+            // ->where('users.session_id', $currentSessionId)
                 ->whereNotIn('users.id', $approvedArr)
                 ->join('usersbiodata', 'usersbiodata.user_id', '=', 'users.id')
+                 ->where('usersbiodata.session_id', $currentSessionId)
                 ->join('de', 'de.user_id', '=', 'users.id')
                 ->select('users.*', 'usersbiodata.gender', 'usersbiodata.created_at', 'de.course_applied', 'de.qualification')
                 ->get();
@@ -746,7 +747,7 @@ class AdminController extends Controller
                 $counter++;
             }
             $pgApplicants = DB::table('users')->where('applicant_type', 'pg')
-            // ->where('users.session_id', $currentSessionId)
+          //  ->where('users.session_id', $currentSessionId)
                 ->whereNotIn('users.id', $approvedArr)
                 ->join('usersbiodata', 'usersbiodata.user_id', '=', 'users.id')
                 ->join('pgs', 'pgs.user_id', '=', 'users.id')
@@ -774,9 +775,10 @@ class AdminController extends Controller
                 $counter++;
             }
             $transferApplicants = DB::table('users')->where('applicant_type', 'transfer')
-            ->where('users.session_id', $currentSessionId)
+            // ->where('users.session_id', $currentSessionId)
                 ->whereNotIn('users.id', $approvedArr)
                 ->join('usersbiodata', 'usersbiodata.user_id', '=', 'users.id')
+                ->where('usersbiodata.session_id', $currentSessionId)
                 ->join('transfers', 'transfers.user_id', '=', 'users.id')
                 ->select('users.*', 'usersbiodata.gender', 'usersbiodata.created_at', 'transfers.cgpa', 'transfers.course_applied')
                 ->get();
@@ -801,9 +803,10 @@ class AdminController extends Controller
                 $counter++;
             }
             $utmeApplicants = DB::table('users')->where('applicant_type', 'utme')
-              ->where('users.session_id', $currentSessionId)
+            //   ->where('users.session_id', $currentSessionId)
                 ->whereNotIn('users.id', $approvedArr)
                 ->join('usersbiodata', 'usersbiodata.user_id', '=', 'users.id')
+                ->where('usersbiodata.session_id', $currentSessionId)
                 // ->join('uploads', 'uploads.user_id', '=', 'users.id')
                 ->join('utme', 'utme.user_id', '=', 'users.id')
                 ->select('users.*', 'usersbiodata.gender', 'usersbiodata.created_at',  'usersbiodata.dob', 'usersbiodata.status', 'utme.course_applied')
@@ -2469,7 +2472,7 @@ public function viewaddRemitasServiceType(){
     public function destroy(Request $request, StaffCourse $staffCourse)
     {
         // dd( $staffCourse);
-        $this->authorize('searchapplicant',Session::class);
+        // $this->authorize('searchapplicant',Session::class);
         $staffCourse->delete();
 
         if ($request->method() === 'GET') {
