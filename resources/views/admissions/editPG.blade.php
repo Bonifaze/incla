@@ -76,10 +76,10 @@ active
                                 <input id="surname" type="text" class="form-control " name="surname" value="{{ $applicantsDetails->surname}}" autofocus readonly>
                         </div>
                         <div class="form-group">
-                            <div class="form-group"> readonly
+
                                 <label for="">{{ __('First Name') }} </label>
                                 <input id="first_name" type="text" class="form-control" name="first_name" value="{{ $applicantsDetails->first_name}}" autofocus readonly>
-                            </div>
+
                         </div>
                         <div class="form-group">
                                 <label for="">{{ __('Email') }} </label>
@@ -87,7 +87,7 @@ active
                         </div>
                         <div class="form-group">
                                 <label for="">{{ __('Phone') }} </label>
-                                <input id="phone" type="phone" class="form-control" name="phone" autocomplete="phone" placeholder="{{ $applicantsDetails->phone}}" autofocus>
+                                <input id="phone" type="phone" class="form-control" name="phone" value="{{ $applicantsDetails->phone}}" autofocus>
                         </div>
 
                             <div class="form-group">
@@ -120,7 +120,7 @@ active
                             <label for="dob">{{ __('Date of Birth') }} </label>
 
                             <div class="form-group">
-                                <input id="dob" type="date" class="form-control" name="dob" value="{{$applicantsDetails -> dob}}">
+                                <input id="" type="date" class="form-control" name="dob" value="{{$applicantsDetails -> dob}}">
                             </div>
                         </div>
 

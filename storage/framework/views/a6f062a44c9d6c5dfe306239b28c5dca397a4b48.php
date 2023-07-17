@@ -49,7 +49,7 @@ active
                 <div class="tab-pane fade show active" id="home-tab-pane" role="tabpanel" aria-labelledby="home-tab" tabindex="0">
                     <form method="POST" action="/editbiodata" enctype="multipart/form-data" class="p-3">
                         <?php echo csrf_field(); ?>
-
+                        
 
                         <div class="item border-bottom py-3">
                             <div class="row justify-content-between align-items-center">
@@ -73,10 +73,10 @@ active
                                 <input id="surname" type="text" class="form-control " name="surname" value="<?php echo e($applicantsDetails->surname); ?>" autofocus readonly>
                         </div>
                         <div class="form-group">
-                            <div class="form-group"> readonly
+
                                 <label for=""><?php echo e(__('First Name')); ?> </label>
                                 <input id="first_name" type="text" class="form-control" name="first_name" value="<?php echo e($applicantsDetails->first_name); ?>" autofocus readonly>
-                            </div>
+
                         </div>
                         <div class="form-group">
                                 <label for=""><?php echo e(__('Email')); ?> </label>
@@ -84,7 +84,7 @@ active
                         </div>
                         <div class="form-group">
                                 <label for=""><?php echo e(__('Phone')); ?> </label>
-                                <input id="phone" type="phone" class="form-control" name="phone" autocomplete="phone" placeholder="<?php echo e($applicantsDetails->phone); ?>" autofocus>
+                                <input id="phone" type="phone" class="form-control" name="phone" value="<?php echo e($applicantsDetails->phone); ?>" autofocus>
                         </div>
 
                             <div class="form-group">
@@ -117,7 +117,7 @@ active
                             <label for="dob"><?php echo e(__('Date of Birth')); ?> </label>
 
                             <div class="form-group">
-                                <input id="dob" type="date" class="form-control" name="dob" value="<?php echo e($applicantsDetails -> dob); ?>">
+                                <input id="" type="date" class="form-control" name="dob" value="<?php echo e($applicantsDetails -> dob); ?>">
                             </div>
                         </div>
 
@@ -425,7 +425,7 @@ active
                 </div>
                 <div class="tab-pane fade" id="profile-tab-pane" role="tabpanel" aria-labelledby="profile-tab" tabindex="0">
 
-
+                    
                     <form method="POST" action="/editsponsers" class="p-3">
                         <?php echo csrf_field(); ?>
 
@@ -469,7 +469,7 @@ active
             </div>
             <div class="tab-pane fade" id="profile4-tab-pane" role="tabpanel" aria-labelledby="profile4-tab" tabindex="0">
 
-
+                
                 <form method="POST" action="/editpassword" class="p-3">
                     <?php echo csrf_field(); ?>
                     <input id="email" type="hidden" class="form-input form-control" name="email" value="<?php echo e($applicantsDetails -> email); ?>">
@@ -509,7 +509,7 @@ unset($__errorArgs, $__bag); ?>
                     <div class="form-group">
                         <div class="form-group">
 
-
+                            
                             <button type="submit" class="btn btn-success mt-5">
                                 <?php echo e(__('Update')); ?>
 
@@ -519,7 +519,7 @@ unset($__errorArgs, $__bag); ?>
                 </form>
             </div>
             <div class="tab-pane fade" id="profile2-tab-pane" role="tabpanel" aria-labelledby="profile2-tab" tabindex="0">
-
+                
 
                 <form method="POST" action="/editpginformation" class="p-3">
                     <?php echo csrf_field(); ?>
@@ -621,7 +621,7 @@ unset($__errorArgs, $__bag); ?>
                     </div>
                     <h5 class="h6 text-success text-center fw-bold mb-2 pt-2">REFEREES </h5>
                     <h6 class="h6 text-warning text-center fw-small mb-4 pt-2"> Provide three (3) referees, two (2) must be your former lecturers. </h6>
-
+                    
                     <hr>
                     <div class="form-group">
                         <div class="form-group">
@@ -647,7 +647,7 @@ unset($__errorArgs, $__bag); ?>
                             <input id="subject_3" type="text" name="email1" class="form-control" required value="<?php echo e($applicantsDetails -> email1); ?>" autofocus>
                         </div>
                     </div>
-
+                    
                     <hr>
                     <div class="form-group">
                         <div class="form-group">
@@ -669,7 +669,7 @@ unset($__errorArgs, $__bag); ?>
                             <input id="subject_3" type="text" name="email2" class="form-control" required value="<?php echo e($applicantsDetails -> email1); ?>" autofocus>
                         </div>
                     </div>
-
+                    
                     <hr>
                     <div class="form-group">
                         <div class="form-group">
@@ -695,7 +695,7 @@ unset($__errorArgs, $__bag); ?>
                     <div class="form-group">
                         <div class="form-group">
 
-
+                            
                             <button type="submit" class="btn btn-success mt-5">
                                 <?php echo e(__('Update')); ?>
 
@@ -749,7 +749,7 @@ unset($__errorArgs, $__bag); ?>
                     <div class="form-group">
                         <div class="form-group">
 
-
+                            
                             <button type="submit" class="btn btn-success mt-5">
                                 <?php echo e(__('update')); ?>
 
@@ -762,6 +762,32 @@ unset($__errorArgs, $__bag); ?>
     </section>
 </div>
 
+<?php $__env->stopSection(); ?>
+
+<?php $__env->startSection('pagescript'); ?>
+<!-- External JavaScripts
+            ============================================= -->
+<script src="<?php echo e(asset('js/jquery.js')); ?>"></script>
+<!-- bootstrap datepicker -->
+<script src="<?php echo e(asset('dist/js/components/bootstrap-datepicker.js')); ?>"></script>
+<!-- Bootstrap File Upload Plugin -->
+<script src="<?php echo e(asset('dist/js/components/bs-filestyle.js')); ?>"></script>
+
+<script src="<?php echo e(asset('js/jquery.js')); ?>"></script>
+
+<!-- bootstrap datepicker -->
+<script src="<?php echo e(asset('dist/js/components/bootstrap-datepicker.js')); ?>"></script>
+<!-- Bootstrap File Upload Plugin -->
+<script src="<?php echo e(asset('dist/js/components/bs-filestyle.js')); ?>"></script>
+
+<script type="text/javascript">
+    //Date picker
+    $('#dob').datepicker({
+        format: 'yyyy-mm-dd',
+        autoclose: true
+    })
+</script>
+
 <script>
     $(document).ready(function() {
         $('#myTab a').on('click', function(e) {
@@ -770,5 +796,96 @@ unset($__errorArgs, $__bag); ?>
         });
     });
 </script>
+
+
+<script type="text/javascript">
+    $(document).on('ready', function() {
+
+        $("#passport").fileinput({
+            mainClass: "input-group-md",
+            showUpload: false,
+            previewFileType: "image",
+            browseClass: "btn btn-success",
+            browseLabel: "Pick Image",
+            browseIcon: "<i class=\"fas fa-user\"></i>",
+            removeClass: "btn btn-danger",
+            removeLabel: "Delete",
+            removeIcon: "<i class=\"icon-trash\"></i> ",
+            allowedFileExtensions: ["jpg", "jpeg", "gif", "png"],
+            elErrorContainer: "#errorBlock"
+        });
+
+    });
+</script>
+
+<script type="text/javascript">
+    $(document).on('ready', function() {
+
+        $("#jamb").fileinput({
+            mainClass: "input-group-md",
+            showUpload: false,
+            previewFileType: "image",
+            browseClass: "btn btn-success",
+            browseLabel: "Pick Image",
+            browseIcon: "<i class=\"fas fa-user\"></i>",
+            removeClass: "btn btn-danger",
+            removeLabel: "Delete",
+            removeIcon: "<i class=\"icon-trash\"></i> ",
+            allowedFileExtensions: ["jpg", "jpeg", "gif", "png"],
+            elErrorContainer: "#errorBlock"
+
+
+
+        });
+
+
+
+    });
+</script>
+
+<script type="text/javascript">
+    $(document).on('ready', function() {
+
+        $("#olevel1").fileinput({
+            mainClass: "input-group-md",
+            showUpload: false,
+            previewFileType: "image",
+            browseClass: "btn btn-success",
+            browseLabel: "Pick Image",
+            browseIcon: "<i class=\"fas fa-user\"></i>",
+            removeClass: "btn btn-danger",
+            removeLabel: "Delete",
+            removeIcon: "<i class=\"icon-trash\"></i> ",
+            allowedFileExtensions: ["jpg", "jpeg", "gif", "png"],
+            elErrorContainer: "#errorBlock"
+
+
+
+        });
+
+
+
+    });
+</script>
+
+<script type="text/javascript">
+    $(document).on('ready', function() {
+
+        $("#olevel2").fileinput({
+            mainClass: "input-group-md",
+            showUpload: false,
+            previewFileType: "image",
+            browseClass: "btn btn-success",
+            browseLabel: "Pick Image",
+            browseIcon: "<i class=\"fas fa-file-upload\"></i>",
+            removeClass: "btn btn-danger",
+            removeLabel: "Delete",
+            removeIcon: "<i class=\"icon-trash\"></i> ",
+            allowedFileExtensions: ["jpg", "jpeg", "gif", "png"],
+            elErrorContainer: "#errorBlock"
+        });
+    });
+</script>
 <?php $__env->stopSection(); ?>
+
 <?php echo $__env->make('layouts.adminsials', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH /Users/lifeofrence/Documents/laraproject/resources/views/admissions//editPG.blade.php ENDPATH**/ ?>
