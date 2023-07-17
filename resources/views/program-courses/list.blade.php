@@ -52,7 +52,7 @@
 							  <th>Level</th>
 							  <th>Credit</th>
 							  <th>Session</th>
-							  <th>Lecturer</th>
+							  {{--  <th>Lecturer</th>  --}}
 							  <th>Action</th>
 							  <th>Action</th>
 
@@ -72,7 +72,7 @@
 							   <td>{{ $pcourse->level }}</td>
 							 <td>{{ $pcourse->credit_unit }}</td>
 							 <td>{{ $pcourse->session->name }}</td>
-							 <td>{{ $pcourse->lecturer->FullName  ?? ' '}}</td>
+							 {{--  <td>{{ $pcourse->lecturer->FullName  ?? ' '}}</td>  --}}
 							<td><a href="{{ route('program_course.edit',$pcourse->id) }}" class="btn btn-warning"> Edit </td>
 
 							    <td>

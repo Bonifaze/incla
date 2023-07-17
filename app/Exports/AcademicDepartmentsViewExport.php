@@ -35,21 +35,52 @@ class AcademicDepartmentsViewExport implements FromView
         $session = $session->currentSession();
         $semester = $this->semester;
 
-
         $student_ids = RegisteredCourse::distinct('student_id')->where('program_id', $id)
          ->where('level', $level)
         ->where('semester', $semester)
         ->where('session', $session)->pluck('student_id');
         $student_ids_arr = $student_ids->toArray();
-        $students = Student::wherein('id', $student_ids_arr)->with(['registered_courses' => function ($q) use ($level, $semester, $session) {
-            $q->where('session', $session);
-             $q->where('level', $level);
-            $q->where('semester', $semester);
-            $q->orderBy('course_id', 'ASC');
 
-        }, 'previous_registered_courses' => function ($qr) use($level) {
-            $qr->where('level', '<', $level);
-        }])->get();
+$students = Student::whereIn('id', $student_ids_arr)
+    ->with([
+        'registered_courses' => function ($q) use ($level, $semester, $session) {
+            $q->where('level', $level)
+                ->where('semester', $semester)
+                ->where('session', $session)
+                ->orderBy('course_id', 'ASC');
+        },
+        'previous_registered_courses' => function ($qr) use ($level, $semester) {
+            $qr->where(function ($query) use ($level, $semester) {
+                $query->where('level', '<', $level);
+                if ($semester == 2) {
+                    $query->orWhere(function ($query) use ($level, $semester) {
+                        $query->where('level', $level)
+                            ->where('semester', 1);
+                    });
+                }
+            });
+        }
+    ])
+    ->withCount([
+        'registered_courses as total_tc' => function ($q) use ($level, $semester, $session) {
+            $q->where('level', $level)
+                ->where('semester', $semester)
+                ->where('session', $session);
+        },
+        'previous_registered_courses as total_tc_bf' => function ($q) use ($level, $semester) {
+            $q->where('level', '<', $level)
+                ->orWhere(function ($query) use ($level, $semester) {
+                    $query->where('level', $level)
+                        ->where('semester', 1);
+                });
+        }
+    ])
+    ->get();
+
+
+
+
+    //    dd($students);
 
         $student_course_ids = RegisteredCourse::distinct('course_id')->where('program_id', $id)
          ->where('level', $level)
@@ -60,7 +91,7 @@ class AcademicDepartmentsViewExport implements FromView
         ->where('program_id', $id)->with(['program']
         )->where('session_id', $session)
         ->where('semester', $semester)
-        ->distinct($student_course_ids)
+        // ->distinct($student_course_ids)
         ->orderBy('level', 'ASC')->get();
 
         /*$program_courses = RegisteredCourse::

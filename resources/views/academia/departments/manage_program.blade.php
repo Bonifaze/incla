@@ -98,10 +98,10 @@
                                     <tr>
                                         <td> Results <br> Download</td>
                                         <td>
-                                                <a class="btn btn-outline-dark"
+                                                {{--  <a class="btn btn-outline-dark"
                                                 href="{{ route('academia.department.export_view', [$program->id, 100, 1]) }}">
                                                  First Semester </a>
-                                                 <br><br>
+                                                 <br><br>   --}}
                                                 <a class="btn btn-outline-primary"
                                                 href="{{ route('academia.department.export_view', [$program->id, 100, 2]) }}">
                                                  Second Semester </a>

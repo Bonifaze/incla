@@ -110,7 +110,8 @@
                               $tgp_cgpa = 0;
                               $tcu_cgpa = 0;
                               foreach ($courses as $course) {
-                                if ($course->session < $session->id)
+
+                                if (($course->session == $session->id && $course->semester != 2) || $course->session < $session->id)
                                 {
                                   $tgp_cgpa += $course->grade_point * $course->course_unit;
                                   $tcu_cgpa += $course->course_unit;
@@ -136,7 +137,7 @@
                             <td>&nbsp;</td>
                             <td colspan="3" align="right"><strong>TC</strong></td>
                            <td>&nbsp;</td>
-                            <td><strong> <?php echo e($tcu_cgpa); ?></strong></td>
+                            <td><strong> <?php echo e($tc1 > 0 ? $tcu_cgpa : 0); ?></strong></td>
                             <td>&nbsp;</td>
                           </tr>
 
@@ -144,7 +145,7 @@
                             <td>&nbsp;</td>
                             <td colspan="3" align="right"><strong>TGP</strong></td>
                             <td>&nbsp;</td>
-                            <td><strong> <?php echo e($tgp_cgpa); ?></strong></td>
+                            <td><strong> <?php echo e($tc1 > 0 ? $tgp_cgpa : 0); ?></strong></td>
                             <td>&nbsp;</td>
                           </tr>
                           <tr>
@@ -204,11 +205,10 @@
       $tgp_cgpa2 = 0;
       $tcu_cgpa2 = 0;
       foreach ($courses as $course) {
-          if (($course->session == $session->id && $course->semester == 1) || $course->session < $session->id)
-          {
+
             $tgp_cgpa2 += $course->grade_point * $course->course_unit;
             $tcu_cgpa2 += $course->course_unit;
-          }
+
       }
       //dd($tgp_cgpa, $tcu_cgpa);
     ?>
@@ -237,7 +237,7 @@
     <td>&nbsp;</td>
     <td colspan="3" align="right"><strong>TC</strong></td>
    <td>&nbsp;</td>
-    <td><strong> <?php echo e($tcu_cgpa2); ?></strong></td>
+    <td><strong> <?php echo e($tc2 > 0 ?  $tcu_cgpa2 : 0); ?></strong></td>
     <td>&nbsp;</td>
   </tr>
 
@@ -245,7 +245,7 @@
     <td>&nbsp;</td>
     <td colspan="3" align="right"><strong>TGP</strong></td>
     <td>&nbsp;</td>
-    <td><strong> <?php echo e($tgp_cgpa2); ?></strong></td>
+    <td><strong> <?php echo e($tc2 > 0 ? $tgp_cgpa2 : 0); ?></strong></td>
     <td>&nbsp;</td>
   </tr>
   <tr>
