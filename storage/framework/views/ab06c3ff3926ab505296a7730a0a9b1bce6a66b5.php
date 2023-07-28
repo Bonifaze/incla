@@ -1,3 +1,5 @@
+`
+
 <?php $__env->startSection('pagetitle'); ?>
 <!-- CSRF Token -->
     <meta name="csrf-token" content="<?php echo e(csrf_token()); ?>">
@@ -6,7 +8,7 @@
 
 <?php $__env->stopSection(); ?>
 
-<?php $__env->startSection('content'); ?>
+<?php $__env->startSection('conten`t'); ?>
 <body >
 <table width="650" border="0" cellspacing="0" cellpadding="0" style="margin:auto">
   <tr>
