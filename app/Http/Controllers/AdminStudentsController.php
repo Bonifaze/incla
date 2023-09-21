@@ -807,4 +807,36 @@ public function transcriptadmin($encode)
     return view('results.transcript',compact('student','academic','sessions', 'registered_courses'));
 } //end transcriptAdmin
 
+
+public function findprogramUG(Request $request)
+{
+    $this->authorize('search', Student::class);
+
+    $program_id = $request->program_id;
+    $level = $request->level; // Get the level from the request
+// dd($request->level )
+;    $students = Student::with(['contact', 'academic', 'medical', 'academic.program'])
+        ->whereHas('academic', function ($query) use ($level, $request) {
+            if ($level == 'UnderGraduate') {
+                $query->where('level', '<=', 600);
+            } elseif ($level == 'PostGraduate') {
+                $query->where('level', '>=', 700)
+                      ->where('level', '<=', 900);
+            } else {
+                // If other levels are passed, handle them accordingly
+                // For example, if you want to show all students regardless of level
+                // you can simply remove the condition for level
+                // $query->where('program_id', '=', $request->program_id);
+            }
+
+            $query->where('program_id', '=', $request->program_id)
+                ->orderBy('program_id');
+        })
+        ->orderBy('id')
+        ->orderBy('surname')
+        ->paginate(2000);
+
+    return view('students.admin.plain_list', compact('students'));
+}
+
 } // end Class

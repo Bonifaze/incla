@@ -13,6 +13,7 @@ use App\Models\GradeSetting;
 use Illuminate\Http\Request;
 use App\Models\RegisteredCourse;
 use Illuminate\Support\Facades\DB;
+use App\Models\RemitasVerification;
 use Illuminate\Support\Facades\Auth;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Models\SemesterRemarkCourses;
@@ -676,5 +677,15 @@ class StudentResultsController extends Controller
         return view('results.course_form',compact('student','session','academic','results' ,'results2'));
     }
     //02-05-2023
+
+    public function pClearanceForm(Request $request){
+        $student = Student::findOrFail($request->student_id);
+        $academic = $student->academic;
+        $session = DB::table('sessions')->where('id', $request->session_id)->select('sessions.name', 'sessions.semester')->first();
+        $rv = RemitasVerification::select('updated_at')->first();
+        $semester = $request->semester;
+        $college_id = $student->academic->program->department->college_id;
+        return view('results.studentsPClearance', compact('student', 'academic', 'session','rv','semester' ));
+    }
 
 } // end class

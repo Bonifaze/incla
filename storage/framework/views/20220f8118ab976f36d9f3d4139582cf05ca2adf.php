@@ -56,9 +56,7 @@
                             <td colspan="2"><strong>Order</strong>: <?php echo e($remita->order_id); ?></td>
                         </tr>
                         <tr>
-                            <td colspan="3"><strong>RRR Date</strong>: <?php echo e($remita->created_at->format('d-M-Y')); ?></td>
-                            <td colspan="2" align="center"><strong>Payment Date</strong>: <?php echo e(\Carbon\Carbon::parse($remita->created_at)->format('d-m-Y')); ?> </td>
-                            <td colspan="2"><strong>Updated On</strong>: <?php echo e(\Carbon\Carbon::parse($remita->updated_at)->format('d-m-Y')); ?></td>
+                           admin/departments/staff-list/
                         </tr>
 
 

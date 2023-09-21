@@ -55,6 +55,7 @@
                                             <th>Course Code</th>
                                             <th>Course Title</th>
                                             <th>Credit Unit</th>
+                                            <th>Action</th>
                                         </tr>
                                     </thead>
 
@@ -93,6 +94,26 @@
                                                         <td><?php echo e($course->course_title); ?></td>
                                                         <td><?php echo e($course->credit_unit); ?></td>
                                                         
+                                                         <td>
+                                            <?php echo Form::open(['method' => 'Post', 'route' => 'result.add-course', 'id' => 'addFCForm' . $course->course_id]); ?>
+
+                                            <?php echo e(Form::hidden('course_id', $course->course_id )); ?>
+
+                                            <?php echo e(Form::text('student_id',  Auth::guard('student')->user()->id  )); ?>
+
+                                            
+                                            <?php echo e(Form::hidden('semester', $course->semester)); ?>
+
+                                            
+                                            
+
+
+                                            <button onclick="addFCourse(<?php echo e($course->course_id); ?>)" type="submit"
+                                                class="<?php echo e($course->course_id); ?> btn btn-success"><span class="icon-plus"></span>
+                                               <i class="fas fa-plus"></i>  Add</button>
+                                            <?php echo Form::close(); ?>
+
+                                        </td>
                                                 <?php endif; ?>
                                             <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                                             </tr>
@@ -100,6 +121,7 @@
                                                 <td><strong>Total Credit Unit</strong></td>
                                                 <td colspan="2"></td>
                                                 <td id="tcu" name="total"></td>
+                                                <td></td>
                                             </tr>
                                     </tbody>
 
@@ -112,6 +134,7 @@
                                             <th>Course Code</th>
                                             <th>Course Title</th>
                                             <th>Credit Unit</th>
+                                            <th>Action</th>
                                         </tr>
                                     </thead>
 
@@ -146,6 +169,25 @@
                                                     <td><?php echo e($course->course_code); ?></td>
                                                     <td><?php echo e($course->course_title); ?></td>
                                                     <td><?php echo e($course->credit_unit); ?></td>
+                                                    <td>
+                                            <?php echo Form::open(['method' => 'Post', 'route' => 'result.add-course', 'id' => 'addFCForm' . $course->course_id]); ?>
+
+                                            <?php echo e(Form::hidden('course_id', $course->course_id )); ?>
+
+                                            
+                                            
+                                            <?php echo e(Form::hidden('semester', $course->semester)); ?>
+
+                                            
+                                            
+
+
+                                            <button onclick="addFCourse(<?php echo e($course->course_id); ?>)" type="submit"
+                                                class="<?php echo e($course->course_id); ?> btn btn-success"><span class="icon-plus"></span>
+                                               <i class="fas fa-plus"></i>  Add</button>
+                                            <?php echo Form::close(); ?>
+
+                                        </td>
                                             <?php endif; ?>
                                         <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                                         </tr>
@@ -153,6 +195,7 @@
                                             <td><strong>Total Credit Unit</strong> </td>
                                             <td colspan="2"></td>
                                             <td id="tcu2" name="total"></td>
+                                            <td></td>
 
                                         </tr>
                                     </tbody>

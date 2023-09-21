@@ -80,3 +80,6 @@ Route::get('/students/course-form/{encode}', 'StudentsController@courseFormstude
 Route::delete('/student/remita/studentupaid/{remita}', 'StudentsController@destroy')->name('studentremita.find-studentunpaidrrr.destroy');
 
 Route::get('/students/remita/otherfeestype', 'StudentPaymentsController@Otherfees')->name('student.otherfeespayment');
+
+//CLEARANCE
+Route::get('/student/studentsClearance', 'StudentsController@studentsClearance')->name('student.studentsClearance');

@@ -44,6 +44,7 @@ active
 
             <form action="" method="POST" onsubmit="event.preventDefault();" class="p-5">
                 <?php echo csrf_field(); ?>
+                <div class="text-danger font-weight-bold text-justify">ANNOUNCEMENT: This is to inform all parents, guardians, sponsors and students that the PA Eto Hostel block is now filled up. You are therefore advised to make your choice of accommodation from other available options.</div>
                 <div class="form-group container-fluid mt-5 p-5 border border-success shadow shadow-lg rounded rounded-lg">
                     <label for="exampleFormControlSelect1" class="text-success fw-bold mb-2">School Fee Type</label>
 

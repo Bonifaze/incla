@@ -38,23 +38,35 @@
                         class="app-page-title text-uppercase h5 font-weight-bold p-2 mb-2 shadow-sm text-center text-success border">
                         Dashboard
                     </h1>
+ <?php echo $__env->make('partialsv3.flash', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
                     <div class="card shadow border border-success">
 
                         <div class="row p-5">
                            <?php $__currentLoopData = $courseReg; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $key => $session): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                             <div class="col-xl-6 col-md-6 mb-4">
-                                <div class="card border-left-success shadow h-100 py-3">
+                                <div class="card border-left-success shadow h-100 ">
                                     <div class="card-body">
                                         <div class="row no-gutters align-items-center">
                                             <div class="col mr-2">
-                                                <div class="h4 text-success" style="text-decoration: underline;">
+                                             <div class="h4 text-primary " style="text-decoration: underline;">
+                                                       
+                                                    
+                                                        
+                                                        <a href="/student/studentsClearance"
+                                                        class="text-success <?php echo $__env->yieldContent('registration'); ?>">Semester Clearance</a>
+
+                                                </div>
+                                                <div class="h4 text-success mt-3" style="text-decoration: underline;">
                                                        
                                                     
                                                         
                                                         <a href="<?php echo e($session->route); ?>"
                                                         class="text-success <?php echo $__env->yieldContent('registration'); ?>">Course Registration</a>
 
+
                                                 </div>
+
+
                                             </div>
                                             <div class="col-auto">
                                                 <i class="fa fa-tasks fa-3x text-success"></i>

@@ -468,13 +468,13 @@ class ApplicantController extends Controller
                 $facultyAndDept = $this->getdptcollegid($ca->course_applied);
             }
 
-            $fee_types = fee_types::orderBy('status', 'ASC')
+            $fee_types = fee_types::orderBy('name', 'ASC')
                 ->where('status', 1)
                 ->where('category', 3)
                 // ->where('gender_code', $payment->gender)
                 // ->where('college_id', $facultyAndDept['col'])
                 ->get();
-            $fee_typess = fee_types::orderBy('status', 'ASC')
+            $fee_typess = fee_types::orderBy('name', 'ASC')
                 ->where('status', 1)
                 ->where('category', 3)
                 ->get();

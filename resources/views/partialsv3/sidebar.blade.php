@@ -740,6 +740,12 @@
                                 <p>Show Remita Fee Type</p>
                             </a>
                         </li>
+                         <li class="nav-item">
+                            <a href="/staff/paymentlists" class="nav-link @yield('remita-list3')">
+                                <i class="fa fa-eye nav-icon"></i>
+                                <p>RRR for Clearance</p>
+                            </a>
+                        </li>
                         <li class="nav-item has-treeview @yield('bursary-open')">
                     <a href="#" class="nav-link @yield('bursary')">
                         <i class="nav-icon far fa-calendar-alt"></i>

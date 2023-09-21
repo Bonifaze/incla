@@ -50,6 +50,7 @@
                         class="app-page-title text-uppercase h5 font-weight-bold p-2 mb-2 shadow-sm text-center text-success border">
                         Remita Fees
                     </h1>
+
                     <div id="content">
                         <!DOCTYPE html>
                         <html lang="en">
@@ -90,6 +91,9 @@
                                     {{--  <h6 class="m-0 font-weight-bold text-success">Show Other Fees </h6>  --}}
 
                                 </div>
+
+                                <div class="text-danger font-weight-bold text-justify">ANNOUNCEMENT: This is to inform all parents, guardians, sponsors and students that the PA Eto Hostel block is now filled up. You are therefore advised to make your choice of accommodation from other available options.</div>
+
                                 <div
                                     class="form-group container-fluid mt-5 p-5 border border-success shadow shadow-lg rounded rounded-lg">
                                     <label for="exampleFormControlSelect1" class="text-success fw-bold mb-2">School

@@ -51,4 +51,6 @@ Route::post('/results/courseRegStudentForm', 'StudentResultsController@courseReg
 
 //02-05-2023
 
+Route::post('/pclearance/form', 'StudentResultsController@pClearanceForm')->name('pclearance.form');
+
 //

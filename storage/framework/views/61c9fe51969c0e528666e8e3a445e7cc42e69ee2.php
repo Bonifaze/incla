@@ -65,7 +65,7 @@
 
             <div class="card ">
 
-               
+
                 <div class="table-responsive">
 
                     <!-- form start -->
@@ -134,7 +134,7 @@
 
                <div class="card ">
 
-          
+
                 <div class="table-responsive">
 
                     <!-- form start -->
@@ -148,7 +148,8 @@
 
                                 <div class="col-md-6 form-group">
 								<label for="program">Program :</label>
-  					                                     <?php echo e(Form::select('program_id', $programs, null, [ 'class' => 'form-control','placeholder'=>'Select Program', 'id' => 'program_id', 'name' => 'program_id'])); ?> 
+  					                                     <?php echo e(Form::select('program_id', $programs, null, [ 'class' => 'form-control','placeholder'=>'Select Program', 'id' => 'program_id', 'name' => 'program_id'])); ?>
+
 
 							      <span class="text-danger"> <?php echo e($errors->first('program')); ?></span>
 						        </div>
@@ -169,6 +170,67 @@
                                                     '1000' => 'Graduate',
                                                 ],
                                                 100,
+                                                ['class' => 'form-control select2'],
+                                            )); ?>
+
+                                            <span class="text-danger"> <?php echo e($errors->first('level')); ?></span>
+                                        </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <!-- /.card-body -->
+
+                    <div class="card-footer">
+
+                        <?php echo e(Form::submit('Search', array('class' => 'btn btn-primary'))); ?>
+
+
+                    </div>
+
+                </div>
+                <!-- /.box-body -->
+
+
+                <?php echo Form::close(); ?>
+
+
+            </div>
+
+            
+
+              <div class="card ">
+
+
+                <div class="table-responsive">
+
+                    <!-- form start -->
+
+                    <?php echo Form::open(array('route' => 'student.findprogramUG', 'method'=>'POST', 'class' => 'nobottommargin')); ?>
+
+                    <div class="card-body">
+                        <div class="box-body">
+
+                            <div class="row">
+
+                                <div class="col-md-6 form-group">
+								<label for="program">Program :</label>
+  					                                     <?php echo e(Form::select('program_id', $programs, null, [ 'class' => 'form-control','placeholder'=>'Select Program', 'id' => 'program_id', 'name' => 'program_id'])); ?>
+
+
+							      <span class="text-danger"> <?php echo e($errors->first('program')); ?></span>
+						        </div>
+                     <div class="col-md-4 form-group">
+                                            <label for="level">Level :</label>
+                                            <?php echo e(Form::select(
+                                                'level',
+                                                [
+                                                    'UnderGraduate' => 'UnderGraduate',
+                                                    'PostGraduate' => 'PostGraduate',
+
+                                                ],
+                                                'UnderGraduate',
                                                 ['class' => 'form-control select2'],
                                             )); ?>
 

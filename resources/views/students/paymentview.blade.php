@@ -200,7 +200,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="modal" id="myModal">
+                            {{--  <div class="modal" id="myModal">
                                                             <div class="modal-dialog">
                                                                 <div class="modal-content">
 
@@ -229,7 +229,7 @@
 
                                                                 </div>
                                                             </div>
-                                                        </div>
+                                                        </div>  --}}
                             <script type="text/javascript" src="https://login.remita.net/payment/v1/remita-pay-inline.bundle.js"></script>
                             </script>
 

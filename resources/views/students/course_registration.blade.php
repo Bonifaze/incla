@@ -60,6 +60,7 @@
                                             <th>Course Code</th>
                                             <th>Course Title</th>
                                             <th>Credit Unit</th>
+                                            <th>Action</th>
                                         </tr>
                                     </thead>
 
@@ -97,6 +98,21 @@
                                                         <td>{{ $course->course_title }}</td>
                                                         <td>{{ $course->credit_unit }}</td>
                                                         {{--  <td>{{ $course->id }}</td>  --}}
+                                                         <td>
+                                            {!! Form::open(['method' => 'Post', 'route' => 'result.add-course', 'id' => 'addFCForm' . $course->course_id]) !!}
+                                            {{ Form::text('course_id', $course->course_id ) }}
+                                            {{ Form::text('student_id',  Auth::guard('student')->user()->id  )}}
+                                            {{--  {{ Form::hidden('session_id', $session->id) }}  --}}
+                                            {{ Form::text('semester', $course->semester) }}
+                                            {{--  {{ Form::hidden('level', $student->academic->level) }}  --}}
+                                            {{--  {{ Form::hidden('program_id', $student->academic->program_id) }}  --}}
+
+
+                                            <button onclick="addFCourse({{$course->course_id}})" type="submit"
+                                                class="{{ $course->course_id }} btn btn-success"><span class="icon-plus"></span>
+                                               <i class="fas fa-plus"></i>  Add</button>
+                                            {!! Form::close() !!}
+                                        </td>
                                                 @endif
                                             @endforeach
                                             </tr>
@@ -104,6 +120,7 @@
                                                 <td><strong>Total Credit Unit</strong></td>
                                                 <td colspan="2"></td>
                                                 <td id="tcu" name="total"></td>
+                                                <td></td>
                                             </tr>
                                     </tbody>
 
@@ -116,6 +133,7 @@
                                             <th>Course Code</th>
                                             <th>Course Title</th>
                                             <th>Credit Unit</th>
+                                            <th>Action</th>
                                         </tr>
                                     </thead>
 
@@ -149,6 +167,21 @@
                                                     <td>{{ $course->course_code }}</td>
                                                     <td>{{ $course->course_title }}</td>
                                                     <td>{{ $course->credit_unit }}</td>
+                                                    <td>
+                                            {!! Form::open(['method' => 'Post', 'route' => 'result.add-course', 'id' => 'addFCForm' . $course->course_id]) !!}
+                                            {{ Form::hidden('course_id', $course->course_id ) }}
+                                            {{--  {{ Form::hidden('student_id', $student->id) }}  --}}
+                                            {{--  {{ Form::hidden('session_id', $session->id) }}  --}}
+                                            {{ Form::hidden('semester', $course->semester) }}
+                                            {{--  {{ Form::hidden('level', $student->academic->level) }}  --}}
+                                            {{--  {{ Form::hidden('program_id', $student->academic->program_id) }}  --}}
+
+
+                                            <button onclick="addFCourse({{$course->course_id}})" type="submit"
+                                                class="{{ $course->course_id }} btn btn-success"><span class="icon-plus"></span>
+                                               <i class="fas fa-plus"></i>  Add</button>
+                                            {!! Form::close() !!}
+                                        </td>
                                             @endif
                                         @endforeach
                                         </tr>
@@ -156,6 +189,7 @@
                                             <td><strong>Total Credit Unit</strong> </td>
                                             <td colspan="2"></td>
                                             <td id="tcu2" name="total"></td>
+                                            <td></td>
 
                                         </tr>
                                     </tbody>

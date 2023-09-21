@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\College;
 use programs;
 use App\Remita;
 use App\FeeType;
@@ -110,7 +111,8 @@ class AdminController extends Controller
     {
         //dd($staff_course_id);
         $course = StaffCourse::where('id', $staff_course_id)->first();
-        return Excel::download(new RegisteredCourseExport(new RegisteredCourse, $course->session_id, $course->course_id, $course->program_id), $course->course_title.'_sheet.csv');
+        $fileName = strtolower ($course->course_code)."-".(str_replace("/", "-",$course->course_title)).'sheet.csv';
+        return Excel::download(new RegisteredCourseExport(new RegisteredCourse, $course->session_id, $course->course_id, $course->program_id), $fileName);
     }
 
     public function uploadResultCsv(Request $request)
@@ -2247,7 +2249,10 @@ public function viewaddRemitasServiceType(){
     $staff = Auth::guard('staff')->user();
         // if ($this->hasPriviledge("addRemitaServiceType",  $staff->id)) {
             $this->authorize('addremitaservicetype',Session::class);
+            // $colleges = College::with('departments')->orderBy('name','ASC')->pluck('name','id');
+        //    return view('admissions.addRemitaServiceType', compact('colleges'));
            return view('admissions.addRemitaServiceType');
+
         // }
         // else {
         //    $loginMsg = '<div class="alert alert-danger alert-dismissible" role="alert"> <button type="button" class="close" data-dismiss="alert"> &times; </button> You dont\'t have access to this task, please see the ICT</div>';
@@ -2260,6 +2265,8 @@ public function viewaddRemitasServiceType(){
             // $this->authorize('addremitaservicetype',Session::class);
 
             // dd($req);
+            $colleges = College::orderBy('name','ASC')->pluck('name','id');
+
             DB::beginTransaction();
 
             try {

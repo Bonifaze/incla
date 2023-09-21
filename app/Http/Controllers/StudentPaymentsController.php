@@ -54,7 +54,7 @@ class StudentPaymentsController extends Controller
             $fee_types = FeeType::orderBy('status', 'ASC')
             // ->select('id', 'name', 'amount', 'status', 'category', 'gender_code')
                 ->where('status', 1)
-            ->where('gender_code', $gender_code)
+            // ->where('gender_code', $gender_code)
 
                 ->where('category', '>', 2)
                 ->whereHas('college', function ($query) use ($academic) {
@@ -363,6 +363,7 @@ class StudentPaymentsController extends Controller
             ->select('remitas.*', 'students.surname', 'students.first_name', 'students.middle_name', 'students.gender', 'students.email', 'students.phone', )
         // ->leftjoin('usersbiodata', 'usersbiodata.user_id', '=', 'users.id')
             ->first();
+
         return view('students.receipt', compact('receipt'));
     }
 

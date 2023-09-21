@@ -56,3 +56,9 @@ Route::delete('/staff/assign/remove/{staffCourse}', 'AdminController@destroy')->
 
 Route::get('/staff/assign/courses', 'AdminController@courseAssigned')->name('staff.assign.courses');
 
+//CLEARNCE
+Route::get('/staff/paymentlists', 'StaffController@approvePayments')->name('paymentlists');
+
+Route::post('/staff/remitasverification', 'StaffController@remitasVerification')->name('staff.remitasVerification');
+
+Route::get('/staff/paymentConfirmlists', 'StaffController@confirmPayments')->name('staff.Confirmpaymentlists');

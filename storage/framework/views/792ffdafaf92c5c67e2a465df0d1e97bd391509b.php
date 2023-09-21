@@ -185,36 +185,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="modal" id="myModal">
-                                                            <div class="modal-dialog">
-                                                                <div class="modal-content">
-
-                                                                    <!-- Modal Header -->
-                                                                    <div class="modal-header">
-                                                                        <h4 class="modal-title bold">Are you sure you want
-                                                                            to delete this RRR?</h4>
-                                                                        <button type="button" class="btn-close"
-                                                                            data-bs-dismiss="modal"></button>
-                                                                    </div>
-
-                                                                    <!-- Modal body -->
-                                                                    <div class="modal-body">
-                                                                        Please confirm that you are deleting the RRR and
-                                                                        ensure that the payment status is not pending.
-                                                                    </div>
-
-                                                                    <!-- Modal footer -->
-                                                                    <div class="modal-footer">
-                                                                        <button type="button"
-                                                                            class="btn fw-bolder text-danger"
-                                                                            data-bs-dismiss="modal">Go Back</button>
-                                                                        <button type="submit" class="btn btn-success"
-                                                                            data-bs-dismiss="modal">Proceed</button>
-                                                                    </div>
-
-                                                                </div>
-                                                            </div>
-                                                        </div>
+                            
                             <script type="text/javascript" src="https://login.remita.net/payment/v1/remita-pay-inline.bundle.js"></script>
                             </script>
 

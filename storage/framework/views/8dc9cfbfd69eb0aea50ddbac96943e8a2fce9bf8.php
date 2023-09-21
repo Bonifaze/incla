@@ -12,6 +12,15 @@
     <title><?php echo e($receipt->first_name." ".$receipt->middle_name." ".$receipt->surname); ?> REMITA RECEPT</title>
     <!-- CSS only -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
+
+ <style>
+        .watermark {
+            background: url('path-to-watermark-image.png') no-repeat center center fixed;
+            background-size: cover;
+            opacity: 0.4; /* Adjust the opacity as needed */
+            position: relative;
+        }
+    </style>
 </head>
 
 <body>
@@ -23,13 +32,14 @@
                         class="card-img-top mb-2 mx-3" alt="User Image" style="width: 50px;">
 
             
-            <h3 class="text-nowrap mx-5">Remita Payment Receipt</>
+            <h3 class="text-nowrap text-bold mx-5">Remita Payment Receipt</h3>
         </div>
 
         <div class="mb-2">
             <div class="d-flex">
                 <ul class="m-2">
                     <li><b>Name: </b> <?php echo e($receipt->first_name." ".$receipt->middle_name." ".$receipt->surname); ?> </li>
+                    
                     <li><b>Phone: </b><?php echo e($receipt->phone); ?></li>
                 </ul>
                 <ul class="m-2">
@@ -54,10 +64,39 @@
                     <td><b>Channel: </b><?php echo e($receipt->channel); ?> </td>
                     <td><b>Order: </b> <?php echo e($receipt->order_ref); ?></td>
                     <td><b>RRR Date: </b> <?php echo e(\Carbon\Carbon::parse($receipt->created_at)->format('d-m-Y')); ?></td>
-                    <td><b>Payment Date: </b> <?php echo e(\Carbon\Carbon::parse($receipt->updated_at)->format('d-m-Y')); ?></td>
+                    <td><b>Payment Date: </b> <?php echo e(\Carbon\Carbon::parse($receipt->transaction_date)->format('d-m-Y')); ?></td>
                 </tr>
             </tbody>
         </table>
+<div class="">
+          <table width="100%" border="0">
+
+            <tr>
+                <td colspan="2">&nbsp;</td>
+            </tr>
+            <tr>
+            <?php if($receipt->authenticate_by==NULL): ?>
+                 <td colspan="2" Class="text-danger"><br />
+                  PENDING APPROVAL OF RECEIPT FROM BURSARY
+                    </td>
+            <?php else: ?>
+
+                <td colspan="2"><br />
+                 <td colspan="2" Class="text-success "\><br />
+                  APPROVED  RECEIPT FROM BURSARY
+                    </td>
+                    .............<?php echo e(\Carbon\Carbon::parse($receipt->updated_at)->format('d/m/Y')); ?>..................................<br />
+                    Date and Stamped<br />
+                    
+                    </td>
+            <?php endif; ?>
+            </tr>
+            <tr>
+                <td colspan="2">&nbsp;</td>
+            </tr>
+        </table>
+        </div>
+
 
     </div>
     <script>

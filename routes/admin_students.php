@@ -66,3 +66,5 @@ Route::patch('/student-medicals/edit/{id}', 'StudentMedicalsController@update')-
 Route::get('/students/list/getGradStudent/{level}', 'AdminStudentsController@getGradStudent')->name('student.getGradStudent');
 
 Route::get('/results/transcript/{encode}', 'AdminStudentsController@transcriptadmin')->name('results.transcript');
+
+Route::POST('/students/findprogramUG', 'AdminStudentsController@findprogramUG')->name('student.findprogramUG');

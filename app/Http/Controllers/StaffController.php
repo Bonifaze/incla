@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use PDF;
 use App\Role;
 use App\Staff;
+use App\Remita;
 use App\Program;
 use App\Session;
 use App\Mail\Welcome;
@@ -12,11 +13,14 @@ use App\StaffContact;
 use App\ProgramCourse;
 use App\StaffPosition;
 use App\EmploymentType;
+use App\Models\Remitas;
 use App\AdminDepartment;
 use App\StaffWorkProfile;
 use Illuminate\Http\Request;
+use App\Models\BursarySession;
 use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\DB;
+use App\Models\RemitasVerification;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
@@ -640,5 +644,96 @@ $data  =  $emails;
             ->orderBy('program_id','ASC')->orderBy('level','ASC')->paginate(40);
         return view('staff.academic.results', compact('pcourses'));
     }
+
+//CLEARANCE
+public function approvePaymentss()
+{
+    $staff = Auth::guard('staff')->user();
+    $sessionBus = BursarySession::where('status',1)->frst();
+    // Retrieve paid RRRs with associated student names
+    // $paidRRRs = Remitas::where('status_code', '01')
+    //     ->join('students', 'remitas.student_id', '=', 'students.id')
+    //     ->select('remitas.rrr', 'remitas.amount','remitas.fee_type', 'students.first_name', 'students.surname', 'students.middle_name', 'remitas.transaction_date')
+    //     ->orderBy('remitas.transaction_date', 'desc')
+    //     ->paginate(10);
+    $paidRRRs = Remita::with(['feeType','student','student.academic','users'])
+        ->where('status_code',1)
+        ->where('authenticate', 'not_confrim')
+
+        ->orderBy('updated_at','DESC')
+        ->paginate(10);
+    return view('staff.paymentlists', compact('staff', 'paidRRRs','sessionBus'));
+}
+public function approvePayments(Request $request)
+{
+    $staff = Auth::guard('staff')->user();
+    $sessionBus = BursarySession::where('status',1)->first();
+
+        $query = Remita::with(['feeType', 'student', 'student.academic', 'users'])
+            ->where('status_code', 1)
+            ->where('authenticate', 'not_confrim')
+
+            ->orderBy('updated_at', 'DESC');
+
+    // Check if a search query is provided
+    if ($request->has('search')) {
+        $search = $request->input('search');
+        $query->where(function ($q) use ($search) {
+            $q->where('students.first_name', 'like', "%$search%")
+                ->orWhere('students.surname', 'like', "%$search%")
+                ->orWhere('students.middle_name', 'like', "%$search%")
+                ->orWhere('remitas.amount', 'like', "%$search%")
+                ->orWhere('remitas.transaction_date', 'like', "%$search%")
+                ->orWhere('remitas.rrr', 'like', "%$search%");
+        });
+    }
+
+    $paidRRRs = $query->paginate(10);
+
+    return view('staff.paymentlists', compact('staff', 'paidRRRs','sessionBus'));
+}
+
+public function remitasVerification(Request $request){
+        // dd($request);
+
+        $this->authorize('addremitaservicetype', Session::class);
+
+    	$create = new RemitasVerification();
+    		$create->user_id = $request->user_id;
+    		$create->student_id = $request->student_id;
+            $create->rrr = $request->rrr;
+            $create->amount = $request->amount;
+            $create->session_id = $request->session_id;
+            $create->percentage = $request->percentage;
+            $create->staff_id = $request->staff_id;
+
+    		$create->save();
+
+            DB::table('remitas')->where('rrr', $request->rrr)->update([
+                'authenticate' => 'confirm',
+                'authenticate_by' => $request->staff_id,
+
+            ]);
+            DB::commit();
+            // dd($create->save());
+
+    	return redirect()->to('/staff/paymentlists')
+    	->with('success','Approved '.$request->rrr.' Approved Verification  successfully');
+
+}
+
+
+public function confirmPayments()
+{
+    $staff = Auth::guard('staff')->user();
+    $paidRRRs = Remita::with(['feeType','student','student.academic','users', 'staff'])
+        ->where('status_code',1)
+        ->where('authenticate', 'confirm')
+
+        ->orderBy('updated_at','DESC')
+        ->paginate(10);
+    return view('staff.paymentConfirmlists', compact('staff', 'paidRRRs'));
+}
+
 
 } // end Class
