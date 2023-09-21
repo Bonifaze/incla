@@ -307,6 +307,22 @@
                                 </div>
                             </div>
 
+                                                     {{--  second contact  --}}
+                             <div class="app-card-body px-4 w-100">
+                                <div class="item border-bottom py-3">
+                                    <div class="row justify-content-between align-items-center">
+                                        <div class="col-auto">
+                                            <div class="item-label">
+                                                <strong>Alt Phone Number  </strong>
+                                            </div>
+                                            <div class="item-data">
+                                                {{ $contact->phone_2 }}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
                              <div class="app-card-body px-4 w-100">
                                 <div class="item border-bottom py-3">
                                     <div class="row justify-content-between align-items-center">
@@ -321,6 +337,10 @@
                                     </div>
                                 </div>
                             </div>
+
+
+
+
 
                         </div>
                     </div>

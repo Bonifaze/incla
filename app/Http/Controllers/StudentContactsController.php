@@ -46,6 +46,7 @@ class StudentContactsController extends Controller
         $contact->surname = $request->surname;
         $contact->other_names = $request->other_names;
         $contact->phone = $request->phone;
+        $contact->phone_2 = $request->phone_2;
         $contact->email = $request->email;
         $contact->title = $request->title;
         $contact->relationship = $request->relationship;

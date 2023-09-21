@@ -56,7 +56,7 @@
 							<div class="col-md-4 form-group">
 							<div  <?php if($errors->has('other_names')): ?> class ='has-error form-group' <?php endif; ?>>
 								<label for="other_names">Other Names :</label>
-								<?php echo Form::text('other_names', null, array('placeholder' => '', 'class' => 'form-control', 'id' => 'other_names', 'required' => 'required')); ?>
+								<?php echo Form::text('other_names', null, array('placeholder' => '', 'class' => 'form-control', 'id' => 'other_names')); ?>
 
 							 <span class="text-danger"> <?php echo e($errors->first('other_names')); ?></span>
 							</div>
@@ -79,7 +79,7 @@
 							<div class="col-md-4 form-group">
               			<div  <?php if($errors->has('state')): ?> class ='has-error form-group' <?php endif; ?>>
 								<label for="state">State of Residence :</label>
-								<?php echo Form::text('state', null, array( 'placeholder' => '','class' => 'form-control', 'id' => 'state', 'required' => 'required')); ?>
+								<?php echo Form::text('state', null, array( 'placeholder' => '','class' => 'form-control', 'id' => 'state')); ?>
 
 							 <span class="text-danger"> <?php echo e($errors->first('state')); ?></span>
 							 </div>
@@ -89,7 +89,7 @@
 							<div class="col-md-4 form-group">
 							<div  <?php if($errors->has('city')): ?> class ='has-error form-group' <?php endif; ?>>
 								<label for="city">City of Residence :</label>
-								<?php echo Form::text('city', null, array('placeholder' => '', 'class' => 'form-control', 'id' => 'city', 'required' => 'required')); ?>
+								<?php echo Form::text('city', null, array('placeholder' => '', 'class' => 'form-control', 'id' => 'city')); ?>
 
 							 <span class="text-danger"> <?php echo e($errors->first('city')); ?></span>
 							</div>
@@ -110,13 +110,22 @@
 							</div>
 
 
-							<div class="col-md-6 form-group">
+							<div class="col-md-3 form-group">
 							<div  <?php if($errors->has('phone')): ?> class ='has-error form-group' <?php endif; ?>>
 								<label for="phone">Phone :</label>
 
                                 <?php echo Form::text('phone', null, array('placeholder' => '080xxxxx', 'class' => 'form-control', 'id' => 'phone', 'name' => 'phone', 'required' => 'required')); ?>
 
 							<span class="text-danger"> <?php echo e($errors->first('phone')); ?></span>
+							</div>
+							</div>
+                            	<div class="col-md-3 form-group">
+							<div  <?php if($errors->has('phone_2')): ?> class ='has-error form-group' <?php endif; ?>>
+								<label for="phone_2">Phone :</label>
+
+                                <?php echo Form::text('phone_2', null, array('placeholder' => '080xxxxx', 'class' => 'form-control', 'id' => 'phone_2', 'name' => 'phone_2', 'required' => 'required')); ?>
+
+							<span class="text-danger"> <?php echo e($errors->first('phone_2')); ?></span>
 							</div>
 							</div>
 							</div>
@@ -130,7 +139,7 @@
 							<div  <?php if($errors->has('address')): ?> class ='has-error form-group' <?php endif; ?>>
 
 								<label for="address">Address :</label>
-								 <?php echo Form::textarea('address', null, array('placeholder' => '','rows'=>'4', 'class' => 'form-control', 'id' => 'address', 'required' => 'required')); ?>
+								 <?php echo Form::textarea('address', null, array('placeholder' => '','rows'=>'4', 'class' => 'form-control', 'id' => 'address')); ?>
 
 								<span class="text-danger"> <?php echo e($errors->first('address')); ?></span>
 								</div>

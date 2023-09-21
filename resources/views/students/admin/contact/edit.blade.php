@@ -106,12 +106,20 @@
 							</div>
 
 
-							<div class="col-md-6 form-group">
+							<div class="col-md-3 form-group">
 							<div  @if($errors->has('phone')) class ='has-error form-group' @endif>
 								<label for="phone">Phone :</label>
 
                                 {!! Form::text('phone', null, array('placeholder' => '080xxxxx', 'class' => 'form-control', 'id' => 'phone', 'name' => 'phone', 'required' => 'required')) !!}
 							<span class="text-danger"> {{ $errors->first('phone') }}</span>
+							</div>
+							</div>
+                            	<div class="col-md-3 form-group">
+							<div  @if($errors->has('phone_2')) class ='has-error form-group' @endif>
+								<label for="phone_2">Phone :</label>
+
+                                {!! Form::text('phone_2', null, array('placeholder' => '080xxxxx', 'class' => 'form-control', 'id' => 'phone_2', 'name' => 'phone_2', 'required' => 'required')) !!}
+							<span class="text-danger"> {{ $errors->first('phone_2') }}</span>
 							</div>
 							</div>
 							</div>
