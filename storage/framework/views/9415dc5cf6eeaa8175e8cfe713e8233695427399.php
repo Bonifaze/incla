@@ -57,13 +57,13 @@
                                                             <th>RRR</th>
                                                             <th>Student Name</th>
                                                             <th>Matric No.</th>
-                                                            
+                                                            <th>Email</th>
                                                             <th colspan="2">Applicant Name</th>
                                                             
                                                             <th>Amount(₦)</th>
                                                             <th>Payment Description</th>
                                                             <th>Approved Date</th>
-                                                            <th>Staff</th>
+                                                            
                                                             
                                                         </tr>
                                                     </thead>
@@ -74,7 +74,7 @@
                                                                 <td class="text-uppercase">
                                                                     <?php echo e($payment->student->fullname ?? ''); ?></td>
                                                                 <td><?php echo e($payment->student->academic->mat_no ?? ' '); ?></td>
-                                                                
+                                                                <td><?php echo e($payment->FeeType->percentage ?? ''); ?></td>
                                                                 <td colspan="2" class="text-uppercase">
                                                                     <?php echo e($payment->users->surname ?? ' '); ?>
 
@@ -84,7 +84,7 @@
                                                                 <td> &#8358;<?php echo e(number_format($payment->amount)); ?></td>
                                                                 <td><?php echo e($payment->fee_type); ?></td>
                                                                 <td><?php echo e($payment->updated_at); ?></td>
-                                                                 <td><?php echo e($payment->authenticate_by); ?></td>
+                                                                 
                                                                                                                            </tr>
                                                         <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                                                     </tbody>

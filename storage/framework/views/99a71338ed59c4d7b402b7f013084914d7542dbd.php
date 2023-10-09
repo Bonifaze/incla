@@ -50,6 +50,7 @@
                                                     <a href="/admin/upload"
                                                         class="text-success <?php echo $__env->yieldContent('staff-courses'); ?>">My Courses</a>
                                                 </div>
+
                                             </div>
                                             <div class="col-auto">
                                                 <i class="fas fa-book-open fa-3x text-success"></i>

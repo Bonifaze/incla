@@ -366,23 +366,7 @@
                 @else
                 @endcan
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+{{--  //CLEARANCE  --}}
                 @can('register', 'App\StudentResult')
                     <div class="card card-primary">
                         <h1
@@ -449,7 +433,7 @@
                 @else
                 @endcan
 
-
+{{--  //CLEARANCEV END  --}}
 
 
             </div>

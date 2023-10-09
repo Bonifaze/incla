@@ -315,22 +315,6 @@
                 <?php endif; ?>
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
                 <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('register', 'App\StudentResult')): ?>
                     <div class="card card-primary">
                         <h1

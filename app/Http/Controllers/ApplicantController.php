@@ -577,7 +577,8 @@ class ApplicantController extends Controller
     {
         $viewpayment = DB::table('remitas')->where('user_id', session('userid'))
             ->orderBy('status_code', 'ASC')->orderBy('created_at', 'DESC')
-            ->get();
+            // ->get();
+            ->paginate(4);
 
         $verifyResponse = $this->verifyRRRALL();
         $billing = $this->billstudent();

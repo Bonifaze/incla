@@ -48,7 +48,7 @@
 							  <th>Level</th>
 							  <th>Credit</th>
 							  <th>Session</th>
-							  <th>Lecturer</th>
+							  
 							  <th>Action</th>
 							  <th>Action</th>
 
@@ -68,7 +68,7 @@
 							   <td><?php echo e($pcourse->level); ?></td>
 							 <td><?php echo e($pcourse->credit_unit); ?></td>
 							 <td><?php echo e($pcourse->session->name); ?></td>
-							 <td><?php echo e($pcourse->lecturer->FullName  ?? ' '); ?></td>
+							 
 							<td><a href="<?php echo e(route('program_course.edit',$pcourse->id)); ?>" class="btn btn-warning"> Edit </td>
 
 							    <td>

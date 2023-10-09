@@ -1,7 +1,7 @@
 <?php $__env->startSection('pagetitle'); ?>
-<?php echo e($student->full_name); ?> Veritas University Abuja Clearance Form
 <?php $__env->stopSection(); ?>
 <head>
+<title> <?php echo e($student->full_name); ?> Clearance Form </title>
 
 
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
@@ -18,14 +18,25 @@
 
   @media print {
     .print-image {
-        background-image: url('<?php echo e(asset('img/register.png')); ?>');
+        background-image: url('<?php echo e(asset('img/bursary.png')); ?>');
         background-size: cover;
-        width: 150px;
+        width: 250px;
         height: 100px;
         position: absolute;
-        top: -80px;
-        left: 100px;
+        top: -95px;
+        left: 85px;
     }
+    footer {
+            display: block;
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background-color: green;
+            color: white;
+            text-align: center;
+            padding: 10px;
+        }
 }
 
 
@@ -105,14 +116,12 @@
                                 <br>
                                 <div class="row mt-3">
                                     <div class="col-lg-6 text-left h4">
-                                        <p><strong>Bursar (Name): ...MRS. AKOJE MARGARET EJIMA..........</strong> </p>
+                                        <p><strong>Bursar (Name): MRS. AKOJE MARGARET EJIMA </strong> </p>
                                     </div>
   <div class="col-lg-6 text-left h4">
-    <p><strong> Sign / Date: ..........................<?php echo e($rv->updated_at->format('d/m/Y')); ?>
-
-..............</strong></p>
+    <p><strong> Sign / Date:..<span class="text-danger font-weight-bold" style="margin-left:80px"><?php echo e($rv->updated_at->format('d/m/Y')); ?></span></strong></p>
     <div style="position: relative; display: block;">
-        <img class="print-image"src="<?php echo e(asset('img/register.png')); ?>" width='150' height='100' border='0' style="position: absolute; top: -80px; left: 100px;" />
+        <img class="print-image"src="<?php echo e(asset('img/bursary.png')); ?>" width='250' height='100' border='0' style="position: absolute; top: -95px; left: 85px;" />
         
     </div>
 </div>
@@ -152,6 +161,7 @@
                 </div>
             </div>
         </section>
+
     </body>
     <script>
         window.onload = function() {

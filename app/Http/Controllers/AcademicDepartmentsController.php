@@ -153,11 +153,20 @@ class AcademicDepartmentsController extends Controller
     {
         $this->authorize('programs',AcademicDepartment::class);
         $staff = Auth::guard('staff')->user();
+
+            $session = new Session();
+            $modify=RegisteredCourse::with(['staff','sessions'])->where('staff_id', '<>', '', 'and')
+            ->whereColumn('old_total', '!=', 'total')
+            ->orderBy('updated_at','DESC')
+           // ->limit(20)
+            // ->paginate(10);
+           ->get();
+
         if($staff->isAcademic())
         {
         $department = $staff->workProfile->admin->academic;
             $programs = $department->programs;
-            return view('academia.departments.programs', compact('department', 'staff', 'programs'));
+            return view('academia.departments.programs', compact('department', 'staff', 'programs','modify','session'));
         }
         else{
             return redirect()->route('staff.home')

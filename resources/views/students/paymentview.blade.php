@@ -78,6 +78,7 @@
 @endif  --}}
 
                                 <div class="table-responsive">
+                                 {!! $viewpayment->render() !!}
                                     <table class="table table-hover shadow m-1 mb-5">
 
                                         <thead></thead>
@@ -192,6 +193,7 @@
                             </tbody>
 
                                     </table>
+
                                                      <div class="dropdown no-arrow  btn btn-sm btn-success shadow-sm">
 
                                         <a href="{{ route('student.feespayment') }}"

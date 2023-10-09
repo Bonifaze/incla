@@ -55,7 +55,7 @@
                                                         class="form-inline">
                                                         <div class="form-group mr-2">
                                                             <label for="searchField">Search:</label>
-                                                            <input type="text" class="form-control" id="searchField"
+                                                            <input type="text" placeholder="Name/RRR/Amount/Date" class="form-control" id="searchField"
                                                                 name="search" value="<?php echo e(request('search')); ?>">
                                                         </div>
                                                         <button type="submit" class="btn btn-primary">Search</button>
@@ -93,7 +93,7 @@
                                                                 
                                                                 <td> &#8358;<?php echo e(number_format($payment->amount)); ?></td>
                                                                 <td><?php echo e($payment->fee_type); ?></td>
-                                                                <td><?php echo e($payment->updated_at); ?></td>
+                                                                <td><?php echo e($payment->transaction_date); ?></td>
                                                                 <td>
                                                                     <form action="/staff/remitasverification"
                                                                         enctype="multipart/form-data" method="post">

@@ -83,12 +83,16 @@
 
                 <td colspan="2"><br />
                  <td colspan="2" Class="text-success "\><br />
-                  APPROVED  RECEIPT FROM BURSARY
-                    </td>
-                    .............<?php echo e(\Carbon\Carbon::parse($receipt->updated_at)->format('d/m/Y')); ?>..................................<br />
-                    Date and Stamped<br />
-                    
-                    </td>
+
+
+                     <div class="col-lg-6 text-left">
+    <p class="text-danger font-weight-bold" style="margin-left:80px"><strong> <?php echo e(\Carbon\Carbon::parse($receipt->updated_at)->format('d/m/Y')); ?></strong></p>
+    <div style="position: relative; display: block;">
+        <img class="print-image"src="<?php echo e(asset('img/bursary.png')); ?>" width='350' height='200' border='0' style="position: absolute; top: -180px; left: 1px;" />
+        
+    </div>
+     APPROVED  RECEIPT FROM BURSARY
+</div>
             <?php endif; ?>
             </tr>
             <tr>

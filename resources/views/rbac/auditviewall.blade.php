@@ -39,6 +39,8 @@
                     <h1
                         class="app-page-title text-uppercase h5 font-weight-bold p-2 mb-2 shadow-sm text-center text-success border">
                        Audit Record of Modified Result
+                        <a href="/program-courses/results/resultBarchat"
+                                                        class="float-right btn btn-outline-info">VIEW BAR CHAT</a>
                     </h1>
 
 
@@ -88,8 +90,8 @@
                                         <td>Second</td>
                                         @endif
                              <td>{{ $audit->level}}</td>
-                               <td>{{ $audit->old_total ?? null}}</td>
-                             <td>{{ $audit->total ?? null}}</td>
+                              <td class="text-warning h2">{{ $audit->old_total ?? null}}</td>
+                             <td class="text-success h1">{{ $audit->total ?? null}}</td>
                              <td>{{ $audit->student->academic->mat_no ?? null}}</td>
                              <td>{{ $audit->full_name}}</td>
                                    <td>{{ $audit->updated_at}}</td>

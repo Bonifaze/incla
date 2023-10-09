@@ -729,8 +729,16 @@ class ProgramCoursesController extends Controller
         //     ->paginate(100);
         $program = Program::orderBy('name','ASC')->get();
         $session = new Session();
+        $modify=RegisteredCourse::with(['staff','sessions'])
+        ->where('staff_id', '<>', '', 'and')
+        ->whereColumn('old_total', '!=', 'total')
+        ->orderBy('updated_at','DESC')
+       // ->limit(20)
+        // ->paginate(10);
+       ->get();
 
-        return view('vc.results', compact('programs','session'));
+
+        return view('vc.results', compact('programs','session','modify'));
     }
     public function VCLevel($level)
     {
@@ -745,9 +753,16 @@ class ProgramCoursesController extends Controller
 
         // ->where('sbc_approval', 'approved')
             ->orderBy('name','ASC')
-            ->paginate(100);
+            ->paginate(1);
         $session = new Session();
-        return view('vc.level_results', compact('programs','session', 'level'));
+        $modify=RegisteredCourse::with(['staff','sessions'])->where('staff_id', '<>', '', 'and')
+        ->whereColumn('old_total', '!=', 'total')
+        ->where('level',$level)
+        ->orderBy('updated_at','DESC')
+       // ->limit(20)
+        // ->paginate(10);
+       ->get();
+        return view('vc.level_results', compact('programs','session', 'level','modify'));
     }
 
     public function SBCLevel($level)
@@ -758,8 +773,48 @@ class ProgramCoursesController extends Controller
             ->paginate(100);
             //dd($programs);
         // $programs = Program::orderBy('name','ASC')->get();
+
         $session = new Session();
-        return view('sbc.level_results', compact('programs','session', 'level'));
+            $modify=RegisteredCourse::with(['staff','sessions'])->where('staff_id', '<>', '', 'and')
+            ->whereColumn('old_total', '!=', 'total')
+            ->where('level',$level)
+            ->orderBy('updated_at','DESC')
+           // ->limit(20)
+            // ->paginate(10);
+           ->get();
+        return view('sbc.level_results', compact('programs','session', 'level','modify'));
+    }
+
+    //VIEWCHATBAR
+    public function resultBarchat()
+    {
+        // $this->authorize('approveResultSBC',ProgramCourse::class);
+        // $programs = Program::whereHas('SbcApproval')->with(['department','programCourses','SbcApproval'])
+        //     ->orderBy('name','ASC')
+        //     ->paginate(100);
+            //dd($programs);
+        // $programs = Program::orderBy('name','ASC')->get();
+            // $session = new Session();
+            // In your controller method
+            $programModifications = RegisteredCourse::with(['program'])->select('program_id', DB::raw('count(*) as modification_count'))
+            ->where('staff_id', '<>', '', 'and')
+            ->whereColumn('old_total', '!=', 'total')
+            ->groupBy('program_id')
+            ->orderByDesc('modification_count')
+            // ->limit(5) // Limit to the top 5 programs with modifications
+            ->get();
+            //dd($programModifications);
+    //         $programModifications = RegisteredCourse::with(['program']) // Load the program relationship
+    // ->where('staff_id', '<>', '', 'and')
+    // ->whereColumn('old_total', '!=', 'total')
+    // ->orderBy('updated_at','DESC')
+    // ->get();
+
+
+        return view('rbac.resultbarchat', compact('programModifications'));
+
+
+        // return view('sbc.level_results', compact('programs','session', 'level','modify'));
     }
 
     public function ICTLevel($level)

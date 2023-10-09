@@ -235,7 +235,6 @@
 
                                 <?php $__currentLoopData = $modify; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $key => $audit): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                     <tr>
-
                                         <td><?php echo e($loop->iteration); ?></td>
                                         <td><?php echo e($audit->staff->full_name ?? null); ?></td>
                                         
@@ -254,8 +253,6 @@
                                         <td><?php echo e($audit->student->academic->mat_no ?? null); ?></td>
                                         <td><?php echo e($audit->full_name); ?></td>
                                         <td> <?php echo e(\Carbon\Carbon::parse($audit->updated_at)->format('l j, F Y H:i:s')); ?></td>
-
-
 
 
 

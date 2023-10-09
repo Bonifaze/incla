@@ -91,12 +91,16 @@ if(!session('userid'))
 
                 <td colspan="2"><br />
                  <td colspan="2" Class="text-success "\><br />
-                  APPROVED  RECEIPT FROM BURSARY
-                    </td>
-                    .............{{ \Carbon\Carbon::parse($receipt->updated_at)->format('d/m/Y') }}..................................<br />
-                    Date and Stamped<br />
-                    {{--  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<strong>Name: {{$name}}</strong>--}}
-                    </td>
+
+
+                     <div class="col-lg-6 text-left">
+    <p class="text-danger font-weight-bold" style="margin-left:80px"><strong> {{ \Carbon\Carbon::parse($receipt->updated_at)->format('d/m/Y') }}</strong></p>
+    <div style="position: relative; display: block;">
+        <img class="print-image"src="{{ asset('img/bursary.png') }}" width='350' height='200' border='0' style="position: absolute; top: -180px; left: 1px;" />
+        {{--  <div style="position: absolute; top: 20px; left: 120px; width: 250px; border-bottom: 1px solid #000;"></div>  --}}
+    </div>
+     APPROVED  RECEIPT FROM BURSARY
+</div>
             @endif
             </tr>
             <tr>

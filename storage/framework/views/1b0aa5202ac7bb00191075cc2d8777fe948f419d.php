@@ -35,6 +35,8 @@
                     <h1
                         class="app-page-title text-uppercase h5 font-weight-bold p-2 mb-2 shadow-sm text-center text-success border">
                        Audit Record of Modified Result
+                        <a href="/program-courses/results/resultBarchat"
+                                                        class="float-right btn btn-outline-info">VIEW BAR CHAT</a>
                     </h1>
 
 
@@ -57,7 +59,8 @@
 							 <th>session</th>
 							 <th>Semester</th>
                              <th>Level</th>
-                             <th>Score</th>
+                                <th>Old Score</th>
+                             <th>New Score</th>
                             
                             <th>Student MatNo.</th>
                             <th>Student Name</th>
@@ -83,7 +86,8 @@
                                         <td>Second</td>
                                         <?php endif; ?>
                              <td><?php echo e($audit->level); ?></td>
-                             <td><?php echo e($audit->total ?? null); ?></td>
+                              <td class="text-warning h2"><?php echo e($audit->old_total ?? null); ?></td>
+                             <td class="text-success h1"><?php echo e($audit->total ?? null); ?></td>
                              <td><?php echo e($audit->student->academic->mat_no ?? null); ?></td>
                              <td><?php echo e($audit->full_name); ?></td>
                                    <td><?php echo e($audit->updated_at); ?></td>

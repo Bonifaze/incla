@@ -57,7 +57,7 @@
                                                         class="form-inline">
                                                         <div class="form-group mr-2">
                                                             <label for="searchField">Search:</label>
-                                                            <input type="text" class="form-control" id="searchField"
+                                                            <input type="text" placeholder="Name/RRR/Amount/Date" class="form-control" id="searchField"
                                                                 name="search" value="{{ request('search') }}">
                                                         </div>
                                                         <button type="submit" class="btn btn-primary">Search</button>

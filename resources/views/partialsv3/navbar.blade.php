@@ -196,6 +196,8 @@
                 <li><a href="#" class="dropdown-item">List Staff Positions</a></li>
                  <li><a href="#" class="dropdown-item">New Grade Scales</a></li>
                 <li><a href="#" class="dropdown-item">List Grade Scales</a></li>
+
+
             </ul>
         </li>
  @else
@@ -232,6 +234,7 @@
                 <li><a href="{{ route('program_course.sbc_level', 800) }}" class="dropdown-item">MSc SBC Approval</a>
                 </li>
                 <li><a href="{{ route('program_course.sbc_level', 900) }}" class="dropdown-item">PhD SBC Approval</a>
+                <li><a href="/rbac/auditviewall" class="dropdown-item">RESULT AUDIT</a></li>
                 </li>
 
                         </ul>
@@ -260,6 +263,7 @@
                 </li>
                 <li><a href="{{ route('program_course.vc_level', 900) }}" class="dropdown-item">PhD VC Approval</a>
                 </li>
+                <li><a href="/rbac/auditviewall" class="dropdown-item">RESULT AUDIT</a></li>
                         </ul>
                     </li>
                     </ul>
@@ -314,10 +318,13 @@
 
 
 
+
             </ul>
+
         </li>
         @can('ICTOfficers', 'App\StudentResult')
             <li class="nav-item dropdown">
+
                 <a id="dropdownSubMenu1" style="color: #218c74;" href="#" data-toggle="dropdown"
                     aria-haspopup="true" aria-expanded="false" class="nav-link dropdown-toggle">ICT</a>
                 <ul aria-labelledby="dropdownSubMenu1" class="dropdown-menu border-0 shadow">
@@ -417,8 +424,9 @@
                     </li>
 
 
-
+<li><a href="/rbac/auditviewall" class="dropdown-item">Result Audit</a></li>
                 </ul>
+
             </li>
         @else
             <div></div>

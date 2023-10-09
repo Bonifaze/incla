@@ -66,7 +66,7 @@
                                 <th>Matric Number</th>
                                 <th>Service Type</th>
                                 <th>Amount</th>
-                                <th>Generated</th>
+                                <th>Payment</th>
                                 <th>Action</th>
                             </thead>
                             <tbody class="">
@@ -74,11 +74,12 @@
                                     <tr>
                                         <td><?php echo e($loop->iteration); ?></td>
                                         <td><?php echo e($remita->rrr); ?></td>
-                                        <td><?php echo e($remita->student->fullname ?? null); ?></td>
+                                        <td><?php echo e($remita->student->fullname ?? $remita->users->surname ?? null); ?></td>
+                                        <td><?php echo e($remita->users->surname ?? null); ?></td>
                                         <td><?php echo e($remita->student->academic->mat_no ?? null); ?></td>
                                         <td><?php echo e($remita->feeType->name ?? null); ?></td>
                                         <td>&#8358;<?php echo e(number_format($remita->amount)); ?></td>
-                                        <td><?php echo e($remita->created_at->format('d-M-Y')); ?></td>
+                                        <td><?php echo e($remita->updated_at->format('d-M-Y')); ?></td>
                                         <td>
                                             <?php if($remita->status_code == 1): ?>
                                                 <a class="btn btn-info" target="_blank"
@@ -104,21 +105,7 @@
                                 </thead>
                             <tbody class="">
                                 <tr>
-                                    <td colspan="3">
-                                        <?php if($balance === '<i class="fas fa-spinner fa-spin"></i>'): ?>
-                                            <i class="fa fa-spinner fa-spin"></i>
-                                        <?php else: ?>
-                                            &#8358;<?php echo e(number_format($totalAmountPaid + (int) $balance, 2)); ?>
-
-                                        <?php endif; ?>
-                                    </td>
-                                    <td colspan="2" class=" text-success">₦<?php echo $totalAmountPaid != 0 ? $totalAmountPaid : html_entity_decode('<i class="fa fa-spinner fa-spin"></i>'); ?></td>
-                                    <td colspan="2" class="text-bold  text-success">₦<?php echo html_entity_decode($balance); ?></td>
-                                    <td>
-                                        <a class="btn btn-info edit-button" data-toggle="modal" data-target="#editModal">
-                                            <i class="fas fa-edit text-white-50"></i> Edit
-                                        </a>
-                                    </td>
+                                    
 
                                 </tr>
                             </tbody>
@@ -140,21 +127,7 @@
                                     <form id="editDebtForm" action="<?php echo e(route('remita.update-debt')); ?>" method="POST">
                                         <?php echo csrf_field(); ?>
                                         <!-- Form inputs for editing debt and amount paid -->
-                                        <input type="hidden" name="student_id" value="<?php echo e($remita->student->id); ?>">
-                                        <input type="hidden" name="staff_id" value="<?php echo e(auth()->user()->id); ?>">
-                                        <div class="form-group">
-                                            <label for="debt">Debt:</label>
-                                            <input type="text" class="form-control" id="debt" name="debt"
-                                                value="<?php echo e($balance); ?>">
-                                            <input type="hidden" class="form-control" id="debt" name="old_debt"
-                                                value="<?php echo e($balance); ?>">
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="amountPaid">Amount Paid:</label>
-                                            <input type="text" class="form-control" id="amountPaid" name="amount_paid"
-                                                value="<?php echo e($totalAmountPaid); ?>">
-                                            <input type="hidden" class="form-control" id="amountPaid"
-                                                name="old_amount_paid" value="<?php echo e($totalAmountPaid / 2); ?>">
+                                       
                                         </div>
                                 </div>
                                 <div class="modal-footer">
@@ -169,15 +142,7 @@
                 </div>
                                                     <div class="dropdown no-arrow  btn btn-sm shadow-sm">
 
-                                        <a href="<?php echo e(route('remita.find-studentdebt', $remita->student->id)); ?>}"
-                                            class="nav-link <?php echo $__env->yieldContent('results'); ?>">
-                                            <i class="fa fa-eye nav-icon"></i>Show Payment History
-                                        </a>
-                                    </div>
-
-                                    <div><a class="btn btn-warning" target="_blank"
-                                                        href="<?php echo e(route('remita.find-studentunpaidrrr', $remita->student->id)); ?>"> <i
-                                                            class="fa fa-eye"></i> Unpaid RRR </a>
+                                        
                                     </div>
                 <!-- /.box -->
 

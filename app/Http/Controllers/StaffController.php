@@ -660,6 +660,7 @@ public function approvePaymentss()
         ->where('status_code',1)
         ->where('authenticate', 'not_confrim')
 
+        ->where('updated_at', '>=', '2022-07-19 13:07:36') // Filter records updated on or after July 19, 2022
         ->orderBy('updated_at','DESC')
         ->paginate(10);
     return view('staff.paymentlists', compact('staff', 'paidRRRs','sessionBus'));
@@ -669,28 +670,31 @@ public function approvePayments(Request $request)
     $staff = Auth::guard('staff')->user();
     $sessionBus = BursarySession::where('status',1)->first();
 
-        $query = Remita::with(['feeType', 'student', 'student.academic', 'users'])
-            ->where('status_code', 1)
-            ->where('authenticate', 'not_confrim')
+    $query = Remita::with(['feeType', 'student', 'student.academic', 'users'])
+    ->where('status_code', 1)
+    ->where('authenticate', 'not_confrim')
+    ->orderBy('remitas.updated_at', 'DESC')
+    ->join('students', 'students.id', '=', 'remitas.student_id') // Assuming 'student_id' is the common key
+    ->leftJoin('users', 'users.id', '=', 'remitas.user_id');
+// Check if a search query is provided
+if ($request->has('search')) {
+    $search = $request->input('search');
+    $query->where(function ($q) use ($search) {
+        $q->where('students.first_name', 'like', "%$search%") // Use 'students.first_name' to refer to the column in the 'students' table
+            ->orWhere('students.surname', 'like', "%$search%")
+            ->orwhere('users.first_name', 'like', "%$search%") // Use 'students.first_name' to refer to the column in the 'students' table
+            ->orWhere('users.surname', 'like', "%$search%")
+            ->orWhere('students.middle_name', 'like', "%$search%")
+            ->orWhere('remitas.amount', 'like', "$search")
+            ->orWhere('remitas.transaction_date', 'like', "%$search%")
+            ->orWhere('remitas.rrr', 'like', "$search");
+    });
+}
 
-            ->orderBy('updated_at', 'DESC');
+$paidRRRs = $query->paginate(10);
 
-    // Check if a search query is provided
-    if ($request->has('search')) {
-        $search = $request->input('search');
-        $query->where(function ($q) use ($search) {
-            $q->where('students.first_name', 'like', "%$search%")
-                ->orWhere('students.surname', 'like', "%$search%")
-                ->orWhere('students.middle_name', 'like', "%$search%")
-                ->orWhere('remitas.amount', 'like', "%$search%")
-                ->orWhere('remitas.transaction_date', 'like', "%$search%")
-                ->orWhere('remitas.rrr', 'like', "%$search%");
-        });
-    }
+return view('staff.paymentlists', compact('staff', 'paidRRRs', 'sessionBus'));
 
-    $paidRRRs = $query->paginate(10);
-
-    return view('staff.paymentlists', compact('staff', 'paidRRRs','sessionBus'));
 }
 
 public function remitasVerification(Request $request){
