@@ -82,6 +82,7 @@ class StudentResultsController extends Controller
         $registered_courses = RegisteredCourse::where('student_id', $request->student_id)
             ->where('session', $request->session_id)
             ->where('semester', $request->semester)
+            // ->where('status', 'published')
             ->get();
         return view('results.modify', compact('registered_courses', 'session', 'semester', 'student'));
     }
@@ -693,6 +694,83 @@ class StudentResultsController extends Controller
         $semester = $request->semester;
         $college_id = $student->academic->program->department->college_id;
         return view('results.studentsPClearance', compact('student', 'academic', 'session','rv','semester' ));
+    }
+
+
+
+
+
+    // SPOTLIGHT CONTROLLER FIX
+
+    public function programSearchStudentSpotlight()
+    {
+        $this->authorize('examOfficer', StudentResult::class);
+        $staff = Auth::guard('staff')->user();
+
+        if ($staff->isAcademic()) {
+            $programs = $staff->workProfile->admin->academic->programs->pluck('name', 'id');
+            $sessions = Session::where('status', 0)->orderBy('id', 'DESC')->pluck('name', 'id');
+            return view('results.Spotlight.program-search-studentSpotlight', compact('programs','sessions'));
+        } else {
+            return redirect()->route('staff.home')
+                ->with('error', 'Academic Department not found');
+        }
+    }
+
+    public function programFindStudentSpotlight(Request $request)
+    {
+        $this->authorize('examOfficer', StudentResult::class);
+        $students = StudentAcademic::
+            where(function ($q) use ($request) {
+            $q->where('mat_no', $request->mat_no)
+                ->where('program_id', $request->program);
+        })
+            ->orWhere(function ($query) use ($request) {
+                $query->orWhere('student_id', $request->mat_no)
+                    ->where('program_id', $request->program);
+            })
+            ->get();
+        if ($students->count()) {
+            $student = $students->first()->student;
+            $academic = $student->academic;
+
+            //check if academic information exists for student.
+            if (!$academic) {
+                $programs = Program::orderBy('name', 'ASC')->pluck('name', 'id');
+                return redirect()->route('results.Spotlight.program-search-studentSpotlight')
+                    ->with(['programs' => $programs, 'error' => 'No academic record available for this student']);
+            }
+
+            // $sessions = Session::where('id','>',0)->where('id','<',14)->where('status','<',2)->orderBy('id','DESC')->pluck('name','id');
+           // $sessions = Session::where('status', 0)->orderBy('id', 'DESC')->pluck('name', 'id');
+             $sessions = Session::orderBy('id', 'DESC')->pluck('name', 'id');
+            return view('results.spotlight.manage-studentSpotlight', compact('student', 'sessions', 'academic'));
+        } else {
+            $programs = Program::orderBy('name', 'ASC')->pluck('name', 'id');
+            return redirect()->route('result.programSearchStudentSpotlight')
+                ->with(['programs' => $programs, 'error' => 'No Student was found']);
+        }
+    } // end programFindStudent
+
+
+    public function modifyResultSpotlight(Request $request)
+    {
+        $student = Student::findOrFail($request->student_id);
+        // $this->authorize('ictUpload', StudentResult::class);
+        $session = Session::findOrFail($request->session_id);
+        $semester = $request->semester;
+        $request->validate([
+            'session_id' => 'required',
+            'semester' => 'required',
+            'level' => 'required',
+        ]);
+
+        $registered_courses = RegisteredCourse::where('student_id', $request->student_id)
+            ->where('session', $request->session_id)
+            ->where('semester', $request->semester)
+            // ->where('status', 'published')
+            ->get();
+        return view('results.Spotlight.modifySpotlight', compact('registered_courses', 'session', 'semester', 'student'));
     }
 
 } // end class

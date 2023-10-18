@@ -22,3 +22,10 @@ Route::get('/exam-officer/program-level-courses/{id}/{level}', 'ExamOfficersCont
 
 Route::patch('/results/brought_forward_cgpa', 'ExamOfficersController@broughtForwardCGPA')->name('result.brought_forward_cgpa');
 
+//spotlight
+
+Route::get('/results/programSearchStudentSpotlight', 'StudentResultsController@programSearchStudentSpotlight')->name('result.programSearchStudentSpotlight');
+
+Route::post('/results/programFindStudentSpotlight', 'StudentResultsController@programFindStudentSpotlight')->name('result.programFindStudentSpotlight');
+
+Route::get('/results/modifySpotlight', 'StudentResultsController@modifyResultSpotlight')->name('result.modifySpotlight');

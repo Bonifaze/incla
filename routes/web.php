@@ -58,6 +58,14 @@ Route::get('/admissions/login', function () {
     return view('admissions.login');
 });
 
+Route::get('/spotlight/confirm', function () {
+    return view('rbac.confirm');
+});
+
+Route::get('/spotlight/option', function () {
+    return view('rbac.spotlightOption');
+});
+
 // Academic Departments routes
 require_once "academic_departments.php";
 

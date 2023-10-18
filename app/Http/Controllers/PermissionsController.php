@@ -337,8 +337,8 @@ class PermissionsController extends Controller
         ->whereColumn('old_total', '!=', 'total')
         ->orderBy('updated_at','DESC')
        // ->limit(20)
-        // ->paginate(10);
-       ->get();
+         ->paginate(10);
+    //    ->get();
        // dd($article);
        $remita=Remita::with(['staff'])->where('verify_by', '<>', '', 'and')
        ->orderBy('updated_at','DESC')

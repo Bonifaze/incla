@@ -1,33 +1,4 @@
-@extends('layouts.mini')
 
-
-
-@section('pagetitle')
-    Student Result Management
-@endsection
-
-<!-- Sidebar Links -->
-
-<!-- Treeview -->
-@section('results-openuj')
-    menu-open
-@endsection
-
-@section('resulhts')
-    active
-@endsection
-
-<!-- Page -->
-@section('exam-remark')
-    active
-@endsection
-
-<!-- End Sidebar links -->
-
-
-
-
-@section('content')
     <div class="content-wrapper">
         <!-- Content Header (Page header) -->
 
@@ -297,7 +268,7 @@
 {{--  end of result audit  --}}
     </div>
     <!-- /.row -->
-    </section>
+
     <!-- /.content -->
     </div>
-@endsection
+

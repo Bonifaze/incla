@@ -260,4 +260,14 @@ public function getPogramNameAttribute()
         return $this->belongsTo('App\Program', 'program_id');
     }
 
+    public function courses()
+    {
+        return $this->belongsTo('App\course', 'course_id');
+    }
+
+    public function staffCourse()
+    {
+        return $this->belongsTo('App\Models\StaffCourse', 'staff_id');
+    }
+
 }

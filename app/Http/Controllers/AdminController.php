@@ -81,7 +81,21 @@ class AdminController extends Controller
     ->orderBy('courses.course_code', 'ASC')
     ->get();
 
-        return view('results.course_upload', ['staff_courses' => $staff_courses]);
+
+    $session = new Session();
+    $modify = RegisteredCourse::with(['staff', 'sessions', 'StaffCourse'])
+    ->where('staff_id', '<>', '')
+    ->whereColumn('old_total', '!=', 'total')
+    ->whereHas('staffCourse', function($query) use ($staff) {
+        $query->where('staff_id', $staff->id);
+    })
+    ->orderBy('updated_at', 'DESC')
+    ->get();
+
+
+        // dd($modify);
+
+        return view('results.course_upload', compact('staff_courses','session','modify'));
     // } else {
     //     $loginMsg = '<div class="alert alert-danger alert-dismissible" role="alert"> <button type="button" class="close" data-dismiss="alert"> &times; </button> You dont\'t have access to this task, please see the ICT</div>';
     //    return view('adminutmessions.error', compact('loginMsg'));
