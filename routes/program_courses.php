@@ -70,6 +70,6 @@ Route::get('/program-courses/results/ict/{level}', 'ProgramCoursesController@ICT
 
 Route::get('/program-courses/results/manage_oldresult', 'ProgramCoursesController@ICTmanageoldresult')->name('program_course.ict_manage_oldresut');
 
-
+//RESULT BARCHAT
 Route::get('/program-courses/results/resultBarchat', 'ProgramCoursesController@resultBarchat')->name('program_course.resultbarchat');
 Route::get('/program-courses/results/resultBarchatCourse/{program_id}', 'ProgramCoursesController@resultBarchatCourse')->name('program_course.resultbarchatCourse');

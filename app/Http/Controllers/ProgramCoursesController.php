@@ -812,7 +812,14 @@ class ProgramCoursesController extends Controller
             $programs = Program::with([])
             ->orderBy('name','ASC')
             ->paginate(100);
-        return view('rbac.resultbarchat', compact('programModifications','programs'));
+            $Data2 = $programModifications->map(function($item) {
+                return [
+                    'program_id' => $item->program->id ?? 'Unknown Program',
+                    'modification_count' => $item->modification_count,
+                    // ... other properties you need
+                ];
+            });
+        return view('rbac.resultbarchat', compact('programModifications','programs','Data2'));
     }
 
 

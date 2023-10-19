@@ -696,10 +696,6 @@ class StudentResultsController extends Controller
         return view('results.studentsPClearance', compact('student', 'academic', 'session','rv','semester' ));
     }
 
-
-
-
-
     // SPOTLIGHT CONTROLLER FIX
 
     public function programSearchStudentSpotlight()
