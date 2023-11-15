@@ -63,7 +63,7 @@ class StaffLoginController extends Controller
     public function showLoginForm()
     {
         $MacAddr = $this->getUserInfo();
-        dd($MacAddr);
+        // dd($MacAddr);
         return view('staff.auth.login');
     }
 
