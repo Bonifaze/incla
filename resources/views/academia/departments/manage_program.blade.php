@@ -98,10 +98,10 @@
                                     <tr>
                                         <td> Results <br> Download</td>
                                         <td>
-                                                {{--  <a class="btn btn-outline-dark"
+                                              {{--  <a class="btn btn-outline-dark"
                                                 href="{{ route('academia.department.export_view', [$program->id, 100, 1]) }}">
-                                                 First Semester </a>
-                                                 <br><br>   --}}
+                                                 First Semester </a> --}}
+                                                 <br><br>
                                                 <a class="btn btn-outline-primary"
                                                 href="{{ route('academia.department.export_view', [$program->id, 100, 2]) }}">
                                                  Second Semester </a>
@@ -109,9 +109,10 @@
                                                  </td>
 
 
-                                        <td><a class="btn btn-outline-dark"
+                                        <td>
+                                          {{--<a class="btn btn-outline-dark"
                                                 href="{{ route('academia.department.export_view', [$program->id, 200, 1]) }}">
-                                                First Semester </a>
+                                                First Semester </a> --}}
                                                    <br><br>
                                                 <a class="btn btn-outline-primary"
                                                 href="{{ route('academia.department.export_view', [$program->id, 200, 2]) }}">
@@ -120,49 +121,55 @@
                                                 href="{{ route('academia.department.generatePDF', [$program->id, 200, 2]) }}">
                                                  Second Semester test </a>  --}}
                                                  </td>
-                                        <td><a class="btn btn-outline-dark"
+                                        <td>
+                                        {{--<a class="btn btn-outline-dark"
                                                 href="{{ route('academia.department.export_view', [$program->id, 300, 1]) }}">
-                                                First Semester </a>
+                                                First Semester </a> --}}
                                                    <br><br>
                                                 <a class="btn btn-outline-primary"
                                                 href="{{ route('academia.department.export_view', [$program->id, 300, 2]) }}">
                                                  Second Semester </a>
                                                  </td>
-                                        <td><a class="btn btn-outline-dark"
+                                        <td>
+                                        {{--<a class="btn btn-outline-dark"
                                                 href="{{ route('academia.department.export_view', [$program->id, 400, 1]) }}">
-                                                First Semester </a>
+                                                First Semester </a> --}}
                                                    <br><br>
                                                 <a class="btn btn-outline-primary"
                                                 href="{{ route('academia.department.export_view', [$program->id, 400, 2]) }}">
                                                  Second Semester </a>
                                                  </td>
-                                        <td><a class="btn btn-outline-dark"
+                                        <td>
+                                        {{--<a class="btn btn-outline-dark"
                                                 href="{{ route('academia.department.export_view', [$program->id, 500, 1]) }}">
-                                                 First Semester</a>
+                                                 First Semester</a> --}}
                                                    <br><br>
                                                 <a class="btn btn-outline-primary"
                                                 href="{{ route('academia.department.export_view', [$program->id, 500, 2]) }}">
                                                  Second Semester </a>
                                                  </td>
-                                        <td><a class="btn btn-outline-dark"
+                                        <td>
+                                        {{--<a class="btn btn-outline-dark"
                                                 href="{{ route('academia.department.export_view', [$program->id, 700, 1]) }}">
-                                                First Semester </a>
+                                                First Semester </a> --}}
                                                    <br><br>
                                                 <a class="btn btn-outline-primary"
                                                 href="{{ route('academia.department.export_view', [$program->id, 700, 2]) }}">
                                                  Second Semester </a>
                                                  </td>
-                                        <td><a class="btn btn-outline-dark"
+                                        <td>
+                                        {{--<a class="btn btn-outline-dark"
                                                 href="{{ route('academia.department.export_view', [$program->id, 800, 1]) }}">
-                                                 First Semester</a>
+                                                 First Semester</a> --}}
                                                    <br><br>
                                                 <a class="btn btn-outline-primary"
                                                 href="{{ route('academia.department.export_view', [$program->id, 800, 2]) }}">
                                                  Second Semester </a>
                                                  </td>
-                                        <td><a class="btn btn-outline-dark"
+                                        <td>
+                                        {{--<a class="btn btn-outline-dark"
                                                 href="{{ route('academia.department.export_view', [$program->id, 900, 1]) }}">
-                                               First Semester  </a>
+                                               First Semester  </a> --}}
                                                    <br><br>
                                                 <a class="btn btn-outline-primary"
                                                 href="{{ route('academia.department.export_view', [$program->id, 900, 2]) }}">

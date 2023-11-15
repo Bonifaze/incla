@@ -44,13 +44,7 @@
     <link rel="stylesheet" href="{{ asset('v3/plugins/toastr/toastr.min.css') }}" />
 
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/dt-1.11.3/b-2.1.1/r-2.2.9/datatables.min.css"/>
-{{--  <style>
-    .content-wrapper {
-      background-image: url('/css/default-night.jpg');
-      background-size: cover;
-      /* Additional background properties if needed */
-    }
-  </style>  --}}
+
     @yield('css')
 {{--
     <style>
@@ -79,10 +73,7 @@
 
 
         <!-- Content Wrapper. Contains page content -->
-
-    {{--  <div class="content-wrapper">  --}}
-      @yield('content')
-    {{--  </div>  --}}
+        @yield('content')
 
         <!-- /.content-wrapper -->
 

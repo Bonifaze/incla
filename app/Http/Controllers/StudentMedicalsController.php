@@ -13,7 +13,7 @@ class StudentMedicalsController extends Controller
     //
     public function edit($id)
     {
-        $this->authorize('edit', Student::class);
+        // $this->authorize('edit', Student::class);
         $medical = StudentMedical::findOrFail($id);
         return view('students.admin.medical.edit',compact('medical'));
     } // end edit

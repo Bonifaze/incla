@@ -145,17 +145,17 @@
                                 </tr>
                                 <thead></thead>
                                 <tr>
-                                    {{--  <th colspan="3"></th>
+                                   {{--    <th colspan="3"></th>
                                     <th colspan="2">School Fee paid</th>
                                     <th colspan="2">School Fees Debt</th>
-                                    <th colspan="2">Toal Paid Amount</th>  --}}
+                                    <th colspan="2">Toal Paid Amount</th> --}}
                                 </tr>
                                 </thead>
                             <tbody class="">
                                 <tr>
                                 <td colspan="3">
                                 </td>
-                                    {{--  <td colspan="3">
+                                    {{--    <td colspan="3">
                                         @if ($balance === '<i class="fas fa-spinner fa-spin"></i>')
                                             <i class="fa fa-spinner fa-spin"></i>
                                         @else
@@ -166,15 +166,12 @@
                                     <td colspan="2" class="text-bold">₦{!! html_entity_decode($balance) !!}</td>
                                     <td colspan="2" class="text-bold">&#8358;{{ number_format($totalPaid, 2) }}</td> --}}
                                 </tr>
-                                </tr>
 
 
 
                             </tbody>
 
                         </table>
-
-                                                </div>
                     </div>
                 </div>
 

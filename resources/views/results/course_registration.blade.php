@@ -194,7 +194,7 @@
                                             {{ Form::hidden('semester', $semester) }}
                                             {{ Form::hidden('level', $level) }}
 
-                                            <button onclick="removeRCForm({{ $res->id }})" type="submit"
+                                            <button onclick="removeRCForm({{ $res->id }})" type="button"
                                                 class="{{ $res->id }} btn btn-danger"><span
                                                     class="icon-line2-trash"></span><i
                                                                 class="fas fa-solid fa-trash"></i>  Drop</button>
@@ -296,7 +296,7 @@
                                             {{ Form::hidden('program_id', $student->academic->program_id) }}
 
 
-                                            <button onclick="addFCourse({{ $fcourse->id }})" type="submit"
+                                            <button onclick="addFCourse({{ $fcourse->id }})" type="button"
                                                 class="{{ $fcourse->id }} btn btn-success"><span class="icon-plus"></span>
                                                <i class="fas fa-plus"></i>  Add</button>
                                             {!! Form::close() !!}
@@ -356,7 +356,7 @@
                                             {{ Form::hidden('level', $level) }}
                                             {{ Form::hidden('program_id', $student->academic->program_id) }}
 
-                                            <button onclick="addCOver({{ $co->id }})" type="submit"
+                                            <button onclick="addCOver({{ $co->id }})" type="button"
                                                 class="{{ $co->id }} btn btn-success"><span class="icon-plus"></span>
                                                  <i class="fas fa-plus"></i> Add</button>
                                             {!! Form::close() !!}

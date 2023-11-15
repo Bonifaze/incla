@@ -117,8 +117,8 @@ active
                         </div>
 
                         <div class="form-group">
-                            <label for="dob">{{ __('Date of Birth') }} </label>
 
+                                <label for="dob">{{ __('Date of Birth') }}:{{$applicantsDetails -> dob}}</label>
                             <div class="form-group">
                                 <input id="" type="date" class="form-control" name="dob" value="{{$applicantsDetails -> dob}}">
                             </div>

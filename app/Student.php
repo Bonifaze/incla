@@ -109,7 +109,7 @@ class Student extends Authenticatable implements Auditable
     }
 
     public function setSurnameAttribute($value) {
-        $this->attributes['surname'] = ucwords(strtoupper($value));
+        $this->attributes['surname'] = ucwords(strtolower($value));
     }
 
     public function setEmailAttribute($value) {
@@ -121,12 +121,12 @@ class Student extends Authenticatable implements Auditable
      *
      * @return string
      */
-    // public function getFullNameAttribute()
-    // {
-    //     return "{$this->first_name}  {$this->middle_name} {$this->surname}";
-    // }
+   // public function getFullNameAttribute()
+    //{
+    //    return "{$this->surname} {$this->first_name} {$this->middle_name} ";
+    //}
 
-    public function getFullNameAttribute()
+     public function getFullNameAttribute()
     {
         $surname = strtoupper($this->surname);
         $firstName = ucwords(strtolower($this->first_name));
@@ -134,6 +134,7 @@ class Student extends Authenticatable implements Auditable
 
         return "{$surname}, {$firstName} {$middleName}";
     }
+
 
     // public function getDobAttribute()
     // {

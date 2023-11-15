@@ -64,7 +64,7 @@ class Staff extends Authenticatable implements Auditable
      */
     public function getFullNameAttribute()
     {
-        return "{$this->first_name} {$this->middle_name} {$this->surname}";
+        return "{$this->surname} {$this->first_name} {$this->middle_name} ";
     }
 
     // public function getDobAttribute()

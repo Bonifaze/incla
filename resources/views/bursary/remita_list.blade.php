@@ -69,7 +69,7 @@
                                 <th>Matric Number</th>
                                 <th>Service Type</th>
                                 <th>Amount</th>
-                                <th>Payment</th>
+                                <th>Generated</th>
                                 <th>Action</th>
                             </thead>
                             <tbody class="">
@@ -77,12 +77,11 @@
                                     <tr>
                                         <td>{{ $loop->iteration }}</td>
                                         <td>{{ $remita->rrr }}</td>
-                                        <td>{{ $remita->student->fullname ?? $remita->users->surname ?? null }}</td>
-                                        {{--  <td>{{ $remita->users->surname ?? null}}</td>  --}}
+                                        <td>{{ $remita->student->fullname ?? null }}</td>
                                         <td>{{ $remita->student->academic->mat_no ?? null }}</td>
                                         <td>{{ $remita->feeType->name ?? null }}</td>
                                         <td>&#8358;{{ number_format($remita->amount) }}</td>
-                                        <td>{{ $remita->updated_at->format('d-M-Y') }}</td>
+                                        <td>{{ $remita->created_at->format('d-M-Y') }}</td>
                                         <td>
                                             @if ($remita->status_code == 1)
                                                 <a class="btn btn-info" target="_blank"
@@ -107,7 +106,7 @@
                                 </thead>
                             <tbody class="">
                                 <tr>
-                                    {{--  <td colspan="3">
+                                   {{--     <td colspan="3">
                                         @if ($balance === '<i class="fas fa-spinner fa-spin"></i>')
                                             <i class="fa fa-spinner fa-spin"></i>
                                         @else
@@ -120,7 +119,7 @@
                                         <a class="btn btn-info edit-button" data-toggle="modal" data-target="#editModal">
                                             <i class="fas fa-edit text-white-50"></i> Edit
                                         </a>
-                                    </td>  --}}
+                                    </td> --}}
 
                                 </tr>
                             </tbody>
@@ -142,21 +141,21 @@
                                     <form id="editDebtForm" action="{{ route('remita.update-debt') }}" method="POST">
                                         @csrf
                                         <!-- Form inputs for editing debt and amount paid -->
-                                       {{--  <input type="hidden" name="student_id" value="{{ $remita->student->id }}">
+                                        <input type="hidden" name="student_id" value="{{ $remita->student->id }}">
                                         <input type="hidden" name="staff_id" value="{{ auth()->user()->id }}">
                                         <div class="form-group">
                                             <label for="debt">Debt:</label>
-                                             <input type="text" class="form-control" id="debt" name="debt"
+                                              {{--  <input type="text" class="form-control" id="debt" name="debt"
                                                 value="{{ $balance }}">
                                             <input type="hidden" class="form-control" id="debt" name="old_debt"
-                                                value="{{ $balance }}">
+                                                value="{{ $balance }}"> --}}
                                         </div>
                                         <div class="form-group">
                                             <label for="amountPaid">Amount Paid:</label>
-                                            <input type="text" class="form-control" id="amountPaid" name="amount_paid"
+                                               {{-- <input type="text" class="form-control" id="amountPaid" name="amount_paid"
                                                 value="{{ $totalAmountPaid }}">
                                             <input type="hidden" class="form-control" id="amountPaid"
-                                                name="old_amount_paid" value="{{ $totalAmountPaid / 2 }}">  --}}
+                                                name="old_amount_paid" value="{{ $totalAmountPaid / 2 }}"> --}}
                                         </div>
                                 </div>
                                 <div class="modal-footer">
@@ -171,7 +170,7 @@
                 </div>
                                                     <div class="dropdown no-arrow  btn btn-sm shadow-sm">
 
-                                        {{--  <a href="{{ route('remita.find-studentdebt', $remita->student->id) }}}"
+                                        <a href="{{ route('remita.find-studentdebt', $remita->student->id) }}}"
                                             class="nav-link @yield('results')">
                                             <i class="fa fa-eye nav-icon"></i>Show Payment History
                                         </a>
@@ -179,7 +178,7 @@
 
                                     <div><a class="btn btn-warning" target="_blank"
                                                         href="{{ route('remita.find-studentunpaidrrr', $remita->student->id) }}"> <i
-                                                            class="fa fa-eye"></i> Unpaid RRR </a>  --}}
+                                                            class="fa fa-eye"></i> Unpaid RRR </a>
                                     </div>
                 <!-- /.box -->
 

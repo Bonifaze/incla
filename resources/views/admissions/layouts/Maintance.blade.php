@@ -58,24 +58,22 @@
                     <div class="login-logo">
                       <center> <p class="h1"><strong> We’ll be back soon! </strong></p> </center>
                     </div>
-                    {{--  <p class="h4">
+                       {{--  <p class="h4">
                         Sorry for the inconvenience. We’re performing some maintenance at the moment. we’ll be back up shortly!
 
 
                   </p>  --}}
-                    <p class="h4">
-
-Apologies for any inconvenience caused. We are currently undergoing an upgrade to improve our services. As a part of this upgrade, there will be an increase in fees, which necessitates some adjustments to our system.
-<br>
-During this period, the generation of RRR for payment will be temporarily unavailable. We expect the upgrade to be completed shortly, and the system will be back up and running with the new fees in place.
-<br>
-We understand the importance of a seamless payment process, and we assure you that we are working diligently to minimize any disruption. Once the upgrade is finished, you will be able to generate your RRR and proceed with your payment as usual.
-<br>
-Thank you for your understanding and patience. If you have any urgent inquiries or concerns, please feel free to reach out to our support team at [contact email/phone number].
-
-                  </p>
+   
+    <p class="h4">We apologise for any inconvenience caused. We are currently upgrading our system to serve you better. During this period, the generation of RRR code for tuition fees payment via Remita will be temporarily unavailable. </p>
+    <br>
+    <p class="h4">Do bear with us as we work diligently to minimize any disruption. </p>
+    <br>
+    <p class="h4">For urgent inquiries, please reach out to the Veritas ICT support team at  <a href="mailto:ictsupport@veritas.edu.ng">ictsupport@veritas.edu.ng</a> and we will respond to you promptly.</p>
 
                   {{--  <p class="h2" id="demo"></p>  --}}
+
+
+                 
 
 <br>
 <br>
@@ -88,7 +86,7 @@ Thank you for your understanding and patience. If you have any urgent inquiries 
     </div>
 <script>
 // Set the date we're counting down to
-var countDownDate = new Date("june 25, 2023 23:00:00").getTime();
+var countDownDate = new Date("june 26, 2023 15:00:00").getTime();
 
 // Update the count down every 1 second
 var x = setInterval(function() {

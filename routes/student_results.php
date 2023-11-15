@@ -1,6 +1,7 @@
 <?php
 
 // Student Result Routes
+use App\Http\Controllers\CardInfoController;
 
 Route::get('/results/search-student', 'StudentResultsController@searchStudent')->name('result.search_student');
 
@@ -53,4 +54,7 @@ Route::post('/results/courseRegStudentForm', 'StudentResultsController@courseReg
 
 Route::post('/pclearance/form', 'StudentResultsController@pClearanceForm')->name('pclearance.form');
 
-//
+Route::get('/results/card-info', CardInfoController::class)->name('result.card_info');
+
+Route::post('/results/card-info', 'CardInfoController@findStudent')->name('result.card_info');
+

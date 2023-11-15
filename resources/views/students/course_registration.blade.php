@@ -42,6 +42,7 @@
                             @if (session('approvalMsg'))
                                 {!! session('approvalMsg') !!}
                             @endif
+                              {{--  <div class="h2 text-center">Course Registration ends in:  <span class="h2 text-danger font-weight-bold" id="demo"></span> </div>  --}}
                             <div class="container">
                                 <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
                                     <h6 class="m-0 font-weight-bold text-success">Current Level Course </h6>
@@ -60,7 +61,6 @@
                                             <th>Course Code</th>
                                             <th>Course Title</th>
                                             <th>Credit Unit</th>
-                                            <th>Action</th>
                                         </tr>
                                     </thead>
 
@@ -98,21 +98,6 @@
                                                         <td>{{ $course->course_title }}</td>
                                                         <td>{{ $course->credit_unit }}</td>
                                                         {{--  <td>{{ $course->id }}</td>  --}}
-                                                         <td>
-                                            {!! Form::open(['method' => 'Post', 'route' => 'result.add-course', 'id' => 'addFCForm' . $course->course_id]) !!}
-                                            {{ Form::text('course_id', $course->course_id ) }}
-                                            {{ Form::text('student_id',  Auth::guard('student')->user()->id  )}}
-                                            {{--  {{ Form::hidden('session_id', $session->id) }}  --}}
-                                            {{ Form::text('semester', $course->semester) }}
-                                            {{--  {{ Form::hidden('level', $student->academic->level) }}  --}}
-                                            {{--  {{ Form::hidden('program_id', $student->academic->program_id) }}  --}}
-
-
-                                            <button onclick="addFCourse({{$course->course_id}})" type="submit"
-                                                class="{{ $course->course_id }} btn btn-success"><span class="icon-plus"></span>
-                                               <i class="fas fa-plus"></i>  Add</button>
-                                            {!! Form::close() !!}
-                                        </td>
                                                 @endif
                                             @endforeach
                                             </tr>
@@ -120,7 +105,6 @@
                                                 <td><strong>Total Credit Unit</strong></td>
                                                 <td colspan="2"></td>
                                                 <td id="tcu" name="total"></td>
-                                                <td></td>
                                             </tr>
                                     </tbody>
 
@@ -133,7 +117,6 @@
                                             <th>Course Code</th>
                                             <th>Course Title</th>
                                             <th>Credit Unit</th>
-                                            <th>Action</th>
                                         </tr>
                                     </thead>
 
@@ -167,21 +150,6 @@
                                                     <td>{{ $course->course_code }}</td>
                                                     <td>{{ $course->course_title }}</td>
                                                     <td>{{ $course->credit_unit }}</td>
-                                                    <td>
-                                            {!! Form::open(['method' => 'Post', 'route' => 'result.add-course', 'id' => 'addFCForm' . $course->course_id]) !!}
-                                            {{ Form::hidden('course_id', $course->course_id ) }}
-                                            {{--  {{ Form::hidden('student_id', $student->id) }}  --}}
-                                            {{--  {{ Form::hidden('session_id', $session->id) }}  --}}
-                                            {{ Form::hidden('semester', $course->semester) }}
-                                            {{--  {{ Form::hidden('level', $student->academic->level) }}  --}}
-                                            {{--  {{ Form::hidden('program_id', $student->academic->program_id) }}  --}}
-
-
-                                            <button onclick="addFCourse({{$course->course_id}})" type="submit"
-                                                class="{{ $course->course_id }} btn btn-success"><span class="icon-plus"></span>
-                                               <i class="fas fa-plus"></i>  Add</button>
-                                            {!! Form::close() !!}
-                                        </td>
                                             @endif
                                         @endforeach
                                         </tr>
@@ -189,7 +157,6 @@
                                             <td><strong>Total Credit Unit</strong> </td>
                                             <td colspan="2"></td>
                                             <td id="tcu2" name="total"></td>
-                                            <td></td>
 
                                         </tr>
                                     </tbody>
@@ -458,5 +425,36 @@
             }
             //console.log(sum)
         }
+
+
+        // Set the date we're counting down to
+var countDownDate = new Date("october 31, 2023 23:59:00").getTime();
+
+// Update the count down every 1 second
+var x = setInterval(function() {
+
+  // Get today's date and time
+  var now = new Date().getTime();
+
+  // Find the distance between now and the count down date
+  var distance = countDownDate - now;
+
+  // Time calculations for days, hours, minutes and seconds
+  var days = Math.floor(distance / (1000 * 60 * 60 * 24));
+  var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+  var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+  var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+  // Output the result in an element with id="demo"
+  document.getElementById("demo").innerHTML = days + "d " + hours + "h "
+  + minutes + "m " + seconds + "s ";
+
+  // If the count down is over, write some text
+  if (distance < 0) {
+    clearInterval(x);
+    document.getElementById("demo").innerHTML = "EXPIRED";
+  }
+}, 1000);
+
     </script>
 @endsection

@@ -32,5 +32,11 @@ class StudentAcademic extends Model implements Auditable
         return $college;
     }
 
+      public function student_medical()
+    {
+        return $this->belongsTo('App\StudentMedical', 'student_id');
+    }
+
+
 
 } // end class

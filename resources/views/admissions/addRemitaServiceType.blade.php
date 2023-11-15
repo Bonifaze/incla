@@ -82,7 +82,7 @@
 
 
 
-                            <select class="form-input form-control m-3" name="category">
+                            <select class="form-input form-control text-uppercase m-3" name="category">
                                 <option>Select Fee Type Category</option>
                                 <option value="1"> Application Fee</option>
                                 <option value="2">Acceptance Fee</option>
@@ -91,7 +91,7 @@
 
                             </select>
 
-                              <select class="form-input form-control m-3" name="installment">
+                              <select class="form-input form-control text-uppercase m-3" name="installment">
                                 <option>Select Payment Type Instalment</option>
                                 <option value="1"> Full Payment </option>
                                 <option value="2">Part Payment</option>
@@ -101,7 +101,7 @@
 
                                 <select class="form-input form-control text-uppercase m-3" name="college_id">
                                 <option  value="0">Select College </option>
-
+                                 
                                   <option value="1"> Management ,Science, Arts and Technology</option>
                                 <option value="2"> Natural and Applied Science</option>
                                   <option value="3"> Faculty of Education</option>
@@ -112,7 +112,8 @@
                                     <option value="8"> LAW FACULTY</option>
                                     <option value="9"> HEALTH SCIENCES</option>
                                     <option value="8"> Pharmaceutical Sciences</option>
-                                     <option  value="1000">None of the Above </option>
+                                         <option value="9"> Ecclesiastical  Faculty of Theology</option>
+                                     <option  value=" ">None of the Above </option>
 
 
                             </select>

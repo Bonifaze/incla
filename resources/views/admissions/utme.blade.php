@@ -1252,7 +1252,7 @@ active
                             @csrf
                             <div class="form-group">
                                 <div class="form-group">
-                                    <label for="">{{ __('Tile') }} </label>
+                                    <label for="">{{ __('Title') }} </label>
                                     <input id="fname" type="text" name="sponsor_title" class="form-control" placeholder="" autofocus>
                                 </div>
                             </div>
@@ -1460,13 +1460,13 @@ active
 <!-- Bootstrap File Upload Plugin -->
 <script src="{{ asset('dist/js/components/bs-filestyle.js') }}"></script>
 
-<script type="text/javascript">
+{{--  <script type="text/javascript">
     //Date picker
     $('#dob').datepicker({
         format: 'yyyy-mm-dd',
         autoclose: true
     })
-</script>
+</script>  --}}
 
 <script type="text/javascript">
     $(document).on('ready', function() {

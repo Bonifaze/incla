@@ -347,7 +347,7 @@ $validatedData = $request->validate([
             //  return view('login');
 
              $approvalMsg = '<div class="alert alert-danger alert-dismissible" role="alert"> <button type="button" class="close" data-dismiss="alert"> &times; </button> ERROR '.$e->getMessage();' </div>';
-           // $approvalMsg = '<div class="alert alert-danger alert-dismissible" role="alert"> <button type="button" class="close" data-dismiss="alert"> &times; </button> Error Generating Matric Number ensure you properly fill the form then Sorry try again or contact ICT Unit </div>';
+            //$approvalMsg = '<div class="alert alert-danger alert-dismissible" role="alert"> <button type="button" class="close" data-dismiss="alert"> &times; </button>  Sorry try again or contact ICT Unit </div>';
             return Redirect::back()->with('approvalMsg', $approvalMsg);
             // return redirect('/students/create')->with('approvalMsg', $approvalMsg);
             // return redirect()->route('student.create')

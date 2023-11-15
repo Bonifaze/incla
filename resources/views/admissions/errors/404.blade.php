@@ -53,7 +53,7 @@
                     </div>
                     <p class="h4">
                     We can't find the page you are looking for. This page may no longer exist.
-                    Meanwhile, you may <a href="{{ url('/') }}">return to Login</a>.<br />
+                    <br />
                       If this continues, contact Veritas University ICT Unit.
                   </p>
 

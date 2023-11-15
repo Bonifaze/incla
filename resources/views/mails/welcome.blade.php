@@ -19,10 +19,12 @@ Click to Login your account
 @endcomponent
 {{ $emailData['note'] }}
 <br>Thank you.<br>
- <p align='left'> <img src="{{ asset('img/icthead2.png') }}" width='100' height='60' border='0' /></p>
+ {{--  <p align='left'> <img src="{{ asset('img/icthead2.png') }}" width='100' height='60' border='0' /></p>
 
   <strong>Mr. Calistus C. Chimezie</strong>
   <br>(Supervising Head, ICT UNIT)
+   --}}
+   <strong>Veritas Univeristy Abuja</strong>
 
  {{--  {{ config('app.name') }}  --}}
 @endcomponent

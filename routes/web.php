@@ -16,14 +16,18 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+// Route::get('/', function () {
+//     return view('pages');
+// });
+
 Route::get('/', function () {
     return view('default');
 });
 
-//MAINTAINCE PAGE
-Route::get('/maitiance', function () {
-    return view('admissions.layouts.Maintance');
-});
+// MAINTAINCE PAGE
+// Route::get('/students/remita/feestype', function () {
+//     return view('admissions.layouts.Maintance');
+// });
 
 Route::get('/classroom/init', 'GoogleClassroomsController@init')->name('classroom.init');
 
@@ -52,7 +56,6 @@ Route::post('/students/logout', 'Auth\StudentLoginController@logout')->name('stu
 // Checks the status of payments made in the bank
 Route::get('/remitas', 'RemitaBankPaymentController@index')->name('remitas.remitaBankVerification');
 Route::get('/remita-response', 'RemitaBankPaymentResponseController@handle')->name('remitas.remitaBankResponse');
-
 
 
 Route::get('/admissions/login', function () {
@@ -124,7 +127,7 @@ require_once "utilities.php";
 require_once "soteria.php";
 
 //ASMIISONS ROUNTS
-require_once "admissions.php";
+ require_once "admissions.php";
 
 
 

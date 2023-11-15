@@ -124,7 +124,7 @@
                     <!-- /.start third column -->
                     
 
-                <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('ictUpload', 'App\StudentResult')): ?>
+                <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('ICTOfficers', 'App\StudentResult')): ?>
 
 
                         <di class="card card-primary">

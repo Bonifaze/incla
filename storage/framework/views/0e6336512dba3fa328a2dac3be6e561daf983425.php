@@ -1,3 +1,5 @@
+<?php $__env->startSection('content'); ?>
+
 <div class="bg-slate-900 min-h-screen text-white p-10">
     <h1 class="app-page-title text-uppercase h5 font-weight-bold p-2 mb-2 shadow-sm text-center text-white border">
         Student Result Management
@@ -157,5 +159,6 @@
 
 
 </div>
+<?php $__env->stopSection(); ?>
 
 <?php echo $__env->make('layouts.mini2', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH /Users/lifeofrence/Documents/laraproject/resources/views/results/Spotlight/program-search-studentSpotlight.blade.php ENDPATH**/ ?>

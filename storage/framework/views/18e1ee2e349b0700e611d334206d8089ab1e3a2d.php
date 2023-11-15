@@ -130,7 +130,7 @@
                                             <?php echo e(Form::hidden('level', $level)); ?>
 
 
-                                            <button onclick="removeRCForm(<?php echo e($res->id); ?>)" type="submit"
+                                            <button onclick="removeRCForm(<?php echo e($res->id); ?>)" type="button"
                                                 class="<?php echo e($res->id); ?> btn btn-danger"><span
                                                     class="icon-line2-trash"></span><i
                                                                 class="fas fa-solid fa-trash"></i>  Drop</button>

@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Auth;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Artisan;
 
 class StaffLoginController extends Controller
 {
@@ -30,9 +31,39 @@ class StaffLoginController extends Controller
     }
 
 
+    public function getUserInfo()
+    {
+        $userIP = $_SERVER['REMOTE_ADDR'];
+        $userMacAddress = $this->getMacAddress();
+
+        return [
+            'request_ip' => $userIP,
+            'mac_address' => $userMacAddress,
+        ];
+    }
+
+    private function getMacAddress()
+    {
+        if (strtoupper(substr(PHP_OS, 0, 3)) === 'WIN') {
+            $command = 'getmac';
+        } else {
+            $command = 'ifconfig';
+        }
+
+        // Run the command and get the output
+        $output = shell_exec($command);
+
+        // Use regular expression to extract MAC address
+        $pattern = '/(?:[0-9a-fA-F]{2}[:-]){5}[0-9a-fA-F]{2}/';
+        preg_match_all($pattern, $output, $matches);
+
+        return !empty($matches[0]) ? $matches[0][0] : null;
+    }
 
     public function showLoginForm()
     {
+        $MacAddr = $this->getUserInfo();
+        dd($MacAddr);
         return view('staff.auth.login');
     }
 
@@ -49,8 +80,18 @@ class StaffLoginController extends Controller
         // attempt to log user
         if(Auth::guard('staff')->attempt(['username' => $request->email, 'password' => $request->password, 'status' => '1'], $request->remember)){
 
+              //check for Temporary password
+             if($request->password == "welcome")
+             {
+                 return redirect()->route('staff.password');
+             }
             //check for default password
             if($request->password == "welcome@1")
+            {
+                return redirect()->route('staff.password');
+            }
+               //check for  Reset password
+            if($request->password == "welcome@123")
             {
                 return redirect()->route('staff.password');
             }

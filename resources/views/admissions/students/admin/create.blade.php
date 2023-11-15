@@ -58,6 +58,8 @@
                                 @if (session('approvalMsg'))
                                     {!! session('approvalMsg') !!}
                                 @endif
+                                 <span class="text-danger"> {{ $errors->first('passport') }}</span>
+                                      <span class="text-danger"> {{ $errors->first('signature') }}</span>
                                 <div class="box-body">
                                     <div class="">
                                         {{--  <h3 class="box-title">Bio-Data</h3>  --}}
@@ -139,11 +141,28 @@
                                             ) }}
 
                                         </div>
-                                        <div class="col-md-1 form-group">
+                                       {{--  <div class="col-md-1 form-group">
                                             <label for="level">Level :</label>
                                             <input type="text" name="level" id="level-select" class="form-control"
                                                 readonly>
-                                        </div>
+                                        </div>  --}}
+                                         <div class="col-md-1 form-group ">
+                                        <label for="level">Level :</label>
+                                        {{ Form::select(
+                                            'level',
+                                            [
+                                                ' '=> 'Select Level',
+                                                '100' => '100',
+                                                '200' => '200',
+                                                '700' => 'PGD',
+                                                '800' => 'MSc/MBA/MPA',
+                                                '900' => 'PhD',
+                                            ],
+                                            ' ',
+                                            ['class' => 'form-control select2', 'id' => 'level-select'],
+                                        ) }}
+
+                                    </div>
                                     </div>
 
                                     <div class="row">
@@ -812,7 +831,7 @@
             // Handle mode of study change event
             $('#mode-of-entry-select').change(function() {
                 var selectedMode = $(this).val();
-                var level = levelOptions[selectedMode] || '';
+                var level = levelOptions[selectedMode] || '100';
 
                 $('#level-select').val(level);
             });

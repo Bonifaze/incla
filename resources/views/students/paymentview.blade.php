@@ -166,10 +166,10 @@
                                            </tr>
                                 <thead></thead>
                                 <tr>
-                                    <th colspan="3"></th>
+                                   {{--  <th colspan="3"></th>
                                     <th colspan="2">School Fee paid</th>
-                                    <th colspan="2">School Fees Debt</th>
-                                    <th colspan="2">Toal Paid Amount</th>
+                                    <th colspan="2">School Fees Debt</th> 
+                                    <th colspan="2">Toal Paid Amount</th> --}}
                                 </tr>
                                 </thead>
                             <tbody class="">
@@ -183,9 +183,10 @@
                                             &#8358;{{ number_format($totalAmountPaid + (int) $balance, 2) }}
                                         @endif
                                     </td>  --}}
-                                    <td colspan="2">₦{!! $totalAmountPaid != 0 ? $totalAmountPaid : html_entity_decode('<i class="fa fa-spinner fa-spin"></i>') !!}</td>
-                                    <td colspan="2" class="text-bold">₦{!! html_entity_decode($balance) !!}</td>
-                                    <td colspan="2" class="text-bold">&#8358;{{ number_format($totalPaid, 2) }}</td>
+                                    
+                                    {{--    <td colspan="2">₦{!! $totalAmountPaid != 0 ? $totalAmountPaid : html_entity_decode('<i class="fa fa-spinner fa-spin"></i>') !!}</td> --}}
+                                     {{--   <td colspan="2" class="text-bold">₦{!! html_entity_decode($balance) !!}</td> 
+                                    <td colspan="2" class="text-bold">&#8358;{{ number_format($totalPaid, 2) }}</td> --}}
                                 </tr>
 
 
@@ -193,7 +194,7 @@
                             </tbody>
 
                                     </table>
-
+                                    
                                                      <div class="dropdown no-arrow  btn btn-sm btn-success shadow-sm">
 
                                         <a href="{{ route('student.feespayment') }}"
@@ -202,7 +203,7 @@
                                     </div>
                                 </div>
                             </div>
-                            {{--  <div class="modal" id="myModal">
+                             {{--    <div class="modal" id="myModal">
                                                             <div class="modal-dialog">
                                                                 <div class="modal-content">
 
@@ -225,13 +226,13 @@
                                                                         <button type="button"
                                                                             class="btn fw-bolder text-danger"
                                                                             data-bs-dismiss="modal">Go Back</button>
-                                                                        <button type="submit" class="btn btn-success"
+                                                                        <button type="" class="btn btn-success"
                                                                             data-bs-dismiss="modal">Proceed</button>
                                                                     </div>
 
                                                                 </div>
                                                             </div>
-                                                        </div>  --}}
+                                                        </div> --}}
                             <script type="text/javascript" src="https://login.remita.net/payment/v1/remita-pay-inline.bundle.js"></script>
                             </script>
 

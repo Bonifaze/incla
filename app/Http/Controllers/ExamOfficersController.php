@@ -2,16 +2,15 @@
 
 namespace App\Http\Controllers;
 
-use Validator;
-use App\Program;
-use App\Session;
-use App\ProgramCourse;
-use App\StudentResult;
-use App\StudentAcademic;
 use App\AcademicDepartment;
+use App\Program;
+use App\ProgramCourse;
+use App\Session;
+use App\StudentAcademic;
+use App\StudentResult;
 use Illuminate\Http\Request;
-use App\Models\RegisteredCourse;
 use Illuminate\Support\Facades\Auth;
+use Validator;
 
 class ExamOfficersController extends Controller
 {
@@ -27,19 +26,11 @@ class ExamOfficersController extends Controller
     {
         $this->authorize('examOfficer', StudentResult::class);
         $staff = Auth::guard('staff')->user();
-        $session = new Session();
-            $modify=RegisteredCourse::with(['staff','sessions'])->where('staff_id', '<>', '', 'and')
-            ->whereColumn('old_total', '!=', 'total')
-            ->orderBy('updated_at','DESC')
-           // ->limit(20)
-            // ->paginate(10);
-           ->get();
         if($staff->isAcademic())
         {
             $department = $staff->workProfile->admin->academic;
             $programs = $department->programs;
-            $sessions = Session::where('status', 0)->orderBy('id', 'DESC')->pluck('name', 'id');
-            return view('academia.exam-officers.programs', compact('department', 'staff','sessions', 'programs','modify','session'));
+            return view('academia.exam-officers.programs', compact('department', 'staff', 'programs'));
         }
         else{
             return redirect()->route('staff.home')

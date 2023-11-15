@@ -32,6 +32,15 @@
                         class="app-page-title text-uppercase h5 font-weight-bold p-2 mb-2 shadow-sm text-center text-success border">
                         Change Password
                     </h1>
+
+                    <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                        <strong>Attention:</strong> You cannot use the default password <code>welcome@1</code> or
+                        <code>welcome@123</code>.
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    
                     <div class="card ">
 
                         <?php echo Form::open(['route' => 'staff.change', 'method' => 'POST', 'class' => 'nobottommargin']); ?>
@@ -82,4 +91,4 @@
     </div>
 <?php $__env->stopSection(); ?>
 
-<?php echo $__env->make('layouts.mini', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH /Users/lifeofrence/Documents/laraproject/resources/views/staff/password.blade.php ENDPATH**/ ?>
+<?php echo $__env->make('layouts.miniPassword', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH /Users/lifeofrence/Documents/laraproject/resources/views/staff/password.blade.php ENDPATH**/ ?>

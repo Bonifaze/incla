@@ -150,7 +150,7 @@
                         <br>
                         <br>
 
-                        <p class="link-text"><a href="/register" class="text-success active-link">Click Here </a> if you do not have an account</p>
+                        <p class="link-text"><a href="/register" class="text-success h1 active-link">Click Here </a> if you do not have an account</p>
                         <p class="link-text"> Forgot password ?<a href="/forgotpassword" class="text-danger active-link"> Click here</a> to reset </p>
                         {{--  <p class="link-text"> <a href="https://tawk.to/chat/6452e8b94247f20fefef3648/1gvhtq6f7" class=" active-link text-success">Chat with us</a></p>  --}}
 

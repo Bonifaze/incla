@@ -1,3 +1,4 @@
+<?php $__env->startSection('content'); ?>
 <div class="h-screen bg-slate-900 p-10">
     <!-- left column -->
     <div class="col form-group">
@@ -130,5 +131,6 @@
 
 
 </div>
+<?php $__env->stopSection(); ?>
 
 <?php echo $__env->make('layouts.mini2', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH /Users/lifeofrence/Documents/laraproject/resources/views/results/spotlight/manage-studentSpotlight.blade.php ENDPATH**/ ?>

@@ -89,7 +89,7 @@
                                                 <th>S/N</th>
                                                 <th>Service Type</th>
                                                 <th>Description</th>
-                                                <th>Amount</th>
+                                                <th>Amount (₦‎)</th>
                                                 {{--  <th>Total Amount</th>
                                             <th>View</th>  --}}
                                                 <th colspan="2">Action</th>
@@ -104,7 +104,7 @@
                                                     <td>{{ $key + 1 }}</td>
                                                     <td>{{ $fee_types->provider_code }}</td>
                                                     <td>{{ $fee_types->name }}</td>
-                                                    <td>{{ $fee_types->amount }}</td>
+                                                    <td> ₦‎{{ $fee_types->amount }}</td>
                                                     {{--  <td>Null</td>
                                             <td><a class="btn btn-primary">View</a></td>  --}}
                                                     <td><a href="/editRemitaServiceType/{{ $fee_types->provider_code }}"

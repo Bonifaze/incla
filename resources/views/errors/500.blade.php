@@ -48,8 +48,8 @@
                                 <b>Oops! Something went wrong. </b>
                             </div>
                             <p class="h4">
-                                We will work on fixing that right away.
-                                Meanwhile, you may <a href="{{ url('/') }}">return to Login</a>.<br />
+                                Please check your internet connection. 
+                            <br />
                                 If this continues, contact Veritas University ICT Unit
 
                             </p> </div>

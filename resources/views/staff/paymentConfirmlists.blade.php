@@ -59,13 +59,13 @@
                                                             <th>RRR</th>
                                                             <th>Student Name</th>
                                                             <th>Matric No.</th>
-                                                            <th>Email</th>
+                                                            {{--  <th>Email</th>  --}}
                                                             <th colspan="2">Applicant Name</th>
                                                             {{--  <th>Email</th>  --}}
                                                             <th>Amount(₦)</th>
                                                             <th>Payment Description</th>
                                                             <th>Approved Date</th>
-                                                            {{--  <th>Staff</th>  --}}
+                                                           {{--  <th>Staff</th> --}}
                                                             {{--  <th>Action</th>  --}}
                                                         </tr>
                                                     </thead>
@@ -76,7 +76,7 @@
                                                                 <td class="text-uppercase">
                                                                     {{ $payment->student->fullname ?? '' }}</td>
                                                                 <td>{{ $payment->student->academic->mat_no ?? ' ' }}</td>
-                                                                <td>{{ $payment->FeeType->percentage ?? ''}}</td>
+                                                                {{--  <td>{{ $payment->student->email ?? ''}}</td>  --}}
                                                                 <td colspan="2" class="text-uppercase">
                                                                     {{ $payment->users->surname ?? ' ' }}
                                                                     {{ $payment->users->first_name ?? ' ' }}</td>
@@ -85,7 +85,8 @@
                                                                 <td> &#8358;{{ number_format($payment->amount) }}</td>
                                                                 <td>{{ $payment->fee_type }}</td>
                                                                 <td>{{ $payment->updated_at }}</td>
-                                                                 {{--  <td>{{ $payment->authenticate_by }}</td>  --}}
+                                                         {{--  <td>{{ $payment->authenticate_by }}</td>  --}}                                                             {{--  <td>{{ $payment->authenticate_by }}</td>  --}}
+
                                                                                                                            </tr>
                                                         @endforeach
                                                     </tbody>

@@ -58,11 +58,13 @@
                     <div class="form-group">
 
                         <div class="form-group">
-
+                                      <label for="code">Provider Code :</label>
                             <input id="provider_code" type="text" class="form-input form-control m-3"
-                                name="provider_code" required value="{{ $fee_types->provider_code }}" readonly>
+                                name="provider_code" required value="{{ $fee_types->provider_code }}" >
+                                     <label for="code">Amount(₦‎) :</label>
                             <input id="amount" type="text" class="form-input form-control m-3" name="amount" required
-                                value="{{ $fee_types->amount }}" autofocus>
+                                value= "{{ $fee_types->amount }}" autofocus>
+                                    <label for="code">Name :</label>
                             <input id="name" type="text" class="form-input form-control m-3" name="name" required
                                 value="{{ $fee_types->name }}" autofocus>
                             {{--  <select class="form-input form-control m-3" name="category">

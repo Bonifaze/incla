@@ -56,9 +56,11 @@ Route::post('/register', 'App\Http\Controllers\ApplicantController@register');
 
 
 //MAINTAINCE
-Route::get('/maintane', function () {
+Route::get('/maintaince', function () {
     return view('admissions.layouts.Maintance');
 });
+
+
 
 Route::get('/forgotpassword', function () {
     return view('admissions.forgotpassword');
@@ -73,6 +75,7 @@ Route::post('/logoutUser', 'App\Http\Controllers\ApplicantController@logoutUsers
 Route::post('/login', 'App\Http\Controllers\ApplicantController@login');
 Route::get('/dashboard', 'App\Http\Controllers\ApplicantController@admissionstatus');
 Route::get('/completeadmissions', 'App\Http\Controllers\ApplicantController@completeadmissions');
+//GENERATE MATRIC NO.
 Route::get('/generatematricnumber', 'App\Http\Controllers\AdminStudentsControllerApplicant@create');
 
 
@@ -95,6 +98,7 @@ Route::get('/payment', 'App\Http\Controllers\ApplicantController@payment');
 // Route::post('/payment', 'App\Http\Controllers\RemitaController@processRRR');
 // Route::post('/payment', 'App\Http\Controllers\ApplicantController@payment');
 Route::get('/newPayment', 'App\Http\Controllers\ApplicantController@payment');
+
 Route::get('/schoolfeespayment', 'App\Http\Controllers\ApplicantController@schoolfeespayment');
 Route::get('/acceptancepayment', 'App\Http\Controllers\ApplicantController@paymentacceptance');
 Route::get('/paymentview/{id}', 'App\Http\Controllers\ApplicantController@Viewpayment');

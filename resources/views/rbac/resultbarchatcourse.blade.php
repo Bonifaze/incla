@@ -1,64 +1,90 @@
-@extends('layouts.mini')
+@extends('layouts.mini2')
+
+<head>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="{{ asset('v3/plugins/chart.js/Chart.min.js') }}"></script>
 
 
-
-@section('pagetitle')
-
-
-
-<!-- Sidebar Links -->
-
-<!-- Treeview -->
-@section('cbt-open') menu-open @endsection
-
-@section('cbt') active @endsection
-
-<!-- Page -->
- @section('upload-questions') active @endsection
-
- <!-- End Sidebar links -->
-
-
-
+    @yield('pagescript')
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#000100',
+                        light: '#c2c4c4',
+                        gray: '#91a1a4'
+                    }
+                }
+            }
+        }
+    </script>
+</head>
 @section('content')
-
-<div class="content-wrapper">
-    <!-- Content Header (Page header) -->
-
-    <!-- Main content -->
-    <section class="content">
-      <div class="container-fluid">
-        <!-- left column -->
-        <div class="col_full">
-          <h1
-                        class="app-page-title text-uppercase h5 font-weight-bold p-2 mb-2 shadow-sm text-center text-success border">
-                        Result Bar Chat  <a href="/rbac/auditviewall"
-                                                        class="float-right btn btn-outline-info">VIEW RESULT AUDIT</a>
-                    </h1>
-
-
-
-<canvas id="modificationChart" width="380" height="200"></canvas>
-
-
-
-
-
-
-          <!-- /.box -->
-
+<body class="w-full bg-slate-900 min-h-screen p-10">
+    <div class="flex items-center justify-between">
+        <div class="">
+            <h1 class="text-white text-3xl font-semibold uppercase pulse-animation">Course Results Correction Chart</h1>
+            {{--  <p class="text-gray py-5 text-lg">Spotlight RIMS which stands for Spotlight Results Correction System.</p>  --}}
         </div>
-        <!--/.col (left) -->
+           <div class="text-white text-2xl font-semibold  pulse-animation">
+               {{ $program->name }}
+        </div>
+    </div>
 
-      </div>
-      <!-- /.row -->
-    </section>
-    <!-- /.content -->
-  </div>
+ <main class="border border-gray p-5 rounded-lg my-14">
+        <canvas id="modificationChart" width="190" height="50"></canvas>
+    </main>
+
+     <table class="table table-striped" id="dataTable" width="100%" cellspacing="0">
+        <thead class="text-white">
+            <th>S/N</th>
+            <th>Staff Name</th>
+            <th>Course </th>
+            <th>session</th>
+            <th>Semester</th>
+            <th>Level</th>
+            <th>Old Score</th>
+            <th>New Score</th>
+            <th>Student MatNo.</th>
+            <th>Student Name</th>
+            <th>Date</th>
+        </thead>
+
+        <tbody>
+            @foreach ($modify as $key => $audit)
+            <tr>
+                <td class="text-white">{{ $loop->iteration }}</td>
+                <td class="text-white">{{ $audit->staff->full_name ?? null}}</td>
+                {{-- <td>{{ $audit->modifiedBy->full_name ?? null}}</td> --}}
+                <td class="text-white">{{ $audit->course->course_code}} ({{ $audit->course->course_title}})</td>
+
+                <td class="text-white">{{ $audit->sessions->name }}</td>
+
+                @if($audit->semester==1)
+                <td class="text-white">First</td>
+                @else
+                <td class="text-white">Second</td>
+                @endif
+                <td class="text-white">{{ $audit->level}}</td>
+                <td class="text-warning h2">{{ $audit->old_total ?? null}}</td>
+                <td class="text-success h1">{{ $audit->total ?? null}}</td>
+                <td class="text-white">{{ $audit->student->academic->mat_no ?? null}}</td>
+                <td class="text-white">{{ $audit->full_name}}</td>
+                <td class="text-white">{{ $audit->updated_at}}</td>
+            </tr>
+            @endforeach
+        </tbody>
+    </table>
+
+  @section('pagescript')
+</body>
+
 @endsection
 
 
-@section('pagescript')
+
 
 <script>
     var ctx = document.getElementById('modificationChart').getContext('2d');

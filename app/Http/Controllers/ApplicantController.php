@@ -158,7 +158,7 @@ class ApplicantController extends Controller
                     $billing = $this->paymen();
                     // return redirect('/completeadmissions');
                 }
-                if ($users->status_code == '01' && ($users->fee_type == 'Acceptance fees (Undergraduate ) (₦80000)' || $users->fee_type == 'Acceptance Fees (Postgraduate) (₦50000)')) {
+                if ($users->status_code == '01' && ($users->fee_type == 'Acceptance fees (Undergraduate ) (₦100000)' || $users->fee_type == 'Acceptance Fees (Postgraduate) (₦50000)')) {
                     if (Hash::check($request->password, $users->password)) {
 
                         if ($users->email_verified_at != null) {
@@ -320,34 +320,41 @@ class ApplicantController extends Controller
     }
 
     public function paymen()
-    {
-        $admissiontype = admissionType::where('status', 1)->orderBy('id', 'ASC')->paginate(20);
-        // dd($sessions);
-        $paymen = DB::table('users')->where('users.id', session('userid'))
-            ->leftJoin('usersbiodata', 'usersbiodata.user_id', '=', 'users.id')
-            ->select('usersbiodata.status')->first();
-        $payment = DB::table('users')->where('users.id', session('userid')) //-> where('remitas.status_code', '01')
-            ->leftJoin('usersbiodata', 'usersbiodata.user_id', '=', 'users.id')
-            ->leftJoin('remitas', 'remitas.user_id', '=', 'users.id')
-        // ->select('remitas.status_code', 'remitas.fee_type', 'remitas.fee_type_id', 'remitas.created_at')
-            ->get();
+{
+    $admissiontype = admissionType::where('status', 1)->orderBy('id', 'ASC')->paginate(20);
+    
 
-        foreach ($payment as $utm) {
-            if ($utm->status_code == '01' && $utm->amount >= 170000) {
-                return redirect('completeadmissions');}
-        }
+    $payment = DB::table('users')->where('users.id', session('userid'))
+        ->leftJoin('usersbiodata', 'usersbiodata.user_id', '=', 'users.id')
+        ->leftJoin('remitas', 'remitas.user_id', '=', 'users.id')
+        ->select('remitas.status_code', 'remitas.amount','remitas.fee_type', 'remitas.fee_type_id', 'remitas.created_at')
+        ->get();
 
-        foreach ($payment as $utm) {
-            if ($utm->status_code == '01' && ($utm->fee_type_id == '2' || $utm->fee_type_id == '4' || $utm->fee_type_id == '118')) {
-                return redirect('/schoolfeespayment');
-            }
+    foreach ($payment as $utm) {
+        if ($utm->status_code == '01' && $utm->amount >= 170000) {
+            return redirect('completeadmissions');
         }
-        if ($paymen->status >= 4) {
-
-            return redirect('/admission');
-        }
-        return view('admissions.home', compact('paymen', 'admissiontype'));
     }
+
+    foreach ($payment as $utm) {
+        if ($utm->status_code == '01' && ($utm->fee_type_id == '2' || $utm->fee_type_id == '4' || $utm->fee_type_id == '118')) {
+            return redirect('/schoolfeespayment');
+        }
+    }
+    
+    $paymen = DB::table('users')->where('users.id', session('userid'))
+        ->leftJoin('usersbiodata', 'usersbiodata.user_id', '=', 'users.id')
+        ->select('usersbiodata.status')->first();
+
+    // Check if $paymen is not null before accessing its property
+    if ($paymen && $paymen->status >= 4) {
+        return redirect('/admission');
+    }
+
+
+    return view('admissions.home', compact('paymen', 'admissiontype'));
+}
+
 
     // END OF HOME FUNCTION PASSING PARAMETER USEFUL FOR THE BLADE
 
@@ -368,7 +375,7 @@ class ApplicantController extends Controller
             ->select('remitas.status_code', 'remitas.fee_type', 'remitas.created_at')->get();
 
         foreach ($utmeremita as $utm) {
-            if ($utm->status_code == '01' && $utm->fee_type == 'Application Fee (Under Graduate) (₦4500)') {
+            if ($utm->status_code == '01' && $utm->fee_type == 'Application Fee (Under Graduate) (₦7000)') {
                 return view('admissions./utme', compact('utme', 'utmeremita', 'admissiontype'), ['programs' => $programs, 'subjects' => $subjects, 'country' => $country]);
             }
         }
@@ -471,12 +478,16 @@ class ApplicantController extends Controller
             $fee_types = fee_types::orderBy('name', 'ASC')
                 ->where('status', 1)
                 ->where('category', 3)
+                //to make school fess not availbe for UG
+                    //  ->where('category', 11)
                 // ->where('gender_code', $payment->gender)
                 // ->where('college_id', $facultyAndDept['col'])
                 ->get();
             $fee_typess = fee_types::orderBy('name', 'ASC')
                 ->where('status', 1)
                 ->where('category', 3)
+                //to make school fess not availbe for UG
+                //    ->where('category', 11)
                 ->get();
 
             return view('admissions.schoolfeespayment', compact('payment'), ['fee_types' => $fee_types, 'fee_typess' => $fee_typess]);
@@ -497,12 +508,12 @@ class ApplicantController extends Controller
             foreach ($pgadmission as $ca) {
                 $facultyAndDept = $this->getdptcollegid($ca->course_applied);
             }
-            $fee_types = fee_types::orderBy('status', 'ASC')
+            $fee_types = fee_types::orderBy('name', 'ASC')
                 ->where('status', 1)
                 ->where('category', 5)
             // ->where('college_id', $facultyAndDept['col'])
                 ->get();
-            $fee_typess = fee_types::orderBy('status', 'ASC')
+            $fee_typess = fee_types::orderBy('name', 'ASC')
                 ->where('status', 1)
                 ->where('category', 3)
                 ->get();
@@ -522,7 +533,8 @@ class ApplicantController extends Controller
             ->where('status_code', '025')
             ->count();
 
-        if ($unpaid_rrr_count >= 5) {
+        // if ($unpaid_rrr_count >= 5) {
+                   if ($unpaid_rrr_count >= 3000) {
             // The student has already created 5 or more unpaid RRRs, so don't insert a new RRR
             // $json = array('success' => false, 'route' => '/home', 'msg' => 'You have reached the maximum number of unpaid Generated RRRs, Please pay your outstanding RRR before generating a new RRR. Visit ICT Unit or Bursary .');
             $json = array('success' => false, 'route' => '/home', 'msg' => 'You have reached the maximum number of unpaid Generated RRRs, Please pay your outstanding RRR before generating a new RRR. Go to Payment View and Delete unpaid RRR .');
@@ -578,33 +590,40 @@ class ApplicantController extends Controller
         $viewpayment = DB::table('remitas')->where('user_id', session('userid'))
             ->orderBy('status_code', 'ASC')->orderBy('created_at', 'DESC')
             // ->get();
-            ->paginate(4);
+            ->paginate(5);
 
         $verifyResponse = $this->verifyRRRALL();
-        $billing = $this->billstudent();
+        //$billing = $this->billstudent();
 
         // Retrieve the last data for the user
-        $lastPayment = DB::table('student_billings')
-            ->where('user_id', session('userid'))
-            ->where('status', 1)
-            ->where('session_id', $this->getcurrentsession())
-            ->orderBy('created_at', 'desc')
-            ->first();
-            $allPayment = DB::table('student_billings')
-            ->where('user_id', session('userid'))
-            ->where('status', 1)
-            ->where('session_id', $this->getcurrentsession())
-            ->pluck('amount_paid');
+    //     $lastPayment = DB::table('student_billings')
+    //         ->where('user_id', session('userid'))
+    //         ->where('status', 1)
+    //         ->where('session_id', $this->getcurrentsession())
+    //         ->orderBy('created_at', 'desc')
+    //         ->first();
+    //         $allPayment = DB::table('student_billings')
+    //         ->where('user_id', session('userid'))
+    //         ->where('status', 1)
+    //         ->where('session_id', $this->getcurrentsession())
+    //         ->pluck('amount_paid');
 
-        $totalAmountPaid = $allPayment->sum();
+    //      $totalAmountPaid = $allPayment->sum();
+    //   $amountPaid = $lastPayment->amount_paid ?? 0;
+    //         $debt = $lastPayment->debt ?? 0;
+        // $balance = $lastPayment ? max(0, $lastPayment->debt) : '<i class="fas fa-spinner fa-spin"></i>';
 
-        $amountPaid = $lastPayment->amount_paid ?? 0;
-        $debt = $lastPayment->debt ?? 0;
+      
 
 
-        $balance = $lastPayment ? max(0, $lastPayment->debt) : '<i class="fas fa-spinner fa-spin"></i>';
+        // $amountPaid = 0;
+      
 
-        return view('admissions.paymentview', compact('viewpayment', 'verifyResponse', 'totalAmountPaid', 'balance'));
+
+        // $balance = 0;
+
+        // return view('admissions.paymentview', compact('viewpayment', 'verifyResponse', 'totalAmountPaid', 'balance'));
+          return view('admissions.paymentview', compact('viewpayment', 'verifyResponse'));
     }
     public function billstudent()
     {
@@ -977,7 +996,7 @@ class ApplicantController extends Controller
             ->select('remitas.status_code', 'remitas.fee_type', 'remitas.created_at')->get();
 
         foreach ($deremita as $der) {
-            if ($der->status_code == '01' && $der->fee_type == 'Application Fee (Under Graduate) (₦4500)') {
+            if ($der->status_code == '01' && $der->fee_type == 'Application Fee (Under Graduate) (₦7000)') {
                 return view('admissions./de', compact('de', 'deremita'), ['programs' => $programs, 'subjects' => $subjects, 'country' => $country]);
             }
         }
@@ -1003,7 +1022,7 @@ class ApplicantController extends Controller
             ->select('remitas.status_code', 'remitas.fee_type', 'remitas.created_at')->get();
 
         foreach ($transfersremita as $utm) {
-            if ($utm->status_code == '01' && $utm->fee_type == 'Application Fee (Under Graduate) (₦4500)') {
+            if ($utm->status_code == '01' && $utm->fee_type == 'Application Fee (Under Graduate) (₦7000)') {
                 return view('admissions./transfers', compact('transfers', 'transfersremita'), ['programs' => $programs, 'subjects' => $subjects, 'country' => $country]);
             }
         }
@@ -1206,16 +1225,17 @@ class ApplicantController extends Controller
 
     public function utmeuploads(Request $req)
     {
+     
         $this->validate($req, [
 
-            'jamb' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:1048|dimensions:min_width=300',
-            'olevel1' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:1048|dimensions:min_width=300',
-            'olevel2' => 'image|mimes:jpeg,png,jpg,gif,svg|max:1048|dimensions:min_width=300',
+            // 'jamb' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:1048|dimensions:min_width=300',
+            // 'olevel1' => 'image|mimes:jpeg,png,jpg,gif,svg|max:1048|dimensions:min_width=300',
+            // 'olevel2' => 'image|mimes:jpeg,png,jpg,gif,svg|max:1048|dimensions:min_width=300',
         ],
             $messages = [
-                'jamb.dimensions' => 'Result Image is too small. Must be at least 400px wide.',
-                'olevel1.dimensions' => 'Olevel Image is too small. Must be at least 400px wide.',
-                'olevel2.dimensions' => 'Olevel Image is too small. Must be at least 400px wide.',
+                // 'jamb.dimensions' => 'Result Image is too small. Must be at least 400px wide.',
+                // 'olevel1.dimensions' => 'Olevel Image is too small. Must be at least 400px wide.',
+                // 'olevel2.dimensions' => 'Olevel Image is too small. Must be at least 400px wide.',
 
             ]);
         // dd($req);
@@ -1394,7 +1414,7 @@ class ApplicantController extends Controller
             // 'lga_name' => 'required|string|max:100',
             'religion' => 'required|string|max:50',
             'address' => 'required|string|max:200',
-            'passport' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:1048|dimensions:min_width=300',
+            // 'passport' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:1048|dimensions:min_width=300',
         ],
             $messages = [
                 'passport.dimensions' => 'Passport Image is too small. Must be at least 400px wide.',
@@ -1674,7 +1694,7 @@ class ApplicantController extends Controller
             // 'lga_name' => 'required|string|max:100',
             'religion' => 'required|string|max:50',
             'address' => 'required|string|max:200',
-            'passport' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:1048|dimensions:min_width=300',
+            // 'passport' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:1048|dimensions:min_width=300',
         ],
             $messages = [
                 'passport.dimensions' => 'Passport Image is too small. Must be at least 400px wide.',
@@ -1758,7 +1778,7 @@ class ApplicantController extends Controller
             DB::table('sponsors')->insert([
                 'user_id' => session('userid'),
                 'sponsor_title' => $req->sponsor,
-                'sponsor_relationship' => $req->namesponsor_relationship,
+                'sponsor_relationship' => $req->sponsor_relationship,
                 'name' => $req->name,
                 'sponsors_phone' => $req->sponsors_phone,
                 'sponsors_email' => $req->sponsors_email,
@@ -2011,7 +2031,7 @@ class ApplicantController extends Controller
             DB::table('sponsors')->insert([
                 'user_id' => session('userid'),
                 'sponsor_title' => $req->sponsor,
-                'sponsor_relationship' => $req->namesponsor_relationship,
+                'sponsor_relationship' => $req->sponsor_relationship,
                 'name' => $req->name,
                 'sponsors_phone' => $req->sponsors_phone,
                 'sponsors_email' => $req->sponsors_email,

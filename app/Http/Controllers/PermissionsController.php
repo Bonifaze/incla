@@ -338,7 +338,7 @@ class PermissionsController extends Controller
         ->orderBy('updated_at','DESC')
        // ->limit(20)
          ->paginate(10);
-    //    ->get();
+       // ->get();
        // dd($article);
        $remita=Remita::with(['staff'])->where('verify_by', '<>', '', 'and')
        ->orderBy('updated_at','DESC')

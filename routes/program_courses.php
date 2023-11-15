@@ -73,3 +73,4 @@ Route::get('/program-courses/results/manage_oldresult', 'ProgramCoursesControlle
 //RESULT BARCHAT
 Route::get('/program-courses/results/resultBarchat', 'ProgramCoursesController@resultBarchat')->name('program_course.resultbarchat');
 Route::get('/program-courses/results/resultBarchatCourse/{program_id}', 'ProgramCoursesController@resultBarchatCourse')->name('program_course.resultbarchatCourse');
+Route::get('/program-courses/results/ProgramResultBarchat', 'ProgramCoursesController@ProgramResultBarchat')->name('program_course.ProgramResultBarchat');

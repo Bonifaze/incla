@@ -116,7 +116,7 @@ active
                         </div>
 
                         <div class="form-group">
-                            <label for="dob">{{ __('Date of Birth') }}:{{ \Carbon\Carbon::parse($applicantsDetails -> dob)->format(' jS \of F Y ') }}</label>
+                            <label for="dob">{{ __('Date of Birth') }}:{{$applicantsDetails -> dob}}</label>
                             <input id="dob" type="date" class="form-control" value="{{$applicantsDetails -> dob}}" name="dob" required>
                         </div>
 

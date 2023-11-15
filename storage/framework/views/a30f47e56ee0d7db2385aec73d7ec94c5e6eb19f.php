@@ -1,3 +1,5 @@
+<?php $__env->startSection('content'); ?>
+
 <div class="bg-slate-900 p-10 min-h-screen">
     <!-- left column -->
     <div class="col_full">
@@ -135,7 +137,7 @@
             </div>
         </div>
     </div>-->
-
+<?php $__env->stopSection(); ?>
 
 <?php $__env->startSection('pagescript'); ?>
     <script src="<?php echo asset('dist/js/bootbox.min.js'); ?>"></script>

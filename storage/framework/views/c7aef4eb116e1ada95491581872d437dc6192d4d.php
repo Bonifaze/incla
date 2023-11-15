@@ -211,6 +211,7 @@
                     aria-haspopup="true" aria-expanded="false" class="nav-link dropdown-toggle">ICT</a>
                 <ul aria-labelledby="dropdownSubMenu1" class="dropdown-menu border-0 shadow">
                     <li><a href="<?php echo e(route('result.search_student')); ?>" class="dropdown-item">Manage Student</a></li>
+                     <li><a href="<?php echo e(route('result.card_info')); ?>" class="dropdown-item">ID Card Info</a></li>
                     <li class="dropdown-submenu dropdown-hover">
                         <a id="dropdownSubMenu2" href="#" role="button" data-toggle="dropdown"
                             aria-haspopup="true" aria-expanded="false" class="dropdown-item dropdown-toggle">Results</a>

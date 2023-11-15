@@ -191,7 +191,7 @@
 
                 </div>  --}}
 
-                @can('ictUpload', 'App\StudentResult')
+                @can('ICTOfficers', 'App\StudentResult')
 
 
                         <di class="card card-primary">
@@ -366,6 +366,7 @@
                 @else
                 @endcan
 
+
 {{--  //CLEARANCE  --}}
                 @can('register', 'App\StudentResult')
                     <div class="card card-primary">
@@ -433,7 +434,24 @@
                 @else
                 @endcan
 
-{{--  //CLEARANCEV END  --}}
+{{--  //CLEARANCE END  --}}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
             </div>

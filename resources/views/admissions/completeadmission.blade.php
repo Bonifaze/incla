@@ -65,9 +65,11 @@
         </a>
     </div>
     <div class="dropdown no-arrow">
-        <a href="/letter" class="btn btn-sm btn-success mt-3 float-right">
+        <!--   <a href="/letter" class="btn btn-sm btn-success mt-3 float-right">
             <i class="fas fa-envelope fa-sm text-white-50 "></i>Print Letter
-        </a>
+        </a> -->
+
+
     </div>
 </div>
                     <!-- Card Body -->

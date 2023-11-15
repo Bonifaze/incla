@@ -2,7 +2,7 @@
 
 
 
-
+@section('content')
 
 <div class="bg-slate-900 min-h-screen text-white p-10">
     <h1 class="app-page-title text-uppercase h5 font-weight-bold p-2 mb-2 shadow-sm text-center text-white border">
@@ -151,3 +151,4 @@
     {!! Form::close() !!}
 
 </div>
+@endsection

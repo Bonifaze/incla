@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\College;
 use programs;
 use App\Remita;
 use App\FeeType;
@@ -81,21 +80,7 @@ class AdminController extends Controller
     ->orderBy('courses.course_code', 'ASC')
     ->get();
 
-
-    $session = new Session();
-    $modify = RegisteredCourse::with(['staff', 'sessions', 'StaffCourse'])
-    ->where('staff_id', '<>', '')
-    ->whereColumn('old_total', '!=', 'total')
-    ->whereHas('staffCourse', function($query) use ($staff) {
-        $query->where('staff_id', $staff->id);
-    })
-    ->orderBy('updated_at', 'DESC')
-    ->get();
-
-
-        // dd($modify);
-
-        return view('results.course_upload', compact('staff_courses','session','modify'));
+        return view('results.course_upload', ['staff_courses' => $staff_courses]);
     // } else {
     //     $loginMsg = '<div class="alert alert-danger alert-dismissible" role="alert"> <button type="button" class="close" data-dismiss="alert"> &times; </button> You dont\'t have access to this task, please see the ICT</div>';
     //    return view('adminutmessions.error', compact('loginMsg'));
@@ -121,13 +106,14 @@ class AdminController extends Controller
     // }
     }
 
-    public function downloadResultCsv($staff_course_id)
+   public function downloadResultCsv($staff_course_id)
     {
         //dd($staff_course_id);
         $course = StaffCourse::where('id', $staff_course_id)->first();
         $fileName = strtolower ($course->course_code)."-".(str_replace("/", "-",$course->course_title)).'sheet.csv';
         return Excel::download(new RegisteredCourseExport(new RegisteredCourse, $course->session_id, $course->course_id, $course->program_id), $fileName);
     }
+
 
     public function uploadResultCsv(Request $request)
     {
@@ -306,9 +292,13 @@ class AdminController extends Controller
         $semester = $this->getCurrentSemester();
 
         switch ($by) {
-            case 'hod':
+            // case 'hod':
+            //     $course_id = $request->course_id;
+            //     StaffCourse::where('course_id', $course_id)->where('program_id', $program_id)->where('session_id', $session)->where('semester_id', $semester)->update(['hod_approval' => 'approved']);
+            //     break;
+             case 'hod':
                 $course_id = $request->course_id;
-                StaffCourse::where('course_id', $course_id)->where('program_id', $program_id)->where('session_id', $session)->where('semester_id', $semester)->update(['hod_approval' => 'approved']);
+                StaffCourse::where('course_id', $course_id)->where('program_id', $program_id)->where('session_id', $session)->update(['hod_approval' => 'approved']);
                 break;
             case 'dean':
                 $level = $request->level;
@@ -341,9 +331,13 @@ class AdminController extends Controller
         $session = $this->getCurrentSession();
 
         switch ($by) {
-            case 'hod':
+            // case 'hod':
+            //     $course_id = $request->course_id;
+            //     StaffCourse::where('course_id', $course_id)->where('program_id', $program_id)->where('session_id', $session)->where('semester_id', $semester)->update(['hod_approval' => 'pending']);
+            //     break;
+                case 'hod':
                 $course_id = $request->course_id;
-                StaffCourse::where('course_id', $course_id)->where('program_id', $program_id)->where('session_id', $session)->where('semester_id', $semester)->update(['hod_approval' => 'pending']);
+                StaffCourse::where('course_id', $course_id)->where('program_id', $program_id)->where('session_id', $session)->update(['hod_approval' => 'pending']);
                 break;
             case 'dean':
                 $level = $request->level;
@@ -948,7 +942,7 @@ class AdminController extends Controller
     //Mail base URL
     function getloginApplicanturl()
     {
-        return 'https://admissions.veritas.edu.ng/students/login';
+        return 'https://admissions.veritas.edu.ng/admissions/login';
     }
 
     // Approval of Applicants
@@ -972,7 +966,7 @@ class AdminController extends Controller
 
                 $mailData = [
                     'title' => 'CONGRATULATION ',
-                    'msg' => 'You have been offerred provisional admission into Veritas Univeristy Abuja kindly click the button below to Login and print your Admission Letter',
+                    'msg' => 'You have been offerred provisional admission into Veritas Univeristy Abuja kindly click the button below to Login',
                     'url' => $this->getloginApplicantUrl() ,
                     // 'url' => $this->getBaseUrl().'/='.base64_encode($req->idcard),
                      'surname'=>$usersEmail ->surname." ".$usersEmail ->first_name." ".$usersEmail ->middle_name,
@@ -1667,17 +1661,21 @@ public function changecourseTransfer(Request $req)
 
             if ($applicant_type == 'UTME') {
                 $program = DB::table('programs')->where('name', $applicantsDetails->course_applied)->first();
-                if ($applicantsDetails->score >= $program->jamb_cutoff) {
-                    return true;
-                }
+                   return true;
+
+                // if ($applicantsDetails->score >= $program->jamb_cutoff) {
+                //     return true;
+                // }
             } elseif ($applicant_type == 'DE') {
-                if ($applicantsDetails->grade >= 4.00) {
-                    return true;
-                }
+                return true;
+                // if ($applicantsDetails->grade >= 4.00) {
+                //     return true;
+                // }
             } elseif ($applicant_type == 'Transfer') {
-                if ($applicantsDetails->cgpa >= 2.50) {
-                    return true;
-                }
+                return true;
+                // if ($applicantsDetails->cgpa >= 2.50) {
+                //     return true;
+                // }
             }
         }
         // return false;
@@ -2263,10 +2261,7 @@ public function viewaddRemitasServiceType(){
     $staff = Auth::guard('staff')->user();
         // if ($this->hasPriviledge("addRemitaServiceType",  $staff->id)) {
             $this->authorize('addremitaservicetype',Session::class);
-            // $colleges = College::with('departments')->orderBy('name','ASC')->pluck('name','id');
-        //    return view('admissions.addRemitaServiceType', compact('colleges'));
            return view('admissions.addRemitaServiceType');
-
         // }
         // else {
         //    $loginMsg = '<div class="alert alert-danger alert-dismissible" role="alert"> <button type="button" class="close" data-dismiss="alert"> &times; </button> You dont\'t have access to this task, please see the ICT</div>';
@@ -2279,8 +2274,6 @@ public function viewaddRemitasServiceType(){
             // $this->authorize('addremitaservicetype',Session::class);
 
             // dd($req);
-            $colleges = College::orderBy('name','ASC')->pluck('name','id');
-
             DB::beginTransaction();
 
             try {

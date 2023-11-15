@@ -44,16 +44,17 @@
     </script>
 </head>
 
+@section('content')
 
-
-
-
-<body class="w-full p-10 min-h-screen bg-slate-900">
+<div class="w-full p-10 min-h-screen bg-slate-900">
 
     <div class="flex items-center justify-between mb-5">
         <h1 class="text-white text-3xl font-semibold uppercase pulse-animation">Spotlight Audit Record of Modified Result</h1>
         <a href="/program-courses/results/resultBarchat" class="bg-emerald-500 hover:bg-emerald-700 text-white font-semibold py-2 px-6 rounded-lg">
             View Chart
+        </a>
+         <a href="/program-courses/results/ProgramResultBarchat" class="bg-emerald-500 hover:bg-emerald-700 text-white font-semibold py-2 px-6 rounded-lg">
+            View Programs
         </a>
     </div>
 
@@ -104,18 +105,6 @@
     <div class="flex justify-center mb-4">
         {{ $modify->links() }}
     </div>
-</body>
-
-
-@section('pagescript')
-<script src="<?php echo asset('dist/js/bootbox.min.js'); ?>"></script>
-<script type="text/javascript">
-    $(function() {
-            // Bootstrap DateTimePicker v4
-            $('#start_date').datetimepicker({
-                format: 'YYYY-MM-DD',
-            });
-        });
-</script>
+</div>
 
 @endsection

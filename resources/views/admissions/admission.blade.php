@@ -40,7 +40,7 @@ active
                             <div class="dropdown no-arrow">
 
                                 {!! $status=="Successful"?'
-                                      <a href="/letter" class="btn btn-success mt-3"> <i class=" fas fa-envelope fa-sm text-white-50 p-2"></i>Print Letter</a>
+                                     <!--   <a href="/letter" class="btn btn-success mt-3"> <i class=" fas fa-envelope fa-sm text-white-50 p-2"></i>Print Letter</a> -->
 
                                 ':'' !!}
 
@@ -53,7 +53,7 @@ active
                             <div class="dropdown no-arrow">
 
                                 @php
-                                $fees = array("UTME"=>80000, "DE"=>80000, "Transfer"=>80000, "PG"=>'50000 or ₦30000');
+                                $fees = array("UTME"=>100000, "DE"=>100000, "Transfer"=>100000, "PG"=>'50000 or ₦30000');
                                 @endphp
                                 @foreach ($admission as $utm )
                                 <input type="hidden" class="form-control" id="js-firstName" placeholder="{{$utm->first_name." ".$utm->middle_name." ".$utm->surname }}" value="{{ $utm->first_name." ".$utm->middle_name." ".$utm->surname }}" name="firstName" readonly>

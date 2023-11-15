@@ -200,7 +200,6 @@
       $tgp_cgpa2 = 0;
       $tcu_cgpa2 = 0;
       foreach ($courses as $course) {
-
           $tgp_cgpa2 += $course->grade_point * $course->course_unit;
           $tcu_cgpa2 += $course->course_unit;
       }

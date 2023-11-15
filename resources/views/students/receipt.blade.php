@@ -83,7 +83,7 @@ if(!session('userid'))
                 <td colspan="2">&nbsp;</td>
             </tr>
             <tr>
-            @if ($receipt->authenticate_by==NULL)
+             {{--   @if ($receipt->authenticate_by==NULL)
                  <td colspan="2" Class="text-danger"><br />
                   PENDING APPROVAL OF RECEIPT FROM BURSARY
                     </td>
@@ -95,13 +95,13 @@ if(!session('userid'))
 
                      <div class="col-lg-6 text-left">
     <p class="text-danger font-weight-bold" style="margin-left:80px"><strong> {{ \Carbon\Carbon::parse($receipt->updated_at)->format('d/m/Y') }}</strong></p>
-    <div style="position: relative; display: block;">
-        <img class="print-image"src="{{ asset('img/bursary.png') }}" width='350' height='200' border='0' style="position: absolute; top: -180px; left: 1px;" />
+    <div style="position: relative; display: block;">  
+        <img class="print-image"src="{{ asset('img/bursary.png') }}" width='350' height='200' border='0' style="position: absolute; top: -180px; left: 1px;" /> --}}
         {{--  <div style="position: absolute; top: 20px; left: 120px; width: 250px; border-bottom: 1px solid #000;"></div>  --}}
     </div>
-     APPROVED  RECEIPT FROM BURSARY
+    {{--    APPROVED  RECEIPT FROM BURSARY 
 </div>
-            @endif
+            @endif  --}}
             </tr>
             <tr>
                 <td colspan="2">&nbsp;</td>

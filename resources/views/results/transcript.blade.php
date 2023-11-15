@@ -1,4 +1,4 @@
-`@extends('layouts.plain')
+@extends('layouts.plain')
 
 @section('pagetitle')
 <!-- CSRF Token -->
@@ -8,7 +8,7 @@
 
 @endsection
 
-@section('conten`t')
+@section('content')
 <body >
 <table width="650" border="0" cellspacing="0" cellpadding="0" style="margin:auto">
   <tr>

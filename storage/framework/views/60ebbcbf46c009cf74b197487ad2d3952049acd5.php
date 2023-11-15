@@ -141,11 +141,25 @@
 
 
                                         </div>
-                                        <div class="col-md-1 form-group">
-                                            <label for="level">Level :</label>
-                                            <input type="text" name="level" id="level-select" class="form-control"
-                                                readonly>
-                                        </div>
+                                        
+                                         <div class="col-md-1 form-group ">
+                                        <label for="level">Level :</label>
+                                        <?php echo e(Form::select(
+                                            'level',
+                                            [
+                                                ' '=> 'Select Level',
+                                                '100' => '100',
+                                                '200' => '200',
+                                                '700' => 'PGD',
+                                                '800' => 'MSc/MBA/MPA',
+                                                '900' => 'PhD',
+                                            ],
+                                            ' ',
+                                            ['class' => 'form-control select2', 'id' => 'level-select'],
+                                        )); ?>
+
+
+                                    </div>
                                     </div>
 
                                     <div class="row">

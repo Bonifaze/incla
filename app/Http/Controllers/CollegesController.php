@@ -2,13 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\Staff;
-use App\College;
 use App\Program;
-use App\Session;
 use App\ProgramCourse;
+use App\Session;
 use Illuminate\Http\Request;
-use App\Models\RegisteredCourse;
+use App\College;
+use App\Staff;
 use Illuminate\Support\Facades\Auth;
 
 class CollegesController extends Controller
@@ -161,19 +160,11 @@ class CollegesController extends Controller
     {
         $this->authorize('programs',College::class);
         $staff = Auth::guard('staff')->user();
-
-            $session = new Session();
-            $modify=RegisteredCourse::with(['staff','sessions'])->where('staff_id', '<>', '', 'and')
-            ->whereColumn('old_total', '!=', 'total')
-            ->orderBy('updated_at','DESC')
-           // ->limit(20)
-            // ->paginate(10);
-           ->get();
         if($staff->isAcademic())
         {
             $college = $staff->workProfile->admin->academic->college;
             $programs = $college->programs;
-            return view('academia.colleges.programs', compact('college', 'staff', 'programs','modify','session'));
+            return view('academia.colleges.programs', compact('college', 'staff', 'programs'));
         }
         else{
             return redirect()->route('staff.home')
@@ -188,18 +179,9 @@ class CollegesController extends Controller
         $id = base64_decode($encode);
         // dd($id);
         $program = Program::findOrFail($id);
-        $session = new Session();
-        $modify=RegisteredCourse::with(['staff','sessions'])
-        ->where('staff_id', '<>', '', 'and')
-        ->where('program_id', $id )
-            ->whereColumn('old_total', '!=', 'total')
-            ->orderBy('updated_at','DESC')
-           // ->limit(20)
-            // ->paginate(10);
-           ->get();
 
 
-        return view('academia.colleges.manage_program',compact('program','modify','session'));
+        return view('academia.colleges.manage_program',compact('program'));
     }
 
     public function programLevelStudents($id,$level)

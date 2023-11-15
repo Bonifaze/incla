@@ -258,9 +258,8 @@ return view('admissions.error', compact('loginMsg'));
             ]);
         $start = $request->start_date; //"2021-10-20";
         $end = $request->end_date; // "2021-10-20";
-        $remitas = Remita::with(['feeType','student','student.academic', 'users'])->where('updated_at','>=',$start)->where('updated_at','<=',$end)
-            ->where('status_code',1)
-            ->orderBy('updated_at','ASC')->get();
+        $remitas = Remita::with(['feeType','student','student.academic'])->where('updated_at','>=',$start)->where('updated_at','<=',$end)
+            ->where('status_code',1)->orderBy('updated_at','DESC')->get();
         $sum = $remitas->sum('amount');
         return view('bursary.remita_list',compact('remitas','sum'));
 

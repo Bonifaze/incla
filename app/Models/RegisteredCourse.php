@@ -4,8 +4,8 @@ namespace App\Models;
 
 use App\Student;
 use App\ProgramCourse;
+use App\Course;
 use App\Staff;
-use App\Program;
 use App\StudentAcademic;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -33,7 +33,6 @@ class RegisteredCourse extends Model implements Auditable
         'grade_status',
         'status',
         'staff_id',
-
 
     ];
 
@@ -88,11 +87,7 @@ class RegisteredCourse extends Model implements Auditable
         return "{$student->first_name} {$student->middle_name} {$student->surname}";
     }
 //end of testing stuff
-public function getPogramNameAttribute()
-{
-    $program = Program::where('id', $this->program_id)->first();
-    return $this->program->name;
-}
+
     public function getStudentMatricAttribute()
     {
         return StudentAcademic::where('student_id', $this->student_id)->first()->mat_no ?? '';
@@ -247,6 +242,7 @@ public function getPogramNameAttribute()
         return $cgpa;
     }
 
+
     public function getResultAttribute()
     {
         // Logic to calculate and return the result attribute based on your model's fields
@@ -269,5 +265,6 @@ public function getPogramNameAttribute()
     {
         return $this->belongsTo('App\Models\StaffCourse', 'staff_id');
     }
+
 
 }

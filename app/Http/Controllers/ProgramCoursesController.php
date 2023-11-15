@@ -7,6 +7,7 @@ use App\Staff;
 use Exception;
 use App\College;
 use App\Program;
+use App\Courses;
 use App\Session;
 use App\ProgramCourse;
 use App\AdminDepartment;
@@ -176,14 +177,14 @@ class ProgramCoursesController extends Controller
 
     public function dropStaffCourse($staff_course_id)
     {
-        StaffCourse::destroy($staff_course_id);
+        // StaffCourse::destroy($staff_course_id);
         return back()->with('msg', 'Course Dropped');
     }
 
 
     public function update(Request $request, $id)
     {
-        $this->authorize('edit',ProgramCourse::class);
+        // $this->authorize('edit',ProgramCourse::class);
         $this->validate($request, [
             'course_id' => 'required|integer',
             'level' => 'required|integer',
@@ -519,6 +520,9 @@ class ProgramCoursesController extends Controller
             'course_id' => $request->course_id,
             'session_id' => $session->currentSession(),
             'program_id' => $request->program_id,
+
+
+
         ]);
 
         try {
@@ -726,16 +730,8 @@ class ProgramCoursesController extends Controller
         //     ->paginate(100);
         $program = Program::orderBy('name','ASC')->get();
         $session = new Session();
-        $modify=RegisteredCourse::with(['staff','sessions'])
-        ->where('staff_id', '<>', '', 'and')
-        ->whereColumn('old_total', '!=', 'total')
-        ->orderBy('updated_at','DESC')
-       // ->limit(20)
-        // ->paginate(10);
-       ->get();
 
-
-        return view('vc.results', compact('programs','session','modify'));
+        return view('vc.results', compact('programs','session'));
     }
     public function VCLevel($level)
     {
@@ -750,16 +746,9 @@ class ProgramCoursesController extends Controller
 
         // ->where('sbc_approval', 'approved')
             ->orderBy('name','ASC')
-            ->paginate(1);
+            ->paginate(100);
         $session = new Session();
-        $modify=RegisteredCourse::with(['staff','sessions'])->where('staff_id', '<>', '', 'and')
-        ->whereColumn('old_total', '!=', 'total')
-        ->where('level',$level)
-        ->orderBy('updated_at','DESC')
-       // ->limit(20)
-        // ->paginate(10);
-       ->get();
-        return view('vc.level_results', compact('programs','session', 'level','modify'));
+        return view('vc.level_results', compact('programs','session', 'level'));
     }
 
     public function SBCLevel($level)
@@ -770,58 +759,9 @@ class ProgramCoursesController extends Controller
             ->paginate(100);
             //dd($programs);
         // $programs = Program::orderBy('name','ASC')->get();
-
         $session = new Session();
-            $modify=RegisteredCourse::with(['staff','sessions'])->where('staff_id', '<>', '', 'and')
-            ->whereColumn('old_total', '!=', 'total')
-            ->where('level',$level)
-            ->orderBy('updated_at','DESC')
-           // ->limit(20)
-            // ->paginate(10);
-           ->get();
-        return view('sbc.level_results', compact('programs','session', 'level','modify'));
+        return view('sbc.level_results', compact('programs','session', 'level'));
     }
-
-    //VIEWCHATBAR FOR PROGRAM
-    public function resultBarchatCourse($program_id)
-    {
-            $programModifications = RegisteredCourse::with(['program', 'courses'])->select('course_id', DB::raw('count(*) as modification_count'))
-            ->where('staff_id', '<>', '', 'and')
-            ->where('program_id', $program_id)
-            ->whereColumn('old_total', '!=', 'total')
-            ->groupBy('course_id')
-            ->orderByDesc('modification_count')
-             ->limit(10) // Limit to the top 5 course with modifications
-            ->get();
-            // dd($programModifications);
-
-
-        return view('rbac.resultbarchatCourse', compact('programModifications'));
-    }
-
-    //VIEW CHAT BAR FOR COURSE
-    public function resultBarchat()
-    {
-            $programModifications = RegisteredCourse::with(['program'])->select('program_id', DB::raw('count(*) as modification_count'))
-            ->where('staff_id', '<>', '', 'and')
-            ->whereColumn('old_total', '!=', 'total')
-            ->groupBy('program_id')
-            ->orderByDesc('modification_count')
-             ->limit(10) // Limit to the top 5 programs with modifications
-            ->get();
-            $programs = Program::with([])
-            ->orderBy('name','ASC')
-            ->paginate(100);
-            $Data2 = $programModifications->map(function($item) {
-                return [
-                    'program_id' => $item->program->id ?? 'Unknown Program',
-                    'modification_count' => $item->modification_count,
-                    // ... other properties you need
-                ];
-            });
-        return view('rbac.resultbarchat', compact('programModifications','programs','Data2'));
-    }
-
 
     public function ICTLevel($level)
     {
@@ -899,6 +839,63 @@ class ProgramCoursesController extends Controller
     //         ->with('success',$resultCount." results approved in ".$pcCount." courses");
 
     // }
+
+
+
+    //VIEWCHATBAR FOR PROGRAM
+    public function resultBarchatCourse($program_id)
+    {
+            $programModifications = RegisteredCourse::with(['program', 'course'])->select('course_id', DB::raw('count(*) as modification_count'))
+            ->where('staff_id', '<>', '', 'and')
+            ->where('program_id', $program_id)
+            ->whereColumn('old_total', '!=', 'total')
+            ->groupBy('course_id')
+            ->orderByDesc('modification_count')
+             ->limit(10) // Limit to the top 5 course with modifications
+            ->get();
+            // dd($programModifications);
+            $modify=RegisteredCourse::with(['staff','sessions'])->where('staff_id', '<>', '', 'and')
+        ->whereColumn('old_total', '!=', 'total')
+        ->where('program_id', $program_id)
+        ->orderBy('updated_at','DESC')
+       // ->limit(20)
+        // ->paginate(10);
+       ->get();
+         $program = Program::findOrFail($program_id);
+
+
+        return view('rbac.resultbarchatcourse', compact('programModifications','modify','program'));
+    }
+
+    //VIEW CHAT BAR FOR COURSE
+    public function resultBarchat()
+    {
+            $programModifications = RegisteredCourse::with(['program'])->select('program_id', DB::raw('count(*) as modification_count'))
+            ->where('staff_id', '<>', '', 'and')
+            ->whereColumn('old_total', '!=', 'total')
+            ->groupBy('program_id')
+            ->orderByDesc('modification_count')
+             ->limit(10) // Limit to the top 5 programs with modifications
+            ->get();
+            $programs = Program::with([])
+            ->orderBy('name','ASC')
+            ->paginate(100);
+        return view('rbac.resultbarchat', compact('programModifications','programs'));
+    }
+    public function ProgramResultBarchat()
+    {
+        // $this->authorize('ICTViewResult',ProgramCourse::class);
+        $programs = Program::with(['department'])
+            ->orderBy('name', 'ASC')
+            // ->paginate(10);
+            ->get();
+            //dd($programs);
+        // $programs = Program::orderBy('name','ASC')->get();
+
+        return view('rbac.programresultsbarchat', compact('programs'));
+    }
+
+
 
 
 } // end class

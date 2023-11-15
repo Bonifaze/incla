@@ -51,30 +51,31 @@ class StudentPaymentsController extends Controller
 
             // ->leftJoin('usersbiodata', 'usersbiodata.user_id', '=', 'users.id')->get();
 
-            $fee_types = FeeType::orderBy('status', 'ASC')
+            $fee_types = FeeType::orderBy('name', 'ASC')
             // ->select('id', 'name', 'amount', 'status', 'category', 'gender_code')
                 ->where('status', 1)
+                ->where('category', 3)
             // ->where('gender_code', $gender_code)
 
-                ->where('category', '>', 2)
-                ->whereHas('college', function ($query) use ($academic) {
-                    $query->where('id', $academic->college()->id);
-                })
+                 ->where('category', '>', 2)
+                 ->whereHas('college', function ($query) use ($academic) {
+                     $query->where('id', $academic->college()->id);
+                 })
                 ->get();
 
-            $fee_typess = fee_types::orderBy('status', 'ASC')
+            $fee_typess = fee_types::orderBy('name', 'ASC')
                 ->where('status', 1)
                 ->where('category', 4)
                 ->get();
 
             return view('students.RemitaPayment', compact('payment'), ['fee_types' => $fee_types, 'fee_typess' => $fee_typess, 'courseReg' => $courseReg]);
         }else{
-            $fee_types = fee_types::orderBy('status', 'ASC')
+            $fee_types = fee_types::orderBy('name', 'ASC')
             ->where('status', 1)
             ->where('category', 5)
             ->get();
 
-            $fee_typess = fee_types::orderBy('status', 'ASC')
+            $fee_typess = fee_types::orderBy('name', 'ASC')
             ->where('status', 1)
             ->where('category', 4)
             ->get();
@@ -87,7 +88,7 @@ class StudentPaymentsController extends Controller
     {
         $courseReg = CourseRegistrations::where('status', 1)->orderBy('id', 'ASC')->paginate(20);
         $payment = Auth::guard('student')->user();
-        $fee_typess = fee_types::orderBy('status', 'ASC')
+        $fee_typess = fee_types::orderBy('name', 'ASC')
             ->where('status', 1)
             ->where('category', 4)
             ->get();
@@ -104,7 +105,8 @@ class StudentPaymentsController extends Controller
             ->where('status_code', '025')
             ->count();
 
-        if ($unpaid_rrr_count >= 5) {
+        // if ($unpaid_rrr_count >= 5) {
+               if ($unpaid_rrr_count >= 5) {
             // The student has already created 5 or more unpaid RRRs, so don't insert a new RRR
             // $json = array('success' => false, 'route' => '/students/remita/feestype', 'msg' => 'You have reached the maximum number of unpaid Generated RRRs, Please pay your outstanding RRR before generating a new RRR. Visit ICT Unit or Bursary .');
             $json = array('success' => false, 'route' => '/students/remita/feestype', 'msg' => 'You have reached the maximum number of unpaid Generated RRRs, Please pay your outstanding RRR before generating a new RRR. Go to View Remita Payment and Delete unpaid RRR .');
@@ -184,62 +186,63 @@ class StudentPaymentsController extends Controller
     {
     $courseReg = CourseRegistrations::where('status', 1)->orderBy('id', 'ASC')->paginate(20);
 
-        // $viewpayment = DB::table('remitas')->where('student_id', Auth::guard('student')->user()->id)
+           // $viewpayment = DB::table('remitas')->where('student_id', Auth::guard('student')->user()->id)
         //     ->orderBy('status_code', 'ASC')->orderBy('created_at', 'DESC')
         //     // ->get();
         //     ->paginate(4);
 
-    $viewpayment = DB::table('remitas')
-    ->where('student_id', Auth::guard('student')->user()->id)
-    ->where(function($query) {
-        // Select remita with status_code 01
-        $query->where('status_code', 1)
-            ->orWhere(function($subquery) {
-                // Select remita with status_code 025 that are not older than 30 days
-                $subquery->where('status_code', 25)
-                    ->where('updated_at', '>=', Carbon::now()->subDays(30)->toDateString());
-            });
-    })
-    ->orderBy('status_code', 'ASC')
-    ->orderBy('created_at', 'DESC')
-    ->paginate(10);
-
+    // $viewpayment = DB::table('remitas')
+    // ->where('student_id', Auth::guard('student')->user()->id)
+    // ->where(function($query) {
+    //     // Select remita with status_code 01
+    //     $query->where('status_code', 1)
+    //         ->orWhere(function($subquery) {
+    //             // Select remita with status_code 025 that are not older than 30 days
+    //             $subquery->where('status_code', 25)
+    //                 ->where('updated_at', '>=', Carbon::now()->subDays(30)->toDateString());
+    //         });
+    // })
+    // ->orderBy('status_code', 'ASC')
+    // ->orderBy('created_at', 'DESC')
+    // ->paginate(5);
+      $viewpayment = DB::table('remitas')->where('student_id', Auth::guard('student')->user()->id)
+            ->orderBy('status_code', 'ASC')->orderBy('created_at', 'DESC')
+          ->paginate(5);
 
         $verifyResponse = $this->verifyRRRALL();
 
-        $billing = $this->billstudent();
-
+     //   $billing = $this->billstudent();
 
         // Retrieve the last data for the user
-        $lastPayment = DB::table('student_billings')
-        ->where('student_id', Auth::guard('student')->user()->id)
-        ->where('status', 1)
-        ->where('session_id', $this->getcurrentsession())
-            ->orderBy('created_at', 'desc')
-            ->first();
-            $allPayment = DB::table('student_billings')
-            ->where('student_id', Auth::guard('student')->user()->id)
-            ->where('status', 1)
-            ->where('session_id', $this->getcurrentsession())
-            ->pluck('amount_paid');
-            $allDebt = DB::table('student_billings')
-            ->where('student_id', Auth::guard('student')->user()->id)
-            ->where('status', 1)
-            ->where('session_id', $this->getcurrentsession())
-            ->pluck('debt');
+        // $lastPayment = DB::table('student_billings')
+        // ->where('student_id', Auth::guard('student')->user()->id)
+        // ->where('status', 1)
+        // ->where('session_id', $this->getcurrentsession())
+        //     ->orderBy('created_at', 'desc')
+        //     ->first();
+        //     $allPayment = DB::table('student_billings')
+        //     ->where('student_id', Auth::guard('student')->user()->id)
+        //     ->where('status', 1)
+        //     ->where('session_id', $this->getcurrentsession())
+        //     ->pluck('amount_paid');
 
-        $totalAmountPaid = $allPayment->sum();
-        $debt = $allDebt->sum()-$totalAmountPaid;
-        $amountPaid = $lastPayment->amount_paid ?? 0;
+        // $totalAmountPaid = $allPayment->sum();
+        // $amountPaid = $lastPayment->amount_paid ?? 0;
         // $debt = $lastPayment->debt ?? 0;
+        // $balance = $lastPayment ? max(0, $lastPayment->debt) : '<i class="fas fa-spinner fa-spin"></i>';
+
+        // $totalAmountPaid = 0;
+        // $amountPaid = 0;
+        // $debt = 0
 
 
-        $balance = $debt !== null ? max(0, $debt) : '<i class="fas fa-spinner fa-spin"></i>';
+        // $balance = 0;
+        // return view('students.paymentview', compact('viewpayment', 'verifyResponse', 'courseReg', 'totalAmountPaid', 'balance' ));
 
-        return view('students.paymentview', compact('viewpayment', 'verifyResponse', 'courseReg', 'totalAmountPaid', 'balance' ));
+        return view('students.paymentview', compact('viewpayment', 'verifyResponse', 'courseReg',  ));
     }
 
-    public function billstudentUNUSED()
+    public function billstudent()
     {
         $remitas = DB::table('remitas')->where('student_id', Auth::guard('student')->user()->id)
             ->where('status_code', '01')
@@ -342,120 +345,6 @@ class StudentPaymentsController extends Controller
 
     }
 
-    public function billstudent()
-{
-    $remitas = DB::table('remitas')
-        ->where('student_id', Auth::guard('student')->user()->id)
-        ->where('status_code', '01')
-        ->get();
-
-    if ($remitas->isNotEmpty()) {
-        foreach ($remitas as $remita) {
-            $feeType = FeeType::where('provider_code', $remita->service_type_id)->first();
-
-            if ($feeType) {
-                $totalAmount = $feeType->amount;
-                $paidPercentage = $feeType->percentage;
-                    // DD($paidPercentage);
-                if ($paidPercentage >= 100) {
-                    // 100% paid, insert into student_billings
-                    $billingData = [
-                        'student_id' => $remita->student_id,
-                        'rrr' => $remita->rrr,
-                        'amount_paid' => $remita->amount,
-                        'debt' => 0,
-                        'session_id' => $this->getcurrentsession()
-                    ];
-                    // dd($totalAmount);
-
-                    $this->insertOrUpdateBilling($billingData);
-                } elseif ($paidPercentage >= 75) {
-                    $totalAmount =($feeType->amount/0.75);
-                    // 75% paid, calculate balance and insert/update into student_billings
-                    $balance = ($totalAmount - $remita->amount);
-                    //  dd($balance);
-                    $billingData = [
-                        'student_id' => $remita->student_id,
-                        'rrr' => $remita->rrr,
-                        'amount_paid' => $remita->amount,
-                        'debt' => $balance,
-                        'session_id' => $this->getcurrentsession()
-                    ];
-                        //  dd($totalAmount);
-
-                    $this->insertOrUpdateBilling($billingData);
-                } elseif ($paidPercentage >= 50) {
-                    $totalAmount =($feeType->amount/0.50);
-
-                    // 50% paid, calculate balance and insert/update into student_billings
-                    $balance = ($totalAmount - $remita->amount);
-                    // dd($balance);
-                    $billingData = [
-                        'student_id' => $remita->student_id,
-                        'rrr' => $remita->rrr,
-                        'amount_paid' => $remita->amount,
-                        'debt' => $balance,
-                        'session_id' => $this->getcurrentsession()
-                    ];
-
-                    $this->insertOrUpdateBilling($billingData);
-                    // similar logic as above
-                } elseif ($paidPercentage >= 25) {
-                    $totalAmount =($feeType->amount/0.25);
-                    // 25% paid, calculate balance and insert/update into student_billings
-                    $balance = ($totalAmount - $remita->amount);
-
-                    // $balance = ($totalAmount * 100 - $remita->amount) / 100;
-                    $billingData = [
-                        'student_id' => $remita->student_id,
-                        'rrr' => $remita->rrr,
-                        'amount_paid' => $remita->amount,
-                        'debt' => $balance,
-                        'session_id' => $this->getcurrentsession()
-                    ];
-                    //  dd($billingData);
-
-                    $this->insertOrUpdateBilling($billingData);
-                    // similar logic as above
-                }
-            }
-        }
-    }
-
-    // Redirect logic can go here if needed
-
-    // ...
-
-}
-
-private function insertOrUpdateBilling($data)
-{
-    try {
-        $existingRecord = DB::table('student_billings')
-            ->where('rrr', $data['rrr'])
-            ->where('student_id', $data['student_id'])
-            ->exists();
-
-        if (!$existingRecord) {
-            DB::table('student_billings')->insert($data);
-        } else {
-            DB::table('student_billings')
-                ->where('rrr', $data['rrr'])
-                ->where('student_id', $data['student_id'])
-                ->update([
-                    'amount_paid' => $data['amount_paid'],
-                    'debt' => $data['debt'],
-                    'session_id' => $data['session_id']
-                ]);
-        }
-            // DD($existingRecord);
-    } catch (QueryException $e) {
-        // Handle query exception if necessary
-        // Log or redirect with an error message
-    }
-}
-
-
     public function verifyRRRALL()
     {
         $remitas = Remitas::where('student_id', Auth::guard('student')->user()->id)
@@ -500,7 +389,6 @@ private function insertOrUpdateBilling($data)
             ->select('remitas.*', 'students.surname', 'students.first_name', 'students.middle_name', 'students.gender', 'students.email', 'students.phone', )
         // ->leftjoin('usersbiodata', 'usersbiodata.user_id', '=', 'users.id')
             ->first();
-
         return view('students.receipt', compact('receipt'));
     }
 

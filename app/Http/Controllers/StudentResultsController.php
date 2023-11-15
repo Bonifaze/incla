@@ -10,10 +10,10 @@ use App\ProgramCourse;
 use App\StudentResult;
 use App\StudentAcademic;
 use App\Models\GradeSetting;
+use App\Models\RemitasVerification;
 use Illuminate\Http\Request;
 use App\Models\RegisteredCourse;
 use Illuminate\Support\Facades\DB;
-use App\Models\RemitasVerification;
 use Illuminate\Support\Facades\Auth;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Models\SemesterRemarkCourses;
@@ -82,7 +82,6 @@ class StudentResultsController extends Controller
         $registered_courses = RegisteredCourse::where('student_id', $request->student_id)
             ->where('session', $request->session_id)
             ->where('semester', $request->semester)
-            // ->where('status', 'published')
             ->get();
         return view('results.modify', compact('registered_courses', 'session', 'semester', 'student'));
     }
@@ -282,17 +281,10 @@ class StudentResultsController extends Controller
     {
         $this->authorize('examOfficer', StudentResult::class);
         $staff = Auth::guard('staff')->user();
-        $session = new Session();
-        $modify=RegisteredCourse::with(['staff','sessions'])->where('staff_id', '<>', '', 'and')
-        ->whereColumn('old_total', '!=', 'total')
-        ->orderBy('updated_at','DESC')
-       // ->limit(20)
-        // ->paginate(10);
-       ->get();
         if ($staff->isAcademic()) {
             $programs = $staff->workProfile->admin->academic->programs->pluck('name', 'id');
             $sessions = Session::where('status', 0)->orderBy('id', 'DESC')->pluck('name', 'id');
-            return view('results.program-search-student', compact('programs','sessions','modify','session'));
+            return view('results.program-search-student', compact('programs','sessions'));
         } else {
             return redirect()->route('staff.home')
                 ->with('error', 'Academic Department not found');
@@ -326,8 +318,9 @@ class StudentResultsController extends Controller
             }
 
             // $sessions = Session::where('id','>',0)->where('id','<',14)->where('status','<',2)->orderBy('id','DESC')->pluck('name','id');
-           // $sessions = Session::where('status', 0)->orderBy('id', 'DESC')->pluck('name', 'id');
-             $sessions = Session::orderBy('id', 'DESC')->pluck('name', 'id');
+            $sessions = Session::where('status', 1)->orderBy('id', 'DESC')->pluck('name', 'id');
+           //  $sessions = Session::orderBy('id', 'DESC')->pluck('name', 'id');
+            // $sessions = Session::orderBy('id', 'DESC')->pluck('name', 'id');
             return view('results.manage-student', compact('student', 'sessions', 'academic'));
         } else {
             $programs = Program::orderBy('name', 'ASC')->pluck('name', 'id');
@@ -685,8 +678,7 @@ class StudentResultsController extends Controller
         return view('results.course_form',compact('student','session','academic','results' ,'results2'));
     }
     //02-05-2023
-
-    public function pClearanceForm(Request $request){
+ public function pClearanceForm(Request $request){
         $student = Student::findOrFail($request->student_id);
         $academic = $student->academic;
         $session = DB::table('sessions')->where('id', $request->session_id)->select('sessions.name', 'sessions.semester')->first();
@@ -695,6 +687,7 @@ class StudentResultsController extends Controller
         $college_id = $student->academic->program->department->college_id;
         return view('results.studentsPClearance', compact('student', 'academic', 'session','rv','semester' ));
     }
+
 
     // SPOTLIGHT CONTROLLER FIX
 
@@ -740,7 +733,7 @@ class StudentResultsController extends Controller
             // $sessions = Session::where('id','>',0)->where('id','<',14)->where('status','<',2)->orderBy('id','DESC')->pluck('name','id');
            // $sessions = Session::where('status', 0)->orderBy('id', 'DESC')->pluck('name', 'id');
              $sessions = Session::orderBy('id', 'DESC')->pluck('name', 'id');
-            return view('results.spotlight.manage-studentSpotlight', compact('student', 'sessions', 'academic'));
+            return view('results.Spotlight.manage-studentSpotlight', compact('student', 'sessions', 'academic'));
         } else {
             $programs = Program::orderBy('name', 'ASC')->pluck('name', 'id');
             return redirect()->route('result.programSearchStudentSpotlight')
@@ -752,7 +745,7 @@ class StudentResultsController extends Controller
     public function modifyResultSpotlight(Request $request)
     {
         $student = Student::findOrFail($request->student_id);
-        // $this->authorize('ictUpload', StudentResult::class);
+         $this->authorize('ictUpload', StudentResult::class);
         $session = Session::findOrFail($request->session_id);
         $semester = $request->semester;
         $request->validate([
@@ -768,5 +761,6 @@ class StudentResultsController extends Controller
             ->get();
         return view('results.Spotlight.modifySpotlight', compact('registered_courses', 'session', 'semester', 'student'));
     }
+
 
 } // end class

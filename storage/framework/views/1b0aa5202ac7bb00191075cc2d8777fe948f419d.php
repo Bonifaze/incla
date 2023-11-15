@@ -42,16 +42,17 @@
     </script>
 </head>
 
+<?php $__env->startSection('content'); ?>
 
-
-
-
-<body class="w-full p-10 min-h-screen bg-slate-900">
+<div class="w-full p-10 min-h-screen bg-slate-900">
 
     <div class="flex items-center justify-between mb-5">
         <h1 class="text-white text-3xl font-semibold uppercase pulse-animation">Spotlight Audit Record of Modified Result</h1>
         <a href="/program-courses/results/resultBarchat" class="bg-emerald-500 hover:bg-emerald-700 text-white font-semibold py-2 px-6 rounded-lg">
             View Chart
+        </a>
+         <a href="/program-courses/results/ProgramResultBarchat" class="bg-emerald-500 hover:bg-emerald-700 text-white font-semibold py-2 px-6 rounded-lg">
+            View Program
         </a>
     </div>
 
@@ -103,19 +104,8 @@
         <?php echo e($modify->links()); ?>
 
     </div>
-</body>
-
-
-<?php $__env->startSection('pagescript'); ?>
-<script src="<?php echo asset('dist/js/bootbox.min.js'); ?>"></script>
-<script type="text/javascript">
-    $(function() {
-            // Bootstrap DateTimePicker v4
-            $('#start_date').datetimepicker({
-                format: 'YYYY-MM-DD',
-            });
-        });
-</script>
+</div>
 
 <?php $__env->stopSection(); ?>
+
 <?php echo $__env->make('layouts.mini2', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH /Users/lifeofrence/Documents/laraproject/resources/views//rbac/auditviewall.blade.php ENDPATH**/ ?>

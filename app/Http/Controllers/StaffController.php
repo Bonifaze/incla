@@ -13,18 +13,17 @@ use App\StaffContact;
 use App\ProgramCourse;
 use App\StaffPosition;
 use App\EmploymentType;
-use App\Models\Remitas;
 use App\AdminDepartment;
 use App\StaffWorkProfile;
 use Illuminate\Http\Request;
-use App\Models\BursarySession;
 use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\DB;
-use App\Models\RemitasVerification;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
 use App\Models\StaffRoleAssignmentLog;
+use App\Models\BursarySession;
+use App\Models\RemitasVerification;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Storage;
 use Intervention\Image\ImageManagerStatic as Image;
@@ -309,7 +308,7 @@ class StaffController extends Controller
                 'email' => $request->username,
                 'name_no'=>'Staff Number : ',
                 'identity_no'=> $request->staff_no,
-                'password' => 'welcome@123',
+                'password' => 'welcome@1',
                 'note'=>''
 
             ];
@@ -478,6 +477,10 @@ class StaffController extends Controller
         if ($request->get('password') == 'welcome@1') {
             // The password should not be default
             return redirect()->back()->with("error","Your new password should not be the default password. Please try again.");
+        }
+        if ($request->get('password') == 'welcome@123') {
+            // The password should not be default
+            return redirect()->back()->with("error","Your new password should not be the Reset password. Please try again.");
         }
 
         //Change Password
@@ -658,13 +661,13 @@ public function approvePaymentss()
     //     ->paginate(10);
     $paidRRRs = Remita::with(['feeType','student','student.academic','users'])
         ->where('status_code',1)
-        ->where('authenticate', 'not_confrim')
-
-        ->where('updated_at', '>=', '2022-07-19 13:07:36') // Filter records updated on or after July 19, 2022
+        ->where('authenticate', 'not_confirm')
+         ->where('updated_at', '>=', '2022-08-1 13:07:36') // Filter records updated on or after July 19, 2022
         ->orderBy('updated_at','DESC')
-        ->paginate(10);
+        ->paginate(100);
     return view('staff.paymentlists', compact('staff', 'paidRRRs','sessionBus'));
 }
+
 public function approvePayments(Request $request)
 {
     $staff = Auth::guard('staff')->user();
@@ -672,30 +675,32 @@ public function approvePayments(Request $request)
 
     $query = Remita::with(['feeType', 'student', 'student.academic', 'users'])
     ->where('status_code', 1)
-    ->where('authenticate', 'not_confrim')
+    ->where('authenticate', 'not_confirm')
     ->orderBy('remitas.updated_at', 'DESC')
     ->join('students', 'students.id', '=', 'remitas.student_id') // Assuming 'student_id' is the common key
     ->leftJoin('users', 'users.id', '=', 'remitas.user_id');
+
 // Check if a search query is provided
 if ($request->has('search')) {
     $search = $request->input('search');
     $query->where(function ($q) use ($search) {
         $q->where('students.first_name', 'like', "%$search%") // Use 'students.first_name' to refer to the column in the 'students' table
             ->orWhere('students.surname', 'like', "%$search%")
-            ->orwhere('users.first_name', 'like', "%$search%") // Use 'students.first_name' to refer to the column in the 'students' table
-            ->orWhere('users.surname', 'like', "%$search%")
             ->orWhere('students.middle_name', 'like', "%$search%")
+            ->orwhere('users.first_name', 'like', "%$search%") // Use 'users.first_name' to refer to the column in the 'students' table
+            ->orWhere('users.surname', 'like', "%$search%")
             ->orWhere('remitas.amount', 'like', "$search")
             ->orWhere('remitas.transaction_date', 'like', "%$search%")
             ->orWhere('remitas.rrr', 'like', "$search");
     });
 }
 
-$paidRRRs = $query->paginate(10);
+$paidRRRs = $query->paginate(100);
 
 return view('staff.paymentlists', compact('staff', 'paidRRRs', 'sessionBus'));
 
 }
+
 
 public function remitasVerification(Request $request){
         // dd($request);
