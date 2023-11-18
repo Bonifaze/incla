@@ -31,6 +31,7 @@ use App\Computations\ResultComputation;
 use App\Exports\RegisteredCourseExport;
 // use App\Policies\AdmissionPolicy;
 use App\Imports\RegisteredCourseImport;
+use App\StudentAcademic;
 use Illuminate\Database\QueryException;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
@@ -132,11 +133,28 @@ class AdminController extends Controller
         $ca3_scores = $request->ca3_scores;
         $exam_scores = $request->exam_scores;
 
+        if (!is_array($reg_ids))
+        {
+            return back()->withErrors(['error' => 'Data received is invalid']);
+        }
+
+        $course_ids = RegisteredCourse::whereIn('id', $reg_ids)->pluck('course_id')->toArray();
+        $student_ids = RegisteredCourse::whereIn('id', $reg_ids)->pluck('student_id')->toArray();
+        $courses = Course::whereIn('id', $course_ids)->get();
+        $registered_courses = RegisteredCourse::whereIn('id', $reg_ids)->get();
+        $student_academics = StudentAcademic::whereIn('student_id', $student_ids)->get();
+        $results = [];
         for ($i=0; $i < count($reg_ids); $i++) {
             $total_score = $ca1_scores[$i] + $ca2_scores[$i] + $ca3_scores[$i] + $exam_scores[$i];
-            $grade_setting = GradeSetting::where('min_score', '<=', $total_score)->where('max_score', '>=', $total_score)->first();
+            $course_reg = $registered_courses->where('id', $reg_ids[$i])->first();
+            $course = $courses->where('id', $course_reg?->course_id)->first();
+            $student_aca = $student_academics->where('student_id', $course_reg?->student_id);
+            $grade_setting = GradeSetting::where('min_score', '<=', $total_score)->where('max_score', '>=', $total_score)->where(function ($q) use ($course) {
+                $q->where('program_id', $course->program_id)
+                    ->orWhereNull('program_id');
+            })->first();
             $grade_id = $grade_setting->id;
-            $course_reg = RegisteredCourse::find($reg_ids[$i]);
+
             if ($ca1_scores[$i] > 10 || $ca2_scores[$i] > 10 || $ca3_scores[$i] > 10)
             {
                 return redirect()->back()->withErrors(['error' => 'CA score cannot be more than 30']);
@@ -145,37 +163,60 @@ class AdminController extends Controller
             {
                 return redirect()->back()->withErrors(['error' => 'Exam score cannot be more than 70']);
             }
-            if ($grade_setting->status == 'fail')
+
+            if (!is_null($course_reg))
             {
+                if ($grade_setting->status == 'fail')
+                {
 
-                SemesterRemarkCourses::create([
-                    'student_id' => $course_reg->student_id,
-                    'course_id' => $course_reg->course_id,
-                    // Add more fields and their values as needed
-                ]);
+                    SemesterRemarkCourses::create([
+                        'student_id' => $course_reg?->student_id,
+                        'course_id' => $course_reg?->course_id,
+                        // Add more fields and their values as needed
+                    ]);
 
-            }else{
-                SemesterRemarkCourses::where('student_id', $course_reg->student_id)
-                ->where('course_id', $course_reg->course_id)
-                ->delete();
+                }else{
+                    SemesterRemarkCourses::where('student_id', $course_reg->student_id)
+                    ->where('course_id', $course_reg->course_id)
+                    ->delete();
+                }
+
+                $results[] =
+                [
+                    'result_id' => $this->removeSpecialChars($student_aca->mat_no).$course_reg->session.$course_reg->semester.$course_reg->course_id,
+                    'ca1_score' => $ca1_scores[$i],
+                    'ca2_score' => $ca2_scores[$i],
+                    'ca3_score' => $ca3_scores[$i],
+                    'exam_score' => $exam_scores[$i],
+                    'total' => $total_score,
+                    'grade_id' => $grade_id,
+                    'grade_status' => $grade_setting->status,
+                    'status' => 'unpublished'
+                ];
+
+                /*RegisteredCourse::where('id', $reg_ids[$i])->update([
+                    'ca1_score' => $ca1_scores[$i],
+                    'ca2_score' => $ca2_scores[$i],
+                    'ca3_score' => $ca3_scores[$i],
+                    'exam_score' => $exam_scores[$i],
+                    'total' => $total_score,
+                    'grade_id' => $grade_id,
+                    'grade_status' => $grade_setting->status,
+                    'status' => 'unpublished'
+                ]);*/
             }
-
-            RegisteredCourse::where('id', $reg_ids[$i])->update([
-                'ca1_score' => $ca1_scores[$i],
-                'ca2_score' => $ca2_scores[$i],
-                'ca3_score' => $ca3_scores[$i],
-                'exam_score' => $exam_scores[$i],
-                'total' => $total_score,
-                'grade_id' => $grade_id,
-                'grade_status' => $grade_setting->status,
-                'status' => 'unpublished'
-            ]);
         }
+        RegisteredCourse::upsert($results, 'result_id', ['ca1_score','ca2_score','ca3_score','exam_score','total', 'grade_id', 'grade_status', 'status']);
         StaffCourse::where('id', $request->course_id)->update([
             'upload_status' => 'uploaded',
             'hod_approval' => 'pending'
         ]);
         return redirect()->back()->with('success', 'Scores uploaded successfully');
+    }
+
+    protected function removeSpecialChars($str)
+    {
+        return str_replace(['/'], '', $str);
     }
 
     public function approveScores()
