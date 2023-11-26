@@ -100,13 +100,19 @@ class StudentResultsController extends Controller
         $old_total = $request->old_total;
         // dd($request->oldtotal);
 
+        $registered_courses = RegisteredCourse::whereIn('id', $reg_ids)->get();
+
         for ($i = 0; $i < count($reg_ids); $i++) {
             // $total_score = $ca1_scores[$i] + $ca2_scores[$i] + $ca3_scores[$i] + $exam_scores[$i];
             $total_score = $total[$i];
             $old_total_score = $old_total[$i];
-            $grade_setting = GradeSetting::where('min_score', '<=', $total_score)->where('max_score', '>=', $total_score)->first();
+            $course_reg = $registered_courses->where('id', $reg_ids[$i])->first();
+            $course = Course::find($course_reg->course_id);
+            $grade_setting = GradeSetting::where('min_score', '<=', $total_score)->where('max_score', '>=', $total_score)->where(function ($q) use ($course) {
+                $q->where('program_id', $course->program_id)
+                    ->orWhereNull('program_id');
+            })->first();
             $grade_id = $grade_setting->id;
-            $course_reg = RegisteredCourse::find($reg_ids[$i]);
             // if ($ca1_scores[$i] > 100 || $ca2_scores[$i] > 100 || $ca3_scores[$i] > 100)
             // {
             //     return redirect()->back()->withErrors(['error' => 'CA score cannot be more than 30']);

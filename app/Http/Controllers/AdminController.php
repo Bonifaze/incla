@@ -148,7 +148,7 @@ class AdminController extends Controller
             $total_score = $ca1_scores[$i] + $ca2_scores[$i] + $ca3_scores[$i] + $exam_scores[$i];
             $course_reg = $registered_courses->where('id', $reg_ids[$i])->first();
             $course = $courses->where('id', $course_reg?->course_id)->first();
-            $student_aca = $student_academics->where('student_id', $course_reg?->student_id);
+            $student_aca = $student_academics->where('student_id', $course_reg?->student_id)->first();
             $grade_setting = GradeSetting::where('min_score', '<=', $total_score)->where('max_score', '>=', $total_score)->where(function ($q) use ($course) {
                 $q->where('program_id', $course->program_id)
                     ->orWhereNull('program_id');
