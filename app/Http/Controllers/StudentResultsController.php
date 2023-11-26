@@ -108,11 +108,23 @@ class StudentResultsController extends Controller
             $old_total_score = $old_total[$i];
             $course_reg = $registered_courses->where('id', $reg_ids[$i])->first();
             $course = Course::find($course_reg->course_id);
-            $grade_setting = GradeSetting::where('min_score', '<=', $total_score)->where('max_score', '>=', $total_score)->where(function ($q) use ($course) {
-                $q->where('program_id', $course->program_id)
-                    ->orWhereNull('program_id');
-            })->first();
-            $grade_id = $grade_setting->id;
+            $grade_setting = GradeSetting::where('min_score', '<=', $total_score)->where('max_score', '>=', $total_score)->where('program_id', $course->program_id)->first();
+            if (!is_null($grade_setting))
+            {
+                if ($course_reg->program_id == $grade_setting->program_id)
+                {
+                    $grade_id = $grade_setting->id;
+                }
+                else 
+                {
+                    $grade_setting = GradeSetting::where('min_score', '<=', $total_score)->where('max_score', '>=', $total_score)->first();
+                    $grade_id = $grade_setting->id;
+                }
+            }
+            else{
+                $grade_setting = GradeSetting::where('min_score', '<=', $total_score)->where('max_score', '>=', $total_score)->first();
+                $grade_id = $grade_setting->id;
+            }
             // if ($ca1_scores[$i] > 100 || $ca2_scores[$i] > 100 || $ca3_scores[$i] > 100)
             // {
             //     return redirect()->back()->withErrors(['error' => 'CA score cannot be more than 30']);
