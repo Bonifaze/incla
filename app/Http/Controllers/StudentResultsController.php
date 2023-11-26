@@ -117,12 +117,12 @@ class StudentResultsController extends Controller
                 }
                 else 
                 {
-                    $grade_setting = GradeSetting::where('min_score', '<=', $total_score)->where('max_score', '>=', $total_score)->first();
+                    $grade_setting = GradeSetting::where('min_score', '<=', $total_score)->where('max_score', '>=', $total_score)->whereNull('program_id')->first();
                     $grade_id = $grade_setting->id;
                 }
             }
             else{
-                $grade_setting = GradeSetting::where('min_score', '<=', $total_score)->where('max_score', '>=', $total_score)->first();
+                $grade_setting = GradeSetting::where('min_score', '<=', $total_score)->where('max_score', '>=', $total_score)->whereNull('program_id')->first();
                 $grade_id = $grade_setting->id;
             }
             // if ($ca1_scores[$i] > 100 || $ca2_scores[$i] > 100 || $ca3_scores[$i] > 100)

@@ -25,12 +25,12 @@ class RegisteredCourseImport implements ToModel, WithStartRow
             }
             else 
             {
-                $grade = GradeSetting::where('min_score', '<=', $total)->where('max_score', '>=', $total)->first();
+                $grade = GradeSetting::where('min_score', '<=', $total)->where('max_score', '>=', $total)->whereNull('program_id')->first();
                 $grade_id = $grade->id;
             }
         }
         else{
-            $grade = GradeSetting::where('min_score', '<=', $total)->where('max_score', '>=', $total)->first();
+            $grade = GradeSetting::where('min_score', '<=', $total)->where('max_score', '>=', $total)->whereNull('program_id')->first();
             $grade_id = $grade->id;
         }
         StaffCourse::where('course_id', $course_reg->course_id)->where('program_id', $course_reg->program_id)

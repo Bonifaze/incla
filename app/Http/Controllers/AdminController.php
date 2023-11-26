@@ -160,12 +160,12 @@ class AdminController extends Controller
                 }
                 else 
                 {
-                    $grade_setting = $grades->where('min_score', '<=', $total_score)->where('max_score', '>=', $total_score)->first();
+                    $grade_setting = $grades->where('min_score', '<=', $total_score)->where('max_score', '>=', $total_score)->where('program_id', null)->first();
                     $grade_id = $grade_setting->id;
                 }
             }
             else{
-                $grade_setting = $grades->where('min_score', '<=', $total_score)->where('max_score', '>=', $total_score)->first();
+                $grade_setting = $grades->where('min_score', '<=', $total_score)->where('max_score', '>=', $total_score)->where('program_id', null)->first();
                 $grade_id = $grade_setting->id;
             }
 
