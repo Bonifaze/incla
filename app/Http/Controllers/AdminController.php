@@ -197,7 +197,7 @@ class AdminController extends Controller
 
                 $results[] =
                 [
-                    'result_id' => $this->removeSpecialChars($student_aca->mat_no).$course_reg->session.$course_reg->semester.$course_reg->course_id,
+                    'id' => $course_reg->id,
                     'program_id' => $course_reg->program_id,
                     'session' => $course_reg->session,
                     'level' => $course_reg->level,
@@ -226,7 +226,7 @@ class AdminController extends Controller
                 ]);*/
             }
         }
-        RegisteredCourse::upsert($results, 'result_id', ['ca1_score','ca2_score','ca3_score','exam_score','total', 'grade_id', 'grade_status', 'status']);
+        RegisteredCourse::upsert($results, 'id', ['ca1_score','ca2_score','ca3_score','exam_score','total', 'grade_id', 'grade_status', 'status']);
         StaffCourse::where('id', $request->course_id)->update([
             'upload_status' => 'uploaded',
             'hod_approval' => 'pending'
