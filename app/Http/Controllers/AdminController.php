@@ -184,6 +184,12 @@ class AdminController extends Controller
                 $results[] =
                 [
                     'result_id' => $this->removeSpecialChars($student_aca->mat_no).$course_reg->session.$course_reg->semester.$course_reg->course_id,
+                    'program_id' => $course_reg->program_id,
+                    'session' => $course_reg->session,
+                    'level' => $course_reg->level,
+                    'semester' => $course_reg->semester,
+                    'student_id' => $course_reg->student_id,
+                    'course_id' => $course_reg->course_id,
                     'ca1_score' => $ca1_scores[$i],
                     'ca2_score' => $ca2_scores[$i],
                     'ca3_score' => $ca3_scores[$i],
