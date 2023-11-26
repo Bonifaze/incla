@@ -143,17 +143,31 @@ class AdminController extends Controller
         $courses = Course::whereIn('id', $course_ids)->get();
         $registered_courses = RegisteredCourse::whereIn('id', $reg_ids)->get();
         $student_academics = StudentAcademic::whereIn('student_id', $student_ids)->get();
+        $grades = GradeSetting::all();
         $results = [];
         for ($i=0; $i < count($reg_ids); $i++) {
             $total_score = $ca1_scores[$i] + $ca2_scores[$i] + $ca3_scores[$i] + $exam_scores[$i];
             $course_reg = $registered_courses->where('id', $reg_ids[$i])->first();
             $course = $courses->where('id', $course_reg?->course_id)->first();
             $student_aca = $student_academics->where('student_id', $course_reg?->student_id)->first();
-            $grade_setting = GradeSetting::where('min_score', '<=', $total_score)->where('max_score', '>=', $total_score)->where(function ($q) use ($course) {
-                $q->where('program_id', $course->program_id)
-                    ->orWhereNull('program_id');
-            })->first();
-            $grade_id = $grade_setting->id;
+            $grade_setting = $grades->where('program_id', $course->program_id)->where('min_score', '<=', $total_score)->where('max_score', '>=', $total_score)->first();
+
+            if (!is_null($grade_setting))
+            {
+                if ($course_reg->program_id == $grade_setting->program_id)
+                {
+                    $grade_id = $grade_setting->id;
+                }
+                else 
+                {
+                    $grade_setting = $grades->where('min_score', '<=', $total_score)->where('max_score', '>=', $total_score)->first();
+                    $grade_id = $grade_setting->id;
+                }
+            }
+            else{
+                $grade_setting = $grades->where('min_score', '<=', $total_score)->where('max_score', '>=', $total_score)->first();
+                $grade_id = $grade_setting->id;
+            }
 
             if ($ca1_scores[$i] > 10 || $ca2_scores[$i] > 10 || $ca3_scores[$i] > 10)
             {
