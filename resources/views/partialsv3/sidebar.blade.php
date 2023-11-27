@@ -117,15 +117,16 @@
                     </a>
 
                     <ul class="nav nav-treeview">
-
+ @can('ICTOfficers', 'App\StudentResult')
                         <li class="nav-item">
-                            <a href="{{ route('course.create') }}" class="nav-link @yield('exam-remark')">
+                              <a href="{{ route('course.create') }}" class="nav-link @yield('exam-remark')">
                                 <i class="fa fa-plus nav-icon"></i>
-                                <p>Create Course</p>
-                            </a>
+                               <p>Create Course</p> 
+                            </a> 
                         </li>
-
-
+@else
+<li></li>
+  @endcan
                         <li class="nav-item">
                             <a href="{{ route('program_course.create') }}" class="nav-link @yield('exam-remark')">
                                 <i class="fa fa-plus nav-icon"></i>

@@ -169,7 +169,7 @@ class StudentResultsController extends Controller
             $registeredCourse->grade_id = $grade_id;
             $registeredCourse->grade_status = $grade_setting->status;
             $registeredCourse->status = 'published';
-            $registeredCourse->staff_id = $staff->id;
+            // $registeredCourse->staff_id = $staff->id;
 
             $registeredCourse->save();
             // dd($registeredCourse->save());
@@ -177,7 +177,6 @@ class StudentResultsController extends Controller
 
         return redirect()->back()->with('success', 'Scores uploaded successfully');
     }
-
 
     public function manageStudent($id)
     {

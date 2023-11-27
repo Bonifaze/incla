@@ -32,6 +32,8 @@ Route::prefix('/admin')->group(function () {
     Route::get('/compute', [AdminController::class, 'showCompute'])->name('admin.show_compute');
     Route::get('/download/{staff_course_id}', [AdminController::class, 'downloadResultCsv']);
     Route::post('/upload-scores', [AdminController::class, 'uploadResultCsv']);
+
+    Route::get('uploadPrevious', [AdminController::class, 'courseUploadPrevious'])->name('admin.course_uploadprevious');
 });
 Route::post('/admin/compute', [AdminController::class, 'compute'])->name('admin.compute');
 Route::post('/admin/compute-progress', [AdminController::class, 'batchProgress'])->name('admin.show_progress');

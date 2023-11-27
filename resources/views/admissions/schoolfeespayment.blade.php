@@ -44,7 +44,7 @@ active
 
 
             <form action="" method="POST" onsubmit="event.preventDefault();" class="p-5">
-            <div class="text-danger font-weight-bold text-justify">ANNOUNCEMENT:<span class="text-primary font-weight-bold h2">Veritas University wishes to inform all parents that all accomodation spaces are now filled up. Please reach out to the Students Affairs office and discuss accomodation options before making any further payment</span>.</div>
+                <div class="text-success font-weight-bold text-justify">ANNOUNCEMENT:<span class="text-primary font-weight-bold h3">Veritas University wishes to inform all parents that most accomodation spaces are now filled up. Please reach out to the Students' Affairs office and discuss accomodation options before making any further payment.</span></div>
                 @csrf
                 <div class="form-group container-fluid mt-5 p-5 border border-success shadow shadow-lg rounded rounded-lg">
                     <label for="exampleFormControlSelect1" class="text-success fw-bold mb-2">School Fee Type</label>
@@ -63,7 +63,7 @@ active
                     <input type="hidden" class="form-control mt-2" id="provider_code" readonly>
                     <input type="hidden" class="form-control mt-2" id="fee_type_id" readonly>
                     <input type="text" class="form-control mt-2" id="id" readonly>
-                    {{--  @foreach ($payment as $utm)  --}}
+                    {{-- @foreach ($payment as $utm)  --}}
                     <div class="form-floating mb-3 mt-3">
                         <input type="hidden" class="form-control" id="js-firstName" placeholder="{{ $payment->first_name . ' ' . $payment->middle_name . ' ' . $payment->surname }}" value="{{ $payment->first_name . ' ' . $payment->middle_name . ' ' . $payment->surname }}" name="firstName" readonly>
                         <label for="email"></label>
@@ -78,7 +78,7 @@ active
                         <input type="hidden" class="form-control" id="js-phone" placeholder="{{ $payment->phone }}" value="{{ $payment->phone }}" name="email" readonly>
                         <label for="email"></label>
                     </div>
-                    {{--  @endforeach  --}}
+                    {{-- @endforeach  --}}
 
                     {{-- <div class="form-floating mt-3 mb-3">
                             <input type="text" class="form-control" id="value" placeholder="Enter Amount" name="amount" readonly>
@@ -287,7 +287,6 @@ active
                         if (narate == "4430731") {
                             $('#js-amount').val(4500);
                         } else if (narate == "PG") {
-
                             $('#js-amount').val(80000);
                         }
                     });

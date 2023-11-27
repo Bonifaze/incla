@@ -102,8 +102,8 @@ class CardInfoController extends Controller
                         "blood_group" => "Blood Group",
                         "level" => "Level",
                         "gender" => "Gender",
-                        "card" => "Pasaport",
-                        "signature" => "Signature",
+                        "card" => "ID Card Name",
+                        "signature" => "Signature Name",
                     ];
 
             foreach ($students as $key => $stud) {

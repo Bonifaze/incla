@@ -81,8 +81,6 @@
                 <li><a href="#" class="dropdown-item">List Staff Positions</a></li>
                  <li><a href="#" class="dropdown-item">New Grade Scales</a></li>
                 <li><a href="#" class="dropdown-item">List Grade Scales</a></li>
-
-
             </ul>
         </li>
  <?php else: ?>
@@ -118,7 +116,6 @@
                 <li><a href="<?php echo e(route('program_course.sbc_level', 800)); ?>" class="dropdown-item">MSc SBC Approval</a>
                 </li>
                 <li><a href="<?php echo e(route('program_course.sbc_level', 900)); ?>" class="dropdown-item">PhD SBC Approval</a>
-                <li><a href="/rbac/auditviewall" class="dropdown-item">RESULT AUDIT</a></li>
                 </li>
 
                         </ul>
@@ -146,7 +143,6 @@
                 </li>
                 <li><a href="<?php echo e(route('program_course.vc_level', 900)); ?>" class="dropdown-item">PhD VC Approval</a>
                 </li>
-                <li><a href="/rbac/auditviewall" class="dropdown-item">RESULT AUDIT</a></li>
                         </ul>
                     </li>
                     </ul>
@@ -200,18 +196,15 @@
 
 
 
-
             </ul>
-
         </li>
         <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('ICTOfficers', 'App\StudentResult')): ?>
             <li class="nav-item dropdown">
-
                 <a id="dropdownSubMenu1" style="color: #218c74;" href="#" data-toggle="dropdown"
                     aria-haspopup="true" aria-expanded="false" class="nav-link dropdown-toggle">ICT</a>
                 <ul aria-labelledby="dropdownSubMenu1" class="dropdown-menu border-0 shadow">
                     <li><a href="<?php echo e(route('result.search_student')); ?>" class="dropdown-item">Manage Student</a></li>
-                     <li><a href="<?php echo e(route('result.card_info')); ?>" class="dropdown-item">ID Card Info</a></li>
+                    <li><a href="<?php echo e(route('result.card_info')); ?>" class="dropdown-item">ID Card Info</a></li>
                     <li class="dropdown-submenu dropdown-hover">
                         <a id="dropdownSubMenu2" href="#" role="button" data-toggle="dropdown"
                             aria-haspopup="true" aria-expanded="false" class="dropdown-item dropdown-toggle">Results</a>
@@ -269,7 +262,7 @@
 
 
 
-
+                        <li><a href="<?php echo e(route('course.create')); ?>" class="dropdown-item">Create Course</a></li>
                     <hr>
                     <li class="dropdown-submenu dropdown-hover">
                         <a id="dropdownSubMenu2" href="#" role="button" data-toggle="dropdown"
@@ -307,10 +300,13 @@
                     </li>
 
 
-<li><a href="/rbac/auditviewall" class="dropdown-item">Result Audit</a></li>
-                </ul>
 
+                <li><a href="/spotlight/confirm"
+                                class="dropdown-item "> Spotlight
+                            </a></li>
+                </ul>
             </li>
+            
         <?php else: ?>
             <div></div>
         <?php endif; ?>

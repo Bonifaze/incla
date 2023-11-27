@@ -380,7 +380,7 @@
 
 
 
-
+                        <li><a href="{{ route('course.create') }}" class="dropdown-item">Create Course</a></li>
                     <hr>
                     <li class="dropdown-submenu dropdown-hover">
                         <a id="dropdownSubMenu2" href="#" role="button" data-toggle="dropdown"

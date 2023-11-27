@@ -6,6 +6,7 @@ use App\Staff;
 use App\Program;
 use App\ProgramCourse;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Session;
 use OwenIt\Auditing\Contracts\Auditable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
@@ -45,6 +46,11 @@ class StaffCourse extends Model implements Auditable
     public function Program()
     {
         return $this->belongsTo('App\Program', 'program_id');
+    }
+
+      public function Session()
+    {
+        return $this->belongsTo('App\Session', 'session_id');
     }
 
     public function getCourseSemesterAttribute()

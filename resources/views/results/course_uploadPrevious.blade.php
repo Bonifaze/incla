@@ -38,7 +38,7 @@
                 <div class="col_full">
                     <h1
                         class="app-page-title text-uppercase h5 font-weight-bold p-2 mb-2 shadow-sm text-center text-success border">
-                        Staff Asdigned Courses
+                        Staff Courses History
                     </h1>
 
                     <div class="card shadow border border-success">
@@ -58,14 +58,14 @@
                                             <thead>
                                                 <tr>
                                                     <th>S/N</th>
-                                                    <th>Name</th>
-                                                    <th>Phone</th>
                                                      <th>Course Code</th>
                                                     <th>Course Title</th>
+                                                    <th>Session</th>
                                                     <th>Semester</th>
                                                     <th>Students</th>
                                                     <th>Student Program</th>
                                                     <th>Upload Status</th>
+                                                     <th>Upload Date</th>
                                                     <th>HoD Approval</th>
                                                     <th>Action</th>
                                                      <th>Action</th>
@@ -76,10 +76,9 @@
                                                 @foreach ($staff_courses as $staff_course)
                                                     <tr>
                                                         <td>{{ $loop->iteration }}</td>
-                                                         <td>{{ $staff_course->staff_name }}</td>
-                                                        <td>{{ $staff_course->staff_phone }}</td>
                                                         <td>{{ $staff_course->course_code }}</td>
                                                         <td>{{ $staff_course->course_title }}</td>
+                                                         <th>{{ $staff_course->session->name ?? null }}</th>
                                                           <td >
                                                           @if ($staff_course->semester==1)
                                                                 First
@@ -87,24 +86,44 @@
                                                                 Second
                                                           @endif
                                                           </td>
+
                                                         <th>{{ $staff_course->total_students }}</th>
                                                         <th>{{ $staff_course->program->name ?? null }}</th>
                                                         <td>{{ $staff_course->upload_status }}</td>
+                                                          <td>@if ($staff_course->upload_status =='uploaded')
+                                                        {{ $staff_course->updated_at }}
+                                                          @else
+                                                    Unavialble
+                                                          @endif
+                                                        </td>
                                                         <td>{{ $staff_course->hod_approval }}</td>
-                                                        <td>@if ($staff_course->hod_approval != 'approved') <a href="{{ route('admin.scores_upload', $staff_course->id) }}"
-                                                                class="btn btn-primary">Upload Scores</a> @else <p class="text-warning text-bold ">Kindly Ask HoD TO REVOKE</p> @endif</td>
-                                                                 @if ($staff_course->hod_approval == 'approved')
-                                                <td></td>
-                                            @else
-                                                <td>
+                                                        {{--  <td> <a href="{{ route('admin.scores_upload', $staff_course->id) }}"
+                                                                class="btn btn-primary">Upload Scores</a>
+
+                                                        </td>  --}}
+                                                          <td> @if ($staff_course->upload_status =='uploaded')
+                                                            <a href="/admin/download/{{ $staff_course->id }}" class="btn btn-primary">Download  Scores </a>
+                                                          @else
+                                                    Unavialble
+                                                          @endif
+                                                           {{--   <a href="{{ route('admin.view_scores', $staff_course->course_id) }}"
+                                                                        class="btn btn-primary">View Course Scores</a>
+                                                                    --}}
+                                                            
+                                                                        </td>
+
+                                                                 @if ($staff_course->upload_status =='uploaded')
+                                                                <td></td>
+                                                                @else
+                                                         <td>
                                                     <form
                                                         action="{{ route('staff.assign.destroy', $staff_course->id) }}"
                                                         method="POST">
                                                         @csrf
                                                         @method('DELETE')
-                                                        <button type="submit" class="btn btn-danger" data-bs-toggle="modal"
+                                                        <button type="submit" class="btn btn-danger" onclick="return confirm('Are you sure you want to drop this course?')" data-bs-toggle="modal"
                                                             data-bs-target="#myModal"> <i class="fas fa-solid fa-trash"></i>
-                                                            Delete</button>
+                                                            DROP</button>
 
                                                     </form>
                                                 </td>
@@ -113,14 +132,16 @@
                                                 @endforeach
                                             </tbody>
                                         </table>
-
+   <a href="{{ route('admin.course_upload') }}" type="submit" class="btn btn-success"
+                                                            data-bs-target="#myModal"> <i class="fas fa-solid fa-eye"></i>
+                                                         View My Current Session Courses </a>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-{!! $staff_courses->render() !!}
+
                     </div>
                 </div>
 

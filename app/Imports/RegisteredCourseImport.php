@@ -1,8 +1,7 @@
-<?php
+<?php 
 
 namespace App\Imports;
 
-use App\Models\Course;
 use App\Models\GradeSetting;
 use App\Models\RegisteredCourse;
 use App\Models\StaffCourse;
@@ -11,7 +10,7 @@ use Maatwebsite\Excel\Concerns\WithStartRow;
 
 class RegisteredCourseImport implements ToModel, WithStartRow
 {
-    public function model(array $row)
+     public function model(array $row)
     {
         $total = $row[4] + $row[5] + $row[6] + $row[7];
         $course_reg = RegisteredCourse::find($row[0]);
@@ -48,7 +47,7 @@ class RegisteredCourseImport implements ToModel, WithStartRow
             'grade_status' => $grade->status
         ]);
     }
-
+    
     public function startRow(): int
     {
         return 2;

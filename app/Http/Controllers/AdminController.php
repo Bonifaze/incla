@@ -15,6 +15,7 @@ use App\Models\Course;
 use App\Models\fee_types;
 use App\Mail\Confirmsignup;
 use App\Models\StaffCourse;
+use App\StudentAcademic;
 use App\Models\GradeSetting;
 use Illuminate\Http\Request;
 use App\Models\RegisteredCourse;
@@ -31,7 +32,6 @@ use App\Computations\ResultComputation;
 use App\Exports\RegisteredCourseExport;
 // use App\Policies\AdmissionPolicy;
 use App\Imports\RegisteredCourseImport;
-use App\StudentAcademic;
 use Illuminate\Database\QueryException;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
@@ -88,6 +88,30 @@ class AdminController extends Controller
     // }
     }
 
+    // TO UPLOAD FOR PRVIOUS LEVEL
+    public function courseUploadPrevious()
+    {
+    $staff = Auth::guard('staff')->user();
+
+    $session = new Session();
+
+        $staff_courses = StaffCourse::distinct()
+    ->where('staff_courses.session_id','<', $this->getCurrentSession())
+    ->where('staff_courses.staff_id', $staff->id)
+    ->leftJoin('courses', 'staff_courses.course_id', '=', 'courses.id')
+    ->leftJoin('program_courses', 'courses.id', '=', 'program_courses.course_id')
+    ->leftJoin('sessions','staff_courses.session_id','=','sessions.id' )
+    ->select('staff_courses.*', 'courses.course_title', 'courses.course_code', 'program_courses.semester','staff_courses.session_id')
+    ->orderBy('courses.course_code', 'ASC')
+    ->get();
+
+        return view('results.course_uploadPrevious', ['staff_courses' => $staff_courses]);
+    // } else {
+    //     $loginMsg = '<div class="alert alert-danger alert-dismissible" role="alert"> <button type="button" class="close" data-dismiss="alert"> &times; </button> You dont\'t have access to this task, please see the ICT</div>';
+    //    return view('adminutmessions.error', compact('loginMsg'));
+    // }
+    }
+
     public function scoresupload($staff_course_id)
     {
         $staff = Auth::guard('staff')->user();
@@ -123,8 +147,7 @@ class AdminController extends Controller
         Excel::import(new RegisteredCourseImport, $request->file);
         return back()->with('success', 'Scores Uploaded!');
     }
-
-    public function uploadScores(Request $request)
+public function uploadScores(Request $request)
     {
         // dd($request);
         $reg_ids = $request->reg_ids;
@@ -234,11 +257,6 @@ class AdminController extends Controller
         return redirect()->back()->with('success', 'Scores uploaded successfully');
     }
 
-    protected function removeSpecialChars($str)
-    {
-        return str_replace(['/'], '', $str);
-    }
-
     public function approveScores()
     {
         $staff = Auth::guard('staff')->user();
@@ -268,7 +286,7 @@ class AdminController extends Controller
     {
         $staff = Auth::guard('staff')->user();
         // if ($this->hasPriviledge("approveScores",  $staff->id)) {
-            $this->authorize('approveScores',Student::class);
+           // $this->authorize('approveScores',Student::class);
 
         $staff_courses = StaffCourse::where('upload_status', 'not uploaded')->where('session_id', $this->getCurrentSession())->get();
         return view('results.notuploaded_scores', ['staff_courses' => $staff_courses]);
@@ -280,10 +298,18 @@ class AdminController extends Controller
 
     public function viewScores($course_id)
     {
+ 
         $course = StaffCourse::where('course_id', $course_id)->first();
         $student_registered_courses = RegisteredCourse::where('course_id', $course_id)
         ->where('level', $course->level)
-        ->where('session', $this->getCurrentSession())
+       
+        ->where('session', '<=', $this->getCurrentSession())
+        //  ->where(function ($query) {
+//     $query->where('session', '<', $this->getCurrentSession())
+        
+//         ->orWhere('session', $this->getCurrentSession() - 1);
+// })
+
         ->get();
         return view('results.view_scores', ['student_registered_courses' => $student_registered_courses, 'course' => $course]);
     }

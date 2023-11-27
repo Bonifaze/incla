@@ -110,15 +110,16 @@
                     </a>
 
                     <ul class="nav nav-treeview">
-
+ <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('ICTOfficers', 'App\StudentResult')): ?>
                         <li class="nav-item">
-                            <a href="<?php echo e(route('course.create')); ?>" class="nav-link <?php echo $__env->yieldContent('exam-remark'); ?>">
+                              <a href="<?php echo e(route('course.create')); ?>" class="nav-link <?php echo $__env->yieldContent('exam-remark'); ?>">
                                 <i class="fa fa-plus nav-icon"></i>
-                                <p>Create Course</p>
-                            </a>
+                               <p>Create Course</p> 
+                            </a> 
                         </li>
-
-
+<?php else: ?>
+<li></li>
+  <?php endif; ?>
                         <li class="nav-item">
                             <a href="<?php echo e(route('program_course.create')); ?>" class="nav-link <?php echo $__env->yieldContent('exam-remark'); ?>">
                                 <i class="fa fa-plus nav-icon"></i>
