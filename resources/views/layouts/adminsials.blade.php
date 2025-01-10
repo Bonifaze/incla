@@ -6,7 +6,7 @@
   <!-- CSRF Token -->
   <meta name="csrf-token" content="{{ csrf_token() }}">
 
-  <title> @yield('pagetitle') | Veritas University, Abuja </title>
+  <title> @yield('pagetitle') | Institute of Consecrated Life in Africa (InCLA), Abuja </title>
   <link rel="shortcut icon" href="{{ asset('img/letter_logo.png') }}">
 
   <meta charset="utf-8">

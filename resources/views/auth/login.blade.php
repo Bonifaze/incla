@@ -111,7 +111,7 @@
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Veritas University|Home</title>
+  <title>Institute of Consecrated Life in Africa (InCLA)|Home</title>
   <style>
     .hero-full-screen {
       height: 100vh;
@@ -185,7 +185,7 @@
 
     <div class="middle-content-section">
       <h4 class="m-4 ">Welcome to</h4>
-      <h1 class="m-4 fw-bold">Veritas University Portal</h1>
+      <h1 class="m-4 fw-bold">Institute of Consecrated Life in Africa (InCLA) Portal</h1>
       <a href="{{ route('student.login') }}" class="btn btn-success px-4 m-2 fs-5">STUDENT</a>
       <a href="{{ route('staff.login') }}" class="btn btn-success px-4 m-2 fs-5">STAFF</a>
       <a href="/admissions/login" class="btn btn-success px-4 m-2 fs-5">APPLICANT</a>

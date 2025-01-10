@@ -83,7 +83,7 @@
                                 <h5>
                                   <p class="align-center"><img src="{{ asset('img/letter_logo.png') }}" width='120'
                                             height='100' border='0' /></p>
-                                    <h1 class="text-center"><strong>VERITAS UNIVERSITY, ABUJA</strong></h1>
+                                    <h1 class="text-center"><strong>Institute of Consecrated Life in Africa (InCLA), ABUJA</strong></h1>
                                     <h3 class="text-center space_marg"><strong>The Catholic University, Abuja</strong></h3>
                                     <h3 class="text-centerspace_marg "><strong>UNDERGRADUATE STUDIES</strong></h3>
                                     <BR>

@@ -5,7 +5,7 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <link rel="icon" type="image/x-icon" href="../img/uaes.png">
 
-    <title>InCLA | Student Portal Access </title>
+    <title>InCLA | Student Portal Access</title>
     <link href="https://fonts.googleapis.com/css2?family=Dancing+Script&display=swap" rel="stylesheet">
 @endsection
 

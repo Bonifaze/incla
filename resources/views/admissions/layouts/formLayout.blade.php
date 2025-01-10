@@ -21,7 +21,7 @@
     <link rel="stylesheet" href="{{ asset('css/style.css')}}">
     <link rel="stylesheet" href="{{ asset('css/style.css.map')}}">
     <link rel="stylesheet" href="{{ asset('fonts/material-icon/css/material-design-iconic-font.min.css')}}">
-    <title>Veritas University Admissions Portal</title>
+    <title>Institute of Consecrated Life in Africa (InCLA) Admissions Portal</title>
 </head>
 
 <body>

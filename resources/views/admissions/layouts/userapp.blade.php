@@ -8,7 +8,7 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>Veritas University</title>
+    <title>Institute of Consecrated Life in Africa (InCLA)</title>
 {{--  Favicon   --}}
 <link rel="shortcut icon" href="{{ asset('img/letter_logo.png') }}" >
     <!-- Scripts -->

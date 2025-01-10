@@ -9,7 +9,7 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <link rel="stylesheet" href="{{ asset('v3/plugins/fontawesome-free/css/all.min.css') }}" />
 
-    <title> Spotlight System | Veritas University, Abuja </title>
+    <title> Spotlight System | Institute of Consecrated Life in Africa (InCLA), Abuja </title>
     <link rel="shortcut icon" href="{{ asset('img/letter_logo.png') }}">
 
     <link rel="stylesheet" href="{{ asset('v3/plugins/jqvmap/jqvmap.min.css') }}" />

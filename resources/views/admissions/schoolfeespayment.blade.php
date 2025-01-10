@@ -44,7 +44,7 @@ active
 
 
             <form action="" method="POST" onsubmit="event.preventDefault();" class="p-5">
-                <div class="text-success font-weight-bold text-justify">ANNOUNCEMENT:<span class="text-primary font-weight-bold h3">Veritas University wishes to inform all parents that most accomodation spaces are now filled up. Please reach out to the Students' Affairs office and discuss accomodation options before making any further payment.</span></div>
+                <div class="text-success font-weight-bold text-justify">ANNOUNCEMENT:<span class="text-primary font-weight-bold h3">Institute of Consecrated Life in Africa (InCLA) wishes to inform all parents that most accomodation spaces are now filled up. Please reach out to the Students' Affairs office and discuss accomodation options before making any further payment.</span></div>
                 @csrf
                 <div class="form-group container-fluid mt-5 p-5 border border-success shadow shadow-lg rounded rounded-lg">
                     <label for="exampleFormControlSelect1" class="text-success fw-bold mb-2">School Fee Type</label>

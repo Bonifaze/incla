@@ -214,7 +214,7 @@ class AdminStudentsController extends Controller
 
            //Data That will be deisplayed at the email address portal
            $mailData = [
-            'title' => 'Welcome to Veritas University Portal',
+            'title' => 'Welcome to Institute of Consecrated Life in Africa (InCLA) Portal',
             'msg' => 'Your Student account have been created , please click on the button below to Login and Reset Your Password',
             'url' => $this->getloginUrl() ,
             // 'url' => $this->getBaseUrl().'/='.base64_encode($req->idcard),

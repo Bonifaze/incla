@@ -38,7 +38,7 @@ body {
 {{  $utm->first_name." ".$utm->middle_name." ".$utm->surname }}
 </strong></p>
 <p align='center'><strong><u>PROVISIONAL ADMISSION INTO SCHOOL OF POSTGRADUATE STUDIES</u></strong></p>
-<p>Following your application through PostGraduate (PG) for this academic session, I write to offer you a Provisional Admission into a higher degree of Veritas University, I am pleased to inform
+<p>Following your application through PostGraduate (PG) for this academic session, I write to offer you a Provisional Admission into a higher degree of Institute of Consecrated Life in Africa (InCLA), I am pleased to inform
  {{--  {{ $utm->duration }}  --}}
  Programme to study <strong>
  {{ $utm->course_applied }}

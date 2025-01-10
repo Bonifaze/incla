@@ -5,7 +5,7 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>Veritas University | Staff Login</title>
+    <title>Institute of Consecrated Life in Africa (InCLA) | Staff Login</title>
 @endsection
 
 @section('css')

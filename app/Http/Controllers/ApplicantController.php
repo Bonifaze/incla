@@ -1478,8 +1478,8 @@ class ApplicantController extends Controller
                 $signUpMsg = '<div class="alert alert-danger alert-dismissible"><button type="button" class="close" data-dismiss="alert">&times;</button><strong>Error!</strong> You can not fill the form </div>';
                 return redirect('/utme')->with('signUpMsg', $signUpMsg);
             } else {
-                $signUpMsg = '<div class="alert alert-danger alert-dismissible"><button type="button" class="close" data-dismiss="alert">&times;</button><strong>Error!</strong>  please try again later or call Veritas University help line</div>';
-                //   $signUpMsg = '<div class="alert alert-danger alert-dismissible"><button type="button" class="close" data-dismiss="alert">&times;</button><strong>Error!</strong>  please try again later or call Veritas University help line'.$e->getMessage().'</div>';
+                $signUpMsg = '<div class="alert alert-danger alert-dismissible"><button type="button" class="close" data-dismiss="alert">&times;</button><strong>Error!</strong>  please try again later or call Institute of Consecrated Life in Africa (InCLA) help line</div>';
+                //   $signUpMsg = '<div class="alert alert-danger alert-dismissible"><button type="button" class="close" data-dismiss="alert">&times;</button><strong>Error!</strong>  please try again later or call Institute of Consecrated Life in Africa (InCLA) help line'.$e->getMessage().'</div>';
                 return redirect('/utme')->with('signUpMsg', $signUpMsg);
             }
         }
@@ -1580,7 +1580,7 @@ class ApplicantController extends Controller
                 return redirect('/utme');
                 //->with('signUpMsg',$signUpMsg);
             } else {
-                $signUpMsg = '<div class="alert alert-danger alert-dismissible"><button type="button" class="close" data-dismiss="alert">&times;</button><strong>Error!</strong> please try again later or Veritas University help line</div>';
+                $signUpMsg = '<div class="alert alert-danger alert-dismissible"><button type="button" class="close" data-dismiss="alert">&times;</button><strong>Error!</strong> please try again later or Institute of Consecrated Life in Africa (InCLA) help line</div>';
                 //   $signUpMsg = '<div class="alert alert-danger alert-dismissible"><button type="button" class="close" data-dismiss="alert">&times;</button><strong>Error!</strong> please try again later or call Muoga Market help line'.$e->getMessage().'</div>';
                 return redirect('/utme')->with('signUpMsg', $signUpMsg);
             }
@@ -3332,7 +3332,7 @@ class ApplicantController extends Controller
                     return redirect('/addRemitaServiceType')->with('signUpMsg', $signUpMsg);
                 } else {
                     $signUpMsg = '<div class="alert alert-danger alert-dismissible"><button type="button" class="close" data-dismiss="alert">&times;</button><strong>Error!</strong>  Try again /div>';
-                    //   $signUpMsg = '<div class="alert alert-danger alert-dismissible"><button type="button" class="close" data-dismiss="alert">&times;</button><strong>Error!</strong>  please try again later or call Veritas University help line'.$e->getMessage().'</div>';
+                    //   $signUpMsg = '<div class="alert alert-danger alert-dismissible"><button type="button" class="close" data-dismiss="alert">&times;</button><strong>Error!</strong>  please try again later or call Institute of Consecrated Life in Africa (InCLA) help line'.$e->getMessage().'</div>';
                     return redirect('/addRemitaServiceType')->with('signUpMsg', $signUpMsg);
                 }
             }
