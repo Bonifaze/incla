@@ -1,155 +1,203 @@
 @extends('layouts.plain')
 
-
 @section('pagetitle')
-<!-- CSRF Token -->
-<meta name="csrf-token" content="{{ csrf_token() }}">
+    <!-- CSRF Token -->
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+    <link rel="icon" type="image/x-icon" href="../img/uaes.png">
 
-<title>Veritas University | Staff Login</title>
-
+    <title>InCLA | Staff Portal Access</title>
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script&display=swap" rel="stylesheet">
 @endsection
 
 @section('css')
+    <style>
+        body {
+            background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
+            url("{{ asset('/css/incla-class.jpg') }}") center center no-repeat;
+            background-size: cover;
+            padding-top: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+        }
 
-<!-- <link rel="stylesheet" href="{{ asset('plugins/iCheck/square/blue.css')}}"> -->
+        .login-form {
+            background: rgba(0, 0, 0, 0.7);
+            box-shadow: rgba(0, 0, 0, 0.4) 0px 2px 4px 0px, rgba(0, 0, 0, 0.3) 0px 7px 13px -3px, rgba(0, 0, 0, 0.2) 0px -3px 0px 0px inset;
+            padding: 30px 40px;
+            border-radius: 15px;
+            color: white;
+            max-width: 400px;
+            width: 100%;
+            margin: 0;
+        }
 
-<style>
-  {{--  body {
-    background:linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
-    url("{{ asset('/css/defaults.jpg') }}") center center no-repeat;
-    background-size: cover;
-    padding-top: 10px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }  --}}
+        .btn-success {
+          background-color: #f0ad4e;
+          border: none;
+          border-radius: 30px;
+          color: #fff;
+          width: 100%;
+          padding: 12px;
+          font-size: 1.2em;
+      }
 
+      .btn-success:hover {
+          background-color: #ec971f;
+      }
 
-  .day-background {
-    background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
-      url("{{ asset('/css/default-day.jpg') }}") center center no-repeat;
-    background-size: cover;
-      padding-top: 10px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
+        .form-control {
+            border-radius: 30px;
+            background-color: #f1f1f1;
+            border: 1px solid #5bc0de;
+            color: #333;
+        }
 
-  .night-background {
-    background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
-      url("{{ asset('/css/default-night.jpg') }}") center center no-repeat;
-    background-size: cover;
-         padding-top: 10px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
+        .input-group-text {
+            background-color: #5bc0de;
+            border-radius: 30px;
+            color: white;
+        }
 
-  .login-form {
-    background: rgba(219, 219, 219,0.6);
-    box-shadow: rgba(0, 0, 0, 0.4) 0px 2px 4px 0px, rgba(0, 0, 0, 0.3) 0px 7px 13px -3px, rgba(0, 0, 0, 0.2) 0px -3px 0px 0px inset;
-    padding: 70px;
-    border-radius: 20px;
-    color: white;
-  }
+        .login-heading {
+            text-align: center;
+            margin: 20px;
+            color: #fff;
+            font-size: 2em;
+            text-transform: uppercase;
+            font-weight: 600;
+            font-family: 'Dancing Script', cursive;
+        }
 
-  .login-heading {
-    text-align: center;
-    margin: 20px;
-    color: #fff;
-    font-size: 2.5em;
-    text-transform: uppercase;
-    font-weight: 600;
-  }
+        .link-text {
+            margin-bottom: 10px;
+            color: #fff;
+            font-size: 1.2em;
+            font-weight: 400;
+        }
 
-  label {
-    font-weight: 500;
-  }
+        .active-link {
+            font-weight: 500;
+            text-decoration: underline;
+        }
 
-  @media only screen and (max-width: 480px) {
-    body {
-      font-size: 20px;
-      padding-top: 90px;
-    }
+        label {
+            font-weight: 500;
+        }
 
-  }
-</style>
+        .buttons-container {
+            display: flex;
+            justify-content: flex-end;
+            margin-top: 20px;
+            gap: 10px;
+        }
 
+        .button-aligned {
+            width: 150px;
+            padding: 12px;
+            background-color: #5bc0de;
+            color: white;
+            border-radius: 30px;
+            text-align: center;
+            font-size: 1.1em;
+            border: none;
+        }
+
+        .button-aligned:hover {
+            background-color: #31b0d5;
+        }
+
+        @media only screen and (max-width: 480px) {
+            body {
+                font-size: 20px;
+                padding-top: 90px;
+            }
+
+            .login-form {
+                width: 100%;
+                max-width: 100%;
+            }
+
+            .buttons-container {
+                flex-direction: column;
+                align-items: center;
+                gap: 15px;
+            }
+
+            .button-aligned {
+                width: 80%;
+            }
+        }
+    </style>
 @endsection
 
 @section('content')
 
-<body onload="setBackground()" class="{{ (date('H') >= 6 && date('H') < 11) ? 'day-background' : 'night-background' }}">
-  <div class="container">
-    <div class="row">
-      <div class="col-md-6 offset-md-2 d-flex aligns-items-center justify-content-center">
-        <div class="login-form">
-          <div class="login-heading">
-            <p>Staff Login</p>
-          </div>
-          <form method="POST" action="{{ route('staff.login.submit') }}">
-            @csrf
-            <div class="form-group">
-              <label for="exampleInputEmail1">Veritas Email</label>
-              <input id="email" type="email" placeholder="Veritas Email" class="form-control{{ $errors->has('email') ? ' is-invalid' : '' }}" name="email" value="{{ old('email') }}" required autofocus>
-              @if ($errors->has('email'))
-              <span class="invalid-feedback"> <strong>{{ $errors->first('email') }}</strong> </span>
-              @endif
-              <!-- <small id="emailHelp" class="form-text text-muted">We will never share your email with anyone else.</small> -->
+<body>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6 d-flex align-items-center justify-content-center">
+                <div class="login-form">
+                    <div class="login-heading">
+                        <p>Staff Portal </p>
+                    </div>
+                    <form method="POST" action="{{ route('staff.login.submit') }}">
+                        @csrf
+                        <div class="form-group">
+                            <label for="email"> Email</label>
+                            <input id="email" type="email" placeholder="Email" class="form-control{{ $errors->has('email') ? ' is-invalid' : '' }}" name="email" value="{{ old('email') }}" required autofocus>
+                            @if ($errors->has('email'))
+                                <span class="invalid-feedback"> <strong>{{ $errors->first('email') }}</strong> </span>
+                            @endif
+                        </div>
+
+                        <div class="form-group">
+                            <label for="password">Password</label>
+                            <input id="password" type="password" placeholder="Password" class="form-control{{ $errors->has('password') ? ' is-invalid' : '' }}" name="password" required>
+                            @if ($errors->has('password'))
+                                <span class="invalid-feedback"><strong>{{ $errors->first('password') }}</strong></span>
+                            @endif
+                        </div>
+
+                        <div class="form-group form-check">
+                            <label class="form-check-label" for="remember">
+                                <input type="checkbox" name="remember" {{ old('remember') ? 'checked' : '' }}>
+                                {{ __('Remember Me') }}
+                            </label>
+                        </div>
+
+                        @if (session('loginMsg'))
+                            {!! session('loginMsg') !!}
+                        @endif
+                        <br>
+                        <button type="submit" class="btn btn-success">{{ __('Login') }}</button>
+                        <br>
+                        <p class="link-text"><a href="/forgotpassword" class="text-danger active-link">Forgot Password</a></p>
+                        <br>
+
+                    </form>
+
+                    <!-- Buttons for Applicant and Staff login -->
+                    <div class="buttons-container">
+                        <a href="/admissions/login"><button class="button-aligned">Applicant Login</button></a>
+                        <a href="{{ route('student.login') }}"><button class="button-aligned">Student Login</button></a>
+                    </div>
+                </div>
             </div>
-            <div class="form-group mt-3">
-              <label for="exampleInputPassword1">Password</label>
-              <input id="password" type="password" placeholder="Password" class="form-control{{ $errors->has('password') ? ' is-invalid' : '' }}" name="password" required>
-              @if ($errors->has('password'))
-             <div class="alert alert-danger alert-dismissible" role="alert"> <button type="button" class="close" data-dismiss="alert"> &times; </button>{{ $errors->first('password') }}</strong></div>
-              @endif
-            </div>
-            <div class="form-group form-check">
-              <label class="form-check-label" for="exampleCheck1">
-                <input type="checkbox" name="remember" {{ old('remember') ? 'checked' : '' }}> {{ __('Remember Me') }}
-              </label>
-            </div>
-            <button type="submit" class="btn btn-primary"> {{ __('Login') }}</button>
-          </form>
         </div>
-      </div>
     </div>
-  </div>
+</body>
 
+@endsection
 
-  @endsection
-
-  @section('pagescript')
-  <!-- iCheck -->
-  <!-- <script src="{{ asset('plugins/iCheck/icheck.min.js') }}"></script>
-  <script>
-    $(function() {
-      $('input').iCheck({
-        checkboxClass: 'icheckbox_square-blue',
-        radioClass: 'iradio_square-blue',
-        increaseArea: '20%' // optional
-      });
-    });
-  </script> -->
-
-  <script>
-function setBackground() {
-    var now = new Date();
-    var hour = now.getHours();
-
-    var body = document.querySelector('body');
-    if (hour >= 6 && hour < 16) {
-        body.classList.add('day-background');
-        body.classList.remove('night-background');
-    } else {
-        body.classList.add('night-background');
-        body.classList.remove('day-background');
-    }
-}
-</script>
-
-  <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
-  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
-  @endsection
+@section('pagescript')
+    <script>
+        $(function() {
+            $('input').iCheck({
+                checkboxClass: 'icheckbox_square-blue',
+                radioClass: 'iradio_square-blue',
+                increaseArea: '20%' // optional
+            });
+        });
+    </script>
+@endsection

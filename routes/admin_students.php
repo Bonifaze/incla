@@ -68,3 +68,7 @@ Route::get('/students/list/getGradStudent/{level}', 'AdminStudentsController@get
 Route::get('/results/transcript/{encode}', 'AdminStudentsController@transcriptadmin')->name('results.transcript');
 
 Route::POST('/students/findprogramUG', 'AdminStudentsController@findprogramUG')->name('student.findprogramUG');
+
+
+Route::get('/students/list/studentreport', 'AdminStudentsController@studentreport')->name('student.report');
+

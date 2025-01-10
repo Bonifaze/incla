@@ -51,7 +51,7 @@ class AcademicDepartmentsController extends Controller
     {
         //
         $this->authorize('create',AcademicDepartment::class);
-        $colleges = College::with('departments')->orderBy('name','ASC')->pluck('name','id');
+        $colleges = College::z->orderBy('name','ASC')->pluck('name','id');
       return view('academia.departments.create', compact('colleges'));
     }
 

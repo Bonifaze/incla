@@ -183,7 +183,7 @@ class UtilitiesController extends Controller
 Regards and stay safe. <br />
 lawrence christopher <br />
  ICT Unit<br />
- Veritas University Abuja..<br />
+ Institute of Consecrated Life in Africa (InCLA)..<br />
 ";
 
            Mail::to('lawrencechrisojor@gmail.com')->send(new Letters($message));
@@ -226,7 +226,7 @@ lawrence christopher <br />
 Regards and stay safe. <br />
 lawrence christopher <br />
  ICT Unit<br />
- Veritas University Abuja<br />
+ Institute of Consecrated Life in Africa (InCLA)<br />
 ";
                         //Mail::to($mail)->send(new Letters($message));
                         $status.= "mail sent to".$mail;
@@ -289,7 +289,7 @@ dd($status);
 Regards and stay safe. <br />
 lawrence christopher <br />
  ICT Unit<br />
- Veritas University Abuja<br />
+ Institute of Consecrated Life in Africa (InCLA)<br />
 ";
                        // Mail::to($mail)->send(new Letters($message));
                         $emails .= $mail.",";
@@ -372,7 +372,7 @@ lawrence christopher <br />
 Regards and stay safe. <br />
 lawrence christopher <br />
  ICT Unit<br />
- Veritas University Abuja<br />
+ Institute of Consecrated Life in Africa (InCLA)<br />
 ";
                     Mail::to($ds)->send(new Letters($message));
                     echo "mail sent to " . $ds;

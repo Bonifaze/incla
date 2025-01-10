@@ -62,15 +62,15 @@ year Degree Programme to study <strong>
    {{--  {{ $program->academic->name }}
    , College of  --}}
     {{--  {{ $program->academic->college->name }}  --}}
-    </strong>, of Veritas University Abuja.</p>
+    </strong>, of Institute of Consecrated Life in Africa (InCLA).</p>
 <p>Please note that  your admission to the University is subject to your having the University  minimum and departmental entry qualifications in the prescribed programme and a  medical report showing that you are drug- free to study. The medical check may  be carried out in the University. The university reserves the right to withdraw  any candidate who is drug positive. <strong>Female  students are kindly requested to indicate their choice of hostel of residence. </strong></p>
 
 <p><strong><u>This letter does  not replace the admission letter to be issued by the Joint Admissions and  Matriculation Board (JAMB) which is the authorised body for admissions into  Nigerian Universities</u></strong>. </p>
-<p>If you accept the  offer, please pay a <u>NON-REFUNDABLE</u> acceptance fee of Thirty-Five  Thousand Naira (N35, 000:00) into the account of <strong>Veritas University Abuja </strong>in any branch of<strong> GTB (Account number:  0024642120) or First Bank Plc (Account number: </strong><strong>2032211597</strong><strong>) or  Zenith Bank (Account number: 1013201758) </strong>to secure your admission. The acceptance fee is NOT part of the  tuition fee.</p>
+<p>If you accept the  offer, please pay a <u>NON-REFUNDABLE</u> acceptance fee of Thirty-Five  Thousand Naira (N35, 000:00) into the account of <strong>Institute of Consecrated Life in Africa (InCLA) </strong>in any branch of<strong> GTB (Account number:  0024642120) or First Bank Plc (Account number: </strong><strong>2032211597</strong><strong>) or  Zenith Bank (Account number: 1013201758) </strong>to secure your admission. The acceptance fee is NOT part of the  tuition fee.</p>
 <p>You are therefore  expected to pay<strong> not less than a minimum of 50% of the total fees.</strong> Please  note that accommodation is reserved on first-come first-served basis, on  evidence of payment. The balance of the total fees is expected to be paid at  the beginning of the Second Semester of 2020/2021 session. </p>
 <p><strong>This  offer of admission will lapse on 31th January, 2020 if the minimum  tuition and accommodation fees are not paid on or before that date. </strong>Please  consult our website <a href='http://www.veritas.edu.ng/'>www.veritas.edu.ng</a> for  fees, other charges and date of resumption.</p>
 <p>You are to proceed  to the Admissions Office immediately you resume on campus for completion of  your admission process.</p>
-<p>I congratulate you  on your admission to Veritas University Abuja and wish you success in your  programme.</p>
+<p>I congratulate you  on your admission to Institute of Consecrated Life in Africa (InCLA) and wish you success in your  programme.</p>
 <p>Yours sincerely,<br />
   <br />
   <br />

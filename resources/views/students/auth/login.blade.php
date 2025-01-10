@@ -1,264 +1,203 @@
-@extends('layouts.plain')
-
+@extends('layouts.plain')
 
 @section('pagetitle')
-<!-- CSRF Token -->
-<meta name="csrf-token" content="{{ csrf_token() }}">
+    <!-- CSRF Token -->
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+    <link rel="icon" type="image/x-icon" href="../img/uaes.png">
 
-<title>Veritas University | Student Login</title>
-
+    <title>InCLA | Student Portal Access</title>
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script&display=swap" rel="stylesheet">
 @endsection
 
 @section('css')
+    <style>
+        body {
+            background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
+            url("{{ asset('/css/incla-class.jpg') }}") center center no-repeat;
+            background-size: cover;
+            padding-top: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+        }
 
-<!-- <link rel="stylesheet" href="{{ asset('plugins/iCheck/square/blue.css')}}"> -->
+        .login-form {
+            background: rgba(0, 0, 0, 0.7);
+            box-shadow: rgba(0, 0, 0, 0.4) 0px 2px 4px 0px, rgba(0, 0, 0, 0.3) 0px 7px 13px -3px, rgba(0, 0, 0, 0.2) 0px -3px 0px 0px inset;
+            padding: 30px 40px;
+            border-radius: 15px;
+            color: white;
+            max-width: 400px;
+            width: 100%;
+            margin: 0;
+        }
 
-<style>
+        .btn-success {
+            background-color: #f0ad4e;
+            border: none;
+            border-radius: 30px;
+            color: #fff;
+            width: 100%;
+            padding: 12px;
+            font-size: 1.2em;
+        }
 
+        .btn-success:hover {
+            background-color: #ec971f;
+        }
 
+        .form-control {
+            border-radius: 30px;
+            background-color: #f1f1f1;
+            border: 1px solid #5bc0de;
+            color: #333;
+        }
 
-  .day-background {
-    background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
-      url("{{ asset('/css/default-day.jpg') }}") center center no-repeat;
-    background-size: cover;
-      padding-top: 10px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
+        .input-group-text {
+            background-color: #5bc0de;
+            border-radius: 30px;
+            color: white;
+        }
 
-  .night-background {
-    background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
-      url("{{ asset('/css/default-night.jpg') }}") center center no-repeat;
-    background-size: cover;
-         padding-top: 10px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
+        .login-heading {
+            text-align: center;
+            margin: 20px;
+            color: #fff;
+            font-size: 2em;
+            text-transform: uppercase;
+            font-weight: 600;
+            font-family: 'Dancing Script', cursive;
+        }
 
-  .form-horizontal {
-    background: #1a11117a;
-    color: white;
-    box-shadow: rgba(0, 0, 0, 0.4) 0px 2px 4px 0px, rgba(0, 0, 0, 0.3) 0px 7px 13px -3px, rgba(0, 0, 0, 0.2) 0px -3px 0px 0px inset;
-    padding-bottom: 40px;
-    border-radius: 15px;
-    text-align: center;
-  }
+        .link-text {
+            margin-bottom: 10px;
+            color: #fff;
+            font-size: 1.2em;
+            font-weight: 400;
+        }
 
-  .form-horizontal .heading {
-    display: block;
-    font-size: 35px;
-    font-weight: 700;
-    padding: 35px 0;
-    border-bottom: 2px solid #218c74;
-    margin-bottom: 30px;
-  }
+        .active-link {
+            font-weight: 500;
+            text-decoration: underline;
+        }
 
-  .form-horizontal .form-group {
-    padding: 0 40px;
-    margin: 0 0 25px 0;
-    position: relative;
-  }
+        label {
+            font-weight: 500;
+        }
 
-  .form-horizontal .form-control {
-    background: #f0f0f0;
-    border: none;
-    border-radius: 20px;
-    box-shadow: none;
-    padding: 0 20px 0 45px;
-    height: 40px;
-    transition: all 0.3s ease 0s;
-  }
+        .buttons-container {
+            display: flex;
+            justify-content: flex-end;
+            margin-top: 20px;
+            gap: 10px;
+        }
 
-  .form-horizontal .form-control:focus {
-    background: #e0e0e0;
-    box-shadow: none;
-    outline: 0 none;
-  }
+        .button-aligned {
+            width: 150px;
+            padding: 12px;
+            background-color: #5bc0de;
+            color: white;
+            border-radius: 30px;
+            text-align: center;
+            font-size: 1.1em;
+            border: none;
+        }
 
-  .form-horizontal .form-group i {
-    position: absolute;
-    top: 12px;
-    left: 60px;
-    font-size: 17px;
-    color: #c8c8c8;
-    transition: all 0.5s ease 0s;
-  }
+        .button-aligned:hover {
+            background-color: #025aa5;
+        }
 
-  .form-horizontal .form-control:focus+i {
-    color: #218c74;
-  }
+        @media only screen and (max-width: 480px) {
+            body {
+                font-size: 20px;
+                padding-top: 90px;
+            }
 
-  .form-horizontal .fa-question-circle {
-    display: inline-block;
-    position: absolute;
-    top: 12px;
-    right: 60px;
-    font-size: 20px;
-    color: #218c74;
-    transition: all 0.5s ease 0s;
-  }
+            .login-form {
+                width: 100%;
+                max-width: 100%;
+            }
 
-  .form-horizontal .fa-question-circle:hover {
-    color: #000;
-  }
+            .buttons-container {
+                flex-direction: column;
+                align-items: center;
+                gap: 15px;
+            }
 
-  .form-horizontal .main-checkbox {
-    float: left;
-    width: 20px;
-    height: 20px;
-    background: #218c74;
-    border-radius: 50%;
-    position: relative;
-    margin: 5px 0 0 5px;
-    border: 1px solid #218c74;
-  }
-
-  .form-horizontal .main-checkbox label {
-    width: 20px;
-    height: 20px;
-    position: absolute;
-    top: 0;
-    left: 0;
-    cursor: pointer;
-  }
-
-  .form-horizontal .main-checkbox label:after {
-    content: "";
-    width: 10px;
-    height: 5px;
-    position: absolute;
-    top: 5px;
-    left: 4px;
-    border: 3px solid #fff;
-    border-top: none;
-    border-right: none;
-    background: transparent;
-    opacity: 0;
-    -webkit-transform: rotate(-45deg);
-    transform: rotate(-45deg);
-  }
-
-  .form-horizontal .main-checkbox input[type=checkbox] {
-    visibility: hidden;
-  }
-
-  .form-horizontal .main-checkbox input[type=checkbox]:checked+label:after {
-    opacity: 1;
-  }
-
-  .form-horizontal .text {
-    float: left;
-    margin-left: 7px;
-    line-height: 20px;
-    padding-top: 5px;
-    text-transform: capitalize;
-  }
-
-  .form-horizontal .btn {
-    float: right;
-    font-size: 14px;
-    color: #fff;
-    background: #218c74;
-    border-radius: 30px;
-    padding: 10px 25px;
-    border: none;
-    text-transform: capitalize;
-    transition: all 0.5s ease 0s;
-  }
-
-  @media only screen and (max-width: 479px) {
-
-    .form-horizontal .form-horizontal .form-horizontal .form-group {
-      padding: 0 25px;
-    }
-
-    .form-horizontal .form-group i {
-      left: 45px;
-    }
-
-    .form-horizontal .btn {
-      padding: 10px 20px;
-    }
-
-  }
-</style>
-
+            .button-aligned {
+                width: 80%;
+            }
+        }
+    </style>
 @endsection
 
 @section('content')
 
-<body onload="setBackground()" class="{{ (date('H') >= 6 && date('H') < 12) ? 'day-background' : 'night-background' }}">
-
+<body>
     <div class="container">
-      <div class="row">
-        <div class="col-md-offset-3 col-md-6">
-          <form class="form-horizontal" method="POST" action="{{ route('student.login.submit') }}">
-            @csrf
-            <span class="heading">Students Login</span>
-            <div class="form-group">
-              <label for="text-start">Username</label>
-              <input id="email" type="email" placeholder="Username" class="form-control{{ $errors->has('email') ? ' is-invalid' : '' }}" name="email" value="{{ old('email') }}" required autofocus>
-              @if ($errors->has('email'))
-              <span class="invalid-feedback"> <strong>{{ $errors->first('email') }}</strong> </span>
-              @endif
-              <!-- <small id="emailHelp" class="form-text text-muted">We will never share your email with anyone else.</small> -->
-            </div>
-            <div class="form-group">
-              <label for="exampleInputPassword1">Password</label>
-              <input id="password" type="password" placeholder="Password" class="form-control{{ $errors->has('password') ? ' is-invalid' : '' }}" name="password" required>
-              @if ($errors->has('password'))
-              <span class="invalid-feedback"><strong>{{ $errors->first('password') }}</strong></span>
-              @endif
-            </div>
-            <div class="form-group">
-              <div class="main-checkbox">
-                <input type="checkbox" value="None" id="checkbox1" name="check">
-                <label for="checkbox1"></label>
-              </div>
-              <span class="text">Remember me</span>
-              <button type="submit" class="btn btn-primary"> {{ __('Login') }}</button>
-            </div>
-          </form>
-        </div>
-      </div>
-    </div>
+        <div class="row">
+            <div class="col-md-6 d-flex align-items-center justify-content-center">
+                <div class="login-form">
+                    <div class="login-heading">
+                        <p>STUDENT Portal</p>
+                    </div>
+                    <form method="POST" action="{{ route('student.login.submit') }}">
+                        @csrf
+                        <div class="form-group">
+                            <label for="email">Username</label>
+                            <input id="email" type="email" placeholder="Username" class="form-control{{ $errors->has('email') ? ' is-invalid' : '' }}" name="email" value="{{ old('email') }}" required autofocus>
+                            @if ($errors->has('email'))
+                                <span class="invalid-feedback"> <strong>{{ $errors->first('email') }}</strong> </span>
+                            @endif
+                        </div>
 
+                        <div class="form-group">
+                            <label for="password">Password</label>
+                            <input id="password" type="password" placeholder="Password" class="form-control{{ $errors->has('password') ? ' is-invalid' : '' }}" name="password" required>
+                            @if ($errors->has('password'))
+                                <span class="invalid-feedback"><strong>{{ $errors->first('password') }}</strong></span>
+                            @endif
+                        </div>
+
+                        <div class="form-group form-check">
+                            <label class="form-check-label" for="remember">
+                                <input type="checkbox" name="remember" {{ old('remember') ? 'checked' : '' }}>
+                                {{ __('Remember Me') }}
+                            </label>
+                        </div>
+
+                        @if (session('loginMsg'))
+                            {!! session('loginMsg') !!}
+                        @endif
+                        <br>
+                        <button type="submit" class="btn btn-success">{{ __('Login') }}</button>
+                        <br>
+                        <p class="link-text"><a href="/forgotpassword" class="text-danger active-link">Forgot Password</a></p>
+                        <br>
+
+                    </form>
+
+                    <!-- Buttons for Applicant and Staff login -->
+                    <div class="buttons-container">
+                        <a href="/admissions/login"><button class="button-aligned">Applicant Login</button></a>
+                        <a href="{{ route('staff.login') }}"><button class="button-aligned">Staff Login</button></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </body>
 
 @endsection
 
 @section('pagescript')
-<!-- iCheck -->
-<!-- <script src="{{ asset('plugins/iCheck/icheck.min.js') }}"></script>
-  <script>
-    $(function() {
-      $('input').iCheck({
-        checkboxClass: 'icheckbox_square-blue',
-        radioClass: 'iradio_square-blue',
-        increaseArea: '20%' // optional
-      });
-    });
-  </script> -->
-
-<script>
-function setBackground() {
-    var now = new Date();
-    var hour = now.getHours();
-
-    var body = document.querySelector('body');
-    if (hour >= 6 && hour < 16) {
-        body.classList.add('day-background');
-        body.classList.remove('night-background');
-    } else {
-        body.classList.add('night-background');
-        body.classList.remove('day-background');
-    }
-}
-</script>
-<!-- jQuery first, then Popper.js, then Bootstrap JS -->
-<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+    <script>
+        $(function() {
+            $('input').iCheck({
+                checkboxClass: 'icheckbox_square-blue',
+                radioClass: 'iradio_square-blue',
+                increaseArea: '20%' // optional
+            });
+        });
+    </script>
 @endsection

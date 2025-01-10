@@ -4,7 +4,7 @@
 
 <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
- <title>Veritas University Abuja</title>
+ <title>Institute of Consecrated Life in Africa (InCLA)</title>
   
   <!-- Tell the browser to be responsive to screen width -->
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport')?>" media='screen' />
@@ -43,7 +43,7 @@
     <div class="row">
       <div class="col-xs-12">
         <h2 class="page-header">
-          <i class="fa fa-globe"></i> Veritas University Abuja
+          <i class="fa fa-globe"></i> Institute of Consecrated Life in Africa (InCLA)
           <small class="pull-right">Date: 2/10/2014</small>
         </h2>
       </div>

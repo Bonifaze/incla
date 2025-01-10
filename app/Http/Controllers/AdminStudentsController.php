@@ -20,11 +20,12 @@ use App\StudentAcademic;
 use App\Mail\PasswordReset;
 use Illuminate\Http\Request;
 use App\SemesterRegistration;
+use Illuminate\Http\Response;
 use Illuminate\Validation\Rule;
 use App\Models\RegisteredCourse;
 use App\Models\StudentCreditLoad;
-use Illuminate\Routing\Controller;
 
+use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -563,7 +564,7 @@ Password: welcome <br />
 Regards and stay safe. <br />
 Email: ict@veritas.edu.ng. <br />
 ICT Unit<br />
- Veritas University Abuja<br />
+ Institute of Consecrated Life in Africa (InCLA)<br />
 ";
 
             //Mail::to($student->email)->send(new PasswordReset($message));
@@ -785,6 +786,8 @@ public function getGradStudent($level)
     return view('students.admin.plain_list', compact('students'));
 }
 
+
+
 public function transcriptadmin($encode)
 {
     $this->authorize('transcript',Student::class);
@@ -806,5 +809,178 @@ public function transcriptadmin($encode)
     }])->get();
     return view('results.transcript',compact('student','academic','sessions', 'registered_courses'));
 } //end transcriptAdmin
+
+
+
+public function studentreport()
+{
+    // Count of graduated, postgraduate, and undergraduate students
+    $graduatedCount = Student::whereHas('academic', function ($query) {
+        $query->where('level', 1000);
+    })->count();
+
+    $postgraduateCount = Student::whereHas('academic', function ($query) {
+        $query->whereBetween('level', [700, 900]);
+    })->count();
+
+    $undergraduateCount = Student::whereHas('academic', function ($query) {
+        $query->whereBetween('level', [100, 600]);
+    })->count();
+
+    // Count of male and female students postgraduate
+    $maleCountPost = Student::whereHas('academic', function ($query) {
+        $query->whereBetween('level', [700, 900]);
+    })->where('gender', 'male')->count();
+
+    $femaleCountPost = Student::whereHas('academic', function ($query) {
+        $query->whereBetween('level', [700, 900]);
+    })->where('gender', 'female')->count();
+
+    // Count of male and female students undergraduate
+    $maleCount = Student::whereHas('academic', function ($query) {
+        $query->whereBetween('level', [100, 600]);
+    })->where('gender', 'male')->count();
+
+    $femaleCount = Student::whereHas('academic', function ($query) {
+        $query->whereBetween('level', [100, 600]);
+    })->where('gender', 'female')->count();
+
+    // Count of students based on religion
+    $catholicCount = Student::whereHas('academic', function ($query) {
+        $query->whereBetween('level', [100, 600]);
+    })->where('religion', 'Christian(Catholic)')->count();
+    $nonCatholicCount = Student::whereHas('academic', function ($query) {
+        $query->whereBetween('level', [100, 600]);
+    })->where('religion', 'Christian(Non-Catholic)')->count();
+    $muslimCount = Student::whereHas('academic', function ($query) {
+        $query->whereBetween('level', [100, 600]);
+    })->where('religion', 'Muslim')->count();
+    $otherReligionCount = Student::whereHas('academic', function ($query) {
+        $query->whereBetween('level', [100, 600]);
+    })->where('religion', 'Others')->count();
+
+    // Count of students based on religion Postgraduate
+    $catholicCountPost = Student::whereHas('academic', function ($query) {
+        $query->whereBetween('level', [700, 900]);
+    })->where('religion', 'Christian(Catholic)')->count();
+    $nonCatholicCountPost = Student::whereHas('academic', function ($query) {
+        $query->whereBetween('level', [700, 900]);
+    })->where('religion', 'Christian(Non-Catholic)')->count();
+    $muslimCountPost = Student::whereHas('academic', function ($query) {
+        $query->whereBetween('level', [700, 900]);
+    })->where('religion', 'Muslim')->count();
+    $otherReligionCountPost = Student::whereHas('academic', function ($query) {
+        $query->whereBetween('level', [700, 900]);
+    })->where('religion', 'Others')->count();
+
+    $undergratedCount6 = Student::whereHas('academic', function ($query) {
+        $query->whereBetween('mode_of_entry', ['UTME','DE','TRANSFER'])
+        ->where('entry_session_id', 6);
+    })->count();
+
+    // Return the counts to the view
+    return view('students.admin.report', compact(
+        'graduatedCount',
+        'postgraduateCount',
+        'undergraduateCount',
+        'maleCountPost',
+        'femaleCountPost',
+        'maleCount',
+        'femaleCount',
+        'catholicCount',
+        'nonCatholicCount',
+        'muslimCount',
+        'otherReligionCount',
+        'catholicCountPost',
+        'nonCatholicCountPost',
+        'muslimCountPost',
+        'otherReligionCountPost',
+        'undergratedCount6'
+    ));
+}
+
+
+function attendance() {
+    // Fetch students along with their related contact, academic, medical, and program details
+    $students = Student::with(['contact', 'academic', 'medical', 'academic.program'])
+    // Apply a filter to fetch only students whose academic level is less than 700
+    ->whereHas('academic', function ($query) {
+        $query->where('level', '<', 100);
+    })
+    // Order by program_id and level within the academic relation
+    ->orderBy(function($query) {
+        $query->select('mat_no')
+              ->from('student_academics')
+              ->whereColumn('student_academics.student_id', 'students.id')
+              ->limit(1);
+    })
+    ->orderBy(function($query) {
+        $query->select('level')
+              ->from('student_academics')
+              ->whereColumn('student_academics.student_id', 'students.id')
+              ->limit(1);
+    })
+    // Order by student ID and surname
+    ->orderBy('id')
+    ->orderBy('surname')
+    // Paginate the results with 50 students per page
+    ->paginate(30);
+
+    // Return the view with the students data
+    return view('students.admin.plain_list1', compact('students'));
+}
+
+public function exportCsv()
+{
+    $students = Student::with(['contact', 'academic', 'medical', 'academic.program'])
+        ->whereHas('academic', function ($query) {
+            $query->where('level', '<', 700);
+        })
+        ->orderBy(function($query) {
+            $query->select('program_id')
+                  ->from('student_academics')
+                  ->whereColumn('student_academics.student_id', 'students.id')
+                  ->limit(1);
+        })
+        ->orderBy(function($query) {
+            $query->select('level')
+                  ->from('student_academics')
+                  ->whereColumn('student_academics.student_id', 'students.id')
+                  ->limit(1);
+        })
+        ->orderBy('id')
+        ->orderBy('surname')
+        ->get();
+
+    $filename = "students.csv";
+    $handle = fopen($filename, 'w+');
+    fputcsv($handle, [
+        'S/N', 'Matric No', 'Last Name', 'Department', 'Level', 'Gender', 'Marital Status', 'Title', 'First Name'
+    ]);
+
+    $sn = 1;
+    foreach ($students as $student) {
+        fputcsv($handle, [
+            $sn++,
+            $student->academic ? $student->academic->mat_no : 'N/A',
+            $student->surname,
+            $student->academic && $student->academic->program ? $student->academic->program->name : 'N/A',
+            $student->academic ? $student->academic->level : 'N/A',
+            $student->gender,
+            $student->marital_status,
+            $student->title,
+            $student->first_name
+        ]);
+    }
+
+    fclose($handle);
+
+    $headers = [
+        'Content-Type' => 'text/csv',
+    ];
+
+    return Response::download($filename, $filename, $headers)->deleteFileAfterSend(true);
+}
+
 
 } // end Class

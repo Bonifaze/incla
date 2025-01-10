@@ -146,7 +146,7 @@ active
                         "payerName": name,
                         "payerEmail": email,
                         "payerPhone": phone,
-                        "description": "VERITAS UNIVERSITY ABUJA FEE"
+                        "description": "Institute of Consecrated Life in Africa (InCLA) FEE"
                         //"expiryDate": "05/09/2021"
                     }))
 
@@ -252,7 +252,7 @@ active
                         "feeType": feeType,
                         "fee_type_id": fee_type_id,
                         "status": status,
-                        "description": "VERITAS UNIVERSITY ABUJA FEE"
+                        "description": "Institute of Consecrated Life in Africa (InCLA) FEE"
                         //"expiryDate": "05/09/2021"
                     }));
 

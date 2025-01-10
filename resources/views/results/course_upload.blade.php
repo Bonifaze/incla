@@ -94,11 +94,12 @@
                                                           @endif
                                                         </td>
                                                         <td>{{ $staff_course->hod_approval }}</td>
-                                                        <td>@if ($staff_course->hod_approval != 'approved') <a href="{{ route('admin.scores_upload', $staff_course->id) }}"
+                                                        {{--  <td>@if ($staff_course->hod_approval != 'approved') <a href="{{ route('admin.scores_upload', $staff_course->id) }}"
                                                                 class="btn btn-primary">Upload Scores</a> @else <p class="text-warning text-bold ">Kindly Ask HoD TO REVOKE</p> @endif</td>
                                                                  @if ($staff_course->upload_status =='uploaded')
                                                 <td> <a href="/admin/download/{{ $staff_course->id }}" class="btn btn-primary">Download  Scores </a></td>
                                             @else
+
                                                 <td>
                                                     <form
                                                         action="{{ route('staff.assign.destroy', $staff_course->id) }}"
@@ -111,14 +112,14 @@
 
                                                     </form>
                                                 </td>
-                                            @endif
+                                            @endif  --}}
                                                     </tr>
                                                 @endforeach
                                             </tbody>
                                         </table>
                                     <a href="{{ route('admin.course_uploadprevious') }}" type="submit" class="btn btn-success"
                                                             data-bs-target="#myModal"> <i class="fas fa-solid fa-eye"></i>
-                                                         View My Courses History</a>  
+                                                         View My Courses History</a>
                                     </div>
                                 </div>
                             </div>

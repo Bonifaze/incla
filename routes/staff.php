@@ -62,3 +62,5 @@ Route::get('/staff/paymentlists', 'StaffController@approvePayments')->name('paym
 Route::post('/staff/remitasverification', 'StaffController@remitasVerification')->name('staff.remitasVerification');
 
 Route::get('/staff/paymentConfirmlists', 'StaffController@confirmPayments')->name('staff.Confirmpaymentlists');
+
+Route::get('/staff/list/studentreport', 'StaffController@staffreport')->name('staff.report');

@@ -1,10 +1,11 @@
-<?php 
+<?php
 
 namespace App\Imports;
 
+use App\Course;
+use App\Models\StaffCourse;
 use App\Models\GradeSetting;
 use App\Models\RegisteredCourse;
-use App\Models\StaffCourse;
 use Maatwebsite\Excel\Concerns\ToModel;
 use Maatwebsite\Excel\Concerns\WithStartRow;
 
@@ -22,7 +23,7 @@ class RegisteredCourseImport implements ToModel, WithStartRow
             {
                 $grade_id = $grade->id;
             }
-            else 
+            else
             {
                 $grade = GradeSetting::where('min_score', '<=', $total)->where('max_score', '>=', $total)->whereNull('program_id')->first();
                 $grade_id = $grade->id;
@@ -47,7 +48,7 @@ class RegisteredCourseImport implements ToModel, WithStartRow
             'grade_status' => $grade->status
         ]);
     }
-    
+
     public function startRow(): int
     {
         return 2;

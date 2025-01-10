@@ -79,7 +79,7 @@ if(!session('adminId'))
                                             {{ session()->get('success') }}
                                         </div>
                                     @endif
-                                    <form method="POST" action="/results/update">
+                                    <form method="POST" action="/results/updateICT">
                                         @csrf
                                         <div class="table-responsive mt-5 mb-4">
                                             <table class="table table-bordered table-striped table-hover">

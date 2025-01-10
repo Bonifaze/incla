@@ -69,7 +69,7 @@
                     </h1>  --}}
             <div class="card ">
 
-               
+
                 <div class="table-responsive">
 
                     <!-- form start -->
@@ -134,7 +134,7 @@
 
                <div class="card ">
 
-          
+
                 <div class="table-responsive">
 
                     <!-- form start -->
@@ -147,7 +147,7 @@
 
                                 <div class="col-md-6 form-group">
 								<label for="program">Program :</label>
-  					                                     {{ Form::select('program_id', $programs, null, [ 'class' => 'form-control','placeholder'=>'Select Program', 'id' => 'program_id', 'name' => 'program_id']) }} 
+  					                                     {{ Form::select('program_id', $programs, null, [ 'class' => 'form-control','placeholder'=>'Select Program', 'id' => 'program_id', 'name' => 'program_id']) }}
 
 							      <span class="text-danger"> {{ $errors->first('program') }}</span>
 						        </div>

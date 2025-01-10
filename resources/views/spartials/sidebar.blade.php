@@ -148,7 +148,13 @@
                             </li>
                         </ul>
                     </li>
+                    <li class="nav-item">
+                        <a href="/student/getvoucherstudent" class="nav-link">
+                     <i class="fa fa-plus-circle nav-icon"></i>
+                            <p>Voucher</p>
 
+                        </a>
+                    </li>
                     <li class="nav-item">
                         <a href="{{ route('student.logout') }}" class="nav-link"Contact
                             onclick="event.preventDefault();

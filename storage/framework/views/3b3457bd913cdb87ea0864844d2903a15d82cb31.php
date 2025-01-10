@@ -1,1 +1,0 @@
-<?php /**PATH /Users/lifeofrence/Documents/laraproject/resources/views/remitas/remitaBankResponse.blade.php ENDPATH**/ ?>

@@ -64,7 +64,7 @@
 
 
 
-            <span class="font-weight-light">2021 - <?php echo date("Y"); ?> &copy; Admission |Veritas University Abuja</span>
+            <span class="font-weight-light">2021 - <?php echo date("Y"); ?> &copy; Admission |Institute of Consecrated Life in Africa (InCLA)</span>
             <div class="font-italic">Version 2.2.1</div>
         </div>
              </li>

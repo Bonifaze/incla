@@ -18,6 +18,6 @@
 	
 	<!-- Document Title
 	============================================= -->
-	<title>Veritas University Abuja</title>
+	<title>Institute of Consecrated Life in Africa (InCLA)</title>
 	
 	

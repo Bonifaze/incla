@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 namespace App\Exports;
 
@@ -8,11 +8,11 @@ use Maatwebsite\Excel\Concerns\FromArray;
 class RegisteredCourseExport implements FromArray
 {
     protected $registeredCourse, $session, $course_id, $program_id;
-    
+
     public function __construct(RegisteredCourse $registeredCourse, $session, $course_id, $program_id)
     {
         $this->registeredCourse = $registeredCourse;
-        $this->session = $session; 
+        $this->session = $session;
         $this->course_id = $course_id;
         $this->program_id = $program_id;
     }
@@ -23,6 +23,7 @@ class RegisteredCourseExport implements FromArray
         $registeredCourses = $this->registeredCourse->where('session', $this->session)
         ->where('course_id', $this->course_id)
         ->where('program_id', $this->program_id)
+        ->orderBy('student_id', 'asc')
         ->get();
         foreach ($registeredCourses as $course)
         {

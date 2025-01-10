@@ -1,8 +1,9 @@
 <?php
 
-use App\Http\Controllers\AdminController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\AdminController;
+use App\Http\Controllers\StaffController;
 //use Symfony\Component\Routing\Route;
 
 /*
@@ -20,14 +21,18 @@ use Illuminate\Support\Facades\Route;
 //     return view('pages');
 // });
 
-Route::get('/', function () {
+Route::get('/',function () {
     return view('default');
 });
+
 
 // MAINTAINCE PAGE
 // Route::get('/students/remita/feestype', function () {
 //     return view('admissions.layouts.Maintance');
 // });
+
+Route::get('/generate/matricno', 'AdminStudentsControllerApplicant@selfcreate')->name('student.selfcreate');
+Route::post('/generate/matricno', 'AdminStudentsControllerApplicant@selfstore')->name('student.selfstore');
 
 Route::get('/classroom/init', 'GoogleClassroomsController@init')->name('classroom.init');
 
@@ -69,6 +74,11 @@ Route::get('/spotlight/confirm', function () {
 Route::get('/spotlight/option', function () {
     return view('rbac.spotlightOption');
 });
+
+
+// Route::get('/', function () {
+//     return view('students.admin.selfcreate');
+// });
 
 // Academic Departments routes
 require_once "academic_departments.php";
@@ -128,6 +138,10 @@ require_once "soteria.php";
 
 //ASMIISONS ROUNTS
  require_once "admissions.php";
+
+
+//CMS WEBSITE ROUNTS
+require_once "cms_website.php";
 
 
 

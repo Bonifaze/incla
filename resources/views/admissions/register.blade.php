@@ -5,12 +5,37 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="icon" type="image/x-icon" href="../img/uaes.png">
 
     <!-- CSS only -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
-    <title>Veritas University Admissions Portal</title>
+    <title>INCLA | New Account </title>
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script&display=swap" rel="stylesheet">
+    
 
     <style>
+        
+        .btn-success {
+            background-color: #f0ad4e;
+            border: none;
+            border-radius: 30px;
+            color: #fff;
+            width: 100%;
+            padding: 12px;
+            font-size: 1.2em;
+        }
+
+        .btn-success:hover {
+            background-color: #ec971f;
+        }
+      
+        .form-title{
+               
+                text-transform: uppercase;
+                font-weight: 600;
+                font-family: 'Dancing Script', cursive;
+        }
+
         @media (min-width:320px) {
             body {
                 height: 100vh;
@@ -34,7 +59,7 @@
     <link rel="stylesheet" href="{{ asset('css/style.css')}}">
 </head>
 
-<body style="background-image: url('../img/register.jpg'); opacity: 0.9;">
+<body style="background-image: url('../img/incla-block.jpg'); opacity: 0.9;">
     <div class="main">
         <div class=" signup">
             <div class="container">
@@ -42,7 +67,7 @@
                 <div class="signup-content">
                     <form method="POST" action="/register">
                         @csrf
-                        <h2 class="form-title text-success">Register</h2>
+                        <h2 class="form-title ">CREATE ACCOUNT</h2>
                         @if (session('signUpMsg'))
                         {!! session('signUpMsg') !!}
                         @endif
@@ -133,7 +158,7 @@
                                 {{ __('Register') }}
                             </button>
                             <br>
-                            <p> Already have an account? <a href="/" class="text-success"> Login</a></p>
+                            <p> Already have an account? <a href="/" class="text-warning"> Login</a></p>
                         </div>
                     </form>
                 </div>

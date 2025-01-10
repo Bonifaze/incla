@@ -9,7 +9,7 @@
 				<div class="container clearfix">
 
 					<div class="col_half">
-						Copyrights &copy; 2020 All Rights Reserved Veritas University Abuja
+						Copyrights &copy; 2020 All Rights Reserved Institute of Consecrated Life in Africa (InCLA)
 						
 					</div>
 

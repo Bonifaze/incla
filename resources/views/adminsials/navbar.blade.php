@@ -20,10 +20,10 @@
             <img src="{{ asset('img/veritasin.jpg') }}" alt="" width="170" height="60" class="px-2">
         </a>
     </div>  --}}
-      {{--  <div class="ml-5" style="color: green; font-weight:bold;"><h1> Veritas University Abuja </h1></div>  --}}
+      {{--  <div class="ml-5" style="color: green; font-weight:bold;"><h1> Institute of Consecrated Life in Africa (InCLA) </h1></div>  --}}
 
       {{--  <h1 class="app-page-title text-uppercase h2 font-weight-bold p-2 mb-2 shadow-sm text-center text-success border">
-                 Veritas University Abuja
+                 Institute of Consecrated Life in Africa (InCLA)
                 </h1>  --}}
                  </li>
 

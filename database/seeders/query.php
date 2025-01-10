@@ -58,3 +58,12 @@ AND `session` LIKE '16'
 AND `level` LIKE '100'
 AND `semester` LIKE '2'
 AND `status` = 'unpublished'
+
+<!-- TO CHECK STUDENT THAT SCORE 45-49 FOR SPECIAL GRADIG SYSTEM  -->
+SELECT * FROM `registered_courses` WHERE `program_id` = 39 AND `session` LIKE '16' AND `level` = 200 AND `course_id` = 4373 AND `total` > 44 AND `total` < 50 ORDER BY `registered_courses`.`student_id` ASC;
+
+
+SELECT s.id AS student_id, s.surname, sa.mat_no, sa.level, sp.name AS program_name, s.gender, s.marital_status, s.title, s.first_name FROM students s JOIN student_academics sa ON s.id = sa.student_id JOIN programs sp ON sa.program_id = sp.id WHERE sa.level < 700 ORDER BY sp.id, sa.level, s.id, s.surname
+
+
+SELECT s.id AS staff_id, s.surname, swp.staff_no, ad.name AS department_name, s.gender, s.marital_status, s.title, st.name AS staff_type_name, s.first_name FROM staff s JOIN staff_work_profiles swp ON s.id = swp.staff_id JOIN admin_departments ad ON swp.admin_department_id = ad.id JOIN staff_types st ON swp.staff_type_id = st.id WHERE s.status = 1 ORDER BY ad.id, st.id, s.id, s.surname;Í

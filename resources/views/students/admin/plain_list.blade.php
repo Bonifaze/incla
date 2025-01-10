@@ -46,6 +46,8 @@
                                     <th>Phone</th>
                                     <th>Usernameame</th>
                                     <th>Matric No</th>
+                                    <th>Gender</th>
+                                     <th>Religion</th>
                                     <th>Parents Name</th>
                                     <th>Parents Email</th>
                                     <th>Parents Phone</th>
@@ -95,6 +97,8 @@
                                             @if ($student->academic)
                                                 <td>{{ $student->academic->mat_no }}</td>
                                             @endif
+                                              <td>{{ $student->gender}}</td>
+                                                   <td>{{ $student->religion}}</td>
                                             <td>{{ $student->contact->surname }} {{ $student->contact->other_names }}</td>
                                             <td>{{ $student->contact->email }}</td>
                                             <td>{{ $student->contact->phone }}</td>

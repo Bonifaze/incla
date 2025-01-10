@@ -16,16 +16,18 @@ use App\EmploymentType;
 use App\AdminDepartment;
 use App\StaffWorkProfile;
 use Illuminate\Http\Request;
+use App\Models\BursarySession;
 use Illuminate\Validation\Rule;
+use App\Models\RegisteredCourse;
 use Illuminate\Support\Facades\DB;
+use App\Models\RemitasVerification;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
 use App\Models\StaffRoleAssignmentLog;
-use App\Models\BursarySession;
-use App\Models\RemitasVerification;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Http\JsonResponse;
 use Intervention\Image\ImageManagerStatic as Image;
 
 
@@ -38,23 +40,42 @@ class StaffController extends Controller
      *
      * @return void
      */
-    public function __construct()
-    {
-        $this->middleware('auth:staff');
-    }
+    // public function __construct()
+    // {
+    //     $this->middleware('auth:staff');
+    // }
 
     public function home()
     {
         $staff = Auth::guard('staff')->user();
-        return view('staff.home',compact('staff'));
+        $work = $staff->workProfile->staff_type_id;
+        $test = $staff->program;
+
+        $programs = $staff->workProfile->admin->academic->programs->pluck('id');
+        // ery->where('admin_department_id', '=', $admin);
+
+        //   dd($work);
+        $modify=RegisteredCourse::with(['staff','sessions'])->where('staff_id', '<>', '', 'and')
+        ->whereColumn('old_total', '!=', 'total')
+        ->where('program_id',$programs)
+        ->orderBy('updated_at','DESC')
+       // ->limit(20)
+        ->paginate(20);
+
+        return view('staff.home',compact('staff','modify','work'));
+    }
+    public function index(): JsonResponse
+    {
+        $test = Staff::all();
+        return response()->json($test);
     }
 
-    public function index()
-    {
-        $this->authorize('list', Staff::class);
-        $staff = Staff::orderBy('status','ASC')->orderBy('surname','ASC')->orderBy('id','DESC')->paginate(100);
-        return view('staff.admin.list',compact('staff'));
-    }
+    // public function index()
+    // {
+    //     $this->authorize('list', Staff::class);
+    //     $staff = Staff::orderBy('status','ASC')->orderBy('surname','ASC')->orderBy('id','DESC')->paginate(100);
+    //     return view('staff.admin.list',compact('staff'));
+    // }
 
 
     /**
@@ -238,7 +259,7 @@ class StaffController extends Controller
         $staff->maiden_name = $request->maiden_name;
         $staff->religion = $request->religion;
         $staff->address = $request->address;
-        $staff->password = Hash::make('welcome@1');
+        $staff->password = Hash::make('welcome@123');
         $staff->status = 1;
         $staff->username = $request->username;
 
@@ -744,5 +765,69 @@ public function confirmPayments()
     return view('staff.paymentConfirmlists', compact('staff', 'paidRRRs'));
 }
 
+public function staffreport()
+{
 
+    $allstaff = Staff::count();
+    $activestaff = Staff::where('status',1)->count();
+    $acdstaff = Staff::whereHas('workProfile', function ($query) {
+        $query->where('staff_type_id',1);
+        })->where('status',1)->count();
+
+    $Nacdstaff = Staff::whereHas('workProfile', function ($query) {
+        $query->where('staff_type_id',2);
+        })->where('status',1)->count();
+
+
+    return view('staff.admin.report',compact('allstaff','activestaff', 'acdstaff', 'Nacdstaff'));
+}
+
+// public function attendance()
+// {
+//     // NOTE
+//     // public function type()
+//     // {
+//     //     return $this->belongsTo('App\StaffType', 'staff_type_id');
+//     // }
+
+//     // public function admin()
+//     // {
+//     //     return $this->belongsTo('App\AdminDepartment', 'admin_department_id');
+//     // }
+
+//         $staff = Staff::with(['workProfile'])->where('status',1)
+//         ->orderBy(function($query) {
+//             $query->select('staff_type_id')
+//                   ->from('staff_types')
+//                   ->whereColumn('staff_types.staff_id', 'staff.id')
+//                   ->limit(1);
+//                 })
+//                   ->orderBy(function($query) {
+//                     $query->select('level')
+//                           ->from('staff_work_profiles')
+//                           ->whereColumn('staff_work_profiles.admin_department_id', 'admin_departments.id')
+//                           ->limit(1);
+//                 })
+
+//                 <th>Staff No.</th>
+//                 <th>Last Name</th>
+//                 <th>Department</th>
+//                 <th>Gender</th>
+//                  <th>Marital Status</th>
+//                  <th>title</th>
+//                  <th>staff_type</th>
+//                 <th>First Name</th>
+
+//                 <td>{{ $staff->work->staff_no }}</td>
+//                 <td> {{ $staff->surname }}</td>
+//                 <td> {{ $staff->work->admin->name }}</td>
+//                 <td> {{ $staff->gender }}</td>
+//                 <td> {{ $staff->marital_status }}</td>
+//                 <td> {{ $staff->title }}</td>
+//                 <td> {{ $staff->work->type->name  }}</td>
+//                 <td> {{ $staff->first_name }}</td>
+
+
+
+// }
 } // end Class

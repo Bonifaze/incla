@@ -47,7 +47,7 @@ body {
    , Faculty of
     {{ $facultyAndDept['col']}}
 
-    </strong>, of Veritas University Abuja.</p>
+    </strong>, of Institute of Consecrated Life in Africa (InCLA).</p>
 <p>Please note that  your admission to the University is subject to your having the University  minimum and departmental entry qualifications in the prescribed programme and a  medical report showing that you are drug- free to study. The medical check may  be carried out in the University. The university reserves the right to withdraw  any candidate who is drug positive. <strong>Female  students are kindly requested to indicate their choice of hostel of residence. </strong></p>
 
 <p><strong><u>This letter does  not replace the admission letter to be issued by OFFICE OF THE DEAN, SCHOOL OF POSTGRADUATE STUDIES.</u></strong> </p>

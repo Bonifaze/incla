@@ -19,6 +19,7 @@ use Illuminate\Validation\Rule;
 use App\Models\RegisteredCourse;
 use App\Models\StudentCreditLoad;
 use App\Models\RemitasVerification;
+use App\Models\VoucherCode;
 use Illuminate\Support\Facades\DB;
 use App\Models\CourseRegistrations;
 use Illuminate\Support\Facades\Auth;
@@ -1251,6 +1252,46 @@ public function studentsClearance()
     // If none of the conditions are met, you may want to redirect or show an error message
     return redirect()->to('/students/home')
     ->with('error','error');
+}
+
+public function getvoucherstudent()
+{
+    // Get the authenticated student
+    $courseReg = CourseRegistrations::where('status', 1)->orderBy('id', 'ASC')->paginate(20);
+
+    $student = Auth::guard('student')->user();
+   
+
+    // Retrieve the student ID
+    $student_id = $student->id;
+    // Check if a record with the student ID already exists in the voucher codes table
+    $existingRecord = VoucherCode::where('student_id', $student_id)->exists();
+
+    // If the record already exists, return to the view
+    if ($existingRecord) {
+        $viewV= VoucherCode::where('student_id', $student_id)->first();
+        return view('soteria.studentV', compact('viewV', 'courseReg'));
+    }
+// Find the first voucher code with status 1
+$getv = VoucherCode::where('status', 1)->first();
+
+    // Update the student ID and status of the voucher code where status is 1
+    if ($getv) {
+        // Update the found voucher code's student_id and status to 2
+        $getv->student_id = $student_id;
+        $getv->status = 2;
+        $getv->save();
+        $viewV= VoucherCode::where('student_id', $student_id)->first();
+        return view('soteria.studentV', compact('viewV', 'courseReg'))->with('success', 'Student ID and status updated successfully.');
+
+    // Check if any rows were updated
+    
+    } else {
+        // No rows were updated, return to the view with an error message
+        return view('soteria.studentV', compact('viewV'))->with('error', 'No voucher code found with status 1.');
+    
+      }
+
 }
 
 } // end Class

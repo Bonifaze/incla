@@ -62,7 +62,7 @@ class CardInfoController extends Controller
 
         $department = AcademicDepartment::where('id', $program->academic_department_id)->first();
 
-        $students = StudentAcademic::where('program_id', $request->program)
+        $students = StudentAcademic::with('student')->where('program_id', $request->program)
                 ->where('level', $request->level)->wherehas('student', function ($query)
                 {
                     $query->where('status', 1);
@@ -106,6 +106,7 @@ class CardInfoController extends Controller
                         "signature" => "Signature Name",
                     ];
 
+
             foreach ($students as $key => $stud) {
 
                 $card_details[$stud->student_id] =
@@ -115,8 +116,8 @@ class CardInfoController extends Controller
                         "department" => ucwords(strtolower($department->name)),
                         "program" => "$degree ".ucwords(strtolower($stud->program->name)),
                         "matri_no" => $stud->mat_no,
-                        // "blood_group" => strtoupper($stud->student_medical->blood_group),
-                        "blood_group" => strtoupper(optional($stud->student_medical)->blood_group ?? 'N/A'),
+                        "blood_group" => strtoupper($stud->student_medical->blood_group),
+                        // "blood_group" => strtoupper(optional($stud->student_medical)->blood_group ?? 'N/A'),
                         "level" => $stud->level,
                         "gender" => ucwords(strtolower($stud->student->gender)),
                         "card" => $stud->student_id,

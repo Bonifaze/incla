@@ -1,115 +1,141 @@
 @extends('layouts.plain')
 
-
 @section('pagetitle')
-<!-- CSRF Token -->
-<meta name="csrf-token" content="{{ csrf_token() }}">
+    <!-- CSRF Token -->
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+    <link rel="icon" type="image/x-icon" href="../img/uaes.png">
 
-<title>Veritas University | Applicant Login</title>
+    <title>InCLA | Applicant Login</title>
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script&display=swap" rel="stylesheet">
 @endsection
 
 @section('css')
-<!-- <link rel="stylesheet" href="{{ asset('plugins/iCheck/square/blue.css') }}"> -->
-
-<style>
-    body {
-        background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
-        url("{{ asset('/css/defaultadd.jpg') }}") center center no-repeat;
-        background-size: cover;
-        padding-top: 10px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-    }
-
-    .login-form {
-        background: rgba(219, 219, 219, 0.6);
-        box-shadow: rgba(0, 0, 0, 0.4) 0px 2px 4px 0px, rgba(0, 0, 0, 0.3) 0px 7px 13px -3px, rgba(0, 0, 0, 0.2) 0px -3px 0px 0px inset;
-        padding: 70px;
-        border-radius: 20px;
-        color: white;
-    }
-
-    .login-heading {
-        text-align: center;
-        margin: 20px;
-        color: #fff;
-        font-size: 2.5em;
-        text-transform: uppercase;
-        font-weight: 600;
-    }
-
-    .link-text {
-        margin-bottom: 10px;
-        color: #fff;
-        font-size: 1.2em;
-        font-weight: 400;
-    }
-
-    .active-link {
-        font-weight: 500;
-        text-decoration: underline;
-    }
-
-    label {
-        font-weight: 500;
-    }
-
-    @media only screen and (max-width: 480px) {
+    <style>
         body {
-            font-size: 20px;
-            padding-top: 90px;
+            background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
+            url("{{ asset('/css/incla-class.jpg') }}") center center no-repeat;
+            background-size: cover;
+            padding-top: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
 
-    }
-</style>
+        .login-form {
+            background: rgba(0, 0, 0, 0.7);
+            box-shadow: rgba(0, 0, 0, 0.4) 0px 2px 4px 0px, rgba(0, 0, 0, 0.3) 0px 7px 13px -3px, rgba(0, 0, 0, 0.2) 0px -3px 0px 0px inset;
+            padding: 30px 40px;
+            border-radius: 15px;
+            color: white;
+            max-width: 400px;
+            width: 100%;
+            margin: 0 auto;
+        }
+
+        .btn-success {
+            background-color: #f0ad4e;
+            border: none;
+            border-radius: 30px;
+            color: #fff;
+            width: 100%;
+            padding: 12px;
+            font-size: 1.2em;
+        }
+
+        .btn-success:hover {
+            background-color: #ec971f;
+        }
+
+        .form-control {
+            border-radius: 30px;
+            background-color: #f1f1f1;
+            border: 1px solid #5bc0de;
+            color: #333;
+        }
+
+        .input-group-text {
+            background-color: #5bc0de;
+            border-radius: 30px;
+            color: white;
+        }
+
+        .login-heading {
+            text-align: center;
+            margin: 20px;
+            color: #fff;
+            font-size: 2em;
+            text-transform: uppercase;
+            font-weight: 600;
+            font-family: 'Dancing Script', cursive;
+        }
+
+        .link-text {
+            margin-bottom: 10px;
+            color: #fff;
+            font-size: 1.2em;
+            font-weight: 400;
+        }
+
+        .active-link {
+            font-weight: 500;
+            text-decoration: underline;
+        }
+
+        label {
+            font-weight: 500;
+        }
+
+        .buttons-container {
+            display: flex;
+            justify-content: flex-end;
+            margin-top: 20px;
+            gap: 10px;
+        }
+
+        .button-aligned {
+            width: 150px;
+            padding: 12px;
+            background-color: #5bc0de;
+            color: white;
+            border-radius: 30px;
+            text-align: center;
+            font-size: 1.1em;
+            border: none;
+        }
+
+        .button-aligned:hover {
+            background-color: #025aa5;
+        }
+
+        @media only screen and (max-width: 480px) {
+            body {
+                font-size: 20px;
+                padding-top: 90px;
+            }
+
+            .login-form {
+                width: 100%;
+                max-width: 100%;
+            }
+
+            .buttons-container {
+                flex-direction: column;
+                align-items: center;
+                gap: 15px;
+            }
+
+            .button-aligned {
+                width: 80%;
+            }
+        }
+    </style>
 @endsection
 
 @section('content')
 
 <body>
     <div class="container">
-        <div class="modal fade" id="myModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h6 class="modal-title" id="exampleModalLabel">Thank you for applying veritas
-                            University Abuja.</h6>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body">
-                        <div class="text-danger"><strong> Accomodation into Pa-Etos hostel, Male HOTEL L and
-                                Male HOSTEL K are currently unavaliable </strong></div> <br>
-                        <p>
-                            For inquiries kindly contact the listed numbers below:<br>
-
-                            Rev. Fr. Dr. Richard Gokum
-                            Ag. Chairman, Admissions
-                            08069536843<br>
-
-                            Iliya cephas barde
-                            Admissions officer
-                            07086858143<br>
-
-                            Adidi, Timothy Dokpesi
-                            Marketing officer
-                            08138605055<br>
-
-                            Ezimmuo, Martha
-                            Bursary officer
-                            09021727363<br>
-                            <br>
-
-                            Thanks
-                        </p>
-                    </div>
-                    <hr>
-
-                </div>
-            </div>
-        </div>
         <div class="row">
-
             <div class="col-md-6 offset-md-2 d-flex aligns-items-center justify-content-center">
                 <div class="login-form">
                     <div class="login-heading">
@@ -127,7 +153,6 @@
                             @if ($errors->has('email'))
                             <span class="invalid-feedback"> <strong>{{ $errors->first('email') }}</strong> </span>
                             @endif
-                            <!-- <small id="emailHelp" class="form-text text-muted">Well never share your email with anyone else.</small> -->
                         </div>
                         <div class="form-group">
                             <label for="exampleInputPassword1">Password</label>
@@ -148,44 +173,28 @@
                         @endif
                         <button type="submit" class="btn btn-success"> {{ __('Login') }}</button>
                         <br>
+                        <p class="link-text"><a href="/forgotpassword" class="text-danger active-link"> Forgot Password</a> </p>
                         <br>
-
-                        <p class="link-text"><a href="/register" class="text-success h1 active-link">Click Here </a> if you do not have an account</p>
-                        <p class="link-text"> Forgot password ?<a href="/forgotpassword" class="text-danger active-link"> Click here</a> to reset </p>
-                        {{--  <p class="link-text"> <a href="https://tawk.to/chat/6452e8b94247f20fefef3648/1gvhtq6f7" class=" active-link text-success">Chat with us</a></p>  --}}
-
+                        <p class="link-text">I'm New.  <a href="/register" class="text-success h4 active-link">Create Account here </a></p>
                     </form>
+
+                    <!-- Buttons for Student and Staff login -->
+                    <div class="buttons-container">
+                        <a href="{{ route('student.login') }}"><button class="button-aligned">Student Login</button><a/>
+                        <a href="{{ route('staff.login') }}"><button class="button-aligned">Staff Login</button><a/>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-    @endsection
+</body>
 
-    @section('pagescript')
+@endsection
+
+@section('pagescript')
     <!-- iCheck -->
     <script>
         var myModal = new bootstrap.Modal(document.getElementById('myModal'), {})
         myModal.show()
     </script>
-
-    <!-- <script src="{{ asset('plugins/iCheck/icheck.min.js') }}"></script>
-                      <script>
-                          $(function() {
-                              $('input').iCheck({
-                                  checkboxClass: 'icheckbox_square-blue',
-                                  radioClass: 'iradio_square-blue',
-                                  increaseArea: '20%' // optional
-                              });
-                          });
-                      </script> -->
-
-    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous">
-    </script>
-
-
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous">
-    </script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous">
-    </script>
-    @endsection
+@endsection

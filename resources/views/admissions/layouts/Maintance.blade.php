@@ -77,7 +77,7 @@
 
 <br>
 <br>
-<p>Powerd by: ICT Veritas University Abuja
+<p>Powerd by: ICT Institute of Consecrated Life in Africa (InCLA)
                 </div>
 
             </div>

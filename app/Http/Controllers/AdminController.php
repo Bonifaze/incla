@@ -181,7 +181,7 @@ public function uploadScores(Request $request)
                 {
                     $grade_id = $grade_setting->id;
                 }
-                else 
+                else
                 {
                     $grade_setting = $grades->where('min_score', '<=', $total_score)->where('max_score', '>=', $total_score)->where('program_id', null)->first();
                     $grade_id = $grade_setting->id;
@@ -298,15 +298,15 @@ public function uploadScores(Request $request)
 
     public function viewScores($course_id)
     {
- 
+
         $course = StaffCourse::where('course_id', $course_id)->first();
         $student_registered_courses = RegisteredCourse::where('course_id', $course_id)
         ->where('level', $course->level)
-       
+
         ->where('session', '<=', $this->getCurrentSession())
         //  ->where(function ($query) {
 //     $query->where('session', '<', $this->getCurrentSession())
-        
+
 //         ->orWhere('session', $this->getCurrentSession() - 1);
 // })
 
@@ -2600,6 +2600,26 @@ public function viewaddRemitasServiceType(){
 
     }
 
+
+
+
+
+
+
+
+ public function sendBirthdayEmail($recipient, $name)
+    {
+
+        $content = "Dear $name,\n\nWishing you a fantastic birthday filled with joy and laughter! 🎉🎂";
+        $subject = 'Happy Birthday! 🎈';
+
+
+        Mail::raw($content, function ($message) use ($recipient, $subject) {
+            $message->to($recipient)->subject($subject);
+        });
+
+        return response()->json(['message' => 'Birthday email sent successfully!']);
+    }
 
 }
 

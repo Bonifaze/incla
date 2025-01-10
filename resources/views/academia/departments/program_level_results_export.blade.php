@@ -14,7 +14,7 @@
                               <td colspan="8"> </td>
 
 
-                                  <td colspan="8"> VERITAS UNIVERSITY ABUJA </td>
+                                  <td colspan="8"> Institute of Consecrated Life in Africa (InCLA) </td>
 
 
 

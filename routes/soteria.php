@@ -3,6 +3,9 @@
 
 Route::get('/soteria/home', 'SoteriaController@home')->name('soteria.home');
 
+// Route::get('/soteria/getvoucherstudent', 'SoteriaController@getvoucherstudent')->name('soteria.getvoucherstudent');
+Route::get('/soteria/getvoucherstaff', 'SoteriaController@getvoucherstaff')->name('soteria.getvoucherstaff');
+
 Route::post('/soteria/add', 'SoteriaController@add')->name('soteria.add');
 
 Route::get('/soteria/add-staff/{staff_id}', 'SoteriaController@addStaff')->name('soteria.add_staff');
@@ -36,6 +39,10 @@ Route::get('/soteria/admin-edit/{device_id}', 'SoteriaController@adminEdit')->na
 Route::patch('/soteria/admin-edit/{device_id}', 'SoteriaController@adminUpdate')->name('soteria.admin_update');
 
 
+Route::post('/add-pin', 'SoteriaController@addPin')->name('addPin');
 
+Route::get('/download-sample-csv', 'SoteriaController@downloadSampleCSV')->name('downloadSampleCSV');
 
+// Route to handle CSV file upload
+Route::post('/upload-csv', 'SoteriaController@uploadCSV')->name('uploadCSV');
 

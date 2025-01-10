@@ -293,9 +293,12 @@ class ProgramCoursesController extends Controller
     {
         $this->authorize('search',ProgramCourse::class);
         $pcourses = ProgramCourse::with(['course', 'program', 'lecturer', 'session'])
-        ->where('semester',  $request->semester)
-        ->where('session_id', $request->session_id)
-        ->where('level', $request->level)
+        // ->where('semester',  $request->semester)
+         ->where('session_id', $request->session_id)
+         ->where('level', [100,200,300,400])
+        // ->where('semester',  $request->semester)
+         ->where('session_id', 17)
+        //  ->where('level', $request->level)
         ->where('program_id', $request->program)
         ->orderBy('id','DESC')
         ->orderBy('program_id','ASC')->orderBy('level','ASC')->paginate(100);
@@ -431,12 +434,15 @@ class ProgramCoursesController extends Controller
 
     public function students($program_course_id, $program_id)
     {
-
+        $session = new Session();
        // $pcid = base64_decode($program_course_id);
         // dd($pcid);
         $program_course_name=Course::findOrFail($program_course_id);
         // $program_course = ProgramCourse::with(['registeredCourse.student','registeredCourse.student.contact','registeredCourse.student.academic'])->findOrFail($pcid);
-        $program_course=RegisteredCourse::with('course','student',)->where('program_id', $program_id)->where('course_id', $program_course_id )->where('session', 16)->get();
+        $program_course=RegisteredCourse::with('course','student',)->where('program_id', $program_id)->where('course_id', $program_course_id )
+        // ->where('session', 17)
+        ->where('session', $session->currentSession())
+        ->get();
         // $results = $program_course->registeredCourse;
         // dd($results);
         return view('staff.academic.program_course_students', compact('program_course','program_course_name'));

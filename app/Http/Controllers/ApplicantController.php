@@ -70,7 +70,7 @@ class ApplicantController extends Controller
                 //$fullName = $req->first_name." ".$req->surname;
                 //Data That will be deisplayed at the email address portal
                 $mailData = [
-                    'title' => 'Welcome to Veritas Admission Portal',
+                    'title' => 'Welcome to Institute of Consecrated Life in Africa (InCLA)',
                     'msg' => 'Thank you for Registering , please click on the button below to activate your account',
                     'url' => $this->getBaseUrl() . '/confirmation/?applicant=' . base64_encode($idcard),
                     // 'url' => $this->getBaseUrl().'/='.base64_encode($req->idcard),
@@ -2383,7 +2383,7 @@ class ApplicantController extends Controller
             $userreferee = DB::table('users')->where('id', session('userid'))->first();
 
             $mailData = [
-                'title' => 'Welcome to Veritas University Abuja',
+                'title' => 'Welcome to Institute of Consecrated Life in Africa (InCLA)',
                 'msg' => ' Please click on the button below to fill the Referee form ',
                 'url' => $this->getpgUrl(),
                 'surname' => $userreferee->first_name . " " . $userreferee->surname,

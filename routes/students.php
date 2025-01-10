@@ -83,3 +83,5 @@ Route::get('/students/remita/otherfeestype', 'StudentPaymentsController@Otherfee
 
 //CLEARANCE
 Route::get('/student/studentsClearance', 'StudentsController@studentsClearance')->name('student.studentsClearance');
+
+Route::get('/student/getvoucherstudent', 'StudentsController@getvoucherstudent')->name('student.getvoucherstudent');

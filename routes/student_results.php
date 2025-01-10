@@ -20,7 +20,8 @@ Route::post('/results/ict-store', 'StudentResultsController@ICTStore')->name('re
 Route::get('/results/semester/{student_id}/{session_id}/{semester}', 'StudentResultsController@semesterResult')->name('result.semester_result');
 Route::get('/results/modify', 'StudentResultsController@modifyResult')->name('result.modify');
 Route::post('/results/update', 'StudentResultsController@updateResult')->name('result.update');
-
+//FOR ICT STAFF CHANGE RESULT
+Route::post('/results/updateICT', 'StudentResultsController@updateResultICT')->name('result.updateICT');
 // Admin Course Registration Routes
 
 Route::post('/results/registration', 'StudentResultsController@registration')->name('result.registration');

@@ -1,1 +1,0 @@
-<?php /**PATH C:\Users\hp\Documents\WEB DEV\Work-VUNA\laraproject\resources\views/remitas/remitaBankResponse.blade.php ENDPATH**/ ?>

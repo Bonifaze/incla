@@ -424,7 +424,7 @@
                             </a></li>
                 </ul>
             </li>
-            
+
         @else
             <div></div>
         @endcan

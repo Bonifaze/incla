@@ -480,6 +480,200 @@ $validatedData = $request->validate([
 
 
 
+    public function selfcreate()
+    {
+        // $this->authorize('create',Student::class);
+        $programs = Program::orderBy('name','ASC')->pluck('name','id');
+        $sessions = Session::where('status',1)->pluck('name','id');
+        return view('students.admin.selfcreate',compact('programs', 'sessions'));
+    }
+
+    public function selfstore(Request $request)
+    {
+        // $this->authorize('create',Student::class);
+
+
+        $student = new Student();
+        if($request->serial_no !== 0 AND $student->checkSerial($request->serial_no) === false)
+        {
+         $student->id = $request->serial_no;
+        }
+        // $student->user_id =$request->user_id;
+        $student->surname = $request->surname;
+        $student->first_name = $request->first_name;
+        $student->middle_name = $request->middle_name;
+        $student->gender = $request->gender;
+        $student->phone = $request->phone;
+        $student->email = $request->email;
+        $student->title = $request->title;
+        $student->dob = $request->dob;
+        $student->marital_status = $request->marital_status;
+        $student->nationality = $request->nationality;
+        $student->state = $request->state;
+        $student->lga_name = $request->lga_name;
+        // $student->city = $request->city;
+        $student->hobbies = $request->hobbies;
+        $student->religion = $request->religion;
+        $student->address = $request->address;
+        $student->password = Hash::make('welcome');
+        $student->status = 1;
+
+        //temprary username
+        $student->username = "temporary@veritas.edu.ng";
+
+       // process Passport upload
+        if($request->hasFile('passport'))
+        {
+            $img1 = ($request->file('passport'));
+
+                $passport = ($img1);
+                $student->passport = $passport;
+        } // end Passport
+
+        //process Signature upload
+        if($request->hasFile('signature'))
+        {
+            $img2 = ($request->file('signature'));
+
+
+                $signature =($img2);
+                $student->signature = $signature;
+        } // end Signature
+        if($request->hasFile('passport'))
+        {
+            $img1 = Image::make($request->file('passport'))->resize(300, null, function ($constraint) {
+                $constraint->aspectRatio();
+            });
+                $passport = base64_encode($img1->encode()->encoded);
+                $student->passport = $passport;
+        } // end Passport
+
+
+        //process Signature upload
+        if($request->hasFile('signature'))
+        {
+            $img2 = Image::make($request->file('signature'))->resize(300, null, function ($constraint) {
+                $constraint->aspectRatio();
+            });
+
+                $signature = base64_encode($img2->encode()->encoded);
+                $student->signature = $signature;
+        } // end Signature
+
+
+       // emergency contacts or sponsor
+
+        $contact = new StudentContact();
+        $contact->surname = $request->esurname;
+        $contact->other_names = $request->eother_names;
+        $contact->phone = $request->ephone;
+        $contact->email = $request->eemail;
+        $contact->title = $request->etitle;
+        $contact->relationship = $request->relationship;
+        $contact->state = $request->estate;
+        $contact->city = $request->ecity;
+        $contact->address = $request->eaddress;
+
+        // academic information
+        $academic = new StudentAcademic();
+        $academic->mode_of_entry = $request->mode_of_entry;
+        $academic->mode_of_study = $request->mode_of_study;
+        $academic->jamb_no = $request->jamb_no;
+        $academic->jamb_score = $request->jamb_score;
+        $academic->entry_session_id = $request->entry_session_id;
+        $academic->program_id = $request->program_id;
+        $academic->level = $request->level;
+        // $academic->program_type = $request->program_type;
+
+
+        // medical information
+        $medical = new StudentMedical();
+        $medical->physical = $request->physical;
+        $medical->blood_group = $request->blood_group;
+        $medical->genotype = $request->genotype;
+        $medical->condition = $request->condition;
+        $medical->allergies = $request->allergies;
+
+        $studentCreditLoad1 = new StudentCreditLoad();
+        $studentCreditLoad1->semester =1;
+        $studentCreditLoad2 = new StudentCreditLoad();
+        $studentCreditLoad2->semester =2;
+
+        $studentDebit = new StudentDebt();
+
+        DB::beginTransaction(); //Start transaction!
+
+        try {
+
+            //saving logic here
+            // $student->id=$this->studentID($request->only('program_id', 'entry_session_id', 'program_type'));
+            $student->save();
+    // dd($student);
+            // save contact
+            $contact->student_id = $student->id;
+            $contact->save();
+
+           //save academic
+           $academic->student_id = $student->id;
+           $academic->mat_no = $student->setMatNo($request->program_id, $request->entry_session_id, $student->id, $request->mode_of_entry);
+           $academic->save();
+
+            //save medical
+            $medical->student_id = $student->id;
+            $medical->save();
+
+            //save CreditLoad firstsemster
+            $studentCreditLoad1->student_id=$student->id;
+            $studentCreditLoad1->save();
+
+             //save CreditLoad secondsemester
+             $studentCreditLoad2->student_id=$student->id;
+             $studentCreditLoad2->save();
+
+             $studentDebit->student_id=$student->id;
+             $studentDebit->save();
+
+            // $student->id=$student->studentID($request->only('program_id', 'entry_session_id', 'program_type'));
+            $student->username = $student->setVunaMail();
+            $student->save();
+
+           //Data That will be deisplayed at the email address portal
+           $mailData = [
+            'title' => 'Welcome to Veritas University Portal',
+            'msg' => 'Your Student account have been created , please click on the button below to Login and Reset Your Password',
+            'url' => $this->getloginUrl() ,
+            // 'url' => $this->getBaseUrl().'/='.base64_encode($req->idcard),
+             'surname'=>$request->surname." ".$request->first_name." ".$request->middle_name,
+            'email' => $student->username,
+            'name_no'=>'Matric Number : ',
+            'identity_no'=> $academic->mat_no,
+            'password' => 'welcome'
+
+        ];
+        //   Mail::to($request->email)->send(new Welcome($mailData));
+        //   Mail::to('noreply@veritas.edu.ng')->send(new Welcome($mailData));
+        //   //end of email address sending
+        } // end try
+
+
+          catch(\Exception $e)
+            {
+            //failed logic here
+             DB::rollback();
+            //  return view('login');
+
+
+            return redirect()->back()
+            ->with('error',"Errors in creating Student information.".$e);
+
+             }
+
+             DB::commit();
+             return redirect()->back()
+             ->with('success','Student Matric  Number'.$academic->mat_no.' created successfully, an email has been sent to you with your Matriculation Number and Login details');
+
+    } //end store
+
 
 
 
