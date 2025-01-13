@@ -106,26 +106,44 @@
         }
 
         @media only screen and (max-width: 480px) {
-            body {
-                font-size: 20px;
-                padding-top: 90px;
-            }
+    body {
+        font-size: 18px; /* Adjust font size for mobile */
+        padding-top: 70px; /* Provide top padding to avoid overlap with navbar */
+    }
 
-            .login-form {
-                width: 100%;
-                max-width: 100%;
-            }
+    .login-form {
+        width: 90%;
+        max-width: 90%; /* Ensure form takes full width on mobile */
+    }
 
-            .buttons-container {
-                flex-direction: column;
-                align-items: center;
-                gap: 15px;
-            }
+    .buttons-container {
+        flex: 1;
+        align-items: center;
+        gap: 15px;
+    }
 
-            .button-aligned {
-                width: 80%;
-            }
-        }
+    .button-aligned {
+        width: 100%;
+
+    }
+    .login-heading {
+
+    margin: 5px;
+
+    font-size: 1em;
+
+    font-weight: 300;
+
+}
+.link-text {
+    margin-bottom: 5px;
+
+    font-size: 1em;
+    font-weight: 300;
+}
+
+
+}
     </style>
 <?php $__env->stopSection(); ?>
 
@@ -202,4 +220,4 @@
     </script>
 <?php $__env->stopSection(); ?>
 
-<?php echo $__env->make('layouts.plain', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH C:\Users\CLINTON\Downloads\TASK\incla\resources\views/staff/auth/login.blade.php ENDPATH**/ ?>
+<?php echo $__env->make('layouts.plain', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH C:\Users\hp\Desktop\incla\resources\views/staff/auth/login.blade.php ENDPATH**/ ?>

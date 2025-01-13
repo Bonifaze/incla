@@ -9,123 +9,142 @@
 
 <?php $__env->startSection('css'); ?>
 <style>
+body {
+    background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
+    url("<?php echo e(asset('/css/incla-class.jpg')); ?>") center center no-repeat;
+    background-size: cover;
+    padding-top: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+}
+
+.login-form {
+    background: rgba(0, 0, 0, 0.7);
+    box-shadow: rgba(0, 0, 0, 0.4) 0px 2px 4px 0px, rgba(0, 0, 0, 0.3) 0px 7px 13px -3px, rgba(0, 0, 0, 0.2) 0px -3px 0px 0px inset;
+    padding: 30px 40px;
+    border-radius: 15px;
+    color: white;
+    width: 100%;
+    max-width: 400px;
+    margin: 0;
+}
+
+.btn-success {
+    background-color: #f0ad4e;
+    border: none;
+    border-radius: 30px;
+    color: #fff;
+    width: 100%;
+    padding: 12px;
+    font-size: 1.2em;
+}
+
+.btn-success:hover {
+    background-color: #ec971f;
+}
+
+.form-control {
+    border-radius: 30px;
+    background-color: #f1f1f1;
+    border: 1px solid #5bc0de;
+    color: #333;
+}
+
+.input-group-text {
+    background-color: #5bc0de;
+    border-radius: 30px;
+    color: white;
+}
+
+.login-heading {
+    text-align: center;
+    margin: 20px;
+    color: #fff;
+    font-size: 2em;
+    text-transform: uppercase;
+    font-weight: 600;
+    font-family: 'Dancing Script', cursive;
+}
+
+.link-text {
+    margin-bottom: 10px;
+    color: #fff;
+    font-size: 1.2em;
+    font-weight: 400;
+}
+
+.active-link {
+    font-weight: 500;
+    text-decoration: underline;
+}
+
+label {
+    font-weight: 500;
+}
+
+.buttons-container {
+    display: flex;
+    justify-content: space-between; /* Ensures the buttons are aligned side by side */
+    margin-top: 20px;
+    gap: 10px;
+}
+
+.button-aligned {
+    flex: 1; /* Makes buttons take equal space */
+    padding: 12px;
+    background-color: #5bc0de;
+    color: white;
+    border-radius: 30px;
+    text-align: center;
+    font-size: 1.1em;
+    border: none;
+}
+
+.button-aligned:hover {
+    background-color: #025aa5;
+}
+
+@media only screen and (max-width: 480px) {
     body {
-        background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
-        url("<?php echo e(asset('/css/incla-class.jpg')); ?>") center center no-repeat;
-        background-size: cover;
-        padding-top: 10px;
-        display: flex;
-        align-items: center;
-        justify-content: flex-end;
+        font-size: 18px; /* Adjust font size for mobile */
+        padding-top: 70px; /* Provide top padding to avoid overlap with navbar */
     }
 
     .login-form {
-        background: rgba(0, 0, 0, 0.7);
-        box-shadow: rgba(0, 0, 0, 0.4) 0px 2px 4px 0px, rgba(0, 0, 0, 0.3) 0px 7px 13px -3px, rgba(0, 0, 0, 0.2) 0px -3px 0px 0px inset;
-        padding: 30px 40px;
-        border-radius: 15px;
-        color: white;
-        max-width: 400px;
-        width: 100%;
-        margin: 0;
-    }
-
-    .btn-success {
-        background-color: #f0ad4e;
-        border: none;
-        border-radius: 30px;
-        color: #fff;
-        width: 100%;
-        padding: 12px;
-        font-size: 1.2em;
-    }
-
-    .btn-success:hover {
-        background-color: #ec971f;
-    }
-
-    .form-control {
-        border-radius: 30px;
-        background-color: #f1f1f1;
-        border: 1px solid #5bc0de;
-        color: #333;
-    }
-
-    .input-group-text {
-        background-color: #5bc0de;
-        border-radius: 30px;
-        color: white;
-    }
-
-    .login-heading {
-        text-align: center;
-        margin: 20px;
-        color: #fff;
-        font-size: 2em;
-        text-transform: uppercase;
-        font-weight: 600;
-        font-family: 'Dancing Script', cursive;
-    }
-
-    .link-text {
-        margin-bottom: 10px;
-        color: #fff;
-        font-size: 1.2em;
-        font-weight: 400;
-    }
-
-    .active-link {
-        font-weight: 500;
-        text-decoration: underline;
-    }
-
-    label {
-        font-weight: 500;
+        width: 90%;
+        max-width: 90%; /* Ensure form takes full width on mobile */
     }
 
     .buttons-container {
-        display: flex;
-        justify-content: flex-end;
-        margin-top: 20px;
-        gap: 10px;
+        flex: 1;
+        align-items: center;
+        gap: 15px;
     }
 
     .button-aligned {
-        width: 150px;
-        padding: 12px;
-        background-color: #5bc0de;
-        color: white;
-        border-radius: 30px;
-        text-align: center;
-        font-size: 1.1em;
-        border: none;
+        width: 100%;
+
     }
+    .login-heading {
 
-    .button-aligned:hover {
-        background-color: #025aa5;
-    }
+    margin: 5px;
 
-    @media only screen and (max-width: 480px) {
-        body {
-            font-size: 20px;
-            padding-top: 90px;
-        }
+    font-size: 1em;
 
-        .login-form {
-            width: 100%;
-            max-width: 100%;
-        }
+    font-weight: 300;
 
-        .buttons-container {
-            flex-direction: column;
-            align-items: center;
-            gap: 15px;
-        }
+}
+.link-text {
+    margin-bottom: 5px;
 
-        .button-aligned {
-            width: 80%;
-        }
-    }
+    font-size: 1em;
+    font-weight: 300;
+}
+
+
+}
+
 </style>
 <?php $__env->stopSection(); ?>
 
@@ -134,7 +153,7 @@
 <body>
 
 
-    
+
     <div class="container">
         <div class="row">
             <div class="col-md-6 offset-md-2 d-flex aligns-items-center justify-content-center">
@@ -184,9 +203,9 @@
 
                     <!-- Buttons for Student and Staff login -->
                     <div class="buttons-container">
-                        <a href="<?php echo e(route('student.login')); ?>"><button class="button-aligned">Student Login</button><a/>
+                        <a href="<?php echo e(route('student.login')); ?>"><button class="button-aligned">Student</button><a/>
                             <br>
-                        <a href="<?php echo e(route('staff.login')); ?>"><button class="button-aligned">Staff Login</button><a/>
+                        <a href="<?php echo e(route('staff.login')); ?>"><button class="button-aligned">Staff</button><a/>
 </div>
                 </div>
             </div>
@@ -204,4 +223,4 @@
     </script>
 <?php $__env->stopSection(); ?>
 
-<?php echo $__env->make('layouts.plain', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH C:\Users\CLINTON\Downloads\incla\resources\views/default.blade.php ENDPATH**/ ?>
+<?php echo $__env->make('layouts.plain', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH C:\Users\hp\Desktop\incla\resources\views/auth/login.blade.php ENDPATH**/ ?>

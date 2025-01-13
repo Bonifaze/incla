@@ -9,4 +9,4 @@
     </ul>
 
 </nav>
-<?php /**PATH C:\Users\CLINTON\Downloads\incla\resources\views/adminsials/navbar.blade.php ENDPATH**/ ?>
+<?php /**PATH C:\Users\hp\Desktop\incla\resources\views/adminsials/navbar.blade.php ENDPATH**/ ?>

@@ -1,6 +1,11 @@
+
+
+
+
+
 <!DOCTYPE html>
 <html lang="en">
-
+    
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -34,7 +39,7 @@
 }"
   </style>
 </head>
-
+<?php $__env->startSection('content'); ?>
 <body style="background-image: url('../img/signup-bg.jpg'); opacity: 0.9;" >
     <div class="">
         <div class="signup">
@@ -43,16 +48,14 @@
                 <div class="signup-content" >
 
 
-                        <div class="login-box-body loginbg">
-                            <div class="login-logo">
-                                <b>Oops! Something went wrong. </b>
-                            </div>
-                            <p class="h4">
-                                Please check your internet connection. 
-                            <br />
-                                If this continues, contact Institute of Consecrated Life in Africa (InCLA) ICT Unit
-
-                            </p> </div>
+                    <div class="login-logo">
+                        <strong>404 Page Not Found. </strong>
+                    </div>
+                    <p class="h4">
+                    We can't find the page you are looking for. This page may no longer exist.
+                   <br />
+                      If this continues, contact Institute of Consecrated Life in Africa (InCLA) ICT Unit.
+                  </p>
 
 
 
@@ -64,6 +67,8 @@
     </div>
 
 </body>
+<?php $__env->stopSection(); ?>
 
 </html>
-<?php /**PATH C:\Users\CLINTON\Downloads\incla\resources\views/errors/500.blade.php ENDPATH**/ ?>
+
+<?php echo $__env->make('layouts.plain', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH C:\Users\hp\Desktop\incla\resources\views/errors/404.blade.php ENDPATH**/ ?>

@@ -1,4 +1,4 @@
-<aside class="main-sidebar sidebar-dark-primary elevation-4" style="background-color: #F7F5F6; color: #100e0e;" >
+<aside class="main-sidebar sidebar-dark-primary elevation-4" style="background-color: #F7F5F6; color: #e23838;" >
     <!-- Brand Logo -->
 
     <div class="bg-white text-center">
@@ -19,7 +19,7 @@
         }
         ?>
         <div class="user-panel mt-3 pb-3 mb-3 d-flex">
-            
+
 
         <div class="info text-wrap ">
             <div class="d-block"> <?php echo e(session('userssurname')); ?> <?php echo e(session('usersFirstName')); ?> <?php echo e(session('usersMiddleName')); ?></div>
@@ -72,7 +72,7 @@
                     </li>
                 </ul>
             </li>
-        
+
 
 
             <li class="nav-item has-treeview <?php echo $__env->yieldContent('fees-open'); ?>">
@@ -90,7 +90,7 @@
                             <p>View Payment</p>
                         </a>
                     </li>
-                
+
                 </ul>
             </li>
             <li class="nav-item">
@@ -104,7 +104,8 @@
     </nav>
     <!-- /.sidebar-menu -->
 
-    
+
     </div>
     <!-- /.sidebar -->
-</aside><?php /**PATH C:\Users\CLINTON\Downloads\incla\resources\views/adminsials/sidebar.blade.php ENDPATH**/ ?>
+</aside>
+<?php /**PATH C:\Users\hp\Desktop\incla\resources\views/adminsials/sidebar.blade.php ENDPATH**/ ?>

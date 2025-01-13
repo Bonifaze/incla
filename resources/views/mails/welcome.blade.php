@@ -24,7 +24,7 @@ Click to Login your account
   <strong>Mr. Calistus C. Chimezie</strong>
   <br>(Supervising Head, ICT UNIT)
    --}}
-   <strong>Veritas Univeristy Abuja</strong>
+   <strong>Institute of Consecrated Life in Africa (InCLA)</strong>
 
  {{--  {{ config('app.name') }}  --}}
 @endcomponent

@@ -3,7 +3,7 @@
     <meta name="csrf-token" content="<?php echo e(csrf_token()); ?>">
     <link rel="icon" type="image/x-icon" href="../img/uaes.png">
 
-    <title>InCLA | Applicant Login</title>
+    <title>InCLA | Student Portal Access</title>
     <link href="https://fonts.googleapis.com/css2?family=Dancing+Script&display=swap" rel="stylesheet">
 <?php $__env->stopSection(); ?>
 
@@ -16,7 +16,7 @@
             padding-top: 10px;
             display: flex;
             align-items: center;
-            justify-content: center;
+            justify-content: flex-end;
         }
 
         .login-form {
@@ -27,7 +27,7 @@
             color: white;
             max-width: 400px;
             width: 100%;
-            margin: 0 auto;
+            margin: 0;
         }
 
         .btn-success {
@@ -106,26 +106,44 @@
         }
 
         @media only screen and (max-width: 480px) {
-            body {
-                font-size: 20px;
-                padding-top: 90px;
-            }
+    body {
+        font-size: 18px; /* Adjust font size for mobile */
+        padding-top: 70px; /* Provide top padding to avoid overlap with navbar */
+    }
 
-            .login-form {
-                width: 100%;
-                max-width: 100%;
-            }
+    .login-form {
+        width: 90%;
+        max-width: 90%; /* Ensure form takes full width on mobile */
+    }
 
-            .buttons-container {
-                flex-direction: column;
-                align-items: center;
-                gap: 15px;
-            }
+    .buttons-container {
+        flex: 1;
+        align-items: center;
+        gap: 15px;
+    }
 
-            .button-aligned {
-                width: 80%;
-            }
-        }
+    .button-aligned {
+        width: 100%;
+
+    }
+    .login-heading {
+
+    margin: 5px;
+
+    font-size: 1em;
+
+    font-weight: 300;
+
+}
+.link-text {
+    margin-bottom: 5px;
+
+    font-size: 1em;
+    font-weight: 300;
+}
+
+
+}
     </style>
 <?php $__env->stopSection(); ?>
 
@@ -134,34 +152,31 @@
 <body>
     <div class="container">
         <div class="row">
-            <div class="col-md-6 offset-md-2 d-flex aligns-items-center justify-content-center">
+            <div class="col-md-6 d-flex align-items-center justify-content-center">
                 <div class="login-form">
                     <div class="login-heading">
-                        <p>APPLICANT Login</p>
+                        <p>STUDENT Portal</p>
                     </div>
-                    <form method="POST" action="/login">
-                        <?php if(session('signUpMsg')): ?>
-                        <?php echo session('signUpMsg'); ?>
-
-                        <?php endif; ?>
-
+                    <form method="POST" action="<?php echo e(route('student.login.submit')); ?>">
                         <?php echo csrf_field(); ?>
                         <div class="form-group">
-                            <label for="exampleInputEmail1">Email</label>
-                            <input id="email" type="email" placeholder="Email" class="form-control<?php echo e($errors->has('email') ? ' is-invalid' : ''); ?>" name="email" value="<?php echo e(old('email')); ?>" required autofocus>
+                            <label for="email">Username</label>
+                            <input id="email" type="email" placeholder="Username" class="form-control<?php echo e($errors->has('email') ? ' is-invalid' : ''); ?>" name="email" value="<?php echo e(old('email')); ?>" required autofocus>
                             <?php if($errors->has('email')): ?>
-                            <span class="invalid-feedback"> <strong><?php echo e($errors->first('email')); ?></strong> </span>
+                                <span class="invalid-feedback"> <strong><?php echo e($errors->first('email')); ?></strong> </span>
                             <?php endif; ?>
                         </div>
+
                         <div class="form-group">
-                            <label for="exampleInputPassword1">Password</label>
+                            <label for="password">Password</label>
                             <input id="password" type="password" placeholder="Password" class="form-control<?php echo e($errors->has('password') ? ' is-invalid' : ''); ?>" name="password" required>
                             <?php if($errors->has('password')): ?>
-                            <span class="invalid-feedback"><strong><?php echo e($errors->first('password')); ?></strong></span>
+                                <span class="invalid-feedback"><strong><?php echo e($errors->first('password')); ?></strong></span>
                             <?php endif; ?>
                         </div>
+
                         <div class="form-group form-check">
-                            <label class="form-check-label" for="exampleCheck1">
+                            <label class="form-check-label" for="remember">
                                 <input type="checkbox" name="remember" <?php echo e(old('remember') ? 'checked' : ''); ?>>
                                 <?php echo e(__('Remember Me')); ?>
 
@@ -169,20 +184,21 @@
                         </div>
 
                         <?php if(session('loginMsg')): ?>
-                        <?php echo session('loginMsg'); ?>
+                            <?php echo session('loginMsg'); ?>
 
                         <?php endif; ?>
-                        <button type="submit" class="btn btn-success"> <?php echo e(__('Login')); ?></button>
                         <br>
-                        <p class="link-text"><a href="/forgotpassword" class="text-danger active-link"> Forgot Password</a> </p>
+                        <button type="submit" class="btn btn-success"><?php echo e(__('Login')); ?></button>
                         <br>
-                        <p class="link-text">I'm New.  <a href="/register" class="text-success h4 active-link">Create Account here </a></p>
+                        <p class="link-text"><a href="/forgotpassword" class="text-danger active-link">Forgot Password</a></p>
+                        <br>
+
                     </form>
 
-                    <!-- Buttons for Student and Staff login -->
+                    <!-- Buttons for Applicant and Staff login -->
                     <div class="buttons-container">
-                        <a href="<?php echo e(route('student.login')); ?>"><button class="button-aligned">Student Login</button><a/>
-                        <a href="<?php echo e(route('staff.login')); ?>"><button class="button-aligned">Staff Login</button><a/>
+                        <a href="/admissions/login"><button class="button-aligned">Applicant Login</button></a>
+                        <a href="<?php echo e(route('staff.login')); ?>"><button class="button-aligned">Staff Login</button></a>
                     </div>
                 </div>
             </div>
@@ -193,11 +209,15 @@
 <?php $__env->stopSection(); ?>
 
 <?php $__env->startSection('pagescript'); ?>
-    <!-- iCheck -->
     <script>
-        var myModal = new bootstrap.Modal(document.getElementById('myModal'), {})
-        myModal.show()
+        $(function() {
+            $('input').iCheck({
+                checkboxClass: 'icheckbox_square-blue',
+                radioClass: 'iradio_square-blue',
+                increaseArea: '20%' // optional
+            });
+        });
     </script>
 <?php $__env->stopSection(); ?>
 
-<?php echo $__env->make('layouts.plain', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH C:\Users\CLINTON\Downloads\TASK\incla\resources\views/admissions/login.blade.php ENDPATH**/ ?>
+<?php echo $__env->make('layouts.plain', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH C:\Users\hp\Desktop\incla\resources\views/students/auth/login.blade.php ENDPATH**/ ?>

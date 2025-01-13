@@ -1053,7 +1053,7 @@ public function uploadScores(Request $request)
 
                 $mailData = [
                     'title' => 'CONGRATULATION ',
-                    'msg' => 'You have been offerred provisional admission into Veritas Univeristy Abuja kindly click the button below to Login',
+                    'msg' => 'You have been offerred provisional admission into Institute of Consecrated Life in Africa (InCLA) kindly click the button below to Login',
                     'url' => $this->getloginApplicantUrl() ,
                     // 'url' => $this->getBaseUrl().'/='.base64_encode($req->idcard),
                      'surname'=>$usersEmail ->surname." ".$usersEmail ->first_name." ".$usersEmail ->middle_name,
@@ -1143,7 +1143,7 @@ public function uploadScores(Request $request)
                 ]);
                 $mailData = [
                     'title' => 'CONGRATULATION ',
-                    'msg' => 'You have been offerred provisional admission into Veritas Univeristy Abuja kindly click the button below to Login and print your Admission Letter',
+                    'msg' => 'You have been offerred provisional admission into Institute of Consecrated Life in Africa (InCLA) kindly click the button below to Login and print your Admission Letter',
                     'url' => $this->getloginApplicantUrl() ,
                     // 'url' => $this->getBaseUrl().'/='.base64_encode($req->idcard),
                      'surname'=>$usersEmail ->surname." ".$usersEmail ->first_name." ".$usersEmail ->middle_name,
@@ -1541,7 +1541,7 @@ public function changecourseTransfer(Request $req)
 
                     $mailData = [
                         'title' => 'CONGRATULATION ',
-                        'msg' => 'You have been offerred provisional admission into Veritas Univeristy Abuja kindly click the button below to Login and print your Admission Letter',
+                        'msg' => 'You have been offerred provisional admission into Institute of Consecrated Life in Africa (InCLA) kindly click the button below to Login and print your Admission Letter',
                         'url' => $this->getloginApplicantUrl() ,
                         // 'url' => $this->getBaseUrl().'/='.base64_encode($req->idcard),
                          'surname'=>$usersEmail ->surname." ".$usersEmail ->first_name." ".$usersEmail ->middle_name,

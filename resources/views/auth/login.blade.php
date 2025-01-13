@@ -1,203 +1,223 @@
-{{--  @extends('layouts.plain')
+@extends('layouts.plain')
 
+@section('pagetitle')
+    <!-- CSRF Token -->
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+     <link rel="icon" type="image/x-icon" href="../img/uaes.png">
 
- @section('pagetitle')
-
-<title> Laravel Starter Login</title>
-
+    <title>InCLA | Applicant Login</title>
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script&display=swap" rel="stylesheet">
 @endsection
 
-  @section('css')
+@section('css')
+<style>
+body {
+    background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
+    url("{{ asset('/css/incla-class.jpg') }}") center center no-repeat;
+    background-size: cover;
+    padding-top: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+}
 
-   <!-- iCheck -->
-  <link rel="stylesheet" href="{{ asset('plugins/iCheck/square/blue.css')}}">
+.login-form {
+    background: rgba(0, 0, 0, 0.7);
+    box-shadow: rgba(0, 0, 0, 0.4) 0px 2px 4px 0px, rgba(0, 0, 0, 0.3) 0px 7px 13px -3px, rgba(0, 0, 0, 0.2) 0px -3px 0px 0px inset;
+    padding: 30px 40px;
+    border-radius: 15px;
+    color: white;
+    width: 100%;
+    max-width: 400px;
+    margin: 0;
+}
+
+.btn-success {
+    background-color: #f0ad4e;
+    border: none;
+    border-radius: 30px;
+    color: #fff;
+    width: 100%;
+    padding: 12px;
+    font-size: 1.2em;
+}
+
+.btn-success:hover {
+    background-color: #ec971f;
+}
+
+.form-control {
+    border-radius: 30px;
+    background-color: #f1f1f1;
+    border: 1px solid #5bc0de;
+    color: #333;
+}
+
+.input-group-text {
+    background-color: #5bc0de;
+    border-radius: 30px;
+    color: white;
+}
+
+.login-heading {
+    text-align: center;
+    margin: 20px;
+    color: #fff;
+    font-size: 2em;
+    text-transform: uppercase;
+    font-weight: 600;
+    font-family: 'Dancing Script', cursive;
+}
+
+.link-text {
+    margin-bottom: 10px;
+    color: #fff;
+    font-size: 1.2em;
+    font-weight: 400;
+}
+
+.active-link {
+    font-weight: 500;
+    text-decoration: underline;
+}
+
+label {
+    font-weight: 500;
+}
+
+.buttons-container {
+    display: flex;
+    justify-content: space-between; /* Ensures the buttons are aligned side by side */
+    margin-top: 20px;
+    gap: 10px;
+}
+
+.button-aligned {
+    flex: 1; /* Makes buttons take equal space */
+    padding: 12px;
+    background-color: #5bc0de;
+    color: white;
+    border-radius: 30px;
+    text-align: center;
+    font-size: 1.1em;
+    border: none;
+}
+
+.button-aligned:hover {
+    background-color: #025aa5;
+}
+
+@media only screen and (max-width: 480px) {
+    body {
+        font-size: 18px; /* Adjust font size for mobile */
+        padding-top: 70px; /* Provide top padding to avoid overlap with navbar */
+    }
+
+    .login-form {
+        width: 90%;
+        max-width: 90%; /* Ensure form takes full width on mobile */
+    }
+
+    .buttons-container {
+        flex: 1;
+        align-items: center;
+        gap: 15px;
+    }
+
+    .button-aligned {
+        width: 100%;
+
+    }
+    .login-heading {
+
+    margin: 5px;
+
+    font-size: 1em;
+
+    font-weight: 300;
+
+}
+.link-text {
+    margin-bottom: 5px;
+
+    font-size: 1em;
+    font-weight: 300;
+}
 
 
+}
 
-
+</style>
 @endsection
 
-  @section('content')
+@section('content')
 
-<body class="hold-transition login-page" style="background-image: url({{ asset( 'dist/img/login1.jpg' ) }}); background-repeat: no-repeat; background-size: cover;">
-<div class="login-box">
-  <div class="login-logo">
-    <a href="{{ asset( url('/home') ) }}"><b>Laravel </b>Starter</a>
-  </div>
-  <!-- /.login-logo -->
-  <div class="login-box-body">
-    <p class="login-box-msg">Sign in to start your session</p>
-
-    <form method="POST" action="{{ route('login') }}">
-     @csrf
-      <div class="form-group has-feedback">
-
-        <input id="email" type="email" placeholder="Email" class="form-control{{ $errors->has('email') ? ' is-invalid' : '' }}" name="email" value="{{ old('email') }}" required autofocus>
-		<span class="glyphicon glyphicon-envelope form-control-feedback"></span>
-            @if ($errors->has('email'))
-            <span class="invalid-feedback"> <strong>{{ $errors->first('email') }}</strong> </span>
-             @endif
-
-      </div>
+<body>
 
 
 
-      <div class="form-group has-feedback">
-        <input id="password" type="password" placeholder="Password" class="form-control{{ $errors->has('password') ? ' is-invalid' : '' }}" name="password" required>
-		 <span class="glyphicon glyphicon-lock form-control-feedback"></span>
-		 @if ($errors->has('password'))
-		 <span class="invalid-feedback"><strong>{{ $errors->first('password') }}</strong></span>
-          @endif
-      </div>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6 offset-md-2 d-flex aligns-items-center justify-content-center">
+                <div class="login-form">
+                    <div class="login-heading">
+                        <p>APPLICANT Login</p>
+                    </div>
+                    <form method="POST" action="/login">
+                        @if (session('signUpMsg'))
+                        {!! session('signUpMsg') !!}
+                        @endif
 
+                        @csrf
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">Email</label>
+                            <input id="email" type="email" placeholder="Email" class="form-control{{ $errors->has('email') ? ' is-invalid' : '' }}" name="email" value="{{ old('email') }}" required autofocus>
+                            @if ($errors->has('email'))
+                            <span class="invalid-feedback"> <strong>{{ $errors->first('email') }}</strong> </span>
+                            @endif
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleInputPassword1">Password</label>
+                            <input id="password" type="password" placeholder="Password" class="form-control{{ $errors->has('password') ? ' is-invalid' : '' }}" name="password" required>
+                            @if ($errors->has('password'))
+                            <span class="invalid-feedback"><strong>{{ $errors->first('password') }}</strong></span>
+                            @endif
+                        </div>
+                        <div class="form-group form-check">
+                            <label class="form-check-label" for="exampleCheck1">
+                                <input type="checkbox" name="remember" {{ old('remember') ? 'checked' : '' }}>
+                                {{ __('Remember Me') }}
+                            </label>
+                        </div>
 
+                        @if (session('loginMsg'))
+                        {!! session('loginMsg') !!}
+                        @endif
+                        <button type="submit" class="btn btn-success"> {{ __('Login') }}</button>
+                        <br>
+                        <p class="link-text"><a href="/forgotpassword" class="text-danger active-link"> Forgot Password</a> </p>
+                        <br>
+                        <p class="link-text"> I Don't have an Account <a href="/register" class="text-success h4 active-link">Create Account here </a></p>
+                    </form>
 
-      <div class="row">
-        <div class="col-xs-8">
-          <div class="checkbox icheck">
-            <label>
-              <input type="checkbox" name="remember" {{ old('remember') ? 'checked' : '' }}> {{ __('Remember Me') }}
-            </label>
-          </div>
-        </div>
-        <!-- /.col -->
-        <div class="col-xs-4">
-        <button type="submit" class="btn btn-primary"> {{ __('Login') }}</button>
-
-
-
-        </div>
-        <!-- /.col -->
-      </div>
-    </form>
-
-
-		 <a class="btn btn-link" href="{{ route('password.request') }}">
-                                    {{ __('Forgot Your Admin Password?') }}
-         </a>
-
-
-  </div>
-  <!-- /.login-box-body -->
+                    <!-- Buttons for Student and Staff login -->
+                    <div class="buttons-container">
+                        <a href="{{ route('student.login') }}"><button class="button-aligned">Student</button><a/>
+                            <br>
+                        <a href="{{ route('staff.login') }}"><button class="button-aligned">Staff</button><a/>
 </div>
-<!-- /.login-box -->
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
 
 @endsection
 
 @section('pagescript')
-<!-- iCheck -->
-<script src="{{ asset('plugins/iCheck/icheck.min.js') }}"></script>
-<script>
-  $(function () {
-    $('input').iCheck({
-      checkboxClass: 'icheckbox_square-blue',
-      radioClass: 'iradio_square-blue',
-      increaseArea: '20%' // optional
-    });
-  });
-</script>
+    <!-- iCheck -->
+    <script>
+        var myModal = new bootstrap.Modal(document.getElementById('myModal'), {})
+        myModal.show()
+    </script>
 @endsection
-
-
-  --}}
-
-
-
-  <!DOCTYPE html>
-<html lang="en">
-
-<head>
-  <meta charset="UTF-8">
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Institute of Consecrated Life in Africa (InCLA)|Home</title>
-  <style>
-    .hero-full-screen {
-      height: 100vh;
-      display: -webkit-flex;
-      display: -ms-flexbox;
-      display: flex;
-      -webkit-flex-direction: column;
-      -ms-flex-direction: column;
-      flex-direction: column;
-      -webkit-align-items: center;
-      -ms-flex-align: center;
-      align-items: center;
-      -webkit-justify-content: center;
-      -ms-flex-pack: justify;
-      justify-content: center;
-      background:linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
-      url("{{ asset('/css/view-2.jpg') }}") center center no-repeat;
-      background-size: cover;
-    }
-
-    .hero-full-screen .middle-content-section {
-      text-align: center;
-      color: #fefefe;
-    }
-
-    .hero-full-screen .top-bar {
-      background: transparent;
-    }
-
-    .hero-full-screen .top-bar .menu {
-      background: transparent;
-    }
-
-    .hero-full-screen .top-bar .menu-text {
-      color: #fefefe;
-    }
-
-    .hero-full-screen .top-bar .menu li {
-      display: -webkit-flex;
-      display: -ms-flexbox;
-      display: flex;
-      -webkit-align-items: center;
-      -ms-flex-align: center;
-      align-items: center;
-    }
-
-    .hero-full-screen .top-bar .menu a {
-      color: #fefefe;
-      font-weight: bold;
-    }
-
-    h1,
-    h2,
-    h3,
-    h4,
-    h5 {
-      text-transform: uppercase;
-    }
-
-    h1 {
-      font-size: 3.5em;
-    }
-
-  </style>
-
-</head>
-
-<body>
-
-  <div class="hero-full-screen">
-
-    <div class="middle-content-section">
-      <h4 class="m-4 ">Welcome to</h4>
-      <h1 class="m-4 fw-bold">Institute of Consecrated Life in Africa (InCLA) Portal</h1>
-      <a href="{{ route('student.login') }}" class="btn btn-success px-4 m-2 fs-5">STUDENT</a>
-      <a href="{{ route('staff.login') }}" class="btn btn-success px-4 m-2 fs-5">STAFF</a>
-      <a href="/admissions/login" class="btn btn-success px-4 m-2 fs-5">APPLICANT</a>
-      <!-- <button class="button large">Button</button> -->
-    </div>
-
-  </div>
-
-
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
-
-</body>
-
-</html>
-

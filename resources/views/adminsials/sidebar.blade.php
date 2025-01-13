@@ -1,4 +1,4 @@
-<aside class="main-sidebar sidebar-dark-primary elevation-4" style="background-color: #F7F5F6; color: #100e0e;" >
+<aside class="main-sidebar sidebar-dark-primary elevation-4" style="background-color: #F7F5F6; color: #e23838;" >
     <!-- Brand Logo -->
 
     <div class="bg-white text-center">
@@ -19,7 +19,7 @@
         }
         @endphp
         <div class="user-panel mt-3 pb-3 mb-3 d-flex">
-            
+
 
         <div class="info text-wrap ">
             <div class="d-block"> {{ session('userssurname')}} {{ session('usersFirstName')}} {{ session('usersMiddleName')}}</div>
@@ -79,7 +79,7 @@
                     </li>
                 </ul>
             </li>
-        
+
 
 
             <li class="nav-item has-treeview @yield('fees-open')">
@@ -97,7 +97,7 @@
                             <p>View Payment</p>
                         </a>
                     </li>
-                
+
                 </ul>
             </li>
             <li class="nav-item">
@@ -110,7 +110,7 @@
     </nav>
     <!-- /.sidebar-menu -->
 
-    
+
     </div>
     <!-- /.sidebar -->
 </aside>

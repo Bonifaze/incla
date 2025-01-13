@@ -14,4 +14,4 @@
     </div>
   </div>
 </footer>
-<?php /**PATH C:\Users\CLINTON\Downloads\incla\resources\views/adminsials/footer1.blade.php ENDPATH**/ ?>
+<?php /**PATH C:\Users\hp\Desktop\incla\resources\views/adminsials/footer.blade.php ENDPATH**/ ?>

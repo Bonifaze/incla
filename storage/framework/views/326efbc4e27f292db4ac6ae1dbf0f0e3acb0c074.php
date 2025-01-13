@@ -147,4 +147,4 @@
   <?php echo $__env->yieldContent('pagescript'); ?>
 </body>
 
-</html><?php /**PATH C:\Users\CLINTON\Downloads\incla\resources\views/layouts/adminsials.blade.php ENDPATH**/ ?>
+</html><?php /**PATH C:\Users\hp\Desktop\incla\resources\views/layouts/adminsials.blade.php ENDPATH**/ ?>
