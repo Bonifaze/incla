@@ -117,7 +117,7 @@ form.was-validated select:invalid ~ .select2-container--bootstrap4 .select2-sele
 
 select.is-valid ~ .select2-container--bootstrap4 .select2-selection,
 form.was-validated select:valid ~ .select2-container--bootstrap4 .select2-selection {
-  border-color: #218c74; }
+  border-color: #c95b28; }
 
 .select2-container--bootstrap4 .select2-dropdown {
   border-color: #ced4da;
@@ -133,7 +133,7 @@ form.was-validated select:valid ~ .select2-container--bootstrap4 .select2-select
 
 .select2-container--bootstrap4 .select2-results__option--highlighted,
 .select2-container--bootstrap4 .select2-results__option--highlighted.select2-results__option[aria-selected=true] {
-  background-color: #2980b9;
+  background-color: #c95b28;
   color: #f8f9fa; }
 
 .select2-container--bootstrap4 .select2-results__option[role=group] {

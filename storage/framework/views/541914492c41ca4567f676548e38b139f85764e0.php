@@ -8,125 +8,125 @@
 <?php $__env->stopSection(); ?>
 
 <?php $__env->startSection('css'); ?>
-    <style>
+<style>
+    body {
+        background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
+        url("<?php echo e(asset('/css/incla-class.jpg')); ?>") center center no-repeat;
+        background-size: cover;
+        padding-top: 10px;
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+    }
+
+    .login-form {
+        background: rgba(0, 0, 0, 0.7);
+        box-shadow: rgba(0, 0, 0, 0.4) 0px 2px 4px 0px, rgba(0, 0, 0, 0.3) 0px 7px 13px -3px, rgba(0, 0, 0, 0.2) 0px -3px 0px 0px inset;
+        padding: 30px 40px;
+        border-radius: 15px;
+        color: white;
+        max-width: 400px;
+        width: 100%;
+        margin: 0;
+    }
+
+    .btn-success {
+        background-color: #f0ad4e;
+        border: none;
+        border-radius: 30px;
+        color: #fff;
+        width: 100%;
+        padding: 12px;
+        font-size: 1.2em;
+    }
+
+    .btn-success:hover {
+        background-color: #c95b28;
+    }
+
+    .form-control {
+        border-radius: 30px;
+        background-color: #f1f1f1;
+        border: 1px solid #5bc0de;
+        color: #333;
+    }
+
+    .input-group-text {
+        background-color: #5bc0de;
+        border-radius: 30px;
+        color: white;
+    }
+
+    .login-heading {
+        text-align: center;
+        margin: 20px;
+        color: #fff;
+        font-size: 2em;
+        text-transform: uppercase;
+        font-weight: 600;
+        font-family: 'Dancing Script', cursive;
+    }
+
+    .link-text {
+        margin-bottom: 10px;
+        color: #fff;
+        font-size: 1.2em;
+        font-weight: 400;
+    }
+
+    .active-link {
+        font-weight: 500;
+        text-decoration: underline;
+    }
+
+    label {
+        font-weight: 500;
+    }
+
+    .buttons-container {
+        display: flex;
+        justify-content: flex-end;
+        margin-top: 20px;
+        gap: 10px;
+    }
+
+    .button-aligned {
+        width: 150px;
+        padding: 12px;
+        background-color: #5bc0de;
+        color: white;
+        border-radius: 30px;
+        text-align: center;
+        font-size: 1.1em;
+        border: none;
+    }
+
+    .button-aligned:hover {
+        background-color: #025aa5;
+    }
+
+    @media only screen and (max-width: 480px) {
         body {
-            background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
-            url("<?php echo e(asset('/css/incla-class.jpg')); ?>") center center no-repeat;
-            background-size: cover;
-            padding-top: 10px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+            font-size: 20px;
+            padding-top: 90px;
         }
 
         .login-form {
-            background: rgba(0, 0, 0, 0.7);
-            box-shadow: rgba(0, 0, 0, 0.4) 0px 2px 4px 0px, rgba(0, 0, 0, 0.3) 0px 7px 13px -3px, rgba(0, 0, 0, 0.2) 0px -3px 0px 0px inset;
-            padding: 30px 40px;
-            border-radius: 15px;
-            color: white;
-            max-width: 400px;
             width: 100%;
-            margin: 0 auto;
-        }
-
-        .btn-success {
-            background-color: #f0ad4e;
-            border: none;
-            border-radius: 30px;
-            color: #fff;
-            width: 100%;
-            padding: 12px;
-            font-size: 1.2em;
-        }
-
-        .btn-success:hover {
-            background-color: #ec971f;
-        }
-
-        .form-control {
-            border-radius: 30px;
-            background-color: #f1f1f1;
-            border: 1px solid #5bc0de;
-            color: #333;
-        }
-
-        .input-group-text {
-            background-color: #5bc0de;
-            border-radius: 30px;
-            color: white;
-        }
-
-        .login-heading {
-            text-align: center;
-            margin: 20px;
-            color: #fff;
-            font-size: 2em;
-            text-transform: uppercase;
-            font-weight: 600;
-            font-family: 'Dancing Script', cursive;
-        }
-
-        .link-text {
-            margin-bottom: 10px;
-            color: #fff;
-            font-size: 1.2em;
-            font-weight: 400;
-        }
-
-        .active-link {
-            font-weight: 500;
-            text-decoration: underline;
-        }
-
-        label {
-            font-weight: 500;
+            max-width: 100%;
         }
 
         .buttons-container {
-            display: flex;
-            justify-content: flex-end;
-            margin-top: 20px;
-            gap: 10px;
+            flex-direction: column;
+            align-items: center;
+            gap: 15px;
         }
 
         .button-aligned {
-            width: 150px;
-            padding: 12px;
-            background-color: #5bc0de;
-            color: white;
-            border-radius: 30px;
-            text-align: center;
-            font-size: 1.1em;
-            border: none;
+            width: 80%;
         }
-
-        .button-aligned:hover {
-            background-color: #025aa5;
-        }
-
-        @media only screen and (max-width: 480px) {
-            body {
-                font-size: 20px;
-                padding-top: 90px;
-            }
-
-            .login-form {
-                width: 100%;
-                max-width: 100%;
-            }
-
-            .buttons-container {
-                flex-direction: column;
-                align-items: center;
-                gap: 15px;
-            }
-
-            .button-aligned {
-                width: 80%;
-            }
-        }
-    </style>
+    }
+</style>
 <?php $__env->stopSection(); ?>
 
 <?php $__env->startSection('content'); ?>
@@ -176,7 +176,7 @@
                         <br>
                         <p class="link-text"><a href="/forgotpassword" class="text-danger active-link"> Forgot Password</a> </p>
                         <br>
-                        <p class="link-text">I'm New.  <a href="/register" class="text-success h4 active-link">Create Account here </a></p>
+                        <p class="link-text"> I Don't have an Account <a href="/register" class="text-success h4 active-link">Create Account here </a></p>
                     </form>
 
                     <!-- Buttons for Student and Staff login -->

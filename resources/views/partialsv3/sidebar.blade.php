@@ -1,4 +1,4 @@
-<aside class="main-sidebar sidebar-dark-primary elevation-4 nav-flat" style="background-color: #218c74; color: #fff">
+<aside class="main-sidebar sidebar-dark-primary elevation-4 nav-flat" style="background-color: #c95b28; color: #fff">
     <!-- Brand Logo -->
     <style>
         .spotlight-nav {
@@ -10,7 +10,7 @@
         }
 
         .spotlight-nav-link {
-            color: #218c74;
+            color: #c95b28;
         }
     </style>
 
@@ -840,14 +840,14 @@
             <li class="spotlight-nav" style="background-color: #fff;">
                 {{-- /rbac/auditviewall  --}}
                 <a href="/spotlight/confirm" class="nav-link @yield('soteria-search')"
-                    style="color: #218c74; width: 100%; font-weight: 700; font-size: 18px;">
+                    style="color: #c95b28; width: 100%; font-weight: 700; font-size: 18px;">
                     <p>Spotlight</p>
                 </a>
             </li>
             <li class="spotlight-nav" style="background-color: #fff;">
                 {{-- /rbac/auditviewall  --}}
                 <a href="/soteria/getvoucherstaff" class="nav-link @yield('soteria-search')"
-                    style="color: #218c74; width: 100%; font-weight: 700; font-size: 18px;">
+                    style="color: #c95b28; width: 100%; font-weight: 700; font-size: 18px;">
                     <p>VoucherCode</p>
                 </a>
             </li>

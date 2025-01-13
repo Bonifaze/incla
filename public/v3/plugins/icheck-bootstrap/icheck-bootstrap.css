@@ -221,13 +221,13 @@
 
 .icheck-greensea > input:first-child:not(:checked):not(:disabled):hover + label::before,
 .icheck-greensea > input:first-child:not(:checked):not(:disabled):hover + input[type="hidden"] + label::before {
-    border-color: #218c74;
+    border-color: #c95b28;
 }
 
 .icheck-greensea > input:first-child:checked + label::before,
 .icheck-greensea > input:first-child:checked + input[type="hidden"] + label::before {
-    background-color: #218c74;
-    border-color: #218c74;
+    background-color: #c95b28;
+    border-color: #c95b28;
 }
 
 .icheck-nephritis > input:first-child:not(:checked):not(:disabled):hover + label::before,
@@ -243,13 +243,13 @@
 
 .icheck-belizehole > input:first-child:not(:checked):not(:disabled):hover + label::before,
 .icheck-belizehole > input:first-child:not(:checked):not(:disabled):hover + input[type="hidden"] + label::before {
-    border-color: #2980b9;
+    border-color: #c95b28;
 }
 
 .icheck-belizehole > input:first-child:checked + label::before,
 .icheck-belizehole > input:first-child:checked + input[type="hidden"] + label::before {
-    background-color: #2980b9;
-    border-color: #2980b9;
+    background-color: #c95b28;
+    border-color: #c95b28;
 }
 
 .icheck-wisteria > input:first-child:not(:checked):not(:disabled):hover + label::before,

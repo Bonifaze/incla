@@ -2,7 +2,7 @@
     <!-- Left navbar links -->
     <ul class="navbar-nav">
         <li class="nav-item">
-            <a class="nav-link" style="color: #218c74;" data-widget="pushmenu" href="#"><i class="fas fa-bars"></i></a>
+            <a class="nav-link" style="color: #c95b28;" data-widget="pushmenu" href="#"><i class="fas fa-bars"></i></a>
         </li>
         {{--  <li class="nav-item d-none d-sm-inline-block">
        <a class="dropdown-item btn btn-danger btn-flat" href="{{ route('student.logout') }}"

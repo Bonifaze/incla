@@ -7,7 +7,7 @@
   <meta name="csrf-token" content="<?php echo e(csrf_token()); ?>">
 
   <title> <?php echo $__env->yieldContent('pagetitle'); ?> | Institute of Consecrated Life in Africa (InCLA), Abuja </title>
-  <link rel="shortcut icon" href="<?php echo e(asset('img/letter_logo.png')); ?>">
+  <link rel="shortcut icon" href="<?php echo e(asset('img/uaes.png')); ?>">
 
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -26,6 +26,7 @@
   <link rel="stylesheet" href="<?php echo e(asset('v3/plugins/jqvmap/jqvmap.min.css')); ?>" />
   <!-- Theme style -->
   <link rel="stylesheet" href="<?php echo e(asset('v3/dist/css/adminlte.min.css')); ?>" />
+  
   <!-- overlayScrollbars -->
   <link rel="stylesheet" href="<?php echo e(asset('v3/plugins/overlayScrollbars/css/OverlayScrollbars.min.css')); ?>" />
   <!-- Daterange picker -->
@@ -35,6 +36,12 @@
   <!-- Google Font: Source Sans Pro -->
   <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/css/bootstrap.min.css">
+
+  <!-- FullCalendar CSS -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.2.0/fullcalendar.min.css" rel="stylesheet" />
+
+
+
 
 
 
@@ -101,6 +108,15 @@
   <script src="<?php echo e(asset('v3/plugins/bootstrap/js/bootstrap.bundle.min.js')); ?>"></script>
   <!-- ChartJS -->
   <script src="<?php echo e(asset('v3/plugins/chart.js/Chart.min.js')); ?>"></script>
+
+  <!-- jQuery (required for FullCalendar) -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+  
+  <!-- Moment.js (required for FullCalendar) -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
+  
+  <!-- FullCalendar JS -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.2.0/fullcalendar.min.js"></script>
   <!-- Sparkline -->
   <script src="<?php echo e(asset('v3/plugins/sparklines/sparkline.js')); ?>"></script>
   <!-- JQVMap -->

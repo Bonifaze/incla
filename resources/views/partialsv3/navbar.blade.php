@@ -5,7 +5,7 @@
     a,
     li,
     ul {
-        color: #218c74;
+        color: #c95b28;
     }
 </style>  --}}
 
@@ -13,7 +13,7 @@
     <!-- Left navbar links -->
     <ul class="navbar-nav">
         <li class="nav-item">
-            <a class="nav-link" style="color: #218c74;" data-widget="pushmenu" href="#"><i class="fas fa-bars"></i></a>
+            <a class="nav-link" style="color: #c95b28;" data-widget="pushmenu" href="#"><i class="fas fa-bars"></i></a>
         </li>
 
         {{--  <li class="nav-item dropdown">
@@ -134,7 +134,7 @@
         </li>  --}}
         @can('ICTOfficers', 'App\StudentResult')
             <li class="nav-item dropdown">
-                <a id="dropdownSubMenu1" style="color: #218c74;" href="#" data-toggle="dropdown" aria-haspopup="true"
+                <a id="dropdownSubMenu1" style="color: #c95b28;" href="#" data-toggle="dropdown" aria-haspopup="true"
                     aria-expanded="false" class="nav-link dropdown-toggle">Security</a>
                 <ul aria-labelledby="dropdownSubMenu1" class="dropdown-menu border-0 shadow">
 
@@ -186,7 +186,7 @@
         @endcan
          @can('ICTOfficers', 'App\StudentResult')
         <li class="nav-item dropdown">
-            <a id="dropdownSubMenu1"style="color: #218c74;" href="#" data-toggle="dropdown" aria-haspopup="true"
+            <a id="dropdownSubMenu1"style="color: #c95b28;" href="#" data-toggle="dropdown" aria-haspopup="true"
                 aria-expanded="false" class="nav-link dropdown-toggle">HR</a>
             <ul aria-labelledby="dropdownSubMenu1" class="dropdown-menu border-0 shadow">
                 <li><a href="{{ route('admin.department.create') }}" class="dropdown-item">Create Dept/Unit </a></li>
@@ -205,7 +205,7 @@
                  @can('approveResultSBC', 'App\ProgramCourse')
         <li class="nav-item dropdown">
 
-            <a id="dropdownSubMenu1" style="color: #218c74;" href="#" data-toggle="dropdown" aria-haspopup="true"
+            <a id="dropdownSubMenu1" style="color: #c95b28;" href="#" data-toggle="dropdown" aria-haspopup="true"
                 aria-expanded="false" class="nav-link dropdown-toggle">Results</a>
 
 <ul aria-labelledby="dropdownSubMenu1" class="dropdown-menu border-0 shadow">
@@ -318,7 +318,7 @@
         </li>
         @can('ICTOfficers', 'App\StudentResult')
             <li class="nav-item dropdown">
-                <a id="dropdownSubMenu1" style="color: #218c74;" href="#" data-toggle="dropdown"
+                <a id="dropdownSubMenu1" style="color: #c95b28;" href="#" data-toggle="dropdown"
                     aria-haspopup="true" aria-expanded="false" class="nav-link dropdown-toggle">ICT</a>
                 <ul aria-labelledby="dropdownSubMenu1" class="dropdown-menu border-0 shadow">
                     <li><a href="{{ route('result.search_student') }}" class="dropdown-item">Manage Student</a></li>

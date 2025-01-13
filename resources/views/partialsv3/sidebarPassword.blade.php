@@ -1,4 +1,4 @@
-<aside class="main-sidebar sidebar-dark-primary elevation-4 nav-flat" style="background-color: #218c74; color: #fff">
+<aside class="main-sidebar sidebar-dark-primary elevation-4 nav-flat" style="background-color: #c95b28; color: #fff">
     <!-- Brand Logo -->
     <style>
         .lightbulb-container {

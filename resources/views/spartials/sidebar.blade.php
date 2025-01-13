@@ -1,4 +1,4 @@
-<aside class="main-sidebar sidebar-dark-primary elevation-4"style="background-color: #218c74; color: #fff"v>
+<aside class="main-sidebar sidebar-dark-primary elevation-4"style="background-color: #c95b28; color: #fff"v>
     <!-- Brand Logo -->
 
     <div class="bg-white text-center">
