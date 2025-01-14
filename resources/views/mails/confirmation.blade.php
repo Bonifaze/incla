@@ -1,6 +1,6 @@
 @component('mail::message')
 {{--  <p align='center'> <img src="{{ asset('img/letter_logo.png') }}" width='70' height='70' border='0' /></p>  --}}
-<p align='center'> <img src="{{ asset('img/veritasin.jpg') }}" width='1000' height='100' border='0' /></p>
+<p align='center'> <img src="{{ asset('img/logs.png') }}" width='1000' height='100' border='0' /></p>
 
 
  {{ $emailData['title'] }}

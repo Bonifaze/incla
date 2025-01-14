@@ -1,9 +1,9 @@
-<aside class="main-sidebar sidebar-dark-primary elevation-4" style="background-color: #c95b28; color: #fff" v>
+<aside class="main-sidebar sidebar-dark-primary elevation-4" style="background-color: #302b2b; color: #fff;" v>
     <!-- Brand Logo -->
 
     <div class="bg-white text-center">
         <a class="navbar-brand" href="{{ route('student.home') }}">
-            <img src="{{ asset('img/veritasin.jpg') }}" alt="" width="170" height="60" class="px-2">
+            <img src="{{ asset('img/logs.png') }}" alt="" width="170" height="60" class="px-2">
         </a>
     </div>
 

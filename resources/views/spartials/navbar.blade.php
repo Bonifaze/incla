@@ -17,7 +17,7 @@
       <li>
  {{--  <div class="bg-white text-center">
         <a class="navbar-brand" href="{{ route('student.home') }}">
-            <img src="{{ asset('img/veritasin.jpg') }}" alt="" width="170" height="60" class="px-2">
+            <img src="{{ asset('img/logs.png') }}" alt="" width="170" height="60" class="px-2">
         </a>
     </div>  --}}
       {{--  <div class="ml-5" style="color: green; font-weight:bold;"><h1> Institute of Consecrated Life in Africa (InCLA) </h1></div>  --}}

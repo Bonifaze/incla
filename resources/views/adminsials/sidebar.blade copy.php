@@ -1,4 +1,4 @@
-<aside class="main-sidebar sidebar-dark-primary elevation-4" style="background-color: #c95b28; color: #fff" v>
+<aside class="main-sidebar sidebar-dark-primary elevation-4" style="background-color: #302b2b; color: #fff;" v>
     <!-- Brand Logo -->
 
     <div class="bg-white text-center">
@@ -19,7 +19,7 @@
         }
         @endphp
         <div class="user-panel mt-3 pb-3 mb-3 d-flex">
-            
+
 
         <div class="info text-wrap ">
             <div class="d-block"> {{ session('userssurname')}} {{ session('usersFirstName')}} {{ session('usersMiddleName')}}</div>
@@ -89,10 +89,10 @@
                         <p>View Payment</p>
                     </a>
                 </li>
-               
+
             </ul>
         </li>
-       
+
             <li class="nav-item">
                 <a href="/logoutUser" class="nav-link" Contact onclick="event.preventDefault();
                     document.getElementById('logout-form').submit();">
@@ -104,11 +104,11 @@
                 </a>
             </li>
 
-        
+
     </nav>
     <!-- /.sidebar-menu -->
 
-    
+
     </div>
     <!-- /.sidebar -->
 </aside>
