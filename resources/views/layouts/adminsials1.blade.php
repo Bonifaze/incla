@@ -298,7 +298,7 @@
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
 
-  
+
   {{--  ================================================  --}}
   <script src="{{ asset('asnew/js/main.js')}}"></script>
 
@@ -333,6 +333,103 @@
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous">
   </script>
+  @yield('pagescript')
+</body>
+
+</html>
+
+
+
+
+
+
+
+<!DOCTYPE html>
+<html>
+
+<head>
+  <!-- CSRF Token -->
+  <meta name="csrf-token" content="{{ csrf_token() }}">
+
+  <title> @yield('pagetitle') | Institute of Consecrated Life in Africa (InCLA), Abuja </title>
+  <link rel="shortcut icon" href="{{ asset('img/uaes.png') }}">
+
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+  <!-- Tell the browser to be responsive to screen width -->
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <!-- Ionicons -->
+  <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css" />
+
+  <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/css/bootstrap.min.css">
+
+  <!-- FullCalendar CSS -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.2.0/fullcalendar.min.css" rel="stylesheet" />
+  <link rel="stylesheet" href="{{ asset('src/css/skin_color.css') }}">
+  <link rel="stylesheet" href="{{ asset('src/css/style.css') }}">
+  <link rel="stylesheet" href="{{ asset('src/css/vendors_css.css') }}">
+
+  @yield('css')
+
+</head>
+
+<body class="hold-transition sidebar-mini layout-fixed">
+  <div class="wrapper">
+
+    <!-- Navbar -->
+    @include("adminsials.navbar1")
+
+    <!-- /.navbar -->
+
+    <!-- Main Sidebar Container -->
+    @include("adminsials.sidebar1")
+
+    <!-- Content Wrapper. Contains page content -->
+    @yield('content')
+
+    <!-- /.content-wrapper -->
+    <!-- Footer starts -->
+    @include("adminsials.footer1")
+
+    <!-- Control Sidebar -->
+    <aside class="control-sidebar control-sidebar-dark">
+      <!-- Control sidebar content goes here -->
+    </aside>
+    <!-- /.control-sidebar -->
+  </div>
+  <!-- ./wrapper -->
+
+  <script src="{{ asset('src/js/vendors.min.js') }}"></script>
+  <script src="{{ asset('src/js/pages/chat-popup.js') }}"></script>
+  <script src="{{ asset('src/assets/icons/feather-icons/feather.min.js') }}"></script>
+  <script src="{{ asset('src/assets/icons/feather-icons/feather.min.js') }}"></script>
+
+  <script src="{{ asset('src/assets/vendor_components/apexcharts-bundle/dist/apexcharts.js') }}"></script>
+  <script src="{{ asset('src/assets/vendor_components/moment/min/moment.min.js') }}"></script>
+  <script src="{{ asset('src/assets/vendor_components/bootstrap-daterangepicker/daterangepicker.js') }}"></script>
+
+  <!-- edulearn App -->
+  <script src="{{ asset('src/js/demo.js') }}"></script>
+  <script src="{{ asset('src/js/demo.js') }}"></script>
+  <script src="{{ asset('src/js/template.js') }}"></script>
+  <script src="{{ asset('src/js/pages/dashboard.js') }}"></script>
+  <!-- jQuery (required for FullCalendar) -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
+  <!-- Moment.js (required for FullCalendar) -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
+
+  <!-- FullCalendar JS -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.2.0/fullcalendar.min.js"></script>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/js/bootstrap.bundle.min.js"></script>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+
   @yield('pagescript')
 </body>
 

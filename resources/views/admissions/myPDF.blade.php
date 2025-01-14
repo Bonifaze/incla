@@ -8,7 +8,7 @@
 
     {{--  <h1>{{ $title }}</h1>  --}}
     {{--  <h6>(The Catholic University of Nigeria)</h6>
-    <h6>Website: <a href='#'> 'https://www.veritas.edu.ng' </a> </h6>
+    <h6>Website: <a href='#'> 'https://www.aicla.org.ng/' </a> </h6>
     <h4>Motto:"Seeking The Truth"</h4>  --}}
     {{--  <<img src="{{ asset('') }}" alt="{{ __('') }}">  --}}
 

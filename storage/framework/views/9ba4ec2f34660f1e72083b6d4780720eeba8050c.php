@@ -5,12 +5,12 @@
 		<a href="index.html" class="logo">
 		  <!-- logo-->
 		  <div class="logo-mini w-30">
-			  <span class="light-logo"><img  src="{{ asset('src/images/avatar/avatar-13.png') }} alt="logo"></span>
-			  <span class="dark-logo"><img  src="{{ asset('src/images/avatar/avatar-13.png') }} alt="logo"></span>
+			  <span class="light-logo"><img  src="<?php echo e(asset('src/images/avatar/avatar-13.png')); ?> alt="logo"></span>
+			  <span class="dark-logo"><img  src="<?php echo e(asset('src/images/avatar/avatar-13.png')); ?> alt="logo"></span>
 		  </div>
 		  <div class="logo-lg">
-			  <span class="light-logo"><img  src="{{ asset('src/images/avatar/avatar-13.png') }} alt="logo"></span>
-			  <span class="dark-logo"><img  src="{{ asset('src/images/avatar/avatar-13.png') }} alt="logo"></span>
+			  <span class="light-logo"><img  src="<?php echo e(asset('src/images/avatar/avatar-13.png')); ?> alt="logo"></span>
+			  <span class="dark-logo"><img  src="<?php echo e(asset('src/images/avatar/avatar-13.png')); ?> alt="logo"></span>
 		  </div>
 		</a>
 	</div>
@@ -95,7 +95,7 @@
 							<p class="pt-5 fs-14 mb-0 fw-700">Nil Yeager</p>
 							<small class="fs-10 mb-0 text-uppercase text-mute">Admin</small>
 						</div>
-						<img src="{{ asset('img/uaes.png') }}" class="avatar rounded-circle bg-primary-light h-40 w-40" alt="" />
+						<img src="<?php echo e(asset('img/uaes.png')); ?>" class="avatar rounded-circle bg-primary-light h-40 w-40" alt="" />
 					</div>
 				</a>
 			</li>
@@ -110,3 +110,4 @@
       </div>
     </nav>
   </header>
+<?php /**PATH C:\Users\hp\Desktop\incla\resources\views/adminsials/navbar1.blade.php ENDPATH**/ ?>

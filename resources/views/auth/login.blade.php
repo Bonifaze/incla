@@ -22,92 +22,92 @@ body {
 }
 
 .login-form {
-    background: rgba(0, 0, 0, 0.7);
-    box-shadow: rgba(0, 0, 0, 0.4) 0px 2px 4px 0px, rgba(0, 0, 0, 0.3) 0px 7px 13px -3px, rgba(0, 0, 0, 0.2) 0px -3px 0px 0px inset;
-    padding: 30px 40px;
-    border-radius: 15px;
-    color: white;
-    width: 100%;
-    max-width: 400px;
-    margin: 0;
-}
+        background: rgba(0, 0, 0, 0.7);
+        box-shadow: rgba(0, 0, 0, 0.4) 0px 2px 4px 0px, rgba(0, 0, 0, 0.3) 0px 7px 13px -3px, rgba(0, 0, 0, 0.2) 0px -3px 0px 0px inset;
+        padding: 30px 40px;
+        border-radius: 15px;
+        color: white;
+        max-width: 400px;
+        width: 100%;
+        margin: 0;
+    }
 
-.btn-success {
-    background-color: #f0ad4e;
-    border: none;
-    border-radius: 30px;
-    color: #fff;
-    width: 100%;
-    padding: 12px;
-    font-size: 1.2em;
-}
+    .btn-success {
+        background-color: #f0ad4e;
+        border: none;
+        border-radius: 30px;
+        color: #fff;
+        width: 100%;
+        padding: 12px;
+        font-size: 1.2em;
+    }
 
-.btn-success:hover {
-    background-color: #ec971f;
-}
+    .btn-success:hover {
+        background-color: #ec971f;
+    }
 
-.form-control {
-    border-radius: 30px;
-    background-color: #f1f1f1;
-    border: 1px solid #5bc0de;
-    color: #333;
-}
+    .form-control {
+        border-radius: 30px;
+        background-color: #f1f1f1;
+        border: 1px solid #5bc0de;
+        color: #333;
+    }
 
-.input-group-text {
-    background-color: #5bc0de;
-    border-radius: 30px;
-    color: white;
-}
+    .input-group-text {
+        background-color: #5bc0de;
+        border-radius: 30px;
+        color: white;
+    }
 
-.login-heading {
-    text-align: center;
-    margin: 20px;
-    color: #fff;
-    font-size: 2em;
-    text-transform: uppercase;
-    font-weight: 600;
-    font-family: 'Dancing Script', cursive;
-}
+    .login-heading {
+        text-align: center;
+        margin: 20px;
+        color: #fff;
+        font-size: 2em;
+        text-transform: uppercase;
+        font-weight: 600;
+        font-family: 'Dancing Script', cursive;
+    }
 
-.link-text {
-    margin-bottom: 10px;
-    color: #fff;
-    font-size: 1.2em;
-    font-weight: 400;
-}
+    .link-text {
+        margin-bottom: 10px;
+        color: #fff;
+        font-size: 1.2em;
+        font-weight: 400;
+    }
 
-.active-link {
-    font-weight: 500;
-    text-decoration: underline;
-}
+    .active-link {
+        font-weight: 500;
+        text-decoration: underline;
+    }
 
-label {
-    font-weight: 500;
-}
+    label {
+        font-weight: 500;
+    }
 
-.buttons-container {
-    display: flex;
-    justify-content: space-between; /* Ensures the buttons are aligned side by side */
-    margin-top: 20px;
-    gap: 10px;
-}
+    .buttons-container {
+        display: flex;
+        justify-content: flex-end;
+        margin-top: 20px;
+        gap: 10px;
+    }
 
-.button-aligned {
-    flex: 1; /* Makes buttons take equal space */
-    padding: 12px;
-    background-color: #5bc0de;
-    color: white;
-    border-radius: 30px;
-    text-align: center;
-    font-size: 1.1em;
-    border: none;
-}
+    .button-aligned {
+        width: 150px;
+        padding: 12px;
+        background-color: #5bc0de;
+        color: white;
+        border-radius: 30px;
+        text-align: center;
+        font-size: 1.1em;
+        border: none;
+    }
 
-.button-aligned:hover {
-    background-color: #025aa5;
-}
+    .button-aligned:hover {
+        background-color: #025aa5;
+    }
 
-@media only screen and (max-width: 480px) {
+    @media only screen and (max-width: 480px) {
     body {
         font-size: 18px; /* Adjust font size for mobile */
         padding-top: 70px; /* Provide top padding to avoid overlap with navbar */
@@ -146,7 +146,6 @@ label {
 
 
 }
-
 </style>
 @endsection
 
@@ -161,7 +160,7 @@ label {
             <div class="col-md-6 offset-md-2 d-flex aligns-items-center justify-content-center">
                 <div class="login-form">
                     <div class="login-heading">
-                        <p>APPLICANT Login</p>
+                        <p>APPLICANT Logu9in</p>
                     </div>
                     <form method="POST" action="/login">
                         @if (session('signUpMsg'))

@@ -26,7 +26,7 @@
   <link rel="stylesheet" href="<?php echo e(asset('v3/plugins/jqvmap/jqvmap.min.css')); ?>" />
   <!-- Theme style -->
   <link rel="stylesheet" href="<?php echo e(asset('v3/dist/css/adminlte.min.css')); ?>" />
-  
+
   <!-- overlayScrollbars -->
   <link rel="stylesheet" href="<?php echo e(asset('v3/plugins/overlayScrollbars/css/OverlayScrollbars.min.css')); ?>" />
   <!-- Daterange picker -->
@@ -40,14 +40,73 @@
   <!-- FullCalendar CSS -->
 <link href="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.2.0/fullcalendar.min.css" rel="stylesheet" />
 
-
-
-
-
-
-
   <?php echo $__env->yieldContent('css'); ?>
+<style>/* Basic styles for the calendar */
+    .calendar {
+        width: 100%;
+        max-width: 400px;
+        margin: 0 auto;
+    }
 
+    .calendar__header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        font-size: 18px;
+        margin-bottom: 10px;
+    }
+
+    .calendar__week {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 5px;
+    }
+
+    .calendar__week-text {
+        width: 30px;
+        text-align: center;
+        font-size: 14px;
+        font-weight: bold;
+    }
+
+    .calendar__day {
+        width: 30px;
+        height: 30px;
+        display: inline-block;
+        text-align: center;
+        line-height: 30px;
+        margin: 2px;
+        font-size: 14px;
+        background-color: #f0f0f0;
+        border-radius: 5px;
+    }
+
+    .calendar__day.empty {
+        visibility: hidden; /* Hide empty cells */
+    }
+
+    .calendar__day:hover {
+        background-color: #e0e0e0;
+    }
+
+    /* Highlight the current day */
+    .calendar__day.today {
+        background-color: #4caf50; /* Change this color to highlight today's date */
+        color: white;
+        font-weight: bold;
+    }
+
+
+.calendar__day:hover {
+    background-color: #302b2b;
+    color: #c95b28;
+    cursor: pointer;
+}
+
+.ft-text{
+    color: #c95b28;
+}
+</style>
 
 </head>
 
@@ -69,25 +128,10 @@
     <?php echo $__env->yieldContent('content'); ?>
 
     <!-- /.content-wrapper -->
-
-
-
-
-
-
     <!-- Footer starts -->
 
 
     <?php echo $__env->make("adminsials.footer", \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
-
-
-
-
-
-
-
-
-
     <!-- Control Sidebar -->
     <aside class="control-sidebar control-sidebar-dark">
       <!-- Control sidebar content goes here -->
@@ -111,10 +155,10 @@
 
   <!-- jQuery (required for FullCalendar) -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-  
+
   <!-- Moment.js (required for FullCalendar) -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
-  
+
   <!-- FullCalendar JS -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.2.0/fullcalendar.min.js"></script>
   <!-- Sparkline -->
@@ -147,4 +191,5 @@
   <?php echo $__env->yieldContent('pagescript'); ?>
 </body>
 
-</html><?php /**PATH C:\Users\hp\Desktop\incla\resources\views/layouts/adminsials.blade.php ENDPATH**/ ?>
+</html>
+<?php /**PATH C:\Users\hp\Desktop\incla\resources\views/layouts/adminsials.blade.php ENDPATH**/ ?>

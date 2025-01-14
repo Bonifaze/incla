@@ -1,10 +1,10 @@
-				
-				
+
+
 				<nav id="primary-menu">
-                    
+
                     	<ul>
                         	<li><a href="{{ route('student.home')}}"><div>Home</div></a></li>
-                            
+
                             <li><a href="#"><div>Apply</div></a>
                                 <ul>
                                     <li><a href="{{ route('student.undergrad')}}"><div>UTME</div></a></li>
@@ -13,9 +13,9 @@
                                     <li><a href="{{ route('student.pg')}}"><div>PG</div></a></li>
                                 </ul>
                             </li>
-                            
-                            <li><a href="https://www.veritas.edu.ng" target="_blank"><div>Veritas Website</div></a></li>
-                            
+
+                            <li><a href="https://www.aicla.org.ng/" target="_blank"><div>Veritas Website</div></a></li>
+
                            <li>
        								<a href="#"
                                        onclick="event.preventDefault();
@@ -26,9 +26,8 @@
                                         @csrf
                                     </form>
       							</li>
-                            
+
 						</ul>
 
 					</nav>
-					
-				
+

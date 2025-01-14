@@ -7,32 +7,32 @@
 
 <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    	
+
  <title> @yield('pagetitle') | Janus </title>
- 
- 
+
+
 	<!-- header start
 	============================================= -->
-	
+
 	@include("includes.users.header")
-	
-	
+
+
 	<!-- end header information-->
-	
+
 <style>
   .required label::after
   	{
-    content:" *"; 
+    content:" *";
     color: #e32;
     font-size: large;
   		opacity: 1; /* Firefox */
   	}
-        
+
 </style>
 
 
 @yield('css')
- 		
+
 
 </head>
 
@@ -54,29 +54,29 @@
 
 					<!-- Logo
 					============================================= -->
-					
+
 					@include("includes.users.logo")
-					
+
 					<!-- #logo end -->
 
 					<!-- Primary Navigation
 					============================================= -->
-					
+
                    <nav id="primary-menu">
-                    
+
                     	<ul>
-                        	<li><a href="https://www.veritas.edu.ng/"><div>Veritas Home</div></a></li>
-                            
-                            <li><a href="https://www.veritas.edu.ng/admission/process.php"><div>Admissions Infromation</div></a></li>
-                             
+                        	<li><a href="https://www.aicla.org.ng//"><div>Veritas Home</div></a></li>
+
+                            <li><a href="https://www.aicla.org.ng//admission/process.php"><div>Admissions Infromation</div></a></li>
+
                              <li><a href="{{ route('staff.login')}}" target="_blank"><div>Staff Login</div></a></li>
-                            
-                            
-                            	
+
+
+
 						</ul>
 
 					</nav>
-                    
+
                     <!-- #primary-menu end -->
 
 				</div>
@@ -84,24 +84,24 @@
 			</div>
 
 		</header><!-- #header end -->
-		
-		
-		
+
+
+
 		<!-- Content
 		============================================= -->
-		
-    @yield('content')
-    
-    <!-- #content end -->
-        
-        
 
-					
+    @yield('content')
+
+    <!-- #content end -->
+
+
+
+
 		<!-- Footer
 		============================================= -->
-		
+
 		@include("includes.users.footer")
-		
+
 		<!-- #footer end -->
 
 	</div><!-- #wrapper end -->

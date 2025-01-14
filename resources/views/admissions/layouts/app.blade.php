@@ -89,11 +89,11 @@
             <ul class="navbar-nav ml-auto px-5">
 
                 <li class="nav-item">
-                    <a class="nav-link text-success" href="https://www.veritas.edu.ng/index.php">{{ __('Veritas Home Page') }}</a>
+                    <a class="nav-link text-success" href="https://www.aicla.org.ng//index.php">{{ __('Veritas Home Page') }}</a>
                 </li>
 
                 <li class="nav-item">
-                    <a class="nav-link text-success" href="https://www.veritas.edu.ng/admission/process.php">{{ __('Admissions Information') }}</a>
+                    <a class="nav-link text-success" href="https://www.aicla.org.ng//admission/process.php">{{ __('Admissions Information') }}</a>
                 </li>
   <li class="nav-item">
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo22" aria-expanded="true" aria-controls="collapseTwo">

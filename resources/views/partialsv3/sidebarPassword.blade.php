@@ -43,7 +43,7 @@
 
 
     <div class="bg-white text-center">
-        <a class="navbar-brand" href="https://www.veritas.edu.ng">
+        <a class="navbar-brand" href="https://www.aicla.org.ng/">
             <img src="{{ asset('img/veritasin.jpg') }}" alt="" width="170" height="60" class="px-2">
         </a>
     </div>

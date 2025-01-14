@@ -399,3 +399,4 @@
 		</div>
     </section>
   </aside>
+<?php /**PATH C:\Users\hp\Desktop\incla\resources\views/adminsials/sidebar1.blade.php ENDPATH**/ ?>
