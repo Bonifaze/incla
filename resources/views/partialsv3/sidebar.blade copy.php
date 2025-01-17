@@ -46,7 +46,7 @@
                 <li class="nav-item">
                     <a href="{{ route('staff.home') }}" class="nav-link @yield('staff-home')">
                         <i class="fas fa-home nav-icon"></i>
-                        <p>Staff Dashboard</p>
+                        <p>Dashboard</p>
                     </a>
                 </li>
 
@@ -54,7 +54,7 @@
                     <a href="#" class="nav-link @yield('staffs')">
                         <i class="nav-icon fas fa-user"></i>
                         <p>
-                           Staff Profile
+                            Profile
                             <i class="right fas fa-angle-right"></i>
                         </p>
                     </a>
@@ -293,12 +293,12 @@
                                     <p>Search</p>
                                 </a>
                             </li>
-                            <li class="nav-item">
+                            {{-- <li class="nav-item">
                             <a href="/adminallUsers" class="nav-link @yield('faculties')">
                                 <i class="fa fa-eye nav-icon"></i>
                                 <p>All Registered User</p>
                             </a>
-                        </li> 
+                        </li> --}}
                             <li class="nav-item">
                                 <a href="/adminallApplicants" class="nav-link @yield('departments')">
                                     <i class="fas fa-list-alt nav-icon"></i>
@@ -838,8 +838,139 @@
             </ul>
             </li> --}}
 
+            <li class="spotlight-nav" style="background-color: #fff;">
+                {{-- /rbac/auditviewall  --}}
+                <a href="/spotlight/confirm" class="nav-link @yield('soteria-search')"
+                    style="color: #c95b28; width: 100%; font-weight: 700; font-size: 18px;">
+                    <p>Spotlight</p>
+                </a>
+            </li>
+            <li class="spotlight-nav" style="background-color: #fff;">
+                {{-- /rbac/auditviewall  --}}
+                <a href="/soteria/getvoucherstaff" class="nav-link @yield('soteria-search')"
+                    style="color: #c95b28; width: 100%; font-weight: 700; font-size: 18px;">
+                    <p>VoucherCode</p>
+                </a>
+            </li>
 
-        
+            {{--  TO MANAGE THE WEBISTE SIDEBAR  --}}
+
+
+            <li class="nav-item has-treeview @yield('bursary-open')">
+                <a href="#" class="nav-link @yield('bursary')">
+                    <i class="nav-icon fas fa-money-bill-wave"></i>
+                    <p>
+                        WEBSITE CMS
+
+                        <i class="right fas fa-angle-right"></i>
+                    </p>
+                </a>
+                <ul class="nav nav-treeview ml-4">
+
+                    <li class="nav-item">
+                        <a href="/website/slider" class="nav-link @yield('remita-search')">
+                            <i class="fas fa-search nav-icon"></i>
+                            <p>Slider</p>
+                        </a>
+                    </li>
+
+
+
+                    <li class="nav-item">
+                        <a href="/website/news" class="nav-link @yield('remita-list1')">
+                            <i class="fas fa-plus nav-icon"></i>
+                            <p>News </p>
+                        </a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a href="/website/events" class="nav-link @yield('remita-list1')">
+                            <i class="fas fa-plus nav-icon"></i>
+                            <p>Event </p>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="/website/news" class="nav-link @yield('remita-list1')">
+                            <i class="fas fa-plus nav-icon"></i>
+                            <p>Marquee </p>
+                        </a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a href="" class="nav-link @yield('remita-list2')">
+                            <i class="fa fa-eye nav-icon"></i>
+                            <p>Faculty</p>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="" class="nav-link @yield('remita-list3')">
+                            <i class="fa fa-eye nav-icon"></i>
+                            <p>Department</p>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="" class="nav-link @yield('remita-list3')">
+                            <i class="fa fa-eye nav-icon"></i>
+                            <p>PostGraduate</p>
+                        </a>
+                    </li>
+                    <li class="nav-item has-treeview @yield('bursary-open')">
+                        <a href="#" class="nav-link @yield('bursary')">
+                            <i class="nav-icon far fa-calendar-alt"></i>
+                            <p>
+                                Campus Life
+                                <i class="right fas fa-angle-right"></i>
+                            </p>
+                        </a>
+                        <ul class="nav nav-treeview">
+
+                            <li class="nav-item has-treeview @yield('bursary-open')">
+                                <a href="#" class="nav-link @yield('bursary')">
+                                    <i class="nav-icon far fa-calendar-alt"></i>
+                                    <p>
+                                        SRA
+                                        <i class="right fas fa-angle-right"></i>
+                                    </p>
+                                </a>
+                                <ul class="nav nav-treeview">
+
+                                    <li class="nav-item"><a href="/website/sliderSRA"
+                                            class="nav-link @yield('remita-list3')"> <i
+                                                class="fa fa-plus nav-icon"></i>Slider</a></li>
+                                    <li class="nav-item"><a href="/website/newsSRA" class="nav-link @yield('remita-list3')"> <i
+                                                class="fa fa-eye nav-icon"></i>
+                                            News</a></li>
+                                    <li class="nav-item"><a href="" class="nav-link @yield('remita-list3')"> <i
+                                                class="fa fa-eye nav-icon"></i>
+                                            Schedules </a></li>
+                                </ul>
+                            <li class="nav-item has-treeview @yield('bursary-open')">
+                                <a href="#" class="nav-link @yield('bursary')">
+                                    <i class="nav-icon far fa-calendar-alt"></i>
+                                    <p>
+                                        NFCS
+                                        <i class="right fas fa-angle-right"></i>
+                                    </p>
+                                </a>
+                                <ul class="nav nav-treeview">
+
+                                    <li class="nav-item"><a href="/website/sliderNFCS"
+                                            class="nav-link @yield('remita-list3')"> <i
+                                                class="fa fa-plus nav-icon"></i>Slider</a></li>
+                                    <li class="nav-item"><a href="/website/newsNFCS" class="nav-link @yield('remita-list3')"> <i
+                                                class="fa fa-eye nav-icon"></i>
+                                            News</a></li>
+                                    <li class="nav-item"><a href="" class="nav-link @yield('remita-list3')"> <i
+                                                class="fa fa-eye nav-icon"></i>
+                                            Schedules </a></li>
+
+
+                                </ul>
+                            </li>
+
+                    </li>
+            </li>
+            </li>
 
             <li class="nav">
                 <a href="{{ route('staff.logout') }}" class="nav-link" Contact

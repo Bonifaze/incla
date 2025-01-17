@@ -1,34 +1,34 @@
-@extends('layouts.mini')
 
 
 
-@section('pagetitle')
+
+<?php $__env->startSection('pagetitle'); ?>
 Staff Home
-@endsection
+<?php $__env->stopSection(); ?>
 
 
 
 <!-- Sidebar Links -->
 
 <!-- Treeview -->
-@section('staff-open')
+<?php $__env->startSection('staff-open'); ?>
 menu-open
-@endsection
+<?php $__env->stopSection(); ?>
 
-@section('staff')
+<?php $__env->startSection('staff'); ?>
 active
-@endsection
+<?php $__env->stopSection(); ?>
 
 <!-- Page -->
-@section('staff-home')
+<?php $__env->startSection('staff-home'); ?>
 active
-@endsection
+<?php $__env->stopSection(); ?>
 
 <!-- End Sidebar links -->
 
 
 
-@section('content')
+<?php $__env->startSection('content'); ?>
 <div class="content-wrapper bg-white">
 
     <!-- Main content -->
@@ -39,11 +39,11 @@ active
                 <h1 class="app-page-title text-uppercase h5 font-weight-bold p-2 mb-2 shadow-sm text-center text-success border">
                     Dashboard
                 </h1>
-                @include('partialsv3.flash')
-                {{-- <div class="h2 text-center">Course Registration ends in:  <span class="h2 text-danger font-weight-bold" id="demo"></span> </div>  --}}
+                <?php echo $__env->make('partialsv3.flash', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
+                
 
-                @if ($work == 1)
-                {{-- THIS SECTION FOR AUDIT   --}}
+                <?php if($work == 1): ?>
+                
                 <div class="card shadow border border-success" style="height: 400px; overflow-y: scroll;">
                     <div class="table-responsive card-body">
                         <div class="card-header">
@@ -64,46 +64,48 @@ active
                                 <th>Old Score</th>
                                 <th>New Score</th>
                                 <th>Staff Name</th>
-                                {{-- <th>Program</th>  --}}
+                                
 
 
                                 <th>Date</th>
                             </thead>
                             <tbody>
-                                @foreach ($modify as $key => $audit)
+                                <?php $__currentLoopData = $modify; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $key => $audit): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                 <tr>
-                                    <td>{{ $loop->iteration }}</td>
-                                    <td>{{ $audit->full_name }}({{ $audit->student->academic->mat_no ?? null }})
+                                    <td><?php echo e($loop->iteration); ?></td>
+                                    <td><?php echo e($audit->full_name); ?>(<?php echo e($audit->student->academic->mat_no ?? null); ?>)
                                     </td>
 
-                                    {{-- <td>{{ $audit->modifiedBy->full_name ?? null}}</td> --}}
-                                    <td>{{ $audit->course->course_code }} ({{ $audit->course->course_title }})
+                                    
+                                    <td><?php echo e($audit->course->course_code); ?> (<?php echo e($audit->course->course_title); ?>)
                                     </td>
-                                    <td>{{ $audit->sessions->name }}</td>
-                                    @if ($audit->semester == 1)
+                                    <td><?php echo e($audit->sessions->name); ?></td>
+                                    <?php if($audit->semester == 1): ?>
                                     <td>First</td>
-                                    @else
+                                    <?php else: ?>
                                     <td>Second</td>
-                                    @endif
-                                    <td class="">{{ $audit->level }}</td>
-                                    <td class="text-danger h4">{{ $audit->old_total ?? null }}</td>
-                                    <td class="text-success h3">{{ $audit->total ?? null }}</td>
-                                    <td>{{ $audit->staff->full_name ?? null }}</td>
+                                    <?php endif; ?>
+                                    <td class=""><?php echo e($audit->level); ?></td>
+                                    <td class="text-danger h4"><?php echo e($audit->old_total ?? null); ?></td>
+                                    <td class="text-success h3"><?php echo e($audit->total ?? null); ?></td>
+                                    <td><?php echo e($audit->staff->full_name ?? null); ?></td>
 
-                                    <td>{{ \Carbon\Carbon::parse($audit->updated_at)->format('l j, F Y H:i:s') }}
+                                    <td><?php echo e(\Carbon\Carbon::parse($audit->updated_at)->format('l j, F Y H:i:s')); ?>
+
                                     </td>
                                 </tr>
-                                @endforeach
-                                <a target="_blank" href="{{ route('rbac.auditviewall') }}" class="btn btn-primary mb-3 mt-3 float-right">View All Result Changes</a>
+                                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                                <a target="_blank" href="<?php echo e(route('rbac.auditviewall')); ?>" class="btn btn-primary mb-3 mt-3 float-right">View All Result Changes</a>
                             </tbody>
-                            {!! $modify->render() !!}
+                            <?php echo $modify->render(); ?>
+
                         </table>
                     </div>
                 </div>
-                @else
+                <?php else: ?>
                 <div></div>
-                @endif
-                {{-- END OF DEPARTMENT AUDIT   --}}
+                <?php endif; ?>
+                
 
                 <div class="card shadow border border-success">
 
@@ -124,12 +126,9 @@ active
                                             <div class="row no-gutters align-items-center">
                                                 <div class="col mr-2">
                                                     <div class="h4 text-success" style="text-decoration: underline;">
-                                                        <a href="/admin/upload" class="text-success @yield('staff-courses')">My
+                                                        <a href="/admin/upload" class="text-success <?php echo $__env->yieldContent('staff-courses'); ?>">My
                                                             Courses</a><br>
-                                                        {{-- <a href="/attendance" class="text-success @yield('staff-courses')">My
-                                                            Attendace csv</a>
-
-                                                            <a href="{{ route('students.exportCsv') }}" class="btn btn-primary">Export as CSV</a> --}}
+                                                        
 
                                                     </div>
                                                 </div>
@@ -147,7 +146,7 @@ active
                                             <div class="row no-gutters align-items-center">
                                                 <div class="col mr-3">
                                                     <div class="h4 text-success" style="text-decoration: underline;">
-                                                        <a href="/admin/staffscoresresult" class="text-success @yield('staff-results')">My Results</a>
+                                                        <a href="/admin/staffscoresresult" class="text-success <?php echo $__env->yieldContent('staff-results'); ?>">My Results</a>
                                                     </div>
                                                 </div>
                                                 <div class="col-auto">
@@ -168,7 +167,7 @@ active
                                             <div class="row no-gutters align-items-center">
                                                 <div class="col mr-2">
                                                     <div class="h4 text-success" style="text-decoration: underline;">
-                                                        <a href="{{ route('student.search') }}" class="text-success @yield('registration')">Search Student</a>
+                                                        <a href="<?php echo e(route('student.search')); ?>" class="text-success <?php echo $__env->yieldContent('registration'); ?>">Search Student</a>
                                                     </div>
                                                 </div>
                                                 <div class="col-auto">
@@ -185,7 +184,7 @@ active
                                             <div class="row no-gutters align-items-center">
                                                 <div class="col mr-2">
                                                     <div class="h4 text-success" style="text-decoration: underline;">
-                                                        <a href="{{ route('staff.search') }}" class="text-success @yield('registration')">Search Staff</a>
+                                                        <a href="<?php echo e(route('staff.search')); ?>" class="text-success <?php echo $__env->yieldContent('registration'); ?>">Search Staff</a>
                                                     </div>
                                                 </div>
                                                 <div class="col-auto">
@@ -240,9 +239,9 @@ active
             </div>
     </section>
 </div>
-@endsection
+<?php $__env->stopSection(); ?>
 
-@section('pagescript')
+<?php $__env->startSection('pagescript'); ?>
 <script src="<?php echo asset('dist/js/bootbox.min.js'); ?>"></script>
 
 
@@ -317,4 +316,6 @@ active
     window.onload = updateCalendar;
 
 </script>
-@endsection
+<?php $__env->stopSection(); ?>
+
+<?php echo $__env->make('layouts.mini', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH C:\Users\Lawrence Chris\Downloads\Onoyima (1)\work\incla\resources\views/staff/home.blade.php ENDPATH**/ ?>

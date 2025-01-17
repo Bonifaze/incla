@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
-@extends('layouts.plain')
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -12,42 +12,17 @@
     <title>Institute of Consecrated Life in Africa (InCLA) Admissions Portal</title>
 
     <!-- External CSS for material icons and custom styles -->
-    <link rel="stylesheet" href="{{ asset('fonts/material-icon/css/material-design-iconic-font.min.css') }}">
-    <link rel="stylesheet" href="{{ asset('css/style.css') }}">
-    <link rel="stylesheet" href="{{ asset('css/errors.css') }}">
+    <link rel="stylesheet" href="<?php echo e(asset('fonts/material-icon/css/material-design-iconic-font.min.css')); ?>">
+    <link rel="stylesheet" href="<?php echo e(asset('css/style.css')); ?>">
+     <link rel="stylesheet" href="<?php echo e(asset('css/errors.css')); ?>">
 
     <!-- Bootstrap and Popper JS -->
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.min.js" integrity="sha384-Atwg2Pkwv9vp0ygtn1JAojH0nYbwNJLPhwyoVbhoPwBhjQPR5VtM2+xf0Uwh9KtT" crossorigin="anonymous"></script>
 
-   
 </head>
 
-{{--  <body style="background-image: url('../img/signup-bg.jpg'); opacity: 0.9;" >
-    <div class="">
-        <div class="signup">
-
-            <div class="error-page">
-                <h2 class="headline text-yellow"> 419</h2>
-
-                <div class="error-content">
-                  <h3><i class="fa fa-warning text-yellow"></i> Sorry, your session has expired</h3>
-
-                  <p>
-                   Sorry, your session has expired. Please refresh and try again
-                    Meanwhile, you may <a href="{{ url('/') }}">return to Login</a>
-                  </p>
-
-
-                </div>
-                <!-- /.error-content -->
-              </div>
-        </div>
-
-    </div>
-
-</body>  --}}
-
+<?php $__env->startSection('content'); ?>
 <body>
     <!-- Moon and Stars Background -->
     <div class="moon"></div>
@@ -62,10 +37,9 @@
 
     <!-- Error Message -->
     <div class="error">
-        <div class="error__title">419</div>
+        <div class="error__title">404</div>
         <div class="error__subtitle">Ohhh!</div>
-        <div class="error__description"> Sorry, your session has expired. Please refresh and try again
-                    Meanwhile, you may <a href="{{ url('/') }}">return to Login.</div>
+        <div class="error__description"> We can't find the page you are looking for.<br> This page may no longer exist.</div>
         <button class="error__button error__button--active">Contact Admin</button>
         <div class="error__description"> If this continues, contact <br> Institute of Consecrated Life in Africa (InCLA) Admin Unit</div>
 
@@ -163,5 +137,7 @@
         animate();
     </script>
 </body>
-
+<?php $__env->stopSection(); ?>
 </html>
+
+<?php echo $__env->make('layouts.plain', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH C:\Users\Lawrence Chris\Downloads\Onoyima (1)\work\incla\resources\views/errors/404.blade.php ENDPATH**/ ?>

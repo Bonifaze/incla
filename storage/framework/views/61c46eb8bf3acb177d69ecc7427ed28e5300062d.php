@@ -16,7 +16,7 @@
                 class="users arrow-down-icon border border-gray-200 rounded-circle p-2 position-relative"
                 type="button" data-bs-toggle="dropdown" aria-expanded="false">
                 <span class="position-relative">
-                    <img src="{{ asset('img/123.png') }}" alt="User Image" class="h-32 w-32 rounded-circle">
+                    <img src="<?php echo e(asset('img/123.png')); ?>" alt="User Image" class="h-32 w-32 rounded-circle">
                     <span class="activation-badge position-absolute w-2 h-2 bg-success rounded-circle"
                           style="bottom: 0; right: 0; border: 2px solid white;">
                     </span>
@@ -26,24 +26,25 @@
                     <div class="card border border-gray-100 rounded-12 box-shadow-custom">
                         <div class="card-body">
                             <div class="flex-align gap-8 mb-20 pb-20 border-bottom border-gray-100">
-                                {{-- <img src="assets/images/thumbs/user-img.png" alt="" class="w-54 h-54 rounded-circle"> --}}
+                                
                                 <div>
-                                    @php
+                                    <?php
 
                                         if (!session('userid')) {
                                             header('location: /admissions/login');
                                             exit();
                                         }
-                                    @endphp
+                                    ?>
                                     <div class="user-panel mt-3 pb-3 mb-3 d-flex">
 
 
                                         <div class="info text-wrap ">
                                             <div class="d-block"> </div>
                                         </div>
-                                        <h4 class="mb-0">{{ session('userssurname') }} {{ session('usersFirstName') }}
-                                            {{ session('usersMiddleName') }}</h4>
-                                        <p class="fw-medium text-13 text-gray-200">{{ session('email') }}</p>
+                                        <h4 class="mb-0"><?php echo e(session('userssurname')); ?> <?php echo e(session('usersFirstName')); ?>
+
+                                            <?php echo e(session('usersMiddleName')); ?></h4>
+                                        <p class="fw-medium text-13 text-gray-200"><?php echo e(session('email')); ?></p>
                                     </div>
                                 </div>
                                 <ul class="max-h-270 overflow-y-auto scroll-sm pe-4">
@@ -61,8 +62,8 @@
                                             onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
                                             <span class="text-2xl text-danger-600 d-flex">
                                                 <i class="ph ph-sign-out"></i>
-                                                {{-- <i class="fas fa-power-off nav-icon text-danger" title="Logout"></i></span> --}}
-                                            <span class="text">{{ __('Logout') }}</span>
+                                                
+                                            <span class="text"><?php echo e(__('Logout')); ?></span>
                                         </a>
 
                                     </li>
@@ -75,3 +76,4 @@
         <!-- User Profile End -->
     </ul>
 </nav>
+<?php /**PATH C:\Users\Lawrence Chris\Downloads\Onoyima (1)\work\incla\resources\views/adminsials/navbar.blade.php ENDPATH**/ ?>

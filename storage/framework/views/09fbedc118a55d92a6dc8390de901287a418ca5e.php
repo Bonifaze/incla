@@ -20,7 +20,7 @@
             <div class="dropdown">
                 <button class="users arrow-down-icon border border-gray-200 rounded-circle p-2 position-relative" type="button" data-bs-toggle="dropdown" aria-expanded="false">
                     <span class="position-relative">
-                        <img src="data:image/png;base64,{{ Auth::guard('staff')->user()->passport }}" alt="User Image" class="h-32 w-32 rounded-circle" style="width: 50px;">
+                        <img src="data:image/png;base64,<?php echo e(Auth::guard('staff')->user()->passport); ?>" alt="User Image" class="h-32 w-32 rounded-circle" style="width: 50px;">
                         <span class="activation-badge position-absolute w-2 h-2 bg-success rounded-circle" style="bottom: 0; right: 0; border: 2px solid white;">
                         </span>
                     </span>
@@ -31,7 +31,7 @@
                             <div class="flex-align gap-8 mb-20 pb-20 border-bottom border-gray-100 text-center">
                                 <h4 class="mb-0">
                                     <div class="info text-wrap">
-                                        <a href="{{ route('staff.profile') }}" class="d-block">{{ Auth::guard('staff')->user()->full_name }}</a>
+                                        <a href="<?php echo e(route('staff.profile')); ?>" class="d-block"><?php echo e(Auth::guard('staff')->user()->full_name); ?></a>
                                     </div>
                                 </h4>
                             </div>
@@ -43,12 +43,13 @@
                                     </a>
                                 </li>
                                 <li class="border-top pt-3">
-                                    <a href="{{ route('staff.logout') }}" class="nav-link" Contact onclick="event.preventDefault();
+                                    <a href="<?php echo e(route('staff.logout')); ?>" class="nav-link" Contact onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">
                                         <i class="fas fa-power-off nav-icon text-danger"></i>
-                                        {{ __('Logout') }}
-                                        <form id="logout-form" action="{{ route('staff.logout') }}" method="POST" style="display: none;">
-                                            @csrf
+                                        <?php echo e(__('Logout')); ?>
+
+                                        <form id="logout-form" action="<?php echo e(route('staff.logout')); ?>" method="POST" style="display: none;">
+                                            <?php echo csrf_field(); ?>
                                         </form>
                                     </a>
                                 </li>
@@ -64,3 +65,4 @@
     </ul>
 </nav>
 
+<?php /**PATH C:\Users\Lawrence Chris\Downloads\Onoyima (1)\work\incla\resources\views/partialsv3/navbar.blade.php ENDPATH**/ ?>

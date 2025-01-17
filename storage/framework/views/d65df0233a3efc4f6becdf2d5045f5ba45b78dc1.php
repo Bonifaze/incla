@@ -2,14 +2,14 @@
     <!-- Brand Logo -->
 
     <div class="bg-white text-center">
-        <a class="navbar-brand" href="{{ route('student.home') }}">
-            <img src="{{ asset('img/logs.png') }}" alt="InCLA logo" class="px-2" title="InCLA logo">
+        <a class="navbar-brand" href="<?php echo e(route('student.home')); ?>">
+            <img src="<?php echo e(asset('img/logs.png')); ?>" alt="InCLA logo" class="px-2" title="InCLA logo">
         </a>
     </div>
 
     <!-- Sidebar -->
     <div class="sidebar">
-        @php
+        <?php
 
         if(!session('userid'))
         {
@@ -17,12 +17,12 @@
         header('location: /admissions/login');
         exit;
         }
-        @endphp
+        ?>
         <div class="user-panel mt-3 pb-3 mb-3 d-flex">
 
 
         <div class="info text-wrap ">
-            <div class="d-block"> {{ session('userssurname')}} {{ session('usersFirstName')}} {{ session('usersMiddleName')}}</div>
+            <div class="d-block"> <?php echo e(session('userssurname')); ?> <?php echo e(session('usersFirstName')); ?> <?php echo e(session('usersMiddleName')); ?></div>
         </div>
 
     </div>
@@ -32,14 +32,14 @@
         <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
 
             <li class="nav-item ">
-                <a href="/home" class="nav-link @yield('home')">
+                <a href="/home" class="nav-link <?php echo $__env->yieldContent('home'); ?>">
                     <i class="fa fa-home nav-icon"></i>
                     <p>Dashbord Home</p>
                 </a>
             </li>
 
-            <li class="nav-item has-treeview @yield('student-open')">
-                <a href="#" class="nav-link @yield('studentss')">
+            <li class="nav-item has-treeview <?php echo $__env->yieldContent('student-open'); ?>">
+                <a href="#" class="nav-link <?php echo $__env->yieldContent('studentss'); ?>">
                     <i class="nav-icon fas fa-user-alt"></i>
                     <p>
                         Manage Profile
@@ -50,29 +50,22 @@
                 <ul class="nav nav-treeview">
 
                     <li class="nav-item ml-2">
-                        @if(session('status') == '4')
+                        <?php if(session('status') == '4'): ?>
                         <a class="nav-link collapsed" href="/viewprofile">
                             <i class="fas fa-user"></i>
                             <span>View Profile</span>
                         </a>
-                    @endif
+                    <?php endif; ?>
                     </li>
-                    {{--  <li class="nav-item ml-2">
-                        {!! session('status') =='4'?'
-                        <a class="nav-link collapsed" href="/viewprofile">
-                            <i class="fas fa-user"></i>
-                            <span>View Profile</span>
-                        </a>
-                        ':'' !!}
-                    </li>  --}}
+                    
                     <li class="nav-item">
-                        <a href="#" class="nav-link @yield('profile')">
+                        <a href="#" class="nav-link <?php echo $__env->yieldContent('profile'); ?>">
                             <i class="fa fa-unlock-alt nav-icon"></i>
                             <p>Edit Profile</p>
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a href="/editpassword" class="nav-link @yield('password')">
+                        <a href="/editpassword" class="nav-link <?php echo $__env->yieldContent('password'); ?>">
                             <i class="fa fa-unlock-alt nav-icon"></i>
                             <p>Change Password</p>
                         </a>
@@ -82,8 +75,8 @@
 
 
 
-            <li class="nav-item has-treeview @yield('fees-open')">
-                <a href="#" class="nav-link @yield('fees')">
+            <li class="nav-item has-treeview <?php echo $__env->yieldContent('fees-open'); ?>">
+                <a href="#" class="nav-link <?php echo $__env->yieldContent('fees'); ?>">
                     <i class="nav-icon fa fa-credit-card"></i>
                     <p>
                         Manage Payment
@@ -92,7 +85,7 @@
                 </a>
                 <ul class="nav nav-treeview">
                     <li class="nav-item">
-                        <a href="paymentview/session('userid')" class="nav-link @yield('viewremita')">
+                        <a href="paymentview/session('userid')" class="nav-link <?php echo $__env->yieldContent('viewremita'); ?>">
                             <i class="fa fa-eye nav-icon"></i>
                             <p>View Payment</p>
                         </a>
@@ -100,20 +93,16 @@
 
                 </ul>
             </li>
-            {{--  <li class="nav-item">
-                <a href="/logoutUser" class="nav-link" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
-                    <i class="fas fa-power-off nav-icon text-danger" title="Logout"></i>
-                    {{ __('Logout') }}
-                </a>
-            </li>  --}}
+            
 
              <li class="nav-item">
                 <a href="/logoutUser" class="nav-link" Contact onclick="event.preventDefault();
                     document.getElementById('logout-form').submit();">
                     <i class="fas fa-power-off nav-icon text-danger" title="Logout"></i>
-                    {{ __('  Logout') }}
+                    <?php echo e(__('  Logout')); ?>
+
                     <form id="logout-form" action="/logoutUser" method="POST" style="display: none;">
-                        @csrf
+                        <?php echo csrf_field(); ?>
                     </form>
                 </a>
             </li>
@@ -125,3 +114,4 @@
     </div>
     <!-- /.sidebar -->
 </aside>
+<?php /**PATH C:\Users\Lawrence Chris\Downloads\Onoyima (1)\work\incla\resources\views/adminsials/sidebar.blade.php ENDPATH**/ ?>

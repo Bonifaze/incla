@@ -107,99 +107,147 @@ active
 
                 <div class="card shadow border border-success">
 
+                    <div class="row p-5">
 
-                </div>
+                        <div class="col-xl-6 col-md-6 mb-4">
+                            <div class="card border-left-success shadow h-100 py-3">
+                                <div class="card-body">
+                                    <div class="row no-gutters align-items-center">
+                                        <div class="col mr-2">
+                                            <div class="h4 text-success" style="text-decoration: underline;">
+                                                <a href="/admin/upload" class="text-success @yield('staff-courses')">My
+                                                    Courses</a><br>
+                                                {{-- <a href="/attendance" class="text-success @yield('staff-courses')">My
+                                                        Attendace csv</a>
 
-                <div class="row gy-4">
+                                                        <a href="{{ route('students.exportCsv') }}" class="btn btn-primary">Export as CSV</a> --}}
 
-                    <div class="col-lg-9">
-                        <!-- Widgets Start -->
-
-                        <div class="card shadow border border-success">
-                            <div class="row p-5">
-
-                                <div class="col-xl-6 col-md-6 mb-4">
-                                    <div class="card border-left-success shadow h-100 py-3">
-                                        <div class="card-body">
-                                            <div class="row no-gutters align-items-center">
-                                                <div class="col mr-2">
-                                                    <div class="h4 text-success" style="text-decoration: underline;">
-                                                        <a href="/admin/upload" class="text-success @yield('staff-courses')">My
-                                                            Courses</a><br>
-                                                        {{-- <a href="/attendance" class="text-success @yield('staff-courses')">My
-                                                            Attendace csv</a>
-
-                                                            <a href="{{ route('students.exportCsv') }}" class="btn btn-primary">Export as CSV</a> --}}
-
-                                                    </div>
-                                                </div>
-                                                <div class="col-auto">
-                                                    <i class="fas fa-book-open fa-3x text-success"></i>
-                                                </div>
                                             </div>
+                                        </div>
+                                        <div class="col-auto">
+                                            <i class="fas fa-book-open fa-3x text-success"></i>
                                         </div>
                                     </div>
                                 </div>
-
-                                <div class="col-xl-6 col-md-6 mb-4">
-                                    <div class="card border-left-success shadow h-100 py-3">
-                                        <div class="card-body">
-                                            <div class="row no-gutters align-items-center">
-                                                <div class="col mr-3">
-                                                    <div class="h4 text-success" style="text-decoration: underline;">
-                                                        <a href="/admin/staffscoresresult" class="text-success @yield('staff-results')">My Results</a>
-                                                    </div>
-                                                </div>
-                                                <div class="col-auto">
-                                                    <i class="fa fa-book fa-3x text-success"></i>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-
-                            </div>
-
-                            <div class="row p-5">
-
-                                <div class="col-xl-6 col-md-6 mb-4">
-                                    <div class="card border-left-success shadow h-100 py-3">
-                                        <div class="card-body">
-                                            <div class="row no-gutters align-items-center">
-                                                <div class="col mr-2">
-                                                    <div class="h4 text-success" style="text-decoration: underline;">
-                                                        <a href="{{ route('student.search') }}" class="text-success @yield('registration')">Search Student</a>
-                                                    </div>
-                                                </div>
-                                                <div class="col-auto">
-                                                    <i class="fa fa-search fa-3x text-success"></i>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="col-xl-6 col-md-6 mb-4">
-                                    <div class="card border-left-success shadow h-100 py-3">
-                                        <div class="card-body">
-                                            <div class="row no-gutters align-items-center">
-                                                <div class="col mr-2">
-                                                    <div class="h4 text-success" style="text-decoration: underline;">
-                                                        <a href="{{ route('staff.search') }}" class="text-success @yield('registration')">Search Staff</a>
-                                                    </div>
-                                                </div>
-                                                <div class="col-auto">
-                                                    <i class="fa fa-search fa-3x text-success"></i>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                </div>
-
                             </div>
                         </div>
 
+                        <div class="col-xl-6 col-md-6 mb-4">
+                            <div class="card border-left-success shadow h-100 py-3">
+                                <div class="card-body">
+                                    <div class="row no-gutters align-items-center">
+                                        <div class="col mr-3">
+                                            <div class="h4 text-success" style="text-decoration: underline;">
+                                                <a href="/admin/staffscoresresult" class="text-success @yield('staff-results')">My Results</a>
+                                            </div>
+                                        </div>
+                                        <div class="col-auto">
+                                            <i class="fa fa-book fa-3x text-success"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div class="row p-5">
+
+                        <div class="col-xl-6 col-md-6 mb-4">
+                            <div class="card border-left-success shadow h-100 py-3">
+                                <div class="card-body">
+                                    <div class="row no-gutters align-items-center">
+                                        <div class="col mr-2">
+                                            <div class="h4 text-success" style="text-decoration: underline;">
+                                                <a href="{{ route('student.search') }}" class="text-success @yield('registration')">Search Student</a>
+                                            </div>
+                                        </div>
+                                        <div class="col-auto">
+                                            <i class="fa fa-search fa-3x text-success"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-xl-6 col-md-6 mb-4">
+                            <div class="card border-left-success shadow h-100 py-3">
+                                <div class="card-body">
+                                    <div class="row no-gutters align-items-center">
+                                        <div class="col mr-2">
+                                            <div class="h4 text-success" style="text-decoration: underline;">
+                                                <a href="{{ route('staff.search') }}" class="text-success @yield('registration')">Search Staff</a>
+                                            </div>
+                                        </div>
+                                        <div class="col-auto">
+                                            <i class="fa fa-search fa-3x text-success"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+
+                    </div>
+                </div>
+
+                <div class="row gy-4">
+                    <div class="col-lg-9">
+                        <!-- Widgets Start -->
+                        <div class="row gy-4">
+                            <div class="col-xxl-3 col-sm-6">
+                                <div class="card">
+                                     <a href="/admin/upload" class="text-success @yield('staff-courses')">
+                                    <div class="card-body">
+                                        <h4 class="mb-2">5+</h4>
+                                        <span class="text-gray-600">My Courses</span>
+                                        <div class="flex-between gap-8 mt-16">
+                                            <span class="flex-shrink-0 w-48 h-48 flex-center rounded-circle bg-main-600 text-white text-2xl"><i class="ph-fill ph-book-open"></i></span>
+                                            <div id="complete-course" class="remove-tooltip-title rounded-tooltip-value"></div>
+                                        </div>
+                                    </div>
+                                     </a>
+                                </div>
+                            </div>
+                            <div class="col-xxl-3 col-sm-6">
+                                <div class="card">
+                                    <a href="/admin/staffscoresresult" class="text-success @yield('staff-results')">
+                                        <div class="card-body">
+                                            <h4 class="mb-2">3+</h4>
+                                            <span class="text-gray-600">My Results</span>
+                                            <div class="flex-between gap-8 mt-16">
+                                                <span class="flex-shrink-0 w-48 h-48 flex-center rounded-circle bg-main-two-600 text-white text-2xl"><i class="ph-fill ph-certificate"></i></span>
+                                                <div id="earned-certificate" class="remove-tooltip-title rounded-tooltip-value"></div>
+                                            </div>
+                                        </div>
+                                    </a>
+                                </div>
+                            </div>
+                            {{--  <div class="col-xxl-3 col-sm-6">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <h4 class="mb-2">25+</h4>
+                                        <span class="text-gray-600">Course in Progress</span>
+                                        <div class="flex-between gap-8 mt-16">
+                                            <span class="flex-shrink-0 w-48 h-48 flex-center rounded-circle bg-purple-600 text-white text-2xl"> <i class="ph-fill ph-graduation-cap"></i></span>
+                                            <div id="course-progress" class="remove-tooltip-title rounded-tooltip-value"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xxl-3 col-sm-6">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <h4 class="mb-2">18k+</h4>
+                                        <span class="text-gray-600">Community Support</span>
+                                        <div class="flex-between gap-8 mt-16">
+                                            <span class="flex-shrink-0 w-48 h-48 flex-center rounded-circle bg-warning-600 text-white text-2xl"><i class="ph-fill ph-users-three"></i></span>
+                                            <div id="community-support" class="remove-tooltip-title rounded-tooltip-value"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>  --}}
+                        </div>
                         <!-- Widgets End -->
 
 
@@ -231,7 +279,7 @@ active
                         </div>
                         <!-- Calendar End -->
 
-
+                       
 
                     </div>
 
@@ -318,3 +366,4 @@ active
 
 </script>
 @endsection
+
