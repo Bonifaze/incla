@@ -48,21 +48,21 @@ class StaffController extends Controller
     public function home()
     {
         $staff = Auth::guard('staff')->user();
-        $work = $staff->workProfile->staff_type_id;
-        $test = $staff->program;
+    //     $work = $staff->workProfile->staff_type_id;
+    //     $test = $staff->program;
 
-        $programs = $staff->workProfile->admin->academic->programs->pluck('id');
-        // ery->where('admin_department_id', '=', $admin);
+    //     $programs = $staff->workProfile->admin->academic->programs->pluck('id');
+    //     // ery->where('admin_department_id', '=', $admin);
 
-        //   dd($work);
-        $modify=RegisteredCourse::with(['staff','sessions'])->where('staff_id', '<>', '', 'and')
-        ->whereColumn('old_total', '!=', 'total')
-        ->where('program_id',$programs)
-        ->orderBy('updated_at','DESC')
-       // ->limit(20)
-        ->paginate(20);
+    //     //   dd($work);
+    //     $modify=RegisteredCourse::with(['staff','sessions'])->where('staff_id', '<>', '', 'and')
+    //     ->whereColumn('old_total', '!=', 'total')
+    //     ->where('program_id',$programs)
+    //     ->orderBy('updated_at','DESC')
+    //    // ->limit(20)
+    //     ->paginate(20);
 
-        return view('staff.home',compact('staff','modify','work'));
+        return view('staff.home',compact('staff'));
     }
     public function index(): JsonResponse
     {

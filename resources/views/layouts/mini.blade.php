@@ -82,7 +82,7 @@
             /* Add some space between the navbar items */
         }
 
-    </style> 
+    </style>
 </head>
 
 <body class="hold-transition sidebar-mini layout-fixed">
@@ -132,7 +132,7 @@
 
     <!-- jQuery -->
 
-    
+
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 
     <script src="{{ asset('v3/plugins/jquery/jquery.min.js') }}"></script>

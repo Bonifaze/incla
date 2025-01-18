@@ -242,7 +242,7 @@
                                 <i class="fa fa-eye nav-icon"></i>
                                 <p>All Registered User</p>
                             </a>
-                        </li> 
+                        </li>
                             <li class="nav-item">
                                 <a href="/adminallApplicants" class="nav-link <?php echo $__env->yieldContent('departments'); ?>">
                                     <i class="fas fa-list-alt nav-icon"></i>
@@ -656,7 +656,7 @@
             
 
 
-        
+
 
             <li class="nav">
                 <a href="<?php echo e(route('staff.logout')); ?>" class="nav-link" Contact

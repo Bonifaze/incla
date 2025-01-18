@@ -48,8 +48,13 @@ Auth::routes();
 //Authentication Staff Routes
 Route::get('/staff/login', 'Auth\StaffLoginController@showLoginForm')->name('staff.login');
 Route::post('/staff/login', 'Auth\StaffLoginController@login')->name('staff.login.submit');
-Route::get('/staff/home', 'StaffController@home')->name('staff.home');
+// Route::get('/staff/home', 'StaffController@home')->name('staff.home');
+Route::group(['middleware' => 'auth:staff'], function () {
+    Route::get('/staff/home', 'StaffController@home')->name('staff.home');
+});
 Route::post('/staff/logout', 'Auth\StaffLoginController@logout')->name('staff.logout');
+
+
 
 
 //Authentication Student Routes

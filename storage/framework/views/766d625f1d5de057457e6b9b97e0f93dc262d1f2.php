@@ -1,7 +1,3 @@
-
-
-
-
 <?php $__env->startSection('pagetitle'); ?>
     Show Staff Profile
 <?php $__env->stopSection(); ?>
@@ -500,15 +496,7 @@
                                 </div>
                             </div>
                         </div>
-                         <?php if(auth()->user()->id == 506): ?>
-
-                                <a href="/rbac/otp" class="nav-link <?php echo $__env->yieldContent(''); ?>">
-
-                                    <p></p>
-                                </a>
-
-                        <?php else: ?>
-                        <?php endif; ?>
+                         
                     </div>
 
                 </div>

@@ -63,6 +63,7 @@
             </div>
         </li>
     </ul>
+    
 </nav>
 
 <?php /**PATH C:\Users\Lawrence Chris\Downloads\Onoyima (1)\work\incla\resources\views/partialsv3/navbar.blade.php ENDPATH**/ ?>

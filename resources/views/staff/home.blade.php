@@ -42,68 +42,7 @@ active
                 @include('partialsv3.flash')
                 {{-- <div class="h2 text-center">Course Registration ends in:  <span class="h2 text-danger font-weight-bold" id="demo"></span> </div>  --}}
 
-                @if ($work == 1)
-                {{-- THIS SECTION FOR AUDIT   --}}
-                <div class="card shadow border border-success" style="height: 400px; overflow-y: scroll;">
-                    <div class="table-responsive card-body">
-                        <div class="card-header">
-                            <h6 class="app-page-title text-uppercase h5 font-weight-bold p-2 mb-2 shadow-sm text-center text-success border">
-                                Department Result Audit System
-                            </h6>
-                        </div>
-                        <table class="table table-striped">
-                            <thead>
-                                <th>S/N</th>
 
-                                <th>Student </th>
-
-                                <th>Course </th>
-                                <th>session</th>
-                                <th>Semester</th>
-                                <th>Level</th>
-                                <th>Old Score</th>
-                                <th>New Score</th>
-                                <th>Staff Name</th>
-                                {{-- <th>Program</th>  --}}
-
-
-                                <th>Date</th>
-                            </thead>
-                            <tbody>
-                                @foreach ($modify as $key => $audit)
-                                <tr>
-                                    <td>{{ $loop->iteration }}</td>
-                                    <td>{{ $audit->full_name }}({{ $audit->student->academic->mat_no ?? null }})
-                                    </td>
-
-                                    {{-- <td>{{ $audit->modifiedBy->full_name ?? null}}</td> --}}
-                                    <td>{{ $audit->course->course_code }} ({{ $audit->course->course_title }})
-                                    </td>
-                                    <td>{{ $audit->sessions->name }}</td>
-                                    @if ($audit->semester == 1)
-                                    <td>First</td>
-                                    @else
-                                    <td>Second</td>
-                                    @endif
-                                    <td class="">{{ $audit->level }}</td>
-                                    <td class="text-danger h4">{{ $audit->old_total ?? null }}</td>
-                                    <td class="text-success h3">{{ $audit->total ?? null }}</td>
-                                    <td>{{ $audit->staff->full_name ?? null }}</td>
-
-                                    <td>{{ \Carbon\Carbon::parse($audit->updated_at)->format('l j, F Y H:i:s') }}
-                                    </td>
-                                </tr>
-                                @endforeach
-                                <a target="_blank" href="{{ route('rbac.auditviewall') }}" class="btn btn-primary mb-3 mt-3 float-right">View All Result Changes</a>
-                            </tbody>
-                            {!! $modify->render() !!}
-                        </table>
-                    </div>
-                </div>
-                @else
-                <div></div>
-                @endif
-                {{-- END OF DEPARTMENT AUDIT   --}}
 
                 <div class="card shadow border border-success">
 

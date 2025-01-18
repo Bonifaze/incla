@@ -238,4 +238,4 @@ window.onload = updateCalendar;
 </script>
 <?php $__env->stopSection(); ?>
 
-<?php echo $__env->make('layouts.adminsials', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH C:\Users\hp\Desktop\incla\resources\views/admissions/home.blade.php ENDPATH**/ ?>
+<?php echo $__env->make('layouts.adminsials', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH C:\Users\Lawrence Chris\Downloads\Onoyima (1)\work\incla\resources\views/admissions/home.blade.php ENDPATH**/ ?>

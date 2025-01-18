@@ -121,11 +121,15 @@ private function getMacAddress()
     }
 
 
-    public function logout()
-    {
-        Auth::guard('staff')->logout();
-        return redirect('/');
-    }
+    public function logout(Request $request)
+{
+    Auth::guard('staff')->logout(); // Log out the staff user
+    $request->session()->invalidate(); // Invalidate the session
+    $request->session()->regenerateToken(); // Regenerate CSRF token for security
+
+    // Redirect to the staff login page
+    return redirect()->route('staff.login');
+}
 
 
 } // end class

@@ -254,4 +254,4 @@ unset($__errorArgs, $__bag); ?>
 </body>
 
 </html>
-<?php /**PATH C:\Users\hp\Desktop\incla\resources\views/admissions/register.blade.php ENDPATH**/ ?>
+<?php /**PATH C:\Users\Lawrence Chris\Downloads\Onoyima (1)\work\incla\resources\views/admissions/register.blade.php ENDPATH**/ ?>

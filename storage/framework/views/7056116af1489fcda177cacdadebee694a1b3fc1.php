@@ -1,7 +1,3 @@
-
-
-
-
 <?php $__env->startSection('pagetitle'); ?> Staff Role details  <?php $__env->stopSection(); ?>
 
 

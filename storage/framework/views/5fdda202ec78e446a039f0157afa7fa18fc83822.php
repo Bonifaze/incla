@@ -1,9 +1,7 @@
-
-
 <?php $__env->startSection('pagetitle'); ?>
     <!-- CSRF Token -->
     <meta name="csrf-token" content="<?php echo e(csrf_token()); ?>">
-    <link rel="icon" type="image/x-icon" href="../img/uaes.png">
+     <link rel="icon" type="image/x-icon" href="../img/uaes.png">
 
     <title>InCLA | Applicant Login</title>
     <link href="https://fonts.googleapis.com/css2?family=Dancing+Script&display=swap" rel="stylesheet">
@@ -11,17 +9,17 @@
 
 <?php $__env->startSection('css'); ?>
 <style>
-    body {
-        background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
-        url("<?php echo e(asset('/css/incla-class.jpg')); ?>") center center no-repeat;
-        background-size: cover;
-        padding-top: 10px;
-        display: flex;
-        align-items: center;
-        justify-content: flex-end;
-    }
+body {
+    background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
+    url("<?php echo e(asset('/css/incla-class.jpg')); ?>") center center no-repeat;
+    background-size: cover;
+    padding-top: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+}
 
-    .login-form {
+.login-form {
         background: rgba(0, 0, 0, 0.7);
         box-shadow: rgba(0, 0, 0, 0.4) 0px 2px 4px 0px, rgba(0, 0, 0, 0.3) 0px 7px 13px -3px, rgba(0, 0, 0, 0.2) 0px -3px 0px 0px inset;
         padding: 30px 40px;
@@ -43,7 +41,7 @@
     }
 
     .btn-success:hover {
-        background-color: #c95b28;
+        background-color: #ec971f;
     }
 
     .form-control {
@@ -108,38 +106,59 @@
     }
 
     @media only screen and (max-width: 480px) {
-        body {
-            font-size: 20px;
-            padding-top: 90px;
-        }
-
-        .login-form {
-            width: 100%;
-            max-width: 100%;
-        }
-
-        .buttons-container {
-            flex-direction: column;
-            align-items: center;
-            gap: 15px;
-        }
-
-        .button-aligned {
-            width: 80%;
-        }
+    body {
+        font-size: 18px; /* Adjust font size for mobile */
+        padding-top: 70px; /* Provide top padding to avoid overlap with navbar */
     }
+
+    .login-form {
+        width: 90%;
+        max-width: 90%; /* Ensure form takes full width on mobile */
+    }
+
+    .buttons-container {
+        flex: 1;
+        align-items: center;
+        gap: 15px;
+    }
+
+    .button-aligned {
+        width: 100%;
+
+    }
+    .login-heading {
+
+    margin: 5px;
+
+    font-size: 1em;
+
+    font-weight: 300;
+
+}
+.link-text {
+    margin-bottom: 5px;
+
+    font-size: 1em;
+    font-weight: 300;
+}
+
+
+}
 </style>
 <?php $__env->stopSection(); ?>
 
 <?php $__env->startSection('content'); ?>
 
 <body>
+
+
+
     <div class="container">
         <div class="row">
             <div class="col-md-6 offset-md-2 d-flex aligns-items-center justify-content-center">
                 <div class="login-form">
                     <div class="login-heading">
-                        <p>APPLICANT Login</p>
+                        <p>APPLICANT Logu9in</p>
                     </div>
                     <form method="POST" action="/login">
                         <?php if(session('signUpMsg')): ?>
@@ -183,9 +202,10 @@
 
                     <!-- Buttons for Student and Staff login -->
                     <div class="buttons-container">
-                        <a href="<?php echo e(route('student.login')); ?>"><button class="button-aligned">Student Login</button><a/>
-                        <a href="<?php echo e(route('staff.login')); ?>"><button class="button-aligned">Staff Login</button><a/>
-                    </div>
+                        <a href="<?php echo e(route('student.login')); ?>"><button class="button-aligned">Student</button><a/>
+                            <br>
+                        <a href="<?php echo e(route('staff.login')); ?>"><button class="button-aligned">Staff</button><a/>
+</div>
                 </div>
             </div>
         </div>
@@ -202,4 +222,4 @@
     </script>
 <?php $__env->stopSection(); ?>
 
-<?php echo $__env->make('layouts.plain', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH C:\Users\hp\Desktop\incla\resources\views/admissions/login.blade.php ENDPATH**/ ?>
+<?php echo $__env->make('layouts.plain', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH C:\Users\Lawrence Chris\Downloads\Onoyima (1)\work\incla\resources\views/auth/login.blade.php ENDPATH**/ ?>

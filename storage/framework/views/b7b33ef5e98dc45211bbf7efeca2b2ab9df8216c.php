@@ -1,5 +1,3 @@
-
-
 <?php $__env->startSection('pagetitle'); ?>
     <!-- CSRF Token -->
     <meta name="csrf-token" content="<?php echo e(csrf_token()); ?>">

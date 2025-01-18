@@ -1,7 +1,3 @@
-
-
-
-
 <?php $__env->startSection('pagetitle'); ?>
 Staff Home
 <?php $__env->stopSection(); ?>
@@ -42,70 +38,7 @@ active
                 <?php echo $__env->make('partialsv3.flash', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
                 
 
-                <?php if($work == 1): ?>
-                
-                <div class="card shadow border border-success" style="height: 400px; overflow-y: scroll;">
-                    <div class="table-responsive card-body">
-                        <div class="card-header">
-                            <h6 class="app-page-title text-uppercase h5 font-weight-bold p-2 mb-2 shadow-sm text-center text-success border">
-                                Department Result Audit System
-                            </h6>
-                        </div>
-                        <table class="table table-striped">
-                            <thead>
-                                <th>S/N</th>
 
-                                <th>Student </th>
-
-                                <th>Course </th>
-                                <th>session</th>
-                                <th>Semester</th>
-                                <th>Level</th>
-                                <th>Old Score</th>
-                                <th>New Score</th>
-                                <th>Staff Name</th>
-                                
-
-
-                                <th>Date</th>
-                            </thead>
-                            <tbody>
-                                <?php $__currentLoopData = $modify; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $key => $audit): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                                <tr>
-                                    <td><?php echo e($loop->iteration); ?></td>
-                                    <td><?php echo e($audit->full_name); ?>(<?php echo e($audit->student->academic->mat_no ?? null); ?>)
-                                    </td>
-
-                                    
-                                    <td><?php echo e($audit->course->course_code); ?> (<?php echo e($audit->course->course_title); ?>)
-                                    </td>
-                                    <td><?php echo e($audit->sessions->name); ?></td>
-                                    <?php if($audit->semester == 1): ?>
-                                    <td>First</td>
-                                    <?php else: ?>
-                                    <td>Second</td>
-                                    <?php endif; ?>
-                                    <td class=""><?php echo e($audit->level); ?></td>
-                                    <td class="text-danger h4"><?php echo e($audit->old_total ?? null); ?></td>
-                                    <td class="text-success h3"><?php echo e($audit->total ?? null); ?></td>
-                                    <td><?php echo e($audit->staff->full_name ?? null); ?></td>
-
-                                    <td><?php echo e(\Carbon\Carbon::parse($audit->updated_at)->format('l j, F Y H:i:s')); ?>
-
-                                    </td>
-                                </tr>
-                                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-                                <a target="_blank" href="<?php echo e(route('rbac.auditviewall')); ?>" class="btn btn-primary mb-3 mt-3 float-right">View All Result Changes</a>
-                            </tbody>
-                            <?php echo $modify->render(); ?>
-
-                        </table>
-                    </div>
-                </div>
-                <?php else: ?>
-                <div></div>
-                <?php endif; ?>
-                
 
                 <div class="card shadow border border-success">
 
