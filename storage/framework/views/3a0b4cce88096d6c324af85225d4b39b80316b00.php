@@ -1,50 +1,46 @@
-@extends('layouts.mini')
-
-
-
-@section('pagetitle')
+<?php $__env->startSection('pagetitle'); ?>
     Show Staff Profile
-@endsection
+<?php $__env->stopSection(); ?>
 
 
 
 <!-- Sidebar Links -->
 
 <!-- Treeview -->
-@section('staff-open')
+<?php $__env->startSection('staff-open'); ?>
     menu-open
-@endsection
+<?php $__env->stopSection(); ?>
 
-@section('staff')
+<?php $__env->startSection('staff'); ?>
     active
-@endsection
+<?php $__env->stopSection(); ?>
 
 <!-- Page -->
-@section('staff-profile')
+<?php $__env->startSection('staff-profile'); ?>
     active
-@endsection
+<?php $__env->stopSection(); ?>
 
 <!-- End Sidebar links -->
 
-@section('content')
+<?php $__env->startSection('content'); ?>
     <div class="content-wrapper bg-white">
         <!-- Content Header (Page header) -->
 
         <!-- Main content -->
         <section class="content">
-            @include('partialsv3.flash')
+            <?php echo $__env->make('partialsv3.flash', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
             <div class="container-fluid">
                 <h1
                     class="app-page-title text-uppercase h5 font-weight-bold p-2 mb-2 shadow-sm text-center text-success border">
                     Staff Profile
                 </h1>
                                                      <div>
-                                                            @can('rbac', 'App\Staff')
+                                                            <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('rbac', 'App\Staff')): ?>
                                                                 <a class="btn btn-warning"
-                                                                    href="{{ route('staff.show',$staff->id) }}">Edit Profile
+                                                                    href="<?php echo e(route('staff.show',$staff->id)); ?>">Edit Profile
                                                                 </a>
-                                                            @else
-                                                            @endcan
+                                                            <?php else: ?>
+                                                            <?php endif; ?>
                                                         </div>
                 <div class="row py-4">
                     <div class="col-12 col-lg-6">
@@ -67,7 +63,7 @@
                                             </div>
                                             <div class="rounded-circle">
                                                 <img class="rounded-circle p-3 mx-auto d-block"
-                                                    src="data:image/png;base64,{{ $staff->passport }}"
+                                                    src="data:image/png;base64,<?php echo e($staff->passport); ?>"
                                                     alt="Student Passport" style="height: 200px; width:200px;" />
                                             </div>
                                         </div>
@@ -77,7 +73,7 @@
                                             </div>
                                             <div class="rounded-circle">
                                                 <img class="rounded-circle p-3 mx-auto d-block"
-                                                    src="data:image/png;base64,{{ $staff->signature }}"
+                                                    src="data:image/png;base64,<?php echo e($staff->signature); ?>"
                                                     alt="Student signature" style="height: 200px; width:200px;" />
                                             </div>
                                         </div>
@@ -88,7 +84,8 @@
                                     <div class="row justify-content-between align-items-center">
                                         <div class="col-auto">
                                             <div class="item-label"><strong>Title</strong></div>
-                                            <div class="item-data">{{ $staff->title }}
+                                            <div class="item-data"><?php echo e($staff->title); ?>
+
                                             </div>
                                         </div>
                                     </div>
@@ -98,7 +95,8 @@
                                     <div class="row justify-content-between align-items-center">
                                         <div class="col-auto">
                                             <div class="item-label"><strong>Surname</strong></div>
-                                            <div class="item-data">{{ $staff->surname }}
+                                            <div class="item-data"><?php echo e($staff->surname); ?>
+
                                             </div>
                                         </div>
                                     </div>
@@ -108,7 +106,8 @@
                                         <div class="col-auto">
                                             <div class="item-label"><strong>First Name</strong></div>
                                             <div class="item-data">
-                                                {{ $staff->first_name }}
+                                                <?php echo e($staff->first_name); ?>
+
                                             </div>
                                         </div>
                                     </div>
@@ -118,7 +117,8 @@
                                         <div class="col-auto">
                                             <div class="item-label"><strong>Other Name</strong></div>
                                             <div class="item-data">
-                                                {{ $staff->middle_name }}
+                                                <?php echo e($staff->middle_name); ?>
+
                                             </div>
                                         </div>
                                     </div>
@@ -127,7 +127,8 @@
                                     <div class="row justify-content-between align-items-center">
                                         <div class="col-auto">
                                             <div class="item-label"><strong>Maiden Name</strong></div>
-                                            {{ $staff->maiden_name }}
+                                            <?php echo e($staff->maiden_name); ?>
+
                                         </div>
                                     </div>
                                 </div>
@@ -137,7 +138,8 @@
                                         <div class="col-auto">
                                             <div class="item-label"><strong>Username / Official Email</strong></div>
                                             <div class="item-data text-primary font-weight-bold">
-                                                {{ $staff->username }}
+                                                <?php echo e($staff->username); ?>
+
                                             </div>
                                         </div>
                                     </div>
@@ -154,7 +156,8 @@
                                     <div class="row justify-content-between align-items-center">
                                         <div class="col-auto">
                                             <div class="item-label"><strong>Email</strong></div>
-                                            <div class="item-data">{{ $staff->email }}
+                                            <div class="item-data"><?php echo e($staff->email); ?>
+
                                             </div>
                                         </div>
                                     </div>
@@ -163,7 +166,8 @@
                                     <div class="row justify-content-between align-items-center">
                                         <div class="col-auto">
                                             <div class="item-label"><strong>Phone Number</strong></div>
-                                            <div class="item-data">{{ $staff->phone }}
+                                            <div class="item-data"><?php echo e($staff->phone); ?>
+
                                             </div>
                                         </div>
                                     </div>
@@ -172,7 +176,8 @@
                                     <div class="row justify-content-between align-items-center">
                                         <div class="col-auto">
                                             <div class="item-label"><strong>Gender</strong></div>
-                                            <div class="item-data">{{ $staff->gender }}
+                                            <div class="item-data"><?php echo e($staff->gender); ?>
+
                                             </div>
                                         </div>
                                     </div>
@@ -181,8 +186,8 @@
                                     <div class="row justify-content-between align-items-center">
                                         <div class="col-auto">
                                             <div class="item-label"><strong>Date of Birth</strong></div>
-                                            {{--  <div class="item-data">{{ $staff->dob }}</div>  --}}
-                                             <div class="item-data">{{ \Carbon\Carbon::parse($staff->dob)->format('l j, F Y') }} </div>
+                                            
+                                             <div class="item-data"><?php echo e(\Carbon\Carbon::parse($staff->dob)->format('l j, F Y')); ?> </div>
                                         </div>
                                     </div>
                                 </div>
@@ -190,7 +195,8 @@
                                     <div class="row justify-content-between align-items-center">
                                         <div class="col-auto">
                                             <div class="item-label"><strong>Religion</strong></div>
-                                            <div class="item-data">{{ $staff->religion }}
+                                            <div class="item-data"><?php echo e($staff->religion); ?>
+
                                             </div>
                                         </div>
                                     </div>
@@ -200,7 +206,8 @@
                                         <div class="col-auto">
                                             <div class="item-label"><strong>Nationality</strong></div>
                                             <div class="item-data">
-                                                {{ $staff->nationality }}
+                                                <?php echo e($staff->nationality); ?>
+
                                             </div>
                                         </div>
                                     </div>
@@ -209,7 +216,8 @@
                                     <div class="row justify-content-between align-items-center">
                                         <div class="col-auto">
                                             <div class="item-label"><strong>Address</strong></div>
-                                            <div class="item-data">{{ $staff->address }}
+                                            <div class="item-data"><?php echo e($staff->address); ?>
+
                                             </div>
                                         </div>
                                     </div>
@@ -220,7 +228,8 @@
                                             <div class="item-label"><strong>State of Origin</strong>
                                             </div>
                                             <div class="item-data">
-                                                {{ $staff->state }}
+                                                <?php echo e($staff->state); ?>
+
                                             </div>
                                         </div>
                                     </div>
@@ -229,7 +238,8 @@
                                     <div class="row justify-content-between align-items-center">
                                         <div class="col-auto">
                                             <div class="item-label"><strong>LGA</strong></div>
-                                            {{ $staff->lga_name }}
+                                            <?php echo e($staff->lga_name); ?>
+
                                         </div>
                                     </div>
                                 </div>
@@ -237,7 +247,8 @@
                                     <div class="row justify-content-between align-items-center">
                                         <div class="col-auto">
                                             <div class="item-label"><strong>Marital Status</strong></div>
-                                            {{ $staff->marital_status }}
+                                            <?php echo e($staff->marital_status); ?>
+
                                         </div>
                                     </div>
                                 </div>
@@ -260,20 +271,7 @@
                             </div>
                         </div>
                     </div>
-                    {{--  <div class="app-card-body px-4 w-100">
-                <div class="item border-bottom py-3">
-                    <div class="row justify-content-between align-items-center">
-                        <div class="col-auto">
-                            <div class="item-label">
-                                <strong>Title</strong>
-                            </div>
-                            <div class="item-data">
-                                 {{ $contact->title }}
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>  --}}
+                    
                     <div class="app-card-body px-4 w-100">
                         <div class="item border-bottom py-3">
                             <div class="row justify-content-between align-items-center">
@@ -282,7 +280,8 @@
                                         <strong>Name</strong>
                                     </div>
                                     <div class="item-data">
-                                        {{ $contact->name }}
+                                        <?php echo e($contact->name); ?>
+
                                     </div>
                                 </div>
                             </div>
@@ -296,7 +295,8 @@
                                         <strong>Relationship</strong>
                                     </div>
                                     <div class="item-data">
-                                        {{ $contact->relationship }}
+                                        <?php echo e($contact->relationship); ?>
+
                                     </div>
                                 </div>
                             </div>
@@ -310,7 +310,8 @@
                                         <strong>Email </strong>
                                     </div>
                                     <div class="item-data">
-                                        {{ $contact->email }}
+                                        <?php echo e($contact->email); ?>
+
                                     </div>
                                 </div>
                             </div>
@@ -324,7 +325,8 @@
                                         <strong>Phone Number </strong>
                                     </div>
                                     <div class="item-data">
-                                        {{ $contact->phone }}
+                                        <?php echo e($contact->phone); ?>
+
                                     </div>
                                 </div>
                             </div>
@@ -338,7 +340,8 @@
                                         <strong>Addresss </strong>
                                     </div>
                                     <div class="item-data">
-                                        {{ $contact->address }}
+                                        <?php echo e($contact->address); ?>
+
                                     </div>
                                 </div>
                             </div>
@@ -353,7 +356,8 @@
                                         <strong>State of Residence </strong>
                                     </div>
                                     <div class="item-data">
-                                        {{ $contact->state }}
+                                        <?php echo e($contact->state); ?>
+
                                     </div>
                                 </div>
                             </div>
@@ -380,7 +384,8 @@
                                         <strong>Staff No.</strong>
                                     </div>
                                     <div class="item-data">
-                                        {{ $work->staff_no }}
+                                        <?php echo e($work->staff_no); ?>
+
                                     </div>
                                 </div>
                             </div>
@@ -395,7 +400,8 @@
                                         <strong>Staff Position</strong>
                                     </div>
                                     <div class="item-data">
-                                        {{ $work->position->name }}
+                                        <?php echo e($work->position->name); ?>
+
                                     </div>
                                 </div>
                             </div>
@@ -409,7 +415,8 @@
                                         <strong>Staff Type </strong>
                                     </div>
                                     <div class="item-data">
-                                        {{ $work->type->name }}
+                                        <?php echo e($work->type->name); ?>
+
                                     </div>
                                 </div>
                             </div>
@@ -423,7 +430,8 @@
                                         <strong>Employment Type </strong>
                                     </div>
                                     <div class="item-data">
-                                        {{ $work->employmentType->name }}
+                                        <?php echo e($work->employmentType->name); ?>
+
                                     </div>
                                 </div>
                             </div>
@@ -437,7 +445,8 @@
                                         <strong>Department </strong>
                                     </div>
                                     <div class="item-data">
-                                        {{ $work->admin->name }}
+                                        <?php echo e($work->admin->name); ?>
+
                                     </div>
                                 </div>
                             </div>
@@ -451,7 +460,8 @@
                                         <strong>Grade level </strong>
                                     </div>
                                     <div class="item-data">
-                                        {{ $work->grade_id }}
+                                        <?php echo e($work->grade_id); ?>
+
                                     </div>
                                 </div>
                             </div>
@@ -465,7 +475,8 @@
                                         <strong>Appointment Date </strong>
                                     </div>
                                     <div class="item-data">
-                                        {{ $work->appointment_date }}
+                                        <?php echo e($work->appointment_date); ?>
+
                                     </div>
                                 </div>
                             </div>
@@ -479,20 +490,13 @@
                                         <strong>Assumption Date </strong>
                                     </div>
                                     <div class="item-data">
-                                        {{ $work->assumption_date }}
+                                        <?php echo e($work->assumption_date); ?>
+
                                     </div>
                                 </div>
                             </div>
                         </div>
-                         {{--  @if (auth()->user()->id == 506)
-
-                                <a href="/rbac/otp" class="nav-link @yield('')">
-
-                                    <p></p>
-                                </a>
-
-                        @else
-                        @endif  --}}
+                         
                     </div>
 
                 </div>
@@ -505,10 +509,10 @@
     </section>
     <!-- /.content -->
     </div>
-@endsection
+<?php $__env->stopSection(); ?>
 
 
-@section('pagescript')
+<?php $__env->startSection('pagescript'); ?>
     <script src="<?php echo asset('dist/js/bootbox.min.js'); ?>"></script>
 
     <script>
@@ -559,4 +563,6 @@
             // e.preventDefault(); // avoid to execute the actual submit of the form if onsubmit is used.
         }
     </script>
-@endsection
+<?php $__env->stopSection(); ?>
+
+<?php echo $__env->make('layouts.mini', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH /Users/lifeofrence/Downloads/inclaproject/incla/resources/views/staff/profile.blade.php ENDPATH**/ ?>

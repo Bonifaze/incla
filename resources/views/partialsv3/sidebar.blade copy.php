@@ -277,7 +277,7 @@
 
             </ul>
             </li> --}}
-                @can('searchapplicant', 'App\Session')
+              @can('searchapplicant', 'App\Session')
                     <li class="nav-item has-treeview @yield('results-open')">
                         <a href="#" class="nav-link @yield('results')">
                             <i class="nav-icon fas fa-graduation-cap"></i>

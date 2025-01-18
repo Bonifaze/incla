@@ -1,34 +1,30 @@
-@extends('layouts.mini')
-
-
-
-@section('pagetitle')
+<?php $__env->startSection('pagetitle'); ?>
 Staff Home
-@endsection
+<?php $__env->stopSection(); ?>
 
 
 
 <!-- Sidebar Links -->
 
 <!-- Treeview -->
-@section('staff-open')
+<?php $__env->startSection('staff-open'); ?>
 menu-open
-@endsection
+<?php $__env->stopSection(); ?>
 
-@section('staff')
+<?php $__env->startSection('staff'); ?>
 active
-@endsection
+<?php $__env->stopSection(); ?>
 
 <!-- Page -->
-@section('staff-home')
+<?php $__env->startSection('staff-home'); ?>
 active
-@endsection
+<?php $__env->stopSection(); ?>
 
 <!-- End Sidebar links -->
 
 
 
-@section('content')
+<?php $__env->startSection('content'); ?>
 <div class="content-wrapper bg-white">
 
     <!-- Main content -->
@@ -39,8 +35,8 @@ active
                 <h1 class="app-page-title text-uppercase h5 font-weight-bold p-2 mb-2 shadow-sm text-center text-success border">
                     Dashboard
                 </h1>
-                @include('partialsv3.flash')
-                {{-- <div class="h2 text-center">Course Registration ends in:  <span class="h2 text-danger font-weight-bold" id="demo"></span> </div>  --}}
+                <?php echo $__env->make('partialsv3.flash', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
+                
 
 
 
@@ -63,12 +59,9 @@ active
                                             <div class="row no-gutters align-items-center">
                                                 <div class="col mr-2">
                                                     <div class="h4 text-success" style="text-decoration: underline;">
-                                                        <a href="/admin/upload" class="text-success @yield('staff-courses')">My
+                                                        <a href="/admin/upload" class="text-success <?php echo $__env->yieldContent('staff-courses'); ?>">My
                                                             Courses</a><br>
-                                                        {{-- <a href="/attendance" class="text-success @yield('staff-courses')">My
-                                                            Attendace csv</a>
-
-                                                            <a href="{{ route('students.exportCsv') }}" class="btn btn-primary">Export as CSV</a> --}}
+                                                        
 
                                                     </div>
                                                 </div>
@@ -86,7 +79,7 @@ active
                                             <div class="row no-gutters align-items-center">
                                                 <div class="col mr-3">
                                                     <div class="h4 text-success" style="text-decoration: underline;">
-                                                        <a href="/admin/staffscoresresult" class="text-success @yield('staff-results')">My Results</a>
+                                                        <a href="/admin/staffscoresresult" class="text-success <?php echo $__env->yieldContent('staff-results'); ?>">My Results</a>
                                                     </div>
                                                 </div>
                                                 <div class="col-auto">
@@ -107,7 +100,7 @@ active
                                             <div class="row no-gutters align-items-center">
                                                 <div class="col mr-2">
                                                     <div class="h4 text-success" style="text-decoration: underline;">
-                                                        <a href="{{ route('student.search') }}" class="text-success @yield('registration')">Search Student</a>
+                                                        <a href="<?php echo e(route('student.search')); ?>" class="text-success <?php echo $__env->yieldContent('registration'); ?>">Search Student</a>
                                                     </div>
                                                 </div>
                                                 <div class="col-auto">
@@ -124,7 +117,7 @@ active
                                             <div class="row no-gutters align-items-center">
                                                 <div class="col mr-2">
                                                     <div class="h4 text-success" style="text-decoration: underline;">
-                                                        <a href="{{ route('staff.search') }}" class="text-success @yield('registration')">Search Staff</a>
+                                                        <a href="<?php echo e(route('staff.search')); ?>" class="text-success <?php echo $__env->yieldContent('registration'); ?>">Search Staff</a>
                                                     </div>
                                                 </div>
                                                 <div class="col-auto">
@@ -179,9 +172,9 @@ active
             </div>
     </section>
 </div>
-@endsection
+<?php $__env->stopSection(); ?>
 
-@section('pagescript')
+<?php $__env->startSection('pagescript'); ?>
 <script src="<?php echo asset('dist/js/bootbox.min.js'); ?>"></script>
 
 
@@ -256,4 +249,6 @@ active
     window.onload = updateCalendar;
 
 </script>
-@endsection
+<?php $__env->stopSection(); ?>
+
+<?php echo $__env->make('layouts.mini', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH /Users/lifeofrence/Downloads/inclaproject/incla/resources/views/staff/home.blade.php ENDPATH**/ ?>
