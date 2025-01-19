@@ -1,26 +1,28 @@
-<?php $__env->startSection('pagetitle'); ?>
+@extends('layouts.adminsials')
+
+@section('pagetitle')
 Home
-<?php $__env->stopSection(); ?>
+@endsection
 
 <!-- Sidebar Links -->
 
 <!-- Treeview -->
-<?php $__env->startSection('student-open'); ?>
+@section('student-open')
 menu-open
-<?php $__env->stopSection(); ?>
+@endsection
 
-<?php $__env->startSection('student'); ?>
+@section('student')
 active
-<?php $__env->stopSection(); ?>
+@endsection
 
 <!-- Page -->
-<?php $__env->startSection('home'); ?>
+@section('home')
 active
-<?php $__env->stopSection(); ?>
+@endsection
 
 <!-- End Sidebar links -->
 
-<?php $__env->startSection('content'); ?>
+@section('content')
 <div class="content-wrapper bg-white">
     <!-- Content Header (Page header) -->
     <!-- Main content -->
@@ -34,7 +36,7 @@ active
                         <!-- Widgets Start -->
                         <div class="row gy-4">
                              <div class="row p-5">
-                        <?php $__currentLoopData = $admissiontype; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $key => $session): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                        @foreach ($admissiontype as $key => $session)
 
 
                         <div class="col-xl-6 col-md-6 mb-4">
@@ -44,7 +46,7 @@ active
                                         <div class="col mr-2">
                                             <div class="h4 text-success" style="text-decoration: underline;">
 
-                                                <a href="<?php echo e($session->route); ?>" class="text-success <?php echo $__env->yieldContent('registration'); ?>"><?php echo e($session->name); ?></a>
+                                                <a href="{{ $session->route }}" class="text-success @yield('registration')">{{ $session->name }}</a>
 
                                             </div>
                                         </div>
@@ -55,7 +57,7 @@ active
                                 </div>
                             </div>
                         </div>
-                        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                        @endforeach
                     </div>
 
                         </div>
@@ -171,9 +173,9 @@ active
 
 
 </div>
-<?php $__env->stopSection(); ?>
+@endsection
 
-<?php $__env->startSection('pagescript'); ?>
+@section('pagescript')
 <script src="<?php echo asset('dist/js/bootbox.min.js'); ?>"></script>
 <script>
     function updateCalendar() {
@@ -214,6 +216,4 @@ active
 window.onload = updateCalendar;
 
 </script>
-<?php $__env->stopSection(); ?>
-
-<?php echo $__env->make('layouts.adminsials', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH C:\Users\Lawrence Chris\Downloads\Onoyima (1)\work\incla\resources\views/admissions/home.blade.php ENDPATH**/ ?>
+@endsection

@@ -56,113 +56,118 @@
     <link rel="stylesheet" href="{{ asset('fonts/material-icon/css/material-design-iconic-font.min.css')}}">
 
     <!-- Main css -->
-    
+
     <link rel="stylesheet" href="{{ asset('css/regform.css')}}">
 </head>
 
-<body >
-{{--  <body style="background-image: url('../img/incla-block.jpg'); opacity: 0.9;">  --}}
-
+<body>
 
 
 
     <div class="wrapper" style="background-image: url('../img/bg-registration-form-2.jpg');">
-			<div class="inner">
-				<form method="POST" action="/register">
-					<h3>New Applicant Registration Form</h3>
-                    @csrf
-                    @if (session('signUpMsg'))
-                    {!! session('signUpMsg') !!}
-                    @endif
-					<div class="form-group">
-						<div class="form-wrapper  @error('surname') is-invalid @enderror" id="surname" type="text" class="form-control @error('surname') is-invalid @enderror" name="surname" value="{{ old('surname') }}" required autocomplete="surname" placeholder="Surname" autofocus>
-							<label for="">Surname</label>
-							{{--  <input type="text" class="form-control">  --}}
-                            <input id="surname" type="text" class="form-control @error('surname') is-invalid @enderror" name="surname" value="{{ old('surname') }}" required autocomplete="surname" placeholder="Surname" autofocus>
+        <div class="inner">
+            <form method="POST" action="/register">
+                <h3>New Applicant Registration Form</h3>
+                @csrf
+                @if (session('signUpMsg'))
+                {!! session('signUpMsg') !!}
+                @endif
+                <div class="form-group">
+                    <div class="form-wrapper  @error('surname') is-invalid @enderror" id="surname" type="text" class="form-control @error('surname') is-invalid @enderror" name="surname" value="{{ old('surname') }}" required autocomplete="surname" placeholder="Surname" autofocus>
+                        <label for="">Surname</label>
+                        <input id="surname" type="text" class="form-control @error('surname') is-invalid @enderror" name="surname" value="{{ old('surname') }}" required autocomplete="surname" placeholder="Surname" autofocus>
 
-                            @error('surname')
-                            <span class="invalid-feedback" role="alert">
-                                <strong>{{ $message }}</strong>
-                            </span>
-                            @enderror
-						</div>
-						<div class="form-wrapper">
-							<label for="">First Name</label>
-							{{--  <input type="text" class="form-control">  --}}
-                            <input id="first_name" type="text" class="form-control @error('first_name') is-invalid @enderror" name="first_name" value="{{ old('first_name') }}" required placeholder="First Name" autocomplete="first_name" autofocus>
-
-                            @error('first_name')
-                            <span class="invalid-feedback" role="alert">
-                                <strong>{{ $message }}</strong>
-                            </span>
-                            @enderror
-						</div>
-					</div>
-					<div class="form-group">
-						<div class="form-wrapper ">
-							<label for="">Other Names</label>
-							{{--  <input type="text" class="form-control">  --}}
-                            <input id="other_name" type="text" class="form-control @error('first_name') is-invalid @enderror" name="middle_name"  placeholder="Other Name" autocomplete="other_name" autofocus>
-
-                                @error('other_name')
-                                <span class="invalid-feedback" role="alert">
-                                    <strong>{{ $message }}</strong>
-                                </span>
-                                @enderror
-						</div>
-                        <div class="form-wrapper">
-							<label for="">Phone</label>
-							{{--  <input type="number" class="form-control">  --}}
-                            <input id="phone" type="text" class="form-control @error('phone') is-invalid @enderror" name="phone" value="{{ old('phone') }}" required placeholder="Phone Number" autocomplete="phone" autofocus>
-
-                            @error('phone')
-                            <span class="invalid-feedback" role="alert">
-                                <strong>{{ $message }}</strong>
-                            </span>
-                            @enderror
-						</div>
-
-					</div>
-					<div class="form-wrapper">
-						<label for="">Email</label>
-						{{--  <input type="text" class="form-control">  --}}
-                        <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required placeholder="Email Address" autocomplete="email">
-
-                        @error('email')
+                        @error('surname')
                         <span class="invalid-feedback" role="alert">
                             <strong>{{ $message }}</strong>
                         </span>
                         @enderror
-					</div>
-					<div class="form-wrapper">
-						<label for="">Password</label>
-						{{--  <input type="password" class="form-control">  --}}
-                        <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required placeholder="Password" autocomplete="new-password">
+                    </div>
+                    <div class="form-wrapper">
+                        <label for="">First Name</label>
+                        <input id="first_name" type="text" class="form-control @error('first_name') is-invalid @enderror" name="first_name" value="{{ old('first_name') }}" required placeholder="First Name" autocomplete="first_name" autofocus>
 
-                                @error('password')
-                                <span class="invalid-feedback" role="alert">
-                                    <strong>{{ $message }}</strong>
-                                </span>
-                                @enderror
-					</div>
-					<div class="form-wrapper">
-						<label for="">Confirm Password</label>
-						{{--  <input type="password" class="form-control">  --}}
-                        <input id="password-confirm" type="password" class="form-control" name="password_confirmation" required placeholder="Confirm Password" autocomplete="new-password">
+                        @error('first_name')
+                        <span class="invalid-feedback" role="alert">
+                            <strong>{{ $message }}</strong>
+                        </span>
+                        @enderror
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="form-wrapper ">
+                        <label for="">Other Names</label>
+                        <input id="other_name" type="text" class="form-control @error('first_name') is-invalid @enderror" name="middle_name" placeholder="Other Name" autocomplete="other_name" autofocus>
 
-					</div>
-					<div class="checkbox">
-						<label>
-							<input type="checkbox"> I caccept the Terms of Use & Privacy Policy.
-							<span class="checkmark"></span>
-						</label>
-					</div>
-					<button type="submit" >{{ __('Register') }}</button>
-                   <br>
-                    <p> Already have an account? <a href="/" class="text-warning"> Login</a></p>
-				</form>
-			</div>
-		</div>
+                        @error('other_name')
+                        <span class="invalid-feedback" role="alert">
+                            <strong>{{ $message }}</strong>
+                        </span>
+                        @enderror
+                    </div>
+                    <div class="form-wrapper">
+                        <label for="">Phone</label>
+                        <input id="phone" type="text" class="form-control @error('phone') is-invalid @enderror" name="phone" value="{{ old('phone') }}" required placeholder="Phone Number" autocomplete="phone" autofocus>
+
+                        @error('phone')
+                        <span class="invalid-feedback" role="alert">
+                            <strong>{{ $message }}</strong>
+                        </span>
+                        @enderror
+                    </div>
+
+                </div>
+                <div class="form-wrapper">
+                    <label for="">Email</label>
+                    <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required placeholder="Email Address" autocomplete="email">
+
+                    @error('email')
+                    <span class="invalid-feedback" role="alert">
+                        <strong>{{ $message }}</strong>
+                    </span>
+                    @enderror
+                </div>
+                <div class="form-wrapper">
+                    <label for="">Password</label>
+                    <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required placeholder="Password" autocomplete="new-password">
+
+                    @error('password')
+                    <span class="invalid-feedback" role="alert">
+                        <strong>{{ $message }}</strong>
+                    </span>
+                    @enderror
+                </div>
+                <div class="form-wrapper">
+                    <label for="">Confirm Password</label>
+                    <input id="password-confirm" type="password" class="form-control" name="password_confirmation" required placeholder="Confirm Password" autocomplete="new-password">
+
+                </div>
+                {{--  <div class="form-wrapper">
+                    <label for="admission_type">Admission Type</label>
+                    <select id="admission_type" name="admission_type" class="form-control @error('admission_type') is-invalid @enderror" required>
+                        <option value="" disabled selected>Select Admission Type</option>
+                        <option value="licentiate">LICENTIATE</option>
+                        <option value="diploma">DIPLOMA</option>
+                        <option value="certificate">CERTIFICATE</option>
+                    </select>
+                    @error('admission_type')
+                    <span class="invalid-feedback" role="alert">
+                        <strong>{{ $message }}</strong>
+                    </span>
+                    @enderror
+                </div>  --}}
+                <div class="checkbox">
+                    <label>
+                        <input type="checkbox"> I caccept the Terms of Use & Privacy Policy.
+                        <span class="checkmark"></span>
+                    </label>
+                </div>
+                <button type="submit">{{ __('Register') }}</button>
+                <br>
+                <p> Already have an account? <a href="/" class="text-warning"> Login</a></p>
+            </form>
+        </div>
+    </div>
 
 </body>
 
