@@ -278,7 +278,7 @@ active
 
     function previewFile(input) {
         const previewDiv = document.getElementById(`${input.name}_preview`);
-        previewDiv.innerHTML = "";
+        previewDiv.innerazHTML = "";
         const file = input.files[0];
         if (file) {
             const reader = new FileReader();

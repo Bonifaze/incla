@@ -60,7 +60,7 @@ active
                                 </div>
                                 <div class="form-group">
                                     <div class="form-row form-row-1">
-                                        <select name="title">
+                                        <select name="title" required>
                                             <option class="option" value=" " disabled selected>Title</option>
                                             <option class="option" value="dr">Dr.</option>
                                             <option class="option" value="prof">Prof.</option>
@@ -72,8 +72,8 @@ active
                                         </span>
                                     </div>
                                     <div class="form-row form-row-2">
-                                        <select name="Gender">
-                                            <option value="">Select Gender</option>
+                                        <select name="Gender" required>
+                                            <option value="" disabled selected >Select Gender</option>
                                             <option value="m">Male</option>
                                             <option value="f">Female</option>
                                         </select>
@@ -84,13 +84,7 @@ active
                                 </div>
                                 <div class="form-group">
                                     <div class="form-row form-row-1">
-                                        <select name="dob">
-                                            <option class="option" value=" " disabled selected>Date of Birth</option>
-
-                                        </select>
-                                        <span class="select-btn">
-                                            <i class="zmdi zmdi-chevron-down"></i>
-                                        </span>
+                                        <input type="date" name="dob" id="dob" class="input-date" required>
                                     </div>
                                     <div class="form-row form-row-2">
                                         <select name="Language">
@@ -105,56 +99,14 @@ active
                                         </span>
                                     </div>
                                 </div>
-
-
-                                   <div class="form-row">
+                                <div class="form-row">
                                     <select name="admission-type" id="admission-type" onchange="updateCredentialInputs()">
-                                        <option value="">Select Type of Admission</option>
-                                        <option value="dbt">DBT - Diploma in Basic Theology</option>
-                                        <option value="dff">DFF - Diploma in Formation of Formators</option>
-                                    </select>
-                                </div>
-
-
-                                {{--  <div class="form-row">
-                                    <select name="languages[]" id="languages" multiple>
-                                        <!-- Populated dynamically by JavaScript -->
-                                    </select>
-                                </div>  --}}
-
-
-
-                                <div class="form-row">
-                                    <select name="diplomas">
-                                        <option value=" ">Type of Diploma </option>
-                                        <option value="dbt"> DBT- Diploma in Basic Theology</option>
-                                        <option value="dff">DFF- Diploma in Formation of Formators</option>
-                                        <option value="dsd">DSD- Diploma in Spiritual Direction</option>
-                                        <option value="dcl">DCL- Diploma in Theology of Consecrated Life</option>
+                                        <option value=" " disabled selected >Type Amission </option>
+                                        <option value="lcl">Licentiate</option>
+                                        <option value="diploma">Diploma Programs </option>
+                                        <option value="cert">Certificate Programs</option>
                                     </select>
 
-                                    <span class="select-btn">
-                                        <i class="zmdi zmdi-chevron-down"></i>
-                                    </span>
-                                </div>
-
-                                <div class="form-row">
-                                  <select name="certificates">
-                                        <option value=" ">Type Certificate</option>
-                                        <option value="cbt">  CBT- Certificate in Basic Theology</option>
-                                        <option value="cff">CFF- Certificate in Formation of Formators</option>
-                                        <option value="csd">CSD- Certificate in Spiritual Direction</option>
-                                        <option value="ccf">CCF- Certificate in Chapter Facilitation</option>
-                                        <option value="cfp">CFP- Certificate in Fundraising & Project Mgt</option>
-							        </select>
-                                    <span class="select-btn">
-                                        <i class="zmdi zmdi-chevron-down"></i>
-                                    </span>
-                                </div>
-                                <div class="form-row">
-                                  <select name="lcl">
-                                        <option value="lcl">LCL- Licentiate in Theology of Consecrated Life</option>
-							        </select>
                                     <span class="select-btn">
                                         <i class="zmdi zmdi-chevron-down"></i>
                                     </span>
@@ -172,10 +124,10 @@ active
                                 <div class="form-group">
                                     <div class="form-row form-row-1">
 
-                                        <input type="text" name="sponsorsfn" id="" class="input-text" placeholder="Sponsors First Name " required >
+                                        <input type="text" name="sponsorsfn" id="" class="input-text" placeholder="Sponsors First Name " required>
                                     </div>
                                     <div class="form-row form-row-2">
-                                        <input type="text" name="sponsorsn" id="first_name" class="input-text" placeholder="Sponsors Surname" required >
+                                        <input type="text" name="sponsorsn" id="first_name" class="input-text" placeholder="Sponsors Surname" required>
                                     </div>
                                 </div>
                                 <div class="form-group">
@@ -192,52 +144,9 @@ active
                                 </div>
 
                             </div>
-                            {{--  <div class="form-right">
-                                <h2>Contact Details</h2>
-                                <div class="form-row">
-                                    <input type="text" name="street" class="street" id="street" placeholder="Street + Nr" required>
-                                </div>
-                                <div class="form-row">
-                                    <input type="text" name="additional" class="additional" id="additional" placeholder="Additional Information" required>
-                                </div>
-                                <div class="form-group">
-                                    <div class="form-row form-row-1">
-                                        <input type="text" name="zip" class="zip" id="zip" placeholder="Zip Code" required>
-                                    </div>
-                                    <div class="form-row form-row-2">
-                                        <select name="place">
-                                            <option value="place">Place</option>
-                                            <option value="Street">Street</option>
-                                            <option value="District">District</option>
-                                            <option value="City">City</option>
-                                        </select>
-                                        <span class="select-btn">
-                                            <i class="zmdi zmdi-chevron-down"></i>
-                                        </span>
-                                    </div>
-                                </div>
-                                <div class="form-row">
-                                    <select name="country">
-                                        <option value="country">Country</option>
-                                        <option value="Vietnam">Vietnam</option>
-                                        <option value="Malaysia">Malaysia</option>
-                                        <option value="India">India</option>
-                                    </select>
-                                    <span class="select-btn">
-                                        <i class="zmdi zmdi-chevron-down"></i>
-                                    </span>
-                                </div>
-                                <div class="form-group">
-                                    <div class="form-row form-row-1">
-                                        <input type="text" name="code" class="code" id="code" placeholder="Code +" required>
-                                    </div>
-                                    <div class="form-row form-row-2">
-                                        <input type="text" name="phone" class="phone" id="phone" placeholder="Phone Number" required>
-                                    </div>
-                                </div>
-                                <div class="form-row">
-                                    <input type="text" name="your_email" id="your_email" class="input-text" required pattern="[^@]+@[^@]+.[a-zA-Z]{2,6}" placeholder="Your Email">
-                                </div>
+                            <div class="form-right " id="credentials-section">
+                                <h2>Credentials Upload Section</h2>
+
                                 <div class="form-checkbox">
                                     <label class="container">
                                         <p>I do accept the <a href="#" class="text">Terms and Conditions</a> of your site.</p>
@@ -248,11 +157,6 @@ active
                                 <div class="form-row-last">
                                     <input type="submit" name="submit" class="register" value="Submit">
                                 </div>
-                            </div>  --}}
-
-                             <div class="form-right" id="credentials-section">
-                                <h2>Credentials</h2>
-                                <!-- Inputs will be dynamically adjusted based on admission type -->
                             </div>
                         </form>
                     </div>
@@ -271,7 +175,14 @@ active
 <script>
     // Define dynamic inputs for each admission type
     const admissionTypes = {
-        dbt: [
+        lcl: [
+            {
+                name: "lcl_type",
+                placeholder: "Select Licentiate Type",
+                options: [
+                    { value: "lcl", label: "LCL - Licentiate in Theology of Consecrated Life" }
+                ]
+            },
             { name: "school_attended", placeholder: "School Attended" },
             { name: "certificates_obtained", placeholder: "Certificates Obtained" },
             { name: "previous_research", placeholder: "Previous Research Topic" },
@@ -280,30 +191,61 @@ active
             { name: "upload_birth", placeholder: "Upload Birth Certificate", type: "file" },
             { name: "upload_passport", placeholder: "Upload Passport", type: "file" }
         ],
-        dff: [
-
+        diploma: [
+            {
+                name: "diploma_type",
+                placeholder: "Type of Diploma",
+                options: [
+                    { value: "dbt", label: "DBT - Diploma in Basic Theology" },
+                    { value: "dff", label: "DFF - Diploma in Formation of Formators" },
+                    { value: "dsd", label: "DSD - Diploma in Spiritual Direction" },
+                    { value: "dcl", label: "DCL - Diploma in Theology of Consecrated Life" }
+                ]
+            },
+            { name: "school_attended", placeholder: "School Attended" },
+            { name: "certificates_obtained", placeholder: "Certificates Obtained" },
             { name: "upload_waec", placeholder: "Upload WAEC Results", type: "file" },
-            { name: "upload_degree", placeholder: "Upload Degree Certificate", type: "file" },
+            { name: "upload_birth", placeholder: "Upload Birth Certificate", type: "file" },
+            { name: "upload_passport", placeholder: "Upload Passport", type: "file" }
+        ],
+        cert: [
+            {
+                name: "certificate_type",
+                placeholder: "Type of Certificate",
+                options: [
+                    { value: "cbt", label: "CBT - Certificate in Basic Theology" },
+                    { value: "cff", label: "CFF - Certificate in Formation of Formators" },
+                    { value: "csd", label: "CSD - Certificate in Spiritual Direction" },
+                    { value: "ccf", label: "CCF - Certificate in Chapter Facilitation" },
+                    { value: "cfp", label: "CFP - Certificate in Fundraising & Project Management" }
+                ]
+            },
+            { name: "upload_waec", placeholder: "Upload WAEC Results", type: "file" },
             { name: "upload_birth", placeholder: "Upload Birth Certificate", type: "file" },
             { name: "upload_passport", placeholder: "Upload Passport", type: "file" }
         ]
     };
 
-    // Function to update credential inputs based on admission type
     function updateCredentialInputs() {
         const selectedType = document.getElementById("admission-type").value;
         const credentialsSection = document.getElementById("credentials-section");
 
-        // Clear existing inputs
-        credentialsSection.innerHTML = "<h2>Credentials</h2>";
+        credentialsSection.innerHTML = `<h2>Credentials Upload Section</h2>`; // Clear existing inputs
 
-        // Add inputs for the selected admission type
         if (admissionTypes[selectedType]) {
             admissionTypes[selectedType].forEach(input => {
                 const inputRow = document.createElement("div");
                 inputRow.className = "form-row";
 
-                if (input.type === "file") {
+                if (input.options) {
+                    inputRow.innerHTML = `
+                        <label>${input.placeholder}</label>
+                        <select name="${input.name}">
+                            <option value="">${input.placeholder}</option>
+                            ${input.options.map(option => `<option value="${option.value}">${option.label}</option>`).join("")}
+                        </select>
+                    `;
+                } else if (input.type === "file") {
                     inputRow.innerHTML = `
                         <label>${input.placeholder}</label>
                         <input type="file" name="${input.name}" onchange="previewFile(this)">
@@ -318,13 +260,25 @@ active
                 credentialsSection.appendChild(inputRow);
             });
         }
+
+        // Re-add terms and conditions and submit button
+        credentialsSection.innerHTML += `
+            <div class="form-checkbox">
+                <label class="container">
+                    <p>I do accept the <a href="#" class="text">Terms and Conditions</a> of your site.</p>
+                    <input type="checkbox" name="checkbox" required>
+                    <span class="checkmark"></span>
+                </label>
+            </div>
+            <div class="form-row-last">
+                <input type="submit" name="submit" class="register" value="Submit">
+            </div>
+        `;
     }
 
-    // File preview function
     function previewFile(input) {
         const previewDiv = document.getElementById(`${input.name}_preview`);
-        previewDiv.innerHTML = ""; // Clear existing previews
-
+        previewDiv.innerazHTML = "";
         const file = input.files[0];
         if (file) {
             const reader = new FileReader();
@@ -334,35 +288,8 @@ active
             reader.readAsDataURL(file);
         }
     }
-
-    // Populate language select with prioritized Nigerian languages
-    {{--  function populateLanguages() {
-        const languages = [
-            "English", "Hausa", "Igbo", "Yoruba", "French", "Arabic", "Fulfulde",
-            "Kanuri", "Tiv", "Ebira", "Idoma", "Nupe", "Urhobo", "Edo", "Ijaw"
-        ];
-        const languageSelect = document.getElementById("languages");
-
-        languages.sort((a, b) => {
-            const nigerianLanguages = ["Hausa", "Igbo", "Yoruba"];
-            if (nigerianLanguages.includes(a) && !nigerianLanguages.includes(b)) return -1;
-            if (!nigerianLanguages.includes(a) && nigerianLanguages.includes(b)) return 1;
-            return a.localeCompare(b);
-        });
-
-        languages.forEach(lang => {
-            const option = document.createElement("option");
-            option.value = lang.toLowerCase();
-            option.textContent = lang;
-            languageSelect.appendChild(option);
-        });
-    }  --}}
-
-    // Initialize on page load
-    document.addEventListener("DOMContentLoaded", () => {
-        populateLanguages();
-    });
 </script>
+
 
 
 @endsection
