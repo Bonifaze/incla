@@ -319,25 +319,25 @@
                                         <li class="nav-item">
                                             <a href="/adminutme" class="nav-link @yield('exam-remark')">
                                                 <i class="fa fa-eye nav-icon"></i>
-                                                <p>UTME</p>
+                                                <p>LCL</p>
                                             </a>
                                         </li>
                                         <li class="nav-item">
                                             <a href="/adminde" class="nav-link @yield('exam-remark')">
                                                 <i class="fa fa-eye nav-icon"></i>
-                                                <p>DIRECT ENTRY</p>
+                                                <p>Diploma</p>
                                             </a>
                                         </li>
                                         <li class="nav-item">
                                             <a href="/admintransfer" class="nav-link @yield('exam-download')">
                                                 <i class="fa fa-eye nav-icon"></i>
-                                                <p>TRANSFER</p>
+                                                <p>Certificates</p>
                                             </a>
                                         </li>
                                     @else
                                         <li></li>
                                     @endcan
-                                    @can('postgraduateapplicant', 'App\Session')
+                                    {{--  @can('postgraduateapplicant', 'App\Session')
                                         <li class="nav-item">
                                             <a href="/adminpg" class="nav-link @yield('exam-download')">
                                                 <i class="fa fa-eye nav-icon"></i>
@@ -345,7 +345,7 @@
                                             </a>
                                         </li>
                                         <li></li>
-                                    @endcan
+                                    @endcan  --}}
                                 </ul>
                             </li>
                         </ul>

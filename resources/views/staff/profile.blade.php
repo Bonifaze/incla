@@ -3,7 +3,7 @@
 
 
 @section('pagetitle')
-    Show Staff Profile
+Staff Home
 @endsection
 
 
@@ -12,479 +12,403 @@
 
 <!-- Treeview -->
 @section('staff-open')
-    menu-open
+menu-open
 @endsection
 
 @section('staff')
-    active
+active
 @endsection
 
 <!-- Page -->
-@section('staff-profile')
-    active
+@section('staff-home')
+active
 @endsection
 
 <!-- End Sidebar links -->
 
-@section('content')
-    <div class="content-wrapper bg-white">
-        <!-- Content Header (Page header) -->
 
-        <!-- Main content -->
-        <section class="content">
-            @include('partialsv3.flash')
-            <div class="container-fluid">
-                <h1
-                    class="app-page-title text-uppercase h5 font-weight-bold p-2 mb-2 shadow-sm text-center text-success border">
+
+@section('content')
+<div class="content-wrapper bg-white">
+
+    <!-- Main content -->
+    <section class="content">
+        <div class="container-fluid">
+            <!-- left column -->
+            <div class="col_full">
+                <h1 class="app-page-title text-uppercase h5 font-weight-bold p-2 mb-2 shadow-sm text-center text-success border">
                     Staff Profile
                 </h1>
-                                                     <div>
-                                                            @can('rbac', 'App\Staff')
-                                                                <a class="btn btn-warning"
-                                                                    href="{{ route('staff.show',$staff->id) }}">Edit Profile
-                                                                </a>
-                                                            @else
-                                                            @endcan
-                                                        </div>
-                <div class="row py-4">
-                    <div class="col-12 col-lg-6">
-                        <div class="app-card app-card-account shadow d-flex flex-column align-items-start ">
+                @include('partialsv3.flash')
 
-                            <div class="app-card-header p-3 border-bottom-0">
-                                <div class="row align-items-center gx-3">
-                                    <div class="col-auto">
-                                        <h4 class="app-card-title">Bio Data</h4>
-                                    </div>
-                                </div>
-                            </div>
+                <div class="main-content" id="panel">
+                    <div>
+                        @can('rbac', 'App\Staff')
+                        <a class="btn btn-warning" href="{{ route('staff.show',$staff->id) }}">Edit Profile</a>
+                        @else
+                        @endcan
+                    </div>
 
-                            <div class="app-card-body px-4 w-100">
-                                <div class="item border-bottom py-3">
-                                    <div class="row justify-content-between align-items-center">
-                                        <div class="col-auto">
-                                            <div class="item-label mb-2">
-                                                <strong>Passport</strong>
-                                            </div>
-                                            <div class="rounded-circle">
-                                                <img class="rounded-circle p-3 mx-auto d-block"
-                                                    src="data:image/png;base64,{{ $staff->passport }}"
-                                                    alt="Student Passport" style="height: 200px; width:200px;" />
-                                            </div>
-                                        </div>
-                                        <div class="col-auto">
-                                            <div class="item-label mb-2">
-                                                <strong>Signature</strong>
-                                            </div>
-                                            <div class="rounded-circle">
-                                                <img class="rounded-circle p-3 mx-auto d-block"
-                                                    src="data:image/png;base64,{{ $staff->signature }}"
-                                                    alt="Student signature" style="height: 200px; width:200px;" />
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
+                    <div class="container-fluid pt-3 drop-zone">
+                        <div class="row removable d-flex" style="min-height: 200px;">
+                            {{--  <!-- Added flex for equal-height columns -->  --}}
+                            {{--  <!-- Profile Card -->  --}}
+                            <div class="col-lg-4 drop-zone d-flex">
+                                <div class="card card-profile draggable w-100" draggable="true" style="display: flex; flex-direction: column; justify-content: space-between; position: relative;">
 
-                                <div class="item border-bottom py-3">
-                                    <div class="row justify-content-between align-items-center">
-                                        <div class="col-auto">
-                                            <div class="item-label"><strong>Title</strong></div>
-                                            <div class="item-data">{{ $staff->title }}
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
+                                    {{-- Profile background image - now as background --}}
+                                    <div class="card-img-top" style="height: 250px; background-image: url('{{ asset('img/background.jpg') }}'); background-size: cover; background-position: center; border-radius: 10px;"></div>
 
-                                <div class="item border-bottom py-3">
-                                    <div class="row justify-content-between align-items-center">
-                                        <div class="col-auto">
-                                            <div class="item-label"><strong>Surname</strong></div>
-                                            <div class="item-data">{{ $staff->surname }}
+                                    {{-- Profile Image on top of background --}}
+                                    <div class="row justify-content-center" style="position: absolute; top: 20px; left: 10%; transform: translateX(-5%); z-index: 10;">
+                                        <div class="col-lg-3 order-lg-2">
+                                            <div class="card-profile-image">
+                                                <a href="#">
+                                                    <img src="data:image/png;base64,{{ $staff->passport }}" class="rounded-circle p-3 mx-auto d-block" style="width: 120px; height: 120px; object-fit: cover; border: 3px solid #333;">
+                                                </a>
                                             </div>
                                         </div>
                                     </div>
-                                </div>
-                                <div class="item border-bottom py-3">
-                                    <div class="row justify-content-between align-items-center">
-                                        <div class="col-auto">
-                                            <div class="item-label"><strong>First Name</strong></div>
-                                            <div class="item-data">
-                                                {{ $staff->first_name }}
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="item border-bottom py-3">
-                                    <div class="row justify-content-between align-items-center">
-                                        <div class="col-auto">
-                                            <div class="item-label"><strong>Other Name</strong></div>
-                                            <div class="item-data">
-                                                {{ $staff->middle_name }}
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="item border-bottom py-3">
-                                    <div class="row justify-content-between align-items-center">
-                                        <div class="col-auto">
-                                            <div class="item-label"><strong>Maiden Name</strong></div>
-                                            {{ $staff->maiden_name }}
-                                        </div>
-                                    </div>
-                                </div>
 
-                                <div class="item border-bottom py-3">
-                                    <div class="row justify-content-between align-items-center">
-                                        <div class="col-auto">
-                                            <div class="item-label"><strong>Username / Official Email</strong></div>
-                                            <div class="item-data text-primary font-weight-bold">
+                                    <div class="card-body pt-0" style="padding-top: 60px;">
+                                        <div class="text-center">
+                                            {{-- Title and Name Styling --}}
+                                            <h5 class="h3 font-weight-bold" style="color: #2d3e50; font-size: 1.5rem; line-height: 1.2;">
+                                                {{ $staff->title }} {{ $staff->surname }}
+                                            </h5>
+                                            <h5 class="font-weight-light" style="color: #6c757d; font-size: 1.25rem;">
+                                                {{ $staff->first_name }} {{ $staff->middle_name }}
+                                            </h5>
+                                             <div class="item-data">
+                                                        {{ $work->position->name }}
+                                                    </div>
+                                            <h5 class="h5 mt-4" style="color: #28a745; font-weight: 600;">
                                                 {{ $staff->username }}
-                                            </div>
+                                            </h5>
+                                            <h5 class="h5 mt-4" style="color: #28a745; font-weight: 600;">
+                                                {{ $staff->maiden_name }}
+                                            </h5>
                                         </div>
                                     </div>
                                 </div>
-
                             </div>
-                        </div>
-                    </div>
-                    <div class="col-12 col-lg-6">
-                        <div class="app-card app-card-account shadow d-flex flex-column align-items-start">
 
-                            <div class="app-card-body px-4 w-100">
-                                <div class="item border-bottom py-3">
-                                    <div class="row justify-content-between align-items-center">
-                                        <div class="col-auto">
-                                            <div class="item-label"><strong>Email</strong></div>
-                                            <div class="item-data">{{ $staff->email }}
+                            {{--  <!-- Contact Information -->  --}}
+                            <div class="col-lg-4 drop-zone d-flex">
+                                <div class="app-card app-card-account shadow d-flex flex-column align-items-start w-100" style="border-radius: 10px; display: flex; justify-content: space-between;">
+                                    <div class="app-card-body px-4 w-100">
+                                        <div class="item border-bottom py-3">
+                                            <div class="row justify-content-between align-items-center">
+                                                <div class="col-auto">
+                                                    <div class="item-label"><strong>Email</strong></div>
+                                                    <div class="item-data">{{ $staff->email }}</div>
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>
-                                </div>
-                                <div class="item border-bottom py-3">
-                                    <div class="row justify-content-between align-items-center">
-                                        <div class="col-auto">
-                                            <div class="item-label"><strong>Phone Number</strong></div>
-                                            <div class="item-data">{{ $staff->phone }}
+                                        <div class="item border-bottom py-3">
+                                            <div class="row justify-content-between align-items-center">
+                                                <div class="col-auto">
+                                                    <div class="item-label"><strong>Phone Number</strong></div>
+                                                    <div class="item-data">{{ $staff->phone }}</div>
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>
-                                </div>
-                                <div class="item border-bottom py-3">
-                                    <div class="row justify-content-between align-items-center">
-                                        <div class="col-auto">
-                                            <div class="item-label"><strong>Gender</strong></div>
-                                            <div class="item-data">{{ $staff->gender }}
+                                        <div class="item border-bottom py-3">
+                                            <div class="row justify-content-between align-items-center">
+                                                <div class="col-auto">
+                                                    <div class="item-label"><strong>Gender</strong></div>
+                                                    <div class="item-data">{{ $staff->gender }}</div>
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>
-                                </div>
-                                <div class="item border-bottom py-3">
-                                    <div class="row justify-content-between align-items-center">
-                                        <div class="col-auto">
-                                            <div class="item-label"><strong>Date of Birth</strong></div>
-                                            {{--  <div class="item-data">{{ $staff->dob }}</div>  --}}
-                                             <div class="item-data">{{ \Carbon\Carbon::parse($staff->dob)->format('l j, F Y') }} </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="item border-bottom py-3">
-                                    <div class="row justify-content-between align-items-center">
-                                        <div class="col-auto">
-                                            <div class="item-label"><strong>Religion</strong></div>
-                                            <div class="item-data">{{ $staff->religion }}
+                                        <div class="item border-bottom py-3">
+                                            <div class="row justify-content-between align-items-center">
+                                                <div class="col-auto">
+                                                    <div class="item-label"><strong>Date of Birth</strong></div>
+                                                    <div class="item-data">{{ \Carbon\Carbon::parse($staff->dob)->format('l j, F Y') }}</div>
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>
-                                </div>
-                                <div class="item border-bottom py-3">
-                                    <div class="row justify-content-between align-items-center">
-                                        <div class="col-auto">
-                                            <div class="item-label"><strong>Nationality</strong></div>
-                                            <div class="item-data">
-                                                {{ $staff->nationality }}
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="item border-bottom py-3">
-                                    <div class="row justify-content-between align-items-center">
-                                        <div class="col-auto">
-                                            <div class="item-label"><strong>Address</strong></div>
-                                            <div class="item-data">{{ $staff->address }}
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="item border-bottom py-3">
-                                    <div class="row justify-content-between align-items-center">
-                                        <div class="col-auto">
-                                            <div class="item-label"><strong>State of Origin</strong>
-                                            </div>
-                                            <div class="item-data">
-                                                {{ $staff->state }}
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="item border-bottom py-3">
-                                    <div class="row justify-content-between align-items-center">
-                                        <div class="col-auto">
-                                            <div class="item-label"><strong>LGA</strong></div>
-                                            {{ $staff->lga_name }}
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="item border-bottom py-3">
-                                    <div class="row justify-content-between align-items-center">
-                                        <div class="col-auto">
-                                            <div class="item-label"><strong>Marital Status</strong></div>
-                                            {{ $staff->marital_status }}
-                                        </div>
-                                    </div>
-                                </div>
 
+                                        <div class="item border-bottom py-3">
+                                            <div class="row justify-content-between align-items-center">
+                                                <div class="col-auto">
+                                                    <div class="item-label"><strong>Religion</strong></div>
+                                                    <div class="item-data">{{ $staff->religion }}</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
                             </div>
 
+                            {{--  <!-- Additional Information -->  --}}
+                            <div class="col-lg-4 drop-zone d-flex">
+                                <div class="app-card app-card-account shadow d-flex flex-column align-items-start w-100" style="border-radius: 10px; display: flex; justify-content: space-between;">
+                                    <div class="app-card-body px-4 w-100">
+                                        <div class="item border-bottom py-3">
+                                            <div class="row justify-content-between align-items-center">
+                                                <div class="col-auto">
+                                                    <div class="item-label"><strong>Nationality</strong></div>
+                                                    <div class="item-data">{{ $staff->nationality }}</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="item border-bottom py-3">
+                                            <div class="row justify-content-between align-items-center">
+                                                <div class="col-auto">
+                                                    <div class="item-label"><strong>Address</strong></div>
+                                                    <div class="item-data">{{ $staff->address }}</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="item border-bottom py-3">
+                                            <div class="row justify-content-between align-items-center">
+                                                <div class="col-auto">
+                                                    <div class="item-label"><strong>State of Origin</strong></div>
+                                                    <div class="item-data">{{ $staff->state }}</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="item border-bottom py-3">
+                                            <div class="row justify-content-between align-items-center">
+                                                <div class="col-auto">
+                                                    <div class="item-label"><strong>LGA</strong></div>
+                                                    <div class="item-data">{{ $staff->lga_name }}</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="item border-bottom py-3">
+                                            <div class="row justify-content-between align-items-center">
+                                                <div class="col-auto">
+                                                    <div class="item-label"><strong>Marital Status</strong></div>
+                                                    <div class="item-data">{{ $staff->marital_status }}</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
                         </div>
-                    </div>
-                </div>
-            </div>
 
 
-
-            <div class="col-12 mt-3">
-                <div class="app-card app-card-account shadow d-flex flex-column align-items-start">
-                    <div class="app-card-header p-3 border-bottom-0">
-                        <div class="row align-items-center px-3">
-                            <div class="col-auto">
-                                <h4 class="app-card-title">Emergency Contact</h4>
-                            </div>
-                        </div>
-                    </div>
-                    {{--  <div class="app-card-body px-4 w-100">
-                <div class="item border-bottom py-3">
-                    <div class="row justify-content-between align-items-center">
-                        <div class="col-auto">
-                            <div class="item-label">
-                                <strong>Title</strong>
-                            </div>
-                            <div class="item-data">
-                                 {{ $contact->title }}
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>  --}}
-                    <div class="app-card-body px-4 w-100">
-                        <div class="item border-bottom py-3">
-                            <div class="row justify-content-between align-items-center">
-                                <div class="col-auto">
-                                    <div class="item-label">
-                                        <strong>Name</strong>
-                                    </div>
-                                    <div class="item-data">
-                                        {{ $contact->name }}
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="app-card-body px-4 w-100">
-                        <div class="item border-bottom py-3">
-                            <div class="row justify-content-between align-items-center">
-                                <div class="col-auto">
-                                    <div class="item-label">
-                                        <strong>Relationship</strong>
-                                    </div>
-                                    <div class="item-data">
-                                        {{ $contact->relationship }}
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="app-card-body px-4 w-100">
-                        <div class="item border-bottom py-3">
-                            <div class="row justify-content-between align-items-center">
-                                <div class="col-auto">
-                                    <div class="item-label">
-                                        <strong>Email </strong>
-                                    </div>
-                                    <div class="item-data">
-                                        {{ $contact->email }}
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="app-card-body px-4 w-100">
-                        <div class="item border-bottom py-3">
-                            <div class="row justify-content-between align-items-center">
-                                <div class="col-auto">
-                                    <div class="item-label">
-                                        <strong>Phone Number </strong>
-                                    </div>
-                                    <div class="item-data">
-                                        {{ $contact->phone }}
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="app-card-body px-4 w-100">
-                        <div class="item border-bottom py-3">
-                            <div class="row justify-content-between align-items-center">
-                                <div class="col-auto">
-                                    <div class="item-label">
-                                        <strong>Addresss </strong>
-                                    </div>
-                                    <div class="item-data">
-                                        {{ $contact->address }}
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
                     </div>
 
-                    <div class="app-card-body px-4 w-100">
-                        <div class="item border-bottom py-3">
-                            <div class="row justify-content-between align-items-center">
-                                <div class="col-auto">
-                                    <div class="item-label">
-                                        <strong>State of Residence </strong>
-                                    </div>
-                                    <div class="item-data">
-                                        {{ $contact->state }}
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
 
                 </div>
-            </div>
+                <div class="container-fluid pt-3 drop-zone">
+                    <div class="row removable">
+                        <div class="col-lg-6 drop-zone">
 
-            <div class="col-12 mt-3">
-                <div class="app-card app-card-account shadow d-flex flex-column align-items-start">
-                    <div class="app-card-header p-3 border-bottom-0">
-                        <div class="row align-items-center px-3">
-                            <div class="col-auto">
-                                <h4 class="app-card-title">Work Infomatation</h4>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="app-card-body px-4 w-100">
-                        <div class="item border-bottom py-3">
-                            <div class="row justify-content-between align-items-center">
-                                <div class="col-auto">
-                                    <div class="item-label">
-                                        <strong>Staff No.</strong>
-                                    </div>
-                                    <div class="item-data">
-                                        {{ $work->staff_no }}
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
 
-                    <div class="app-card-body px-4 w-100">
-                        <div class="item border-bottom py-3">
-                            <div class="row justify-content-between align-items-center">
-                                <div class="col-auto">
-                                    <div class="item-label">
-                                        <strong>Staff Position</strong>
-                                    </div>
-                                    <div class="item-data">
-                                        {{ $work->position->name }}
+                            {{-- <!-- Emergency Contact-->  --}}
+                            <div class="app-card app-card-account shadow d-flex flex-column align-items-start">
+                                <div class="app-card-header p-3 border-bottom-0">
+                                    <div class="row align-items-center px-3">
+                                        <div class="col-auto">
+                                            <h4 class="app-card-title">Emergency Contact</h4>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="app-card-body px-4 w-100">
-                        <div class="item border-bottom py-3">
-                            <div class="row justify-content-between align-items-center">
-                                <div class="col-auto">
-                                    <div class="item-label">
-                                        <strong>Staff Type </strong>
-                                    </div>
-                                    <div class="item-data">
-                                        {{ $work->type->name }}
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="app-card-body px-4 w-100">
-                        <div class="item border-bottom py-3">
-                            <div class="row justify-content-between align-items-center">
-                                <div class="col-auto">
-                                    <div class="item-label">
-                                        <strong>Employment Type </strong>
-                                    </div>
-                                    <div class="item-data">
-                                        {{ $work->employmentType->name }}
+                                <div class="app-card-body px-4 w-100">
+                                    <div class="item border-bottom py-3">
+                                        <div class="row justify-content-between align-items-center">
+                                            <div class="col-auto">
+                                                <div class="item-label">
+                                                    <strong>Name</strong>
+                                                </div>
+                                                <div class="item-data">
+                                                    {{ $contact->name }}
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="app-card-body px-4 w-100">
-                        <div class="item border-bottom py-3">
-                            <div class="row justify-content-between align-items-center">
-                                <div class="col-auto">
-                                    <div class="item-label">
-                                        <strong>Department </strong>
-                                    </div>
-                                    <div class="item-data">
-                                        {{ $work->admin->name }}
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="app-card-body px-4 w-100">
-                        <div class="item border-bottom py-3">
-                            <div class="row justify-content-between align-items-center">
-                                <div class="col-auto">
-                                    <div class="item-label">
-                                        <strong>Grade level </strong>
-                                    </div>
-                                    <div class="item-data">
-                                        {{ $work->grade_id }}
+                                <div class="app-card-body px-4 w-100">
+                                    <div class="item border-bottom py-3">
+                                        <div class="row justify-content-between align-items-center">
+                                            <div class="col-auto">
+                                                <div class="item-label">
+                                                    <strong>Relationship</strong>
+                                                </div>
+                                                <div class="item-data">
+                                                    {{ $contact->relationship }}
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="app-card-body px-4 w-100">
-                        <div class="item border-bottom py-3">
-                            <div class="row justify-content-between align-items-center">
-                                <div class="col-auto">
-                                    <div class="item-label">
-                                        <strong>Appointment Date </strong>
-                                    </div>
-                                    <div class="item-data">
-                                        {{ $work->appointment_date }}
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="app-card-body px-4 w-100">
-                        <div class="item border-bottom py-3">
-                            <div class="row justify-content-between align-items-center">
-                                <div class="col-auto">
-                                    <div class="item-label">
-                                        <strong>Assumption Date </strong>
-                                    </div>
-                                    <div class="item-data">
-                                        {{ $work->assumption_date }}
+                                <div class="app-card-body px-4 w-100">
+                                    <div class="item border-bottom py-3">
+                                        <div class="row justify-content-between align-items-center">
+                                            <div class="col-auto">
+                                                <div class="item-label">
+                                                    <strong>Email </strong>
+                                                </div>
+                                                <div class="item-data">
+                                                    {{ $contact->email }}
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
+                                <div class="app-card-body px-4 w-100">
+                                    <div class="item border-bottom py-3">
+                                        <div class="row justify-content-between align-items-center">
+                                            <div class="col-auto">
+                                                <div class="item-label">
+                                                    <strong>Phone Number </strong>
+                                                </div>
+                                                <div class="item-data">
+                                                    {{ $contact->phone }}
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="app-card-body px-4 w-100">
+                                    <div class="item border-bottom py-3">
+                                        <div class="row justify-content-between align-items-center">
+                                            <div class="col-auto">
+                                                <div class="item-label">
+                                                    <strong>Addresss </strong>
+                                                </div>
+                                                <div class="item-data">
+                                                    {{ $contact->address }}
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="app-card-body px-4 w-100">
+                                    <div class="item border-bottom py-3">
+                                        <div class="row justify-content-between align-items-center">
+                                            <div class="col-auto">
+                                                <div class="item-label">
+                                                    <strong>State of Residence </strong>
+                                                </div>
+                                                <div class="item-data">
+                                                    {{ $contact->state }}
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
                             </div>
                         </div>
-                         {{--  @if (auth()->user()->id == 506)
+
+                         {{-- <!-- Work Information -->  --}}
+                            <div class="col-lg-6 drop-zone">
+                                <div class="app-card app-card-account shadow d-flex flex-column align-items-start">
+                                    <div class="app-card-header p-3 border-bottom-0">
+                                        <div class="row align-items-center px-3">
+                                            <div class="col-auto">
+                                                <h4 class="app-card-title">Work Infomatation</h4>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="app-card-body px-4 w-100">
+                                        <div class="item border-bottom py-3">
+                                            <div class="row justify-content-between align-items-center">
+                                                <div class="col-auto">
+                                                    <div class="item-label">
+                                                        <strong>Staff No.</strong>
+                                                    </div>
+                                                    <div class="item-data">
+                                                        {{ $work->staff_no }}
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="app-card-body px-4 w-100">
+                                        <div class="item border-bottom py-3">
+                                            <div class="row justify-content-between align-items-center">
+                                                <div class="col-auto">
+                                                    <div class="item-label">
+                                                        <strong>Staff Type </strong>
+                                                    </div>
+                                                    <div class="item-data">
+                                                        {{ $work->type->name }}
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    {{--  <div class="app-card-body px-4 w-100">
+                                        <div class="item border-bottom py-3">
+                                            <div class="row justify-content-between align-items-center">
+                                                <div class="col-auto">
+                                                    <div class="item-label">
+                                                        <strong>Employment Type </strong>
+                                                    </div>
+                                                    <div class="item-data">
+                                                        {{ $work->employmentType->name }}
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>  --}}
+                                    <div class="app-card-body px-4 w-100">
+                                        <div class="item border-bottom py-3">
+                                            <div class="row justify-content-between align-items-center">
+                                                <div class="col-auto">
+                                                    <div class="item-label">
+                                                        <strong>Department </strong>
+                                                    </div>
+                                                    <div class="item-data">
+                                                        {{ $work->admin->name }}
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="app-card-body px-4 w-100">
+                                        <div class="item border-bottom py-3">
+                                            <div class="row justify-content-between align-items-center">
+                                                <div class="col-auto">
+                                                    <div class="item-label">
+                                                        <strong>Grade level </strong>
+                                                    </div>
+                                                    <div class="item-data">
+                                                        {{ $work->grade_id }}
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="app-card-body px-4 w-100">
+                                        <div class="item border-bottom py-3">
+                                            <div class="row justify-content-between align-items-center">
+                                                <div class="col-auto">
+                                                    <div class="item-label">
+                                                        <strong>Appointment Date </strong>
+                                                    </div>
+                                                    <div class="item-data">
+                                                        {{ $work->appointment_date }}
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="app-card-body px-4 w-100">
+                                        <div class="item border-bottom py-3">
+                                            <div class="row justify-content-between align-items-center">
+                                                <div class="col-auto">
+                                                    <div class="item-label">
+                                                        <strong>Assumption Date </strong>
+                                                    </div>
+                                                    <div class="item-data">
+                                                        {{ $work->assumption_date }}
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        {{-- @if (auth()->user()->id == 506)
 
                                 <a href="/rbac/otp" class="nav-link @yield('')">
 
@@ -493,70 +417,30 @@
 
                         @else
                         @endif  --}}
+                                    </div>
+
+                                </div>
+                            </div>
+
                     </div>
+                    
 
                 </div>
-
             </div>
-
-    </div>
-    </div>
-    <!-- /.row -->
+        </div>
     </section>
-    <!-- /.content -->
-    </div>
+
+
+
+
+</div>
 @endsection
 
-
 @section('pagescript')
-    <script src="<?php echo asset('dist/js/bootbox.min.js'); ?>"></script>
-
-    <script>
-        function submitAForm(id) {
-            bootbox.dialog({
-                message: "<h4>Confirm you want to assign this Role</h4>",
-                buttons: {
-                    confirm: {
-                        label: 'Yes',
-                        className: 'btn-success',
-                        callback: function() {
-                            document.getElementById("addRForm" + id).submit();
-                        }
-                    },
-                    cancel: {
-                        label: 'No',
-                        className: 'btn-danger',
-                    }
-                },
-                callback: function(result) {}
-
-            });
-            // e.preventDefault(); // avoid to execute the actual submit of the form if onsubmit is used.
-        }
+<script src="<?php echo asset('dist/js/bootbox.min.js'); ?>"></script>
 
 
 
 
-        function submitRForm(id) {
-            bootbox.dialog({
-                message: "<h4>Confirm you want to assign remove this Role</h4>",
-                buttons: {
-                    confirm: {
-                        label: 'Yes',
-                        className: 'btn-success',
-                        callback: function() {
-                            document.getElementById("removeRForm" + id).submit();
-                        }
-                    },
-                    cancel: {
-                        label: 'No',
-                        className: 'btn-danger',
-                    }
-                },
-                callback: function(result) {}
 
-            });
-            // e.preventDefault(); // avoid to execute the actual submit of the form if onsubmit is used.
-        }
-    </script>
 @endsection

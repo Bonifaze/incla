@@ -18,9 +18,9 @@
     <ul class="navbar-nav ml-auto">
         <li class="nav-item">
             <div class="dropdown">
-                <button class="users arrow-down-icon border border-gray-200 rounded-circle p-2 position-relative" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                <button class="users arrow-down-icon border border-gray-100 rounded-circle p-2 position-relative" type="button" data-bs-toggle="dropdown" aria-expanded="false">
                     <span class="position-relative">
-                        <img src="data:image/png;base64,{{ Auth::guard('staff')->user()->passport }}" alt="User Image" class="h-32 w-32 rounded-circle" style="width: 50px;">
+                        <img src="data:image/png;base64,{{ Auth::guard('staff')->user()->passport }}" alt="User Image" class="h-20 w-20 rounded-circle" style="width: 20px;">
                         <span class="activation-badge position-absolute w-2 h-2 bg-success rounded-circle" style="bottom: 0; right: 0; border: 2px solid white;">
                         </span>
                     </span>

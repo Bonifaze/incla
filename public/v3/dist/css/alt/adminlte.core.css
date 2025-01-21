@@ -527,7 +527,7 @@ kbd {
   padding: 0.2rem 0.4rem;
   font-size: 87.5%;
   color: #ffffff;
-  background-color: #212529;
+  background-color: #c95b28 
   border-radius: 0.2rem;
   box-shadow: inset 0 -0.1rem 0 rgba(0, 0, 0, 0.25);
 }
@@ -1621,7 +1621,7 @@ pre code {
 
 .table .thead-dark th {
   color: #ffffff;
-  background-color: #212529;
+  background-color: #c95b28 
   border-color: #383f45;
 }
 
@@ -1633,7 +1633,7 @@ pre code {
 
 .table-dark {
   color: #ffffff;
-  background-color: #212529;
+  background-color: #c95b28 
 }
 
 .table-dark th,
