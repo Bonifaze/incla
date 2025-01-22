@@ -125,7 +125,7 @@
                     </ul>
                 </li>
 
-                    <li class="nav-item has-treeview @yield('fees-open')">
+                    {{--  <li class="nav-item has-treeview @yield('fees-open')">
                         <a href="#" class="nav-link @yield('fees')">
                             <i class="nav-icon fa fa-credit-card"></i>
                             <p>
@@ -147,14 +147,8 @@
                                 </a>
                             </li>
                         </ul>
-                    </li>
-                    <li class="nav-item">
-                        <a href="/student/getvoucherstudent" class="nav-link">
-                     <i class="fa fa-plus-circle nav-icon"></i>
-                            <p>Voucher</p>
-
-                        </a>
-                    </li>
+                    </li>  --}}
+                  
                     <li class="nav-item">
                         <a href="{{ route('student.logout') }}" class="nav-link"Contact
                             onclick="event.preventDefault();

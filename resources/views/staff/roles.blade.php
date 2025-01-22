@@ -2,7 +2,7 @@
 
 
 
-@section('pagetitle') Staff Role details  @endsection
+@section('pagetitle') Staff Role details @endsection
 
 
 
@@ -14,9 +14,9 @@
 @section('staff') active @endsection
 
 <!-- Page -->
- @section('list-staff') active @endsection
+@section('list-staff') active @endsection
 
- <!-- End Sidebar links -->
+<!-- End Sidebar links -->
 
 
 
@@ -27,231 +27,223 @@
 
     <!-- Main content -->
     <section class="content">
-      <div class="container-fluid">
-        <!-- left column -->
-        <div class="col_full">
-          <h1
-                        class="app-page-title text-uppercase h5 font-weight-bold p-2 mb-2 shadow-sm text-center text-success border">
-                     {{ $staff->fullName }}
-                    </h1>
+        <div class="container-fluid">
+            <!-- left column -->
+            <div class="col_full">
+                <h1 class="app-page-title text-uppercase h5 font-weight-bold p-2 mb-2 shadow-sm text-center text-success border">
+                    {{ $staff->fullName }}
+                </h1>
 
-            <div class="card ">
-
-
-             <div class="table-responsive">
-
-						<table class="table table-striped">
-						  <thead>
-
-							  {{--  <th>Data Id</th>  --}}
-							  <th>Name</th>
-							 <th>Email</th>
-							 <th>Phone</th>
-                             <th>username</th>
+                <div class="card ">
 
 
-						  </thead>
+                    <div class="table-responsive">
+
+                        <table class="table table-striped">
+                            <thead>
+
+                                {{-- <th>Data Id</th>  --}}
+                                <th>Name</th>
+                                <th>Email</th>
+                                <th>Phone</th>
+                                <th>username</th>
 
 
-						  <tbody>
-
-						  <tr>
-							  {{--  <td>{{ $staff->id }}</td>  --}}
-							  <td>{{ $staff->fullName }}</td>
-							 <td>{{ $staff->email }}</td>
-							 <td>{{ $staff->phone }}</td>
-							 <td>{{ $staff->username }}</td>
-
-							</tr>
-
-						  </tbody>
+                            </thead>
 
 
+                            <tbody>
 
-						</table>
+                                <tr>
+                                    {{-- <td>{{ $staff->id }}</td> --}}
+                                    <td>{{ $staff->fullName }}</td>
+                                    <td>{{ $staff->email }}</td>
+                                    <td>{{ $staff->phone }}</td>
+                                    <td>{{ $staff->username }}</td>
 
+                                </tr>
+
+                            </tbody>
+
+
+
+                        </table>
+
+
+                    </div>
+
+                    <div class="card card-success">
+                        <div class="card-header">
+                            <h4 class="card-title"> List of assigned Roles</h4>
+                        </div>
+                    </div>
+
+
+                    <div class="table-responsive">
+
+                        <table class="table table-striped">
+                            <thead>
+
+                                <th>S/N</th>
+                                <th>Name</th>
+                                <th>Role</th>
+                                <th>Description</th>
+
+
+                            </thead>
+
+
+                            <tbody>
+
+                                @foreach ($roles as $key => $role)
+
+                                <tr>
+                                    <td>{{ $loop->iteration }}</td>
+                                    <td>{{ $role->name }}</td>
+                                    <td>{{ $role->role }}</td>
+                                    <td>{{ $role->description }}</td>
+
+
+                                </tr>
+
+                                @endforeach
+
+                            </tbody>
+
+
+
+                        </table>
+
+
+
+                    </div>
+
+
+
+                   <div class="container-fluid pt-3">
+    <div class="card shadow-sm">
+        <div class="card-header bg-primary text-white">
+            <h4 class="mb-0">Permissions List</h4>
+        </div>
+        <div class="card-body">
+            <!-- Table responsive with DataTable -->
+            <div class="table-responsive">
+                <table id="permissionsTable" class="table table-striped table-bordered" cellspacing="0" width="100%">
+                    <thead class="thead-dark">
+                        <tr>
+                            <th>S/N</th>
+                            <th>Name</th>
+                            <th>Description</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach ($perms as $key => $perm)
+                            <tr>
+                                <td>{{ $loop->iteration }}</td>
+                                <td>{{ $perm->name }}</td>
+                                <td>{{ $perm->description }}</td>
+                            </tr>
+                        @endforeach
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+              
+
+
+
+
+
+
+
+
+
+
+
+
+
+                </div>
+                <!-- /.box -->
 
             </div>
-
-             <div class="card card-success">
-            <div class="card-header">
-                <h4 class="card-title"> List of assigned Roles</h4>
-				</div>
-				 </div>
-
-
-              <div class="table-responsive">
-
-						<table class="table table-striped">
-						  <thead>
-
-							  <th>S/N</th>
-							  <th>Name</th>
-                              <th>Role</th>
-							 <th>Description</th>
-
-
-						  </thead>
-
-
-						  <tbody>
-
-						  @foreach ($roles as $key => $role)
-
-							<tr>
-							  <td>{{ $loop->iteration }}</td>
-							  <td>{{ $role->name }}</td>
-                               <td>{{ $role->role }}</td>
-							 <td>{{ $role->description }}</td>
-
-
-							</tr>
-
-							@endforeach
-
-						  </tbody>
-
-
-
-						</table>
-
-
-
-            </div>
-
-
-
-             <div class="card card-success">
-            <div class="card-header">
-                <h4 class="card-title">Staff Effective Permissions</h4>
-				</div>
-           </div>
-
-
-
-
-             <div class="table-responsive">
-
-						<table class="table table-striped">
-						  <thead>
-
-							  <th>S/N</th>
-
-							  <th>Name</th>
-							 <th>Description</th>
-
-
-						  </thead>
-
-
-						  <tbody>
-
-
-							@foreach ($perms as $key => $perm)
-
-							<tr>
-							  <td>{{ $loop->iteration }}</td>
-							  <td>{{ $perm->name }}</td>
-							 <td>{{ $perm->description }}</td>
-
-							</tr>
-
-							@endforeach
-
-
-
-						  </tbody>
-
-
-
-						</table>
-
-
-
-            </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-          </div>
-          <!-- /.box -->
+            <!--/.col (left) -->
 
         </div>
-        <!--/.col (left) -->
-
-      </div>
-      <!-- /.row -->
+        <!-- /.row -->
     </section>
     <!-- /.content -->
-  </div>
+</div>
 @endsection
 
 @section('pagescript')
 <script src="<?php echo asset('dist/js/bootbox.min.js')?>"></script>
 
- <script>
+<script>
+    function submitAForm(id) {
+        bootbox.dialog({
+            message: "<h4>Confirm you want to assign this Role</h4>"
+            , buttons: {
+                confirm: {
+                    label: 'Yes'
+                    , className: 'btn-success'
+                    , callback: function() {
+                        document.getElementById("addRForm" + id).submit();
+                    }
+                }
+                , cancel: {
+                    label: 'No'
+                    , className: 'btn-danger'
+                , }
+            }
+            , callback: function(result) {}
 
-
- 			function submitAForm(id)
-        	{
-             bootbox.dialog({
-                message: "<h4>Confirm you want to assign this Role</h4>",
-                buttons: {
-                    confirm: {
-                        label: 'Yes',
-                        className: 'btn-success',
-                        callback: function(){
-                        	document.getElementById("addRForm"+id).submit();
-                        	}
-                    },
-                    cancel: {
-                        label: 'No',
-                        className: 'btn-danger',
-                        }
-                },
-                callback: function (result) {}
-
-            });
-            // e.preventDefault(); // avoid to execute the actual submit of the form if onsubmit is used.
-        }
+        });
+        // e.preventDefault(); // avoid to execute the actual submit of the form if onsubmit is used.
+    }
 
 
 
 
- 			function submitRForm(id)
-        	{
-             bootbox.dialog({
-                message: "<h4>Confirm you want to assign remove this Role</h4>",
-                buttons: {
-                    confirm: {
-                        label: 'Yes',
-                        className: 'btn-success',
-                        callback: function(){
-                        	document.getElementById("removeRForm"+id).submit();
-                        	}
-                    },
-                    cancel: {
-                        label: 'No',
-                        className: 'btn-danger',
-                        }
-                },
-                callback: function (result) {}
+    function submitRForm(id) {
+        bootbox.dialog({
+            message: "<h4>Confirm you want to assign remove this Role</h4>"
+            , buttons: {
+                confirm: {
+                    label: 'Yes'
+                    , className: 'btn-success'
+                    , callback: function() {
+                        document.getElementById("removeRForm" + id).submit();
+                    }
+                }
+                , cancel: {
+                    label: 'No'
+                    , className: 'btn-danger'
+                , }
+            }
+            , callback: function(result) {}
 
-            });
-            // e.preventDefault(); // avoid to execute the actual submit of the form if onsubmit is used.
-        }
+        });
+        // e.preventDefault(); // avoid to execute the actual submit of the form if onsubmit is used.
+    }
 
+</script>
 
-    </script>
-    @endsection
-
+<!-- Initialize DataTable -->
+<script>
+    $(document).ready(function() {
+        $('#permissionsTable').DataTable({
+            "paging": true,
+            "lengthChange": false,
+            "searching": true,
+            "ordering": true,
+            "info": true,
+            "autoWidth": false
+        });
+    });
+</script>
+@endsection

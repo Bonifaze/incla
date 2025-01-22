@@ -1,4 +1,4 @@
-{{--  @php
+{{-- @php
 
 if(!session('adminId'))
 {
@@ -12,7 +12,7 @@ if(!session('adminId'))
 
 
 @section('pagetitle')
-    Staff Home
+Staff Home
 @endsection
 
 
@@ -21,16 +21,16 @@ if(!session('adminId'))
 
 <!-- Treeview -->
 @section('staff-open')
-    menu-open
+menu-open
 @endsection
 
 @section('staff')
-    active
+active
 @endsection
 
 <!-- Page -->
 @section('staff-home')
-    active
+active
 @endsection
 
 <!-- End Sidebar links -->
@@ -38,84 +38,82 @@ if(!session('adminId'))
 
 
 @section('content')
-    <div class="content-wrapper bg-white">
+<div class="content-wrapper bg-white">
 
-        <!-- Main content -->
-        <section class="content">
-            <div class="container-fluid">
-                <!-- left column -->
-                <div class="col_full">
-                    <h1
-                        class="app-page-title text-uppercase h5 font-weight-bold p-2 mb-2 shadow-sm text-center text-success border">
-                      ALL APPLICANTS
-                    </h1>
-
+    <!-- Main content -->
+    <section class="content">
+        <div class="container-fluid">
+            <!-- left column -->
+            <div class="col_full">
+                <h1 class="app-page-title text-uppercase h5 font-weight-bold p-2 mb-2 shadow-sm text-center text-success border">
+                    ALL APPLICANTS
+                </h1>
 
 
-   <div class="row">
 
-                <!-- Area Chart -->
-                <div class="col-xl-12 col-lg-12">
+                <div class="row">
 
-                    <!-- Card Header - Dropdown -->
-                    <div class="card shadow mb-4">
-                        <div class="card-header py-3">
-                            {{--  <h6 class="m-0 font-weight-bold text-success">All Applicants</h6>  --}}
-                        </div>
-                        <div class="card-body">
-                            <div class="table-responsive">
+                    <!-- Area Chart -->
+                    <div class="col-xl-12 col-lg-12">
 
-                                <table class="table table-bordered table-striped" id="dataTable" width="100%" cellspacing="0">
-                                    <thead>
-                                        <tr>
+                        <!-- Card Header - Dropdown -->
+                        <div class="card shadow mb-4">
 
-                                            <th>First Name</th>
-                                            <th>Surname</th>
-                                            <th>Phone Number</th>
-                                            <th>Gender</th>
-                                            <th>Course Applied</th>
-                                            <th>Applicant Type</th>
-                                            <th>View Details</th>
-                                        </tr>
-                                    </thead>
+                            <div class="card-body">
+                                <div class="table-responsive">
 
-                                    <tbody>
-                                        @foreach ($allAppli as $allApp)
+                                    <table class="table table-bordered table-striped" id="dataTable" width="100%" cellspacing="0">
+                                        <thead>
+                                            <tr>
 
-                                        <tr>
+                                                <th>First Name</th>
+                                                <th>Surname</th>
+                                                <th>Phone Number</th>
+                                                <th>Gender</th>
+                                                <th>Course Applied</th>
+                                                <th>Applicant Type</th>
+                                                <th>View Details</th>
+                                            </tr>
+                                        </thead>
 
-                                            <td>{{$allApp['first_name']}}</td>
-                                            <td>{{$allApp['surname']}}</td>
-                                            <td>{{$allApp['phone']}}</td>
-                                            <td>{{$allApp['gender']}}</td>
-                                            <td>{{$allApp['course_applied']}}</td>
-                                            <td>{{$allApp['applicant_type']}}</td>
-                                            <td><a href="/adminView/{{$allApp['applicant_type']}}/{{urlencode(base64_encode($allApp['id']))}}" class="btn btn-primary border mt-2"> View </a></td>
+                                        <tbody>
+                                            @foreach ($allAppli as $allApp)
 
-                                        </tr>
+                                            <tr>
 
-                                        @endforeach
+                                                <td>{{$allApp['first_name']}}</td>
+                                                <td>{{$allApp['surname']}}</td>
+                                                <td>{{$allApp['phone']}}</td>
+                                                <td>{{$allApp['gender']}}</td>
+                                                <td>{{$allApp['course_applied']}}</td>
+                                                <td>{{$allApp['applicant_type']}}</td>
+                                                <td><a href="/adminView/{{$allApp['applicant_type']}}/{{urlencode(base64_encode($allApp['id']))}}" class="btn btn-primary border mt-2"> View </a></td>
 
-                                    </tbody>
-                                </table>
+                                            </tr>
+
+                                            @endforeach
+
+                                        </tbody>
+                                    </table>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
 
 
 
 
-
-                    </div>
-                </div>
 
             </div>
-        </section>
-    </div>
+        </div>
+
+</div>
+</section>
+</div>
 @endsection
 
 @section('pagescript')
-    <script src="<?php echo asset('dist/js/bootbox.min.js'); ?>"></script>
+<script src="<?php echo asset('dist/js/bootbox.min.js'); ?>"></script>
 @endsection
+
