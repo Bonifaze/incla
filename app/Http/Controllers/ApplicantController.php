@@ -3365,12 +3365,17 @@ class ApplicantController extends Controller
             'address' => $req->address,
             'session_id' => $this->getCurrentAdmissionSession(),
             'passport' => $passportImage,
-            'applicant_type' =>$req['admission-type'],
+
 
         ]);
 
         // Update Biodata Status
-        DB::table('usersbiodata')->where('user_id', session('userid'))->update(['status' => 1]);
+        DB::table('usersbiodata')->where('user_id', session('userid'))
+        ->update(['status' => 1]);
+
+        DB::table('users')->where('id', session('userid'))
+        ->update(['applicant_type' =>$req['admission-type']]);
+
 
         // Insert Sponsor Information
         DB::table('sponsors')->insert([

@@ -196,7 +196,7 @@ unset($__errorArgs, $__bag); ?>" placeholder="English, French etc ">
 <script>
     // Define dynamic inputs for each admission type
     const admissionTypes = {
-        lcl: [{
+        Licentiate: [{
                 name: "course_program"
                 , placeholder: "Select Licentiate Type"
                 , options: [{
@@ -233,7 +233,7 @@ unset($__errorArgs, $__bag); ?>" placeholder="English, French etc ">
                 , type: "file"
             }
         ]
-        , diploma: [{
+        , Diploma: [{
                 name: "course_program"
                 , placeholder: "Type of Diploma"
                 , options: [{
@@ -274,7 +274,7 @@ unset($__errorArgs, $__bag); ?>" placeholder="English, French etc ">
                 , type: "file"
             }
         ]
-        , cert: [{
+        , Certificate: [{
                 name: "course_program"
                 , placeholder: "Type of Certificate"
                 , options: [{

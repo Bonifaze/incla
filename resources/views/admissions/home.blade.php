@@ -187,7 +187,7 @@ active
 <script>
     // Define dynamic inputs for each admission type
     const admissionTypes = {
-        lcl: [{
+        Licentiate: [{
                 name: "course_program"
                 , placeholder: "Select Licentiate Type"
                 , options: [{
@@ -224,7 +224,7 @@ active
                 , type: "file"
             }
         ]
-        , diploma: [{
+        , Diploma: [{
                 name: "course_program"
                 , placeholder: "Type of Diploma"
                 , options: [{
@@ -265,7 +265,7 @@ active
                 , type: "file"
             }
         ]
-        , cert: [{
+        , Certificate: [{
                 name: "course_program"
                 , placeholder: "Type of Certificate"
                 , options: [{
