@@ -1,33 +1,32 @@
-@extends('layouts.adminsials')
-
-@section('pagetitle')
+<?php $__env->startSection('pagetitle'); ?>
 Home
-@endsection
+<?php $__env->stopSection(); ?>
 
 <!-- Sidebar Links -->
 <!-- Treeview -->
-@section('student-open')
+<?php $__env->startSection('student-open'); ?>
 menu-open
-@endsection
+<?php $__env->stopSection(); ?>
 
-@section('student')
+<?php $__env->startSection('student'); ?>
 active
-@endsection
+<?php $__env->stopSection(); ?>
 
 <!-- Page -->
-@section('home')
+<?php $__env->startSection('home'); ?>
 active
-@endsection
+<?php $__env->stopSection(); ?>
 <!-- End Sidebar links -->
 
-@section('content')
+<?php $__env->startSection('content'); ?>
 <div class="content-wrapper bg-white">
     <!-- Content Header (Page header) -->
     <section class="content">
 
-        @if (session('signUpMsg'))
-        {!! session('signUpMsg') !!}
-        @endif
+        <?php if(session('signUpMsg')): ?>
+        <?php echo session('signUpMsg'); ?>
+
+        <?php endif; ?>
         <!-- Begin Page Content -->
         <div class="container-fluid">
 
@@ -36,13 +35,14 @@ active
                     <div class="card shadow mb-4">
                         <!-- Card Header - Dropdown -->
                         <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                            <h6 class="m-0 font-weight-bold text-success">Admission Status : {{ $status }}</h6>
+                            <h6 class="m-0 font-weight-bold text-success">Admission Status : <?php echo e($status); ?></h6>
                             <div class="dropdown no-arrow">
 
-                                {!! $status=="Successful"?'
+                                <?php echo $status=="Successful"?'
                                      <!--   <a href="/letter" class="btn btn-success mt-3"> <i class=" fas fa-envelope fa-sm text-white-50 p-2"></i>Print Letter</a> -->
 
-                                ':'' !!}
+                                ':''; ?>
+
 
 
                             </div>
@@ -52,29 +52,30 @@ active
                         <div class="font-weight-bold text-primary">
                             <div class="dropdown no-arrow">
 
-                                @php
+                                <?php
                                 $fees = array("UTME"=>100000, "DE"=>100000, "Transfer"=>100000, "PG"=>'50000 or ₦30000');
-                                @endphp
-                                @foreach ($admission as $utm )
-                                <input type="hidden" class="form-control" id="js-firstName" placeholder="{{$utm->first_name." ".$utm->middle_name." ".$utm->surname }}" value="{{ $utm->first_name." ".$utm->middle_name." ".$utm->surname }}" name="firstName" readonly>
-                                <input type="hidden" class="form-control" id="js-email" placeholder="{{$utm->email}}" value="{{$utm->email}}" name="email" readonly hidden>
-                                <input type="hidden" class="form-control" id="js-phone" placeholder="{{$utm->phone}}" value="{{$utm->phone}}" name="email" readonly>
-                                @endforeach
-                                @foreach ($admission as $utm )
-                                {!! $status=="Successful"?'
+                                ?>
+                                <?php $__currentLoopData = $admission; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $utm): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                <input type="hidden" class="form-control" id="js-firstName" placeholder="<?php echo e($utm->first_name." ".$utm->middle_name." ".$utm->surname); ?>" value="<?php echo e($utm->first_name." ".$utm->middle_name." ".$utm->surname); ?>" name="firstName" readonly>
+                                <input type="hidden" class="form-control" id="js-email" placeholder="<?php echo e($utm->email); ?>" value="<?php echo e($utm->email); ?>" name="email" readonly hidden>
+                                <input type="hidden" class="form-control" id="js-phone" placeholder="<?php echo e($utm->phone); ?>" value="<?php echo e($utm->phone); ?>" name="email" readonly>
+                                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                                <?php $__currentLoopData = $admission; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $utm): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                <?php echo $status=="Successful"?'
                                 <form action="" method="POST" onsubmit="event.preventDefault();" class="p-5">
                                     <div class="form-group container-fluid mt-5 p-5 border border-success shadow shadow-lg rounded text-success rounded-lg">
-                                        @csrf
+                                        <?php echo csrf_field(); ?>
                                         Congratulation you have been offerred provisional admission into veritas univeristy kindly click the button to pay your Acceptance Fee<br>
                                         <a href="acceptancepayment" class="btn btn-success mt-3"> <i class=" fa fa-credit-card fa-sm text-white-50 p-2"></i>Pay (₦'.$fees[$utm->applicant_type].')</a>
 
 
 
                                     </div>
-                                </form>':' ' !!}
-                                @endforeach
+                                </form>':' '; ?>
 
-                                {{-- <a href="paymentview/session("userid") class="d-none d-sm-inline-block btn btn-sm btn-success shadow-sm"><i class="fa fa-credit-card fa-sm text-white-50">  </i> Pay </a>  --}}
+                                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+
+                                
                             </div>
 
 
@@ -96,7 +97,7 @@ active
                     <!-- Card Body -->
 
 
-                    @foreach ($admission as $utm )
+                    <?php $__currentLoopData = $admission; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $utm): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
 
 
                     <div class="row gy-4">
@@ -111,7 +112,7 @@ active
                                                     <strong>Photo</strong>
                                                 </div>
                                                 <div class="rounded-circle">
-                                                    <img class="rounded-circle p-3 mx-auto d-block" src="data:image/jpeg;base64,{{ $utm->passport }}" alt="Applicant Passport" style="height: 180px; width: 200px;">
+                                                    <img class="rounded-circle p-3 mx-auto d-block" src="data:image/jpeg;base64,<?php echo e($utm->passport); ?>" alt="Applicant Passport" style="height: 180px; width: 200px;">
                                                 </div>
 
                                             </div>
@@ -122,7 +123,7 @@ active
                                         <div class="row justify-content-between align-items-center">
                                             <div class="col-auto">
                                                 <div class="item-label"><strong>Surname</strong></div>
-                                                <div class="item-data">{{$utm -> surname}}</div>
+                                                <div class="item-data"><?php echo e($utm -> surname); ?></div>
                                             </div>
                                         </div>
                                     </div>
@@ -130,7 +131,7 @@ active
                                         <div class="row justify-content-between align-items-center">
                                             <div class="col-auto">
                                                 <div class="item-label"><strong>First Name</strong></div>
-                                                <div class="item-data">{{$utm -> first_name}}</div>
+                                                <div class="item-data"><?php echo e($utm -> first_name); ?></div>
                                             </div>
                                         </div>
                                     </div>
@@ -138,7 +139,7 @@ active
                                         <div class="row justify-content-between align-items-center">
                                             <div class="col-auto">
                                                 <div class="item-label"><strong>Other Name</strong></div>
-                                                <div class="item-data">{{$utm -> middle_name}}</div>
+                                                <div class="item-data"><?php echo e($utm -> middle_name); ?></div>
                                             </div>
                                         </div>
                                     </div>
@@ -159,7 +160,7 @@ active
                                         <div class="row justify-content-between align-items-center">
                                             <div class="col-auto">
                                                 <div class="item-label"><strong>Email</strong></div>
-                                                <div class="item-data">{{$utm -> email}}</div>
+                                                <div class="item-data"><?php echo e($utm -> email); ?></div>
                                             </div>
                                         </div>
                                     </div>
@@ -168,7 +169,7 @@ active
                                         <div class="row justify-content-between align-items-center">
                                             <div class="col-auto">
                                                 <div class="item-label"><strong>Phone Number</strong></div>
-                                                <div class="item-data">{{$utm -> phone}}</div>
+                                                <div class="item-data"><?php echo e($utm -> phone); ?></div>
                                             </div>
                                         </div>
                                     </div>
@@ -176,7 +177,7 @@ active
                                         <div class="row justify-content-between align-items-center">
                                             <div class="col-auto">
                                                 <div class="item-label"><strong>Gender</strong></div>
-                                                <div class="item-data">{{$utm -> gender}}</div>
+                                                <div class="item-data"><?php echo e($utm -> gender); ?></div>
                                             </div>
                                         </div>
                                     </div>
@@ -184,7 +185,7 @@ active
                                         <div class="row justify-content-between align-items-center">
                                             <div class="col-auto">
                                                 <div class="item-label"><strong>Date of Birth</strong></div>
-                                                <div class="item-data">{{$utm -> dob}}</div>
+                                                <div class="item-data"><?php echo e($utm -> dob); ?></div>
                                             </div>
                                         </div>
                                     </div>
@@ -192,7 +193,7 @@ active
                                         <div class="row justify-content-between align-items-center">
                                             <div class="col-auto">
                                                 <div class="item-label"><strong>State of Origin</strong></div>
-                                                <div class="item-data">{{$utm -> state_origin}}</div>
+                                                <div class="item-data"><?php echo e($utm -> state_origin); ?></div>
                                             </div>
                                         </div>
                                     </div>
@@ -200,7 +201,7 @@ active
                                         <div class="row justify-content-between align-items-center">
                                             <div class="col-auto">
                                                 <div class="item-label"><strong>Nationality</strong></div>
-                                                <div class="item-data">{{$utm -> lga}}</div>
+                                                <div class="item-data"><?php echo e($utm -> lga); ?></div>
                                             </div>
                                         </div>
                                     </div>
@@ -208,7 +209,7 @@ active
                             </div>
                         </div>
                     </div>
-                    @endforeach
+                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                 </div>
             </div>
 
@@ -340,4 +341,6 @@ active
     });
 </script>
 </body>
-@endsection
+<?php $__env->stopSection(); ?>
+
+<?php echo $__env->make('layouts.adminsials', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH /Users/lifeofrence/Downloads/inclaproject/incla/resources/views/admissions//admission.blade.php ENDPATH**/ ?>

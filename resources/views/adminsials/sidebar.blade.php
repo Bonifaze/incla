@@ -49,9 +49,9 @@
 
                 <ul class="nav nav-treeview">
 
-                    <li class="nav-item ml-2">
-                        @if(session('status') == '4')
-                        <a class="nav-link collapsed" href="/viewprofile">
+                    <li class="nav-item">
+                        @if(session('status') == '1')
+                        <a class="nav-link" href="/viewprofile">
                             <i class="fas fa-user"></i>
                             <span>View Profile</span>
                         </a>
@@ -66,10 +66,12 @@
                         ':'' !!}
                     </li>  --}}
                     <li class="nav-item">
-                        <a href="#" class="nav-link @yield('profile')">
+                     @if(session('status') == '1')
+                        <a href="/editprofile" class="nav-link @yield('profile')">
                             <i class="fa fa-unlock-alt nav-icon"></i>
                             <p>Edit Profile</p>
                         </a>
+                          @endif
                     </li>
                     <li class="nav-item">
                         <a href="/editpassword" class="nav-link @yield('password')">
@@ -82,7 +84,7 @@
 
 
 
-            <li class="nav-item has-treeview @yield('fees-open')">
+            {{--  <li class="nav-item has-treeview @yield('fees-open')">
                 <a href="#" class="nav-link @yield('fees')">
                     <i class="nav-icon fa fa-credit-card"></i>
                     <p>
@@ -99,7 +101,7 @@
                     </li>
 
                 </ul>
-            </li>
+            </li>  --}}
             {{--  <li class="nav-item">
                 <a href="/logoutUser" class="nav-link" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
                     <i class="fas fa-power-off nav-icon text-danger" title="Logout"></i>

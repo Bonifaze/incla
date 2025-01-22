@@ -1,29 +1,26 @@
-@extends('layouts.adminsials')
-{{-- @extends('layouts.formstyle')  --}}
-
-@section('pagetitle')
+<?php $__env->startSection('pagetitle'); ?>
 Home
-@endsection
+<?php $__env->stopSection(); ?>
 
 <!-- Sidebar Links -->
 
 <!-- Treeview -->
-@section('student-open')
+<?php $__env->startSection('student-open'); ?>
 menu-open
-@endsection
+<?php $__env->stopSection(); ?>
 
-@section('student')
+<?php $__env->startSection('student'); ?>
 active
-@endsection
+<?php $__env->stopSection(); ?>
 
 <!-- Page -->
-@section('home')
+<?php $__env->startSection('home'); ?>
 active
-@endsection
+<?php $__env->stopSection(); ?>
 
 <!-- End Sidebar links -->
 
-@section('content')
+<?php $__env->startSection('content'); ?>
 <div class="content-wrapper bg-white">
     <!-- Content Header (Page header) -->
     <!-- Main content -->
@@ -32,32 +29,47 @@ active
             <div class="dashboard-body">
 
 
-        @if (session('signUpMsg'))
-        {!! session('signUpMsg') !!}
-        @endif
+        <?php if(session('signUpMsg')): ?>
+        <?php echo session('signUpMsg'); ?>
+
+        <?php endif; ?>
                 <div class="page-content">
 
                     <div class="form-v10-content">
-                        <form class="form-detail" action="{{ route('form.submit') }}" enctype="multipart/form-data" method="post" id="myform">
-                            @csrf
+                        <form class="form-detail" action="<?php echo e(route('form.submit')); ?>" enctype="multipart/form-data" method="post" id="myform">
+                            <?php echo csrf_field(); ?>
                             <div class="form-left">
                                 <h2>General Infomation</h2>
                                 <div class="form-group">
                                     <div class="form-row form-row-1">
 
                                         <label for="surname">Surname </label>
-                                        <input type="text" name="surname" id="surname" class="input-text @error('surname') is-invalid @enderror" placeholder="{{ session('userssurname')}} " required readonly autofocus>
+                                        <input type="text" name="surname" id="surname" class="input-text <?php $__errorArgs = ['surname'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?> is-invalid <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>" placeholder="<?php echo e(session('userssurname')); ?> " required readonly autofocus>
                                     </div>
                                     <div class="form-row form-row-2">
 
                                         <label for="firstname">Other Name</label>
-                                        <input type="text" name="first_name" id="first_name" class="input-text" placeholder="{{ session('usersFirstName')}}  {{ session('usersMiddleName')}}" required readonly autofocus>
+                                        <input type="text" name="first_name" id="first_name" class="input-text" placeholder="<?php echo e(session('usersFirstName')); ?>  <?php echo e(session('usersMiddleName')); ?>" required readonly autofocus>
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <div class="form-row form-row-1">
                                         <label for="title">Title </label>
-                                        <input type="text" name="title" id="title" class="input-text @error('title') is-invalid @enderror" placeholder="Title ">
+                                        <input type="text" name="title" id="title" class="input-text <?php $__errorArgs = ['title'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?> is-invalid <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>" placeholder="Title ">
                                     </div>
                                     <div class="form-row form-row-2">
                                         <label for="gender">Gender </label>
@@ -77,27 +89,24 @@ active
                                         <label for="dob">Date Of Birth</label>
                                         <input type="date" name="dob" id="dob" class="input-date" required>
                                     </div>
-{{--
-                                    <div class="form-row form-row-2">
-                                        <label for="country">Country</label>
-                                        <select name="nationality" id="country" onchange="updateStates()">
-                                            <option value="" disabled selected>Choose Country</option>
-                                            <option value="ngn" >Nigeria</option>
-                                            <option value="notngn">Not Nigeria</option>
 
-                                        </select>
-                                        <span class="text-danger" id="country-error"></span>
-                                    </div>  --}}
 
                                       <div class="form-row form-row-2">
                                         <label for="title">Language Spoken </label>
-                                        <input type="text" name="lang_spoken" id="lang_spoken" class="input-text @error('lang_spoken') is-invalid @enderror" placeholder="English, French etc ">
+                                        <input type="text" name="lang_spoken" id="lang_spoken" class="input-text <?php $__errorArgs = ['lang_spoken'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?> is-invalid <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>" placeholder="English, French etc ">
                                     </div>
 
                                 </div>
 
                                 <div class="form-group">
-                                    <div class="form-row form-row-1 @if ($errors->has('state_origin')) has-error @endif">
+                                    <div class="form-row form-row-1 <?php if($errors->has('state_origin')): ?> has-error <?php endif; ?>">
                                         <label for="state-origin">State of Origin</label>
                                         <div id="state-origin-group">
                                             <select name="state_origin" id="state-origin" onchange="updateLGA()">
@@ -107,12 +116,12 @@ active
                                         <span class="select-btn">
                                             <i class="zmdi zmdi-chevron-down"></i>
                                         </span>
-                                        @if ($errors->has('state_origin'))
-                                        <span class="text-danger">{{ $errors->first('state_origin') }}</span>
-                                        @endif
+                                        <?php if($errors->has('state_origin')): ?>
+                                        <span class="text-danger"><?php echo e($errors->first('state_origin')); ?></span>
+                                        <?php endif; ?>
                                     </div>
 
-                                    <div class="form-row form-row-2 @if ($errors->has('lga')) has-error @endif">
+                                    <div class="form-row form-row-2 <?php if($errors->has('lga')): ?> has-error <?php endif; ?>">
                                         <label for="lga">Local Govt Area</label>
                                         <div id="lga-group">
                                             <select name="lga" id="slga">
@@ -122,9 +131,9 @@ active
                                         <span class="select-btn">
                                             <i class="zmdi zmdi-chevron-down"></i>
                                         </span>
-                                        @if ($errors->has('lga'))
-                                        <span class="text-danger">{{ $errors->first('lga') }}</span>
-                                        @endif
+                                        <?php if($errors->has('lga')): ?>
+                                        <span class="text-danger"><?php echo e($errors->first('lga')); ?></span>
+                                        <?php endif; ?>
                                     </div>
                                 </div>
 
@@ -388,9 +397,9 @@ active
 
 
 </div>
-@endsection
+<?php $__env->stopSection(); ?>
 
-@section('pagescript')
+<?php $__env->startSection('pagescript'); ?>
 <script src="<?php echo asset('dist/js/bootbox.min.js'); ?>"></script>
 
 
@@ -2478,4 +2487,6 @@ active
     }
 </script>
 
-@endsection
+<?php $__env->stopSection(); ?>
+
+<?php echo $__env->make('layouts.adminsials', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH /Users/lifeofrence/Downloads/inclaproject/incla/resources/views/admissions/home.blade.php ENDPATH**/ ?>

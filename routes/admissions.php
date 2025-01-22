@@ -367,6 +367,8 @@ Route::post('/bursary/remita/find-student', 'App\Http\Controllers\RemitaControll
 // });
 
 
+
+Route::post('/formsubmit', 'App\Http\Controllers\ApplicantController@submitForm')->name('form.submit');
 //students login route
 Route::get('/studentsLogin', function () {
     return view('students.studentsLogin');
