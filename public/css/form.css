@@ -1,5 +1,6 @@
  body {
 	margin:  0;
+    overflow-x: hidden;
 }
 .page-content {
     width: 100%;
@@ -44,8 +45,8 @@
 	display: flex;
 	display: -webkit-flex;
       overflow-x:hidden;
-  
-} 
+
+}
 .form-v10-content .form-detail h2 {
 	font-weight: 500;
 	font-size: 25px;

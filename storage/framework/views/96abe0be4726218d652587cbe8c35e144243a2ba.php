@@ -1,3 +1,6 @@
+
+
+
 <?php $__env->startSection('pagetitle'); ?>
 Home
 <?php $__env->stopSection(); ?>
@@ -29,9 +32,14 @@ active
             <div class="dashboard-body">
 
 
+        <?php if(session('signUpMsg')): ?>
+        <?php echo session('signUpMsg'); ?>
+
+        <?php endif; ?>
                 <div class="page-content">
+
                     <div class="form-v10-content">
-                        <form class="form-detail" action="#" enctype="multipart/form-data" method="post" id="myform">
+                        <form class="form-detail" action="<?php echo e(route('form.submit')); ?>" enctype="multipart/form-data" method="post" id="myform">
                             <?php echo csrf_field(); ?>
                             <div class="form-left">
                                 <h2>General Infomation</h2>
@@ -50,8 +58,8 @@ unset($__errorArgs, $__bag); ?>" placeholder="<?php echo e(session('userssurname
                                     </div>
                                     <div class="form-row form-row-2">
 
-                                        <label for="firstname">First Name</label>
-                                        <input type="text" name="first_name" id="first_name" class="input-text" placeholder="<?php echo e(session('usersFirstName')); ?>" required readonly autofocus>
+                                        <label for="firstname">Other Name</label>
+                                        <input type="text" name="first_name" id="first_name" class="input-text" placeholder="<?php echo e(session('usersFirstName')); ?>  <?php echo e(session('usersMiddleName')); ?>" required readonly autofocus>
                                     </div>
                                 </div>
                                 <div class="form-group">
@@ -68,10 +76,10 @@ unset($__errorArgs, $__bag); ?>" placeholder="Title ">
                                     </div>
                                     <div class="form-row form-row-2">
                                         <label for="gender">Gender </label>
-                                        <select name="Gender" required>
+                                        <select name="gender" required>
                                             <option value="" disabled selected>Select Gender</option>
-                                            <option value="m">Male</option>
-                                            <option value="f">Female</option>
+                                            <option value="Male">Male</option>
+                                            <option value="Female">Female</option>
                                         </select>
                                         <span class="select-btn">
                                             <i class="zmdi zmdi-chevron-down"></i>
@@ -85,15 +93,19 @@ unset($__errorArgs, $__bag); ?>" placeholder="Title ">
                                         <input type="date" name="dob" id="dob" class="input-date" required>
                                     </div>
 
-                                    <div class="form-row form-row-2">
-                                        <label for="country">Country</label>
-                                        <select name="nationality" id="country" onchange="updateStates()">
-                                            <option value="" disabled selected>Choose Country</option>
-                                            <option value="ngn">Nigeria</option>
-                                            <option value="notngn">Not Nigeria</option>
-                                        </select>
-                                        <span class="text-danger" id="country-error"></span>
+
+                                      <div class="form-row form-row-2">
+                                        <label for="title">Language Spoken </label>
+                                        <input type="text" name="lang_spoken" id="lang_spoken" class="input-text <?php $__errorArgs = ['lang_spoken'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?> is-invalid <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>" placeholder="English, French etc ">
                                     </div>
+
                                 </div>
 
                                 <div class="form-group">
@@ -128,14 +140,13 @@ unset($__errorArgs, $__bag); ?>" placeholder="Title ">
                                     </div>
                                 </div>
 
-
                                 <div class="form-row">
                                     <label for="admission_types">Choose Admission Type</label>
                                     <select name="admission-type" id="admission-type" onchange="updateCredentialInputs()">
                                         <option value=" " disabled selected>Type Amission </option>
-                                        <option value="lcl">Licentiate</option>
-                                        <option value="diploma">Diploma Programs </option>
-                                        <option value="cert">Certificate Programs</option>
+                                        <option value="Licentiate">Licentiate</option>
+                                        <option value="Diploma">Diploma Programs </option>
+                                        <option value="Certificate">Certificate Programs</option>
                                     </select>
 
                                     <span class="select-btn">
@@ -143,7 +154,7 @@ unset($__errorArgs, $__bag); ?>" placeholder="Title ">
                                     </span>
                                 </div>
                                 <div class="form-row">
-                                    <label for="congregation">Type Your Congregation</label>
+                                    <label for="congregation"> Your Congregation</label>
                                     <input type="text" name="congregation" class="congregation" id="congregation" placeholder="Congregation" required>
                                 </div>
                                 <div class="form-row">
@@ -155,68 +166,44 @@ unset($__errorArgs, $__bag); ?>" placeholder="Title ">
                                 <h2>Sponsors Infomation</h2>
 
                                 <div class="form-group">
+
                                     <div class="form-row form-row-1">
-                                        <label for="sponsorsfn">Sponsors Firstname</label>
-                                        <input type="text" name="sponsorsfn" id="" class="input-text" placeholder="Sponsors First Name " required>
+                                    <label for="sponsorssn"> Surname</label>
+                                        <input type="text" name="sponsor_surname" id="first_name" class="input-text" placeholder="Sponsors Surname" required>
                                     </div>
                                     <div class="form-row form-row-2">
-                                        <label for="sponsorssn">Sponsors Surname</label>
-                                        <input type="text" name="sponsorsn" id="first_name" class="input-text" placeholder="Sponsors Surname" required>
+                                         <label for="sponsorsfn"> OtherNames</label>
+                                        <input type="text" name="sponsor_othername" id="" class="input-text" placeholder="Sponsors Other Name " required>
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <div class="form-row form-row-1">
-                                        <label for="sponsors_fn">Sponsors Email</label>
-                                        <input type="email" name="code" class="email" id="semail" placeholder="Sponsors Email">
+                                    <label for="sponsors_fn"> Email</label>
+                                        <input type="email" name="sponsor_email" class="email" id="semail" placeholder="Sponsors Email">
                                     </div>
+
                                     <div class="form-row form-row-2">
-                                        <input type="text" name="phone" class="phone" id="phone" placeholder="Phone Number">
+                                      <label for="sponsors_fn">Phone Number</label>
+                                        <input type="text" name="sponsor_phone" class="phone" id="phone" placeholder="Phone Number" >
                                     </div>
                                 </div>
 
                                 <div class="form-row">
-                                    <label for="sponsors_address">Sponsors Address</label>
-                                    <input type="text" name="sponsor_address" class="sponsor_address" id="sponsor_address" placeholder="Sponsors Address">
+                                <label for="sponsors_address"> Address</label>
+                                    <input type="text" name="sponsor_address" class="sponsor_address" id="sponsor_address" placeholder="Sponsors Address" >
                                 </div>
 
                             </div>
                             <div class="form-right " id="credentials-section">
                                 <h2>Credentials Upload Section</h2>
-
-                                <div class="form-checkbox">
-                                    <label class="container">
-                                        <p>I do accept the <a href="#" class="text">Terms and Conditions</a> of your site.</p>
-                                        <input type="checkbox" name="checkbox">
-                                        <span class="checkmark"></span>
-                                    </label>
-                                </div>
-                                <div class="form-row-last">
-                                    <input type="submit" name="submit" class="register" value="Submit">
-                                </div>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-
-</div>
-<?php $__env->stopSection(); ?>
-
-<?php $__env->startSection('pagescript'); ?>
-<script src="<?php echo asset('dist/js/bootbox.min.js'); ?>"></script>
-
- 
 <script>
     // Define dynamic inputs for each admission type
     const admissionTypes = {
-        lcl: [{
-                name: "lcl_type"
+        Licentiate: [{
+                name: "course_program"
                 , placeholder: "Select Licentiate Type"
                 , options: [{
-                    value: "lcl"
+                    value: "LCL - Licentiate in Theology of Consecrated Life"
                     , label: "LCL - Licentiate in Theology of Consecrated Life"
                 }]
             }
@@ -229,47 +216,43 @@ unset($__errorArgs, $__bag); ?>" placeholder="Title ">
                 , placeholder: "Certificates Obtained"
             }
             , {
-                name: "previous_research"
+                name: "pr_topic"
                 , placeholder: "Previous Research Topic"
             }
             , {
-                name: "upload_waec"
+                name: "olevel1"
                 , placeholder: "Upload WAEC Results"
                 , type: "file"
             }
             , {
-                name: "upload_degree"
+                name: "cert"
                 , placeholder: "Upload Degree Certificate"
                 , type: "file"
             }
+
             , {
-                name: "upload_birth"
-                , placeholder: "Upload Birth Certificate"
-                , type: "file"
-            }
-            , {
-                name: "upload_passport"
+                name: "passport"
                 , placeholder: "Upload Passport"
                 , type: "file"
             }
         ]
-        , diploma: [{
-                name: "diploma_type"
+        , Diploma: [{
+                name: "course_program"
                 , placeholder: "Type of Diploma"
                 , options: [{
-                        value: "dbt"
+                        value: "DBT - Diploma in Basic Theology"
                         , label: "DBT - Diploma in Basic Theology"
                     }
                     , {
-                        value: "dff"
+                        value: "DFF - Diploma in Formation of Formators"
                         , label: "DFF - Diploma in Formation of Formators"
                     }
                     , {
-                        value: "dsd"
+                        value: "DSD - Diploma in Spiritual Direction"
                         , label: "DSD - Diploma in Spiritual Direction"
                     }
                     , {
-                        value: "dcl"
+                        value: "DCL - Diploma in Theology of Consecrated Life"
                         , label: "DCL - Diploma in Theology of Consecrated Life"
                     }
                 ]
@@ -283,58 +266,50 @@ unset($__errorArgs, $__bag); ?>" placeholder="Title ">
                 , placeholder: "Certificates Obtained"
             }
             , {
-                name: "upload_waec"
+                name: "olevel1"
                 , placeholder: "Upload WAEC Results"
                 , type: "file"
             }
+
             , {
-                name: "upload_birth"
-                , placeholder: "Upload Birth Certificate"
-                , type: "file"
-            }
-            , {
-                name: "upload_passport"
+                name: "passport"
                 , placeholder: "Upload Passport"
                 , type: "file"
             }
         ]
-        , cert: [{
-                name: "certificate_type"
+        , Certificate: [{
+                name: "course_program"
                 , placeholder: "Type of Certificate"
                 , options: [{
-                        value: "cbt"
+                        value: "CBT - Certificate in Basic Theology"
                         , label: "CBT - Certificate in Basic Theology"
                     }
                     , {
-                        value: "cff"
+                        value: "CFF - Certificate in Formation of Formators"
                         , label: "CFF - Certificate in Formation of Formators"
                     }
                     , {
-                        value: "csd"
+                        value: "CSD - Certificate in Spiritual Direction"
                         , label: "CSD - Certificate in Spiritual Direction"
                     }
                     , {
-                        value: "ccf"
+                        value: "CCF - Certificate in Chapter Facilitation"
                         , label: "CCF - Certificate in Chapter Facilitation"
                     }
                     , {
-                        value: "cfp"
+                        value: "CFP - Certificate in Fundraising & Project Management"
                         , label: "CFP - Certificate in Fundraising & Project Management"
                     }
                 ]
             }
             , {
-                name: "upload_waec"
+                name: "olevel1"
                 , placeholder: "Upload WAEC Results"
                 , type: "file"
             }
+
             , {
-                name: "upload_birth"
-                , placeholder: "Upload Birth Certificate"
-                , type: "file"
-            }
-            , {
-                name: "upload_passport"
+                name: "passport"
                 , placeholder: "Upload Passport"
                 , type: "file"
             }
@@ -405,12 +380,34 @@ unset($__errorArgs, $__bag); ?>" placeholder="Title ">
     }
 
 </script>
+                                <div class="form-checkbox">
+                                    <label class="container">
+                                        <p>I do accept the <a href="#" class="text">Terms and Conditions</a> of your site.</p>
+                                        <input type="checkbox" name="checkbox">
+                                        <span class="checkmark"></span>
+                                    </label>
+                                </div>
+                                <div class="form-row-last">
+                                    <input type="submit" name="submit" class="register" value="Submit">
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+</div>
+<?php $__env->stopSection(); ?>
+
+<?php $__env->startSection('pagescript'); ?>
+<script src="<?php echo asset('dist/js/bootbox.min.js'); ?>"></script>
 
 
 
-
-<script>
-    // List of States and LGAs
+<script type="text/javascript">
     var ngst = [{
             "ID": "0"
             , "Name": "----Choose State----"
@@ -569,854 +566,1043 @@ unset($__errorArgs, $__bag); ?>" placeholder="Title ">
         }
     , ];
 
-    // List of LGAs for each state
-    var lgaData = {
-        "Abia": [
-            "Aba North"
-            , "Aba South"
-            , "Arochukwu"
-            , "Bende"
-            , "Ikwuano"
-            , "Isiala-Ngwa North"
-            , "Isiala-Ngwa South"
-            , "Isuikwato"
-            , "Obi Nwa"
-            , "Ohafia"
-            , "Osisioma"
-            , "Ngwa"
-            , "Ugwunagbo"
-            , "Ukwa East"
-            , "Ukwa West"
-            , "Umuahia North"
-            , "Umuahia South"
-            , "Umu-Neochi"
-        ]
-        , "Adamawa": [
-            "Demsa"
-            , "Fufore"
-            , "Ganaye"
-            , "Gireri"
-            , "Gombi"
-            , "Guyuk"
-            , "Hong"
-            , "Jada"
-            , "Lamurde"
-            , "Madagali"
-            , "Maiha"
-            , "Mayo-Belwa"
-            , "Michika"
-            , "Mubi North"
-            , "Mubi South"
-            , "Numan"
-            , "Shelleng"
-            , "Song"
-            , "Toungo"
-            , "Yola North"
-            , "Yola South"
-        ]
-        , "Anambra": [
-            "Aguata"
-            , "Anambra East"
-            , "Anambra West"
-            , "Anaocha"
-            , "Awka North"
-            , "Awka South"
-            , "Ayamelum"
-            , "Dunukofia"
-            , "Ekwusigo"
-            , "Idemili North"
-            , "Idemili south"
-            , "Ihiala"
-            , "Njikoka"
-            , "Nnewi North"
-            , "Nnewi South"
-            , "Ogbaru"
-            , "Onitsha North"
-            , "Onitsha South"
-            , "Orumba North"
-            , "Orumba South"
-            , "Oyi"
-        ]
-        , "Akwa Ibom": [
-            "Abak"
-            , "Eastern Obolo"
-            , "Eket"
-            , "Esit Eket"
-            , "Essien Udim"
-            , "Etim Ekpo"
-            , "Etinan"
-            , "Ibeno"
-            , "Ibesikpo Asutan"
-            , "Ibiono Ibom"
-            , "Ika"
-            , "Ikono"
-            , "Ikot Abasi"
-            , "Ikot Ekpene"
-            , "Ini"
-            , "Itu"
-            , "Mbo"
-            , "Mkpat Enin"
-            , "Nsit Atai"
-            , "Nsit Ibom"
-            , "Nsit Ubium"
-            , "Obot Akara"
-            , "Okobo"
-            , "Onna"
-            , "Oron"
-            , "Oruk Anam"
-            , "Udung Uko"
-            , "Ukanafun"
-            , "Uruan"
-            , "Urue-Offong/Oruko "
-            , "Uyo"
-        ]
-        , "Bauchi": [
-            "Alkaleri"
-            , "Bauchi"
-            , "Bogoro"
-            , "Damban"
-            , "Darazo"
-            , "Dass"
-            , "Ganjuwa"
-            , "Giade"
-            , "Itas/Gadau"
-            , "Jama'are"
-            , "Katagum"
-            , "Kirfi"
-            , "Misau"
-            , "Ningi"
-            , "Shira"
-            , "Tafawa-Balewa"
-            , "Toro"
-            , "Warji"
-            , "Zaki"
-        ]
-        , "Bayelsa": [
-            "Brass"
-            , "Ekeremor"
-            , "Kolokuma/Opokuma"
-            , "Nembe"
-            , "Ogbia"
-            , "Sagbama"
-            , "Southern Jaw"
-            , "Yenegoa"
-        ]
-        , "Benue": [
-            "Ado"
-            , "Agatu"
-            , "Apa"
-            , "Buruku"
-            , "Gboko"
-            , "Guma"
-            , "Gwer East"
-            , "Gwer West"
-            , "Katsina-Ala"
-            , "Konshisha"
-            , "Kwande"
-            , "Logo"
-            , "Makurdi"
-            , "Obi"
-            , "Ogbadibo"
-            , "Oju"
-            , "Okpokwu"
-            , "Ohimini"
-            , "Oturkpo"
-            , "Tarka"
-            , "Ukum"
-            , "Ushongo"
-            , "Vandeikya"
-        ]
-        , "Borno": [
-            "Abadam"
-            , "Askira/Uba"
-            , "Bama"
-            , "Bayo"
-            , "Biu"
-            , "Chibok"
-            , "Damboa"
-            , "Dikwa"
-            , "Gubio"
-            , "Guzamala"
-            , "Gwoza"
-            , "Hawul"
-            , "Jere"
-            , "Kaga"
-            , "Kala/Balge"
-            , "Konduga"
-            , "Kukawa"
-            , "Kwaya Kusar"
-            , "Mafa"
-            , "Magumeri"
-            , "Maiduguri"
-            , "Marte"
-            , "Mobbar"
-            , "Monguno"
-            , "Ngala"
-            , "Nganzai"
-            , "Shani"
-        ]
-        , "Cross River": [
-            "Akpabuyo"
-            , "Odukpani"
-            , "Akamkpa"
-            , "Biase"
-            , "Abi"
-            , "Ikom"
-            , "Yarkur"
-            , "Odubra"
-            , "Boki"
-            , "Ogoja"
-            , "Yala"
-            , "Obanliku"
-            , "Obudu"
-            , "Calabar South"
-            , "Etung"
-            , "Bekwara"
-            , "Bakassi"
-            , "Calabar Municipality"
-        ]
-        , "Delta": [
-            "Oshimili"
-            , "Aniocha"
-            , "Aniocha South"
-            , "Ika South"
-            , "Ika North-East"
-            , "Ndokwa West"
-            , "Ndokwa East"
-            , "Isoko south"
-            , "Isoko North"
-            , "Bomadi"
-            , "Burutu"
-            , "Ughelli South"
-            , "Ughelli North"
-            , "Ethiope West"
-            , "Ethiope East"
-            , "Sapele"
-            , "Okpe"
-            , "Warri North"
-            , "Warri South"
-            , "Uvwie"
-            , "Udu"
-            , "Warri Central"
-            , "Ukwani"
-            , "Oshimili North"
-            , "Patani"
-        ]
-        , "Ebonyi": [
-            "Afikpo South"
-            , "Afikpo North"
-            , "Onicha"
-            , "Ohaozara"
-            , "Abakaliki"
-            , "Ishielu"
-            , "lkwo"
-            , "Ezza"
-            , "Ezza South"
-            , "Ohaukwu"
-            , "Ebonyi"
-            , "Ivo"
-        ]
-        , "Enugu": [
-            "Enugu South,"
-            , "Igbo-Eze South"
-            , "Enugu North"
-            , "Nkanu"
-            , "Udi Agwu"
-            , "Oji-River"
-            , "Ezeagu"
-            , "IgboEze North"
-            , "Isi-Uzo"
-            , "Nsukka"
-            , "Igbo-Ekiti"
-            , "Uzo-Uwani"
-            , "Enugu Eas"
-            , "Aninri"
-            , "Nkanu East"
-            , "Udenu."
-        ]
-        , "Edo": [
-            "Esan North-East"
-            , "Esan Central"
-            , "Esan West"
-            , "Egor"
-            , "Ukpoba"
-            , "Central"
-            , "Etsako Central"
-            , "Igueben"
-            , "Oredo"
-            , "Ovia SouthWest"
-            , "Ovia South-East"
-            , "Orhionwon"
-            , "Uhunmwonde"
-            , "Etsako East"
-            , "Esan South-East"
-        ]
-        , "Ekiti": [
-            "Ado"
-            , "Ekiti-East"
-            , "Ekiti-West"
-            , "Emure/Ise/Orun"
-            , "Ekiti South-West"
-            , "Ikare"
-            , "Irepodun"
-            , "Ijero,"
-            , "Ido/Osi"
-            , "Oye"
-            , "Ikole"
-            , "Moba"
-            , "Gbonyin"
-            , "Efon"
-            , "Ise/Orun"
-            , "Ilejemeje."
-        ]
-        , "Abuja": [
-            "Abaji"
-            , "AMAC"
-            , "Bwari"
-            , "Gwagwalada"
-            , "Kuje"
-            , "Kwali"
-        ]
-        , "Gombe": [
-            "Akko"
-            , "Balanga"
-            , "Billiri"
-            , "Dukku"
-            , "Kaltungo"
-            , "Kwami"
-            , "Shomgom"
-            , "Funakaye"
-            , "Gombe"
-            , "Nafada/Bajoga"
-            , "Yamaltu/Delta."
-        ]
-        , "Imo": [
-            "Aboh-Mbaise"
-            , "Ahiazu-Mbaise"
-            , "Ehime-Mbano"
-            , "Ezinihitte"
-            , "Ideato North"
-            , "Ideato South"
-            , "Ihitte/Uboma"
-            , "Ikeduru"
-            , "Isiala Mbano"
-            , "Isu"
-            , "Mbaitoli"
-            , "Mbaitoli"
-            , "Ngor-Okpala"
-            , "Njaba"
-            , "Nwangele"
-            , "Nkwerre"
-            , "Obowo"
-            , "Oguta"
-            , "Ohaji/Egbema"
-            , "Okigwe"
-            , "Orlu"
-            , "Orsu"
-            , "Oru East"
-            , "Oru West"
-            , "Owerri-Municipal"
-            , "Owerri North"
-            , "Owerri West"
-        ]
-        , "Jigawa": [
-            "Auyo"
-            , "Babura"
-            , "Birni Kudu"
-            , "Biriniwa"
-            , "Buji"
-            , "Dutse"
-            , "Gagarawa"
-            , "Garki"
-            , "Gumel"
-            , "Guri"
-            , "Gwaram"
-            , "Gwiwa"
-            , "Hadejia"
-            , "Jahun"
-            , "Kafin Hausa"
-            , "Kaugama Kazaure"
-            , "Kiri Kasamma"
-            , "Kiyawa"
-            , "Maigatari"
-            , "Malam Madori"
-            , "Miga"
-            , "Ringim"
-            , "Roni"
-            , "Sule-Tankarkar"
-            , "Taura"
-            , "Yankwashi"
-        ]
-        , "Kaduna": [
-            "Birni-Gwari"
-            , "Chikun"
-            , "Giwa"
-            , "Igabi"
-            , "Ikara"
-            , "jaba"
-            , "Jema'a"
-            , "Kachia"
-            , "Kaduna North"
-            , "Kaduna South"
-            , "Kagarko"
-            , "Kajuru"
-            , "Kaura"
-            , "Kauru"
-            , "Kubau"
-            , "Kudan"
-            , "Lere"
-            , "Makarfi"
-            , "Sabon-Gari"
-            , "Sanga"
-            , "Soba"
-            , "Zango-Kataf"
-            , "Zaria"
-        ]
-        , "Kano": [
-            "Ajingi"
-            , "Albasu"
-            , "Bagwai"
-            , "Bebeji"
-            , "Bichi"
-            , "Bunkure"
-            , "Dala"
-            , "Dambatta"
-            , "Dawakin Kudu"
-            , "Dawakin Tofa"
-            , "Doguwa"
-            , "Fagge"
-            , "Gabasawa"
-            , "Garko"
-            , "Garum"
-            , "Mallam"
-            , "Gaya"
-            , "Gezawa"
-            , "Gwale"
-            , "Gwarzo"
-            , "Kabo"
-            , "Kano Municipal"
-            , "Karaye"
-            , "Kibiya"
-            , "Kiru"
-            , "kumbotso"
-            , "Kunchi"
-            , "Kura"
-            , "Madobi"
-            , "Makoda"
-            , "Minjibir"
-            , "Nasarawa"
-            , "Rano"
-            , "Rimin Gado"
-            , "Rogo"
-            , "Shanono"
-            , "Sumaila"
-            , "Takali"
-            , "Tarauni"
-            , "Tofa"
-            , "Tsanyawa"
-            , "Tudun Wada"
-            , "Ungogo"
-            , "Warawa"
-            , "Wudil"
-        ]
-        , "Katsina": [
-            "Bakori"
-            , "Batagarawa"
-            , "Batsari"
-            , "Baure"
-            , "Bindawa"
-            , "Charanchi"
-            , "Dandume"
-            , "Danja"
-            , "Dan Musa"
-            , "Daura"
-            , "Dutsi"
-            , "Dutsin-Ma"
-            , "Faskari"
-            , "Funtua"
-            , "Ingawa"
-            , "Jibia"
-            , "Kafur"
-            , "Kaita"
-            , "Kankara"
-            , "Kankia"
-            , "Katsina"
-            , "Kurfi"
-            , "Kusada"
-            , "Mai'Adua"
-            , "Malumfashi"
-            , "Mani"
-            , "Mashi"
-            , "Matazuu"
-            , "Musawa"
-            , "Rimi"
-            , "Sabuwa"
-            , "Safana"
-            , "Sandamu"
-            , "Zango"
-        ]
-        , "Kebbi": [
-            "Aleiro"
-            , "Arewa-Dandi"
-            , "Argungu"
-            , "Augie"
-            , "Bagudo"
-            , "Birnin Kebbi"
-            , "Bunza"
-            , "Dandi"
-            , "Fakai"
-            , "Gwandu"
-            , "Jega"
-            , "Kalgo"
-            , "Koko/Besse"
-            , "Maiyama"
-            , "Ngaski"
-            , "Sakaba"
-            , "Shanga"
-            , "Suru"
-            , "Wasagu/Danko"
-            , "Yauri"
-            , "Zuru"
-        ]
-        , "Kogi": [
-            "Adavi"
-            , "Ajaokuta"
-            , "Ankpa"
-            , "Bassa"
-            , "Dekina"
-            , "Ibaji"
-            , "Idah"
-            , "Igalamela-Odolu"
-            , "Ijumu"
-            , "Kabba/Bunu"
-            , "Kogi"
-            , "Lokoja"
-            , "Mopa-Muro"
-            , "Ofu"
-            , "Ogori/Mangongo"
-            , "Okehi"
-            , "Okene"
-            , "Olamabolo"
-            , "Omala"
-            , "Yagba East"
-            , "Yagba West"
-        ]
-        , "Kwara": [
-            "Asa"
-            , "Baruten"
-            , "Edu"
-            , "Ekiti"
-            , "Ifelodun"
-            , "Ilorin East"
-            , "Ilorin West"
-            , "Irepodun"
-            , "Isin"
-            , "Kaiama"
-            , "Moro"
-            , "Offa"
-            , "Oke-Ero"
-            , "Oyun"
-            , "Pategi"
-        ]
-        , "Lagos": [
-            "Agege"
-            , "Ajeromi-Ifelodun"
-            , "Alimosho"
-            , "Amuwo-Odofin"
-            , "Apapa"
-            , "Badagry"
-            , "Epe"
-            , "Eti-Osa"
-            , "Ibeju/Lekki"
-            , "Ifako-Ijaye"
-            , "Ikeja"
-            , "Ikorodu"
-            , "Kosofe"
-            , "Lagos Island"
-            , "Lagos Mainland"
-            , "Mushin"
-            , "Ojo"
-            , "Oshodi-Isolo"
-            , "Shomolu"
-            , "Surulere"
-        ]
-        , "Nasarawa": [
-            "Akwanga"
-            , "Awe"
-            , "Doma"
-            , "Karu"
-            , "Keana"
-            , "Keffi"
-            , "Kokona"
-            , "Lafia"
-            , "Nasarawa"
-            , "Nasarawa-Eggon"
-            , "Obi"
-            , "Toto"
-            , "Wamba"
-        ]
-        , "Niger": [
-            "Agaie"
-            , "Agwara"
-            , "Bida"
-            , "Borgu"
-            , "Bosso"
-            , "Chanchaga"
-            , "Edati"
-            , "Gbako"
-            , "Gurara"
-            , "Katcha"
-            , "Kontagora"
-            , "Lapai"
-            , "Lavun"
-            , "Magama"
-            , "Mariga"
-            , "Mashegu"
-            , "Mokwa"
-            , "Muya"
-            , "Pailoro"
-            , "Rafi"
-            , "Rijau"
-            , "Shiroro"
-            , "Suleja"
-            , "Tafa"
-            , "Wushishi"
-        ]
-        , "Ogun": [
-            "Abeokuta North"
-            , "Abeokuta South"
-            , "Ado-Odo/Ota"
-            , "Egbado North"
-            , "Egbado South"
-            , "Ewekoro"
-            , "Ifo"
-            , "Ijebu East"
-            , "Ijebu North"
-            , "Ijebu North East"
-            , "Ijebu Ode"
-            , "Ikenne"
-            , "Imeko-Afon"
-            , "Ipokia"
-            , "Obafemi-Owode"
-            , "Ogun Waterside"
-            , "Odeda"
-            , "Odogbolu"
-            , "Remo North"
-            , "Shagamu"
-        ]
-        , "Ondo": [
-            "Akoko North East"
-            , "Akoko North West"
-            , "Akoko South Akure East"
-            , "Akoko South West"
-            , "Akure North"
-            , "Akure South"
-            , "Ese-Odo"
-            , "Idanre"
-            , "Ifedore"
-            , "Ilaje"
-            , "Ile-Oluji"
-            , "Okeigbo"
-            , "Irele"
-            , "Odigbo"
-            , "Okitipupa"
-            , "Ondo East"
-            , "Ondo West"
-            , "Ose"
-            , "Owo"
-        ]
-        , "Osun": [
-            "Aiyedade"
-            , "Aiyedire"
-            , "Atakumosa East"
-            , "Atakumosa West"
-            , "Boluwaduro"
-            , "Boripe"
-            , "Ede North"
-            , "Ede South"
-            , "Egbedore"
-            , "Ejigbo"
-            , "Ife Central"
-            , "Ife East"
-            , "Ife North"
-            , "Ife South"
-            , "Ifedayo"
-            , "Ifelodun"
-            , "Ila"
-            , "Ilesha East"
-            , "Ilesha West"
-            , "Irepodun"
-            , "Irewole"
-            , "Isokan"
-            , "Iwo"
-            , "Obokun"
-            , "Odo-Otin"
-            , "Ola-Oluwa"
-            , "Olorunda"
-            , "Oriade"
-            , "Orolu"
-            , "Osogbo"
-        ]
-        , "Oyo": [
-            "Afijio"
-            , "Akinyele"
-            , "Atiba"
-            , "Atigbo"
-            , "Egbeda"
-            , "Ibadan Central"
-            , "Ibadan North"
-            , "Ibadan North West"
-            , "Ibadan South East"
-            , "Ibadan South West"
-            , "Ibarapa Central"
-            , "Ibarapa East"
-            , "Ibarapa North"
-            , "Ido"
-            , "Irepo"
-            , "Iseyin"
-            , "Itesiwaju"
-            , "Iwajowa"
-            , "Kajola"
-            , "Lagelu Ogbomosho North"
-            , "Ogbmosho South"
-            , "Ogo Oluwa"
-            , "Olorunsogo"
-            , "Oluyole"
-            , "Ona-Ara"
-            , "Orelope"
-            , "Ori Ire"
-            , "Oyo East"
-            , "Oyo West"
-            , "Saki East"
-            , "Saki West"
-            , "Surulere"
-        ]
-        , "Plateau": [
-            "Barikin Ladi"
-            , "Bassa"
-            , "Bokkos"
-            , "Jos East"
-            , "Jos North"
-            , "Jos South"
-            , "Kanam"
-            , "Kanke"
-            , "Langtang North"
-            , "Langtang South"
-            , "Mangu"
-            , "Mikang"
-            , "Pankshin"
-            , "Qua'an Pan"
-            , "Riyom"
-            , "Shendam"
-            , "Wase"
-        ]
-        , "Rivers": [
-            "Abua/Odual"
-            , "Ahoada East"
-            , "Ahoada West"
-            , "Akuku Toru"
-            , "Andoni"
-            , "Asari-Toru"
-            , "Bonny"
-            , "Degema"
-            , "Emohua"
-            , "Eleme"
-            , "Etche"
-            , "Gokana"
-            , "Ikwerre"
-            , "Khana"
-            , "Obia/Akpor"
-            , "Ogba/Egbema/Ndoni"
-            , "Ogu/Bolo"
-            , "Okrika"
-            , "Omumma"
-            , "Opobo/Nkoro"
-            , "Oyigbo"
-            , "Port-Harcourt"
-            , "Tai"
-        ]
-        , "Sokoto": [
-            "Binji"
-            , "Bodinga"
-            , "Dange-shnsi"
-            , "Gada"
-            , "Goronyo"
-            , "Gudu"
-            , "Gawabawa"
-            , "Illela"
-            , "Isa"
-            , "Kware"
-            , "kebbe"
-            , "Rabah"
-            , "Sabon birni"
-            , "Shagari"
-            , "Silame"
-            , "Sokoto North"
-            , "Sokoto South"
-            , "Tambuwal"
-            , "Tqngaza"
-            , "Tureta"
-            , "Wamako"
-            , "Wurno"
-            , "Yabo"
-        ]
-        , "Taraba": [
-            "Ardo-kola"
-            , "Bali"
-            , "Donga"
-            , "Gashaka"
-            , "Cassol"
-            , "Ibi"
-            , "Jalingo"
-            , "Karin-Lamido"
-            , "Kurmi"
-            , "Lau"
-            , "Sardauna"
-            , "Takum"
-            , "Ussa"
-            , "Wukari"
-            , "Yorro"
-            , "Zing"
-        ]
-        , "Yobe": [
-            "Bade"
-            , "Bursari"
-            , "Damaturu"
-            , "Fika"
-            , "Fune"
-            , "Geidam"
-            , "Gujba"
-            , "Gulani"
-            , "Jakusko"
-            , "Karasuwa"
-            , "Karawa"
-            , "Machina"
-            , "Nangere"
-            , "Nguru Potiskum"
-            , "Tarmua"
-            , "Yunusari"
-            , "Yusufari"
-        ]
-        , "Zamfara": [
-            "Anka"
-            , "Bakura"
-            , "Birnin Magaji"
-            , "Bukkuyum"
-            , "Bungudu"
-            , "Gummi"
-            , "Gusau"
-            , "Kaura"
-            , "Namoda"
-            , "Maradun"
-            , "Maru"
-            , "Shinkafi"
-            , "Talata Mafara"
-            , "Tsafe"
-            , "Zurmi"
-        ]
-    };
+    var ele = document.getElementById('state');
+    for (var i = 0; i < ngst.length; i++) {
 
-    // Function to update the States dropdown based on the selected country
+        ele.innerHTML = ele.innerHTML +
+            '<option value="' + ngst[i]['ID'] + '">' + ngst[i]['Name'] + '</option>';
+    }
+
+
+    function show(ele) {
+
+        $("#slga").empty();
+        $('#writew').val('');
+
+        var parts = {
+            "Abia": [
+                "Aba North"
+                , "Aba South"
+                , "Arochukwu"
+                , "Bende"
+                , "Ikwuano"
+                , "Isiala-Ngwa North"
+                , "Isiala-Ngwa South"
+                , "Isuikwato"
+                , "Obi Nwa"
+                , "Ohafia"
+                , "Osisioma"
+                , "Ngwa"
+                , "Ugwunagbo"
+                , "Ukwa East"
+                , "Ukwa West"
+                , "Umuahia North"
+                , "Umuahia South"
+                , "Umu-Neochi"
+            ]
+            , "Adamawa": [
+                "Demsa"
+                , "Fufore"
+                , "Ganaye"
+                , "Gireri"
+                , "Gombi"
+                , "Guyuk"
+                , "Hong"
+                , "Jada"
+                , "Lamurde"
+                , "Madagali"
+                , "Maiha"
+                , "Mayo-Belwa"
+                , "Michika"
+                , "Mubi North"
+                , "Mubi South"
+                , "Numan"
+                , "Shelleng"
+                , "Song"
+                , "Toungo"
+                , "Yola North"
+                , "Yola South"
+            ]
+            , "Anambra": [
+                "Aguata"
+                , "Anambra East"
+                , "Anambra West"
+                , "Anaocha"
+                , "Awka North"
+                , "Awka South"
+                , "Ayamelum"
+                , "Dunukofia"
+                , "Ekwusigo"
+                , "Idemili North"
+                , "Idemili south"
+                , "Ihiala"
+                , "Njikoka"
+                , "Nnewi North"
+                , "Nnewi South"
+                , "Ogbaru"
+                , "Onitsha North"
+                , "Onitsha South"
+                , "Orumba North"
+                , "Orumba South"
+                , "Oyi"
+            ]
+            , "Akwa Ibom": [
+                "Abak"
+                , "Eastern Obolo"
+                , "Eket"
+                , "Esit Eket"
+                , "Essien Udim"
+                , "Etim Ekpo"
+                , "Etinan"
+                , "Ibeno"
+                , "Ibesikpo Asutan"
+                , "Ibiono Ibom"
+                , "Ika"
+                , "Ikono"
+                , "Ikot Abasi"
+                , "Ikot Ekpene"
+                , "Ini"
+                , "Itu"
+                , "Mbo"
+                , "Mkpat Enin"
+                , "Nsit Atai"
+                , "Nsit Ibom"
+                , "Nsit Ubium"
+                , "Obot Akara"
+                , "Okobo"
+                , "Onna"
+                , "Oron"
+                , "Oruk Anam"
+                , "Udung Uko"
+                , "Ukanafun"
+                , "Uruan"
+                , "Urue-Offong/Oruko "
+                , "Uyo"
+            ]
+            , "Bauchi": [
+                "Alkaleri"
+                , "Bauchi"
+                , "Bogoro"
+                , "Damban"
+                , "Darazo"
+                , "Dass"
+                , "Ganjuwa"
+                , "Giade"
+                , "Itas/Gadau"
+                , "Jama'are"
+                , "Katagum"
+                , "Kirfi"
+                , "Misau"
+                , "Ningi"
+                , "Shira"
+                , "Tafawa-Balewa"
+                , "Toro"
+                , "Warji"
+                , "Zaki"
+            ]
+            , "Bayelsa": [
+                "Brass"
+                , "Ekeremor"
+                , "Kolokuma/Opokuma"
+                , "Nembe"
+                , "Ogbia"
+                , "Sagbama"
+                , "Southern Jaw"
+                , "Yenegoa"
+            ]
+            , "Benue": [
+                "Ado"
+                , "Agatu"
+                , "Apa"
+                , "Buruku"
+                , "Gboko"
+                , "Guma"
+                , "Gwer East"
+                , "Gwer West"
+                , "Katsina-Ala"
+                , "Konshisha"
+                , "Kwande"
+                , "Logo"
+                , "Makurdi"
+                , "Obi"
+                , "Ogbadibo"
+                , "Oju"
+                , "Okpokwu"
+                , "Ohimini"
+                , "Oturkpo"
+                , "Tarka"
+                , "Ukum"
+                , "Ushongo"
+                , "Vandeikya"
+            ]
+            , "Borno": [
+                "Abadam"
+                , "Askira/Uba"
+                , "Bama"
+                , "Bayo"
+                , "Biu"
+                , "Chibok"
+                , "Damboa"
+                , "Dikwa"
+                , "Gubio"
+                , "Guzamala"
+                , "Gwoza"
+                , "Hawul"
+                , "Jere"
+                , "Kaga"
+                , "Kala/Balge"
+                , "Konduga"
+                , "Kukawa"
+                , "Kwaya Kusar"
+                , "Mafa"
+                , "Magumeri"
+                , "Maiduguri"
+                , "Marte"
+                , "Mobbar"
+                , "Monguno"
+                , "Ngala"
+                , "Nganzai"
+                , "Shani"
+            ]
+            , "Cross River": [
+                "Akpabuyo"
+                , "Odukpani"
+                , "Akamkpa"
+                , "Biase"
+                , "Abi"
+                , "Ikom"
+                , "Yarkur"
+                , "Odubra"
+                , "Boki"
+                , "Ogoja"
+                , "Yala"
+                , "Obanliku"
+                , "Obudu"
+                , "Calabar South"
+                , "Etung"
+                , "Bekwara"
+                , "Bakassi"
+                , "Calabar Municipality"
+            ]
+            , "Delta": [
+                "Oshimili"
+                , "Aniocha"
+                , "Aniocha South"
+                , "Ika South"
+                , "Ika North-East"
+                , "Ndokwa West"
+                , "Ndokwa East"
+                , "Isoko south"
+                , "Isoko North"
+                , "Bomadi"
+                , "Burutu"
+                , "Ughelli South"
+                , "Ughelli North"
+                , "Ethiope West"
+                , "Ethiope East"
+                , "Sapele"
+                , "Okpe"
+                , "Warri North"
+                , "Warri South"
+                , "Uvwie"
+                , "Udu"
+                , "Warri Central"
+                , "Ukwani"
+                , "Oshimili North"
+                , "Patani"
+            ]
+            , "Ebonyi": [
+                "Afikpo South"
+                , "Afikpo North"
+                , "Onicha"
+                , "Ohaozara"
+                , "Abakaliki"
+                , "Ishielu"
+                , "lkwo"
+                , "Ezza"
+                , "Ezza South"
+                , "Ohaukwu"
+                , "Ebonyi"
+                , "Ivo"
+            ]
+            , "Enugu": [
+                "Enugu South,"
+                , "Igbo-Eze South"
+                , "Enugu North"
+                , "Nkanu"
+                , "Udi Agwu"
+                , "Oji-River"
+                , "Ezeagu"
+                , "IgboEze North"
+                , "Isi-Uzo"
+                , "Nsukka"
+                , "Igbo-Ekiti"
+                , "Uzo-Uwani"
+                , "Enugu Eas"
+                , "Aninri"
+                , "Nkanu East"
+                , "Udenu."
+            ]
+            , "Edo": [
+                "Esan North-East"
+                , "Esan Central"
+                , "Esan West"
+                , "Egor"
+                , "Ukpoba"
+                , "Central"
+                , "Etsako Central"
+                , "Igueben"
+                , "Oredo"
+                , "Ovia SouthWest"
+                , "Ovia South-East"
+                , "Orhionwon"
+                , "Uhunmwonde"
+                , "Etsako East"
+                , "Esan South-East"
+            ]
+            , "Ekiti": [
+                "Ado"
+                , "Ekiti-East"
+                , "Ekiti-West"
+                , "Emure/Ise/Orun"
+                , "Ekiti South-West"
+                , "Ikare"
+                , "Irepodun"
+                , "Ijero,"
+                , "Ido/Osi"
+                , "Oye"
+                , "Ikole"
+                , "Moba"
+                , "Gbonyin"
+                , "Efon"
+                , "Ise/Orun"
+                , "Ilejemeje."
+            ]
+            , "Abuja": [
+                "Abaji"
+                , "AMAC"
+                , "Bwari"
+                , "Gwagwalada"
+                , "Kuje"
+                , "Kwali"
+            ]
+            , "Gombe": [
+                "Akko"
+                , "Balanga"
+                , "Billiri"
+                , "Dukku"
+                , "Kaltungo"
+                , "Kwami"
+                , "Shomgom"
+                , "Funakaye"
+                , "Gombe"
+                , "Nafada/Bajoga"
+                , "Yamaltu/Delta."
+            ]
+            , "Imo": [
+                "Aboh-Mbaise"
+                , "Ahiazu-Mbaise"
+                , "Ehime-Mbano"
+                , "Ezinihitte"
+                , "Ideato North"
+                , "Ideato South"
+                , "Ihitte/Uboma"
+                , "Ikeduru"
+                , "Isiala Mbano"
+                , "Isu"
+                , "Mbaitoli"
+                , "Mbaitoli"
+                , "Ngor-Okpala"
+                , "Njaba"
+                , "Nwangele"
+                , "Nkwerre"
+                , "Obowo"
+                , "Oguta"
+                , "Ohaji/Egbema"
+                , "Okigwe"
+                , "Orlu"
+                , "Orsu"
+                , "Oru East"
+                , "Oru West"
+                , "Owerri-Municipal"
+                , "Owerri North"
+                , "Owerri West"
+            ]
+            , "Jigawa": [
+                "Auyo"
+                , "Babura"
+                , "Birni Kudu"
+                , "Biriniwa"
+                , "Buji"
+                , "Dutse"
+                , "Gagarawa"
+                , "Garki"
+                , "Gumel"
+                , "Guri"
+                , "Gwaram"
+                , "Gwiwa"
+                , "Hadejia"
+                , "Jahun"
+                , "Kafin Hausa"
+                , "Kaugama Kazaure"
+                , "Kiri Kasamma"
+                , "Kiyawa"
+                , "Maigatari"
+                , "Malam Madori"
+                , "Miga"
+                , "Ringim"
+                , "Roni"
+                , "Sule-Tankarkar"
+                , "Taura"
+                , "Yankwashi"
+            ]
+            , "Kaduna": [
+                "Birni-Gwari"
+                , "Chikun"
+                , "Giwa"
+                , "Igabi"
+                , "Ikara"
+                , "jaba"
+                , "Jema'a"
+                , "Kachia"
+                , "Kaduna North"
+                , "Kaduna South"
+                , "Kagarko"
+                , "Kajuru"
+                , "Kaura"
+                , "Kauru"
+                , "Kubau"
+                , "Kudan"
+                , "Lere"
+                , "Makarfi"
+                , "Sabon-Gari"
+                , "Sanga"
+                , "Soba"
+                , "Zango-Kataf"
+                , "Zaria"
+            ]
+            , "Kano": [
+                "Ajingi"
+                , "Albasu"
+                , "Bagwai"
+                , "Bebeji"
+                , "Bichi"
+                , "Bunkure"
+                , "Dala"
+                , "Dambatta"
+                , "Dawakin Kudu"
+                , "Dawakin Tofa"
+                , "Doguwa"
+                , "Fagge"
+                , "Gabasawa"
+                , "Garko"
+                , "Garum"
+                , "Mallam"
+                , "Gaya"
+                , "Gezawa"
+                , "Gwale"
+                , "Gwarzo"
+                , "Kabo"
+                , "Kano Municipal"
+                , "Karaye"
+                , "Kibiya"
+                , "Kiru"
+                , "kumbotso"
+                , "Kunchi"
+                , "Kura"
+                , "Madobi"
+                , "Makoda"
+                , "Minjibir"
+                , "Nasarawa"
+                , "Rano"
+                , "Rimin Gado"
+                , "Rogo"
+                , "Shanono"
+                , "Sumaila"
+                , "Takali"
+                , "Tarauni"
+                , "Tofa"
+                , "Tsanyawa"
+                , "Tudun Wada"
+                , "Ungogo"
+                , "Warawa"
+                , "Wudil"
+            ]
+            , "Katsina": [
+                "Bakori"
+                , "Batagarawa"
+                , "Batsari"
+                , "Baure"
+                , "Bindawa"
+                , "Charanchi"
+                , "Dandume"
+                , "Danja"
+                , "Dan Musa"
+                , "Daura"
+                , "Dutsi"
+                , "Dutsin-Ma"
+                , "Faskari"
+                , "Funtua"
+                , "Ingawa"
+                , "Jibia"
+                , "Kafur"
+                , "Kaita"
+                , "Kankara"
+                , "Kankia"
+                , "Katsina"
+                , "Kurfi"
+                , "Kusada"
+                , "Mai'Adua"
+                , "Malumfashi"
+                , "Mani"
+                , "Mashi"
+                , "Matazuu"
+                , "Musawa"
+                , "Rimi"
+                , "Sabuwa"
+                , "Safana"
+                , "Sandamu"
+                , "Zango"
+            ]
+            , "Kebbi": [
+                "Aleiro"
+                , "Arewa-Dandi"
+                , "Argungu"
+                , "Augie"
+                , "Bagudo"
+                , "Birnin Kebbi"
+                , "Bunza"
+                , "Dandi"
+                , "Fakai"
+                , "Gwandu"
+                , "Jega"
+                , "Kalgo"
+                , "Koko/Besse"
+                , "Maiyama"
+                , "Ngaski"
+                , "Sakaba"
+                , "Shanga"
+                , "Suru"
+                , "Wasagu/Danko"
+                , "Yauri"
+                , "Zuru"
+            ]
+            , "Kogi": [
+                "Adavi"
+                , "Ajaokuta"
+                , "Ankpa"
+                , "Bassa"
+                , "Dekina"
+                , "Ibaji"
+                , "Idah"
+                , "Igalamela-Odolu"
+                , "Ijumu"
+                , "Kabba/Bunu"
+                , "Kogi"
+                , "Lokoja"
+                , "Mopa-Muro"
+                , "Ofu"
+                , "Ogori/Mangongo"
+                , "Okehi"
+                , "Okene"
+                , "Olamabolo"
+                , "Omala"
+                , "Yagba East"
+                , "Yagba West"
+            ]
+            , "Kwara": [
+                "Asa"
+                , "Baruten"
+                , "Edu"
+                , "Ekiti"
+                , "Ifelodun"
+                , "Ilorin East"
+                , "Ilorin West"
+                , "Irepodun"
+                , "Isin"
+                , "Kaiama"
+                , "Moro"
+                , "Offa"
+                , "Oke-Ero"
+                , "Oyun"
+                , "Pategi"
+            ]
+            , "Lagos": [
+                "Agege"
+                , "Ajeromi-Ifelodun"
+                , "Alimosho"
+                , "Amuwo-Odofin"
+                , "Apapa"
+                , "Badagry"
+                , "Epe"
+                , "Eti-Osa"
+                , "Ibeju/Lekki"
+                , "Ifako-Ijaye"
+                , "Ikeja"
+                , "Ikorodu"
+                , "Kosofe"
+                , "Lagos Island"
+                , "Lagos Mainland"
+                , "Mushin"
+                , "Ojo"
+                , "Oshodi-Isolo"
+                , "Shomolu"
+                , "Surulere"
+            ]
+            , "Nasarawa": [
+                "Akwanga"
+                , "Awe"
+                , "Doma"
+                , "Karu"
+                , "Keana"
+                , "Keffi"
+                , "Kokona"
+                , "Lafia"
+                , "Nasarawa"
+                , "Nasarawa-Eggon"
+                , "Obi"
+                , "Toto"
+                , "Wamba"
+            ]
+            , "Niger": [
+                "Agaie"
+                , "Agwara"
+                , "Bida"
+                , "Borgu"
+                , "Bosso"
+                , "Chanchaga"
+                , "Edati"
+                , "Gbako"
+                , "Gurara"
+                , "Katcha"
+                , "Kontagora"
+                , "Lapai"
+                , "Lavun"
+                , "Magama"
+                , "Mariga"
+                , "Mashegu"
+                , "Mokwa"
+                , "Muya"
+                , "Pailoro"
+                , "Rafi"
+                , "Rijau"
+                , "Shiroro"
+                , "Suleja"
+                , "Tafa"
+                , "Wushishi"
+            ]
+            , "Ogun": [
+                "Abeokuta North"
+                , "Abeokuta South"
+                , "Ado-Odo/Ota"
+                , "Egbado North"
+                , "Egbado South"
+                , "Ewekoro"
+                , "Ifo"
+                , "Ijebu East"
+                , "Ijebu North"
+                , "Ijebu North East"
+                , "Ijebu Ode"
+                , "Ikenne"
+                , "Imeko-Afon"
+                , "Ipokia"
+                , "Obafemi-Owode"
+                , "Ogun Waterside"
+                , "Odeda"
+                , "Odogbolu"
+                , "Remo North"
+                , "Shagamu"
+            ]
+            , "Ondo": [
+                "Akoko North East"
+                , "Akoko North West"
+                , "Akoko South Akure East"
+                , "Akoko South West"
+                , "Akure North"
+                , "Akure South"
+                , "Ese-Odo"
+                , "Idanre"
+                , "Ifedore"
+                , "Ilaje"
+                , "Ile-Oluji"
+                , "Okeigbo"
+                , "Irele"
+                , "Odigbo"
+                , "Okitipupa"
+                , "Ondo East"
+                , "Ondo West"
+                , "Ose"
+                , "Owo"
+            ]
+            , "Osun": [
+                "Aiyedade"
+                , "Aiyedire"
+                , "Atakumosa East"
+                , "Atakumosa West"
+                , "Boluwaduro"
+                , "Boripe"
+                , "Ede North"
+                , "Ede South"
+                , "Egbedore"
+                , "Ejigbo"
+                , "Ife Central"
+                , "Ife East"
+                , "Ife North"
+                , "Ife South"
+                , "Ifedayo"
+                , "Ifelodun"
+                , "Ila"
+                , "Ilesha East"
+                , "Ilesha West"
+                , "Irepodun"
+                , "Irewole"
+                , "Isokan"
+                , "Iwo"
+                , "Obokun"
+                , "Odo-Otin"
+                , "Ola-Oluwa"
+                , "Olorunda"
+                , "Oriade"
+                , "Orolu"
+                , "Osogbo"
+            ]
+            , "Oyo": [
+                "Afijio"
+                , "Akinyele"
+                , "Atiba"
+                , "Atigbo"
+                , "Egbeda"
+                , "Ibadan Central"
+                , "Ibadan North"
+                , "Ibadan North West"
+                , "Ibadan South East"
+                , "Ibadan South West"
+                , "Ibarapa Central"
+                , "Ibarapa East"
+                , "Ibarapa North"
+                , "Ido"
+                , "Irepo"
+                , "Iseyin"
+                , "Itesiwaju"
+                , "Iwajowa"
+                , "Kajola"
+                , "Lagelu Ogbomosho North"
+                , "Ogbmosho South"
+                , "Ogo Oluwa"
+                , "Olorunsogo"
+                , "Oluyole"
+                , "Ona-Ara"
+                , "Orelope"
+                , "Ori Ire"
+                , "Oyo East"
+                , "Oyo West"
+                , "Saki East"
+                , "Saki West"
+                , "Surulere"
+            ]
+            , "Plateau": [
+                "Barikin Ladi"
+                , "Bassa"
+                , "Bokkos"
+                , "Jos East"
+                , "Jos North"
+                , "Jos South"
+                , "Kanam"
+                , "Kanke"
+                , "Langtang North"
+                , "Langtang South"
+                , "Mangu"
+                , "Mikang"
+                , "Pankshin"
+                , "Qua'an Pan"
+                , "Riyom"
+                , "Shendam"
+                , "Wase"
+            ]
+            , "Rivers": [
+                "Abua/Odual"
+                , "Ahoada East"
+                , "Ahoada West"
+                , "Akuku Toru"
+                , "Andoni"
+                , "Asari-Toru"
+                , "Bonny"
+                , "Degema"
+                , "Emohua"
+                , "Eleme"
+                , "Etche"
+                , "Gokana"
+                , "Ikwerre"
+                , "Khana"
+                , "Obia/Akpor"
+                , "Ogba/Egbema/Ndoni"
+                , "Ogu/Bolo"
+                , "Okrika"
+                , "Omumma"
+                , "Opobo/Nkoro"
+                , "Oyigbo"
+                , "Port-Harcourt"
+                , "Tai"
+            ]
+            , "Sokoto": [
+                "Binji"
+                , "Bodinga"
+                , "Dange-shnsi"
+                , "Gada"
+                , "Goronyo"
+                , "Gudu"
+                , "Gawabawa"
+                , "Illela"
+                , "Isa"
+                , "Kware"
+                , "kebbe"
+                , "Rabah"
+                , "Sabon birni"
+                , "Shagari"
+                , "Silame"
+                , "Sokoto North"
+                , "Sokoto South"
+                , "Tambuwal"
+                , "Tqngaza"
+                , "Tureta"
+                , "Wamako"
+                , "Wurno"
+                , "Yabo"
+            ]
+            , "Taraba": [
+                "Ardo-kola"
+                , "Bali"
+                , "Donga"
+                , "Gashaka"
+                , "Cassol"
+                , "Ibi"
+                , "Jalingo"
+                , "Karin-Lamido"
+                , "Kurmi"
+                , "Lau"
+                , "Sardauna"
+                , "Takum"
+                , "Ussa"
+                , "Wukari"
+                , "Yorro"
+                , "Zing"
+            ]
+            , "Yobe": [
+                "Bade"
+                , "Bursari"
+                , "Damaturu"
+                , "Fika"
+                , "Fune"
+                , "Geidam"
+                , "Gujba"
+                , "Gulani"
+                , "Jakusko"
+                , "Karasuwa"
+                , "Karawa"
+                , "Machina"
+                , "Nangere"
+                , "Nguru Potiskum"
+                , "Tarmua"
+                , "Yunusari"
+                , "Yusufari"
+            ]
+            , "Zamfara": [
+                "Anka"
+                , "Bakura"
+                , "Birnin Magaji"
+                , "Bukkuyum"
+                , "Bungudu"
+                , "Gummi"
+                , "Gusau"
+                , "Kaura"
+                , "Namoda"
+                , "Maradun"
+                , "Maru"
+                , "Shinkafi"
+                , "Talata Mafara"
+                , "Tsafe"
+                , "Zurmi"
+            ]
+        };
+
+        var msg = ele.value;
+
+        var ele1 = document.getElementById('slga');
+
+        for (i = 0; i < parts[msg].length; i++) {
+
+            $('#slga1').show();
+            $('#writew1').show();
+
+            ele1.innerHTML = ele1.innerHTML +
+                '<option value="' + parts[msg][i] + '">' + parts[msg][i] + '</option>';
+        }
+
+
+    }
+
+</script>
+<script type="text/javascript">
+    var ngst = [
+        { "ID": "0", "Name": "----Choose State----" },
+        { "ID": "NOT NGN", "Name": "Not a Nigerian" },
+        {
+                                        "ID": "Abuja",
+                                        "Name": "Abuja"
+                                    },
+                                    {
+                                        "ID": "Abia",
+                                        "Name": "Abia"
+                                    },
+                                    {
+                                        "ID": "Adamawa",
+                                        "Name": "Adamawa"
+                                    },
+                                    {
+                                        "ID": "Anambra",
+                                        "Name": "Anambra"
+                                    },
+                                    {
+                                        "ID": "Akwa Ibom",
+                                        "Name": "Akwa Ibom"
+                                    },
+                                    {
+                                        "ID": "Bauchi",
+                                        "Name": "Bauchi"
+                                    },
+                                    {
+                                        "ID": "Bayelsa",
+                                        "Name": "Bayelsa"
+                                    },
+                                    {
+                                        "ID": "Benue",
+                                        "Name": "Benue"
+                                    },
+                                    {
+                                        "ID": "Borno",
+                                        "Name": "Borno"
+                                    },
+                                    {
+                                        "ID": "Cross River",
+                                        "Name": "Cross River"
+                                    },
+                                    {
+                                        "ID": "Delta",
+                                        "Name": "Delta"
+                                    },
+                                    {
+                                        "ID": "Ebonyi",
+                                        "Name": "Ebonyi"
+                                    },
+                                    {
+                                        "ID": "Edo",
+                                        "Name": "Edo"
+                                    },
+                                    {
+                                        "ID": "Ekiti",
+                                        "Name": "Ekiti"
+                                    },
+                                    {
+                                        "ID": "Enugu",
+                                        "Name": "Enugu"
+                                    },
+                                    {
+                                        "ID": "Gombe",
+                                        "Name": "Gombe"
+                                    },
+                                    {
+                                        "ID": "Imo",
+                                        "Name": "Imo"
+                                    },
+                                    {
+                                        "ID": "Jigawa",
+                                        "Name": "Jigawa"
+                                    },
+                                    {
+                                        "ID": "Kaduna",
+                                        "Name": "Kaduna"
+                                    },
+                                    {
+                                        "ID": "Kano",
+                                        "Name": "Kano"
+                                    },
+                                    {
+                                        "ID": "Katsina",
+                                        "Name": "Katsina"
+                                    },
+                                    {
+                                        "ID": "kebbi",
+                                        "Name": "Kebbi"
+                                    },
+                                    {
+                                        "ID": "Kogi",
+                                        "Name": "Kogi"
+                                    },
+                                    {
+                                        "ID": "Kwara",
+                                        "Name": "Kwara"
+                                    },
+                                    {
+                                        "ID": "Lagos",
+                                        "Name": "Lagos"
+                                    },
+                                    {
+                                        "ID": "Nassarawa",
+                                        "Name": "Nassarawa"
+                                    },
+                                    {
+                                        "ID": "Niger",
+                                        "Name": "Niger"
+                                    },
+                                    {
+                                        "ID": "Ogun",
+                                        "Name": "Ogun"
+                                    },
+                                    {
+                                        "ID": "Ondo",
+                                        "Name": "Ondo"
+                                    },
+                                    {
+                                        "ID": "Osun",
+                                        "Name": "Osun"
+                                    },
+                                    {
+                                        "ID": "Oyo",
+                                        "Name": "Oyo"
+                                    },
+                                    {
+                                        "ID": "Plateau",
+                                        "Name": "Plateau"
+                                    },
+                                    {
+                                        "ID": "Rivers",
+                                        "Name": "Rivers"
+                                    },
+                                    {
+                                        "ID": "Sokoto",
+                                        "Name": "Sokoto"
+                                    },
+                                    {
+                                        "ID": "Taraba",
+                                        "Name": "Taraba"
+                                    },
+                                    {
+                                        "ID": "Yobe",
+                                        "Name": "Yobe"
+                                    },
+                                    {
+                                        "ID": "Zamfara",
+                                        "Name": "Zamfara"
+                                    },
+    ];
+
+    var ele = document.getElementById('state-origin');
+    for (var i = 0; i < ngst.length; i++) {
+        ele.innerHTML = ele.innerHTML +
+            '<option value="' + ngst[i]['ID'] + '">' + ngst[i]['Name'] + '</option>';
+    }
+
+    // This function will be triggered when a country is selected
     function updateStates() {
         var country = document.getElementById("country").value;
         var stateSelect = document.getElementById("state-origin");
@@ -1426,8 +1612,7 @@ unset($__errorArgs, $__bag); ?>" placeholder="Title ">
         stateSelect.innerHTML = '<option value="" disabled selected>Pick a State</option>';
         lgaSelect.innerHTML = '<option value="" disabled selected>Pick an LGA</option>';
 
-        // Only populate states when a valid country is selected
-        if (country === "ngn") {
+        if (country === "Nigeria") {
             ngst.forEach(function(state) {
                 var option = document.createElement("option");
                 option.value = state.ID;
@@ -1437,7 +1622,7 @@ unset($__errorArgs, $__bag); ?>" placeholder="Title ">
         }
     }
 
-    // Function to update the LGA dropdown based on the selected state
+    // This function will be triggered when a state is selected
     function updateLGA() {
         var state = document.getElementById("state-origin").value;
         var lgaSelect = document.getElementById("slga");
@@ -1445,9 +1630,856 @@ unset($__errorArgs, $__bag); ?>" placeholder="Title ">
         // Clear previous LGA options
         lgaSelect.innerHTML = '<option value="" disabled selected>Pick an LGA</option>';
 
-        // Only populate LGAs when a valid state is selected
-        if (lgaData[state]) {
-            var lgas = lgaData[state];
+        // Define LGAs for each state
+        var parts = {
+            "Abia": [
+                                            "Aba North",
+                                            "Aba South",
+                                            "Arochukwu",
+                                            "Bende",
+                                            "Ikwuano",
+                                            "Isiala-Ngwa North",
+                                            "Isiala-Ngwa South",
+                                            "Isuikwato",
+                                            "Obi Nwa",
+                                            "Ohafia",
+                                            "Osisioma",
+                                            "Ngwa",
+                                            "Ugwunagbo",
+                                            "Ukwa East",
+                                            "Ukwa West",
+                                            "Umuahia North",
+                                            "Umuahia South",
+                                            "Umu-Neochi"
+                                        ],
+                                        "Adamawa": [
+                                            "Demsa",
+                                            "Fufore",
+                                            "Ganaye",
+                                            "Gireri",
+                                            "Gombi",
+                                            "Guyuk",
+                                            "Hong",
+                                            "Jada",
+                                            "Lamurde",
+                                            "Madagali",
+                                            "Maiha",
+                                            "Mayo-Belwa",
+                                            "Michika",
+                                            "Mubi North",
+                                            "Mubi South",
+                                            "Numan",
+                                            "Shelleng",
+                                            "Song",
+                                            "Toungo",
+                                            "Yola North",
+                                            "Yola South"
+                                        ],
+                                        "Anambra": [
+                                            "Aguata",
+                                            "Anambra East",
+                                            "Anambra West",
+                                            "Anaocha",
+                                            "Awka North",
+                                            "Awka South",
+                                            "Ayamelum",
+                                            "Dunukofia",
+                                            "Ekwusigo",
+                                            "Idemili North",
+                                            "Idemili south",
+                                            "Ihiala",
+                                            "Njikoka",
+                                            "Nnewi North",
+                                            "Nnewi South",
+                                            "Ogbaru",
+                                            "Onitsha North",
+                                            "Onitsha South",
+                                            "Orumba North",
+                                            "Orumba South",
+                                            "Oyi"
+                                        ],
+                                        "Akwa Ibom": [
+                                            "Abak",
+                                            "Eastern Obolo",
+                                            "Eket",
+                                            "Esit Eket",
+                                            "Essien Udim",
+                                            "Etim Ekpo",
+                                            "Etinan",
+                                            "Ibeno",
+                                            "Ibesikpo Asutan",
+                                            "Ibiono Ibom",
+                                            "Ika",
+                                            "Ikono",
+                                            "Ikot Abasi",
+                                            "Ikot Ekpene",
+                                            "Ini",
+                                            "Itu",
+                                            "Mbo",
+                                            "Mkpat Enin",
+                                            "Nsit Atai",
+                                            "Nsit Ibom",
+                                            "Nsit Ubium",
+                                            "Obot Akara",
+                                            "Okobo",
+                                            "Onna",
+                                            "Oron",
+                                            "Oruk Anam",
+                                            "Udung Uko",
+                                            "Ukanafun",
+                                            "Uruan",
+                                            "Urue-Offong/Oruko ",
+                                            "Uyo"
+                                        ],
+                                        "Bauchi": [
+                                            "Alkaleri",
+                                            "Bauchi",
+                                            "Bogoro",
+                                            "Damban",
+                                            "Darazo",
+                                            "Dass",
+                                            "Ganjuwa",
+                                            "Giade",
+                                            "Itas/Gadau",
+                                            "Jama'are",
+                                            "Katagum",
+                                            "Kirfi",
+                                            "Misau",
+                                            "Ningi",
+                                            "Shira",
+                                            "Tafawa-Balewa",
+                                            "Toro",
+                                            "Warji",
+                                            "Zaki"
+                                        ],
+                                        "Bayelsa": [
+                                            "Brass",
+                                            "Ekeremor",
+                                            "Kolokuma/Opokuma",
+                                            "Nembe",
+                                            "Ogbia",
+                                            "Sagbama",
+                                            "Southern Jaw",
+                                            "Yenegoa"
+                                        ],
+                                        "Benue": [
+                                            "Ado",
+                                            "Agatu",
+                                            "Apa",
+                                            "Buruku",
+                                            "Gboko",
+                                            "Guma",
+                                            "Gwer East",
+                                            "Gwer West",
+                                            "Katsina-Ala",
+                                            "Konshisha",
+                                            "Kwande",
+                                            "Logo",
+                                            "Makurdi",
+                                            "Obi",
+                                            "Ogbadibo",
+                                            "Oju",
+                                            "Okpokwu",
+                                            "Ohimini",
+                                            "Oturkpo",
+                                            "Tarka",
+                                            "Ukum",
+                                            "Ushongo",
+                                            "Vandeikya"
+                                        ],
+                                        "Borno": [
+                                            "Abadam",
+                                            "Askira/Uba",
+                                            "Bama",
+                                            "Bayo",
+                                            "Biu",
+                                            "Chibok",
+                                            "Damboa",
+                                            "Dikwa",
+                                            "Gubio",
+                                            "Guzamala",
+                                            "Gwoza",
+                                            "Hawul",
+                                            "Jere",
+                                            "Kaga",
+                                            "Kala/Balge",
+                                            "Konduga",
+                                            "Kukawa",
+                                            "Kwaya Kusar",
+                                            "Mafa",
+                                            "Magumeri",
+                                            "Maiduguri",
+                                            "Marte",
+                                            "Mobbar",
+                                            "Monguno",
+                                            "Ngala",
+                                            "Nganzai",
+                                            "Shani"
+                                        ],
+                                        "Cross River": [
+                                            "Akpabuyo",
+                                            "Odukpani",
+                                            "Akamkpa",
+                                            "Biase",
+                                            "Abi",
+                                            "Ikom",
+                                            "Yarkur",
+                                            "Odubra",
+                                            "Boki",
+                                            "Ogoja",
+                                            "Yala",
+                                            "Obanliku",
+                                            "Obudu",
+                                            "Calabar South",
+                                            "Etung",
+                                            "Bekwara",
+                                            "Bakassi",
+                                            "Calabar Municipality"
+                                        ],
+                                        "Delta": [
+                                            "Oshimili",
+                                            "Aniocha",
+                                            "Aniocha South",
+                                            "Ika South",
+                                            "Ika North-East",
+                                            "Ndokwa West",
+                                            "Ndokwa East",
+                                            "Isoko south",
+                                            "Isoko North",
+                                            "Bomadi",
+                                            "Burutu",
+                                            "Ughelli South",
+                                            "Ughelli North",
+                                            "Ethiope West",
+                                            "Ethiope East",
+                                            "Sapele",
+                                            "Okpe",
+                                            "Warri North",
+                                            "Warri South",
+                                            "Uvwie",
+                                            "Udu",
+                                            "Warri Central",
+                                            "Ukwani",
+                                            "Oshimili North",
+                                            "Patani"
+                                        ],
+                                        "Ebonyi": [
+                                            "Afikpo South",
+                                            "Afikpo North",
+                                            "Onicha",
+                                            "Ohaozara",
+                                            "Abakaliki",
+                                            "Ishielu",
+                                            "lkwo",
+                                            "Ezza",
+                                            "Ezza South",
+                                            "Ohaukwu",
+                                            "Ebonyi",
+                                            "Ivo"
+                                        ],
+                                        "Enugu": [
+                                            "Enugu South,",
+                                            "Igbo-Eze South",
+                                            "Enugu North",
+                                            "Nkanu",
+                                            "Udi Agwu",
+                                            "Oji-River",
+                                            "Ezeagu",
+                                            "IgboEze North",
+                                            "Isi-Uzo",
+                                            "Nsukka",
+                                            "Igbo-Ekiti",
+                                            "Uzo-Uwani",
+                                            "Enugu Eas",
+                                            "Aninri",
+                                            "Nkanu East",
+                                            "Udenu."
+                                        ],
+                                        "Edo": [
+                                            "Esan North-East",
+                                            "Esan Central",
+                                            "Esan West",
+                                            "Egor",
+                                            "Ukpoba",
+                                            "Central",
+                                            "Etsako Central",
+                                            "Igueben",
+                                            "Oredo",
+                                            "Ovia SouthWest",
+                                            "Ovia South-East",
+                                            "Orhionwon",
+                                            "Uhunmwonde",
+                                            "Etsako East",
+                                            "Esan South-East"
+                                        ],
+                                        "Ekiti": [
+                                            "Ado",
+                                            "Ekiti-East",
+                                            "Ekiti-West",
+                                            "Emure/Ise/Orun",
+                                            "Ekiti South-West",
+                                            "Ikare",
+                                            "Irepodun",
+                                            "Ijero,",
+                                            "Ido/Osi",
+                                            "Oye",
+                                            "Ikole",
+                                            "Moba",
+                                            "Gbonyin",
+                                            "Efon",
+                                            "Ise/Orun",
+                                            "Ilejemeje."
+                                        ],
+                                        "Abuja": [
+                                            "Abaji",
+                                            "AMAC",
+                                            "Bwari",
+                                            "Gwagwalada",
+                                            "Kuje",
+                                            "Kwali"
+                                        ],
+                                        "Gombe": [
+                                            "Akko",
+                                            "Balanga",
+                                            "Billiri",
+                                            "Dukku",
+                                            "Kaltungo",
+                                            "Kwami",
+                                            "Shomgom",
+                                            "Funakaye",
+                                            "Gombe",
+                                            "Nafada/Bajoga",
+                                            "Yamaltu/Delta."
+                                        ],
+                                        "Imo": [
+                                            "Aboh-Mbaise",
+                                            "Ahiazu-Mbaise",
+                                            "Ehime-Mbano",
+                                            "Ezinihitte",
+                                            "Ideato North",
+                                            "Ideato South",
+                                            "Ihitte/Uboma",
+                                            "Ikeduru",
+                                            "Isiala Mbano",
+                                            "Isu",
+                                            "Mbaitoli",
+                                            "Mbaitoli",
+                                            "Ngor-Okpala",
+                                            "Njaba",
+                                            "Nwangele",
+                                            "Nkwerre",
+                                            "Obowo",
+                                            "Oguta",
+                                            "Ohaji/Egbema",
+                                            "Okigwe",
+                                            "Orlu",
+                                            "Orsu",
+                                            "Oru East",
+                                            "Oru West",
+                                            "Owerri-Municipal",
+                                            "Owerri North",
+                                            "Owerri West"
+                                        ],
+                                        "Jigawa": [
+                                            "Auyo",
+                                            "Babura",
+                                            "Birni Kudu",
+                                            "Biriniwa",
+                                            "Buji",
+                                            "Dutse",
+                                            "Gagarawa",
+                                            "Garki",
+                                            "Gumel",
+                                            "Guri",
+                                            "Gwaram",
+                                            "Gwiwa",
+                                            "Hadejia",
+                                            "Jahun",
+                                            "Kafin Hausa",
+                                            "Kaugama Kazaure",
+                                            "Kiri Kasamma",
+                                            "Kiyawa",
+                                            "Maigatari",
+                                            "Malam Madori",
+                                            "Miga",
+                                            "Ringim",
+                                            "Roni",
+                                            "Sule-Tankarkar",
+                                            "Taura",
+                                            "Yankwashi"
+                                        ],
+                                        "Kaduna": [
+                                            "Birni-Gwari",
+                                            "Chikun",
+                                            "Giwa",
+                                            "Igabi",
+                                            "Ikara",
+                                            "jaba",
+                                            "Jema'a",
+                                            "Kachia",
+                                            "Kaduna North",
+                                            "Kaduna South",
+                                            "Kagarko",
+                                            "Kajuru",
+                                            "Kaura",
+                                            "Kauru",
+                                            "Kubau",
+                                            "Kudan",
+                                            "Lere",
+                                            "Makarfi",
+                                            "Sabon-Gari",
+                                            "Sanga",
+                                            "Soba",
+                                            "Zango-Kataf",
+                                            "Zaria"
+                                        ],
+                                        "Kano": [
+                                            "Ajingi",
+                                            "Albasu",
+                                            "Bagwai",
+                                            "Bebeji",
+                                            "Bichi",
+                                            "Bunkure",
+                                            "Dala",
+                                            "Dambatta",
+                                            "Dawakin Kudu",
+                                            "Dawakin Tofa",
+                                            "Doguwa",
+                                            "Fagge",
+                                            "Gabasawa",
+                                            "Garko",
+                                            "Garum",
+                                            "Mallam",
+                                            "Gaya",
+                                            "Gezawa",
+                                            "Gwale",
+                                            "Gwarzo",
+                                            "Kabo",
+                                            "Kano Municipal",
+                                            "Karaye",
+                                            "Kibiya",
+                                            "Kiru",
+                                            "kumbotso",
+                                            "Kunchi",
+                                            "Kura",
+                                            "Madobi",
+                                            "Makoda",
+                                            "Minjibir",
+                                            "Nasarawa",
+                                            "Rano",
+                                            "Rimin Gado",
+                                            "Rogo",
+                                            "Shanono",
+                                            "Sumaila",
+                                            "Takali",
+                                            "Tarauni",
+                                            "Tofa",
+                                            "Tsanyawa",
+                                            "Tudun Wada",
+                                            "Ungogo",
+                                            "Warawa",
+                                            "Wudil"
+                                        ],
+                                        "Katsina": [
+                                            "Bakori",
+                                            "Batagarawa",
+                                            "Batsari",
+                                            "Baure",
+                                            "Bindawa",
+                                            "Charanchi",
+                                            "Dandume",
+                                            "Danja",
+                                            "Dan Musa",
+                                            "Daura",
+                                            "Dutsi",
+                                            "Dutsin-Ma",
+                                            "Faskari",
+                                            "Funtua",
+                                            "Ingawa",
+                                            "Jibia",
+                                            "Kafur",
+                                            "Kaita",
+                                            "Kankara",
+                                            "Kankia",
+                                            "Katsina",
+                                            "Kurfi",
+                                            "Kusada",
+                                            "Mai'Adua",
+                                            "Malumfashi",
+                                            "Mani",
+                                            "Mashi",
+                                            "Matazuu",
+                                            "Musawa",
+                                            "Rimi",
+                                            "Sabuwa",
+                                            "Safana",
+                                            "Sandamu",
+                                            "Zango"
+                                        ],
+                                        "Kebbi": [
+                                            "Aleiro",
+                                            "Arewa-Dandi",
+                                            "Argungu",
+                                            "Augie",
+                                            "Bagudo",
+                                            "Birnin Kebbi",
+                                            "Bunza",
+                                            "Dandi",
+                                            "Fakai",
+                                            "Gwandu",
+                                            "Jega",
+                                            "Kalgo",
+                                            "Koko/Besse",
+                                            "Maiyama",
+                                            "Ngaski",
+                                            "Sakaba",
+                                            "Shanga",
+                                            "Suru",
+                                            "Wasagu/Danko",
+                                            "Yauri",
+                                            "Zuru"
+                                        ],
+                                        "Kogi": [
+                                            "Adavi",
+                                            "Ajaokuta",
+                                            "Ankpa",
+                                            "Bassa",
+                                            "Dekina",
+                                            "Ibaji",
+                                            "Idah",
+                                            "Igalamela-Odolu",
+                                            "Ijumu",
+                                            "Kabba/Bunu",
+                                            "Kogi",
+                                            "Lokoja",
+                                            "Mopa-Muro",
+                                            "Ofu",
+                                            "Ogori/Mangongo",
+                                            "Okehi",
+                                            "Okene",
+                                            "Olamabolo",
+                                            "Omala",
+                                            "Yagba East",
+                                            "Yagba West"
+                                        ],
+                                        "Kwara": [
+                                            "Asa",
+                                            "Baruten",
+                                            "Edu",
+                                            "Ekiti",
+                                            "Ifelodun",
+                                            "Ilorin East",
+                                            "Ilorin West",
+                                            "Irepodun",
+                                            "Isin",
+                                            "Kaiama",
+                                            "Moro",
+                                            "Offa",
+                                            "Oke-Ero",
+                                            "Oyun",
+                                            "Pategi"
+                                        ],
+                                        "Lagos": [
+                                            "Agege",
+                                            "Ajeromi-Ifelodun",
+                                            "Alimosho",
+                                            "Amuwo-Odofin",
+                                            "Apapa",
+                                            "Badagry",
+                                            "Epe",
+                                            "Eti-Osa",
+                                            "Ibeju/Lekki",
+                                            "Ifako-Ijaye",
+                                            "Ikeja",
+                                            "Ikorodu",
+                                            "Kosofe",
+                                            "Lagos Island",
+                                            "Lagos Mainland",
+                                            "Mushin",
+                                            "Ojo",
+                                            "Oshodi-Isolo",
+                                            "Shomolu",
+                                            "Surulere"
+                                        ],
+                                        "Nasarawa": [
+                                            "Akwanga",
+                                            "Awe",
+                                            "Doma",
+                                            "Karu",
+                                            "Keana",
+                                            "Keffi",
+                                            "Kokona",
+                                            "Lafia",
+                                            "Nasarawa",
+                                            "Nasarawa-Eggon",
+                                            "Obi",
+                                            "Toto",
+                                            "Wamba"
+                                        ],
+                                        "Niger": [
+                                            "Agaie",
+                                            "Agwara",
+                                            "Bida",
+                                            "Borgu",
+                                            "Bosso",
+                                            "Chanchaga",
+                                            "Edati",
+                                            "Gbako",
+                                            "Gurara",
+                                            "Katcha",
+                                            "Kontagora",
+                                            "Lapai",
+                                            "Lavun",
+                                            "Magama",
+                                            "Mariga",
+                                            "Mashegu",
+                                            "Mokwa",
+                                            "Muya",
+                                            "Pailoro",
+                                            "Rafi",
+                                            "Rijau",
+                                            "Shiroro",
+                                            "Suleja",
+                                            "Tafa",
+                                            "Wushishi"
+                                        ],
+                                        "Ogun": [
+                                            "Abeokuta North",
+                                            "Abeokuta South",
+                                            "Ado-Odo/Ota",
+                                            "Egbado North",
+                                            "Egbado South",
+                                            "Ewekoro",
+                                            "Ifo",
+                                            "Ijebu East",
+                                            "Ijebu North",
+                                            "Ijebu North East",
+                                            "Ijebu Ode",
+                                            "Ikenne",
+                                            "Imeko-Afon",
+                                            "Ipokia",
+                                            "Obafemi-Owode",
+                                            "Ogun Waterside",
+                                            "Odeda",
+                                            "Odogbolu",
+                                            "Remo North",
+                                            "Shagamu"
+                                        ],
+                                        "Ondo": [
+                                            "Akoko North East",
+                                            "Akoko North West",
+                                            "Akoko South Akure East",
+                                            "Akoko South West",
+                                            "Akure North",
+                                            "Akure South",
+                                            "Ese-Odo",
+                                            "Idanre",
+                                            "Ifedore",
+                                            "Ilaje",
+                                            "Ile-Oluji",
+                                            "Okeigbo",
+                                            "Irele",
+                                            "Odigbo",
+                                            "Okitipupa",
+                                            "Ondo East",
+                                            "Ondo West",
+                                            "Ose",
+                                            "Owo"
+                                        ],
+                                        "Osun": [
+                                            "Aiyedade",
+                                            "Aiyedire",
+                                            "Atakumosa East",
+                                            "Atakumosa West",
+                                            "Boluwaduro",
+                                            "Boripe",
+                                            "Ede North",
+                                            "Ede South",
+                                            "Egbedore",
+                                            "Ejigbo",
+                                            "Ife Central",
+                                            "Ife East",
+                                            "Ife North",
+                                            "Ife South",
+                                            "Ifedayo",
+                                            "Ifelodun",
+                                            "Ila",
+                                            "Ilesha East",
+                                            "Ilesha West",
+                                            "Irepodun",
+                                            "Irewole",
+                                            "Isokan",
+                                            "Iwo",
+                                            "Obokun",
+                                            "Odo-Otin",
+                                            "Ola-Oluwa",
+                                            "Olorunda",
+                                            "Oriade",
+                                            "Orolu",
+                                            "Osogbo"
+                                        ],
+                                        "Oyo": [
+                                            "Afijio",
+                                            "Akinyele",
+                                            "Atiba",
+                                            "Atigbo",
+                                            "Egbeda",
+                                            "Ibadan Central",
+                                            "Ibadan North",
+                                            "Ibadan North West",
+                                            "Ibadan South East",
+                                            "Ibadan South West",
+                                            "Ibarapa Central",
+                                            "Ibarapa East",
+                                            "Ibarapa North",
+                                            "Ido",
+                                            "Irepo",
+                                            "Iseyin",
+                                            "Itesiwaju",
+                                            "Iwajowa",
+                                            "Kajola",
+                                            "Lagelu Ogbomosho North",
+                                            "Ogbmosho South",
+                                            "Ogo Oluwa",
+                                            "Olorunsogo",
+                                            "Oluyole",
+                                            "Ona-Ara",
+                                            "Orelope",
+                                            "Ori Ire",
+                                            "Oyo East",
+                                            "Oyo West",
+                                            "Saki East",
+                                            "Saki West",
+                                            "Surulere"
+                                        ],
+                                        "Plateau": [
+                                            "Barikin Ladi",
+                                            "Bassa",
+                                            "Bokkos",
+                                            "Jos East",
+                                            "Jos North",
+                                            "Jos South",
+                                            "Kanam",
+                                            "Kanke",
+                                            "Langtang North",
+                                            "Langtang South",
+                                            "Mangu",
+                                            "Mikang",
+                                            "Pankshin",
+                                            "Qua'an Pan",
+                                            "Riyom",
+                                            "Shendam",
+                                            "Wase"
+                                        ],
+                                        "Rivers": [
+                                            "Abua/Odual",
+                                            "Ahoada East",
+                                            "Ahoada West",
+                                            "Akuku Toru",
+                                            "Andoni",
+                                            "Asari-Toru",
+                                            "Bonny",
+                                            "Degema",
+                                            "Emohua",
+                                            "Eleme",
+                                            "Etche",
+                                            "Gokana",
+                                            "Ikwerre",
+                                            "Khana",
+                                            "Obia/Akpor",
+                                            "Ogba/Egbema/Ndoni",
+                                            "Ogu/Bolo",
+                                            "Okrika",
+                                            "Omumma",
+                                            "Opobo/Nkoro",
+                                            "Oyigbo",
+                                            "Port-Harcourt",
+                                            "Tai"
+                                        ],
+                                        "Sokoto": [
+                                            "Binji",
+                                            "Bodinga",
+                                            "Dange-shnsi",
+                                            "Gada",
+                                            "Goronyo",
+                                            "Gudu",
+                                            "Gawabawa",
+                                            "Illela",
+                                            "Isa",
+                                            "Kware",
+                                            "kebbe",
+                                            "Rabah",
+                                            "Sabon birni",
+                                            "Shagari",
+                                            "Silame",
+                                            "Sokoto North",
+                                            "Sokoto South",
+                                            "Tambuwal",
+                                            "Tqngaza",
+                                            "Tureta",
+                                            "Wamako",
+                                            "Wurno",
+                                            "Yabo"
+                                        ],
+                                        "Taraba": [
+                                            "Ardo-kola",
+                                            "Bali",
+                                            "Donga",
+                                            "Gashaka",
+                                            "Cassol",
+                                            "Ibi",
+                                            "Jalingo",
+                                            "Karin-Lamido",
+                                            "Kurmi",
+                                            "Lau",
+                                            "Sardauna",
+                                            "Takum",
+                                            "Ussa",
+                                            "Wukari",
+                                            "Yorro",
+                                            "Zing"
+                                        ],
+                                        "Yobe": [
+                                            "Bade",
+                                            "Bursari",
+                                            "Damaturu",
+                                            "Fika",
+                                            "Fune",
+                                            "Geidam",
+                                            "Gujba",
+                                            "Gulani",
+                                            "Jakusko",
+                                            "Karasuwa",
+                                            "Karawa",
+                                            "Machina",
+                                            "Nangere",
+                                            "Nguru Potiskum",
+                                            "Tarmua",
+                                            "Yunusari",
+                                            "Yusufari"
+                                        ],
+                                        "Zamfara": [
+                                            "Anka",
+                                            "Bakura",
+                                            "Birnin Magaji",
+                                            "Bukkuyum",
+                                            "Bungudu",
+                                            "Gummi",
+                                            "Gusau",
+                                            "Kaura",
+                                            "Namoda",
+                                            "Maradun",
+                                            "Maru",
+                                            "Shinkafi",
+                                            "Talata Mafara",
+                                            "Tsafe",
+                                            "Zurmi"
+                                        ]
+        };
+
+        // Check if the selected state has any LGAs
+        if (parts[state]) {
+            var lgas = parts[state];
             lgas.forEach(function(lga) {
                 var option = document.createElement("option");
                 option.value = lga;
@@ -1456,7 +2488,6 @@ unset($__errorArgs, $__bag); ?>" placeholder="Title ">
             });
         }
     }
-
 </script>
 
 <?php $__env->stopSection(); ?>
