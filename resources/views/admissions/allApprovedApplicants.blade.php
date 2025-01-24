@@ -89,7 +89,7 @@ if(!session('adminId'))
                                                 <td>{{$allApp->surname}}</td>
                                                 <td>{{$allApp->phone}}</td>
                                                 <td>{{$allApp->gender}}</td>
-                                                <td>{{$allApp->course_applied}}</td>
+                                                <td>{{$allApp->course_program}}</td>
                                                 <td>{{$allApp->applicant_type}}</td>
                                                 <td>{{$allApp->approval_date}}</td>
                                                 <td><a href="/adminView/{{$allApp -> applicant_type}}/{{urlencode(base64_encode($allApp -> id))}}" class="btn btn-primary border mt-2">View </a></td>

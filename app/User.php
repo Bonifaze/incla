@@ -113,4 +113,5 @@ public function hasRole($role)
 }
 
 
+
 } // end Class User

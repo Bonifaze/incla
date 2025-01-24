@@ -52,30 +52,22 @@ active
                         <div class="font-weight-bold text-primary">
                             <div class="dropdown no-arrow">
 
-                                <?php
-                                $fees = array("UTME"=>100000, "DE"=>100000, "Transfer"=>100000, "PG"=>'50000 or ₦30000');
-                                ?>
-                                <?php $__currentLoopData = $admission; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $utm): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                                <input type="hidden" class="form-control" id="js-firstName" placeholder="<?php echo e($utm->first_name." ".$utm->middle_name." ".$utm->surname); ?>" value="<?php echo e($utm->first_name." ".$utm->middle_name." ".$utm->surname); ?>" name="firstName" readonly>
-                                <input type="hidden" class="form-control" id="js-email" placeholder="<?php echo e($utm->email); ?>" value="<?php echo e($utm->email); ?>" name="email" readonly hidden>
-                                <input type="hidden" class="form-control" id="js-phone" placeholder="<?php echo e($utm->phone); ?>" value="<?php echo e($utm->phone); ?>" name="email" readonly>
-                                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-                                <?php $__currentLoopData = $admission; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $utm): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+
+
                                 <?php echo $status=="Successful"?'
                                 <form action="" method="POST" onsubmit="event.preventDefault();" class="p-5">
                                     <div class="form-group container-fluid mt-5 p-5 border border-success shadow shadow-lg rounded text-success rounded-lg">
                                         <?php echo csrf_field(); ?>
-                                        Congratulation you have been offerred provisional admission into veritas univeristy kindly click the button to pay your Acceptance Fee<br>
-                                        <a href="acceptancepayment" class="btn btn-success mt-3"> <i class=" fa fa-credit-card fa-sm text-white-50 p-2"></i>Pay (₦'.$fees[$utm->applicant_type].')</a>
+                                        Congratulation you have been offerred provisional admission into INCLA kindly click the button to pay your Acceptance Fee<br>
+                                        <a href="acceptancepayment" class="btn btn-success mt-3"> <i class=" fa fa-credit-card fa-sm text-white-50 p-2"></i>Pay </a>
 
 
 
                                     </div>
                                 </form>':' '; ?>
 
-                                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
 
-                                
+
                             </div>
 
 

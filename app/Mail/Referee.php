@@ -29,6 +29,6 @@ class Referee extends Mailable
      */
     public function build()
     {
-        return $this->from('veritasuniversityabuja@gmail.com', 'Welcome to Veritas Admission Portal')->markdown('mails.referee')->with('emailData', $this->emailData);
+        return $this->from('incla@gmail.com', 'Welcome to INCLA Portal')->markdown('mails.referee')->with('emailData', $this->emailData);
     }
 }

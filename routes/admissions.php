@@ -373,6 +373,9 @@ Route::post('/formsubmit', 'App\Http\Controllers\ApplicantController@submitForm'
 Route::get('/studentsLogin', function () {
     return view('students.studentsLogin');
 });
+
+Route::get('/formview/{userType}', 'App\Http\Controllers\AdminController@formview');
+
 // Route::get('/students/home', function () {
 //     return view('students.home');
 // });

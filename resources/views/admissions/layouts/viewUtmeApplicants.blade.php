@@ -47,7 +47,7 @@ if(!session('adminId'))
                 <div class="col_full">
                     <h1
                         class="app-page-title text-uppercase h5 font-weight-bold p-2 mb-2 shadow-sm text-center text-success border">
-                   UTME APPLICANT PROFILE
+                    APPLICANT PROFILE
                     </h1>
 
 
@@ -229,25 +229,7 @@ if(!session('adminId'))
                                                 <div
                                                     class="app-card app-card-account shadow d-flex flex-column align-items-start ">
 
-                                                    <div class="app-card-body px-4 w-100">
-                                                        <div class="item border-bottom py-3">
-                                                            <div class="row justify-content-between align-items-center">
-                                                                <div class="">
-                                                                    <div class="item-label mb-2">
-                                                                        <strong>Jamb Result</strong>
-                                                                    </div>
-                                                                    <div class="">
-                                                                        <img class="mx-auto d-block"
-                                                                                src="data:image/jpeg;base64,{{$applicantsDetails->jamb}}"
-                                                                            alt="Jamb Result"
-                                                                            style="height: 510px; width:400px;" />
-                                                                    </div>
-                                                                    <div class="item-data card-title text-success">
-                                                                        {{ $applicantsDetails->olevel_awaiting }}</div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
+
                                                 </div>
                                                 <!--//app-card-->
                                             </div>
@@ -256,84 +238,7 @@ if(!session('adminId'))
                                                 <div
                                                     class="app-card app-card-account shadow d-flex flex-column align-items-start ">
 
-                                                    <div class="app-card-body px-4 w-100">
-                                                        <div class="item border-bottom py-3">
-                                                            <div class="row justify-content-between align-items-center">
-                                                                <div class="">
-                                                                    <div class="item-label mb-2">
-                                                                        <strong>Jamb Data</strong>
-                                                                    </div>
-                                                                    <div class="">
-                                                                        <ul class="list-group list-group-flush">
 
-
-                                                                            <li class="list-group-item">Jamb Registration
-                                                                                No.:
-                                                                                <b>{{ $applicantsDetails->jamb_reg_no }}</b>
-                                                                            </li>
-                                                                            <li class="list-group-item">Jamb Score:
-                                                                                <b>{{ $applicantsDetails->score }}</b>
-                                                                            </li>
-                                                                            <li class="list-group-item">University First
-                                                                                Choice:
-                                                                                <b>{{ $applicantsDetails->first_choice }}</b>
-                                                                            </li>
-                                                                            <li class="list-group-item">University Second
-                                                                                Choice:
-                                                                                <b>{{ $applicantsDetails->second_choice }}</b>
-                                                                            </li>
-                                                                            <li class="list-group-item">Course Applied:
-                                                                                <b>{{ $applicantsDetails->course_applied }}</b>
-                                                                            </li>
-                                                                            <li class="list-group-item">Subject 1:
-                                                                                <b>{{ $applicantsDetails->subject_1 }}</b>
-                                                                            </li>
-                                                                            <li class="list-group-item">Subject 2:
-                                                                                <b>{{ $applicantsDetails->subject_2 }}</b>
-                                                                            </li>
-                                                                            <li class="list-group-item">Subject 3:
-                                                                                <b>{{ $applicantsDetails->subject_3 }}</b>
-                                                                            </li>
-                                                                            <li class="list-group-item">Subject 4:
-                                                                                <b>{{ $applicantsDetails->subject_4 }}</b>
-                                                                            </li>
-                                                                        </ul><br>
-                                                                        <form method="POST" action="/changecourse">
-                                                                            @csrf
-                                                                            <div class="form-group">
-                                                                                <div class="form-group">
-                                                                                    <input type="hidden"
-                                                                                        value="{{ $applicantsDetails->jamb_reg_no }}"
-                                                                                        name="jamb_reg_no">
-                                                                                    <label
-                                                                                        for="refferal">{{ __('Change Course of Study') }}
-                                                                                    </label>
-                                                                                    <select class="form-select"
-                                                                                        name="course_applied">
-                                                                                        @foreach ($programs as $program)
-                                                                                            <option
-                                                                                                value="{{ $program->name }}">
-                                                                                                {{ $program->name }}
-                                                                                            </option>
-                                                                                        @endforeach
-
-                                                                                    </select>
-                                                                                    <button type="submit"
-                                                                                        class=" btn text-white fw-bold bg-success bg-gradient mb-3 px-5">
-                                                                                        {{ __('Change Course') }}
-                                                                                    </button>
-
-                                                                                </div>
-                                                                            </div>
-                                                                        </form>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <!--//app-card-->
-                                            </div>
                                             <div class="row gy-4 mb-4 mt-1">
                                                 <div class="col-12 col-lg-12">
                                                     <div
@@ -349,12 +254,11 @@ if(!session('adminId'))
                                                                         </div>
                                                                         <div class="">
                                                                             <img class="mx-auto d-block"
-                src="data:image/jpeg;base64,{{$applicantsDetails->olevel1}}"
+                src="data:image/jpeg;base64,{{$applicantsDetails->cert}}"
                                                                                 alt="Olevel"
                                                                                 style="height: 510px; width:400px;" />
                                                                         </div>
-                                                                        <div class="item-data card-title text-success">
-                                                                            {{ $applicantsDetails->olevel_awaiting }}</div>
+
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -369,6 +273,44 @@ if(!session('adminId'))
                                                     <!--//app-card-->
                                                 </div>
                                                 <!--//col-->
+  <div class="col-12 col-lg-12">
+                        <div class="app-card app-card-account shadow d-flex flex-column align-items-start ">
+
+                            <div class="app-card-body px-4 w-100">
+                                <div class="item border-bottom py-3">
+                                    <div class="row justify-content-between align-items-center">
+                                        <div class="col-auto">
+                                            <div class="item-label mb-2">
+                                                <strong> Data</strong>
+                                            </div>
+                                            <div class="">
+                                                <ul class="list-group list-group-flush">
+
+
+                                                    <li class="list-group-item">Admiison Type.: <b>{{ $applicantsDetails->admission_type }}</b>
+                                                    </li>
+                                                    <li class="list-group-item">Course Appliedy:
+                                                        <b>{{ $applicantsDetails->course_program }}</b>
+                                                    </li>
+                                                    <li class="list-group-item">School attended:
+                                                        <b>{{ $applicantsDetails->school_attended }}</b>
+                                                    </li>
+                                                    <li class="list-group-item">Certificate Obatained:
+                                                        <b>{{ $applicantsDetails->certificates_obtained	 }}</b>
+                                                    </li>
+                                                    <li class="list-group-item">Previous Project topic.:
+                                                        <b>{{ $applicantsDetails->pr_topic }}</b>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!--//app-card-->
+                    </div>
+
                                                 <div class="col-12 col-lg-12">
                                                     <div
                                                         class="app-card app-card-account shadow d-flex flex-column align-items-start">
@@ -387,7 +329,7 @@ if(!session('adminId'))
                                                                         <div class="">
 
                                                                             <img class=" mx-auto d-block"
-                                                                                        src="data:image/jpeg;base64,{{$applicantsDetails->olevel2}}"
+                                                                                        src="data:image/jpeg;base64,{{$applicantsDetails->olevel1}}"
                                                                                 alt="Olevel second sitting"
                                                                                 style="height: 500px; width:400px;" />
                                                                         </div>
@@ -424,7 +366,7 @@ if(!session('adminId'))
                                                                             <strong>Name</strong>
                                                                         </div>
                                                                         <div class="item-data">
-                                                                            {{ $applicantsDetails->name }}
+                                                                            {{ $applicantsDetails->sponsor_surname }}
                                                                         </div>
                                                                     </div>
                                                                 </div>
@@ -493,38 +435,32 @@ if(!session('adminId'))
                                                 </div>
                                                 <div class="col-12 col-lg-6">
                                                     <form method="get"
-                                                        action="/approval/{{ $applicantsDetails->applicant_type }}/{{ urlencode(base64_encode($applicantsDetails->user_id)) }}">
+                                                        action="/recommend/{{ $applicantsDetails->applicant_type }}/{{ urlencode(base64_encode($applicantsDetails->user_id)) }}">
                                                         @csrf
                                                         <div class="form-group shadow-textarea">
-                                                            <label for="exampleFormControlTextarea6"
-                                                                class="fw-bold">Registrar's Approval
-                                                                Comment</label>
-                                                            <textarea class="form-control " name="comment">
-                                                    </textarea>
+
+
                                                             <button type="submit"
                                                                 class=" btn text-white fw-bold bg-success bg-gradient mb-3 px-5">
-                                                                {{ __('Approve') }}
+                                                                {{ __('Recommend') }}
                                                             </button>
                                                         </div>
                                                     </form>
                                                 </div>
                                                 <div class="col-12 col-lg-6">
 
-                                                    <form method="get"
+                                                    {{--  <form method="get"
                                                         action="/rejection/{{ $applicantsDetails->applicant_type }}/{{ urlencode(base64_encode($applicantsDetails->user_id)) }}">
                                                         @csrf
                                                         <div class="form-group shadow-textarea">
-                                                            <label for="exampleFormControlTextarea6"
-                                                                class="fw-bold">Registrar's Rejection
-                                                                Comment</label>
-                                                            <textarea class="form-control z-depth-1 shadow" name="comment">
-                                                    </textarea>
+
+
                                                             <button type="submit"
                                                                 class=" btn text-white fw-bold bg-danger bg-gradient mb-3 px-5 float-end">
                                                                 {{ __('Reject ') }}
                                                             </button>
                                                         </div>
-                                                    </form>
+                                                    </form>  --}}
                                                 </div>
                                             </div>
                                         </div>

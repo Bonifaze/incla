@@ -562,51 +562,31 @@ public function uploadScores(Request $request)
         $this->authorize('listallApplicant',Session::class);
         $currentSessionId = $this->getCurrentAdmissionSession();
             $allAppli = array();
-            $allApplicants = DB::table('approved_applicants')->get();
-            $approvedArr = array();
-            $counter = 0;
-            foreach ($allApplicants as $allApp) {
-                $approvedArr[$counter] = $allApp->user_id;
-                $counter++;
-            }
-            $allApplicants = DB::table('users')
-             ->where('users.session_id', $currentSessionId)
-             ->whereNotNull('users.applicant_type')
-                // ->whereNotIn('users.id', $approvedArr)
-                ->join('usersbiodata', 'usersbiodata.user_id', '=', 'users.id')
-                ->leftJoin('de', 'de.user_id', '=', 'users.id')
-                ->leftJoin('pgs', 'pgs.user_id', '=', 'users.id')
-                ->leftJoin('transfers', 'transfers.user_id', '=', 'users.id')
-                ->leftJoin('utme', 'utme.user_id', '=', 'users.id')
-
-                ->select('users.*', 'usersbiodata.gender',
+            // $allApplicants = DB::table('approved_applicants')->get();
+            // $approvedArr = array();
+            // $counter = 0;
+            // foreach ($allApplicants as $allApp) {
+            //     $approvedArr[$counter] = $allApp->user_id;
+            //     $counter++;
+            // }
+        $allApplicants = DB::table('users')
+            ->where('users.session_id', $currentSessionId)
+            ->whereNotNull('users.applicant_type')
+            // ->whereNotIn('users.id', $approvedArr)
+            ->join('usersbiodata', 'usersbiodata.user_id', '=', 'users.id')
+            ->leftJoin('academic_record', 'academic_record.user_id', '=', 'users.id')
+            ->select(
+                'users.*',
+                'usersbiodata.gender',
                 // 'usersbiodata.passport', 'usersbiodata.passport_type',
-                'usersbiodata.created_at', 'de.course_applied', 'transfers.course_applied', 'utme.course_applied', 'pgs.course_applied')
+                'academic_record.course_program'
+            )
 
-                ->get()->toArray();
+            ->get();
 
-            foreach ($allApplicants as $applicant) {
 
-                if ($applicant->applicant_type == 'UTME') {
-                    $assign = (array)$applicant;
-                    $assign['course_applied'] = $this->getApplicantType($assign['id'], 'utme');
-                    array_push($allAppli, $assign);
-                } elseif ($applicant->applicant_type == 'DE') {
-                    $assign = (array)$applicant;
-                    $assign['course_applied'] = $this->getApplicantType($assign['id'], 'de');
-                    array_push($allAppli, $assign);
-                } elseif ($applicant->applicant_type == 'Transfer') {
-                    $assign = (array)$applicant;
-                    $assign['course_applied'] = $this->getApplicantType($assign['id'], 'transfers');
-                    array_push($allAppli, $assign);
-                } elseif ($applicant->applicant_type == 'PG') {
-                    $assign = (array)$applicant;
-                    $assign['course_applied'] = $this->getApplicantType($assign['id'], 'pgs');
-                    array_push($allAppli, $assign);
-                }
-            }
-            $fullName = session('adminFirstName') . " " . session('adminsurname');
-           return view('admissions.allApplicants', compact('allAppli', 'fullName'));
+
+           return view('admissions.allApplicants', compact('allApplicants', ));
 
     }
 
@@ -755,51 +735,7 @@ public function uploadScores(Request $request)
 
     }
 
-    public function allApprovedApplicants($user_type)
-    {
-        $this->authorize('allapprovedapplicant',Session::class);
-        $currentSessionId = $this->getCurrentAdmissionSession();
 
-            $allApplicants = "";
-            if ($user_type == "UTME") {
-                $allApplicants = DB::table('approved_applicants')
-                    ->join('users', 'approved_applicants.user_id', '=', 'users.id')
-                    ->join('usersbiodata', 'usersbiodata.user_id', '=', 'approved_applicants.user_id')
-                    ->join('utme', 'utme.user_id', '=', 'approved_applicants.user_id')
-
-                    ->select('users.*', 'usersbiodata.gender', 'utme.course_applied', 'approved_applicants.*')
-                    ->where('users.session_id', $currentSessionId)
-                    ->get()->toArray();
-            } elseif ($user_type == "DE") {
-                $allApplicants = DB::table('approved_applicants')
-                    ->join('users', 'approved_applicants.user_id', '=', 'users.id')
-                    ->join('usersbiodata', 'usersbiodata.user_id', '=', 'approved_applicants.user_id')
-                    ->join('de', 'de.user_id', '=', 'approved_applicants.user_id')
-                    ->select('users.*', 'usersbiodata.gender', 'de.course_applied', 'approved_applicants.*')
-                    ->where('users.session_id', $currentSessionId)
-                    ->get()->toArray();
-            } elseif ($user_type == "Transfer") {
-                $allApplicants = DB::table('approved_applicants')
-                    ->join('users', 'approved_applicants.user_id', '=', 'users.id')
-                    ->join('usersbiodata', 'usersbiodata.user_id', '=', 'approved_applicants.user_id')
-                    ->join('transfers', 'transfers.user_id', '=', 'approved_applicants.user_id')
-                    ->select('users.*', 'usersbiodata.gender', 'transfers.course_applied', 'approved_applicants.*')
-                    ->where('users.session_id', $currentSessionId)
-                    ->get()->toArray();
-            } elseif ($user_type == "PG") {
-                $allApplicants = DB::table('approved_applicants')
-                    ->join('users', 'approved_applicants.user_id', '=', 'users.id')
-                    ->join('usersbiodata', 'usersbiodata.user_id', '=', 'approved_applicants.user_id')
-                    ->join('pgs', 'pgs.user_id', '=', 'approved_applicants.user_id')
-                    ->select('users.*', 'usersbiodata.gender', 'pgs.course_applied', 'approved_applicants.*')
-                    ->where('users.session_id', $currentSessionId)
-                    ->get()->toArray();
-            }
-
-            $fullName = session('adminFirstName') . " " . session('adminsurname');
-           return view('admissions.allApprovedApplicants', compact('allApplicants', 'fullName', 'user_type'));
-
-    }
 
     public function DE()
     {
@@ -1216,73 +1152,7 @@ public function uploadScores(Request $request)
         // }
     }
     //View applicant's full details
-    public function viewApplicants($applicantType, $id)
-    {
-        $staff = Auth::guard('staff')->user();
-        // if ($this->hasPriviledge("viewApplicants",  $staff->id)) {
-            $this->authorize('viewapplicant',Session::class);
-            $app_id = base64_decode(urldecode($id));
-            $applicantsDetails = "";
-            if ($applicantType ==  'UTME') {
-                $applicantsDetails = DB::table('users')->where('users.applicant_type', 'UTME')
-                    ->where('users.id', $app_id)
-                    ->leftJoin('usersbiodata', 'usersbiodata.user_id', '=', 'users.id')
-                    ->leftJoin('utme', 'utme.user_id', '=', 'users.id')
-                    ->leftJoin('uploads', 'uploads.user_id', '=', 'users.id')
-                    ->leftJoin('sponsors', 'sponsors.user_id', '=', 'users.id')
-                    ->leftJoin('olevel', 'olevel.user_id', '=', 'users.id')
-                    ->select('users.*', 'usersbiodata.*', 'sponsors.*', 'utme.*', 'olevel.*', 'uploads.*')
-                    ->first();
-                     $programs = program::orderBy('name', 'ASC')->get();
-                    $subjects = subjects::orderBy('subject_name', 'ASC')->get();
-               return view('admissions.layouts.viewUtmeApplicants', compact('applicantsDetails', 'app_id'), ['programs' => $programs, 'subjects' => $subjects]);
-            } elseif ($applicantType ==  'DE') {
-                $applicantsDetails = DB::table('users')->where('applicant_type', 'DE')
-                    ->where('users.id', $app_id)
-                    ->leftJoin('usersbiodata', 'usersbiodata.user_id', '=', 'users.id')
-                    ->leftJoin('de', 'de.user_id', '=', 'users.id')
-                    ->leftJoin('uploads', 'uploads.user_id', '=', 'users.id')
-                    ->leftJoin('sponsors', 'sponsors.user_id', '=', 'users.id')
-                    ->leftJoin('olevel', 'olevel.user_id', '=', 'users.id')
-                    ->select('users.*', 'usersbiodata.*', 'sponsors.*', 'de.*', 'olevel.*', 'uploads.*')
-                    ->first();
-                     $programs = program::orderBy('name', 'ASC')->get();
-                    $subjects = subjects::orderBy('subject_name', 'ASC')->get();
-               return view('admissions.layouts.viewDeApplicants',  compact('applicantsDetails', 'app_id'), ['programs' => $programs, 'subjects' => $subjects]);
-            } elseif ($applicantType ==  'Transfer') {
-                $applicantsDetails = DB::table('users')->where('applicant_type', 'Transfer')
-                    ->where('users.id', $app_id)
-                    ->leftJoin('usersbiodata', 'usersbiodata.user_id', '=', 'users.id')
-                    ->leftJoin('transfers', 'transfers.user_id', '=', 'users.id')
-                    ->leftJoin('uploads', 'uploads.user_id', '=', 'users.id')
-                    ->leftJoin('sponsors', 'sponsors.user_id', '=', 'users.id')
-                    ->leftJoin('olevel', 'olevel.user_id', '=', 'users.id')
-                    ->select('users.*', 'usersbiodata.*', 'sponsors.*', 'transfers.*', 'olevel.*', 'uploads.*')
-                    ->first();
-                     $programs = program::orderBy('name', 'ASC')->get();
-                    $subjects = subjects::orderBy('subject_name', 'ASC')->get();
-               return view('admissions.layouts.viewTransferApplicants',  compact('applicantsDetails', 'app_id'), ['programs' => $programs, 'subjects' => $subjects]);
-            } elseif ($applicantType ==  'PG') {
-                $applicantsDetails = DB::table('users')->where('applicant_type', 'PG')
-                    ->where('users.id', $app_id)
-                    ->leftJoin('usersbiodata', 'usersbiodata.user_id', '=', 'users.id')
-                    ->leftJoin('pgs', 'pgs.user_id', '=', 'users.id')
-                    ->leftJoin('sponsors', 'sponsors.user_id', '=', 'users.id')
-                    ->leftJoin('uploads', 'uploads.user_id', '=', 'users.id')
-                    ->leftJoin('pg_referees', 'pg_referees.user_id', '=', 'users.id')
-                    ->leftJoin('pg_educations', 'pg_educations.user_id', '=', 'users.id')
-                    ->leftJoin('olevel', 'olevel.user_id', '=', 'users.id')
-                    ->select('users.*', 'usersbiodata.*', 'sponsors.*', 'pgs.*', 'olevel.*', 'pg_referees.*', 'pg_educations.*', 'uploads.*')
-                    ->first();
-                     $programs = program::orderBy('name', 'ASC')->get();
-                    $subjects = subjects::orderBy('subject_name', 'ASC')->get();
-               return view('admissions.layouts.viewPgApplicants',  compact('applicantsDetails', 'app_id'), ['programs' => $programs, 'subjects' => $subjects]);
-            }
-        // } else {
-        //     $loginMsg = '<div class="alert alert-danger alert-dismissible" role="alert"> <button type="button" class="close" data-dismiss="alert"> &times; </button> You dont\'t have access to this task, please see the ICT</div>';
-        //    return view('admissions./error', compact('loginMsg'));
-        // }
-    }
+
 //To chanage applicant course of study
  public function changecourse(Request $req)
     {
@@ -1375,63 +1245,7 @@ public function changecourseTransfer(Request $req)
 
     }
 
-    // View all qualified applicants
-    public function viewQualifiedApplicants($user_type)
-    {
-        $currentSessionId = $this->getCurrentAdmissionSession();
-        $this->authorize('viewqualifiedapplicant',Session::class);
-            $allAppli = array();
-            $utmeApplicants = DB::table('approved_applicants')->get();
-            $approvedArr = array();
-            $counter = 0;
-            foreach ($utmeApplicants as $utmeApp) {
-                $approvedArr[$counter] = $utmeApp->user_id;
-                $counter++;
-            }
-            if ($user_type == "UTME") {
-                $utmeApplicants = DB::table('users')->where('applicant_type', 'UTME')
-                ->where('users.session_id', $currentSessionId)
-                    ->whereNotIn('users.id', $approvedArr)
-                    ->join('usersbiodata', 'usersbiodata.user_id', '=', 'users.id')
-                    ->join('utme', 'utme.user_id', '=', 'users.id')
-                    ->select('users.*', 'usersbiodata.gender', 'usersbiodata.created_at', 'usersbiodata.dob', 'utme.course_applied')
-                    ->get();
-                foreach ($utmeApplicants as $utmeapp) {
-                    $assign = (array)$utmeapp;
-                    if ($this->getQualifiedApplicants($user_type, "utme", $assign['id']))
-                        array_push($allAppli, $assign);
-                }
-            } elseif ($user_type == "DE") {
-                $deApplicants = DB::table('users')->where('applicant_type', 'DE')
-                ->where('users.session_id', $currentSessionId)
-                    ->whereNotIn('users.id', $approvedArr)
-                    ->join('usersbiodata', 'usersbiodata.user_id', '=', 'users.id')
-                    ->join('de', 'de.user_id', '=', 'users.id')
-                    ->select('users.*', 'usersbiodata.gender', 'usersbiodata.created_at', 'usersbiodata.passport', 'usersbiodata.passport_type', 'usersbiodata.dob', 'de.course_applied')
-                    ->get();
-                foreach ($deApplicants as $deapp) {
-                    $assign = (array)$deapp;
-                    if ($this->getQualifiedApplicants($user_type, "de", $assign['id']))
-                        array_push($allAppli, $assign);
-                }
-            } elseif ($user_type == "Transfer") {
-                $transferApplicants = DB::table('users')->where('applicant_type', 'Transfer')
-                ->where('users.session_id', $currentSessionId)
-                    ->whereNotIn('users.id', $approvedArr)
-                    ->join('usersbiodata', 'usersbiodata.user_id', '=', 'users.id')
-                    ->join('transfers', 'transfers.user_id', '=', 'users.id')
-                    ->select('users.*', 'usersbiodata.gender', 'usersbiodata.created_at', 'usersbiodata.passport', 'usersbiodata.passport_type', 'usersbiodata.dob', 'transfers.course_applied', 'transfers.cgpa')
-                    ->get();
-                foreach ($transferApplicants as $transferapp) {
-                    $assign = (array)$transferapp;
-                    if ($this->getQualifiedApplicants($user_type, "transfers", $assign['id']))
-                        array_push($allAppli, $assign);
-                }
-            }
-            $fullName = session('adminFirstName') . " " . session('adminsurname');
-           return view('admissions.qualifiedApplicants', compact('allAppli', 'fullName', 'user_type'));
 
-    }
 
     //View Recommended Applicants
     public function viewRecommendedApplicants($user_type){
@@ -2620,6 +2434,124 @@ public function viewaddRemitasServiceType(){
 
         return response()->json(['message' => 'Birthday email sent successfully!']);
     }
+
+
+
+
+
+
+    public function formview($userType)
+    {
+        $this->authorize('undergraduateapplicant', Session::class);
+        $currentSessionId = $this->getCurrentAdmissionSession();
+
+        $userType;
+        $applicants = DB::table('approved_applicants')->get();
+        $approvedArr = array();
+        $counter = 0;
+        foreach ($applicants as $app) {
+            $approvedArr[$counter] = $app->user_id;
+            $counter++;
+        }
+
+        // Use the $userType in your query
+        $applicants = DB::table('users')
+            ->where('applicant_type', $userType) // Dynamically filter by user type
+            ->whereNotIn('users.id', $approvedArr)
+            ->join('usersbiodata', 'usersbiodata.user_id', '=', 'users.id')
+            ->where('usersbiodata.session_id', $currentSessionId)
+            ->join('academic_record', 'academic_record.user_id', '=', 'users.id')
+            ->select('users.*', 'usersbiodata.gender', 'usersbiodata.dob', 'usersbiodata.status', 'academic_record.course_program','usersbiodata.created_at')
+            ->where('usersbiodata.status', '1')
+            ->get();
+
+        return view('admissions.formview', compact('applicants','userType'));
+    }
+
+
+    public function viewApplicants($applicantType, $id)
+    {
+        $staff = Auth::guard('staff')->user();
+
+            $this->authorize('viewapplicant',Session::class);
+            $app_id = base64_decode(urldecode($id));
+            $applicantsDetails = "";
+
+                $applicantsDetails = DB::table('users')->where('users.applicant_type', $applicantType)
+                    ->where('users.id', $app_id)
+                    ->leftJoin('usersbiodata', 'usersbiodata.user_id', '=', 'users.id')
+                    ->leftJoin('academic_record', 'academic_record.user_id', '=', 'users.id')
+                    ->leftJoin('uploads', 'uploads.user_id', '=', 'users.id')
+                    ->leftJoin('sponsors', 'sponsors.user_id', '=', 'users.id')
+                    ->select('users.*', 'usersbiodata.*', 'sponsors.*', 'academic_record.*', 'uploads.*')
+                    ->first();
+                     $programs = program::orderBy('name', 'ASC')->get();
+
+               return view('admissions.layouts.viewUtmeApplicants', compact('applicantsDetails', 'app_id'), ['programs' => $programs]);
+
+    }
+
+
+       // View all qualified applicants
+      // View all qualified applicants
+public function viewQualifiedApplicants($user_type)
+{
+    $currentSessionId = $this->getCurrentAdmissionSession();
+    $this->authorize('viewqualifiedapplicant', Session::class);
+
+    // Fetch already approved applicants
+    $approvedArr = DB::table('approved_applicants')->pluck('user_id')->toArray();
+
+    // Fetch qualified applicants
+    $qualifiedApplicants = DB::table('users')
+        ->where('users.applicant_type', $user_type) // Step 1: Filter by user type
+        ->where('users.session_id', $currentSessionId) // Step 2: Filter by session
+        ->whereNotIn('users.id', $approvedArr) // Step 3: Exclude approved applicants
+        ->whereIn('users.id', function ($query) { // Step 4: Check recommended applicants
+            $query->select('user_id')
+                  ->from('recommended_applicants');
+        })
+        ->join('usersbiodata', 'usersbiodata.user_id', '=', 'users.id') // Join usersbiodata
+        ->join('academic_record', 'academic_record.user_id', '=', 'users.id') // Join academic_record
+        ->select(
+            'users.*',
+            'usersbiodata.gender',
+            'usersbiodata.created_at',
+            'usersbiodata.dob',
+            'academic_record.course_program'
+        )
+        ->get();
+
+    // Pass the qualified applicants to the view
+    return view('admissions.qualifiedApplicants', compact('qualifiedApplicants', 'user_type'));
+}
+
+
+public function allApprovedApplicants($user_type)
+{
+    $this->authorize('allapprovedapplicant', Session::class);
+    $currentSessionId = $this->getCurrentAdmissionSession();
+
+    // Fetch approved applicants and join with necessary tables
+    $allApplicants = DB::table('approved_applicants')
+        ->join('users', 'approved_applicants.user_id', '=', 'users.id')
+        ->join('usersbiodata', 'usersbiodata.user_id', '=', 'users.id')
+        ->join('academic_record', 'academic_record.user_id', '=', 'users.id')
+        ->select('users.*', 'usersbiodata.gender', 'academic_record.course_program', 'approved_applicants.*')
+        ->where('users.session_id', $currentSessionId)
+        ->get();
+
+    // Check if any applicants were retrieved
+    if ($allApplicants->isEmpty()) {
+        // Optionally, handle the case where no applicants are found
+        // e.g., you can pass a message or handle an empty array in the view
+        return view('admissions.allApprovedApplicants', compact('allApplicants', 'user_type'))->with('message', 'No approved applicants found.');
+    }
+
+    // Return view with all approved applicants data
+    return view('admissions.allApprovedApplicants', compact('allApplicants', 'user_type'));
+}
+
 
 }
 

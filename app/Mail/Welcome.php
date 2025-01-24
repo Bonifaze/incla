@@ -29,6 +29,6 @@ class Welcome extends Mailable
      */
     public function build()
     {
-        return $this->from('veritasuniversityabuja@gmail.com', 'Welcome to Veritas Portal')->markdown('mails.welcome')->with('emailData', $this->emailData);
+        return $this->from('incla@gmail.com', 'Welcome to INCLA Portal')->markdown('mails.welcome')->with('emailData', $this->emailData);
     }
 }

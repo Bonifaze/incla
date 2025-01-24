@@ -253,7 +253,7 @@ class ApplicantController extends Controller
             // $fullName = $req->first_name." ".$req->surname;
 
             $mailData = [
-                'title' => 'Welcome to Veritas Admission Portal',
+                'title' => 'Welcome to INCLA Portal',
                 'msg' => 'Password Reset Request',
                 // 'url' => $this->getBaseUrl().'/forgotpassword/?applicant='.base64_encode($forgotpassword),
                 // 'url' => $this->getBaseUrl().'/confirmation/?applicant='.base64_encode( $forgotpassword),

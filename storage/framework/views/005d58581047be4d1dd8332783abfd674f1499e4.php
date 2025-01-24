@@ -33,7 +33,7 @@ active
             <!-- left column -->
             <div class="col_full">
                 <h1 class="app-page-title text-uppercase h5 font-weight-bold p-2 mb-2 shadow-sm text-center text-success border">
-                    Dashboard
+                    Staff Home 
                 </h1>
                 <?php echo $__env->make('partialsv3.flash', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
                 
@@ -50,127 +50,135 @@ active
                     <div class="col-lg-9">
                         <!-- Widgets Start -->
 
-                        <div class="card shadow border border-success">
-                            <div class="row p-5">
+                        
 
-                                <div class="col-xl-6 col-md-6 mb-4">
-                                    <div class="card border-left-success shadow h-100 py-3">
-                                        <div class="card-body">
-                                            <div class="row no-gutters align-items-center">
-                                                <div class="col mr-2">
-                                                    <div class="h4 text-success" style="text-decoration: underline;">
-                                                        <a href="/admin/upload" class="text-success <?php echo $__env->yieldContent('staff-courses'); ?>">My
-                                                            Courses</a><br>
-                                                        
 
+                                <div class="container">
+                                    <div class="page-inner">
+                                        <!-- Card -->
+                                        
+                                        <div class="row">
+                                            <div class="col-sm-6 col-md-3">
+                                                <div class="card card-stats card-primary card-round">
+                                                    <div class="card-body">
+                                                        <div class="row">
+                                                            <div class="col-5">
+                                                                <div class="icon-big text-center">
+                                                                    <i class="fas fa-users"></i>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-7 col-stats">
+                                                                <div class="numbers">
+                                                                    <p class="card-category">Applicants</p>
+                                                                    <h4 class="card-title">1,294</h4>
+                                                                </div>
+                                                            </div>
+                                                        </div>
                                                     </div>
                                                 </div>
-                                                <div class="col-auto">
-                                                    <i class="fas fa-book-open fa-3x text-success"></i>
+                                            </div>
+                                            <div class="col-sm-6 col-md-3">
+                                                <div class="card card-stats card-warning card-round">
+                                                    <div class="card-body">
+                                                        <div class="row">
+                                                            <div class="col-5">
+                                                                <div class="icon-big text-center">
+                                                                    
+                                                                     <i class="fas fa-chart-pie"></i>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-7 col-stats">
+                                                                <div class="numbers">
+                                                                    <p class="card-category">Pending</p>
+                                                                    <h4 class="card-title">1303</h4>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-6 col-md-3">
+                                                <div class="card card-stats card-success card-round">
+                                                    <div class="card-body">
+                                                        <div class="row">
+                                                            <div class="col-5">
+                                                                <div class="icon-big text-center">
+                                                                   <i class="fas fa-user-check"></i>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-7 col-stats">
+                                                                <div class="numbers">
+                                                                    <p class="card-category">Approved</p>
+                                                                    <h4 class="card-title">$ 1,345</h4>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-6 col-md-3">
+                                                <div class="card card-stats card-secondary card-round">
+                                                    <div class="card-body">
+                                                        <div class="row">
+                                                            <div class="col-5">
+                                                                <div class="icon-big text-center">
+                                                                    <i class="far fa-check-circle"></i>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-7 col-stats">
+                                                                <div class="numbers">
+                                                                    <p class="card-category">Students</p>
+                                                                    <h4 class="card-title">576</h4>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
 
-                                <div class="col-xl-6 col-md-6 mb-4">
-                                    <div class="card border-left-success shadow h-100 py-3">
-                                        <div class="card-body">
-                                            <div class="row no-gutters align-items-center">
-                                                <div class="col mr-3">
-                                                    <div class="h4 text-success" style="text-decoration: underline;">
-                                                        <a href="/admin/staffscoresresult" class="text-success <?php echo $__env->yieldContent('staff-results'); ?>">My Results</a>
-                                                    </div>
-                                                </div>
-                                                <div class="col-auto">
-                                                    <i class="fa fa-book fa-3x text-success"></i>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
 
-                            </div>
-
-                            <div class="row p-5">
-
-                                <div class="col-xl-6 col-md-6 mb-4">
-                                    <div class="card border-left-success shadow h-100 py-3">
-                                        <div class="card-body">
-                                            <div class="row no-gutters align-items-center">
-                                                <div class="col mr-2">
-                                                    <div class="h4 text-success" style="text-decoration: underline;">
-                                                        <a href="<?php echo e(route('student.search')); ?>" class="text-success <?php echo $__env->yieldContent('registration'); ?>">Search Student</a>
-                                                    </div>
-                                                </div>
-                                                <div class="col-auto">
-                                                    <i class="fa fa-search fa-3x text-success"></i>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="col-xl-6 col-md-6 mb-4">
-                                    <div class="card border-left-success shadow h-100 py-3">
-                                        <div class="card-body">
-                                            <div class="row no-gutters align-items-center">
-                                                <div class="col mr-2">
-                                                    <div class="h4 text-success" style="text-decoration: underline;">
-                                                        <a href="<?php echo e(route('staff.search')); ?>" class="text-success <?php echo $__env->yieldContent('registration'); ?>">Search Staff</a>
-                                                    </div>
-                                                </div>
-                                                <div class="col-auto">
-                                                    <i class="fa fa-search fa-3x text-success"></i>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                </div>
-
-                            </div>
-                        </div>
-
-                        <!-- Widgets End -->
+<!-- Widgets End -->
 
 
-                    </div>
+</div>
 
-                    <div class="col-lg-3">
-                        <!-- Calendar Start -->
-                        <div class="card">
-                            <div class="card-body">
-                                <div class="calendar">
-                                    <div class="calendar__header">
-                                        <button type="button" class="calendar__arrow left"><i class="ph ph-caret-left"></i></button>
-                                        <p class="display h6 mb-0">""</p>
-                                        <button type="button" class="calendar__arrow right"><i class="ph ph-caret-right"></i></button>
-                                    </div>
-
-                                    <div class="calendar__week week">
-                                        <div class="calendar__week-text">Su</div>
-                                        <div class="calendar__week-text">Mo</div>
-                                        <div class="calendar__week-text">Tu</div>
-                                        <div class="calendar__week-text">We</div>
-                                        <div class="calendar__week-text">Th</div>
-                                        <div class="calendar__week-text">Fr</div>
-                                        <div class="calendar__week-text">Sa</div>
-                                    </div>
-                                    <div class="days"></div>
-                                </div>
-                            </div>
-                        </div>
-                        <!-- Calendar End -->
-
-
-
-                    </div>
-
+<div class="col-lg-3">
+    <!-- Calendar Start -->
+    <div class="card">
+        <div class="card-body">
+            <div class="calendar">
+                <div class="calendar__header">
+                    <button type="button" class="calendar__arrow left"><i class="ph ph-caret-left"></i></button>
+                    <p class="display h6 mb-0">""</p>
+                    <button type="button" class="calendar__arrow right"><i class="ph ph-caret-right"></i></button>
                 </div>
 
+                <div class="calendar__week week">
+                    <div class="calendar__week-text">Su</div>
+                    <div class="calendar__week-text">Mo</div>
+                    <div class="calendar__week-text">Tu</div>
+                    <div class="calendar__week-text">We</div>
+                    <div class="calendar__week-text">Th</div>
+                    <div class="calendar__week-text">Fr</div>
+                    <div class="calendar__week-text">Sa</div>
+                </div>
+                <div class="days"></div>
             </div>
-    </section>
+        </div>
+    </div>
+    <!-- Calendar End -->
+
+
+
+</div>
+
+</div>
+
+</div>
+</section>
 </div>
 <?php $__env->stopSection(); ?>
 

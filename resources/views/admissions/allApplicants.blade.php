@@ -77,17 +77,20 @@ active
                                         </thead>
 
                                         <tbody>
-                                            @foreach ($allAppli as $allApp)
+                                            @foreach ($allApplicants as $allApp)
 
                                             <tr>
 
-                                                <td>{{$allApp['first_name']}}</td>
-                                                <td>{{$allApp['surname']}}</td>
-                                                <td>{{$allApp['phone']}}</td>
-                                                <td>{{$allApp['gender']}}</td>
-                                                <td>{{$allApp['course_applied']}}</td>
-                                                <td>{{$allApp['applicant_type']}}</td>
-                                                <td><a href="/adminView/{{$allApp['applicant_type']}}/{{urlencode(base64_encode($allApp['id']))}}" class="btn btn-primary border mt-2"> View </a></td>
+                                                <td>{{$allApp->first_name}}</td>
+                                                <td>{{$allApp->surname}}</td>
+                                                <td>{{$allApp->phone}}</td>
+                                                <td>{{$allApp->gender}}</td>
+                                                <td>{{$allApp->course_program}}</td>
+                                                <td>{{$allApp->applicant_type}}</td>
+                                                <td>
+                                                    <a href="/adminView/{{$allApp->applicant_type}}/{{urlencode(base64_encode($allApp->id))}}" class="btn btn-primary border mt-2"> View </a>
+                                                </td>
+
 
                                             </tr>
 

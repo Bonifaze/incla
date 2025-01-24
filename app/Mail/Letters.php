@@ -35,7 +35,7 @@ class Letters extends Mailable
      */
     public function build()
     {
-        return $this->view('emails.exception')->from('info@veritas.edu.ng', 'Institute of Consecrated Life in Africa (InCLA)')
+        return $this->view('emails.exception')->from('info@incls.edu.ng', 'Institute of Consecrated Life in Africa (InCLA)')
             ->subject('Resumption Letter from the Vice Chancellor')
             ->attach(public_path('storage/letter5.pdf'), [
 

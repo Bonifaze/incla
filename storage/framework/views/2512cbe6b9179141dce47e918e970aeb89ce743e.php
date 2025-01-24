@@ -46,6 +46,18 @@
 
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/dt-1.11.3/b-2.1.1/r-2.2.9/datatables.min.css"/>
 
+
+
+    
+    
+    
+    
+    <link rel="stylesheet" href="<?php echo e(asset('css/css/plugins.min.css')); ?>">
+    <link rel="stylesheet" href="<?php echo e(asset('css/css/custom.min.css')); ?>">
+    <link rel="stylesheet" href="<?php echo e(asset('css/css/demo.css')); ?>">
+
+    
+
     <?php echo $__env->yieldContent('css'); ?>
 
     <style>
@@ -82,7 +94,10 @@
             /* Add some space between the navbar items */
         }
 
-    </style> 
+
+
+    </style>
+   
 </head>
 
 <body class="hold-transition sidebar-mini layout-fixed">
@@ -132,7 +147,7 @@
 
     <!-- jQuery -->
 
-    
+
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 
     <script src="<?php echo e(asset('v3/plugins/jquery/jquery.min.js')); ?>"></script>
@@ -172,6 +187,15 @@
     <script src="<?php echo e(asset('v3/plugins/toastr/toastr.min.js')); ?>"></script>
 
 
+    <script src="<?php echo e(asset('js/js/core/jquery-3.7.1.min.js')); ?>"></script>
+    <script src="<?php echo e(asset('js/js/core/popper.min.js')); ?>"></script>
+    
+    <script src="<?php echo e(asset('js/js/plugin/jquery-scrollbar/jquery.scrollbar.min.js')); ?>"></script>
+    <script src="<?php echo e(asset('js/js/plugin/chart.js/chart.min.js')); ?>"></script>
+    <script src="<?php echo e(asset('js/js/plugin/jquery.sparkline/jquery.sparkline.min.js')); ?>"></script>
+    <script src="<?php echo e(asset('js/js/plugin/datatables/datatables.min.js')); ?>"></script>
+    <script src="<?php echo e(asset('js/js/kaiadmin.min.js')); ?>"></script>
+
      <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"
         integrity="sha512-2ImtlRlf2VVmiGZsjm9bEyhjGW4dU7B6TNwh/hx/iSByxNENtj3WVE6o/9Lj4TJeVXPi4bnOIMXFIJJAeufa0A=="
         crossorigin="anonymous" referrerpolicy="no-referrer"></script>
@@ -197,8 +221,65 @@
 <script type="text/javascript" src="https://cdn.datatables.net/v/dt/dt-1.11.3/b-2.1.1/r-2.2.9/datatables.min.js"></script>
 
 
+ <script>
+      $(document).ready(function () {
+        $("#basic-datatables").DataTable({});
 
+        $("#multi-filter-select").DataTable({
+          pageLength: 5,
+          initComplete: function () {
+            this.api()
+              .columns()
+              .every(function () {
+                var column = this;
+                var select = $(
+                  '<select class="form-select"><option value=""></option></select>'
+                )
+                  .appendTo($(column.footer()).empty())
+                  .on("change", function () {
+                    var val = $.fn.dataTable.util.escapeRegex($(this).val());
+
+                    column
+                      .search(val ? "^" + val + "$" : "", true, false)
+                      .draw();
+                  });
+
+                column
+                  .data()
+                  .unique()
+                  .sort()
+                  .each(function (d, j) {
+                    select.append(
+                      '<option value="' + d + '">' + d + "</option>"
+                    );
+                  });
+              });
+          },
+        });
+
+        // Add Row
+        $("#add-row").DataTable({
+          pageLength: 5,
+        });
+
+        var action =
+          '<td> <div class="form-button-action"> <button type="button" data-bs-toggle="tooltip" title="" class="btn btn-link btn-primary btn-lg" data-original-title="Edit Task"> <i class="fa fa-edit"></i> </button> <button type="button" data-bs-toggle="tooltip" title="" class="btn btn-link btn-danger" data-original-title="Remove"> <i class="fa fa-times"></i> </button> </div> </td>';
+
+        $("#addRowButton").click(function () {
+          $("#add-row")
+            .dataTable()
+            .fnAddData([
+              $("#addName").val(),
+              $("#addPosition").val(),
+              $("#addOffice").val(),
+              action,
+            ]);
+          $("#addRowModal").modal("hide");
+        });
+      });
+    </script>
     <?php echo $__env->yieldContent('pagescript'); ?>
+
 </body>
 
 </html>

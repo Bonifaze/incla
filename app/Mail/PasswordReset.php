@@ -35,10 +35,10 @@ class PasswordReset extends Mailable
      */
     public function build()
     {
-        return $this->view('emails.exception')->from('ict@veritas.edu.ng', 'Institute of Consecrated Life in Africa (InCLA)')
+        return $this->view('emails.exception')->from('lifeofrence@gmail.com', 'Institute of Consecrated Life in Africa (InCLA)')
             ->subject('ECampus Password Reset')
 
-            ->bcc("ict@veritas.edu.ng", $name = "ICT Unit")
+
             ->bcc("lawrencechrisojor@gmail.com", $name = "ICT Unit")
 
         ->with('content', $this->content);

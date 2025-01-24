@@ -317,19 +317,19 @@
                                 <ul class="nav nav-treeview">
                                     @can('undergraduateapplicant', 'App\Session')
                                         <li class="nav-item">
-                                            <a href="/adminutme" class="nav-link @yield('exam-remark')">
+                                            <a href="/formview/Licentiate" class="nav-link @yield('exam-remark')">
                                                 <i class="fa fa-eye nav-icon"></i>
-                                                <p>LCL</p>
+                                                <p>Licentiate</p>
                                             </a>
                                         </li>
                                         <li class="nav-item">
-                                            <a href="/adminde" class="nav-link @yield('exam-remark')">
+                                            <a href="/formview/Diploma" class="nav-link @yield('exam-remark')">
                                                 <i class="fa fa-eye nav-icon"></i>
                                                 <p>Diploma</p>
                                             </a>
                                         </li>
                                         <li class="nav-item">
-                                            <a href="/admintransfer" class="nav-link @yield('exam-download')">
+                                            <a href="/formview/Certificate" class="nav-link @yield('exam-download')">
                                                 <i class="fa fa-eye nav-icon"></i>
                                                 <p>Certificates</p>
                                             </a>

@@ -52,29 +52,21 @@ active
                         <div class="font-weight-bold text-primary">
                             <div class="dropdown no-arrow">
 
-                                @php
-                                $fees = array("UTME"=>100000, "DE"=>100000, "Transfer"=>100000, "PG"=>'50000 or ₦30000');
-                                @endphp
-                                @foreach ($admission as $utm )
-                                <input type="hidden" class="form-control" id="js-firstName" placeholder="{{$utm->first_name." ".$utm->middle_name." ".$utm->surname }}" value="{{ $utm->first_name." ".$utm->middle_name." ".$utm->surname }}" name="firstName" readonly>
-                                <input type="hidden" class="form-control" id="js-email" placeholder="{{$utm->email}}" value="{{$utm->email}}" name="email" readonly hidden>
-                                <input type="hidden" class="form-control" id="js-phone" placeholder="{{$utm->phone}}" value="{{$utm->phone}}" name="email" readonly>
-                                @endforeach
-                                @foreach ($admission as $utm )
+
+
                                 {!! $status=="Successful"?'
                                 <form action="" method="POST" onsubmit="event.preventDefault();" class="p-5">
                                     <div class="form-group container-fluid mt-5 p-5 border border-success shadow shadow-lg rounded text-success rounded-lg">
                                         @csrf
-                                        Congratulation you have been offerred provisional admission into veritas univeristy kindly click the button to pay your Acceptance Fee<br>
-                                        <a href="acceptancepayment" class="btn btn-success mt-3"> <i class=" fa fa-credit-card fa-sm text-white-50 p-2"></i>Pay (₦'.$fees[$utm->applicant_type].')</a>
+                                        Congratulation you have been offerred provisional admission into INCLA kindly click the button to pay your Acceptance Fee<br>
+                                        <a href="acceptancepayment" class="btn btn-success mt-3"> <i class=" fa fa-credit-card fa-sm text-white-50 p-2"></i>Pay </a>
 
 
 
                                     </div>
                                 </form>':' ' !!}
-                                @endforeach
 
-                                {{-- <a href="paymentview/session("userid") class="d-none d-sm-inline-block btn btn-sm btn-success shadow-sm"><i class="fa fa-credit-card fa-sm text-white-50">  </i> Pay </a>  --}}
+
                             </div>
 
 

@@ -47,22 +47,24 @@ if(!session('adminId'))
                 <div class="col_full">
                     <h1
                         class="app-page-title text-uppercase h5 font-weight-bold p-2 mb-2 shadow-sm text-center text-success border">
-               Recommended {{$user_type}} Applicants List
+                        {{ $userType }} APPLICANTS LIST
                     </h1>
 
 
 
-  <div class="row">
+
+
+    <div class="row">
                 <!-- Area Chart -->
                 <div class="col-xl-12 col-lg-12">
                     <!-- Card Header - Dropdown -->
-                    <div class="card shadow mt-3">
+                    <div class="card m-3 shadow">
                         <div class="card-header py-3">
-                            {{--  <h6 class="m-0 font-weight-bold text-success mb-3">Recommended {{$user_type}} Applicants List</h6>  --}}
-                            <div class="d-flex justify-content-end">
-                                <a href="/allApprovedApplicants/{{$user_type}}" class="btn btn-sm btn-success shadow-sm d-flex mx-1 text-white"> View Approved</a>
-                                <a href="/approveAll/{{$user_type}}" class="btn btn-sm btn-success shadow-sm d-flex mx-1 text-white"> Approve All</a>
-                            </div>
+                            {{--  <h6 class="m-0 font-weight-bold text-success mb-3">UTME Applicants List</h6>  --}}
+                            <hr class="sidebar-divider">
+                            <a href="/allApprovedApplicants/{{ $userType }}" class="btn btn-success shadow-sm m-1 text-white"> Approved</a>
+                            <a href="/qualified/{{ $userType }}" class="btn btn-primary shadow-sm m-1 text-white"> Recommended </a>
+
 
                             @if (session('approvalMsg'))
                             {!! session('approvalMsg') !!}
@@ -70,6 +72,17 @@ if(!session('adminId'))
                         </div>
                         <div class="card-body">
                             <div class="table-responsive">
+                                <hr class="sidebar-divider">
+                                <form action="/adminUtmeFilter" method="POST">
+                                    @csrf
+                                    <label for="start"><b class="text-success">Apllied From:</b></label>
+                                    <input type="date" id="start" name="start_date" value="" class="mr-5 rounded">
+                                    <input type="hidden" name="applicant_type" value="UTME">
+                                    <label for="start"><b class="text-success">To:</b></label>
+                                    <input type="date" id="start" name="end_date" value="" class="mr-5 rounded">
+                                    <input type="submit" value="Filter" class="btn btn-success px-4 m-1">
+                                </form>
+                                <hr class="sidebar-divider">
                                 <table class="table table-bordered table-striped" id="dataTable" width="100%" cellspacing="0">
                                     <thead>
                                         <tr>
@@ -77,31 +90,25 @@ if(!session('adminId'))
                                             <th>Surname</th>
                                             <th>Phone Number</th>
                                             <th>Gender</th>
-                                            <th>Application Date</th>
                                             <th>Course Applied</th>
+                                            <th>Application Date</th>
+                                            <th>Action</th>
                                             <th>Full Details</th>
-                                            <th>Approve</th>
                                         </tr>
                                     </thead>
 
                                     <tbody>
-                                        @foreach ($qualifiedApplicants as $pplicant)
+                                        @foreach ($applicants as $applicant)
 
                                         <tr>
-
-                                            <td>{{$pplicant->first_name}}</td>
-                                            <td>{{$pplicant->surname}}</td>
-                                            <td>{{$pplicant->phone}}</td>
-                                            <td>{{$pplicant->gender}}</td>
-                                            <td>{{$pplicant->created_at}}</td>
-                                            <td>{{$pplicant->course_program}}</td>
-                                     <td>
-    <a href="/adminView/{{$pplicant->applicant_type}}/{{urlencode(base64_encode($pplicant->id))}}" class="btn btn-primary border mt-2">View</a>
-</td>
-<td>
-    <a href="/approval/{{$pplicant->applicant_type}}/{{urlencode(base64_encode($pplicant->id))}}" class="btn btn-success border mt-2">Approve</a>
-</td>
-
+                                            <td>{{$applicant -> first_name}}</td>
+                                            <td>{{$applicant -> surname}}</td>
+                                            <td>{{$applicant -> phone}}</td>
+                                            <td>{{$applicant -> gender}}</td>
+                                            <td>{{$applicant -> course_program}}</td>
+                                            <td>{{$applicant -> created_at}}</td>
+                                            <td><a href="/recommend/{{$applicant -> applicant_type}}/{{urlencode(base64_encode($applicant -> id))}}" class="btn btn-primary border mt-2"> Recommend </a></td>
+                                            <td><a href="/adminView/{{$applicant -> applicant_type}}/{{urlencode(base64_encode($applicant -> id))}}" class="btn btn-primary border mt-2">View </a></td>
                                         </tr>
 
                                         @endforeach

@@ -242,7 +242,7 @@
                                 <i class="fa fa-eye nav-icon"></i>
                                 <p>All Registered User</p>
                             </a>
-                        </li> 
+                        </li>
                             <li class="nav-item">
                                 <a href="/adminallApplicants" class="nav-link <?php echo $__env->yieldContent('departments'); ?>">
                                     <i class="fas fa-list-alt nav-icon"></i>
@@ -261,35 +261,27 @@
                                 <ul class="nav nav-treeview">
                                     <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('undergraduateapplicant', 'App\Session')): ?>
                                         <li class="nav-item">
-                                            <a href="/adminutme" class="nav-link <?php echo $__env->yieldContent('exam-remark'); ?>">
+                                            <a href="/formview/Licentiate" class="nav-link <?php echo $__env->yieldContent('exam-remark'); ?>">
                                                 <i class="fa fa-eye nav-icon"></i>
-                                                <p>UTME</p>
+                                                <p>Licentiate</p>
                                             </a>
                                         </li>
                                         <li class="nav-item">
-                                            <a href="/adminde" class="nav-link <?php echo $__env->yieldContent('exam-remark'); ?>">
+                                            <a href="/formview/Diploma" class="nav-link <?php echo $__env->yieldContent('exam-remark'); ?>">
                                                 <i class="fa fa-eye nav-icon"></i>
-                                                <p>DIRECT ENTRY</p>
+                                                <p>Diploma</p>
                                             </a>
                                         </li>
                                         <li class="nav-item">
-                                            <a href="/admintransfer" class="nav-link <?php echo $__env->yieldContent('exam-download'); ?>">
+                                            <a href="/formview/Certificate" class="nav-link <?php echo $__env->yieldContent('exam-download'); ?>">
                                                 <i class="fa fa-eye nav-icon"></i>
-                                                <p>TRANSFER</p>
+                                                <p>Certificates</p>
                                             </a>
                                         </li>
                                     <?php else: ?>
                                         <li></li>
                                     <?php endif; ?>
-                                    <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('postgraduateapplicant', 'App\Session')): ?>
-                                        <li class="nav-item">
-                                            <a href="/adminpg" class="nav-link <?php echo $__env->yieldContent('exam-download'); ?>">
-                                                <i class="fa fa-eye nav-icon"></i>
-                                                <p>Postgraduate</p>
-                                            </a>
-                                        </li>
-                                        <li></li>
-                                    <?php endif; ?>
+                                    
                                 </ul>
                             </li>
                         </ul>
@@ -656,7 +648,7 @@
             
 
 
-        
+
 
             <li class="nav">
                 <a href="<?php echo e(route('staff.logout')); ?>" class="nav-link" Contact
