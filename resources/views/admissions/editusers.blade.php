@@ -60,6 +60,10 @@
                             <input id="amount" type="text" class="form-input form-control m-3" name="first_name"
                                 required value="{{ $allApp->first_name }}" autofocus>
 
+                                 <label for="firstname">Middle Name:  <strong>{{ $allApp->middle_name }}</strong></label>
+                            <input id="amount" type="text" class="form-input form-control m-3" name="middle_name"
+                                required value="{{ $allApp->middle_name }}" autofocus>
+
                             <label for="">Phone:  <strong>{{ $allApp->phone }} </strong></label>
                             <input id="name" type="text" class="form-input form-control m-3" name="phone" required
                                 value="{{ $allApp->phone }}" autofocus>
@@ -76,10 +80,10 @@
                                 value="{{ $allApp->applicant_type }}" placeholder="Allicant Type" autofocus>  --}}
                             <select class="form-input form-control m-3" name="applicant_type">
                                 <option value="{{ $allApp->applicant_type }}" >{{ $allApp->applicant_type }}</option>
-                                <option value="DE"> DE</option>
-                                <option value="Transfer">Transfer</option>
-                                <option value="PG">PG</option>
-                                <option Value="UTME">UTME</option>
+                                <option value="Licentiate"> Licentiate</option>
+                                <option value="Diploma">Diploma</option>
+                                <option value="Certificate">Certificate</option>
+
 
 
                             </select>

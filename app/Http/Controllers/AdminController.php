@@ -2073,6 +2073,7 @@ public function changecourseTransfer(Request $req)
                 ->update([
 
                     'first_name' => $req->first_name,
+                    'middle_name' => $req->middle_name,
                     'surname' => $req->surname,
                     'email' => $req->email,
                     'phone' => $req->phone,

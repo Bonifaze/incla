@@ -127,14 +127,10 @@
                                                 'mode_of_entry',
                                                 [
                                                     ' ' => 'Select Mode of Entry',
-                                                    'UTME' => 'UTME',
-                                                    'DE' => 'Direct Entry',
-                                                    'TRANSFER' => 'Transfer',
-                                                    'PGD' => 'PGD',
-                                                    'MSc' => 'MSc',
-                                                    'MPA' => 'MPA',
-                                                    'MBA' => 'MBA',
-                                                    'PhD' => 'PhD',
+                                                    'Licentiate' => 'Licentiate',
+                                                    'Diploma' => 'Diploma ',
+                                                    'Certificate' => 'Certificate',
+
                                                 ],
                                                 ' ',
                                                 ['class' => 'form-control select2', 'id' => 'mode-of-entry-select'],
@@ -414,23 +410,23 @@
                                 {{--  <div class="col-md-4 form-group">
                                         <div @if ($errors->has('relationship')) class ='has-error form-group' @endif>  --}}
                                 {{--  <label for="relationship">Relationship with Contact / Sponsor :</label>  --}}
-                                {!! Form::hidden('relationship', $applicantsDetails->sponsor_relationship, [
-                                    'placeholder' => '',
-                                    'class' => 'form-control',
-                                    'id' => 'relationship',
-                                    'required' => 'required',
-                                ]) !!}
-                                <span class="text-danger"> {{ $errors->first('relationship') }}</span>
+
                                 {{--  </div>
                                     </div>
 
                                     <div class="col-md-4 form-group">
                                         <div @if ($errors->has('esurname')) class ='has-error form-group' @endif>  --}}
                                 {{--  <label for="esurname">Name :</label>  --}}
-                                {!! Form::hidden('esurname', $applicantsDetails->name, [
+                                {!! Form::hidden('esurname', $applicantsDetails->sponsor_surname, [
                                     'placeholder' => '',
                                     'class' => 'form-control',
                                     'id' => 'esurname',
+                                    'required' => 'required',
+                                ]) !!}
+                                 {!! Form::hidden('eother_names', $applicantsDetails->sponsor_othername, [
+                                    'placeholder' => '',
+                                    'class' => 'form-control',
+                                    'id' => 'eothername',
                                     'required' => 'required',
                                 ]) !!}
                                 {{--  <span class="text-danger"> {{ $errors->first('esurname') }}</span>

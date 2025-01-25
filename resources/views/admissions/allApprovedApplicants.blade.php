@@ -70,8 +70,8 @@ if(!session('adminId'))
                                     <table class="table table-bordered table-striped" id="dataTable" width="100%" cellspacing="0">
                                         <thead>
                                             <tr>
-                                                <th>First Name</th>
-                                                <th>Surname</th>
+
+                                                <th>Name</th>
                                                 <th>Phone Number</th>
                                                 <th>Gender</th>
                                                 <th>Course Applied</th>
@@ -85,8 +85,9 @@ if(!session('adminId'))
                                             @foreach ($allApplicants as $allApp)
 
                                             <tr>
-                                                <td>{{$allApp->first_name}}</td>
-                                                <td>{{$allApp->surname}}</td>
+
+                                        <td>{{ ucwords(strtolower($allApp->surname)) }} {{ ucwords(strtolower($allApp->first_name)) }} {{ ucwords(strtolower($allApp->middle_name)) }}</td>
+
                                                 <td>{{$allApp->phone}}</td>
                                                 <td>{{$allApp->gender}}</td>
                                                 <td>{{$allApp->course_program}}</td>

@@ -56,56 +56,20 @@ class AdminStudentsControllerApplicant extends Controller
         // dd($programs);
         $sessions = Session::where('status',1)->value('id');
         // dd($sessions);
-        $applicantsDetails = "";
-        if (session('usersType') ==  'UTME') {
-            $applicantsDetails = DB::table('users')->where('users.applicant_type', 'UTME')
+
+            $applicantsDetails = DB::table('users')
                 ->where('users.id', session('userid'))
                 ->leftJoin('usersbiodata', 'usersbiodata.user_id', '=', 'users.id')
-                ->leftJoin('utme', 'utme.user_id', '=', 'users.id')
+                ->leftJoin('academic_record', 'academic_record.user_id', '=', 'users.id')
                 ->leftJoin('sponsors', 'sponsors.user_id', '=', 'users.id')
-                ->leftJoin('olevel', 'olevel.user_id', '=', 'users.id')
                 ->leftJoin('uploads', 'uploads.user_id', '=', 'users.id')
-                ->select('users.*', 'usersbiodata.*', 'sponsors.*', 'utme.*', 'olevel.*', 'uploads.*')
+                ->select('users.*', 'usersbiodata.*', 'sponsors.*', 'academic_record.*',  'uploads.*')
                 ->first();
                 return view('admissions.students.admin.create',compact('applicantsDetails','programs', 'sessions'));
-        } elseif (session('usersType')  ==  'DE') {
-            $applicantsDetails = DB::table('users')->where('users.applicant_type', 'DE')
-                ->where('users.id', session('userid'))
-                ->leftJoin('usersbiodata', 'usersbiodata.user_id', '=', 'users.id')
-                ->leftJoin('de', 'de.user_id', '=', 'users.id')
-                ->leftJoin('sponsors', 'sponsors.user_id', '=', 'users.id')
-                ->leftJoin('olevel', 'olevel.user_id', '=', 'users.id')
-                ->leftJoin('uploads', 'uploads.user_id', '=', 'users.id')
-                ->select('users.*', 'usersbiodata.*', 'sponsors.*', 'de.*', 'olevel.*', 'uploads.*')
-                ->first();
-                return view('admissions.students.admin.create',compact('applicantsDetails','programs', 'sessions'));
-        } elseif (session('usersType')  ==  'Transfer') {
-            $applicantsDetails = DB::table('users')->where('users.applicant_type', 'Transfer')
-                ->where('users.id', session('userid'))
-                ->leftJoin('usersbiodata', 'usersbiodata.user_id', '=', 'users.id')
-                ->leftJoin('transfers', 'transfers.user_id', '=', 'users.id')
-                ->leftJoin('sponsors', 'sponsors.user_id', '=', 'users.id')
-                ->leftJoin('olevel', 'olevel.user_id', '=', 'users.id')
-                ->leftJoin('uploads', 'uploads.user_id', '=', 'users.id')
-                ->select('users.*', 'usersbiodata.*', 'sponsors.*', 'transfers.*', 'olevel.*', 'uploads.*')
-                ->first();
-                return view('admissions.students.admin.create',compact('applicantsDetails','programs', 'sessions'));
-        } elseif (session('usersType') ==  'PG') {
-            $applicantsDetails = DB::table('users')->where('users.applicant_type', 'PG')
-                ->where('users.id', session('userid'))
-                ->leftJoin('usersbiodata', 'usersbiodata.user_id', '=', 'users.id')
-                ->leftJoin('pgs', 'pgs.user_id', '=', 'users.id')
-                ->leftJoin('sponsors', 'sponsors.user_id', '=', 'users.id')
-                ->leftJoin('pg_referees', 'pg_referees.user_id', '=', 'users.id')
-                ->leftJoin('pg_educations', 'pg_educations.user_id', '=', 'users.id')
-                ->leftJoin('olevel', 'olevel.user_id', '=', 'users.id')
-                ->leftJoin('uploads', 'uploads.user_id', '=', 'users.id')
-                ->select('users.*', 'usersbiodata.*', 'sponsors.*', 'pgs.*', 'olevel.*', 'pg_referees.*', 'pg_educations.*', 'uploads.*')
-                ->first();
-                return view('admissions.students.admin.create',compact('applicantsDetails','programs', 'sessions'));
+
         }
-        // return view('students.admin.create',compact('applicantsDetails','programs', 'sessions'));
-    }
+
+
 
     function getloginurl()
     {
