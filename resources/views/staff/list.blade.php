@@ -14,7 +14,24 @@
 @section('staff-open')
     menu-open
 @endsection
+<style>
+  /* Styling for the small avatar container */
+  .avatar-sm {
+    width: 40px;  /* Set the container size to 40px */
+    height: 40px; /* Same height as width to keep it circular */
+    display: inline-flex; /* Ensure it stays inline */
+    justify-content: center;
+    align-items: center;
+  }
 
+  /* Styling for the image inside the avatar */
+  .avatar-img {
+    width: 100%;  /* Ensure the image fills the container */
+    height: 100%; /* Maintain aspect ratio within the container */
+    object-fit: cover; /* Ensure the image is properly cropped to fit */
+    border-radius: 50%; /* Ensure the image stays round */
+  }
+</style>
 @section('staff')
     active
 @endsection
@@ -38,10 +55,34 @@
                 <!-- left column -->
                 <div class="col_full">
 
-                    <h1
-                        class="app-page-title text-uppercase h5 font-weight-bold p-2 mb-2 shadow-sm text-center text-success border">
-                        List of Staff
-                    </h1>
+                  
+
+
+                    <h1 class="app-page-title text-uppercase h6 font-weight-bold p-3 mb-3 shadow-sm text-center text-white bg-success border rounded">
+                    Welcome to the List of InCLA Staff Page
+                </h1>
+
+
+
+
+                <div class="card-body ps-0" style="overflow-x: auto; white-space: nowrap; padding-bottom: 1rem;">
+                    <div class="d-flex">
+                        <!-- Avatar items with responsive grid classes -->
+                       @foreach ($staff as $key => $stf)
+
+                        <div class="col-lg-1 col-md-2 col-sm-3 col-4 text-center mb-3">
+                            <a href="{{ route('staff.view', $stf->id) }}" class="avatar avatar-sm rounded-circle border border-primary">
+                                <img alt="{{$stf->fullName }}" title="{{$stf->fullName }}" class="avatar-img" src="data:image/png;base64,{{ $stf->passport }}">
+                            </a>
+                            {{--  <p class="mb-0 text-sm" >{{$stf->fullName }}</p>  --}}
+                            <small class="mb-0 text-sm">{{$stf->fullName }}</small>
+                        </div>
+                        @endforeach
+
+                        <!-- More avatars can be added here -->
+                    </div>
+                </div>
+
                     <div class="card">
 
 
