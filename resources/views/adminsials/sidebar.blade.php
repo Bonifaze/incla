@@ -57,14 +57,7 @@
                         </a>
                     @endif
                     </li>
-                    {{--  <li class="nav-item ml-2">
-                        {!! session('status') =='4'?'
-                        <a class="nav-link collapsed" href="/viewprofile">
-                            <i class="fas fa-user"></i>
-                            <span>View Profile</span>
-                        </a>
-                        ':'' !!}
-                    </li>  --}}
+
                     <li class="nav-item">
                      @if(session('status') == '1')
                         <a href="/editprofile" class="nav-link @yield('profile')">

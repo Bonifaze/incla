@@ -47,72 +47,78 @@ class AdminStudentsControllerApplicant extends Controller
     //     $this->middleware('auth:staff');
     // }
 
-
-
-    public function create()
-    {
-        // $this->authorize('create',Student::class);
-        $programs = Program::orderBy('name','ASC')->pluck('name','id');
-        // dd($programs);
-        $sessions = Session::where('status',1)->value('id');
-        // dd($sessions);
-
-            $applicantsDetails = DB::table('users')
-                ->where('users.id', session('userid'))
-                ->leftJoin('usersbiodata', 'usersbiodata.user_id', '=', 'users.id')
-                ->leftJoin('academic_record', 'academic_record.user_id', '=', 'users.id')
-                ->leftJoin('sponsors', 'sponsors.user_id', '=', 'users.id')
-                ->leftJoin('uploads', 'uploads.user_id', '=', 'users.id')
-                ->select('users.*', 'usersbiodata.*', 'sponsors.*', 'academic_record.*',  'uploads.*')
-                ->first();
-                return view('admissions.students.admin.create',compact('applicantsDetails','programs', 'sessions'));
-
-        }
-
-
-
     function getloginurl()
     {
         return 'https://admissions.veritas.edu.ng/students/login';
     }
 
+    public function create()
+    {
+        // $this->authorize('create', Student::class);
+
+        // Fetch available programs and sessions
+        $programs = Program::orderBy('name', 'ASC')->pluck('name', 'id');
+        $sessions = Session::where('status', 1)->value('id');
+
+        // Get the current user's details
+        $applicantsDetails = DB::table('users')
+            ->where('users.id', session('userid'))
+            ->leftJoin('usersbiodata', 'usersbiodata.user_id', '=', 'users.id')
+            ->leftJoin('academic_record', 'academic_record.user_id', '=', 'users.id')
+            ->leftJoin('sponsors', 'sponsors.user_id', '=', 'users.id')
+            ->leftJoin('uploads', 'uploads.user_id', '=', 'users.id')
+            ->select('users.*', 'usersbiodata.*', 'sponsors.*', 'academic_record.*', 'uploads.*')
+            ->first();
+
+        // Dynamically fetch the program ID based on the course_program from the user's data
+        if ($applicantsDetails && isset($applicantsDetails->course_program)) {
+            $programId = DB::table('programs')
+                ->where('name', $applicantsDetails->course_program)
+                ->value('id');
+            $applicantsDetails->program_id = $programId ?? null; // Add program_id to the details
+        }
+
+        //Debug and return the data
+         // dd($applicantsDetails);
+        //dd($sessions);
+
+        return view('admissions.students.admin.create', compact('applicantsDetails', 'programs', 'sessions'));
+    }
+
+
+
+
+
+
     public function store(Request $request)
     {
-        // $this->authorize('create',Student::class);
-// dd($request);
-$validatedData = $request->validate([
-    //     'surname' => 'required|string|max:50',
-    //     'first_name' => 'required|string|max:50',
-    //     'middle_name' => 'sometimes|nullable|string|max:50',
-    //     'gender' => 'required|string|max:50',
-    //     'phone' => 'required|string|max:50',
-    //     'email' => 'required|string|email|max:100',
-    //     'title' => 'required|string|max:50',
-    //     'dob' => 'required|string|max:50',
-    //     'marital_status' => 'required|string|max:50',
-    //     'nationality' => 'required|string|max:100',
-    //     'state' => 'required|string|max:50',
-    //     'lga_name' => 'required|string|max:100',
-    //     'city' => 'required|string|max:50',
-    //     'hobbies' => 'required|string|max:200',
-    //     'religion' => 'required|string|max:50',
-    //     'address' => 'required|string|max:200',
-        'passport' => 'sometimes|image|mimes:jpeg,png,jpg,gif,svg|max:1048|dimensions:min_width=300',
-        'signature' => 'sometimes|image|mimes:jpeg,png,jpg,gif,svg|max:1048|dimensions:min_width=300',
+          // Check if a student record already exists for this user
+    $existingStudent = Student::where('user_id', session('userid'))->first();
 
-    ],
+    if ($existingStudent) {
+        $approvalMsg = '<div class="alert alert-danger alert-dismissible" role="alert"> <button type="button" class="close" data-dismiss="alert"> &times; </button> Matriculation Number Already Generated </div>';
 
-        $messages = [
-            'passport.dimensions'    => 'Passport Image is too small. Must be at least 400px wide.',
-            'signature.dimensions'    => 'Signature is too small. Must be at least 400px wide.',
-        ]);
+        return Redirect::back()->with('approvalMsg', $approvalMsg);
+
+
+    }
+        $applicantsDetails = DB::table('users')
+        ->where('users.id', session('userid'))
+        ->leftJoin('usersbiodata', 'usersbiodata.user_id', '=', 'users.id')
+        ->leftJoin('academic_record', 'academic_record.user_id', '=', 'users.id')
+        ->leftJoin('sponsors', 'sponsors.user_id', '=', 'users.id')
+        ->leftJoin('uploads', 'uploads.user_id', '=', 'users.id')
+        ->select('users.*', 'usersbiodata.*', 'sponsors.*', 'academic_record.*', 'uploads.*')
+        ->first();
+       // dd($request);
 
         $student = new Student();
+
         if($request->serial_no !== 0 AND $student->checkSerial($request->serial_no) === false)
         {
          $student->id = $request->serial_no;
         }
-        $student->user_id =$request->user_id;
+        $student->user_id =session('userid');
         $student->surname = $request->surname;
         $student->first_name = $request->first_name;
         $student->middle_name = $request->middle_name;
@@ -121,58 +127,21 @@ $validatedData = $request->validate([
         $student->email = $request->email;
         $student->title = $request->title;
         $student->dob = $request->dob;
-        $student->marital_status = $request->marital_status;
-        $student->nationality = $request->nationality;
+
+
         $student->state = $request->state;
         $student->lga_name = $request->lga_name;
         // $student->city = $request->city;
-        $student->hobbies = $request->hobbies;
-        $student->religion = $request->religion;
+
         $student->address = $request->address;
         $student->password = Hash::make('welcome');
         $student->status = 1;
 
         //temprary username
-        $student->username = "temporary@veritas.edu.ng";
-
-       // process Passport upload
-        if($request->hasFile('passport'))
-        {
-            $img1 = ($request->file('passport'));
-
-                $passport = ($img1);
-                $student->passport = $passport;
-        } // end Passport
-
-        //process Signature upload
-        if($request->hasFile('signature'))
-        {
-            $img2 = ($request->file('signature'));
-
-
-                $signature =($img2);
-                $student->signature = $signature;
-        } // end Signature
-        if($request->hasFile('passport'))
-        {
-            $img1 = Image::make($request->file('passport'))->resize(300, null, function ($constraint) {
-                $constraint->aspectRatio();
-            });
-                $passport = base64_encode($img1->encode()->encoded);
-                $student->passport = $passport;
-        } // end Passport
-
-
-        //process Signature upload
-        if($request->hasFile('signature'))
-        {
-            $img2 = Image::make($request->file('signature'))->resize(300, null, function ($constraint) {
-                $constraint->aspectRatio();
-            });
-
-                $signature = base64_encode($img2->encode()->encoded);
-                $student->signature = $signature;
-        } // end Signature
+        $student->username = "temporary@edu.ng";
+        // Include the passport (use the applicant's existing image if required)
+        $student->passport = $request->passport ?? $applicantsDetails->passport;
+        $student->signature = $request->signature ?? $applicantsDetails->signature;
 
 
        // emergency contacts or sponsor
@@ -183,38 +152,24 @@ $validatedData = $request->validate([
         $contact->phone = $request->ephone;
         $contact->email = $request->eemail;
         $contact->title = $request->etitle;
-        $contact->relationship = $request->relationship;
-        $contact->state = $request->estate;
-        $contact->city = $request->ecity;
+
         $contact->address = $request->eaddress;
 
         // academic information
         $academic = new StudentAcademic();
         $academic->mode_of_entry = $request->mode_of_entry;
-        $academic->mode_of_study = $request->mode_of_study;
-        $academic->jamb_no = $request->jamb_no;
-        $academic->jamb_score = $request->jamb_score;
         $academic->entry_session_id = $request->entry_session_id;
         $academic->program_id = $request->program_id;
-        $academic->level = $request->level;
+        $academic->level = 100;
+        $academic->mode_of_study = 'Full Time';
         // $academic->program_type = $request->program_type;
 
 
         // medical information
         $medical = new StudentMedical();
-        $medical->physical = $request->physical;
+
         $medical->blood_group = $request->blood_group;
         $medical->genotype = $request->genotype;
-        $medical->condition = $request->condition;
-        $medical->allergies = $request->allergies;
-
-        $studentCreditLoad1 = new StudentCreditLoad();
-        $studentCreditLoad1->semester =1;
-        $studentCreditLoad2 = new StudentCreditLoad();
-        $studentCreditLoad2->semester =2;
-
-        $studentDebit = new StudentDebt();
-
 
 
 
@@ -226,59 +181,26 @@ $validatedData = $request->validate([
             //saving logic here
             // $student->id=$this->studentID($request->only('program_id', 'entry_session_id', 'program_type'));
             $student->save();
-// dd($student);
+
             // save contact
             $contact->student_id = $student->id;
             $contact->save();
 
-            DB::table('remitas')->where('user_id', $request->user_id)
-            ->update([
+            // DB::table('remitas')->where('user_id', $request->user_id)
+            // ->update([
 
-                'student_id' => $student->id
+            //     'student_id' => $student->id
 
-            ]);
-            DB::table('student_billings')->where('user_id', $request->user_id)
-            ->update([
+            // ]);
 
-                'student_id' => $student->id
-
-            ]);
             //save academic
             $academic->student_id = $student->id;
-            $academic->mat_no = $student->setMatNo($request->program_id, $request->entry_session_id, $student->id, $request->mode_of_entry);
+            $academic->mat_no = $student->setMatNo($request->program_id, $request->entry_session_id, $student->id);
             $academic->save();
-            //save academic
-           /* $matric_count = MatricCount::where('program_id', $request->program_id)->where('program_type', $request->mode_of_entry)->where('session_id', $request->entry_session_id)->first();
-            $academic->student_id = $student->id;
-            $academic->mat_no = $this->genMatricNumber($request->only('program_id', 'entry_session_id', 'mode_of_entry'));
-            $academic->save();
-            if (!is_null($matric_count))
-            {
-                $count = $matric_count->count;
-                $matric_count->update(['count' => $count + 1]);
-            }else
-            {
-                $count = 0;
-                MatricCount::create(['program_id' => $request->program_id, 'program_type' => $request->mode_of_entry, 'session_id' => $request->entry_session_id, 'count' => $count + 1]);
-            } */
-            //save medical
+
             $medical->student_id = $student->id;
             $medical->save();
 
-            //save CreditLoad firstsemster
-            $studentCreditLoad1->student_id=$student->id;
-            $studentCreditLoad1->save();
-
-             //save CreditLoad secondsemester
-             $studentCreditLoad2->student_id=$student->id;
-             $studentCreditLoad2->save();
-
-             $studentDebit->student_id=$student->id;
-             $studentDebit->save();
-
-            //  $remita->student_id=$student->id;
-
-            // $student->id=$student->studentID($request->only('program_id', 'entry_session_id', 'program_type'));
             $student->username = $student->setVunaMail();
             $student->save();
 
@@ -374,12 +296,12 @@ $validatedData = $request->validate([
         $program_id = $fields['program_id'];
         $entry_session_id = $fields['entry_session_id'];
         // $program_type = $fields['program_type'];
-        $modeOfEntry = $fields['mode_of_entry'];
+        // $modeOfEntry = $fields['mode_of_entry'];
 
         $sess = Session::find($entry_session_id);
         $session = $sess->getCode();
 
-        $matric_count = MatricCount::where('program_id', $program_id)->where('program_type', $modeOfEntry)->where('session_id', $entry_session_id)->first();
+        $matric_count = MatricCount::where('program_id', $program_id)->where('session_id', $entry_session_id)->first();
         if (!is_null($matric_count))
         {
             $program_students_count = $matric_count->count;
@@ -389,51 +311,53 @@ $validatedData = $request->validate([
         }
 
         DB::table('student_academics')->where('program_id', $program_id)
-        ->where('entry_session_id', $entry_session_id)
-        ->where('mode_of_entry', $modeOfEntry)->count();
+            ->where('entry_session_id', $entry_session_id);
+        // ->where('mode_of_entry', $modeOfEntry)->count();
         // ->where('program_type', $program_type)->count();
 
         $new_number = $program_students_count + 1;
 
         $program = DB::table('programs')->find($program_id);
         $program_code = $program->code;
-        $deg = $program->masters;
+        // $deg = $program->masters;
 
         $formatted_num = sprintf('%04d', $new_number);
 
 
-        $deg = str_replace(".","",$deg);
-        $deg = str_replace(")","",$deg);
-        $deg = str_replace("(","",$deg);
-        $deg = str_replace(" ","",$deg);
-        switch ($modeOfEntry) {
-            case "UTME":
-                $matric_number= 'VUG/'.$session.'/'.$program_code.''.$formatted_num;
-                break;
-            case "DE":
-                $matric_number= 'VUG/'.$session.'/'.$program_code.''.$formatted_num;
-                break;
-            case "TRANSFER":
-                $matric_number= 'VUG/'.$session.'/'.$program_code.''.$formatted_num;
-                break;
-            case "PGD":
-                $matric_number = "VPG/PGD/".$session.'/'.$program_code.''.$formatted_num;
-                break;
-            case "MSc":
-                $matric_number = "VPG/".$deg."/".$session.'/'.$program_code.''.$formatted_num;
-                break;
-            case "PhD":
-                $matric_number = "VPG/PHD/".$session.'/'.$program_code.''.$formatted_num;
-                break;
-            case "MBA":
-                    $matric_number = "VPG/MBA/".$session.'/'.$program_code.''.$formatted_num;
-                break;
-            case "MPA":
-                    $matric_number = "VPG/MPA/".$session.'/'.$program_code.''.$formatted_num;
-                    break;
-            default:
-             $matric_number= 'VUG/'.$session.'/'.$program_code.''.$formatted_num;
-        }
+        // $deg = str_replace(".","",$deg);
+        // $deg = str_replace(")","",$deg);
+        // $deg = str_replace("(","",$deg);
+        // $deg = str_replace(" ","",$deg);
+
+        $matric_number= 'InCLA/'.$program_code.'/'.$session.''.$formatted_num;
+        // switch ($modeOfEntry) {
+        //     case "UTME":
+        //         $matric_number= 'VUG/'.$session.'/'.$program_code.''.$formatted_num;
+        //         break;
+        //     case "DE":
+        //         $matric_number= 'VUG/'.$session.'/'.$program_code.''.$formatted_num;
+        //         break;
+        //     case "TRANSFER":
+        //         $matric_number= 'VUG/'.$session.'/'.$program_code.''.$formatted_num;
+        //         break;
+        //     case "PGD":
+        //         $matric_number = "VPG/PGD/".$session.'/'.$program_code.''.$formatted_num;
+        //         break;
+        //     case "MSc":
+        //         $matric_number = "VPG/".$deg."/".$session.'/'.$program_code.''.$formatted_num;
+        //         break;
+        //     case "PhD":
+        //         $matric_number = "VPG/PHD/".$session.'/'.$program_code.''.$formatted_num;
+        //         break;
+        //     case "MBA":
+        //             $matric_number = "VPG/MBA/".$session.'/'.$program_code.''.$formatted_num;
+        //         break;
+        //     case "MPA":
+        //             $matric_number = "VPG/MPA/".$session.'/'.$program_code.''.$formatted_num;
+        //             break;
+        //     default:
+        //      $matric_number= 'VUG/'.$session.'/'.$program_code.''.$formatted_num;
+        // }
 
         // $matric_number = 'VUG/'.$program_code.'/'. $session . '/'. $formatted_num;
 

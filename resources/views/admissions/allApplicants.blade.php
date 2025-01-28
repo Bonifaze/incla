@@ -65,7 +65,7 @@ active
                                     <table class="table table-bordered table-striped" id="dataTable" width="100%" cellspacing="0">
                                         <thead>
                                             <tr>
-
+                                                   <th>Passport</th>
                                                 <th>First Name</th>
                                                 <th>Surname</th>
                                                 <th>Phone Number</th>
@@ -80,7 +80,12 @@ active
                                             @foreach ($allApplicants as $allApp)
 
                                             <tr>
-
+                                                <td>
+                                                  <a href="data:image/png;base64,{{ $allApp->passport }}"
+                                                    data-toggle="lightbox" data-title="Passport">
+                                                    <img src="data:image/png;base64,{{ $allApp->passport }}"
+                                                        class="img elevation-2" alt="Passport" width="50px">
+                                                </a></td>
                                                 <td>{{$allApp->first_name}}</td>
                                                 <td>{{$allApp->surname}}</td>
                                                 <td>{{$allApp->phone}}</td>

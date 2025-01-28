@@ -2,26 +2,27 @@
 
 namespace App\Http\Controllers;
 
-use App\Category;
+use Exception;
 use App\FeeType;
 //use App\program;
-use App\Http\Controllers\Controller;
-use App\Mail\Confirmsignup;
-use App\Mail\forgotpassword;
-use App\Mail\Referee;
-use App\Models\admissionType;
-use App\Models\CountryCodes;
-use App\Models\fee_types;
-use App\Models\Remitas;
 use App\Program;
+use App\Session;
+use App\Category;
 use App\subjects;
 use Carbon\Carbon;
-use Exception;
-use Illuminate\Database\QueryException;
+use App\Mail\Referee;
+use App\Models\Remitas;
+use App\Models\fee_types;
+use App\Mail\Confirmsignup;
+use App\Mail\forgotpassword;
+use App\Models\CountryCodes;
 use Illuminate\Http\Request;
+use App\Models\admissionType;
 use Illuminate\Support\Facades\DB;
+use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Database\QueryException;
 use Intervention\Image\ImageManagerStatic as Image;
 
 //use Intervention\Image\ImageManagerStatic as Image;
@@ -1084,9 +1085,29 @@ class ApplicantController extends Controller
         }
         $admission = DB::table('users')->where('users.id', session('userid'))
             ->leftJoin('usersbiodata', 'usersbiodata.user_id', '=', 'users.id')
-            ->leftJoin('utme', 'utme.user_id', '=', 'users.id')->get();
+            ->get();
+            $programs = Program::orderBy('name', 'ASC')->pluck('name', 'id');
+            $sessions = Session::where('status', 1)->value('id');
 
-        return view('admissions./admission', compact('status', 'admission'));
+        // Get the current user's details
+        $applicantsDetails = DB::table('users')
+            ->where('users.id', session('userid'))
+            ->leftJoin('usersbiodata', 'usersbiodata.user_id', '=', 'users.id')
+            ->leftJoin('academic_record', 'academic_record.user_id', '=', 'users.id')
+            ->leftJoin('sponsors', 'sponsors.user_id', '=', 'users.id')
+            ->leftJoin('uploads', 'uploads.user_id', '=', 'users.id')
+            ->select('users.*', 'usersbiodata.*', 'sponsors.*', 'academic_record.*', 'uploads.*')
+            ->first();
+
+        // Dynamically fetch the program ID based on the course_program from the user's data
+        if ($applicantsDetails && isset($applicantsDetails->course_program)) {
+            $programId = DB::table('programs')
+                ->where('name', $applicantsDetails->course_program)
+                ->value('id');
+            $applicantsDetails->program_id = $programId ?? null; // Add program_id to the details
+        }
+
+        return view('admissions./admission', compact('status', 'admission', 'applicantsDetails','sessions'));
     }
 
     public function completeadmissions()
@@ -2506,26 +2527,7 @@ class ApplicantController extends Controller
 
     // *******************************************************************
 
-    public function viewprofile()
-    {
 
-        // $app_id = base64_decode(urldecode($id));
-
-        $applicantsDetails = "";
-        if (session('usersType') == 'Diploma' || session('usersType') == 'Licentiate' || session('usersType') == 'Certificate') {
-            $applicantsDetails = DB::table('users')->where('users.applicant_type', 'Diploma')
-                ->where('users.id', session('userid'))
-                ->leftJoin('usersbiodata', 'usersbiodata.user_id', '=', 'users.id')
-                ->leftJoin('academic_record', 'academic_record.user_id', '=', 'users.id')
-                ->leftJoin('sponsors', 'sponsors.user_id', '=', 'users.id')
-                ->leftJoin('olevel', 'olevel.user_id', '=', 'users.id')
-                ->leftJoin('uploads', 'uploads.user_id', '=', 'users.id')
-                ->select('users.*', 'usersbiodata.*', 'sponsors.*', 'academic_record.*', 'olevel.*', 'uploads.*')
-                ->first();
-            return view('admissions./viewprofile', compact('applicantsDetails'));
-
-        }
-    }
     // END OF CLASS CLOSING TAG
 
     //*****************************************EDIT PROFILE ******************************************************
@@ -2543,27 +2545,6 @@ class ApplicantController extends Controller
 
     }
 
-    public function editprofile()
-    {
-
-        // $app_id = base64_decode(urldecode($id));
-
-        $applicantsDetails = "";
-        if (session('usersType') == 'Diploma' || session('usersType') == 'Licentiate' || session('usersType') == 'Certificate') {
-            $applicantsDetails = DB::table('users')->where('users.applicant_type', 'Diploma')
-                ->where('users.id', session('userid'))
-                ->leftJoin('usersbiodata', 'usersbiodata.user_id', '=', 'users.id')
-                ->leftJoin('academic_record', 'academic_record.user_id', '=', 'users.id')
-                ->leftJoin('sponsors', 'sponsors.user_id', '=', 'users.id')
-                ->leftJoin('olevel', 'olevel.user_id', '=', 'users.id')
-                ->leftJoin('uploads', 'uploads.user_id', '=', 'users.id')
-                ->select('users.*', 'usersbiodata.*', 'sponsors.*', 'academic_record.*', 'olevel.*', 'uploads.*')
-                ->first();
-            return view('admissions./editprofile', compact('applicantsDetails'));
-
-        }
-
-    }
 
     public function changepassword(Request $req)
     {
@@ -3351,20 +3332,28 @@ class ApplicantController extends Controller
             });
             $passportImage = base64_encode($image->encode()->encoded);
         }
+        $signatureImage = null;
+        if ($req->hasFile('signature')) {
+            $image = Image::make($req->file('signature'))->resize(300, null, function ($constraint) {
+                $constraint->aspectRatio();
+            });
+            $signatureImage = base64_encode($image->encode()->encoded);
+        }
 
         // Insert Biodata
         DB::table('usersbiodata')->insert([
             'user_id' => session('userid'),
-
+            'title' =>$req->title,
             'gender' => $req->gender,
-
             'dob' => $req->dob,
-
+            'blood_group'=>$req->blood_group,
+            'genotype'=>$req->genotype,
             'lga' => $req->lga,
             'state_origin' => $req->state_origin,
             'address' => $req->address,
             'session_id' => $this->getCurrentAdmissionSession(),
             'passport' => $passportImage,
+            'signature' => $signatureImage,
 
 
         ]);
@@ -3449,6 +3438,62 @@ private function handleFileUpload($file)
         return base64_encode($image->encode()->encoded);
     }
     return null;
+}
+
+
+public function viewprofile()
+{
+    // Fetch the user's type directly from the database
+    $userType = DB::table('users')
+        ->where('id', session('userid'))
+        ->value('applicant_type'); // Assuming 'applicant_type' is the column for user type
+
+    $applicantsDetails = "";
+
+    if (in_array($userType, ['Diploma', 'Licentiate', 'Certificate'])) {
+        $applicantsDetails = DB::table('users')
+            ->where('users.applicant_type', $userType) // Use the fetched user type
+            ->where('users.id', session('userid'))
+            ->leftJoin('usersbiodata', 'usersbiodata.user_id', '=', 'users.id')
+            ->leftJoin('academic_record', 'academic_record.user_id', '=', 'users.id')
+            ->leftJoin('sponsors', 'sponsors.user_id', '=', 'users.id')
+            ->leftJoin('uploads', 'uploads.user_id', '=', 'users.id')
+            ->select('users.*', 'usersbiodata.*', 'sponsors.*', 'academic_record.*', 'uploads.*')
+            ->first();
+
+        return view('admissions./viewprofile', compact('applicantsDetails'));
+    }
+
+    // Optionally handle cases where userType is not one of the allowed values
+    return redirect()->back()->with('error', 'Invalid user type.');
+}
+
+public function editprofile()
+{
+    // Fetch the user's type directly from the database
+    $userType = DB::table('users')
+        ->where('id', session('userid'))
+        ->value('applicant_type'); // Assuming 'applicant_type' is the column for user type
+
+    $applicantsDetails = "";
+
+    if (in_array($userType, ['Diploma', 'Licentiate', 'Certificate'])) {
+        $applicantsDetails = DB::table('users')
+            ->where('users.applicant_type', $userType) // Use the fetched user type
+            ->where('users.id', session('userid'))
+            ->leftJoin('usersbiodata', 'usersbiodata.user_id', '=', 'users.id')
+            ->leftJoin('academic_record', 'academic_record.user_id', '=', 'users.id')
+            ->leftJoin('sponsors', 'sponsors.user_id', '=', 'users.id')
+
+            ->leftJoin('uploads', 'uploads.user_id', '=', 'users.id')
+            ->select('users.*', 'usersbiodata.*', 'sponsors.*', 'academic_record.*', 'uploads.*')
+            ->first();
+
+        return view('admissions./editprofile', compact('applicantsDetails'));
+    }
+
+    // Optionally handle cases where userType is not one of the allowed values
+    return redirect()->back()->with('error', 'Invalid user type.');
 }
 
 

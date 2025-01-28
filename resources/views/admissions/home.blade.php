@@ -86,19 +86,46 @@ active
 
                                 </div>
 
-                                <div class="form-group">
-                                    <div class="form-row form-row-1">
-                                        <label for="bld">Blood Group</label>
-                                        <input type="text" name="bld" id="bld" class="inpute-text @error('bld') is-invalid @enderror" placeholder="O+, O- " required>
-                                    </div>
+                              <div class="form-group">
+    <!-- Blood Group Dropdown -->
+    <div class="form-row form-row-1">
+        <label for="bld">Blood Group</label>
+        <select name="blood_group" id="bld" class="input-text @error('bld') is-invalid @enderror" required>
+            <option value="" disabled selected>Select Blood Group</option>
+            <option value="O+">O+</option>
+            <option value="O-">O-</option>
+            <option value="A+">A+</option>
+            <option value="A-">A-</option>
+            <option value="B+">B+</option>
+            <option value="B-">B-</option>
+            <option value="AB+">AB+</option>
+            <option value="AB-">AB-</option>
+        </select>
+        @error('bld')
+        <span class="invalid-feedback" role="alert">
+            <strong>{{ $message }}</strong>
+        </span>
+        @enderror
+    </div>
 
+    <!-- Genotype Dropdown -->
+    <div class="form-row form-row-2">
+        <label for="genotype">Genotype</label>
+        <select name="genotype" id="genotype" class="input-text @error('genotype') is-invalid @enderror" required>
+            <option value="" disabled selected>Select Genotype</option>
+            <option value="AA">AA</option>
+            <option value="AS">AS</option>
+            <option value="SS">SS</option>
+            <option value="AC">AC</option>
+        </select>
+        @error('genotype')
+        <span class="invalid-feedback" role="alert">
+            <strong>{{ $message }}</strong>
+        </span>
+        @enderror
+    </div>
+</div>
 
-                                    <div class="form-row form-row-2">
-                                        <label for="genotype">Genotype </label>
-                                        <input type="text" name="genotype" id="genotype" class="input-text @error('genotype') is-invalid @enderror" placeholder="AA, AS " required>
-                                    </div>
-
-                                </div>
 
                                 <div class="form-group">
                                     <div class="form-row form-row-1 @if ($errors->has('state_origin')) has-error @endif">
@@ -176,7 +203,7 @@ active
 
                                     <div class="form-row form-row-2">
                                         <label for="sponsors_fn">Phone Number</label>
-                                        <input type="text" name="sponsor_phone" class="phone" id="phone" placeholder="Phone Number">
+                                        <input type="text" name="sponsor_phone" class="phone" id="phone" placeholder="Phone Number" required>
                                     </div>
                                 </div>
 
@@ -195,8 +222,8 @@ active
                                                 name: "course_program"
                                                 , placeholder: "Select Licentiate Type"
                                                 , options: [{
-                                                    value: "LCL - Licentiate in Theology of Consecrated Life"
-                                                    , label: "LCL - Licentiate in Theology of Consecrated Life"
+                                                    value: "Licentiate in Theology of Consecrated Life"
+                                                    , label: "Licentiate in Theology of Consecrated Life"
                                                 }]
                                             }
                                             , {
@@ -237,20 +264,20 @@ active
                                                 name: "course_program"
                                                 , placeholder: "Type of Diploma"
                                                 , options: [{
-                                                        value: "DBT - Diploma in Basic Theology"
-                                                        , label: "DBT - Diploma in Basic Theology"
+                                                        vaDiploma in Basic Theology"
+                                                        , laDiploma in Basic Theology"
                                                     }
                                                     , {
-                                                        value: "DFF - Diploma in Formation of Formators"
-                                                        , label: "DFF - Diploma in Formation of Formators"
+                                                        vaDiploma in Formation of Formators"
+                                                        , laDiploma in Formation of Formators"
                                                     }
                                                     , {
-                                                        value: "DSD - Diploma in Spiritual Direction"
-                                                        , label: "DSD - Diploma in Spiritual Direction"
+                                                        vaDiploma in Spiritual Direction"
+                                                        , laDiploma in Spiritual Direction"
                                                     }
                                                     , {
-                                                        value: "DCL - Diploma in Theology of Consecrated Life"
-                                                        , label: "DCL - Diploma in Theology of Consecrated Life"
+                                                        vaDiploma in Theology of Consecrated Life"
+                                                        , laDiploma in Theology of Consecrated Life"
                                                     }
                                                 ]
                                             }
@@ -283,24 +310,24 @@ active
                                                 name: "course_program"
                                                 , placeholder: "Type of Certificate"
                                                 , options: [{
-                                                        value: "CBT - Certificate in Basic Theology"
-                                                        , label: "CBT - Certificate in Basic Theology"
+                                                        value: "Certificate in Basic Theology"
+                                                        , label: "Certificate in Basic Theology"
+
+                                                    , {
+                                                        value: "Certificate in Formation of Formators"
+                                                        , label: "Certificate in Formation of Formators"
                                                     }
                                                     , {
-                                                        value: "CFF - Certificate in Formation of Formators"
-                                                        , label: "CFF - Certificate in Formation of Formators"
+                                                        value: "Certificate in Spiritual Direction"
+                                                        , label: "Certificate in Spiritual Direction"
                                                     }
                                                     , {
-                                                        value: "CSD - Certificate in Spiritual Direction"
-                                                        , label: "CSD - Certificate in Spiritual Direction"
+                                                        value: "Certificate in Chapter Facilitation"
+                                                        , label: "Certificate in Chapter Facilitation"
                                                     }
                                                     , {
-                                                        value: "CCF - Certificate in Chapter Facilitation"
-                                                        , label: "CCF - Certificate in Chapter Facilitation"
-                                                    }
-                                                    , {
-                                                        value: "CFP - Certificate in Fundraising & Project Management"
-                                                        , label: "CFP - Certificate in Fundraising & Project Management"
+                                                        value: "Certificate in Fundraising & Project Management"
+                                                        , label: "Certificate in Fundraising & Project Management"
                                                     }
                                                 ]
                                             }

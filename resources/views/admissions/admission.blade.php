@@ -35,6 +35,9 @@ active
                 <div class="col-12">
                     <div class="card shadow mb-4">
                         <!-- Card Header - Dropdown -->
+                         @if (session('approvalMsg'))
+                                    {!! session('approvalMsg') !!}
+                                @endif
                         <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
                             <h6 class="m-0 font-weight-bold text-success">Admission Status : {{ $status }}</h6>
                             <div class="dropdown no-arrow">
@@ -54,17 +57,248 @@ active
 
 
 
-                                {!! $status=="Successful"?'
+                                {{--  {!! $status=="Successful"?'
                                 <form action="" method="POST" onsubmit="event.preventDefault();" class="p-5">
                                     <div class="form-group container-fluid mt-5 p-5 border border-success shadow shadow-lg rounded text-success rounded-lg">
                                         @csrf
-                                        Congratulation you have been offerred provisional admission into INCLA kindly click the button to pay your Acceptance Fee<br>
-                                        <a href="acceptancepayment" class="btn btn-success mt-3"> <i class=" fa fa-credit-card fa-sm text-white-50 p-2"></i>Pay </a>
+                                        Congratulation you have been offerred provisional admission into INCLA <br>
 
 
 
                                     </div>
-                                </form>':' ' !!}
+                                </form>':' ' !!}  --}}
+
+                                @if ($status=="Successful")
+ <div class="form-group container-fluid mt-5 p-5 border border-success shadow shadow-lg rounded text-success rounded-lg">
+
+                                        Congratulation you have been offerred provisional admission into INCLA <br>
+
+                                  <form method="POST" action="/admissions/students/store" enctype="multipart/form-data" class="p-3">
+                            @csrf
+
+
+
+
+
+
+                                      {!! Form::hidden('program_id', $applicantsDetails->program_id, [
+
+
+                                            'id' => 'program_id',
+                                            'required' => 'required',
+                                            'readonly',
+                                        ]) !!}
+                                            {!! Form::hidden('title', $applicantsDetails->title, [
+
+
+                                                    'id' => 'title',
+                                                    'name' => 'title',
+                                                    'required' => 'required',
+                                                ]) !!}
+
+                                                 {!! Form::hidden('mode_of_entry', $applicantsDetails->admission_type, [
+
+
+
+                                                    'name' => 'mode_of_entry',
+                                                    'required' => 'required',
+                                                ]) !!}
+
+
+                                        {!! Form::hidden('surname', $applicantsDetails->surname, [
+                                            'placeholder' => '',
+                                            'class' => 'form-control',
+                                            'id' => 'surname',
+                                            'required' => 'required',
+                                            'readonly',
+                                        ]) !!}
+
+
+
+
+                                        {!! Form::hidden('first_name', $applicantsDetails->first_name, [
+                                            'placeholder' => '',
+                                            'class' => 'form-control',
+                                            'id' => 'first_name',
+                                            'required' => 'required',
+                                            'readonly',
+                                        ]) !!}
+
+                                        {!! Form::hidden('middle_name', $applicantsDetails->middle_name, [
+                                            'placeholder' => '',
+                                            'class' => 'form-control',
+                                            'id' => 'middle_name',
+                                            'readonly',
+                                        ]) !!}
+
+
+
+                                    {!! Form::hidden('gender', $applicantsDetails->gender, [
+                                        'placeholder' => '',
+                                        'class' => 'form-control',
+                                        'id' => 'middle_name',
+                                        'readonly',
+                                    ]) !!}
+
+
+
+                                    {!! Form::hidden('phone', $applicantsDetails->phone, [
+                                        'placeholder' => '080xxxxx',
+                                        'class' => 'form-control',
+                                        'id' => 'phone',
+                                        'name' => 'phone',
+                                        'required' => 'required',
+                                        'readonly',
+                                    ]) !!}
+
+                                    {!! Form::hidden('dob', $applicantsDetails->dob, [
+                                        'placeholder' => '',
+                                        'class' => 'form-control',
+                                        'id' => 'dob',
+                                        'name' => 'dob',
+                                        'readonly',
+                                    ]) !!}
+
+                                    {!! Form::hidden('email', $applicantsDetails->email, [
+                                        'placeholder' => 'john@doe.com',
+                                        'class' => 'form-control',
+                                        'id' => 'email',
+                                        'name' => 'email',
+                                        'readonly',
+                                    ]) !!}
+
+
+
+
+
+                                    {!! Form::hidden('state', $applicantsDetails->state_origin, [
+                                        'placeholder' => 'Imo',
+                                        'class' => 'form-control',
+                                        'id' => 'state',
+                                        'name' => 'state',
+                                        'required' => 'required',
+                                        'readonly',
+                                    ]) !!}
+
+
+                                    {!! Form::hidden('lga_name', $applicantsDetails->lga, [
+                                        'placeholder' => 'Ahiazu-Mbaise',
+                                        'class' => 'form-control',
+                                        'id' => 'lga_name',
+                                        'name' => 'lga_name',
+                                        'required' => 'required',
+                                        'readonly',
+                                    ]) !!}
+
+
+
+                                    {!! Form::hidden('address', $applicantsDetails->address, [
+                                        'placeholder' => '',
+                                        'rows' => '3',
+                                        'class' => 'form-control',
+                                        'id' => 'address',
+                                        'required' => 'required',
+                                        'readonly',
+                                    ]) !!}
+
+
+
+                                {!! Form::hidden('esurname', $applicantsDetails->sponsor_surname, [
+                                    'placeholder' => '',
+                                    'class' => 'form-control',
+                                    'id' => 'esurname',
+                                    'required' => 'required',
+                                ]) !!}
+                                 {!! Form::hidden('eother_names', $applicantsDetails->sponsor_othername, [
+                                    'placeholder' => '',
+                                    'class' => 'form-control',
+                                    'id' => 'eothername',
+                                    'required' => 'required',
+                                ]) !!}
+
+
+
+
+                                {!! Form::hidden('eemail', $applicantsDetails->sponsors_email, [
+                                    'placeholder' => 'john@doe.com',
+                                    'class' => 'form-control',
+                                    'id' => 'eemail',
+                                    'name' => 'eemail',
+                                    'readonly',
+                                ]) !!}
+
+                                {!! Form::hidden('ephone', $applicantsDetails->sponsors_phone, [
+                                    'placeholder' => '080xxxxx',
+                                    'class' => 'form-control',
+                                    'id' => 'ephone',
+                                    'name' => 'ephone',
+                                    'required' => 'required',
+                                    'readonly',
+                                ]) !!}
+
+                                {!! Form::hidden('eaddress', $applicantsDetails->sponsors_address, [
+                                    'placeholder' => '',
+                                    'rows' => '4',
+                                    'class' => 'form-control',
+                                    'id' => 'eaddress',
+                                    'required' => 'required',
+                                    'readonly',
+                                ]) !!}
+
+
+
+
+                                    {!! Form::hidden('serial_no', 0, [
+                                        'placeholder' => '',
+                                        'class' => 'form-control',
+                                        'id' => 'serial_no',
+                                        'readonly',
+                                    ]) !!}
+
+                                    {!! Form::hidden('mode_of_study', 'Full Time', [
+                                        'placeholder' => '',
+                                        'rows' => '4',
+                                        'class' => 'form-control',
+                                        'id' => 'eaddress',
+                                        'required' => 'required',
+                                        'readonly',
+                                    ]) !!}
+
+
+
+                                        {!! Form::hidden('entry_session_id', $sessions, [
+                                            'placeholder' => '',
+                                            'rows' => '4',
+                                            'class' => 'form-control',
+                                            'id' => 'entry_session_id',
+                                            'required' => 'required',
+                                            'readonly',
+                                        ]) !!}
+
+                                    {!! Form::hidden('blood_group', $applicantsDetails->blood_group, [
+                                    'required' => 'required',
+                                    'readonly',
+                                ]) !!}
+
+                                   {!! Form::hidden('genotype', $applicantsDetails->genotype, [
+                                    'placeholder' => '',
+
+                                    'required' => 'required',
+                                    'readonly',
+                                ]) !!}
+
+                                  <div class="position-relative mt-5">
+                                    <button type="submit" class="btn btn-success " data-bs-toggle="modal"
+                                        data-bs-target="#myModal"><i class="fas fa-cogs"></i>
+                                        {{ __('Generate Matric Number') }}</button>
+                                    {{--  <button type="submit" onclick="deleteCourse()" class="btn btn-success position-absolute bottom-0 end-0" data-bs-toggle="modal" data-bs-target="#myModal">{{ __('Generate Matric Number') }}</button>  --}}
+                                </div>
+
+            {!! Form::close() !!}
+            </div>
+            @else
+
+                                @endif
 
 
                             </div>

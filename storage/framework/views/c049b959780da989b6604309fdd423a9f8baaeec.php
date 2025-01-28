@@ -57,7 +57,7 @@
                         </a>
                     <?php endif; ?>
                     </li>
-                    
+
                     <li class="nav-item">
                      <?php if(session('status') == '1'): ?>
                         <a href="/editprofile" class="nav-link <?php echo $__env->yieldContent('profile'); ?>">

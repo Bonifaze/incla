@@ -578,6 +578,7 @@ public function uploadScores(Request $request)
             ->select(
                 'users.*',
                 'usersbiodata.gender',
+                'usersbiodata.passport',
                 // 'usersbiodata.passport', 'usersbiodata.passport_type',
                 'academic_record.course_program'
             )
@@ -1246,50 +1247,6 @@ public function changecourseTransfer(Request $req)
     }
 
 
-
-    //View Recommended Applicants
-    public function viewRecommendedApplicants($user_type){
-        $staff = Auth::guard('staff')->user();
-        // if ($this->hasPriviledge("allApprovedApplicants",  $staff->id)) {
-            $allApplicants = "";
-            if ($user_type == "UTME") {
-                $allApplicants = DB::table('recommended_applicants')
-                    ->join('users', 'recommended_applicants.user_id', '=', 'users.id')
-                    ->join('usersbiodata', 'usersbiodata.user_id', '=', 'recommended_applicants.user_id')
-                    ->join('utme', 'utme.user_id', '=', 'recommended_applicants.user_id')
-                  //  ->select('users.*', 'usersbiodata.passport', 'usersbiodata.passport_type', 'usersbiodata.gender', 'utme.course_applied', 'recommended_applicants.*')
-                     ->select('users.*', 'usersbiodata.gender', 'utme.course_applied', 'recommended_applicants.*')
-                    ->get()->toArray();
-            } elseif ($user_type == "DE") {
-                $allApplicants = DB::table('recommended_applicants')
-                    ->join('users', 'recommended_applicants.user_id', '=', 'users.id')
-                    ->join('usersbiodata', 'usersbiodata.user_id', '=', 'recommended_applicants.user_id')
-                    ->join('de', 'de.user_id', '=', 'recommended_applicants.user_id')
-                    ->select('users.*', 'usersbiodata.passport', 'usersbiodata.passport_type', 'usersbiodata.gender', 'de.course_applied', 'recommended_applicants.*')
-                    ->get()->toArray();
-            } elseif ($user_type == "TRANSFER") {
-                $allApplicants = DB::table('recommended_applicants')
-                    ->join('users', 'recommended_applicants.user_id', '=', 'users.id')
-                    ->join('usersbiodata', 'usersbiodata.user_id', '=', 'recommended_applicants.user_id')
-                    ->join('transfers', 'transfers.user_id', '=', 'recommended_applicants.user_id')
-                    ->select('users.*', 'usersbiodata.passport', 'usersbiodata.passport_type', 'usersbiodata.gender', 'transfers.course_applied', 'recommended_applicants.*')
-                    ->get()->toArray();
-            } elseif ($user_type == "PG") {
-                $allApplicants = DB::table('recommended_applicants')
-                    ->join('users', 'recommended_applicants.user_id', '=', 'users.id')
-                    ->join('usersbiodata', 'usersbiodata.user_id', '=', 'recommended_applicants.user_id')
-                    ->join('pgs', 'pgs.user_id', '=', 'recommended_applicants.user_id')
-                    ->select('users.*', 'usersbiodata.passport', 'usersbiodata.passport_type', 'usersbiodata.gender', 'pgs.course_applied', 'recommended_applicants.*')
-                    ->get()->toArray();
-            }
-
-            $fullName = session('adminFirstName') . " " . session('adminsurname');
-           return view('admissions.viewRecommendedUtmeApplicants', compact('allApplicants', 'fullName', 'user_type'));
-        // } else {
-        //     $loginMsg = '<div class="alert alert-danger alert-dismissible" role="alert"> <button type="button" class="close" data-dismiss="alert"> &times; </button> You dont\'t have access to this task, please see the ICT</div>';
-        //    return view('admissions.error', compact('loginMsg'));
-        // }
-    }
 
     // Approve All Qualified Applicants
     public function approveAllQualifiedApplicants($user_type)
@@ -2462,7 +2419,7 @@ public function viewaddRemitasServiceType(){
             ->join('usersbiodata', 'usersbiodata.user_id', '=', 'users.id')
             ->where('usersbiodata.session_id', $currentSessionId)
             ->join('academic_record', 'academic_record.user_id', '=', 'users.id')
-            ->select('users.*', 'usersbiodata.gender', 'usersbiodata.dob', 'usersbiodata.status', 'academic_record.course_program','usersbiodata.created_at')
+            ->select('users.*', 'usersbiodata.gender', 'usersbiodata.dob', 'usersbiodata.passport', 'usersbiodata.status', 'academic_record.course_program','usersbiodata.created_at')
             ->where('usersbiodata.status', '1')
             ->get();
 
@@ -2517,6 +2474,7 @@ public function viewQualifiedApplicants($user_type)
         ->select(
             'users.*',
             'usersbiodata.gender',
+            'usersbiodata.passport',
             'usersbiodata.created_at',
             'usersbiodata.dob',
             'academic_record.course_program'

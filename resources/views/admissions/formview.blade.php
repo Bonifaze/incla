@@ -71,7 +71,7 @@
 
                         <div class="col-lg-1 col-md-2 col-sm-3 col-4 text-center mb-3">
                             <a href="/adminView/{{$applicant -> applicant_type}}/{{urlencode(base64_encode($applicant -> id))}}" class="avatar avatar-sm rounded-circle border border-primary">
-                                <img alt=" {{$applicant -> first_name}} {{$applicant -> first_name}} " title="{{ ucwords(strtolower($applicant->surname)) }} {{ ucwords(strtolower($allApp->first_name)) }} {{ ucwords(strtolower($allApp->middle_name)) }}" class="avatar-img" src="src="{{ asset('img/logs.png') }}">
+                                <img alt=" {{$applicant -> first_name}} {{$applicant -> first_name}} " title="{{ ucwords(strtolower($applicant->surname)) }} {{ ucwords(strtolower($applicant->first_name)) }} {{ ucwords(strtolower($applicant->middle_name)) }}" class="avatar-img" src="data:image/png;base64,{{ $applicant->passport }}">
                             </a>
                             <p class="mb-0 text-sm" >{{ ucwords(strtolower($applicant->surname)) }} {{ ucwords(strtolower($applicant->first_name)) }}</p>
                             {{--  <small class="mb-0 text-sm"> </small>  --}}
