@@ -86,45 +86,45 @@ active
 
                                 </div>
 
-                              <div class="form-group">
-    <!-- Blood Group Dropdown -->
-    <div class="form-row form-row-1">
-        <label for="bld">Blood Group</label>
-        <select name="blood_group" id="bld" class="input-text @error('bld') is-invalid @enderror" required>
-            <option value="" disabled selected>Select Blood Group</option>
-            <option value="O+">O+</option>
-            <option value="O-">O-</option>
-            <option value="A+">A+</option>
-            <option value="A-">A-</option>
-            <option value="B+">B+</option>
-            <option value="B-">B-</option>
-            <option value="AB+">AB+</option>
-            <option value="AB-">AB-</option>
-        </select>
-        @error('bld')
-        <span class="invalid-feedback" role="alert">
-            <strong>{{ $message }}</strong>
-        </span>
-        @enderror
-    </div>
+                                <div class="form-group">
+                                    <!-- Blood Group Dropdown -->
+                                    <div class="form-row form-row-1">
+                                        <label for="bld">Blood Group</label>
+                                        <select name="blood_group" id="bld" class="input-text @error('bld') is-invalid @enderror" required>
+                                            <option value="" disabled selected>Select Blood Group</option>
+                                            <option value="O+">O+</option>
+                                            <option value="O-">O-</option>
+                                            <option value="A+">A+</option>
+                                            <option value="A-">A-</option>
+                                            <option value="B+">B+</option>
+                                            <option value="B-">B-</option>
+                                            <option value="AB+">AB+</option>
+                                            <option value="AB-">AB-</option>
+                                        </select>
+                                        @error('bld')
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                        @enderror
+                                    </div>
 
-    <!-- Genotype Dropdown -->
-    <div class="form-row form-row-2">
-        <label for="genotype">Genotype</label>
-        <select name="genotype" id="genotype" class="input-text @error('genotype') is-invalid @enderror" required>
-            <option value="" disabled selected>Select Genotype</option>
-            <option value="AA">AA</option>
-            <option value="AS">AS</option>
-            <option value="SS">SS</option>
-            <option value="AC">AC</option>
-        </select>
-        @error('genotype')
-        <span class="invalid-feedback" role="alert">
-            <strong>{{ $message }}</strong>
-        </span>
-        @enderror
-    </div>
-</div>
+                                    <!-- Genotype Dropdown -->
+                                    <div class="form-row form-row-2">
+                                        <label for="genotype">Genotype</label>
+                                        <select name="genotype" id="genotype" class="input-text @error('genotype') is-invalid @enderror" required>
+                                            <option value="" disabled selected>Select Genotype</option>
+                                            <option value="AA">AA</option>
+                                            <option value="AS">AS</option>
+                                            <option value="SS">SS</option>
+                                            <option value="AC">AC</option>
+                                        </select>
+                                        @error('genotype')
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                        @enderror
+                                    </div>
+                                </div>
 
 
                                 <div class="form-group">
@@ -215,81 +215,173 @@ active
                             </div>
                             <div class="form-right " id="credentials-section">
                                 <h2>Credentials Upload Section</h2>
-                               <script>
-    const admissionTypes = {
-        Licentiate: [
-            { name: "course_program", placeholder: "Select Licentiate Type", options: [{ value: "Licentiate in Theology of Consecrated Life", label: "Licentiate in Theology of Consecrated Life" }] },
-            { name: "school_attended", placeholder: "School Attended" },
-            { name: "certificates_obtained", placeholder: "Certificates Obtained" },
-            { name: "pr_topic", placeholder: "Previous Research Topic" },
-            { name: "olevel1", placeholder: "Upload WAEC Results", type: "file" },
-            { name: "cert", placeholder: "Upload Degree Certificate", type: "file" },
-            { name: "passport", placeholder: "Upload Passport", type: "file" },
-            { name: "signature", placeholder: "Upload Signature", type: "file" }
-        ],
-        Diploma: [
-            { name: "course_program", placeholder: "Type of Diploma", options: [
-                { value: "Diploma in Basic Theology", label: "Diploma in Basic Theology" },
-                { value: "Diploma in Formation of Formators", label: "Diploma in Formation of Formators" },
-                { value: "Diploma in Spiritual Direction", label: "Diploma in Spiritual Direction" },
-                { value: "Diploma in Theology of Consecrated Life", label: "Diploma in Theology of Consecrated Life" }
-            ]},
-            { name: "school_attended", placeholder: "School Attended" },
-            { name: "certificates_obtained", placeholder: "Certificates Obtained" },
-            { name: "olevel1", placeholder: "Upload WAEC Results", type: "file" },
-            { name: "passport", placeholder: "Upload Passport", type: "file" },
-            { name: "signature", placeholder: "Upload Signature", type: "file" }
-        ],
-        Certificate: [
-            { name: "course_program", placeholder: "Type of Certificate", options: [
-                { value: "Certificate in Basic Theology", label: "Certificate in Basic Theology" },
-                { value: "Certificate in Formation of Formators", label: "Certificate in Formation of Formators" },
-                { value: "Certificate in Spiritual Direction", label: "Certificate in Spiritual Direction" },
-                { value: "Certificate in Chapter Facilitation", label: "Certificate in Chapter Facilitation" },
-                { value: "Certificate in Fundraising & Project Management", label: "Certificate in Fundraising & Project Management" }
-            ]},
-            { name: "olevel1", placeholder: "Upload WAEC Results", type: "file" },
-            { name: "passport", placeholder: "Upload Passport", type: "file" },
-            { name: "signature", placeholder: "Upload Signature", type: "file" }
-        ]
-    };
+                                <script>
+                                    const admissionTypes = {
+                                        Licentiate: [{
+                                                name: "course_program"
+                                                , placeholder: "Select Licentiate Type"
+                                                , options: [{
+                                                    value: "Licentiate in Theology of Consecrated Life"
+                                                    , label: "Licentiate in Theology of Consecrated Life"
+                                                }]
+                                            }
+                                            , {
+                                                name: "school_attended"
+                                                , placeholder: "School Attended"
+                                            }
+                                            , {
+                                                name: "certificates_obtained"
+                                                , placeholder: "Certificates Obtained"
+                                            }
+                                            , {
+                                                name: "pr_topic"
+                                                , placeholder: "Previous Research Topic"
+                                            }
+                                            , {
+                                                name: "olevel1"
+                                                , placeholder: "Upload WAEC Results"
+                                                , type: "file"
+                                            }
+                                            , {
+                                                name: "cert"
+                                                , placeholder: "Upload Degree Certificate"
+                                                , type: "file"
+                                            }
+                                            , {
+                                                name: "passport"
+                                                , placeholder: "Upload Passport"
+                                                , type: "file"
+                                            }
+                                            , {
+                                                name: "signature"
+                                                , placeholder: "Upload Signature"
+                                                , type: "file"
+                                            }
+                                        ]
+                                        , Diploma: [{
+                                                name: "course_program"
+                                                , placeholder: "Type of Diploma"
+                                                , options: [{
+                                                        value: "Diploma in Basic Theology"
+                                                        , label: "Diploma in Basic Theology"
+                                                    }
+                                                    , {
+                                                        value: "Diploma in Formation of Formators"
+                                                        , label: "Diploma in Formation of Formators"
+                                                    }
+                                                    , {
+                                                        value: "Diploma in Spiritual Direction"
+                                                        , label: "Diploma in Spiritual Direction"
+                                                    }
+                                                    , {
+                                                        value: "Diploma in Theology of Consecrated Life"
+                                                        , label: "Diploma in Theology of Consecrated Life"
+                                                    }
+                                                ]
+                                            }
+                                            , {
+                                                name: "school_attended"
+                                                , placeholder: "School Attended"
+                                            }
+                                            , {
+                                                name: "certificates_obtained"
+                                                , placeholder: "Certificates Obtained"
+                                            }
+                                            , {
+                                                name: "olevel1"
+                                                , placeholder: "Upload WAEC Results"
+                                                , type: "file"
+                                            }
+                                            , {
+                                                name: "passport"
+                                                , placeholder: "Upload Passport"
+                                                , type: "file"
+                                            }
+                                            , {
+                                                name: "signature"
+                                                , placeholder: "Upload Signature"
+                                                , type: "file"
+                                            }
+                                        ]
+                                        , Certificate: [{
+                                                name: "course_program"
+                                                , placeholder: "Type of Certificate"
+                                                , options: [{
+                                                        value: "Certificate in Basic Theology"
+                                                        , label: "Certificate in Basic Theology"
+                                                    }
+                                                    , {
+                                                        value: "Certificate in Formation of Formators"
+                                                        , label: "Certificate in Formation of Formators"
+                                                    }
+                                                    , {
+                                                        value: "Certificate in Spiritual Direction"
+                                                        , label: "Certificate in Spiritual Direction"
+                                                    }
+                                                    , {
+                                                        value: "Certificate in Chapter Facilitation"
+                                                        , label: "Certificate in Chapter Facilitation"
+                                                    }
+                                                    , {
+                                                        value: "Certificate in Fundraising & Project Management"
+                                                        , label: "Certificate in Fundraising & Project Management"
+                                                    }
+                                                ]
+                                            }
+                                            , {
+                                                name: "olevel1"
+                                                , placeholder: "Upload WAEC Results"
+                                                , type: "file"
+                                            }
+                                            , {
+                                                name: "passport"
+                                                , placeholder: "Upload Passport"
+                                                , type: "file"
+                                            }
+                                            , {
+                                                name: "signature"
+                                                , placeholder: "Upload Signature"
+                                                , type: "file"
+                                            }
+                                        ]
+                                    };
 
-    function updateCredentialInputs() {
-        const selectedType = document.getElementById("admission-type").value;
-        const credentialsSection = document.getElementById("credentials-section");
+                                    function updateCredentialInputs() {
+                                        const selectedType = document.getElementById("admission-type").value;
+                                        const credentialsSection = document.getElementById("credentials-section");
 
-        credentialsSection.innerHTML = `<h2>Credentials Upload Section</h2>`; // Clear existing inputs
+                                        credentialsSection.innerHTML = `<h2>Credentials Upload Section</h2>`; // Clear existing inputs
 
-        if (admissionTypes[selectedType]) {
-            admissionTypes[selectedType].forEach(input => {
-                const inputRow = document.createElement("div");
-                inputRow.className = "form-row";
+                                        if (admissionTypes[selectedType]) {
+                                            admissionTypes[selectedType].forEach(input => {
+                                                const inputRow = document.createElement("div");
+                                                inputRow.className = "form-row";
 
-                if (input.options) {
-                    inputRow.innerHTML = `
+                                                if (input.options) {
+                                                    inputRow.innerHTML = `
                         <label>${input.placeholder}</label>
                         <select name="${input.name}">
                             <option value="">${input.placeholder}</option>
                             ${input.options.map(option => `<option value="${option.value}">${option.label}</option>`).join("")}
                         </select>
                     `;
-                } else if (input.type === "file") {
-                    inputRow.innerHTML = `
+                                                } else if (input.type === "file") {
+                                                    inputRow.innerHTML = `
                         <label>${input.placeholder}</label>
                         <input type="file" name="${input.name}" onchange="previewFile(this)">
                         <div id="${input.name}_preview" class="file-preview"></div>
                     `;
-                } else {
-                    inputRow.innerHTML = `
+                                                } else {
+                                                    inputRow.innerHTML = `
                         <input type="text" name="${input.name}" class="input-text" placeholder="${input.placeholder}" required>
                     `;
-                }
+                                                }
 
-                credentialsSection.appendChild(inputRow);
-            });
-        }
+                                                credentialsSection.appendChild(inputRow);
+                                            });
+                                        }
 
-        credentialsSection.innerHTML += `
+                                        credentialsSection.innerHTML += `
             <div class="form-checkbox">
                 <label class="container">
                     <p>I do accept the <a href="#" class="text">Terms and Conditions</a> of your site.</p>
@@ -301,21 +393,22 @@ active
                 <input type="submit" name="submit" class="register" value="Submit">
             </div>
         `;
-    }
+                                    }
 
-    function previewFile(input) {
-        const previewDiv = document.getElementById(`${input.name}_preview`);
-        previewDiv.innerHTML = "";
-        const file = input.files[0];
-        if (file) {
-            const reader = new FileReader();
-            reader.onload = e => {
-                previewDiv.innerHTML = `<img src="${e.target.result}" alt="File Preview" style="max-width: 100px; max-height: 100px;">`;
-            };
-            reader.readAsDataURL(file);
-        }
-    }
-</script>
+                                    function previewFile(input) {
+                                        const previewDiv = document.getElementById(`${input.name}_preview`);
+                                        previewDiv.innerHTML = "";
+                                        const file = input.files[0];
+                                        if (file) {
+                                            const reader = new FileReader();
+                                            reader.onload = e => {
+                                                previewDiv.innerHTML = `<img src="${e.target.result}" alt="File Preview" style="max-width: 100px; max-height: 100px;">`;
+                                            };
+                                            reader.readAsDataURL(file);
+                                        }
+                                    }
+
+                                </script>
                                 <div class="form-checkbox">
                                     <label class="container">
                                         <p>I do accept the <a href="#" class="text">Terms and Conditions</a> of your site.</p>
