@@ -141,17 +141,17 @@ active
                                     <!-- Passport and Signature -->
                                     <div class="col-md-6 mb-4">
                                         <div class="image-section">
-                                            <div class="image-label mb-2">
+                                            {{--  <div class="image-label mb-2">
                                                 <strong>Passport</strong>
-                                            </div>
+                                            </div>  --}}
                                             <img class="img-fluid rounded-circle shadow" src="data:image/png;base64,{{ $student->passport }}" alt="Student Passport" style="height: 180px; width: 180px; object-fit: cover;" />
                                         </div>
                                     </div>
                                     <div class="col-md-6 mb-4">
                                         <div class="image-section">
-                                            <div class="image-label mb-2">
+                                            {{--  <div class="image-label mb-2">
                                                 <strong>Signature</strong>
-                                            </div>
+                                            </div>  --}}
                                             <img class="img-fluid rounded-circle shadow" src="data:image/png;base64,{{ $student->signature }}" alt="Student Signature" style="height: 180px; width: 180px; object-fit: cover;" />
                                         </div>
                                     </div>
@@ -169,15 +169,7 @@ active
                                     <div class="info-item py-3">
                                         <div class="info-label"><strong>Other Name</strong></div>
                                         <div class="info-data">{{ $student->middle_name }}</div>
-                                    </div>
-                                    <div class="info-item py-3">
-                                        <div class="info-label"><strong>Username</strong></div>
-                                        <div class="info-data">{{ $student->username }}</div>
-                                    </div>
-                                    <div class="info-item py-3">
-                                        <div class="info-label"><strong>Phone Number</strong></div>
-                                        <div class="info-data">{{ $student->phone }}</div>
-                                    </div>
+                                    </div>                                   
                                 </div>
                             </div>
                         </div>
@@ -188,6 +180,16 @@ active
                         <div class="app-card app-card-account shadow-lg rounded-3">
                             <div class="app-card-body p-4">
                                 <div class="info-section">
+                                 <div class="info-item py-3">
+                                        <div class="info-label"><strong>Username</strong></div>
+                                        <div class="info-data">{{ $student->username }}</div>
+                                    </div>
+                                   
+                                 <div class="info-item py-3">
+                                        <div class="info-label"><strong>Phone Number</strong></div>
+                                        <div class="info-data">{{ $student->phone }}</div>
+                                    </div>
+
                                     <div class="info-item py-3">
                                         <div class="info-label"><strong>Email</strong></div>
                                         <div class="info-data">{{ $student->email }}</div>
@@ -200,14 +202,7 @@ active
                                         <div class="info-label"><strong>Date of Birth</strong></div>
                                         <div class="info-data">{{ $student->dob }}</div>
                                     </div>
-                                    <div class="info-item py-3">
-                                        <div class="info-label"><strong>Religion</strong></div>
-                                        <div class="info-data">{{ $student->religion }}</div>
-                                    </div>
-                                    <div class="info-item py-3">
-                                        <div class="info-label"><strong>Nationality</strong></div>
-                                        <div class="info-data">{{ $student->nationality }}</div>
-                                    </div>
+                                   
                                     <div class="info-item py-3">
                                         <div class="info-label"><strong>Address</strong></div>
                                         <div class="info-data">{{ $student->address }}</div>
@@ -220,10 +215,15 @@ active
                                         <div class="info-label"><strong>Local Govt Area</strong></div>
                                         <div class="info-data">{{ $student->lga_name }}</div>
                                     </div>
-                                    <div class="info-item py-3">
-                                        <div class="info-label"><strong>Hobbies</strong></div>
-                                        <div class="info-data">{{ $student->hobbies }}</div>
+                                     <div class="info-item py-3">
+                                        <div class="info-label"><strong>Blood Group</strong></div>
+                                        <div class="info-data">{{ $medical->blood_group }}</div>
                                     </div>
+                                    <div class="info-item py-3">
+                                        <div class="info-label"><strong>Genotype</strong></div>
+                                        <div class="info-data">{{ $medical->genotype }}</div>
+                                    </div>
+                                    
                                 </div>
                             </div>
                         </div>
@@ -232,42 +232,9 @@ active
 
                 <!-- Medical Info Cards -->
                 <div class="row mb-4">
-                    <div class="col-md-4 mb-4">
+                    <div class="col-md-6 mb-4">
                         <div class="app-card app-card-account shadow-lg rounded-3">
-                            <div class="app-card-header p-4 border-bottom">
-                                <h4 class="app-card-title text-primary">Student Medicals</h4>
-                            </div>
-                            <div class="app-card-body p-4">
-                                <div class="info-section">
-                                    <div class="info-item py-3">
-                                        <div class="info-label"><strong>Physical Fitness</strong></div>
-                                        <div class="info-data">{{ $medical->physical }}</div>
-                                    </div>
-                                    <div class="info-item py-3">
-                                        <div class="info-label"><strong>Blood Group</strong></div>
-                                        <div class="info-data">{{ $medical->blood_group }}</div>
-                                    </div>
-                                    <div class="info-item py-3">
-                                        <div class="info-label"><strong>Genotype</strong></div>
-                                        <div class="info-data">{{ $medical->genotype }}</div>
-                                    </div>
-                                    <div class="info-item py-3">
-                                        <div class="info-label"><strong>Any Medical Condition</strong></div>
-                                        <div class="info-data">{{ $medical->condition }}</div>
-                                    </div>
-                                    <div class="info-item py-3">
-                                        <div class="info-label"><strong>Any Allergies</strong></div>
-                                        <div class="info-data">{{ $medical->allergies }}</div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Sponsor Info Card -->
-                    <div class="col-md-4 mb-4">
-                        <div class="app-card app-card-account shadow-lg rounded-3">
-                            <div class="app-card-header p-4 border-bottom">
+                             <div class="app-card-header p-4 border-bottom">
                                 <h4 class="app-card-title text-primary">Sponsor Details</h4>
                             </div>
                             <div class="app-card-body p-4">
@@ -296,8 +263,9 @@ active
                             </div>
                         </div>
                     </div>
-                    <!-- Academic Info Card -->
-                    <div class="col-md-4 mb-4">
+
+                    <!-- Sponsor Info Card -->
+                    <div class="col-md-6 mb-4">
                         <div class="app-card app-card-account shadow-lg rounded-3">
                             <div class="app-card-header p-4 border-bottom">
                                 <h4 class="app-card-title text-primary">Academics</h4>
@@ -328,6 +296,7 @@ active
                             </div>
                         </div>
                     </div>
+                    
                 </div>
 
 

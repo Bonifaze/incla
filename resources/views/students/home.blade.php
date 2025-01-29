@@ -3,7 +3,7 @@
 
 
 @section('pagetitle')
-    Home
+Home
 @endsection
 
 
@@ -12,180 +12,229 @@
 
 <!-- Treeview -->
 @section('student-open')
-    menu-open
+menu-open
 @endsection
 
 @section('student')
-    active
+active
 @endsection
 
 <!-- Page -->
 @section('home')
-    active
+active
 @endsection
 
 <!-- End Sidebar links -->
 
-
+<style>
+/* Hover effect for cards */
+.hover-card:hover {
+    transform: scale(1.05); /* Slightly enlarge the card */
+    transition: transform 0.3s ease, box-shadow 0.3s ease; /* Smooth transition */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Add a shadow effect on hover */
+}
+</style>
 
 @section('content')
-    <div class="content-wrapper bg-white">
-        <!-- Content Header (Page header) -->
+<div class="content-wrapper bg-white">
+    <!-- Content Header (Page header) -->
 
-        <!-- Main content -->
-        <section class="content">
-            <div class="container-fluid">
-                <!-- left column -->
-                <div class="col_full">
-
-                    <h1
-                        class="app-page-title text-uppercase h5 font-weight-bold p-2 mb-2 shadow-sm text-center text-success border">
-                        Dashboard
-                    </h1>
-                    @include('partialsv3.flash')
-                    <div class="card shadow border border-success">
-
-                        <div class="row p-5">
-                            @foreach ($courseReg as $key => $session)
-                                <div class="col-xl-6 col-md-6 mb-4">
-                                    <div class="card border-left-success shadow h-100 py-3">
-                                        <div class="card-body">
-                                            <div class="row no-gutters align-items-center">
-                                                <div class="col mr-2">
-                                                    <div class="h4 text-primary " style="text-decoration: underline;">
-                                                        {{--  open course reg  --}}
-                                                        {{--  <a href="{{ route('student.course-registration') }}"
-                                                        class="text-success @yield('registration')">Course Registration</a>  --}}
-                                                        {{--  close course reg  --}}
-                                                        {{--    <a href="/student/studentsClearance"
-                                                        class="text-success @yield('registration')">Semester Clearance</a>
-                                                        --}}
-
-                                                    </div>
-                                                    <div class="h4 text-success mt-3" style="text-decoration: underline;">
-                                                        {{--  open course reg  --}}
-                                                        {{--  <a href="{{ route('student.course-registration') }}"
-                                                        class="text-success @yield('registration')">Course Registration</a>  --}}
-                                                        {{--  close course reg  --}}
-                                                        <a href="{{ $session->route }}"
-                                                            class="text-success @yield('registration')">Course Registration</a>
+    <!-- Main content -->
+    <section class="content">
+        <div class="container-fluid">
+            <!-- left column -->
+            <div class="col_full">
 
 
-                                                    </div>
+                <h1 class="app-page-title text-uppercase h6 font-weight-bold p-3 mb-3 shadow-sm text-center text-white bg-success border rounded">
+                    Welcome to InCLA Student Dashboard
+                </h1>
+                @include('partialsv3.flash')
 
-                                                </div>
-                                                <div class="col-auto">
-                                                    <i class="fa fa-tasks fa-3x text-success"></i>
-                                                </div>
-                                            </div>
+               
+
+                <div class="row">
+                    <div class="col-sm-6 col-md-4">
+                     <a href="/" class=" @yield('/')">
+                        <div class="card card-stats card-round">
+                            <div class="card-body hover-card shadow-sm">
+                                <div class="row align-items-center">
+                                    <div class="col-icon">
+                                        <div class="icon-big text-center icon-primary bubble-shadow-small">
+                                            <i class="fas fa-users"></i>
                                         </div>
                                     </div>
-                                </div>
-                            @endforeach
-
-                            <div class="col-xl-6 col-md-6 mb-4">
-                                <div class="card border-left-success shadow h-100 py-3">
-                                    <div class="card-body">
-                                        <a class="" href="/students/remita/feestype">
-                                            <div class="row no-gutters align-items-center">
-                                                <div class="col mr-3">
-                                                    <div class="h4 text-success" style="text-decoration: underline;">
-                                                        <a href="/students/remita/feestype" class="text-success">Generate
-                                                            Remita</a>
-                                                    </div>
-                                                </div>
-                                                <div class="col-auto">
-                                                    <i class="fa fa-credit-card fa-3x text-success"></i>
-                                                </div>
-                                            </div>
-                                        </a>
+                                    <div class="col col-stats ms-3 ms-sm-0">
+                                        <div class="numbers">
+                                            <p class="card-category">Result</p>
+                                            <h4 class="card-title">Result</h4>
+                                        </div>
                                     </div>
+                                    <div class="col-auto">
+                                            <i class="fa fa-list fa-3x text-success "></i>
+                                        </div>
+                                        
                                 </div>
                             </div>
-
                         </div>
-
-
-                        {{--  <div class="card-header">
-                            <h3 class="card-title"> Home</h3>
-                        </div>  --}}
-
-                        {{--  <div class="table-responsive">
-
-                            @include('partialsv3.flash')
-
-                            @if ($student->debt)
-                                <h1> Remita payment is now available. <a class="btn btn-info"
-                                        href="{{ route('student.remita') }}"> Start here </a></h1>
-                                <h3> Outstanding fees as at 29th May 2022 : &#8358;{{ $student->debt->debt }}</h3>
-                                <h4>If the debt above is not correct, kindly call Bursary immediately.<br />
-                                    Call Bursary on {{ config('app.BURSARY_PHONE') }}</h4>
-                                <br />
-                            @else
-                                <h3>
-                                    No Financial information found.
-                                </h3>
-                            @endif
-
-                        </div>  --}}
-
+                     </a>
                     </div>
-                    <div class="card shadow border border-success">
 
-                        <div class="row p-5">
-                            <div class="col-xl-6 col-md-6 mb-4">
-                                <div class="card border-left-success shadow h-100 py-3">
-                                    <div class="card-body">
-                                        <div class="row no-gutters align-items-center">
-                                            <div class="col mr-2">
-                                                <div class="h4 text-success" style="text-decoration: underline;">
-                                                    <a href="{{ route('students.results') }}"
-                                                        class="text-success @yield('results')">View Result</a>
-
-                                                </div>
-                                            </div>
-                                            <div class="col-auto">
-                                                <i class="fa fa-eye nav-icon fa-3x text-success"></i>
-                                            </div>
+                    
+                     @foreach ($courseReg as $key => $session)
+                    <div class="col-sm-6 col-md-4">
+                    <a href="{{ $session->route }}" class=" @yield('registration')">
+                        <div class="card card-stats card-round hover-card shadow-sm">
+                            <div class="card-body">
+                                <div class="row align-items-center">
+                                    <div class="col-icon">
+                                        <div class="icon-big text-center icon-info bubble-shadow-small">
+                                            <i class="fas fa-user-check"></i>
                                         </div>
                                     </div>
+                                    <div class="col col-stats ms-3 ms-sm-0">
+                                        <div class="numbers">
+                                            <p class="card-category">Register Course</p>
+                                            <h4 class="card-title">Register Course</h4>
+
+                                        </div>
+                                    </div>
+                                    <div class="col-auto">
+                                            <i class="fa fa-cog fa-spin fa-2x text-success "></i>
+                                            
+                                    </div>
+                                    
                                 </div>
                             </div>
+                        </div>
+                    </a>
+                    </div>
+                     @endforeach
 
-                            <div class="col-xl-6 col-md-6 mb-4">
-                                <div class="card border-left-success shadow h-100 py-3">
-                                    <div class="card-body">
-                                        <a class="" href="/students/remita/feestype">
-                                            <div class="row no-gutters align-items-center">
-                                                <div class="col mr-3">
-                                                    <div class="h4 text-success" style="text-decoration: underline;">
-                                                        <a href="/students/remita/paymentview/{id}"
-                                                            class="text-success">View
-                                                            Remita Payment</a>
-                                                    </div>
-                                                </div>
-                                                <div class="col-auto">
-                                                    <i class="fa fa-eye nav-icon fa-3x text-success"></i>
-                                                </div>
-                                            </div>
-                                        </a>
+                    <div class="col-sm-6 col-md-4">
+                         <a href="" class=" @yield('/')">
+                        <div class="card card-stats card-round">
+                            <div class="card-body hover-card shadow-sm">
+                                <div class="row align-items-center">
+                                    <div class="col-icon">
+                                        <div class="icon-big text-center icon-success bubble-shadow-small">
+                                            <i class="fas fa-luggage-cart"></i>
+                                        </div>
+                                    </div>
+                                    <div class="col col-stats ms-3 ms-sm-0">
+                                        <div class="numbers">
+                                            <p class="card-category">Complain</p>
+                                            <h4 class="card-title">Complain</h4>
+                                        </div> 
+                                    </div>
+                                     <div class="col-auto">
+                                            <i class="fa fa-comments fa-3x text-success"></i>
                                     </div>
                                 </div>
                             </div>
-
                         </div>
+                        </a>
+                    </div>
+                   
+                </div>
 
 
+                 <div class="row row-card-no-pd">
+                    <div class="col-12 col-sm-6 col-md-6 col-xl-3">
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="d-flex justify-content-between">
+                                    <div>
+                                        <h6><b>Courses to Offer</b></h6>
+                                    </div>
+                                    <h4 class="text-info fw-bold">34</h4>
+                                </div>
+                                <div class="progress progress-sm">
+                                    <div class="progress-bar bg-info w-100" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
+                                </div>
+                                <div class="d-flex justify-content-between mt-2">
+                                    <p class="text-muted mb-0">Change</p>
+                                    <p class="text-muted mb-0">100%</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12 col-sm-6 col-md-6 col-xl-3">
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="d-flex justify-content-between">
+                                    <div>
+                                        <h6><b>Inprogress</b></h6>
+                                    </div>
+                                    <h4 class="text-success fw-bold">10</h4>
+                                </div>
+                                <div class="progress progress-sm">
+                                    <div class="progress-bar bg-success w-25" role="progressbar" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+                                </div>
+                                <div class="d-flex justify-content-between mt-2">
+                                    {{--  <p class="text-muted mb-0"></p>  --}}
+                                    <p class="text-muted mb-0">25%</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12 col-sm-6 col-md-6 col-xl-3">
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="d-flex justify-content-between">
+                                    <div>
+                                        <h6><b>Passed</b></h6>
+                                        {{--  <p class="text-muted">Failed</p>  --}}
+                                    </div>
+                                    <h4 class="text-danger fw-bold">15</h4>
+                                </div>
+                                <div class="progress progress-sm">
+                                    <div class="progress-bar bg-danger w-50" role="progressbar" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
+                                </div>
+                                <div class="d-flex justify-content-between mt-2">
+                                    {{--  <p class="text-muted mb-0">Change</p>  --}}
+                                    <p class="text-muted mb-0">50%</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12 col-sm-6 col-md-6 col-xl-3">
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="d-flex justify-content-between">
+                                    <div>
+                                        <h6><b>Failed</b></h6>
+                                        {{--  <p class="text-muted">Joined New User</p>  --}}
+                                    </div>
+                                    <h4 class="text-secondary fw-bold">12</h4>
+                                </div>
+                                <div class="progress progress-sm">
+                                    <div class="progress-bar bg-secondary w-25" role="progressbar" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+                                </div>
+                                <div class="d-flex justify-content-between mt-2">
+                                    {{--  <p class="text-muted mb-0">Change</p>  --}}
+                                    <p class="text-muted mb-0">25%</p>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
+
+                
+                
+
+
             </div>
-        </section>
-    </div>
+
+
+        </div>
+    </section>
+</div>
 
 
 
-    <!-- Modal -->
-    <!-- <div class="modal fade" id="reloadModal" tabindex="-1" role="dialog" aria-labelledby="reloadModalLabel" aria-hidden="true">
+<!-- Modal -->
+<!-- <div class="modal fade" id="reloadModal" tabindex="-1" role="dialog" aria-labelledby="reloadModalLabel" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -216,18 +265,19 @@
 @endsection
 
 @section('pagescript')
-    <script src="<?php echo asset('dist/js/bootbox.min.js'); ?>"></script>
+<script src="<?php echo asset('dist/js/bootbox.min.js'); ?>"></script>
 
 
-    <script>
-        // Function to show the modal on page load
-        // function showModalOnLoad() {
-        //     $('#reloadModal').modal('show');
-        //   }
+<script>
+    // Function to show the modal on page load
+    // function showModalOnLoad() {
+    //     $('#reloadModal').modal('show');
+    //   }
 
-        // Call the function when the page is ready
-        // $(document).ready(function () {
-        //      showModalOnLoad();
-        // });
-    </script>
+    // Call the function when the page is ready
+    // $(document).ready(function () {
+    //      showModalOnLoad();
+    // });
+
+</script>
 @endsection
