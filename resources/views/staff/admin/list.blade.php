@@ -74,7 +74,7 @@
                                 <img alt="{{$stf->fullName }}" title="{{$stf->fullName }}" class="avatar-img" src="data:image/png;base64,{{ $stf->passport }}">
                             </a>
                             {{--  <p class="mb-0 text-sm" >{{$stf->fullName }}</p>  --}}
-                            <small class="mb-0 text-sm">{{$stf->fullName }}</small>
+                             {{--  <p class="text-sm">{{ explode(separator: ',', $stf->fullName )[0] }}</p>  --}}
                         </div>
                         @endforeach
 

@@ -96,7 +96,6 @@ active
                                 <img alt="{{ $allApp->surname }}" title="{{ $allApp->surname }}" class="avatar-img" src="{{ asset('img/logs.png') }}">
                             </a>
                             <p class="mb-0 text-sm" >{{ $allApp->surname }}</p>
-                            {{--  <small class="mb-0 text-sm">{{ $allApp->surname }}</small>  --}}
                         </div>
                         @endforeach
 

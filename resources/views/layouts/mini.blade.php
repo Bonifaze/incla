@@ -94,6 +94,23 @@
             /* Add some space between the navbar items */
         }
 
+  /* Styling for the small avatar container */
+  .avatar-sm {
+    width: 40px;  /* Set the container size to 40px */
+    height: 40px; /* Same height as width to keep it circular */
+    display: inline-flex; /* Ensure it stays inline */
+    justify-content: center;
+    align-items: center;
+  }
+
+  /* Styling for the image inside the avatar */
+  .avatar-img {
+    width: 100%;  /* Ensure the image fills the container */
+    height: 100%; /* Maintain aspect ratio within the container */
+    object-fit: cover; /* Ensure the image is properly cropped to fit */
+    border-radius: 50%; /* Ensure the image stays round */
+  }
+
 
 
     </style>
