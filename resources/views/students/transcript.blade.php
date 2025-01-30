@@ -274,7 +274,7 @@
          <tr>
           <td colspan="2"><br />
             ...............................................<br />
-            Dr. (Mrs) Stella Chizoba Okonkwo, FCAI, FIIA, JP<br />
+            Dr. <br />
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<strong>Registrar </strong></td>
         </tr>
          <tr>

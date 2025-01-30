@@ -39,15 +39,27 @@ class StudentLoginController extends Controller
     public function login(Request $request)
     {
 
+        // dd($request);
+       // Validate form data (change 'email' to 'username' and remove 'email' rule)
+$this->validate($request, [
+    'email' => 'required|string', // Accepts matric numbers or emails
+    'password' => 'required|min:6'
+]);
 
-        // Validate form data
-        $this->validate($request, [
-            'email' => 'required|email',
-            'password' => 'required|min:6'
-        ]);
+
+$username = trim($request->email); // Remove any hidden spaces
+
+//dd($username); // Check the output before appending
+
+// Append '@incla.edu.ng' if it's not already included
+if (!str_contains($username, '@incla.edu.ng')) {
+    $username .= '@incla.edu.ng';
+}
+
+//dd($username); // Check again after appending
 
         // attempt to log user
-        if(Auth::guard('student')->attempt(['username' => $request->email, 'password' => $request->password], $request->remember)){
+        if(Auth::guard('student')->attempt(['username' => $username, 'password' => $request->password], $request->remember)){
 
 
             //check for restricted

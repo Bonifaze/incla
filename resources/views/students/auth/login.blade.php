@@ -163,7 +163,7 @@
                         @csrf
                         <div class="form-group">
                             <label for="email">Username</label>
-                            <input id="email" type="email" placeholder="Username" class="form-control{{ $errors->has('email') ? ' is-invalid' : '' }}" name="email" value="{{ old('email') }}" required autofocus>
+                            <input id="email" type="text" placeholder="matric number" class="form-control{{ $errors->has('email') ? ' is-invalid' : '' }}" name="email" value="{{ old('email') }}" required autofocus>
                             @if ($errors->has('email'))
                                 <span class="invalid-feedback"> <strong>{{ $errors->first('email') }}</strong> </span>
                             @endif

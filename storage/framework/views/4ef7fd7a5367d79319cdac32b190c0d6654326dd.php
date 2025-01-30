@@ -105,11 +105,11 @@ unset($__errorArgs, $__bag); ?>" placeholder="English, French etc ">
 
                                 </div>
 
-                              <div class="form-group">
-    <!-- Blood Group Dropdown -->
-    <div class="form-row form-row-1">
-        <label for="bld">Blood Group</label>
-        <select name="blood_group" id="bld" class="input-text <?php $__errorArgs = ['bld'];
+                                <div class="form-group">
+                                    <!-- Blood Group Dropdown -->
+                                    <div class="form-row form-row-1">
+                                        <label for="bld">Blood Group</label>
+                                        <select name="blood_group" id="bld" class="input-text <?php $__errorArgs = ['bld'];
 $__bag = $errors->getBag($__errorArgs[1] ?? 'default');
 if ($__bag->has($__errorArgs[0])) :
 if (isset($message)) { $__messageOriginal = $message; }
@@ -117,34 +117,34 @@ $message = $__bag->first($__errorArgs[0]); ?> is-invalid <?php unset($message);
 if (isset($__messageOriginal)) { $message = $__messageOriginal; }
 endif;
 unset($__errorArgs, $__bag); ?>" required>
-            <option value="" disabled selected>Select Blood Group</option>
-            <option value="O+">O+</option>
-            <option value="O-">O-</option>
-            <option value="A+">A+</option>
-            <option value="A-">A-</option>
-            <option value="B+">B+</option>
-            <option value="B-">B-</option>
-            <option value="AB+">AB+</option>
-            <option value="AB-">AB-</option>
-        </select>
-        <?php $__errorArgs = ['bld'];
+                                            <option value="" disabled selected>Select Blood Group</option>
+                                            <option value="O+">O+</option>
+                                            <option value="O-">O-</option>
+                                            <option value="A+">A+</option>
+                                            <option value="A-">A-</option>
+                                            <option value="B+">B+</option>
+                                            <option value="B-">B-</option>
+                                            <option value="AB+">AB+</option>
+                                            <option value="AB-">AB-</option>
+                                        </select>
+                                        <?php $__errorArgs = ['bld'];
 $__bag = $errors->getBag($__errorArgs[1] ?? 'default');
 if ($__bag->has($__errorArgs[0])) :
 if (isset($message)) { $__messageOriginal = $message; }
 $message = $__bag->first($__errorArgs[0]); ?>
-        <span class="invalid-feedback" role="alert">
-            <strong><?php echo e($message); ?></strong>
-        </span>
-        <?php unset($message);
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong><?php echo e($message); ?></strong>
+                                        </span>
+                                        <?php unset($message);
 if (isset($__messageOriginal)) { $message = $__messageOriginal; }
 endif;
 unset($__errorArgs, $__bag); ?>
-    </div>
+                                    </div>
 
-    <!-- Genotype Dropdown -->
-    <div class="form-row form-row-2">
-        <label for="genotype">Genotype</label>
-        <select name="genotype" id="genotype" class="input-text <?php $__errorArgs = ['genotype'];
+                                    <!-- Genotype Dropdown -->
+                                    <div class="form-row form-row-2">
+                                        <label for="genotype">Genotype</label>
+                                        <select name="genotype" id="genotype" class="input-text <?php $__errorArgs = ['genotype'];
 $__bag = $errors->getBag($__errorArgs[1] ?? 'default');
 if ($__bag->has($__errorArgs[0])) :
 if (isset($message)) { $__messageOriginal = $message; }
@@ -152,26 +152,26 @@ $message = $__bag->first($__errorArgs[0]); ?> is-invalid <?php unset($message);
 if (isset($__messageOriginal)) { $message = $__messageOriginal; }
 endif;
 unset($__errorArgs, $__bag); ?>" required>
-            <option value="" disabled selected>Select Genotype</option>
-            <option value="AA">AA</option>
-            <option value="AS">AS</option>
-            <option value="SS">SS</option>
-            <option value="AC">AC</option>
-        </select>
-        <?php $__errorArgs = ['genotype'];
+                                            <option value="" disabled selected>Select Genotype</option>
+                                            <option value="AA">AA</option>
+                                            <option value="AS">AS</option>
+                                            <option value="SS">SS</option>
+                                            <option value="AC">AC</option>
+                                        </select>
+                                        <?php $__errorArgs = ['genotype'];
 $__bag = $errors->getBag($__errorArgs[1] ?? 'default');
 if ($__bag->has($__errorArgs[0])) :
 if (isset($message)) { $__messageOriginal = $message; }
 $message = $__bag->first($__errorArgs[0]); ?>
-        <span class="invalid-feedback" role="alert">
-            <strong><?php echo e($message); ?></strong>
-        </span>
-        <?php unset($message);
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong><?php echo e($message); ?></strong>
+                                        </span>
+                                        <?php unset($message);
 if (isset($__messageOriginal)) { $message = $__messageOriginal; }
 endif;
 unset($__errorArgs, $__bag); ?>
-    </div>
-</div>
+                                    </div>
+                                </div>
 
 
                                 <div class="form-group">
@@ -263,14 +263,13 @@ unset($__errorArgs, $__bag); ?>
                             <div class="form-right " id="credentials-section">
                                 <h2>Credentials Upload Section</h2>
                                 <script>
-                                    // Define dynamic inputs for each admission type
                                     const admissionTypes = {
                                         Licentiate: [{
                                                 name: "course_program"
                                                 , placeholder: "Select Licentiate Type"
                                                 , options: [{
-                                                    value: "LCL - Licentiate in Theology of Consecrated Life"
-                                                    , label: "LCL - Licentiate in Theology of Consecrated Life"
+                                                    value: "Licentiate in Theology of Consecrated Life"
+                                                    , label: "Licentiate in Theology of Consecrated Life"
                                                 }]
                                             }
                                             , {
@@ -295,7 +294,6 @@ unset($__errorArgs, $__bag); ?>
                                                 , placeholder: "Upload Degree Certificate"
                                                 , type: "file"
                                             }
-
                                             , {
                                                 name: "passport"
                                                 , placeholder: "Upload Passport"
@@ -311,20 +309,20 @@ unset($__errorArgs, $__bag); ?>
                                                 name: "course_program"
                                                 , placeholder: "Type of Diploma"
                                                 , options: [{
-                                                        value: "DBT - Diploma in Basic Theology"
-                                                        , label: "DBT - Diploma in Basic Theology"
+                                                        value: "Diploma in Basic Theology"
+                                                        , label: "Diploma in Basic Theology"
                                                     }
                                                     , {
-                                                        value: "DFF - Diploma in Formation of Formators"
-                                                        , label: "DFF - Diploma in Formation of Formators"
+                                                        value: "Diploma in Formation of Formators"
+                                                        , label: "Diploma in Formation of Formators"
                                                     }
                                                     , {
-                                                        value: "DSD - Diploma in Spiritual Direction"
-                                                        , label: "DSD - Diploma in Spiritual Direction"
+                                                        value: "Diploma in Spiritual Direction"
+                                                        , label: "Diploma in Spiritual Direction"
                                                     }
                                                     , {
-                                                        value: "DCL - Diploma in Theology of Consecrated Life"
-                                                        , label: "DCL - Diploma in Theology of Consecrated Life"
+                                                        value: "Diploma in Theology of Consecrated Life"
+                                                        , label: "Diploma in Theology of Consecrated Life"
                                                     }
                                                 ]
                                             }
@@ -341,7 +339,6 @@ unset($__errorArgs, $__bag); ?>
                                                 , placeholder: "Upload WAEC Results"
                                                 , type: "file"
                                             }
-
                                             , {
                                                 name: "passport"
                                                 , placeholder: "Upload Passport"
@@ -357,24 +354,24 @@ unset($__errorArgs, $__bag); ?>
                                                 name: "course_program"
                                                 , placeholder: "Type of Certificate"
                                                 , options: [{
-                                                        value: "CBT - Certificate in Basic Theology"
-                                                        , label: "CBT - Certificate in Basic Theology"
+                                                        value: "Certificate in Basic Theology"
+                                                        , label: "Certificate in Basic Theology"
                                                     }
                                                     , {
-                                                        value: "CFF - Certificate in Formation of Formators"
-                                                        , label: "CFF - Certificate in Formation of Formators"
+                                                        value: "Certificate in Formation of Formators"
+                                                        , label: "Certificate in Formation of Formators"
                                                     }
                                                     , {
-                                                        value: "CSD - Certificate in Spiritual Direction"
-                                                        , label: "CSD - Certificate in Spiritual Direction"
+                                                        value: "Certificate in Spiritual Direction"
+                                                        , label: "Certificate in Spiritual Direction"
                                                     }
                                                     , {
-                                                        value: "CCF - Certificate in Chapter Facilitation"
-                                                        , label: "CCF - Certificate in Chapter Facilitation"
+                                                        value: "Certificate in Chapter Facilitation"
+                                                        , label: "Certificate in Chapter Facilitation"
                                                     }
                                                     , {
-                                                        value: "CFP - Certificate in Fundraising & Project Management"
-                                                        , label: "CFP - Certificate in Fundraising & Project Management"
+                                                        value: "Certificate in Fundraising & Project Management"
+                                                        , label: "Certificate in Fundraising & Project Management"
                                                     }
                                                 ]
                                             }
@@ -383,7 +380,6 @@ unset($__errorArgs, $__bag); ?>
                                                 , placeholder: "Upload WAEC Results"
                                                 , type: "file"
                                             }
-
                                             , {
                                                 name: "passport"
                                                 , placeholder: "Upload Passport"
@@ -432,7 +428,6 @@ unset($__errorArgs, $__bag); ?>
                                             });
                                         }
 
-                                        // Re-add terms and conditions and submit button
                                         credentialsSection.innerHTML += `
             <div class="form-checkbox">
                 <label class="container">
@@ -449,7 +444,7 @@ unset($__errorArgs, $__bag); ?>
 
                                     function previewFile(input) {
                                         const previewDiv = document.getElementById(`${input.name}_preview`);
-                                        previewDiv.innerazHTML = "";
+                                        previewDiv.innerHTML = "";
                                         const file = input.files[0];
                                         if (file) {
                                             const reader = new FileReader();

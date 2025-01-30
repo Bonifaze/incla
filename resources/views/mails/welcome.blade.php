@@ -9,7 +9,7 @@
  <center> <strong>{{ $emailData['name_no'] }} {{ $emailData['identity_no'] }}  </strong>  </center>
 <br>
 <center> <strong> LOGIN DETAILS </strong> </center>
-<center> <strong> USERNAME: </strong> {{ $emailData['email'] }}  </center>
+<center> <strong> MatricNo.: </strong> {{ $emailData['identity_no'] }}  </center>
 
 <center> <strong> PASSWORD: </strong> {{ $emailData['password'] }} </center>
 
