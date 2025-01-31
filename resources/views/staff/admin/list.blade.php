@@ -55,7 +55,7 @@
                 <!-- left column -->
                 <div class="col_full">
 
-                   
+
 
                     <h1 class="app-page-title text-uppercase h6 font-weight-bold p-3 mb-3 shadow-sm text-center text-white bg-success border rounded">
                     Welcome to the List of InCLA Staff Page
@@ -73,9 +73,7 @@
                             <a href="{{ route('staff.view', $stf->id) }}" class="avatar avatar-sm rounded-circle border border-primary">
                                 <img alt="{{$stf->fullName }}" title="{{$stf->fullName }}" class="avatar-img" src="data:image/png;base64,{{ $stf->passport }}">
                             </a>
-                            {{--  <p class="mb-0 text-sm" >{{$stf->fullName }}</p>  --}}
-                             {{--  <p class="text-sm">{{ explode(separator: ',', $stf->fullName )[0] }}</p>  --}}
-                        </div>
+                            <p class="text-sm">{{ explode(',', $stf->fullName)[0] }}</p>
                         @endforeach
 
                         <!-- More avatars can be added here -->

@@ -82,7 +82,7 @@ if(!session('adminId'))
                             <a href="/adminView/{{$allApp -> applicant_type}}/{{urlencode(base64_encode($allApp -> id))}}" class="avatar avatar-sm rounded-circle border border-primary">
                                 <img alt=" {{ ucwords(strtolower($allApp->first_name)) }} " title="{{ ucwords(strtolower($allApp->surname)) }} {{ ucwords(strtolower($allApp->first_name)) }} {{ ucwords(strtolower($allApp->middle_name)) }}" class="avatar-img" src="src="{{ asset('img/logs.png') }}">
                             </a>
-                            <p class="mb-0 text-sm" >{{ ucwords(strtolower($allApp->surname)) }} {{ ucwords(strtolower($allApp->first_name)) }}</p>
+                            <p class="mb-0 text-sm" > {{ ucwords(strtolower($allApp->first_name)) }}</p>
                             {{--  <small class="mb-0 text-sm"> </small>  --}}
                         </div>
                         @endforeach
