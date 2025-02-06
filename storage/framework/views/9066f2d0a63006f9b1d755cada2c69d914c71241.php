@@ -52,7 +52,7 @@ active
                                                         <th>S/N</th>
                                                         <th>Course Code</th>
                                                         <th>Course Title</th>
-                                                        <th>Semester</th>
+                                                        
                                                         <th>Students</th>
                                                         <th>Student Program</th>
                                                         <th>Upload Status</th>
@@ -69,13 +69,7 @@ active
                                                         <td><?php echo e($loop->iteration); ?></td>
                                                         <td><?php echo e($staff_course->course_code); ?></td>
                                                         <td><?php echo e($staff_course->course_title); ?></td>
-                                                        <td>
-                                                            <?php if($staff_course->semester==1): ?>
-                                                            First
-                                                            <?php else: ?>
-                                                            Second
-                                                            <?php endif; ?>
-                                                        </td>
+
                                                         <th><?php echo e($staff_course->total_students); ?></th>
                                                         <th><?php echo e($staff_course->program->name ?? null); ?></th>
                                                         <td><?php echo e($staff_course->upload_status); ?></td>
@@ -87,7 +81,22 @@ active
                                                             <?php endif; ?>
                                                         </td>
                                                         <td><?php echo e($staff_course->hod_approval); ?></td>
-                                                        
+                                                        <td><?php if($staff_course->hod_approval != 'approved'): ?> <a href="<?php echo e(route('admin.scores_upload', $staff_course->id)); ?>"
+                                                        class="btn btn-primary">Upload Scores</a> <?php else: ?> <p class="text-warning text-bold ">Kindly Ask HoD TO REVOKE</p> <?php endif; ?></td>
+                                                        <?php if($staff_course->upload_status =='uploaded'): ?>
+                                                        <td> <a href="/admin/download/<?php echo e($staff_course->id); ?>" class="btn btn-primary">Download Scores </a></td>
+                                                        <?php else: ?>
+
+                                                        <td>
+                                                            <form action="<?php echo e(route('staff.assign.destroy', $staff_course->id)); ?>" method="POST">
+                                                                <?php echo csrf_field(); ?>
+                                                                <?php echo method_field('DELETE'); ?>
+                                                                <button type="submit" class="btn btn-danger" onclick="return confirm('Are you sure you want to drop this course?')" data-bs-toggle="modal" data-bs-target="#myModal"> <i class="fas fa-solid fa-trash"></i>
+                                                                    DROP</button>
+
+                                                            </form>
+                                                        </td>
+                                                        <?php endif; ?>
                                                     </tr>
                                                     <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                                                 </tbody>

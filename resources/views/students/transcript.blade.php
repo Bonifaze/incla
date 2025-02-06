@@ -27,7 +27,7 @@
           <td><strong>  Matric. No.: {{ $academic->mat_no }} </strong></td>
         </tr>
         <tr>
-          <td><strong>College: {{ $academic->college()->name }} </strong></td>
+          {{--  <td><strong>College: {{ $academic->college()->name }} </strong></td>  --}}
           <td><strong>Gender: {{ $student->gender }} </strong></td>
         </tr>
         <tr>
@@ -57,12 +57,12 @@
                             <td colspan="3"><strong>ACADEMIC SESSION</strong>:
                              {{  $session->name }}
                              </td>
-                            <td colspan="2" align="center"><strong>LEVEL</strong>:
-                             {{ $session->registered_courses1->last()?->level }}
+                            <td colspan="2" align="center"><strong></strong>:
+
                              </td>
-                            <td colspan="2"><strong>SEMESTER</strong>:
+                            <td colspan="2"><strong></strong>:
                         {{--  {{ $session->registered_courses1->first()?->semester }}  --}}
-                             FIRST
+
                              </td>
                           </tr>
                           <tr>
@@ -158,102 +158,7 @@
                         <br />
 <br />
 
-<table width="100%" height="87" border="1" cellpadding="0" cellspacing="0">
-  <tr>
-    <td colspan="3"><strong>ACADEMIC SESSION</strong>:
-     {{  $session->name }}
-     </td>
-    <td colspan="2" align="center"><strong>LEVEL</strong>:
-     {{ $session->registered_courses2->last()?->level }}
-     </td>
-    <td colspan="2"><strong>SEMESTER</strong>:
- {{--   {{ $session->registered_courses2->first()?->semester }} --}}
- SECOND
-     </td>
-  </tr>
-  <tr>
-    <td width="5%"><div align="center"><span style="font-weight: bold">S/N</span></div></td>
-    <td width="15%"><div align="center"><span style="font-weight: bold">Course Code </span></div></td>
-    <td width="23%"><div align="center"><span style="font-weight: bold">Course Title </span></div></td>
-    <td width="14%"><div align="center"><span style="font-weight: bold">Credit Unit </span></div></td>
-    <td width="13%"><div align="center"><span style="font-weight: bold">Score</span></div></td>
-    <td width="17%"><div align="center"><span style="font-weight: bold">Grade</span></div></td>
-    <td width="13%"><div align="center"><span style="font-weight: bold">Pass / Fail</span></div></td>
-  </tr>
-    @foreach ($session->registered_courses2 as $result2)
-    @php
-      $tc2 += $result2->course_unit;
-      $tgp2 += $result2->grade_point * $result2->course_unit;
-    @endphp
-<tr>
-    <td width="5%"><div align="center"><span style="font-weight: bold">{{ $loop->iteration }} </span></div></td>
-    <td width="15%"><div align="center"><span style="font-weight: bold">{{ $result2->course_code }} </span></div></td>
-     <td width="23%"><div align="center"><span style="font-weight: bold">{{ $result2->course_title }} </span></div></td>
-   <td width="14%"><div align="center"><span style="font-weight: bold">{{ $result2->course_unit }} </span></div></td>
-    <td width="13%"><div align="center"><span style="font-weight: bold">{{ $result2->total }}</span></div></td>
-    <td width="17%"><div align="center"><span style="font-weight: bold">{{ $result2->grade }}</span></div></td>
-    <td width="13%"><div align="center"><span style="font-weight: bold">{{ $result2->grade_status }}</span></div></td>
-  </tr>
- @endforeach
 
- @php
-      $tgp_cgpa2 = 0;
-      $tcu_cgpa2 = 0;
-      foreach ($courses as $course) {
-          $tgp_cgpa2 += $course->grade_point * $course->course_unit;
-          $tcu_cgpa2 += $course->course_unit;
-      }
-      //dd($tgp_cgpa, $tcu_cgpa);
-    @endphp
-
- </table>
-<table width="100%" border="1" cellpadding="0" cellspacing="0">
-  <tr>
-    <td  colspan="7">&nbsp;</td>
-    </tr>
-
-  <tr>
-    <td width="2%">&nbsp;</td>
-    <td colspan="2" align="center"><strong>Total Credit Load</strong></td>
-    <td colspan="2" align="left"><strong> {{ $tc2 }}</strong></td>
-    <td width="30%" align="left"><strong>Total Credit Unit Value</strong></td>
-    <td width="10%" align="left"><strong> {{ $tgp2 }}</strong></td>
-  </tr>
-  <tr>
-    <td>&nbsp;</td>
-    <td colspan="3" align="right"><strong>Grade Points Average (GPA)</strong></td>
-    <td width="13%">&nbsp;</td>
-    <td><span style="font-weight: bold">GPA : {{ $tgp2 > 0 && $tc2 > 0 ? number_format($tgp2/$tc2, 2) : '0.00' }} </span></td>
-    <td>&nbsp;</td>
-  </tr>
-  <tr>
-    <td>&nbsp;</td>
-    <td colspan="3" align="right"><strong>TC</strong></td>
-   <td>&nbsp;</td>
-    <td><strong>
-    {{ $tc2 > 0 ?  $tcu_cgpa2 : 0 }}
-    </strong></td>
-    <td>&nbsp;</td>
-  </tr>
-
-   <tr>
-    <td>&nbsp;</td>
-    <td colspan="3" align="right"><strong>TGP</strong></td>
-    <td>&nbsp;</td>
-    <td><strong> {{  $tc2 > 0 ? $tgp_cgpa2 : 0 }}</strong></td>
-    <td>&nbsp;</td>
-  </tr>
-  <tr>
-    <td>&nbsp;</td>
-    <td colspan="3" align="right"><strong>Cumulative Grade Points Average (CGPA) </strong></td>
-    <td>&nbsp;</td>
-
-    <td><span style="font-weight: bold">CGPA : {{ $tc2 > 0  ? number_format($tgp_cgpa2/$tcu_cgpa2, 2) : '0.00' }}</span></td>
-    <td>&nbsp; </td>
-  </tr>
-
-
-</table>
 <br />
 <br />
 

@@ -86,7 +86,7 @@ active
 
 
 
-                <div class="card-body ps-0" style="overflow-x: auto; white-space: nowrap; padding-bottom: 1rem;">
+                {{--  <div class="card-body ps-0" style="overflow-x: auto; white-space: nowrap; padding-bottom: 1rem;">
                     <div class="d-flex">
                         <!-- Avatar items with responsive grid classes -->
                       @foreach ($allApplicants as $allApp)
@@ -101,7 +101,7 @@ active
 
                         <!-- More avatars can be added here -->
                     </div>
-                </div>
+                </div>  --}}
 
 
                 <div class="card shadow border border-success">
@@ -113,46 +113,41 @@ active
                                     <div class="card">
                                         <div class="card-body">
                                             <div class="table-responsive">
-                                                <table id="multi-filter-select" class=" table table-striped table-hover" cellspacing="0">
-                                                    <thead>
-                                                        <tr>
-                                                            <th>Surname</th>
-                                                            <th>First Name</th>
-                                                            <th>Phone Number</th>
-                                                            <th>Email</th>
-                                                            <th>Edit Action</th>
-                                                            <th>Reset Action</th>
-                                                        </tr>
-                                                    </thead>
-                                                    <tfoot>
-                                                        <tr>
-                                                            <th>Surname</th>
-                                                            <th>First Name</th>
-                                                            <th>Phone Number</th>
-                                                            <th>Email</th>
-                                                            <th>Edit</th>
-                                                            <th>Action</th>
-                                                        </tr>
-                                                    </tfoot>
-                                                    <tbody>
-                                                        @foreach ($allApplicants as $allApp)
-                                                        <tr>
-                                                            <td>{{ $allApp->surname }}</td>
-                                                            <td>{{ $allApp->first_name }}</td>
-                                                            <td>{{ $allApp->phone }}</td>
-                                                            <td>{{ $allApp->email }}</td>
-                                                            <td><a href="/editusers/{{ $allApp->email }}" class="btn btn-warning">Edit</a></td>
-                                                            <td>
-                                                                <form method="POST" action="resetuserspassword">
-                                                                    @csrf
-                                                                    <input type="hidden" value="{{ $allApp->email }}" placeholder="{{ $allApp->email }}" name="email">
-                                                                    <button class="btn btn-danger">Reset Password</button>
-                                                                </form>
-                                                            </td>
-                                                        </tr>
-                                                        @endforeach
-                                                    </tbody>
-                                                </table>
+                                                 <table class="table table-bordered table-striped" id="dataTable" width="100%"
+                                        cellspacing="0">
+                                        <thead>
+                                            <tr>
+                                                <th>Surname</th>
+                                                <th>First Name</th>
+                                                <th>Phone Number</th>
+                                                <th>Email</th>
+                                                <th colspan="2">Action</th>
+                                            </tr>
+                                        </thead>
+
+                                        <tbody>
+                                            @foreach ($allApplicants as $allApp)
+                                                <tr>
+                                                    <td>{{ $allApp->surname }}</td>
+                                                    <td>{{ $allApp->first_name }}</td>
+                                                    <td>{{ $allApp->phone }}</td>
+                                                    <td>{{ $allApp->email }}</td>
+                                                    <td><a href="/editusers/{{ $allApp->email }}"
+                                                            class="btn btn-warning">Edit</a></td>
+
+                                                    <td>
+                                                        <form method="POST" action="resetuserspassword">
+                                                            @csrf
+                                                            <input type="hidden" value="{{ $allApp->email }}"
+                                                                placeholder="{{ $allApp->email }}" name="email">
+                                                            <button class="btn btn-danger">Reset Password</button>
+                                                        </form>
+                                                    </td>
+                                                </tr>
+                                            @endforeach
+
+                                        </tbody>
+                                    </table>
                                             </div>
                                         </div>
                                     </div>

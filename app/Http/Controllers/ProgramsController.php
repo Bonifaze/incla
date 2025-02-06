@@ -133,17 +133,14 @@ class ProgramsController extends Controller
         $this->validate($request, [
             'name' => 'required|string|max:100',
             'code' => 'required|string|max:10',
-            'degree' => 'required|string|max:10',
-            'masters' => 'required|string|max:10',
-            'academic_department_id' => 'required|integer',
-            'duration' => 'required|integer',
+
         ]);
         $program = Program::findOrFail($id);
         $program->name = $request->name;
         $program->code = $request->code;
-        $program->degree = $request->degree;
-        $program->masters = $request->masters;
-        $program->duration = $request->duration;
+        // $program->degree = $request->degree;
+        // $program->masters = $request->masters;
+        // $program->duration = $request->duration;
         $program->academic_department_id = $request->academic_department_id;
         $program->status = $request->status;
 

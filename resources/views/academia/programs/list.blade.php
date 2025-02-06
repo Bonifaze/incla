@@ -34,7 +34,7 @@
                                     <th>Name</th>
                                     {{--  <th>Department</th>  --}}
                                     <th>Under Graduates</th>
-                                    <th>Post Graduates</th>
+                                    {{--  <th>Post Graduates</th>  --}}
                                     <th>Action</th>
                                 </thead>
 
@@ -48,7 +48,7 @@
 
                                             <td>{{ $program->undergraduates->count() }}</td>
 
-                                            <td>{{ $program->postgraduates->count() }}</td>
+                                            {{--  <td>{{ $program->postgraduates->count() }}</td>  --}}
 
                                             <td><a class="btn btn-primary"
                                                     href="{{ route('academia.program.edit', $program->id) }}"> Edit </a></td>

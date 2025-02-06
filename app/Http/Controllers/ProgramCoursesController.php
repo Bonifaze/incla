@@ -115,7 +115,7 @@ class ProgramCoursesController extends Controller
             'program_id' => 'required|integer',
             // 'has_perequisite' =>'required|integer',
             // 'perequisite_id'=>'required|integer',
-            'course_category' => 'required|integer',
+
         ]);
 
         $program_course = new ProgramCourse();
@@ -297,7 +297,7 @@ class ProgramCoursesController extends Controller
          ->where('session_id', $request->session_id)
          ->where('level', [100,200,300,400])
         // ->where('semester',  $request->semester)
-         ->where('session_id', 17)
+        //  ->where('session_id', 17)
         //  ->where('level', $request->level)
         ->where('program_id', $request->program)
         ->orderBy('id','DESC')

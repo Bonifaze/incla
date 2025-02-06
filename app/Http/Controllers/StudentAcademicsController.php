@@ -235,19 +235,17 @@ public function update(Request $request, $id)
         // academic information
         'mode_of_entry' => 'required|string|max:50',
         'mode_of_study' => 'required|string|max:50',
-        'jamb_no' => 'sometimes|nullable|string|max:20',
-        'jamb_score' => 'sometimes|nullable|string|max:200',
+
         'entry_session_id' => 'required|integer',
         'program_id' => 'required|integer',
-        'level' => 'required|integer',
+
         ]);
     // $staff = Auth::guard('staff')->user();
     // $staffemail=$staff->email;
     $academic = StudentAcademic::findOrFail($id);
     $academic->mode_of_entry = $request->mode_of_entry;
     $academic->mode_of_study = $request->mode_of_study;
-    $academic->jamb_no = $request->jamb_no;
-    $academic->jamb_score = $request->jamb_score;
+
     $academic->entry_session_id = $request->entry_session_id;
     $academic->program_id = $request->program_id;
     $academic->level = $request->level;

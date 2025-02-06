@@ -72,8 +72,23 @@ public function sidebaradmission()
         $student = Auth::guard('student')->user();
         $courseReg = CourseRegistrations::where('status', 1)->orderBy('id', 'ASC')->paginate(20);
 
-        return view('students.home',compact('student','courseReg'));
-    }
+    $totalCourses = RegisteredCourse::where('student_id', $student->id)
+        ->where('session', $this->getcurrentsession())
+        ->count();
+
+    $passedCourses = RegisteredCourse::where('student_id', $student->id)
+        ->where('session', $this->getcurrentsession())
+        ->where('grade_id', '>', 2)
+        ->count();
+
+    $failedCourses = RegisteredCourse::where('student_id', $student->id)
+        ->where('session', $this->getcurrentsession())
+        ->where('grade_id', 1)
+        ->count();
+
+    return view('students.home', compact('student','courseReg', 'totalCourses', 'passedCourses', 'failedCourses'));
+}
+
 
     public function profile()
     {
@@ -404,7 +419,7 @@ public function sidebaradmission()
                 return redirect()->to('/students/home')
                     ->with('error', "Please pay at least 50% of your total fees to enable you register your Courses. If you have already paid, kindly visit the school's bursary for verification.");
             }
-       
+
     }
 
 
@@ -518,13 +533,13 @@ protected function getCourseSemester($course_id)
 
         if (($total_units1 + $total_reg_units1) > $firstSemesterLoad)
         {
-            $approvalMsg = '<div class="alert alert-danger alert-dismissible" role="alert"> <button type="button" class="close" data-dismiss="alert"> &times; </button> First Semester Credit units cannot exceed '.$firstSemesterLoad.' </div>';
+            $approvalMsg = '<div class="alert alert-danger alert-dismissible" role="alert"> <button type="button" class="close" data-dismiss="alert"> &times; </button>   Credit units cannot exceed '.$firstSemesterLoad.' </div>';
             return back()->with('approvalMsg', $approvalMsg);
         }
 
         if (($total_units2 + $total_reg_units2) > $secondSemesterLoad)
         {
-            $approvalMsg = '<div class="alert alert-danger alert-dismissible" role="alert"> <button type="button" class="close" data-dismiss="alert"> &times; </button> Second Semester Credit units cannot exceed  '.$secondSemesterLoad.' </div>';
+            $approvalMsg = '<div class="alert alert-danger alert-dismissible" role="alert"> <button type="button" class="close" data-dismiss="alert"> &times; </button>   Credit units cannot exceed  '.$secondSemesterLoad.' </div>';
             return back()->with('approvalMsg', $approvalMsg);
         }
 
@@ -1260,7 +1275,7 @@ public function getvoucherstudent()
     $courseReg = CourseRegistrations::where('status', 1)->orderBy('id', 'ASC')->paginate(20);
 
     $student = Auth::guard('student')->user();
-   
+
 
     // Retrieve the student ID
     $student_id = $student->id;
@@ -1285,11 +1300,11 @@ $getv = VoucherCode::where('status', 1)->first();
         return view('soteria.studentV', compact('viewV', 'courseReg'))->with('success', 'Student ID and status updated successfully.');
 
     // Check if any rows were updated
-    
+
     } else {
         // No rows were updated, return to the view with an error message
         return view('soteria.studentV', compact('viewV'))->with('error', 'No voucher code found with status 1.');
-    
+
       }
 
 }

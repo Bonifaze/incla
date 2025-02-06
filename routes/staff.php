@@ -1,4 +1,7 @@
 <?php
+
+Route::group(['middleware' => 'auth:staff'], function () {
+
 Route::get('/staff/list', 'StaffController@index')->name('staff.list');
 
 Route::get('/staff/create', 'StaffController@create')->name('staff.create');
@@ -64,3 +67,4 @@ Route::post('/staff/remitasverification', 'StaffController@remitasVerification')
 Route::get('/staff/paymentConfirmlists', 'StaffController@confirmPayments')->name('staff.Confirmpaymentlists');
 
 Route::get('/staff/list/studentreport', 'StaffController@staffreport')->name('staff.report');
+});

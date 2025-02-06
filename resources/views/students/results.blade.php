@@ -58,8 +58,8 @@
 
                                 {{--  <th>S/N</th>  --}}
                                 <th>Session</th>
-                                <th>Semester</th>
-                                <th>Level</th>
+                                {{--  <th>Semester</th>  --}}
+                                {{--  <th>Level</th>  --}}
                                 {{--  <th>GPA</th>  --}}
                                 {{--  <th>Details</th>  --}}
                                 <th>Course Form</th>
@@ -71,16 +71,12 @@
 
                                 @foreach ($registrations as $key => $reg)
                                     <tr>
-                                    @if ( $reg->semester==1 )
+
                                         {{--  <td>{{ $loop->iteration }}</td>  --}}
                                     <td>{{ $reg->session->name }}</td>
 
-                                       @if ($reg->semester==1 )
-                                          <td>First/Second Semester </td>
-                                       @else
-                                           <td>Second Semester</td>
-                                       @endif
-                                        <td>{{ $reg->level }}</td>
+
+                                        <td></td>
                                         {{--  <td>{{ $reg->gpa()->value }}</td>  --}}
                                         {{--  <td>
                                             @if ($reg->result()->isNotEmpty())
@@ -94,11 +90,11 @@
                                         </td>  --}}
                                         <td> <a class="btn btn-info"
                                                 href="{{ route('student.course-form', base64_encode($reg->id)) }}"
-                                                target="_blank"> <i class="fa fa-print"></i> Print Form </a></td>  @else
+                                                target="_blank"> <i class="fa fa-print"></i> Print Form </a></td>
 
 
 
-@endif
+
                                     </tr>
 
                                 @endforeach

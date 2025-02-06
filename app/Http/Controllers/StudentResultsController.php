@@ -772,7 +772,6 @@ class StudentResultsController extends Controller
         $sessions = Session::orderBy('id', 'DESC')->pluck('name', 'id');
         return view('results.coursesReg-student', compact('student', 'sessions'));
     }
-
     public function courseRegStudentForm(Request $request)
     {
         //

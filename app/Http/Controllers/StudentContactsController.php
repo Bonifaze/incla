@@ -35,8 +35,8 @@ class StudentContactsController extends Controller
             // 'other_names' => 'required|string|max:100',
             'phone' => 'required|string|max:20',
             // 'email' => 'sometimes|nullable|string|email|max:100',
-            'title' => 'required|string|max:50',
-            'relationship' => 'required|string|max:50',
+
+
             // 'state' => 'required|string|max:100',
             // 'address' => 'required|string|max:200',
         ]);
@@ -48,10 +48,7 @@ class StudentContactsController extends Controller
         $contact->phone = $request->phone;
         $contact->phone_2 = $request->phone_2;
         $contact->email = $request->email;
-        $contact->title = $request->title;
-        $contact->relationship = $request->relationship;
-        $contact->state = $request->state;
-        $contact->city = $request->city;
+
         $contact->address = $request->address;
 
         try {

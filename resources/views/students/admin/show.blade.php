@@ -157,32 +157,14 @@
                                     <div class="row justify-content-between align-items-center">
                                         <div class="col-auto">
                                             <div class="item-label"><strong>Date of Birth</strong>:</div>
-                                             <div class="item-data">{{ $student->dob }}</div> 
+                                             <div class="item-data">{{ $student->dob }}</div>
                                            {{-- <div class="item-data">{{ \Carbon\Carbon::parse($student->dob)->format('l j, F Y') }} ({{ \Carbon\Carbon::parse($student->dob)->age }} years old)</div> --}}
 
 
                                         </div>
                                     </div>
                                 </div>
-                                <div class="item border-bottom py-3">
-                                    <div class="row justify-content-between align-items-center">
-                                        <div class="col-auto">
-                                            <div class="item-label"><strong>Religion</strong></div>
-                                            <div class="item-data">{{ $student->religion }}
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="item border-bottom py-3">
-                                    <div class="row justify-content-between align-items-center">
-                                        <div class="col-auto">
-                                            <div class="item-label"><strong>Nationality</strong></div>
-                                            <div class="item-data">
-                                                {{ $student->nationality }}
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
+
                                 <div class="item border-bottom py-3">
                                     <div class="row justify-content-between align-items-center">
                                         <div class="col-auto">
@@ -212,15 +194,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="item border-bottom py-3">
-                                    <div class="row justify-content-between align-items-center">
-                                        <div class="col-auto">
-                                            <div class="item-label"><strong>Hobbies</strong></div>
-                                            <div class="item-data">{{ $student->hobbies }}
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
+
                             </div>
                         </div>
                     </div>
@@ -236,20 +210,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="app-card-body px-4 w-100">
-                                <div class="item border-bottom py-3">
-                                    <div class="row justify-content-between align-items-center">
-                                        <div class="col-auto">
-                                            <div class="item-label">
-                                                <strong>Title</strong>
-                                            </div>
-                                            <div class="item-data">
-                                                {{ $contact->title }}
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+
                             <div class="app-card-body px-4 w-100">
                                 <div class="item border-bottom py-3">
                                     <div class="row justify-content-between align-items-center">
@@ -394,19 +355,7 @@
                                                 {{ $academic->mat_no }}
                                             </div>
                                         </div>
-                                            @if ($academic->old_mat_no==null)
 
-                                            @else
-
-                                         <div class="col-auto">
-                                            <div class="item-label">
-                                                <strong>Old Matric Number</strong>
-                                            </div>
-                                            <div class="item-data">
-                                                {{ $academic->old_mat_no }}
-                                            </div>
-                                        </div>
-                                            @endif
 
                                     </div>
                                 </div>
@@ -425,20 +374,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="app-card-body px-4 w-100">
-                                <div class="item border-bottom py-3">
-                                    <div class="row justify-content-between align-items-center">
-                                        <div class="col-auto">
-                                            <div class="item-label">
-                                                <strong>Level </strong>
-                                            </div>
-                                            <div class="item-data">
-                                                {{ $academic->level ==1000 ?'Graduated': $academic->level  }}
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+
                             <div class="app-card-body px-4 w-100">
                                 <div class="item border-bottom py-3">
                                     <div class="row justify-content-between align-items-center">
@@ -453,34 +389,8 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="app-card-body px-4 w-100">
-                                <div class="item border-bottom py-3">
-                                    <div class="row justify-content-between align-items-center">
-                                        <div class="col-auto">
-                                            <div class="item-label">
-                                                <strong>Jamb No </strong>
-                                            </div>
-                                            <div class="item-data">
-                                                {{ $academic->jamb_no }}
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="app-card-body px-4 w-100">
-                                <div class="item border-bottom py-3">
-                                    <div class="row justify-content-between align-items-center">
-                                        <div class="col-auto">
-                                            <div class="item-label">
-                                                <strong>Jamb Score </strong>
-                                            </div>
-                                            <div class="item-data">
-                                                {{ $academic->jamb_score }}
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+
+
 
                         </div>
                     </div>
@@ -493,20 +403,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="app-card-body px-4 w-100">
-                                <div class="item border-bottom py-3">
-                                    <div class="row justify-content-between align-items-center">
-                                        <div class="col-auto">
-                                            <div class="item-label">
-                                                <strong>Physical Status</strong>
-                                            </div>
-                                            <div class="item-data">
-                                                {{ $medical->physical }}
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+
                             <div class="app-card-body px-4 w-100">
                                 <div class="item border-bottom py-3">
                                     <div class="row justify-content-between align-items-center">
@@ -535,34 +432,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="app-card-body px-4 w-100">
-                                <div class="item border-bottom py-3">
-                                    <div class="row justify-content-between align-items-center">
-                                        <div class="col-auto">
-                                            <div class="item-label">
-                                                <strong>Known Medical Condition</strong>
-                                            </div>
-                                            <div class="item-data">
-                                                {{ $medical->condition }}
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="app-card-body px-4 w-100">
-                                <div class="item border-bottom py-3">
-                                    <div class="row justify-content-between align-items-center">
-                                        <div class="col-auto">
-                                            <div class="item-label">
-                                                <strong>Allergies</strong>
-                                            </div>
-                                            <div class="item-data">
-                                                {{ $medical->allergies }}
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+
 
                         </div>
                     </div>

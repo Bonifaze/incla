@@ -1361,20 +1361,20 @@ ele1.innerHTML = ele1.innerHTML +
 							<div class="col-md-4 form-group">
 							<div  @if($errors->has('username')) class ='has-error form-group' @endif>
 								<label for="username">Official Email :</label>
-								{!! Form::email('username', null, array( 'placeholder' => '@veritas.edu.ng','class' => 'form-control', 'id' => 'username', 'required' => 'required')) !!}
+								{!! Form::email('username', null, array( 'placeholder' => '@incla.edu.ng','class' => 'form-control', 'id' => 'username', 'required' => 'required')) !!}
 							 <span class="text-danger"> {{ $errors->first('username') }}</span>
 							 </div>
 							</div>
 
 							<div class="col-md-4 form-group">
 								<label for="appointment_date">Appointment Date :</label>
-								{!! Form::text('appointment_date', '2015-07-01', array('placeholder' => '', 'class' => 'form-control', 'id' => 'appointment_date', 'required' => 'required')) !!}
+								{!! Form::text('appointment_date', '2024-07-01', array('placeholder' => '', 'class' => 'form-control', 'id' => 'appointment_date', 'required' => 'required')) !!}
 								<span class="text-danger"> {{ $errors->first('appointment_date') }}</span>
 							</div>
 
 							<div class="col-md-4 form-group">
 								<label for="assumption_date">Assumption Date :</label>
-								{!! Form::text('assumption_date', '2015-07-01', array('placeholder' => '', 'class' => 'form-control', 'id' => 'assumption_date', 'required' => 'required')) !!}
+								{!! Form::text('assumption_date', '2024-07-01', array('placeholder' => '', 'class' => 'form-control', 'id' => 'assumption_date', 'required' => 'required')) !!}
 								<span class="text-danger"> {{ $errors->first('assumption_date') }}</span>
 							</div>
 

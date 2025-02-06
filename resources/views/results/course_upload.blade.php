@@ -58,7 +58,7 @@ active
                                                         <th>S/N</th>
                                                         <th>Course Code</th>
                                                         <th>Course Title</th>
-                                                        <th>Semester</th>
+                                                        {{--  <th>Semester</th>  --}}
                                                         <th>Students</th>
                                                         <th>Student Program</th>
                                                         <th>Upload Status</th>
@@ -75,13 +75,7 @@ active
                                                         <td>{{ $loop->iteration }}</td>
                                                         <td>{{ $staff_course->course_code }}</td>
                                                         <td>{{ $staff_course->course_title }}</td>
-                                                        <td>
-                                                            @if ($staff_course->semester==1)
-                                                            First
-                                                            @else
-                                                            Second
-                                                            @endif
-                                                        </td>
+
                                                         <th>{{ $staff_course->total_students }}</th>
                                                         <th>{{ $staff_course->program->name ?? null }}</th>
                                                         <td>{{ $staff_course->upload_status }}</td>
@@ -92,7 +86,7 @@ active
                                                             @endif
                                                         </td>
                                                         <td>{{ $staff_course->hod_approval }}</td>
-                                                        {{-- <td>@if ($staff_course->hod_approval != 'approved') <a href="{{ route('admin.scores_upload', $staff_course->id) }}"
+                                                        <td>@if ($staff_course->hod_approval != 'approved') <a href="{{ route('admin.scores_upload', $staff_course->id) }}"
                                                         class="btn btn-primary">Upload Scores</a> @else <p class="text-warning text-bold ">Kindly Ask HoD TO REVOKE</p> @endif</td>
                                                         @if ($staff_course->upload_status =='uploaded')
                                                         <td> <a href="/admin/download/{{ $staff_course->id }}" class="btn btn-primary">Download Scores </a></td>
@@ -107,7 +101,7 @@ active
 
                                                             </form>
                                                         </td>
-                                                        @endif --}}
+                                                        @endif
                                                     </tr>
                                                     @endforeach
                                                 </tbody>

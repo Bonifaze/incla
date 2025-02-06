@@ -160,9 +160,12 @@ class CollegesController extends Controller
     {
         $this->authorize('programs',College::class);
         $staff = Auth::guard('staff')->user();
+        //dd($staff);
         if($staff->isAcademic())
         {
+            // dd($staff->isAcademic());
             $college = $staff->workProfile->admin->academic->college;
+
             $programs = $college->programs;
             return view('academia.colleges.programs', compact('college', 'staff', 'programs'));
         }

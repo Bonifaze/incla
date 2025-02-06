@@ -154,26 +154,14 @@
 							      <span class="text-danger"> <?php echo e($errors->first('program')); ?></span>
 						        </div>
                      <div class="col-md-4 form-group">
-                                            <label for="level">Level :</label>
-                                            <?php echo e(Form::select(
-                                                'level',
-                                                [
-                                                    '100' => '100 Level',
-                                                    '200' => '200 Level',
-                                                    '300' => '300 Level',
-                                                    '400' => '400 Level',
-                                                    '500' => '500 Level',
-                                                    '600' => '600 Level',
-                                                    '700' => 'PGD',
-                                                    '800' => 'MSc',
-                                                    '900' => 'PhD',
-                                                    '1000' => 'Graduate',
-                                                ],
-                                                100,
-                                                ['class' => 'form-control select2'],
-                                            )); ?>
+                       <?php echo Form::hidden('level', 100, [
+                                        'placeholder' => '',
+                                        'class' => 'form-control',
+                                        'id' => 'serial_no',
+                                        'readonly',
+                                    ]); ?>
 
-                                            <span class="text-danger"> <?php echo e($errors->first('level')); ?></span>
+
                                         </div>
                             </div>
                         </div>

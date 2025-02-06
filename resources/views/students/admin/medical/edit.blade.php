@@ -38,19 +38,7 @@
 
 
 							<div class="row">
-              			<div class="col-md-4 form-group">
-								<label for="physical">Physical Condition :</label>
-								{{ Form::select('physical', [
-	                        		'normal' => 'Normal',
-	                        		'blind' => 'Blind',
-	                        		'dumb' => 'Dumb',
-	                       			'deafdumb' => 'Deaf and Dumb',
-	                       			'other' => 'Other'],
-	                        		$medical->physical,
-	                       			 ['class' => 'form-control select2']
-	                    			) }}
 
-							</div>
 
 							<div class="col-md-4 form-group">
 								<label for="blood_group">Blood Group :</label>
@@ -84,24 +72,6 @@
 							</div>
 
 
-							<div class="row">
-              			<div class="col-md-6 form-group">
-              			<div  @if($errors->has('condition')) class ='has-error form-group' @endif>
-								<label for="condition">Known Medical Condition :</label>
-								 {!! Form::textarea('condition', null, array('placeholder' => 'Asthma or None','rows'=>'3', 'class' => 'form-control', 'id' => 'condition', 'required' => 'required')) !!}
-								<span class="text-danger"> {{ $errors->first('condition') }}</span>
-							 </div>
-							</div>
-
-							<div class="col-md-6 form-group">
-              			<div  @if($errors->has('allergies')) class ='has-error form-group' @endif>
-								<label for="allergies">Known Allergies :</label>
-								 {!! Form::textarea('allergies', null, array('placeholder' => 'Peanuts, sulphur or None','rows'=>'3', 'class' => 'form-control', 'id' => 'allergies', 'required' => 'required')) !!}
-								<span class="text-danger"> {{ $errors->first('allergies') }}</span>
-							 </div>
-							</div>
-
-							</div>
 
 
 

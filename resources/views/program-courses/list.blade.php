@@ -49,7 +49,7 @@
 							  {{--  <th>Data Id</th>  --}}
 							  <th>Course Code</th>
 							  <th>Program</th>
-							  <th>Level</th>
+							  {{--  <th>Level</th>  --}}
 							  <th>Credit</th>
 							  <th>Session</th>
 							  {{--  <th>Lecturer</th>  --}}
@@ -69,7 +69,7 @@
 							  {{--  <td>{{ $pcourse->id }}</td>  --}}
 							  <td>{{ $pcourse->course->courseDescribe ?? ' ' }}</td>
 							   <td>{{ $pcourse->program->name }}</td>
-							   <td>{{ $pcourse->level }}</td>
+							   {{--  <td>{{ $pcourse->level }}</td>  --}}
 							 <td>{{ $pcourse->credit_unit }}</td>
 							 <td>{{ $pcourse->session->name }}</td>
  {{--  <td>{{ $pcourse->lecturer->FullName  ?? ' '}}</td>  --}}

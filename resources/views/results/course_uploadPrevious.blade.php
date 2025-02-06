@@ -61,7 +61,7 @@
                                                      <th>Course Code</th>
                                                     <th>Course Title</th>
                                                     <th>Session</th>
-                                                    <th>Semester</th>
+
                                                     <th>Students</th>
                                                     <th>Student Program</th>
                                                     <th>Upload Status</th>
@@ -79,13 +79,7 @@
                                                         <td>{{ $staff_course->course_code }}</td>
                                                         <td>{{ $staff_course->course_title }}</td>
                                                          <th>{{ $staff_course->session->name ?? null }}</th>
-                                                          <td >
-                                                          @if ($staff_course->semester==1)
-                                                                First
-                                                          @else
-                                                                Second
-                                                          @endif
-                                                          </td>
+
 
                                                         <th>{{ $staff_course->total_students }}</th>
                                                         <th>{{ $staff_course->program->name ?? null }}</th>
@@ -109,7 +103,7 @@
                                                            {{--   <a href="{{ route('admin.view_scores', $staff_course->course_id) }}"
                                                                         class="btn btn-primary">View Course Scores</a>
                                                                     --}}
-                                                            
+
                                                                         </td>
 
                                                                  @if ($staff_course->upload_status =='uploaded')

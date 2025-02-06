@@ -144,7 +144,7 @@ active
                                             {{--  <div class="image-label mb-2">
                                                 <strong>Passport</strong>
                                             </div>  --}}
-                                            <img class="img-fluid rounded-circle shadow" src="data:image/png;base64,{{ $student->passport }}" alt="Student Passport" style="height: 180px; width: 180px; object-fit: cover;" />
+                                            <img class="img-fluid rounded-circle shadow" src="data:image/png;base64,{{ $student->passport }}" alt="Student Passport" style="height: 220px; width: 180px; object-fit: cover;" />
                                         </div>
                                     </div>
                                     <div class="col-md-6 mb-4">
@@ -152,7 +152,7 @@ active
                                             {{--  <div class="image-label mb-2">
                                                 <strong>Signature</strong>
                                             </div>  --}}
-                                            <img class="img-fluid rounded-circle shadow" src="data:image/png;base64,{{ $student->signature }}" alt="Student Signature" style="height: 180px; width: 180px; object-fit: cover;" />
+                                            <img class="img-fluid rounded-circle shadow" src="data:image/png;base64,{{ $student->signature }}" alt="Student Signature" style="height: 220px; width: 180px; object-fit: cover;" />
                                         </div>
                                     </div>
                                 </div>
@@ -169,7 +169,7 @@ active
                                     <div class="info-item py-3">
                                         <div class="info-label"><strong>Other Name</strong></div>
                                         <div class="info-data">{{ $student->middle_name }}</div>
-                                    </div>                                   
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -184,7 +184,7 @@ active
                                         <div class="info-label"><strong>Username</strong></div>
                                         <div class="info-data">{{ $student->username }}</div>
                                     </div>
-                                   
+
                                  <div class="info-item py-3">
                                         <div class="info-label"><strong>Phone Number</strong></div>
                                         <div class="info-data">{{ $student->phone }}</div>
@@ -202,7 +202,7 @@ active
                                         <div class="info-label"><strong>Date of Birth</strong></div>
                                         <div class="info-data">{{ $student->dob }}</div>
                                     </div>
-                                   
+
                                     <div class="info-item py-3">
                                         <div class="info-label"><strong>Address</strong></div>
                                         <div class="info-data">{{ $student->address }}</div>
@@ -223,7 +223,7 @@ active
                                         <div class="info-label"><strong>Genotype</strong></div>
                                         <div class="info-data">{{ $medical->genotype }}</div>
                                     </div>
-                                    
+
                                 </div>
                             </div>
                         </div>
@@ -289,14 +289,14 @@ active
                                         <div class="info-data">{{ $academic->program->name }}</div>
                                     </div>
                                     <div class="info-item py-3">
-                                        <div class="info-label"><strong>Level</strong></div>
-                                        <div class="info-data">{{ $academic->level }}</div>
+                                        <div class="info-label"><strong>Session Admitted</strong></div>
+                                        <div class="info-data">{{ $academic->session->name }}</div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    
+
                 </div>
 
 

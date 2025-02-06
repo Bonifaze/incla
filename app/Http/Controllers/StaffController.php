@@ -46,36 +46,34 @@ class StaffController extends Controller
     // }
 
     public function home()
-    {
-        $staff = Auth::guard('staff')->user();
-    //     $work = $staff->workProfile->staff_type_id;
-    //     $test = $staff->program;
+{
+    $staff = Auth::guard('staff')->user();
 
-    //     $programs = $staff->workProfile->admin->academic->programs->pluck('id');
-    //     // ery->where('admin_department_id', '=', $admin);
+    $totalApplicants = DB::table('usersbiodata')->count();
+    $totalRecommended = DB::table('recommended_applicants')->count();
+    $totalApproved = DB::table('approved_applicants')->count();
+    $totalStudents = DB::table('students')->count();
 
-    //     //   dd($work);
-    //     $modify=RegisteredCourse::with(['staff','sessions'])->where('staff_id', '<>', '', 'and')
-    //     ->whereColumn('old_total', '!=', 'total')
-    //     ->where('program_id',$programs)
-    //     ->orderBy('updated_at','DESC')
-    //    // ->limit(20)
-    //     ->paginate(20);
+    $certificateCount = DB::table('users')->where('applicant_type', 'Certificate')->count();
+    $licentiateCount = DB::table('users')->where('applicant_type', 'Licentiate')->count();
+    $diplomaCount = DB::table('users')->where('applicant_type', 'Diploma')->count();
 
-        return view('staff.home',compact('staff'));
-    }
-    public function index(): JsonResponse
-    {
-        $test = Staff::all();
-        return response()->json($test);
-    }
 
-    // public function index()
+    return view('staff.home', compact('staff', 'totalApplicants', 'totalRecommended', 'totalApproved', 'totalStudents','certificateCount','licentiateCount','diplomaCount'));
+}
+
+    // public function index(): JsonResponse
     // {
-    //     $this->authorize('list', Staff::class);
-    //     $staff = Staff::orderBy('status','ASC')->orderBy('surname','ASC')->orderBy('id','DESC')->paginate(100);
-    //     return view('staff.admin.list',compact('staff'));
+    //     $test = Staff::all();
+    //     return response()->json($test);
     // }
+
+    public function index()
+    {
+        $this->authorize('list', Staff::class);
+        $staff = Staff::orderBy('status','ASC')->orderBy('surname','ASC')->orderBy('id','DESC')->paginate(100);
+        return view('staff.admin.list',compact('staff'));
+    }
 
 
     /**
@@ -86,7 +84,7 @@ class StaffController extends Controller
      */
     public function show($id)
     {
-        $this->authorize('edit', Staff::class);
+       $this->authorize('edit', Staff::class);
         $staff = Staff::find($id);
         $work = $staff->workProfile;
         $contact = $staff->contact;
@@ -362,7 +360,7 @@ class StaffController extends Controller
      */
     public function edit($id)
     {
-       $this->authorize('edit', Staff::class);
+    $this->authorize('edit', Staff::class);
        $staff = Staff::findOrFail($id);
        return view('staff.admin.edit',array('staff' => $staff));
     }
@@ -581,7 +579,7 @@ class StaffController extends Controller
     }
     public function search()
     {
-        $this->authorize('search', Staff::class);
+        //$this->authorize('search', Staff::class);
         return view('staff.admin.search');
     }
 

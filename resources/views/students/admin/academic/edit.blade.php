@@ -49,12 +49,11 @@
                                         {{ Form::select(
                                             'mode_of_entry',
                                             [
-                                                'UTME' => 'UTME',
-                                                'DE' => 'Direct Entry',
+                                                'Certificate' => 'Certificate',
+                                                'Diploma' => 'Diploma',
                                                 'TRANSFER' => 'Transfer',
-                                                'PGD' => 'PGD',
-                                                'MSc' => 'Masters',
-                                                'PhD' => 'PhD',
+                                                'Licentiate' => 'Licentiate',
+
                                             ],
                                             $academic->mode_of_entry,
                                             ['class' => 'form-control select2'],
@@ -69,8 +68,7 @@
                                             [
                                                 'Full Time' => 'Full Time',
                                                 'Part Time' => 'Part Time',
-                                                'Sandwich' => 'Sandwich',
-                                                'Distance Learning' => 'Distance Learning',
+
                                             ],
                                             $academic->mode_of_study,
                                             ['class' => 'form-control select2'],
@@ -89,7 +87,7 @@
 
 
 
-
+{{--
                                     <div class="col-md-6 form-group">
                                         <label for="level">Level : </label>
                                         {{ Form::select(
@@ -110,24 +108,15 @@
                                             ['class' => 'form-control select2'],
                                         ) }}
 
-                                    </div>
+                                    </div>  --}}
 
-                                    <div class="col-md-6 form-group">
-                                        <div @if ($errors->has('jamb_no')) class ='has-error form-group' @endif>
-                                            <label for="jamb_no">Jamb Number :</label>
-                                            {!! Form::text('jamb_no', null, ['placeholder' => '', 'class' => 'form-control', 'id' => 'jamb_no']) !!}
-                                            <span class="text-danger"> {{ $errors->first('jamb_no') }}</span>
-                                        </div>
-                                    </div>
+{!! Form::hidden('level', 100, [
+                                        'placeholder' => '',
+                                        'class' => 'form-control',
+                                        'id' => 'serial_no',
+                                        'readonly',
+                                    ]) !!}
 
-
-                                    <div class="col-md-6 form-group">
-                                        <div @if ($errors->has('jamb_score')) class ='has-error form-group' @endif>
-                                            <label for="jamb_score">Jamb Score :</label>
-                                            {!! Form::text('jamb_score', null, ['placeholder' => '', 'class' => 'form-control', 'id' => 'jamb_score']) !!}
-                                            <span class="text-danger"> {{ $errors->first('jamb_score') }}</span>
-                                        </div>
-                                    </div>
 
 
 

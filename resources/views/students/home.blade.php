@@ -51,11 +51,11 @@ active
                 </h1>
                 @include('partialsv3.flash')
 
-               
+
 
                 <div class="row">
                     <div class="col-sm-6 col-md-4">
-                     <a href="/" class=" @yield('/')">
+                     <a href="{{ route('students.results') }}" class=" @yield('/')">
                         <div class="card card-stats card-round">
                             <div class="card-body hover-card shadow-sm">
                                 <div class="row align-items-center">
@@ -73,14 +73,14 @@ active
                                     <div class="col-auto">
                                             <i class="fa fa-list fa-3x text-success "></i>
                                         </div>
-                                        
+
                                 </div>
                             </div>
                         </div>
                      </a>
                     </div>
 
-                    
+
                      @foreach ($courseReg as $key => $session)
                     <div class="col-sm-6 col-md-4">
                     <a href="{{ $session->route }}" class=" @yield('registration')">
@@ -101,9 +101,9 @@ active
                                     </div>
                                     <div class="col-auto">
                                             <i class="fa fa-cog fa-spin fa-2x text-success "></i>
-                                            
+
                                     </div>
-                                    
+
                                 </div>
                             </div>
                         </div>
@@ -125,7 +125,7 @@ active
                                         <div class="numbers">
                                             <p class="card-category">Complain</p>
                                             <h4 class="card-title">Complain</h4>
-                                        </div> 
+                                        </div>
                                     </div>
                                      <div class="col-auto">
                                             <i class="fa fa-comments fa-3x text-success"></i>
@@ -135,31 +135,31 @@ active
                         </div>
                         </a>
                     </div>
-                   
+
                 </div>
 
 
                  <div class="row row-card-no-pd">
-                    <div class="col-12 col-sm-6 col-md-6 col-xl-3">
+                    <div class="col-12 col-sm-6 col-md-6 col-xl-4">
                         <div class="card">
                             <div class="card-body">
                                 <div class="d-flex justify-content-between">
                                     <div>
-                                        <h6><b>Courses to Offer</b></h6>
+                                        <h6><b>Courses Offered</b></h6>
                                     </div>
-                                    <h4 class="text-info fw-bold">34</h4>
+                                    <h4 class="text-info fw-bold">{{ $totalCourses }}</h4>
                                 </div>
                                 <div class="progress progress-sm">
                                     <div class="progress-bar bg-info w-100" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
                                 </div>
                                 <div class="d-flex justify-content-between mt-2">
-                                    <p class="text-muted mb-0">Change</p>
-                                    <p class="text-muted mb-0">100%</p>
+                                    {{--  <p class="text-muted mb-0">Change</p>  --}}
+                                    {{--  <p class="text-muted mb-0">100%</p>  --}}
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <div class="col-12 col-sm-6 col-md-6 col-xl-3">
+                    {{--  <div class="col-12 col-sm-6 col-md-6 col-xl-3">
                         <div class="card">
                             <div class="card-body">
                                 <div class="d-flex justify-content-between">
@@ -173,12 +173,12 @@ active
                                 </div>
                                 <div class="d-flex justify-content-between mt-2">
                                     {{--  <p class="text-muted mb-0"></p>  --}}
-                                    <p class="text-muted mb-0">25%</p>
+                                    {{--  <p class="text-muted mb-0">25%</p>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="col-12 col-sm-6 col-md-6 col-xl-3">
+                    </div>  --}}
+                    <div class="col-12 col-sm-6 col-md-6 col-xl-4">
                         <div class="card">
                             <div class="card-body">
                                 <div class="d-flex justify-content-between">
@@ -186,19 +186,19 @@ active
                                         <h6><b>Passed</b></h6>
                                         {{--  <p class="text-muted">Failed</p>  --}}
                                     </div>
-                                    <h4 class="text-danger fw-bold">15</h4>
+                                    <h4 class="text-danger fw-bold">{{ $passedCourses }}</h4>
                                 </div>
                                 <div class="progress progress-sm">
                                     <div class="progress-bar bg-danger w-50" role="progressbar" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
                                 </div>
                                 <div class="d-flex justify-content-between mt-2">
                                     {{--  <p class="text-muted mb-0">Change</p>  --}}
-                                    <p class="text-muted mb-0">50%</p>
+                                    {{--  <p class="text-muted mb-0">50%</p>  --}}
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <div class="col-12 col-sm-6 col-md-6 col-xl-3">
+                    <div class="col-12 col-sm-6 col-md-6 col-xl-4">
                         <div class="card">
                             <div class="card-body">
                                 <div class="d-flex justify-content-between">
@@ -206,22 +206,22 @@ active
                                         <h6><b>Failed</b></h6>
                                         {{--  <p class="text-muted">Joined New User</p>  --}}
                                     </div>
-                                    <h4 class="text-secondary fw-bold">12</h4>
+                                    <h4 class="text-secondary fw-bold">{{ $failedCourses }}</h4>
                                 </div>
                                 <div class="progress progress-sm">
                                     <div class="progress-bar bg-secondary w-25" role="progressbar" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
                                 </div>
                                 <div class="d-flex justify-content-between mt-2">
                                     {{--  <p class="text-muted mb-0">Change</p>  --}}
-                                    <p class="text-muted mb-0">25%</p>
+                                    {{--  <p class="text-muted mb-0">25%</p>  --}}
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
 
-                
-                
+
+
 
 
             </div>

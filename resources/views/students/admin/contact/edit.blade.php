@@ -37,13 +37,7 @@
 
 
 							<div class="row">
-              			<div class="col-md-4 form-group">
-              			<div  @if($errors->has('title')) class ='has-error form-group' @endif>
-								<label for="title">Title :</label>
-								{!! Form::text('title', null, array( 'placeholder' => '','class' => 'form-control', 'id' => 'title', 'required' => 'required')) !!}
-							 <span class="text-danger"> {{ $errors->first('title') }}</span>
-							 </div>
-							</div>
+
 
 							<div class="col-md-4 form-group">
               			<div  @if($errors->has('surname')) class ='has-error form-group' @endif>
@@ -67,30 +61,11 @@
 
 
 							<div class="row">
-              			<div class="col-md-4 form-group">
-              			<div  @if($errors->has('relationship')) class ='has-error form-group' @endif>
-								<label for="relationship">Relationship with Contact / Sponsor :</label>
-								{!! Form::text('relationship', null, array( 'placeholder' => '','class' => 'form-control', 'id' => 'relationship', 'required' => 'required')) !!}
-							 <span class="text-danger"> {{ $errors->first('relationship') }}</span>
-							 </div>
-							</div>
-
-							<div class="col-md-4 form-group">
-              			<div  @if($errors->has('state')) class ='has-error form-group' @endif>
-								<label for="state">State of Residence :</label>
-								{!! Form::text('state', null, array( 'placeholder' => '','class' => 'form-control', 'id' => 'state')) !!}
-							 <span class="text-danger"> {{ $errors->first('state') }}</span>
-							 </div>
-							</div>
 
 
-							<div class="col-md-4 form-group">
-							<div  @if($errors->has('city')) class ='has-error form-group' @endif>
-								<label for="city">City of Residence :</label>
-								{!! Form::text('city', null, array('placeholder' => '', 'class' => 'form-control', 'id' => 'city')) !!}
-							 <span class="text-danger"> {{ $errors->first('city') }}</span>
-							</div>
-							</div>
+
+
+
 
 
 							</div>
@@ -118,7 +93,7 @@
 							<div  @if($errors->has('phone_2')) class ='has-error form-group' @endif>
 								<label for="phone_2">Phone :</label>
 
-                                {!! Form::text('phone_2', null, array('placeholder' => '080xxxxx', 'class' => 'form-control', 'id' => 'phone_2', 'name' => 'phone_2', 'required' => 'required')) !!}
+                                {!! Form::text('phone_2', null, array('placeholder' => '080xxxxx', 'class' => 'form-control', 'id' => 'phone_2', 'name' => 'phone_2')) !!}
 							<span class="text-danger"> {{ $errors->first('phone_2') }}</span>
 							</div>
 							</div>

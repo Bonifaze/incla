@@ -49,79 +49,16 @@
 <div>
     <h3>Numbers of </h3>
     <p>Graduated Students : {{ $graduatedCount }}</p>
-    <p>Postgraduate Students: {{ $postgraduateCount }}</p>
-    <p>Undergraduate Students: {{ $undergraduateCount }}</p>
+
     <hr>
     <h3>Numbers of Undergrauate :</h3>
     <p>Male Students: {{ $maleCount }}</p>
     <p>Female Students: {{ $femaleCount }}</p>
     <hr>
-    <h3>Numbers of PostGraduate :</h3>
-    <p>Male Students: {{ $maleCountPost }}</p>
-    <p>Female Students: {{ $femaleCountPost }}</p>
-    <hr>
-    <h3>Numbers of Undergrauate :</h3>
-    <p>Catholic Students: {{ $catholicCount }}</p>
-    <p>Non-Catholic Students: {{ $nonCatholicCount }}</p>
-    <p>Muslim Students: {{ $muslimCount }}</p>
-    <p>Other Religions: {{ $otherReligionCount }}</p>
-    <hr>
-      <h3>Numbers of Postgraduate :</h3>
-    <p>Catholic Students: {{ $catholicCountPost }}</p>
-    <p>Non-Catholic Students: {{ $nonCatholicCountPost }}</p>
-    <p>Muslim Students: {{ $muslimCountPost }}</p>
-    <p>Other Religions: {{ $otherReligionCountPost }}</p>
 
-    <Hr>
-    <p> 2013/2014 Undergraute Students: {{ $undergratedCount6 }}</p>
-</div>
 
-/*
-<div class="container">
-            <div class="row">
-                <div class="col-lg-4 col-sm-6">
-                    <div class="singel-counter text-center mt-40">
-                        <span><span class="counter">{{ $graduatedCount }}</span></span>
-                        <p>Graduated Students</p>
-                    </div> <!-- singel counter -->
-                </div>
-                <div class="col-lg-4 col-sm-6">
-                    <div class="singel-counter text-center mt-40">
-                        <span><span class="counter">{{ $undergraduateCount }}</span></span>
-                        <p>Undergraduate Students</p>
-                    </div> <!-- singel counter -->
-                </div>
-                <div class="col-lg-4 col-sm-6">
-                    <div class="singel-counter text-center mt-40">
-                        <span><span class="counter">{{ $postgraduateCount }}</span></span>
-                        <p>Postgraduate Students</p>
-                    </div> <!-- singel counter -->
-                </div>
 
-            </div>
 
-             <div class="row">
-                <div class="col-lg-4 col-sm-6">
-                    <div class="singel-counter text-center mt-40">
-                        <span><span class="counter">{{ $maleCount }}</span></span>
-                        <p>Male Students</p>
-                    </div> <!-- singel counter -->
-                </div>
-                <div class="col-lg-4 col-sm-6">
-                    <div class="singel-counter text-center mt-40">
-                        <span><span class="counter">{{ $femaleCount }}</span></span>
-                        <p>Female Students</p>
-                    </div> <!-- singel counter -->
-                </div>
-                <div class="col-lg-4 col-sm-6">
-                    <div class="singel-counter text-center mt-40">
-                        <span><span class="counter">{{ $postgraduateCount }}</span></span>
-                        <p>Postgraduate Students</p>
-                    </div> <!-- singel counter -->
-                </div>
-
-            </div> <!-- row -->
-        </div> <!-- container --> */
     </div>
 
 

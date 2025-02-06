@@ -68,23 +68,20 @@
 							<span class="text-danger"> {{ $errors->first('program_id') }}</span>
 							</div>
 
-							<div class="col-md-4 form-group">
-								<label for="level">Level :</label>
-								{{ Form::select('level', [
-	                        		'100' => '100 Level',
-	                        		'200' => '200 Level',
-	                        		'300' => '300 Level',
-	                        		'400' => '400 Level',
-	                        		'500' => '500 Level',
-	                        		'600' => '600 Level',
-	                        		'700' => 'PGD',
-	                        		'800' => 'MSc',
-	                        		'900' => 'PhD'],
-	                        		$pcourse->level,
-	                       			 ['class' => 'form-control select2']
-	                    			) }}
-	                    			<span class="text-danger"> {{ $errors->first('level') }}</span>
-							</div>
+							     {!! Form::hidden('level', 100, [
+                                        'placeholder' => '',
+                                        'class' => 'form-control',
+                                        'id' => 'serial_no',
+                                        'readonly',
+                                    ]) !!}
+
+
+                                {!! Form::hidden('semester', 1, [
+                                        'placeholder' => '',
+                                        'class' => 'form-control',
+                                        'id' => 'serial_no',
+                                        'readonly',
+                                    ]) !!}
 
                             <div class="col-md-4 form-group">
 								<label for="session_id">Session :</label>
@@ -97,49 +94,13 @@
 							<div class="row">
 
 
-							<div class="col-md-3 form-group">
-								<label for="semester">Semester :</label>
-								{{ Form::select('semester', [
-	                        		'1' => 'First Semester',
-	                        		'2' => 'Second Semester',
-	                        		],
-	                        		$pcourse->semester,
-	                       			 ['class' => 'form-control select2']
-	                    			) }}
-	                    			<span class="text-danger"> {{ $errors->first('semester') }}</span>
-							</div>
 
-							<div class="col-md-3 form-group">
-								<label for="mode">Mode :</label>
-								{{ Form::select('course_category', [
-	                        		'1' => 'Core',
-	                        		'2' => 'Elective'],
-	                        		$pcourse->course_category,
-	                       			 ['class' => 'form-control select2']
-	                    			) }}
-	                    			<span class="text-danger"> {{ $errors->first('mode') }}</span>
-							</div>
 
-                             <div class="col-md-3 form-group">
-                                    <label for="semester">prerequisite  :</label>
-                                    {{ Form::select(
-                                        'has_perequisite',
-                                        [
-                                            'no' => 'No',
-                                            'yes' => 'Yes',
-                                        ],
-                                     $pcourse->has_perequisite,
-                                        ['class' => 'form-control select2'],
-                                    ) }}
-                                    <span class="text-danger"> {{ $errors->first('semester') }}</span>
-                                </div>
 
-                                <div class="col-md-3 form-group">
-                                    <label for="semester">prerequisite Course :</label>
-                                     {{ Form::select('perequisite_id', $courses, null, ['placeholder'=> 'null', 'class' => 'form-control select2', 'id' => 'prerequisite_id', 'name' => 'perequisite_id']) }}
 
-                                    <span class="text-danger"> {{ $errors->first('semester') }}</span>
-                                </div>
+
+
+
 
 							</div>
 

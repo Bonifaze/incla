@@ -106,6 +106,6 @@ if (!str_contains($username, '@incla.edu.ng')) {
     public function logout()
     {
         Auth::guard('student')->logout();
-        return redirect('/');
+        return redirect('/students/login');
     }
 } // end class

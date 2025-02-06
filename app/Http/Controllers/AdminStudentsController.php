@@ -498,13 +498,11 @@ class AdminStudentsController extends Controller
         $student->email = $request->email;
         $student->title = $request->title;
         $student->dob = $request->dob;
-        $student->marital_status = $request->marital_status;
-        $student->nationality = $request->nationality;
+
+
         $student->state = $request->state;
         $student->lga_name = $request->lga_name;
-        $student->city = $request->city;
-        $student->hobbies = $request->hobbies;
-        $student->religion = $request->religion;
+
         $student->address = $request->address;
 
         //process Passport upload

@@ -20,20 +20,19 @@ class StudentMedicalsController extends Controller
 
     public function update(Request $request, $id)
     {
-        $this->authorize('edit', Student::class);
+        // $this->authorize('edit', Student::class);
         $this->validate($request, [
-            'physical' => 'required|string|max:100',
+
             'blood_group' => 'required|string|max:100',
             'genotype' => 'required|string|max:100',
-            'condition' => 'required|string|max:100',
-            'allergies' => 'required|string|max:100',
+
         ]);
         $medical = StudentMedical::findOrFail($id);
-        $medical->physical = $request->physical;
+
         $medical->blood_group = $request->blood_group;
         $medical->genotype = $request->genotype;
-        $medical->condition = $request->condition;
-        $medical->allergies = $request->allergies;
+
+
         try {
             $medical->save();
         } // end try

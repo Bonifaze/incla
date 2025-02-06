@@ -71,8 +71,24 @@
                                     <span class="text-danger"> {{ $errors->first('program_id') }}</span>
                                 </div>
 
-                                <div class="col-md-3 form-group">
-                                    <label for="level">Level :</label>
+
+                                {!! Form::hidden('level', 100, [
+                                        'placeholder' => '',
+                                        'class' => 'form-control',
+                                        'id' => 'serial_no',
+                                        'readonly',
+                                    ]) !!}
+
+
+                                {!! Form::hidden('semester', 1, [
+                                        'placeholder' => '',
+                                        'class' => 'form-control',
+                                        'id' => 'serial_no',
+                                        'readonly',
+                                    ]) !!}
+
+
+                                    {{--  <label for="level">Level :</label>
                                     {{ Form::select(
                                         'level',
                                         [
@@ -89,8 +105,8 @@
                                         100,
                                         ['class' => 'form-control select2'],
                                     ) }}
-                                    <span class="text-danger"> {{ $errors->first('level') }}</span>
-                                </div>
+                                    <span class="text-danger"> {{ $errors->first('level') }}</span>  --}}
+
 
                                 <div class="col-md-4 form-group">
                                     <label for="session_id">Session :</label>
@@ -104,54 +120,10 @@
 
 
 
-                                <div class="col-md-3 form-group">
-                                    <label for="semester">Semester :</label>
-                                    {{ Form::select(
-                                        'semester',
-                                        [
-                                            '1' => 'First Semester',
-                                            '2' => 'Second Semester',
-                                        ],
-                                        1,
-                                        ['class' => 'form-control select2'],
-                                    ) }}
-                                    <span class="text-danger"> {{ $errors->first('semester') }}</span>
-                                </div>
 
-                                <div class="col-md-3 form-group">
-                                    <label for="mode">Category :</label>
-                                    {{ Form::select(
-                                        'course_category',
-                                        [
-                                            '1' => 'Core',
-                                            '2' => 'Elective',
-                                        ],
-                                        1,
-                                        ['class' => 'form-control select2'],
-                                    ) }}
-                                    <span class="text-danger"> {{ $errors->first('mode') }}</span>
-                                </div>
 
-                        <div class="col-md-3 form-group">
-                                    <label for="semester">prerequisite  :</label>
-                                    {{ Form::select(
-                                        'has_perequisite',
-                                        [
-                                            'no' => 'No',
-                                            'yes' => 'Yes',
-                                        ],
-                                        1,
-                                        ['class' => 'form-control select2'],
-                                    ) }}
-                                    <span class="text-danger"> {{ $errors->first('semester') }}</span>
-                                </div>
 
-                                <div class="col-md-3 form-group">
-                                    <label for="semester">prerequisite Course :</label>
-                                     {{ Form::select('perequisite_id', $courses, null, ['placeholder'=> '', 'class' => 'form-control select2', 'id' => 'perequisite_id', 'name' => 'perequisite_id']) }}
 
-                                    <span class="text-danger"> {{ $errors->first('semester') }}</span>
-                                </div>
 
                             </div>
 
