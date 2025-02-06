@@ -21,9 +21,9 @@ List Students
             <!-- left column -->
             <div class="col_full">
 
-               
 
-                
+
+
                     <h1 class="app-page-title text-uppercase h6 font-weight-bold p-3 mb-3 shadow-sm text-center text-white bg-success border rounded">
                     Welcome to the List of InCLA Students
                 </h1>
@@ -31,7 +31,7 @@ List Students
 
 
 
-                
+
 
                 <div class="card-body ps-0" style="overflow-x: auto; white-space: nowrap; padding-bottom: 1rem;">
                     <div class="d-flex">
@@ -40,7 +40,8 @@ List Students
                             <a href="{{ route('student.view', $student->id) }}" class="avatar avatar-sm rounded-circle border border-primary">
                                 <img alt=" {{ $student->fullName }} " title="{{ $student->fullName }}" class="avatar-img" src="data:image/png;base64,{{ $student->passport }}">
                             </a>
-                            <p class="text-sm">{{ explode(separator: ',', $student->fullName)[0] }}</p>
+                            <p class="text-sm">{{ explode(',', $student->fullName)[0] }}</p>
+
                         </div>
                         @endforeach
                     </div>
