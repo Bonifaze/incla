@@ -190,7 +190,7 @@ class StaffController extends Controller
      */
     function getloginurl()
     {
-        return 'https://admissions.veritas.edu.ng/staff/login';
+        // return 'https://admissions.veritas.edu.ng/staff/login';
     }
     public function store(Request $request)
     {
@@ -230,10 +230,10 @@ class StaffController extends Controller
             'staff_type_id' => 'required|string|max:20',
             'employment_type_id' => 'required|integer',
             'admin_department_id' => 'required|integer',
-            'grade_id' => 'required|string|max:100',
+            // 'grade_id' => 'required|string|max:100',
             'username' => 'required|string|email|max:50|unique:staff',
-            'assumption_date' => 'required|string|max:50',
-            'appointment_date' => 'required|string|max:50',
+            // 'assumption_date' => 'required|string|max:50',
+            // 'appointment_date' => 'required|string|max:50',
         ],
             $messages = [
                 'passport.dimensions'    => 'Passport Image is too small. Must be at least 400px wide.',
@@ -347,7 +347,7 @@ class StaffController extends Controller
 
         DB::commit();
         return redirect()->route('staff.show', $staff->id)
-        ->with('success',"Staff created successfully, an email has been sent to".$request->email."with login details");
+        ->with('success',"Staff created successfully, an email has been sent to ".$request->email. "with login details");
 
     } // end store
 

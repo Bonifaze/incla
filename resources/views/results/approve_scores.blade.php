@@ -58,13 +58,13 @@
                                                         <th>Course Title</th>
                                                         <th>Course Code</th>
                                                         <th>Program</th>
-                                                        <th>Semester</th>
-                                                        <th>Level</th>
+                                                        {{--  <th>Semester</th>  --}}
+                                                        {{--  <th>Level</th>  --}}
 
-                                                        <th>HoD Approval</th>
-                                                        <th>Dean Approval</th>
+                                                        <th> Approval</th>
+                                                        {{--  <th>Dean Approval</th>
                                                         <th>SBC Approval</th>
-                                                        <th>VC Approval</th>
+                                                        <th>VC Approval</th>  --}}
                                                         <th>Lecturer</th>
                                                         <th>Action</th>
                                                         <th>Date</th>
@@ -84,24 +84,24 @@
                                                                 <td>{{ $staff_course->course_title }}</td>
                                                                 <td>{{ $staff_course->course_code }}</td>
                                                                 <td>{{ $staff_course->program->name }}</td>
-                                                                <td>
+                                                                {{--  <td>
                                                                     @if ($staff_course->semester_id == 1)
                                                                         First
                                                                     @elseif ($staff_course->semester_id == 2)
                                                                         Second
                                                                     @endif
-                                                                </td>
-                                                                <td>{{ $staff_course->level }}</td>
+                                                                </td>  --}}
+                                                                {{--  <td>{{ $staff_course->level }}</td>  --}}
                                                                 <td>{{ $staff_course->hod_approval }}</td>
-                                                                <td>{{ $staff_course->dean_approval }}</td>
+                                                                {{--  <td>{{ $staff_course->dean_approval }}</td>
                                                                 <td>{{ $staff_course->sbc_approval }}</td>
-                                                                <td>{{ $staff_course->vc_senate_approval }}</td>
+                                                                <td>{{ $staff_course->vc_senate_approval }}</td>  --}}
                                                                 <td>{{ $staff_course->staffName }}</td>
                                                                 <td><a href="{{ route('admin.view_scores', $staff_course->course_id) }}"
                                                                         class="btn btn-primary">View Scores</a></td>
                                                                 <td>{{ $staff_course->updated_at }}</td>
                                                                 <td>
-                                                                    @if ($staff_course->vc_senate_approval != 'pending')
+                                                                    @if ($staff_course->hod_approval != 'pending')
                                                                         <P class="text-success">Published</p>
                                                                     @else
                                                                         <P class="text-danger text-bold">Not Published</P>

@@ -28,13 +28,13 @@
                                     <th>Code</th>
                                     <th>Title</th>
                                     <th>Unit</th>
-                                    <th>Semester</th>
+                                    {{--  <th>Semester</th>  --}}
                                     {{--  <th>Lecturer</th>  --}}
 
                                     <th>Students </th>
                                      <th>Result Score</th>
 
-                                    <th>HoD Approval</th>
+                                    <th> Approval</th>
                                     <th>Status</th>
 
                                 </thead>
@@ -45,12 +45,12 @@
                                             <td> {{ $loop->iteration }}</td>
                                             <td> {{ $program_course->course->course_code }}</td>
                                             <td> {{ $program_course->course->course_title }}</td>
-                                            <td> {{ $program_course->credit_unit }}</td>
-                                              @if ( $program_course->semester == 1)
+                                           <td> {{ $program_course->credit_unit }}</td>
+                                            {{--     @if ( $program_course->semester == 1)
                              <td> First </td>
                              @else ( $program_course->semester == 2)
                              <td>Second </td>
-                             @endif
+                             @endif  --}}
                                             {{--  <td> {{ $program_course->course->program->name }}</td>  --}}
                                             {{--  <td> {{ $program_course->lecturer->full_name }}</td>
                                             <td> {{ $program_course->lecturer->phone }}</td>  --}}

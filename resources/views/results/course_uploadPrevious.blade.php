@@ -66,7 +66,7 @@
                                                     <th>Student Program</th>
                                                     <th>Upload Status</th>
                                                      <th>Upload Date</th>
-                                                    <th>HoD Approval</th>
+                                                    <th> Approval</th>
                                                     <th>Action</th>
                                                      <th>Action</th>
 

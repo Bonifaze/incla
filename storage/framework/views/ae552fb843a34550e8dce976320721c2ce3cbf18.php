@@ -119,16 +119,7 @@
                         <?php else: ?>
                             <li></li>
                         <?php endif; ?>
-                        <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('programs', 'App\AcademicDepartment')): ?>
-                            <li class="nav-item ">
-                                <a href="<?php echo e(route('academia.department.programs')); ?>" class="nav-link <?php echo $__env->yieldContent('departments'); ?>">
-                                    <i class="fas fa-list-alt nav-icon"></i>
-                                    <p>Departments</p>
-                                </a>
-                            </li>
-                        <?php else: ?>
-                            <li></li>
-                        <?php endif; ?>
+                        
                         <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('examOfficer', 'App\StudentResult')): ?>
                             <li class="nav-item has-treeview <?php echo $__env->yieldContent('exam-officers-open'); ?>">
                                 <a href="#" class="nav-link <?php echo $__env->yieldContent('results'); ?>">
@@ -146,13 +137,7 @@
                                             <p>Result & Remark </p>
                                         </a>
                                     </li>
-                                    <li class="nav-item ml-4">
-                                        <a href="<?php echo e(route('exam_officer.program')); ?>"
-                                            class="nav-link <?php echo $__env->yieldContent('exam-download'); ?>">
-                                            <i class="fas fa-list-alt nav-icon"></i>
-                                            <p>Result Download</p>
-                                        </a>
-                                    </li>
+                                    
 
 
                                 </ul>

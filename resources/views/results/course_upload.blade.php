@@ -63,7 +63,7 @@ active
                                                         <th>Student Program</th>
                                                         <th>Upload Status</th>
                                                         <th>Upload Date</th>
-                                                        <th>HoD Approval</th>
+                                                        <th> Approval</th>
                                                         <th>Action</th>
                                                         <th>Action</th>
 
@@ -87,7 +87,7 @@ active
                                                         </td>
                                                         <td>{{ $staff_course->hod_approval }}</td>
                                                         <td>@if ($staff_course->hod_approval != 'approved') <a href="{{ route('admin.scores_upload', $staff_course->id) }}"
-                                                        class="btn btn-primary">Upload Scores</a> @else <p class="text-warning text-bold ">Kindly Ask HoD TO REVOKE</p> @endif</td>
+                                                        class="btn btn-primary">Upload Scores</a> @else <p class="text-warning text-bold ">Kindly Ask for REVOKE</p> @endif</td>
                                                         @if ($staff_course->upload_status =='uploaded')
                                                         <td> <a href="/admin/download/{{ $staff_course->id }}" class="btn btn-primary">Download Scores </a></td>
                                                         @else
@@ -106,8 +106,8 @@ active
                                                     @endforeach
                                                 </tbody>
                                             </table>
-                                            <a href="{{ route('admin.course_uploadprevious') }}" type="submit" class="btn btn-success" data-bs-target="#myModal"> <i class="fas fa-solid fa-eye"></i>
-                                                View My Courses History</a>
+                                            {{--  <a href="{{ route('admin.course_uploadprevious') }}" type="submit" class="btn btn-success" data-bs-target="#myModal"> <i class="fas fa-solid fa-eye"></i>
+                                                View My Courses History</a>  --}}
                                         </div>
                                     </div>
                                 </div>

@@ -372,7 +372,7 @@ public function uploadScores(Request $request)
 
     public function approve(Request $request)
     {
-        // dd($request);
+         //dd($request);
         $by = $request->by;
         $program_id = $request->program_id;
         $session = $this->getCurrentSession();
@@ -383,24 +383,27 @@ public function uploadScores(Request $request)
             //     $course_id = $request->course_id;
             //     StaffCourse::where('course_id', $course_id)->where('program_id', $program_id)->where('session_id', $session)->where('semester_id', $semester)->update(['hod_approval' => 'approved']);
             //     break;
-             case 'hod':
-                $course_id = $request->course_id;
-                StaffCourse::where('course_id', $course_id)->where('program_id', $program_id)->where('session_id', $session)->update(['hod_approval' => 'approved']);
-                break;
+            //  case 'hod':
+            //     $course_id = $request->course_id;
+            //     StaffCourse::where('course_id', $course_id)->where('program_id', $program_id)->where('session_id', $session)->update(['hod_approval' => 'approved']);
+            //     break;
             case 'dean':
                 $level = $request->level;
-                StaffCourse::where('level', $level)->where('program_id', $program_id)->where('session_id', $session)->where('semester_id', $semester)->update(['dean_approval' => 'approved']);
+                StaffCourse::where('level', $level)->where('program_id', $program_id)->where('session_id', $session)->update(['hod_approval' => 'approved']);
+                StaffCourse::where('level', $level)->where('program_id', $program_id)->where('session_id', $session)->update(['dean_approval' => 'approved']);
+                RegisteredCourse::where('program_id', $program_id)->where('session', $session)->update(['status' => 'published']);
                 break;
-            case 'sbc':
-                $level = $request->level;
-                StaffCourse::where('level', $level)->where('program_id', $program_id)->where('session_id', $session)->where('semester_id', $semester)->update(['sbc_approval' => 'approved']);
-                break;
-            case 'vc':
-                $level = $request->level;
-                StaffCourse::where('level', $level)->where('program_id', $program_id)->where('session_id', $session)->where('semester_id', $semester)->update(['vc_senate_approval' => 'approved']);
-                RegisteredCourse::where('program_id', $program_id)->where('session', $session)->where('semester', $semester)->update(['status' => 'published']);
+                // dd($StaffCourse);
+            // case 'sbc':
+            //     $level = $request->level;
+            //     StaffCourse::where('level', $level)->where('program_id', $program_id)->where('session_id', $session)->where('semester_id', $semester)->update(['sbc_approval' => 'approved']);
+            //     break;
+            // case 'vc':
+            //     $level = $request->level;
+            //     StaffCourse::where('level', $level)->where('program_id', $program_id)->where('session_id', $session)->where('semester_id', $semester)->update(['vc_senate_approval' => 'approved']);
+            //     RegisteredCourse::where('program_id', $program_id)->where('session', $session)->where('semester', $semester)->update(['status' => 'published']);
 
-                break;
+
             default:
                 $course_id = $request->course_id;
                 StaffCourse::where('course_id', $course_id)->where('program_id', $program_id)->where('session_id', $session)->where('semester_id', $semester)->update(['hod_approval' => 'approved']);
@@ -422,24 +425,26 @@ public function uploadScores(Request $request)
             //     $course_id = $request->course_id;
             //     StaffCourse::where('course_id', $course_id)->where('program_id', $program_id)->where('session_id', $session)->where('semester_id', $semester)->update(['hod_approval' => 'pending']);
             //     break;
-                case 'hod':
-                $course_id = $request->course_id;
-                StaffCourse::where('course_id', $course_id)->where('program_id', $program_id)->where('session_id', $session)->update(['hod_approval' => 'pending']);
-                break;
+                // case 'hod':
+                // $course_id = $request->course_id;
+                // StaffCourse::where('course_id', $course_id)->where('program_id', $program_id)->where('session_id', $session)->update(['hod_approval' => 'pending']);
+                // break;
             case 'dean':
                 $level = $request->level;
+                StaffCourse::where('level', $level)->where('program_id', $program_id)->where('session_id', $session)->update(['hod_approval' => 'pending']);
                 StaffCourse::where('level', $level)->where('program_id', $program_id)->where('session_id', $session)->where('semester_id', $semester)->update(['dean_approval' => 'pending']);
+                RegisteredCourse::where('program_id', $program_id)->where('session', $session)->where('semester', $semester)->update(['status' => 'unpublished']);
                 break;
-                case 'sbc':
-                    $level = $request->level;
-                    StaffCourse::where('level', $level)->where('program_id', $program_id)->where('session_id', $session)->where('semester_id', $semester)->update(['sbc_approval' => 'pending']);
-                    break;
-                case 'vc':
-                    $level = $request->level;
-                    StaffCourse::where('level', $level)->where('program_id', $program_id)->where('session_id', $session)->where('semester_id', $semester)->update(['vc_senate_approval' => 'pending']);
-                    RegisteredCourse::where('program_id', $program_id)->where('session', $session)->where('semester', $semester)->update(['status' => 'unpublished']);
+                // case 'sbc':
+                //     $level = $request->level;
+                //     StaffCourse::where('level', $level)->where('program_id', $program_id)->where('session_id', $session)->where('semester_id', $semester)->update(['sbc_approval' => 'pending']);
+                //     break;
+                // case 'vc':
+                //     $level = $request->level;
+                //     StaffCourse::where('level', $level)->where('program_id', $program_id)->where('session_id', $session)->where('semester_id', $semester)->update(['vc_senate_approval' => 'pending']);
+                //     RegisteredCourse::where('program_id', $program_id)->where('session', $session)->where('semester', $semester)->update(['status' => 'unpublished']);
 
-                    break;
+                //     break;
             default:
                 $course_id = $request->course_id;
                 StaffCourse::where('course_id', $course_id)->where('program_id', $program_id)->where('session_id', $session)->where('semester_id', $semester)->update(['hod_approval' => 'pending']);

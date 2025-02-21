@@ -1345,13 +1345,13 @@ ele1.innerHTML = ele1.innerHTML +
 							</div>
 							</div>
 
-							 <div class="col-md-4 form-group">
+							 {{--  <div class="col-md-4 form-group">
               			<div  @if($errors->has('grade_id')) class ='has-error form-group' @endif>
 								<label for="grade_id">Grade Level :</label>
 								{!! Form::text('grade_id', null, array( 'placeholder' => '','class' => 'form-control', 'id' => 'grade_id', 'required' => 'required')) !!}
 							 <span class="text-danger"> {{ $errors->first('grade_id') }}</span>
 							 </div>
-							</div>
+							</div>  --}}
 
 							</div>
 
@@ -1366,17 +1366,18 @@ ele1.innerHTML = ele1.innerHTML +
 							 </div>
 							</div>
 
+
 							<div class="col-md-4 form-group">
 								<label for="appointment_date">Appointment Date :</label>
 								{!! Form::text('appointment_date', '2024-07-01', array('placeholder' => '', 'class' => 'form-control', 'id' => 'appointment_date', 'required' => 'required')) !!}
 								<span class="text-danger"> {{ $errors->first('appointment_date') }}</span>
 							</div>
 
-							<div class="col-md-4 form-group">
+							{{--  <div class="col-md-4 form-group">
 								<label for="assumption_date">Assumption Date :</label>
 								{!! Form::text('assumption_date', '2024-07-01', array('placeholder' => '', 'class' => 'form-control', 'id' => 'assumption_date', 'required' => 'required')) !!}
 								<span class="text-danger"> {{ $errors->first('assumption_date') }}</span>
-							</div>
+							</div>  --}}
 
 
 							</div>

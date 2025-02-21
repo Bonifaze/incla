@@ -538,7 +538,7 @@ class AdminStudentsControllerApplicant extends Controller
             'password' => 'welcome'
 
         ];
-        //   Mail::to($request->email)->send(new Welcome($mailData));
+          Mail::to($request->email)->send(new Welcome($mailData));
         //   Mail::to('noreply@veritas.edu.ng')->send(new Welcome($mailData));
         //   //end of email address sending
         } // end try

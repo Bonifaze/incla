@@ -46,7 +46,7 @@
                     <div class="card card-primary">
                         <h1
                             class="app-page-title text-uppercase h5 font-weight-bold p-2 mb-2 shadow-sm text-center text-success border">
-                            {{ $semesterName }} {{ $level }} Level {{ $session->currentSessionName() }} <br>ICT
+                             {{ $session->currentSessionName() }} <br>ICT
                             Result status
                         </h1>
 
@@ -65,10 +65,10 @@
                                     <th>Students Total</th>
                                     <th>Result Download</th>
                                     {{--  <th>Courses</th>  --}}
-                                    <th>HoD Approval</th>
-                                    <th>Dean Approval</th>
-                                    <th>SBC Approval</th>
-                                    <th>VC Approval</th>
+                                    {{--  <th>HoD Approval</th>  --}}
+                                    <th> Approval</th>
+                                    {{--  <th>SBC Approval</th>
+                                    <th>VC Approval</th>  --}}
 
                                     <th>Student Result</th>
                                     {{--  <th>Action</th>  --}}
@@ -95,7 +95,7 @@
                                             {{--  <td> {{ $notReady }} </td>  --}}
                                             {{--  <td> {{ $approved }} </td>  --}}
                                             <td> {{ $program->registeredStudentsCount($level) }} </td>
-                                            <td>
+                                            {{--  <td>
                                                 <a class="btn btn-outline-dark"
                                                     href="{{ route('academia.department.export_view', [$program->id, $level, 1]) }}">
                                                     1st Semester</a>
@@ -103,7 +103,7 @@
                                                 <a class="btn btn-outline-primary"
                                                     href="{{ route('academia.department.export_view', [$program->id, $level, 2]) }}">
                                                     2nd Semester </a>
-                                            </td>
+                                            </td>  --}}
                                             <td>
                                                 <a class="btn btn-outline-dark"
                                                     href="{{ route('academia.department.program_level_courses', [base64_encode($program->id), $level]) }}">
@@ -142,31 +142,11 @@
                              <P class="text-success" >Approved</p>
                                  @endif
                                  </td>  --}}
-                                            <td>
-                                                @if (!$program->is_approved)
-                                                    <a href="/staff-course/approve?by=sbc&level={{ $level }}&program_id={{ $program->id }}"
-                                                        class="btn btn-outline-success"
-                                                        onclick="return confirm('are you sure you want to proceed with this action?  Result will be made available for Student to View')">Approve</a>
-                                                @else
-                                                    <a href="/staff-course/revoke?by=sbc&level={{ $level }}&program_id={{ $program->id }}"
-                                                        class="btn btn-outline-danger"
-                                                        onclick="return confirm('are you sure you want to proceed with this action?   Result will not be made available for Student to View')">Revoke</a>
-                                                @endif
-                                            </td>
-                                            <td>
-                                                @if (!$program->is_VCapproved)
-                                                    <a href="/staff-course/approve?by=vc&level={{ $level }}&program_id={{ $program->id }}"
-                                                        class="btn btn-outline-success"
-                                                        onclick="return confirm('are you sure you want to proceed with this action?  Result will be made available for Student to View')">Approve</a>
-                                                @else
-                                                    <a href="/staff-course/revoke?by=vc&level={{ $level }}&program_id={{ $program->id }}"
-                                                        class="btn btn-outline-danger"
-                                                        onclick="return confirm('are you sure you want to proceed with this action?   Result will not be made available for Student to View')">Revoke</a>
-                                                @endif
-                                            </td>
+
+
 
                                             <td>
-                                                @if (!$program->is_VCapproved)
+                                                @if (!$program->is_DEANapproved)
                                                     <P class="text-danger text-bold">Not Published</P>
                                                 @else
                                                     <P class="text-success">Published</p>

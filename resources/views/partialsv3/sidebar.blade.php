@@ -125,7 +125,7 @@
                         @else
                             <li></li>
                         @endcan
-                        @can('programs', 'App\AcademicDepartment')
+                        {{--  @can('programs', 'App\AcademicDepartment')
                             <li class="nav-item ">
                                 <a href="{{ route('academia.department.programs') }}" class="nav-link @yield('departments')">
                                     <i class="fas fa-list-alt nav-icon"></i>
@@ -134,7 +134,7 @@
                             </li>
                         @else
                             <li></li>
-                        @endcan
+                        @endcan  --}}
                         @can('examOfficer', 'App\StudentResult')
                             <li class="nav-item has-treeview @yield('exam-officers-open')">
                                 <a href="#" class="nav-link @yield('results')">
@@ -152,13 +152,13 @@
                                             <p>Result & Remark </p>
                                         </a>
                                     </li>
-                                    <li class="nav-item ml-4">
+                                    {{--  <li class="nav-item ml-4">
                                         <a href="{{ route('exam_officer.program') }}"
                                             class="nav-link @yield('exam-download')">
                                             <i class="fas fa-list-alt nav-icon"></i>
                                             <p>Result Download</p>
                                         </a>
-                                    </li>
+                                    </li>  --}}
 
 
                                 </ul>

@@ -57,7 +57,7 @@ active
                                                         <th>Student Program</th>
                                                         <th>Upload Status</th>
                                                         <th>Upload Date</th>
-                                                        <th>HoD Approval</th>
+                                                        <th> Approval</th>
                                                         <th>Action</th>
                                                         <th>Action</th>
 
@@ -82,7 +82,7 @@ active
                                                         </td>
                                                         <td><?php echo e($staff_course->hod_approval); ?></td>
                                                         <td><?php if($staff_course->hod_approval != 'approved'): ?> <a href="<?php echo e(route('admin.scores_upload', $staff_course->id)); ?>"
-                                                        class="btn btn-primary">Upload Scores</a> <?php else: ?> <p class="text-warning text-bold ">Kindly Ask HoD TO REVOKE</p> <?php endif; ?></td>
+                                                        class="btn btn-primary">Upload Scores</a> <?php else: ?> <p class="text-warning text-bold ">Kindly Ask for REVOKE</p> <?php endif; ?></td>
                                                         <?php if($staff_course->upload_status =='uploaded'): ?>
                                                         <td> <a href="/admin/download/<?php echo e($staff_course->id); ?>" class="btn btn-primary">Download Scores </a></td>
                                                         <?php else: ?>
@@ -101,8 +101,7 @@ active
                                                     <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                                                 </tbody>
                                             </table>
-                                            <a href="<?php echo e(route('admin.course_uploadprevious')); ?>" type="submit" class="btn btn-success" data-bs-target="#myModal"> <i class="fas fa-solid fa-eye"></i>
-                                                View My Courses History</a>
+                                            
                                         </div>
                                     </div>
                                 </div>

@@ -62,11 +62,11 @@
                                                     <th>Phone</th>
                                                      <th>Course Code</th>
                                                     <th>Course Title</th>
-                                                    <th>Semester</th>
+                                                    {{--  <th>Semester</th>  --}}
                                                     <th>Students</th>
                                                     <th>Student Program</th>
                                                     <th>Upload Status</th>
-                                                    <th>HoD Approval</th>
+                                                    <th> Approval</th>
                                                     <th>Action</th>
                                                      <th>Action</th>
 
@@ -80,19 +80,19 @@
                                                         <td>{{ $staff_course->staff_phone }}</td>
                                                         <td>{{ $staff_course->course_code }}</td>
                                                         <td>{{ $staff_course->course_title }}</td>
-                                                          <td >
+                                                          {{--  <td >
                                                           @if ($staff_course->semester==1)
                                                                 First
                                                           @else
                                                                 Second
                                                           @endif
-                                                          </td>
+                                                          </td>  --}}
                                                         <th>{{ $staff_course->total_students }}</th>
                                                         <th>{{ $staff_course->program->name ?? null }}</th>
                                                         <td>{{ $staff_course->upload_status }}</td>
                                                         <td>{{ $staff_course->hod_approval }}</td>
                                                         <td>@if ($staff_course->hod_approval != 'approved') <a href="{{ route('admin.scores_upload', $staff_course->id) }}"
-                                                                class="btn btn-primary">Upload Scores</a> @else <p class="text-warning text-bold ">Kindly Ask HoD TO REVOKE</p> @endif</td>
+                                                                class="btn btn-primary">Upload Scores</a> @else <p class="text-warning text-bold ">Kindly Ask TO REVOKE</p> @endif</td>
                                                                  @if ($staff_course->hod_approval == 'approved')
                                                 <td></td>
                                             @else
