@@ -19,9 +19,9 @@
         <section class="content bg-white">
             @include('partialsv3.flash')
             <div class="container-fluid">
-                <h1
-                    class="app-page-title text-uppercase h5 font-weight-bold p-2 mb-2 shadow-sm text-center text-success border">
-                    Students Information
+
+                <h1 class="app-page-title text-uppercase h6 font-weight-bold p-3 mb-3 shadow-sm text-center text-white bg-success border rounded">
+                    Student Informations
                 </h1>
                 <div class="row py-4">
                     <div class="col-12 col-lg-6">
@@ -144,7 +144,7 @@
                                     <div class="row justify-content-between align-items-center">
                                         <div class="col-auto">
                                             <div class="item-label"><strong>Date of Birth</strong></div>
-                                          <div class="item-data">{{ $student->dob }}</div> 
+                                          <div class="item-data">{{ $student->dob }}</div>
                                                {{--    {{ \Carbon\Carbon::parse($student->dob)->format('l j, F Y') }}  --}}
 
                                         </div>

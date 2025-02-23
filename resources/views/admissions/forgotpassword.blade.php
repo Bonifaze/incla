@@ -34,7 +34,7 @@
     <link rel="stylesheet" href="{{ asset('css/style.css')}}">
 </head>
 
-<body style="background-image: url('../img/gate.jpeg');opacity: 0.9;">
+<body style="background-image: url('img/incla-block.jpg');opacity: 0.9;">
     <div class="main">
         <div class="signup">
 
@@ -46,7 +46,7 @@
             @endif
                     <form method="POST" action="/forgotpassword" id="signup-form">
                         @csrf
-                        <h2 class="form-title text-success">Password Reset</h2>
+                        <h2 class="form-title text-warning">Password Reset</h2>
                         <div class="form-group">
 
                             <div class="form-group">
@@ -63,7 +63,7 @@
                             <div class="form-group">
 
 
-                                <button type="submit" class=" btn text-white fw-bold bg-success bg-gradient mb-3 px-5">
+                                <button type="submit" class=" btn text-white fw-bold bg-warning bg-gradient mb-3 px-5">
                                     {{ __('Send Password Reset Link') }}
                                 </button>
 

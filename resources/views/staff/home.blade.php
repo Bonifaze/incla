@@ -17,11 +17,14 @@
 
 @section('staff')
     active
+
+
 @endsection
 
 <!-- Page -->
 @section('staff-home')
     active
+
 @endsection
 
 <!-- End Sidebar links -->
@@ -32,252 +35,182 @@
     <div class="content-wrapper bg-white">
 
         <!-- Main content -->
-        <section class="content">
-            <div class="container-fluid">
-                <!-- left column -->
-                <div class="col_full">
-                    <h1
-                        class="app-page-title text-uppercase h5 font-weight-bold p-2 mb-2 shadow-sm text-center text-success border">
-                        Staff Home
-                    </h1>
-                    @include('partialsv3.flash')
-                    {{-- <div class="h2 text-center">Course Registration ends in:  <span class="h2 text-danger font-weight-bold" id="demo"></span> </div>  --}}
+            <section class="content">
+                <div class="container-fluid">
+                    <!-- left column -->
+                    <div class="col_full">
+                        <h1
+                            class="app-page-title text-uppercase h5 font-weight-bold p-2 mb-2 shadow-sm text-center text-success border">
+                            Staff Home
+                        </h1>
+                        @include('partialsv3.flash')
 
 
 
-                    <div class="card shadow border border-success">
 
-
-                    </div>
-
-                    <div class="row gy-4">
-
-                        <div class="col-lg-9">
-                            <!-- Widgets Start -->
-
-                            {{-- <div class="card shadow border border-success">
-                            <div class="row p-5">
-
-                                <div class="col-xl-6 col-md-6 mb-4">
-                                    <div class="card border-left-success shadow h-100 py-3">
-                                        <div class="card-body">
-                                            <div class="row no-gutters align-items-center">
-                                                <div class="col mr-2">
-                                                    <div class="h4 text-success" style="text-decoration: underline;">
-                                                        <a href="/admin/upload" class="text-success @yield('staff-courses')">My
-                                                            Courses</a><br>
-
-
-                                                    </div>
-                                                </div>
-                                                <div class="col-auto">
-                                                    <i class="fas fa-book-open fa-3x text-success"></i>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="col-xl-6 col-md-6 mb-4">
-                                    <div class="card border-left-success shadow h-100 py-3">
-                                        <div class="card-body">
-                                            <div class="row no-gutters align-items-center">
-                                                <div class="col mr-3">
-                                                    <div class="h4 text-success" style="text-decoration: underline;">
-                                                        <a href="/admin/staffscoresresult" class="text-success @yield('staff-results')">My Results</a>
-                                                    </div>
-                                                </div>
-                                                <div class="col-auto">
-                                                    <i class="fa fa-book fa-3x text-success"></i>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-
-                            </div>
-
-                            <div class="row p-5">
-
-                                <div class="col-xl-6 col-md-6 mb-4">
-                                    <div class="card border-left-success shadow h-100 py-3">
-                                        <div class="card-body">
-                                            <div class="row no-gutters align-items-center">
-                                                <div class="col mr-2">
-                                                    <div class="h4 text-success" style="text-decoration: underline;">
-                                                        <a href="{{ route('student.search') }}" class="text-success @yield('registration')">Search Student</a>
-                    </div>
-                </div>
-                <div class="col-auto">
-                    <i class="fa fa-search fa-3x text-success"></i>
-                </div>
-            </div>
-        </div>
-</div>
-</div>
-
-<div class="col-xl-6 col-md-6 mb-4">
-    <div class="card border-left-success shadow h-100 py-3">
-        <div class="card-body">
-            <div class="row no-gutters align-items-center">
-                <div class="col mr-2">
-                    <div class="h4 text-success" style="text-decoration: underline;">
-                        <a href="{{ route('staff.search') }}" class="text-success @yield('registration')">Search Staff</a>
-                    </div>
-                </div>
-                <div class="col-auto">
-                    <i class="fa fa-search fa-3x text-success"></i>
-                </div>
-            </div>
-        </div>
-    </div>
-
-</div>
-
-</div>
-</div> --}}
-
-
-                            <div class="container">
-                                <div class="page-inner">
-                                    <!-- Card -->
-                                    {{--  <h3 class="fw-bold mb-3">Card</h3>  --}}
-                                    <div class="row">
-                                        <div class="col-sm-6 col-md-3">
-                                            <div class="card card-stats card-primary card-round">
-                                                <div class="card-body">
-                                                    <div class="row">
-                                                        <div class="col-5">
-                                                            <div class="icon-big text-center">
-                                                                <i class="fas fa-users"></i>
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-7 col-stats">
-                                                            <div class="numbers">
-                                                                <p class="card-category">Applicants</p>
-                                                                <h4 class="card-title">{{ $totalApplicants }}</h4>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="col-sm-6 col-md-3">
-                                            <div class="card card-stats card-warning card-round">
-                                                <div class="card-body">
-                                                    <div class="row">
-                                                        <div class="col-5">
-                                                            <div class="icon-big text-center">
-
-                                                                <i class="fas fa-chart-pie"></i>
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-7 col-stats">
-                                                            <div class="numbers">
-                                                                <p class="card-category">Pending</p>
-                                                                <h4 class="card-title">{{ $totalRecommended }}</h4>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="col-sm-6 col-md-3">
-                                            <div class="card card-stats card-success card-round">
-                                                <div class="card-body">
-                                                    <div class="row">
-                                                        <div class="col-5">
-                                                            <div class="icon-big text-center">
-                                                                <i class="fas fa-user-check"></i>
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-7 col-stats">
-                                                            <div class="numbers">
-                                                                <p class="card-category">Approved</p>
-                                                                <h4 class="card-title">{{ $totalApproved }}</h4>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="col-sm-6 col-md-3">
-                                            <div class="card card-stats card-secondary card-round">
-                                                <div class="card-body">
-                                                    <div class="row">
-                                                        <div class="col-5">
-                                                            <div class="icon-big text-center">
-                                                                <i class="far fa-check-circle"></i>
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-7 col-stats">
-                                                            <div class="numbers">
-                                                                <p class="card-category">Students</p>
-                                                                <h4 class="card-title">{{ $totalStudents }}</h4>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-
-                            <!-- Widgets End -->
+                        <div class="card shadow border border-success">
 
 
                         </div>
 
 
-                        <div class="col-lg-3">
-                            <!-- Calendar Start -->
-                            <div class="card">
-                                <div class="card-body">
-                                    <div class="calendar">
-                                        <div class="calendar__header">
-                                            <button type="button" class="calendar__arrow left"><i
-                                                    class="ph ph-caret-left"></i></button>
-                                            <p class="display h6 mb-0">""</p>
-                                            <button type="button" class="calendar__arrow right"><i
-                                                    class="ph ph-caret-right"></i></button>
-                                        </div>
+                        <div class="row gy-4">
 
-                                        <div class="calendar__week week">
-                                            <div class="calendar__week-text">Su</div>
-                                            <div class="calendar__week-text">Mo</div>
-                                            <div class="calendar__week-text">Tu</div>
-                                            <div class="calendar__week-text">We</div>
-                                            <div class="calendar__week-text">Th</div>
-                                            <div class="calendar__week-text">Fr</div>
-                                            <div class="calendar__week-text">Sa</div>
+                            <div class="col-lg-9">
+                                <!-- Widgets Start -->
+
+
+                                <div class="container">
+                                    <div class="page-inner">
+                                        <!-- Card -->
+
+                                        <div class="row">
+                                            <div class="col-sm-6 col-md-3">
+                                                <div class="card card-stats card-primary card-round">
+                                                    <div class="card-body">
+                                                        <div class="row">
+                                                            <div class="col-5">
+                                                                <div class="icon-big text-center">
+                                                                    <i class="fas fa-users"></i>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-7 col-stats">
+                                                                <div class="numbers">
+                                                                    <p class="card-category">Applicants</p>
+                                                                    <h4 class="card-title">{{ $totalApplicants }}</h4>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-6 col-md-3">
+                                                <div class="card card-stats card-warning card-round">
+                                                    <div class="card-body">
+                                                        <div class="row">
+                                                            <div class="col-5">
+                                                                <div class="icon-big text-center">
+
+                                                                    <i class="fas fa-chart-pie"></i>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-7 col-stats">
+                                                                <div class="numbers">
+                                                                    <p class="card-category">Pending</p>
+                                                                    <h4 class="card-title">{{ $totalRecommended }}</h4>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-6 col-md-3">
+                                                <div class="card card-stats card-success card-round">
+                                                    <div class="card-body">
+                                                        <div class="row">
+                                                            <div class="col-5">
+                                                                <div class="icon-big text-center">
+                                                                    <i class="fas fa-user-check"></i>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-7 col-stats">
+                                                                <div class="numbers">
+                                                                    <p class="card-category">Approved</p>
+                                                                    <h4 class="card-title">{{ $totalApproved }}</h4>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-6 col-md-3">
+                                                <div class="card card-stats card-secondary card-round">
+                                                    <div class="card-body">
+                                                        <div class="row">
+                                                            <div class="col-5">
+                                                                <div class="icon-big text-center">
+                                                                    <i class="far fa-check-circle"></i>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-7 col-stats">
+                                                                <div class="numbers">
+                                                                    <p class="card-category">Students</p>
+                                                                    <h4 class="card-title">{{ $totalStudents }}</h4>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
                                         </div>
-                                        <div class="days"></div>
                                     </div>
                                 </div>
+
+
+                                <!-- Widgets End -->
+
+
                             </div>
-                            <!-- Calendar End -->
 
 
+                            <div class="col-lg-3">
+                                <!-- Calendar Start -->
+                                <!-- Calendar Start -->
+                                <div class="card">
+                                    <div class="card-body">
+                                        <div class="calendar">
+                                            <div class="calendar__header">
+                                                <button type="button" class="calendar__arrow left"><i
+                                                        class="ph ph-caret-left"></i></button>
+                                                <p class="display h6 mb-0"></p>
+                                                <button type="button" class="calendar__arrow right"><i
+                                                        class="ph ph-caret-right"></i></button>
+                                            </div>
+
+                                            <div class="calendar__week week">
+                                                <div class="calendar__week-text">Su</div>
+                                                <div class="calendar__week-text">Mo</div>
+                                                <div class="calendar__week-text">Tu</div>
+                                                <div class="calendar__week-text">We</div>
+                                                <div class="calendar__week-text">Th</div>
+                                                <div class="calendar__week-text">Fr</div>
+                                                <div class="calendar__week-text">Sa</div>
+                                            </div>
+
+                                            <div class="days"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- Calendar End -->
+
+                                <!-- Calendar End -->
+
+
+
+                            </div>
 
                         </div>
 
+                        <div class="container">
+                            <div class="row justify-content-center">
+                                <div class="col-12 col-md-6 col-lg-4">
+                                    <div class="card shadow border border-success p-3">
+                                        <canvas id="applicantChart" class="w-100 h-auto" width="180" height="180"></canvas>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
                     </div>
-
-
-<canvas id="applicantChart" width="100" height="100"></canvas>
-
-
-
                 </div>
-        </section>
+
+            </section>
     </div>
 @endsection
 
 @section('pagescript')
-
-<script>
+    <script>
         var ctx = document.getElementById('applicantChart').getContext('2d');
         var applicantChart = new Chart(ctx, {
             type: 'pie',
@@ -329,45 +262,71 @@
         }, 1000);
     </script>
 
-    <script>
-        function updateCalendar() {
-            const monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September",
-                "October", "November", "December"
-            ];
-            const date = new Date();
+ <script>
+let currentMonth = new Date().getMonth(); // Current month (0-11)
+let currentYear = new Date().getFullYear(); // Current year (e.g., 2025)
+let currentDay = new Date().getDate(); // Current day of the month (1-31)
 
-            const currentMonth = date.getMonth(); // Current month (0-11)
-            const currentYear = date.getFullYear(); // Current year (e.g., 2025)
-            const currentDay = date.getDate(); // Current day of the month (1-31)
+function updateCalendar() {
+    const monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+    const daysInWeek = 7;
 
-            // Display the current month and year in the calendar header
-            document.querySelector('.calendar__header .display').innerHTML = `${monthNames[currentMonth]} ${currentYear}`;
+    // Display the current month and year
+    document.querySelector('.calendar__header .display').innerHTML = `${monthNames[currentMonth]} ${currentYear}`;
 
-            // Get the first day of the month and the total number of days in the month
-            const firstDay = new Date(currentYear, currentMonth, 1)
-        .getDay(); // Day of the week for the 1st of the month (0-6)
-            const totalDays = new Date(currentYear, currentMonth + 1, 0).getDate(); // Total days in the month
+    // Get the first day of the month and total days in the month
+    const firstDay = new Date(currentYear, currentMonth, 1).getDay(); // Get the first day of the month
+    const totalDays = new Date(currentYear, currentMonth + 1, 0).getDate(); // Total days in the month
 
-            // Generate the days of the month in the calendar
-            const daysContainer = document.querySelector('.days');
-            daysContainer.innerHTML = ''; // Clear any previous days
+    // Clear previous days
+    const daysContainer = document.querySelector('.days');
+    daysContainer.innerHTML = '';
 
-            // Create empty cells for the days before the first day of the month
-            for (let i = 0; i < firstDay; i++) {
-                daysContainer.innerHTML += `<div class="calendar__day empty"></div>`;
-            }
+    // Add empty cells before the first day of the month
+    for (let i = 0; i < firstDay; i++) {
+        daysContainer.innerHTML += `<div class="calendar__day empty"></div>`;
+    }
 
-            // Add the actual days of the month
-            for (let i = 1; i <= totalDays; i++) {
-                // Check if the day is the current day and add the 'today' class
-                const isToday = i === currentDay ? 'today' : '';
+    // Add the actual days of the month
+    for (let i = 1; i <= totalDays; i++) {
+        const isToday = (i === currentDay) ? 'today' : '';
+        const dayOfWeek = new Date(currentYear, currentMonth, i).getDay();
+        const isSaturday = (dayOfWeek === 6) ? 'saturday' : ''; // Saturday
+        const isSunday = (dayOfWeek === 0) ? 'sunday' : ''; // Sunday
 
-                // Add the day to the calendar
-                daysContainer.innerHTML += `<div class="calendar__day ${isToday}">${i}</div>`;
-            }
-        }
+        // Add the day to the calendar
+        daysContainer.innerHTML += `<div class="calendar__day ${isToday} ${isSaturday} ${isSunday}">${i}</div>`;
+    }
 
-        // Call the updateCalendar function when the page loads
-        window.onload = updateCalendar;
-    </script>
+    // Add empty cells after the last day of the month
+    const remainingDays = (daysInWeek - (firstDay + totalDays) % daysInWeek) % daysInWeek;
+    for (let i = 0; i < remainingDays; i++) {
+        daysContainer.innerHTML += `<div class="calendar__day empty"></div>`;
+    }
+}
+
+// Navigate to the previous month
+document.querySelector('.calendar__arrow.left').addEventListener('click', () => {
+    currentMonth--;
+    if (currentMonth < 0) {
+        currentMonth = 11;
+        currentYear--;
+    }
+    updateCalendar();
+});
+
+// Navigate to the next month
+document.querySelector('.calendar__arrow.right').addEventListener('click', () => {
+    currentMonth++;
+    if (currentMonth > 11) {
+        currentMonth = 0;
+        currentYear++;
+    }
+    updateCalendar();
+});
+
+// Initialize the calendar
+window.onload = updateCalendar;
+
+</script>
 @endsection

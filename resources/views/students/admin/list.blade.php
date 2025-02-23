@@ -77,8 +77,8 @@ List Students
                                 <th></th>
                                 @endcan
                                 @can('search', 'App\Bursary')
-                                <th colspan="2">
-                                    RRR</th>
+                                {{-- <th colspan="2">
+                                    RRR</th> --}}
                                 @else
                                 <th></th>
                                 @endcan
@@ -108,7 +108,7 @@ List Students
                                     @endif
 
                                     @can('view', 'App\Student')
-                                    <td><a class="btn btn-default" href="{{ route('student.view', $student->id) }}">
+                                    <td><a class="btn btn-warning" href="{{ route('student.view', $student->id) }}">
                                             <i class="fa fa-eye"></i>View</a></td>
                                     @else
                                     <td></td>
@@ -120,7 +120,7 @@ List Students
                                     <td></td>
                                     @endcan
                                     @can('transcript', 'App\Student')
-                                    <td><a class="btn btn-info" href="{{ route('student.transcript', base64_encode($student->id)) }}" target="_blank"> <i class="fa fa-eye"></i> Transcript</a></td>
+                                    <td><a class="btn btn-info" href="{{ route('student.transcript', base64_encode($student->id)) }}" target="_blank"> <i class="fa fa-eye"></i> Results</a></td>
                                     @else
                                     <td></td>
                                     @endcan
@@ -132,7 +132,7 @@ List Students
                                     <td></td>
                                     @endcan
                                     @can('search', 'App\Bursary')
-                                    <td> {!! Form::open(['route' => 'remita.find-student', 'method' => 'POST', 'class' => 'nobottommargin']) !!}
+                                    {{-- <td> {!! Form::open(['route' => 'remita.find-student', 'method' => 'POST', 'class' => 'nobottommargin']) !!}
 
                                         {!! Form::hidden('data', $student->id, [
                                         'placeholder' => 'Student Matric',
@@ -145,9 +145,9 @@ List Students
                                         </button>
 
                                         {!! Form::close() !!}
-                                    </td>
-                                    <td> <a class="btn btn-warning" target="_blank" href="{{ route('remita.find-studentunpaidrrr', $student->id) }}"> <i class="fa fa-eye"></i> Unpaid </a>
-                                    </td>
+                                    </td> --}}
+                                    {{-- <td> <a class="btn btn-warning" target="_blank" href="{{ route('remita.find-studentunpaidrrr', $student->id) }}"> <i class="fa fa-eye"></i> Unpaid </a>
+                                    </td> --}}
                                     @else
                                     <td></td>
                                     @endcan
@@ -223,7 +223,7 @@ List Students
 <script>
     function deleteOption(id) {
         bootbox.dialog({
-            message: "<h4>You are about to delete a Patient</h4> <h5>Note: This action is permanent and irreversible? </h5>"
+            message: "<h4>You are about to delete a student </h4> <h5>Note: This action is permanent and irreversible? </h5>"
             , buttons: {
                 confirm: {
                     label: 'Yes'

@@ -1,5 +1,5 @@
- /* Basic styles for the calendar */
- .calendar {
+/* Basic styles for the calendar */
+.calendar {
     width: 100%;
     max-width: 400px;
     margin: 0 auto;
@@ -14,54 +14,80 @@
 }
 
 .calendar__week {
-    display: flex;
-    justify-content: space-between;
+    display: grid;
+    grid-template-columns: repeat(7, 1fr); /* 7 columns for each day */
+    gap: 5px; /* Optional, for spacing between days */
     margin-bottom: 5px;
 }
 
 .calendar__week-text {
-    width: 30px;
     text-align: center;
     font-size: 14px;
     font-weight: bold;
+    color: #333;
+    padding: 5px 0;
 }
 
+.calendar__days {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr); /* Ensure each day takes equal width */
+    gap: 5px; /* Space between day boxes */
+}
+
+/* Basic styling for each day box */
 .calendar__day {
     width: 30px;
     height: 30px;
-    display: inline-block;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
     text-align: center;
     line-height: 30px;
-    margin: 2px;
     font-size: 14px;
     background-color: #f0f0f0;
     border-radius: 5px;
+    transition: background-color 0.2s ease-in-out;
 }
 
+/* Empty day cells to align with the grid but remain invisible */
 .calendar__day.empty {
-    visibility: hidden;
-    /* Hide empty cells */
+    background-color: transparent;
+    border: none;
 }
 
+/* Hover effect */
 .calendar__day:hover {
     background-color: #e0e0e0;
+    cursor: pointer;
 }
 
 /* Highlight the current day */
 .calendar__day.today {
     background-color: #4caf50;
-    /* Change this color to highlight today's date */
     color: white;
     font-weight: bold;
 }
 
-
-.calendar__day:hover {
-    background-color: #302b2b;
-    color: #c95b28;
-    cursor: pointer;
+/* Style for Saturdays (optional) */
+.calendar__day.saturday {
+    color: red;
+padding-left: 10px;
 }
 
+/* Style for Sundays (optional) */
+.calendar__day.sunday {
+    color: blue;
+}
+
+/* Adjust weekday text to center-align */
+.calendar__week-text {
+    text-align: center;
+    font-size: 14px;
+    font-weight: bold;
+    padding: 5px 0;
+}
+
+/* Optional: Adding footer text style */
 .ft-text {
     color: #c95b28;
 }

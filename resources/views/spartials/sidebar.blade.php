@@ -1,4 +1,4 @@
-<aside class="main-sidebar sidebar-dark-primary elevation-4" style="background-color: #302b2b; color: #fff;" >
+<aside class="main-sidebar sidebar-dark-primary elevation-4" style="background-color: #302b2b; color: #fff;">
     <!-- Brand Logo -->
 
     <div class="bg-white text-center">
@@ -22,58 +22,58 @@
                 </div>
 
             </div>
-            </a>
+        </a>
 
-            <!-- Sidebar Menu -->
-            <nav class="mt-2">
-                <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu"
-                    data-accordion="false">
+        <!-- Sidebar Menu -->
+        <nav class="mt-2">
+            <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu"
+                data-accordion="false">
 
-                    <li class="nav-item ">
-                        <a href="{{ route('student.home') }}" class="nav-link @yield('home')">
-                            <i class="fa fa-home nav-icon"></i>
-                            <p>Dashbord</p>
-                        </a>
-                    </li>
+                <li class="nav-item ">
+                    <a href="{{ route('student.home') }}" class="nav-link @yield('home')">
+                        <i class="fa fa-home nav-icon"></i>
+                        <p>Dashbord</p>
+                    </a>
+                </li>
 
-                    <li class="nav-item has-treeview @yield('student-open')">
-                        <a href="#" class="nav-link @yield('studentss')">
-                            <i class="nav-icon fas fa-user-alt"></i>
-                            <p>
-                                Profile
-                                <i class="right fas fa-angle-right"></i>
-                            </p>
-                        </a>
+                <li class="nav-item has-treeview @yield('student-open')">
+                    <a href="#" class="nav-link @yield('studentss')">
+                        <i class="nav-icon fas fa-user-alt"></i>
+                        <p>
+                            Profile
+                            <i class="right fas fa-angle-right"></i>
+                        </p>
+                    </a>
 
-                        <ul class="nav nav-treeview">
+                    <ul class="nav nav-treeview">
 
-                            <li class="nav-item">
-                                <a href="{{ route('student.profile') }}" class="nav-link @yield('gprofile')">
-                                    <i class="fa fa-user-alt nav-icon"></i>
-                                    <p>View Profile</p>
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="{{ route('student.password') }}" class="nav-link @yield('password')">
-                                    <i class="fa fa-unlock-alt nav-icon"></i>
-                                    <p>Change Password</p>
-                                </a>
-                            </li>
-                        </ul>
-                    </li>
+                        <li class="nav-item">
+                            <a href="{{ route('student.profile') }}" class="nav-link @yield('gprofile')">
+                                <i class="fa fa-user-alt nav-icon"></i>
+                                <p>View Profile</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{ route('student.password') }}" class="nav-link @yield('password')">
+                                <i class="fa fa-unlock-alt nav-icon"></i>
+                                <p>Change Password</p>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
 
 
-                    <li class="nav-item has-treeview @yield('course-open')">
-                        <a href="#" class="nav-link @yield('course')">
-                            <i class="nav-icon fa fa-book"></i>
-                            <p>
-                                Courses
-                                <i class="right fas fa-angle-right"></i>
-                            </p>
-                        </a>
-                        <ul class="nav nav-treeview">
-                         @foreach ($courseReg as $key => $session)
-                        {{--  To ALLOW STUDENT SEE COURSE REGISTARION  --}}
+                <li class="nav-item has-treeview @yield('course-open')">
+                    <a href="#" class="nav-link @yield('course')">
+                        <i class="nav-icon fas fa-book"></i>
+                        <p>
+                            Courses
+                            <i class="right fas fa-angle-right"></i>
+                        </p>
+                    </a>
+                    <ul class="nav nav-treeview">
+                        @foreach ($courseReg as $key => $session)
+                            {{--  To ALLOW STUDENT SEE COURSE REGISTARION  --}}
                             {{--  <li class="nav-item">
                                 <a href="{{ route('student.course-registration') }}" class="nav-link @yield('registration')">
                                     <i class="fa fa-tasks nav-icon"></i>
@@ -81,26 +81,27 @@
                                 </a>
                             </li>  --}}
                             {{--  To close Course Registration  --}}
-                              <li class="nav-item">
+                            <li class="nav-item">
                                 <a href="{{ $session->route }}" class="nav-link @yield('registration')">
                                     <i class="fa fa-tasks nav-icon"></i>
                                     <p>Course Registration</p>
                                 </a>
                             </li>
-       @endforeach
+                        @endforeach
 
 
-                            {{--  <li class="nav-item">
+                        {{--  <li class="nav-item">
                             <a href="{{ route('student.evaluation') }}" class="nav-link @yield('evaluation')">
                                 <i class="fa fa-tasks nav-icon"></i>
                                 <p>Course Evaluation</p>
                             </a>
                         </li>  --}}
-                        </ul>
-                    </li>
+                    </ul>
+                </li>
 
 
-                    <li class="nav-item has-treeview @yield('result-open')">
+
+                <li class="nav-item has-treeview @yield('result-open')">
                     <a href="#" class="nav-link @yield('result')">
                         <i class="nav-icon fas fa-book"></i>
                         <p>
@@ -125,7 +126,7 @@
                     </ul>
                 </li>
 
-                    {{--  <li class="nav-item has-treeview @yield('fees-open')">
+                {{--  <li class="nav-item has-treeview @yield('fees-open')">
                         <a href="#" class="nav-link @yield('fees')">
                             <i class="nav-icon fa fa-credit-card"></i>
                             <p>
@@ -148,23 +149,23 @@
                             </li>
                         </ul>
                     </li>  --}}
-                  
-                    <li class="nav-item">
-                        <a href="{{ route('student.logout') }}" class="nav-link"Contact
-                            onclick="event.preventDefault();
-                                                     document.getElementById('logout-form').submit();">
-                            <i class="fas fa-power-off nav-icon text-danger"></i>
-                            {{   __('  Logout') }}
-                            <form id="logout-form" action="{{ route('student.logout') }}" method="POST"
-                                style="display: none;">
-                                @csrf
-                            </form>
-                        </a>
-                    </li>
 
-                </ul>
-            </nav>
-            <!-- /.sidebar-menu -->
+                <li class="nav-item">
+                    <a href="{{ route('student.logout') }}" class="nav-link"Contact
+                        onclick="event.preventDefault();
+                                                     document.getElementById('logout-form').submit();">
+                        <i class="fas fa-power-off nav-icon text-danger"></i>
+                        {{ __('  Logout') }}
+                        <form id="logout-form" action="{{ route('student.logout') }}" method="POST"
+                            style="display: none;">
+                            @csrf
+                        </form>
+                    </a>
+                </li>
+
+            </ul>
+        </nav>
+        <!-- /.sidebar-menu -->
     </div>
     <!-- /.sidebar -->
 </aside>
