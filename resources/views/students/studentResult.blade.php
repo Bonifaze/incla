@@ -1,168 +1,323 @@
 @extends('layouts.plain')
 
 @section('pagetitle')
-<!-- CSRF Token -->
-    <meta name="csrf-token" content="{{ csrf_token() }}">
-
+<meta name="csrf-token" content="{{ csrf_token() }}">
 <title>{{ $student->full_name }} Result</title>
-
 @endsection
 
 @section('content')
-<body >
-<table width="650" border="0" cellspacing="0" cellpadding="0" style="margin:auto" >
-  <tr>
-    <td height="650" valign="top"><table width="100%" height="174" border="0" cellpadding="0" cellspacing="0">
-      <tr>
-        <td height="138" valign="top"><h1>&nbsp;&nbsp;&nbsp;&nbsp;</h1></td>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background-color: #f8f9fa;
+    }
+    .container {
+        width: 750px;
+        margin: auto;
+        background: #fff;
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+    }
+    .header {
+        text-align: center;
+        margin-bottom: 20px;
+    }
+    .school-logo {
+        width: 80px;
+        height: 80px;
+    }
+    .student-info, .result-table, .summary-table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-bottom: 20px;
+    }
+    .student-info td, .result-table td, .result-table th, .summary-table td {
+        padding: 10px;
+        border: 1px solid #000;
+    }
+    .result-table th, .summary-table th {
+        background-color: #007BFF;
+        color: white;
+    }
+    .summary-table td {
+        font-weight: bold;
+    }
+    .signature {
+        margin-top: 30px;
+        text-align: right;
+    }
+</style>
+
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+        background-color: white;
+        display: flex;
+        justify-content: center;
+        align-items: flex-start;
+        height: 100vh;
+        position: relative;
+    }
+    .content-wrapper {
+        width: 100%;
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 20px;
+    }
+    .watermark {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%) rotate(-45deg);
+        font-size: 60px;
+        font-weight: bold;
+        color: rgba(0, 0, 0, 0.1);
+        text-align: center;
+        z-index: -1;
+        pointer-events: none;
+        white-space: nowrap;
+    }
+    .watermark img {
+        width: 150px;
+        opacity: 0.01;
+        display: block;
+        margin: 0 auto;
+    }
+    .watermark p {
+        margin-top: -20px;
+        font-size: 30px;
+        color: rgba(211, 205, 205, 0.1);
+    }
+    table {
+        width: 100%;
+        max-width: 800px;
+        margin: 0 auto;
+        border-collapse: collapse;
+        background-color: white;
+        position: relative;
+    }
+    td, th {
+        padding: 8px;
+        text-align: left;
+        border: 1px solid #ddd;
+    }
+    th {
+        background-color: #D3D3D3;
+    }
+    .logo {
+        width: 80px;
+        max-width: 80px;
+    }
+    .student-passport {
+        width: 80px;
+        height: 80px;
+    }
+    h1 {
+        text-align: center;
+        font-size: 24px;
+    }
+    h3 {
+        text-align: center;
+        font-weight: bold;
+        color: #4CAF50;
+        margin-top: 20px;
+    }
+    @media print {
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: white;
+        }
+        table, th, td {
+            page-break-inside: avoid;
+            border: 1px solid #000;
+        }
+        .logo {
+            width: 60px;
+            max-width: 60px;
+        }
+        .student-passport {
+            width: 80px;
+            height: 80px;
+        }
+        td, th {
+            font-size: 12px;
+        }
+        .content-wrapper {
+            width: 100%;
+            margin: 0 auto;
+            padding: 10px;
+        }
+        h3 {
+            text-align: center;
+            font-weight: bold;
+        }
+    }
+    @media (max-width: 768px) {
+        td, th {
+            font-size: 14px;
+        }
+        .logo {
+            width: 50px;
+        }
+        .student-passport {
+            width: 60px;
+            height: 60px;
+        }
+    }
+    .chart-container {
+        width: 100%;
+        height: 300px;
+        margin-top: 30px;
+    }
+</style>
+
+<div class="container">
+    <div class="header">
+        <table width="100%" height="80" border="0" cellpadding="0" cellspacing="0">
+            <tr>
+                <td width="20%" align="left">
+                    <img src="{{ asset('img/letter_logo.png') }}" alt="School Logo" class="logo" />
+                </td>
+                <td width="60%" align="center">
+                    <h1><strong>Institute of Consecrated Life in Africa</strong></h1>
+                </td>
+                <td width="20%" align="right">
+                    <img src="data:image/jpeg;base64,{{ $student->passport }}" alt="{{ $student->full_name }} Image" class="student-passport" />
+                </td>
+            </tr>
+        </table>
+    </div>
+
+    <table class="student-info">
+        <tr>
+            <td><strong>Name of Student:</strong> {{ $student->full_name }}</td>
+            <td><strong>Matric No.:</strong> {{ $academic->mat_no }}</td>
         </tr>
-      <tr>
-        <td align="center" valign="top"><h1><strong>Student Result </strong></h1></td>
-      </tr>
+        <tr>
+            <td><strong>Gender:</strong> {{ $student->gender }}</td>
+            <td><strong>Programme:</strong> {{ $academic->program->name }}</td>
+        </tr>
+        <tr>
+            <td colspan="2"><strong>Department:</strong> {{ $academic->program->department->name }}</td>
+        </tr>
     </table>
 
-      <table width="100%" border="0">
+    @foreach ($sessions as $session)
+    <h3>Academic Session: {{ $session->name }}</h3>
 
+    <table class="result-table">
         <tr>
-          <td><strong>Name of Student: {{ $student->full_name }} </strong></td>
-          <td><strong>  Matric. No.: {{ $academic->mat_no }} </strong></td>
+            <th>S/N</th>
+            <th>Course Code</th>
+            <th>Course Title</th>
+            <th>Credit Unit</th>
+            <th>Score</th>
+            <th>Grade</th>
+            <th>Pass / Fail</th>
         </tr>
+        @php
+            $tc1 = 0;
+            $tgp1 = 0;
+        @endphp
+        @foreach ($session->registered_courses1 as $result)
+        @php
+            $tc1 += $result->course_unit;
+            $tgp1 += $result->grade_point * $result->course_unit;
+        @endphp
         <tr>
-          {{--  <td><strong>College: {{ $academic->college()->name }} </strong></td>  --}}
-          <td><strong>Gender: {{ $student->gender }} </strong></td>
+            <td>{{ $loop->iteration }}</td>
+            <td>{{ $result->course_code }}</td>
+            <td>{{ $result->course_title }}</td>
+            <td align="center">{{ $result->course_unit }}</td>
+            <td align="center">{{ $result->total }}</td>
+            <td align="center">{{ $result->grade }}</td>
+            <td align="center">{{ $result->grade_status }}</td>
         </tr>
-        <tr>
-          <td><strong>Programme: {{ $academic->program->name }} </strong></td>
-          <td><strong>Dept: {{ $academic->program->department->name }} </strong></td>
-        </tr>
-
-         <tr>
-          <td>&nbsp;</td>
-          <td>&nbsp;</td>
-        </tr>
-      </table>
-
-	 @foreach ($sessions as $session)
-
-	{{--  @php $results = $reg->result(); @endphp
-
-	@php $gpa = $reg->gpa(); @endphp
-
-	@php $cgpa = $reg->cgpa(); @endphp  --}}
-  <table width="650" border="0" cellspacing="0" cellpadding="0">
-  <tr>
-    <td height="650" valign="top"><table width="100%" height="50" border="0" cellpadding="0" cellspacing="0">
-
+        @endforeach
     </table>
-        <table width="100%" height="87" border="1" cellpadding="0" cellspacing="0">
-                          <tr>
-                            <td colspan="2"><strong></strong>:
 
-                             </td>
-                            <td colspan="3" align="center"><strong>ACADEMIC SESSION</strong>:
-                              {{  $session->name }}
-                             </td>
-                            <td colspan="2"><strong></strong>:
+    @php
+        $tgp_cgpa = 0;
+        $tcu_cgpa = 0;
+        foreach ($registered_courses->where('session','<=', $session->id) as $course) {
+            if (($course->session == $session->id && $course->semester != 2) || $course->session < $session->id) {
+                $tgp_cgpa += $course->grade_point * $course->course_unit;
+                $tcu_cgpa += $course->course_unit;
+            }
+        }
+    @endphp
 
+    <table class="summary-table">
+        <tr>
+            <th>Total Credit Load</th>
+            <td>{{ $tc1 }}</td>
+            <th>Total Credit Unit Value</th>
+            <td>{{ $tgp1 }}</td>
+        </tr>
+        <tr>
+            <th>Grade Points Average (GPA)</th>
+            <td colspan="3">{{ $tc1 > 0 ? number_format($tgp1/$tc1, 2) : '0.00' }}</td>
+        </tr>
+        <tr>
+            <th>TC</th>
+            <td>{{ $tc1 > 0 ? $tcu_cgpa : 0 }}</td>
+            <th>TGP</th>
+            <td>{{ $tc1 > 0 ? $tgp_cgpa : 0 }}</td>
+        </tr>
+        <tr>
+            <th>Cumulative GPA (CGPA)</th>
+            <td colspan="3">{{ $tc1 > 0 ? number_format($tgp_cgpa/$tcu_cgpa, 2) : '0.00' }}</td>
+        </tr>
+    </table>
 
-                             </td>
-                          </tr>
-                          <tr>
-                            <td width="5%"><div align="center"><span style="font-weight: bold">S/N</span></div></td>
-                            <td width="15%"><div align="center"><span style="font-weight: bold">Course Code </span></div></td>
-                            <td width="23%"><div align="center"><span style="font-weight: bold">Course Title </span></div></td>
-                            <td width="14%"><div align="center"><span style="font-weight: bold">Credit Unit </span></div></td>
-                            <td width="13%"><div align="center"><span style="font-weight: bold">Score</span></div></td>
-                            <td width="17%"><div align="center"><span style="font-weight: bold">Grade</span></div></td>
-                            <td width="13%"><div align="center"><span style="font-weight: bold">Pass / Fail</span></div></td>
-                          </tr>
-                          @php
-                            $tc1 = 0;
-                            $tc2 = 0;
-                            $tgp1 = 0;
-                            $tgp2 = 0;
-                          @endphp
-                            @foreach ($session->registered_courses1 as $result)
-                            @php
-                              $tc1 += $result->course_unit;
-                              $tgp1 += $result->grade_point * $result->course_unit;
-                            @endphp
+    <div class="chart-container">
+        <canvas id="gpaChart{{ $session->id }}"></canvas>
+    </div>
 
-						<tr>
-                            <td width="5%"><div align="center"><span style="font-weight: bold">{{ $loop->iteration }} </span></div></td>
-                            <td width="15%"><div align="center"><span style="font-weight: bold">{{ $result->course_code }} </span></div></td>
-                             <td width="23%"><div align="center"><span style="font-weight: bold">{{ $result->course_title }} </span></div></td>
-                           <td width="14%"><div align="center"><span style="font-weight: bold">{{ $result->course_unit }} </span></div></td>
-                            <td width="13%"><div align="center"><span style="font-weight: bold">{{ $result->total }}</span></div></td>
-                            <td width="17%"><div align="center"><span style="font-weight: bold">{{ $result->grade }}</span></div></td>
-                            <td width="13%"><div align="center"><span style="font-weight: bold">{{ $result->grade_status }}</span></div></td>
-                          </tr>
-                         @endforeach
+    <script>
+        var ctx = document.getElementById('gpaChart{{ $session->id }}').getContext('2d');
+        var gpaChart = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: ['Total Credit Units', 'Grade Points'],
+                datasets: [{
+                    label: 'GPA Analytics',
+                    data: [{{ $tc1 }}, {{ $tgp1 }}],
+                    backgroundColor: ['#007BFF', '#28a745'],
+                    borderColor: ['#007BFF', '#28a745'],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: {
+                        position: 'top',
+                    },
+                    tooltip: {
+                        mode: 'index',
+                        intersect: false,
+                    },
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+    </script>
 
-                         </table>
-      <table width="100%" border="1" cellpadding="0" cellspacing="0">
-                          <tr>
-                            <td  colspan="7">&nbsp;</td>
-                            </tr>
-                            @php
-                              $courses = $registered_courses->where('session','<=', $session->id);
-                              //dd($courses);
-                              $tgp_cgpa = 0;
-                              $tcu_cgpa = 0;
-                              foreach ($courses as $course) {
-                                if (($course->session == $session->id && $course->semester != 2) || $course->session < $session->id)
-                                {
-                                  $tgp_cgpa += $course->grade_point * $course->course_unit;
-                                  $tcu_cgpa += $course->course_unit;
-                                }
-                              }
-                              //dd($tgp_cgpa, $tcu_cgpa);
-                            @endphp
-                          <tr>
-                            <td width="2%">&nbsp;</td>
-                            <td colspan="2" align="center"><strong>Total Credit Load</strong></td>
-                            <td colspan="2" align="left"><strong> {{ $tc1 }}</strong></td>
-                            <td width="30%" align="left"><strong>Total Credit Unit Value</strong></td>
-                            <td width="10%" align="left"><strong> {{ $tgp1 }}</strong></td>
-                          </tr>
-                          <tr>
-                            <td>&nbsp;</td>
-                            <td colspan="3" align="right"><strong>Grade Points Average (GPA)</strong></td>
-                            <td width="13%">&nbsp;</td>
-                            <td><span style="font-weight: bold">GPA : {{ $tgp1 > 0 && $tc1 > 0 ? number_format($tgp1/$tc1,2) : '0.00' }} </span></td>
-                            <td>&nbsp;</td>
-                          </tr>
-                          <tr>
-                            <td>&nbsp;</td>
-                            <td colspan="3" align="right"><strong>TC</strong></td>
-                           <td>&nbsp;</td>
-                            <td><strong> {{$tc1 > 0 ? $tcu_cgpa : 0 }}</strong></td>
-                            <td>&nbsp;</td>
-                          </tr>
+    @endforeach
 
-                           <tr>
-                            <td>&nbsp;</td>
-                            <td colspan="3" align="right"><strong>TGP</strong></td>
-                            <td>&nbsp;</td>
-                            <td><strong> {{ $tc1 > 0 ? $tgp_cgpa : 0 }}</strong></td>
-                            <td>&nbsp;</td>
-                          </tr>
-                          <tr>
-                            <td>&nbsp;</td>
-                            <td colspan="3" align="right"><strong>Cumulative Grade Points Average (CGPA) </strong></td>
-                            <td>&nbsp;</td>
-                            <td><span style="font-weight: bold">CGPA : {{ $tc1 > 0 ?  number_format($tgp_cgpa/$tcu_cgpa, 2) : '0.00' }}</span></td>
-                            <td>&nbsp; </td>
-                          </tr>
+    <div class="signature">
+        <p><strong>Authorized Signature</strong></p>
+        <p>_________________________</p>
+    </div>
+</div>
 
-
-                        </table>
-
-
-
-     @endforeach
-
-
-  </tr>
-</table>
 @endsection
