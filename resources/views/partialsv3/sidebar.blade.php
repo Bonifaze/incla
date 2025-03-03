@@ -267,13 +267,13 @@
 
 
                 <li class="nav-item has-treeview @yield('exam-officers-open')">
-                    <a href="#" class="nav-link @yield('results')">
+                    {{-- <a href="#" class="nav-link @yield('results')">
                         <i class="nav-icon fas fa-graduation-cap"></i>
                         <p>
                             Establishment
                             <i class="right fas fa-angle-left"></i>
                         </p>
-                    </a>
+                    </a> --}}
 
                     <ul class="nav nav-treeview ml-4">
 

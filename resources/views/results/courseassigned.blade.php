@@ -92,7 +92,7 @@
                                                         <td>{{ $staff_course->upload_status }}</td>
                                                         <td>{{ $staff_course->hod_approval }}</td>
                                                         <td>@if ($staff_course->hod_approval != 'approved') <a href="{{ route('admin.scores_upload', $staff_course->id) }}"
-                                                                class="btn btn-primary">Upload Scores</a> @else <p class="text-warning text-bold ">Kindly Ask TO REVOKE</p> @endif</td>
+                                                                class="btn btn-primary">Upload Scores</a> @else <p class="text-warning text-bold ">Request to Revoke</p> @endif</td>
                                                                  @if ($staff_course->hod_approval == 'approved')
                                                 <td></td>
                                             @else

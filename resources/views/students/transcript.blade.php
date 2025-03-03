@@ -40,7 +40,7 @@
         border: 1px solid #000;
     }
     .result-table th, .summary-table th {
-        background-color: #007BFF;
+        background-color: #D3D3D3;
         color: white;
     }
     .summary-table td {

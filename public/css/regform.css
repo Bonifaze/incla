@@ -1,209 +1,200 @@
-@font-face {
-    font-family: "Muli-Regular";
-    src: url("../fonts/muli/Muli-Regular.ttf"); }
-  @font-face {
-    font-family: "Muli-SemiBold";
-    src: url("../fonts/muli/Muli-SemiBold.ttf"); }
-  @font-face {
-    font-family: "Muli-Bold";
-    src: url("../fonts/muli/Muli-Bold.ttf"); }
-  * {
-    -webkit-box-sizing: border-box;
-    -moz-box-sizing: border-box;
-    box-sizing: border-box; }
-
-  body {
-    font-family: "Muli-Regular";
-    color: #fff;
-    font-size: 13px;
-    margin: 0; }
-
-  input, textarea, select, button {
-    font-family: "Muli-Regular";
-    color: #333;
-    font-size: 13px; }
-
-  p, h1, h2, h3, h4, h5, h6, ul {
-    margin: 0; }
-
-  img {
-    max-width: 100%; }
-
-  ul {
-    padding-left: 0;
-    margin-bottom: 0; }
-
-  a:hover {
-    text-decoration: none; }
-
-  :focus {
-    outline: none; }
-
-  .wrapper {
-    min-height: 100vh;
+body {
+    /* background: url("../img/bgincla.png") no-repeat center center fixed; */
     background-size: cover;
-    background-repeat: no-repeat;
-    display: flex;
-    align-items: center; }
+    color: #333;
+    font-size: 16px;
+    font-family: 'Muli', sans-serif;
+    margin: 0;
+    padding-top: 2px;
+    height: 100vh;
+    overflow-x: hidden; /* This is to avoid horizontal scrolling */
+}
 
-  .inner {
-    min-width: 850px;
-    margin: auto;
-    padding-top: 68px;
-    padding-bottom: 48px;
-    background: url("../img/bgincla.png"); }
-    .inner h3 {
-      text-transform: uppercase;
-      font-size: 22px;
-      font-family: "Muli-Bold";
-      text-align: center;
-      margin-bottom: 32px;
-      color: #fff;
-      /* color: #333; */
-      letter-spacing: 2px; }
+header {
+    overflow: visible; /* Ensure overflow is visible to allow sticky behavior */
+}
 
-  form {
-    width: 50%;
-    padding-left: 45px; }
 
-  .form-group {
-    display: flex; }
-    .form-group .form-wrapper {
-      width: 50%; }
-      .form-group .form-wrapper:first-child {
-        margin-right: 20px; }
+/* Sticky Navbar */
+.navbar {
+    /* background-color: #ff5d57; */
+    position: sticky;
+    top: 0;
+    z-index: 1000; /* Ensure navbar stays on top */
+}
 
-  .form-wrapper {
-    margin-bottom: 17px; }
-    .form-wrapper label {
-      margin-bottom: 9px;
-      display: block; }
+.navbar-brand {
+    color: #cc2424;
+    font-size: 24px;
+}
 
-  .form-control {
-    border: 1px solid #ccc;
-    display: block;
+.navbar-nav .nav-link {
+    color: #b43434 !important;
+    font-weight: 500;
+}
+
+.navbar-nav .nav-link:hover {
+    color: #f29d35 !important;
+}
+
+/* Form Wrapper (Centered Form) */
+.wrapper {
     width: 100%;
-    height: 40px;
-    padding: 0 20px;
-    border-radius: 20px;
-    font-family: "Muli-Bold";
-    background: none; }
-    .form-control:focus {
-      border: 1px solid #ae3c33; }
+    max-width: 600px;
+    padding: 30px;
+    background: #fff;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    margin: 10px auto 0; /* Center form and leave space for navbar */
+}
 
-  select {
-    -moz-appearance: none;
-    -webkit-appearance: none;
-    cursor: pointer;
-    padding-left: 20px; }
-    select option[value=""][disabled] {
-      display: none; }
+.header-img {
+    text-align: center;
+    margin-bottom: 20px;
+}
 
-  button {
-    border: none;
-    width: 152px;
-    height: 40px;
-    margin: auto;
-    margin-top: 29px;
-    cursor: pointer;
+.header-img img {
+    width: 150px;
+    height: auto;
+    border-radius: 8px;
+}
+
+.wrapper h3 {
+    text-align: center;
+    font-size: 26px;
+    margin-bottom: 30px;
+    font-weight: 600;
+    color: #333;
+}
+
+.form-group {
+    margin-bottom: 20px;
     display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 0;
-    background: #ae3c33;
-    font-size: 13px;
-    color: #fff;
-    text-transform: uppercase;
-    font-family: "Muli-SemiBold";
-    border-radius: 20px;
-    overflow: hidden;
-    -webkit-transform: perspective(1px) translateZ(0);
-    transform: perspective(1px) translateZ(0);
-    box-shadow: 0 0 1px rgba(0, 0, 0, 0);
+    flex-wrap: wrap;
+    gap: 15px;
+}
+
+.form-wrapper {
     position: relative;
-    -webkit-transition-property: color;
-    transition-property: color;
-    -webkit-transition-duration: 0.5s;
-    transition-duration: 0.5s; }
-    button:before {
-      content: "";
-      position: absolute;
-      z-index: -1;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      background: #f11a09;
-      -webkit-transform: scaleX(0);
-      transform: scaleX(0);
-      -webkit-transform-origin: 0 50%;
-      transform-origin: 0 50%;
-      -webkit-transition-property: transform;
-      transition-property: transform;
-      -webkit-transition-duration: 0.5s;
-      transition-duration: 0.5s;
-      -webkit-transition-timing-function: ease-out;
-      transition-timing-function: ease-out; }
-    button:hover:before {
-      -webkit-transform: scaleX(1);
-      transform: scaleX(1);
-      -webkit-transition-timing-function: cubic-bezier(0.52, 1.64, 0.37, 0.66);
-      transition-timing-function: cubic-bezier(0.52, 1.64, 0.37, 0.66); }
+    width: 48%;
+}
 
-  .checkbox {
-    position: relative; }
-    .checkbox label {
-      padding-left: 22px;
-      cursor: pointer; }
-    .checkbox input {
-      position: absolute;
-      opacity: 0;
-      cursor: pointer; }
-    .checkbox input:checked ~ .checkmark:after {
-      display: block; }
+.form-wrapper label {
+    font-weight: 600;
+    display: block;
+    margin-bottom: 8px;
+    color: #333;
+}
 
-  .checkmark {
+.form-control {
+    width: 100%;
+    padding: 12px;
+    border-radius: 20px;
+    border: 1px solid #ddd;
+    font-size: 14px;
+}
+
+.form-control:focus {
+    outline: none;
+    border-color: #ff5d57;
+}
+
+.form-wrapper input[type="password"] {
+    padding-right: 40px;
+}
+
+/* Style for the icon inside the input field */
+.toggle-password {
     position: absolute;
     top: 50%;
-    left: 0;
-    transform: translateY(-50%);
-    height: 12px;
-    width: 13px;
-    border-radius: 2px;
-    background-color: #ebebeb;
-    border: 1px solid #ccc;
-    font-family: Material-Design-Iconic-Font;
-    color: #000;
-    font-size: 10px;
-    font-weight: bolder; }
-    .checkmark:after {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      display: none;
-      content: '\f26b'; }
+    right: 10px; /* Position it inside the input, towards the right */
+    transform: translateY(-50%); /* Vertically center the icon */
+    cursor: pointer;
+    color: #ff5d57;
+    font-size: 18px;
+}
 
-  @media (max-width: 991px) {
-    .inner {
-      min-width: 768px; } }
-  @media (max-width: 767px) {
-    body{
-        color: #333;
+/* Styling for the icon when visible */
+.toggle-password i {
+    transition: color 0.3s ease;
+}
+
+/* Optional: If you want to change color when the password is visible */
+.toggle-password i.fa-eye {
+    color: #f29d35;
+}
+
+
+header {
+    overflow: visible; /* Ensure overflow is visible to allow sticky behavior */
+}
+
+/* Style for the input wrapper to hold the icon */
+.input-wrapper {
+    position: relative;
+}
+
+/* Style for password and confirm password input fields */
+.form-control {
+    width: 100%;
+    padding: 12px 40px 12px 12px; /* Add right padding for the icon */
+    border-radius: 20px;
+    border: 1px solid #ddd;
+    font-size: 14px;
+}
+.checkbox {
+    margin-bottom: 20px;
+}
+
+.checkbox label {
+    font-size: 14px;
+    display: flex;
+    align-items: center;
+}
+
+.checkbox input {
+    margin-right: 8px;
+}
+
+button {
+    width: 100%;
+    padding: 12px;
+    border-radius: 20px;
+    border: none;
+    background-color: #ff5d57;
+    color: #fff;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+button:hover {
+    background-color: #f29d35;
+}
+
+p {
+    text-align: center;
+    margin-top: 20px;
+}
+
+p a {
+    color: #ff5d57;
+    text-decoration: none;
+    font-weight: 600;
+}
+
+/* Media Queries for responsiveness */
+@media (max-width: 768px) {
+    .wrapper {
+        padding: 20px;
     }
-    .inner h3{
-        color: #333;
-        text-align:center;
+
+    .wrapper h3 {
+        font-size: 22px;
     }
-    .inner {
-      min-width: auto;
-      background: none;
-      padding-top: 0;
-      padding-bottom: 0; }
 
-    form {
-      width: 100%;
-      padding-right: 15px;
-      padding-left: 15px; } }
-
-  /*# sourceMappingURL=style.css.map */
+    .form-wrapper {
+        width: 100%;
+    }
+}

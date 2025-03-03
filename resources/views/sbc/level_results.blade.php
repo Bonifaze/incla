@@ -99,7 +99,7 @@
                                  @endif
 
  @else
-<p class="text-danger text-bold">Kindly ask VC to REVOKE</p>
+<p class="text-danger text-bold">Request to Revoke</p>
  @endif
 
                                  </td>

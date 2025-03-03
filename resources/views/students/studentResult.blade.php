@@ -37,8 +37,8 @@
         border: 1px solid #000;
     }
     .result-table th, .summary-table th {
-        background-color: #007BFF;
-        color: white;
+        background-color: #D3D3D3;
+        color: rgb(14, 13, 13);
     }
     .summary-table td {
         font-weight: bold;
@@ -278,39 +278,6 @@
         <canvas id="gpaChart{{ $session->id }}"></canvas>
     </div>
 
-    <script>
-        var ctx = document.getElementById('gpaChart{{ $session->id }}').getContext('2d');
-        var gpaChart = new Chart(ctx, {
-            type: 'bar',
-            data: {
-                labels: ['Total Credit Units', 'Grade Points'],
-                datasets: [{
-                    label: 'GPA Analytics',
-                    data: [{{ $tc1 }}, {{ $tgp1 }}],
-                    backgroundColor: ['#007BFF', '#28a745'],
-                    borderColor: ['#007BFF', '#28a745'],
-                    borderWidth: 1
-                }]
-            },
-            options: {
-                responsive: true,
-                plugins: {
-                    legend: {
-                        position: 'top',
-                    },
-                    tooltip: {
-                        mode: 'index',
-                        intersect: false,
-                    },
-                },
-                scales: {
-                    y: {
-                        beginAtZero: true
-                    }
-                }
-            }
-        });
-    </script>
 
     @endforeach
 
