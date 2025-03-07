@@ -82,7 +82,7 @@ active
                                                         </td>
                                                         <td><?php echo e($staff_course->hod_approval); ?></td>
                                                         <td><?php if($staff_course->hod_approval != 'approved'): ?> <a href="<?php echo e(route('admin.scores_upload', $staff_course->id)); ?>"
-                                                        class="btn btn-primary">Upload Scores</a> <?php else: ?> <p class="text-warning text-bold ">Kindly Ask for REVOKE</p> <?php endif; ?></td>
+                                                        class="btn btn-primary">Upload Scores</a> <?php else: ?> <p class="text-warning text-bold ">Request to Revoke</p> <?php endif; ?></td>
                                                         <?php if($staff_course->upload_status =='uploaded'): ?>
                                                         <td> <a href="/admin/download/<?php echo e($staff_course->id); ?>" class="btn btn-primary">Download Scores </a></td>
                                                         <?php else: ?>

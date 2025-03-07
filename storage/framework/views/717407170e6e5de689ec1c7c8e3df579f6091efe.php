@@ -43,7 +43,7 @@ active
                             <div class="dropdown no-arrow">
 
                                 <?php echo $status=="Successful"?'
-                                     <!--   <a href="/letter" class="btn btn-success mt-3"> <i class=" fas fa-envelope fa-sm text-white-50 p-2"></i>Print Letter</a> -->
+                                       <a href="/letter" class="btn btn-success mt-3"> <i class=" fas fa-envelope fa-sm text-white-50 p-2"></i>Print Addmission Letter</a>
 
                                 ':''; ?>
 

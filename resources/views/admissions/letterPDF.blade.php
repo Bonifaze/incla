@@ -27,9 +27,9 @@ body {
 
 
 
-<p align='center'><strong>VERITAS  UNIVERSITY, ABUJA</strong><br />
+<p align='center'><strong>INCLA</strong><br />
   <strong>(</strong>The Catholic University  of Nigeria)<br />
-  <strong>Website: </strong><a href='http://www.veritas.edu.ng/'>http://www.veritas.edu.ng</a></p>
+  <strong>Website: </strong><a href='http://www..edu.ng/'>http://www..edu.ng</a></p>
 <p align='center'><strong>Motto: Seeking the Truth </strong></p>
 
 <p align='center'> <img src="{{ asset('img/letter_logo.png') }}" width='100' height='100' border='0' /></p>  -
@@ -41,11 +41,10 @@ body {
 <p>Following your application through PostGraduate (PG) for this academic session, I write to offer you a Provisional Admission into a higher degree of Institute of Consecrated Life in Africa (InCLA), I am pleased to inform
  {{--  {{ $utm->duration }}  --}}
  Programme to study <strong>
- {{ $utm->course_applied }}
+
    in the Department of
-   {{ $facultyAndDept['dept'] }}
-   , Faculty of
-    {{ $facultyAndDept['col']}}
+
+
 
     </strong>, of Institute of Consecrated Life in Africa (InCLA).</p>
 <p>Please note that  your admission to the University is subject to your having the University  minimum and departmental entry qualifications in the prescribed programme and a  medical report showing that you are drug- free to study. The medical check may  be carried out in the University. The university reserves the right to withdraw  any candidate who is drug positive. <strong>Female  students are kindly requested to indicate their choice of hostel of residence. </strong></p>
@@ -59,7 +58,7 @@ body {
 <p>Attached is a document that will help you proceed with the admission procedure and payment. </p>
 <p>For further enquiries: </p>
 <p>Contact the Secretary, School of Postgraduate Studies </p>
-<p>Email: pgschool@veritas.edu.ng or consult our website www.veritas.edu.ng/spgs/ for fees, other charges and date of resumption. </p>
+<p>Email: pgschool@INCLA.edu.ng or consult our website www.INCLA.edu.ng/spgs/ for fees, other charges and date of resumption. </p>
 <p>Congratulation, <br>
 <br><br><br>
 {{--  <p align='left'> <img src="{{ asset('img/register.png') }}" width='80' height='80' border='0' /></p>  --}}

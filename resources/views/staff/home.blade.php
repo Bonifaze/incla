@@ -138,7 +138,25 @@
 
                         <!-- Widgets End -->
                     </div>
+ <canvas id="applicantChart" width="400" height="400"></canvas>
 
+    <script>
+        var ctx = document.getElementById('applicantChart').getContext('2d');
+        var applicantChart = new Chart(ctx, {
+            type: 'pie',
+            data: {
+                labels: ['Certificate', 'Licentiate', 'Diploma'],
+                datasets: [{
+                    data: [{{ $certificateCount }}, {{ $licentiateCount }}, {{ $diplomaCount }}],
+                    backgroundColor: ['#ff6384', '#36a2eb', '#ffcd56'],
+                    hoverBackgroundColor: ['#ff4569', '#1e90ff', '#ffb200']
+                }]
+            },
+            options: {
+                responsive: true
+            }
+        });
+    </script>
                     {{-- <div class="container">
                         <div class="row justify-content-center">
                             <!-- Pie Chart for Students Analytics -->

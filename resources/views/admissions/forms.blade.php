@@ -62,6 +62,7 @@ active
                                     <input id="status" type="hidden" class="form-control " name="'{{ $forms->status }}" readonly autofocus>
                                 </div>
                             </div>
+
                             <div class="form-group">
                                 <div class="form-group">
                                     <label for="">{{ __('First Name') }} </label>
@@ -147,7 +148,7 @@ active
                 'CBT' => 'Certificate in Basic Theology',
                 'CFF' => 'Certificate in Formation of Formators',
                 'CSD' => 'Certificate in Spiritual Direction',
-                'CCF' => 'Certificate in Chapter Facilitation',
+                'CCF' => 'Certificate in Facilitation and Leadership',
                 'CFP' => 'Certificate in Fundraising & Project Mgt',
                 'DBT' => 'Diploma in Basic Theology',
                 'DFF' => 'Diploma in Formation of Formators',

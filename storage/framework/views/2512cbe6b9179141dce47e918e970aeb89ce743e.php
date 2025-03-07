@@ -46,6 +46,8 @@
 
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/dt-1.11.3/b-2.1.1/r-2.2.9/datatables.min.css"/>
 
+       <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
 
 
     
@@ -114,7 +116,7 @@
 
 
     </style>
-   
+
 </head>
 
 <body class="hold-transition sidebar-mini layout-fixed">

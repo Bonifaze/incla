@@ -42,12 +42,13 @@ class ApplicantController extends Controller
     //Mail base URL
     public function getBaseurl()
     {
-        return 'https://admissions.veritas.edu.ng';
+        return 'https://';
     }
 
     // Registeration Fuction
     public function register(Request $req)
     {
+        //dd($req);
         //Comfirm password verification
         if ($req->password == $req->password_confirmation) {
             $jsonstring = "";
@@ -62,6 +63,7 @@ class ApplicantController extends Controller
                     'middle_name' => $req->middle_name,
                     'phone' => $req->phone,
                     'email' => $req->email,
+                    'Nationality' => $req->country,
                     'session_id' => $this->getCurrentAdmissionSession(),
                     //Hash::make to encrpty or hash the password
                     'password' => Hash::make($req->password),
@@ -87,7 +89,7 @@ class ApplicantController extends Controller
                 Mail::to($req->email)->send(new Confirmsignup($mailData));
                 DB::commit();
 
-                $signUpMsg = '<div class="alert alert-success alert-dismissible text-lg"><button type="button" class="close" data-dismiss="alert">&times;</button><strong>Success!</strong> ' . $req->surname . ' Your Registration was successful, please follow the instruction sent to your mail ' . $req->email . ' to complete the process</div>';
+                $signUpMsg = '<div class="alert alert-success alert-dismissible text-lg"><button type="button" class="close" data-dismiss="alert">&times;</button><strong>Success!</strong> ' . $req->first_name . ' Your Registration was successful, please follow the instruction sent to your mail ' . $req->email . ' to complete the process</div>';
                 return redirect('/register')->with('signUpMsg', $signUpMsg);
             } catch (QueryException $e) {
                 DB::rollBack();
@@ -888,16 +890,8 @@ class ApplicantController extends Controller
 
         $admission = DB::table('users')->where('users.id', session('userid'))->first();
 
-        if ($admission->applicant_type == 'UTME') {
+            return $this->letterPDF();
 
-            return $this->utmeletterPDF();
-        } elseif ($admission->applicant_type == 'DE') {
-            return $this->deletterPDF();
-        } elseif ($admission->applicant_type == 'Transfer') {
-            return $this->transferletterPDF();
-        } else {
-            return $this->pgletterPDF();
-        }
     }
     public function utmeletterPDF()
     {
@@ -961,25 +955,35 @@ class ApplicantController extends Controller
         return view('admissions.transferletterPDF', compact('transferadmission', 'facultyAndDept'));
     }
 
-    public function pgletterPDF()
+    public function letterPDF()
     {
-        $pgadmission = DB::table('users')->where('users.id', session('userid'))
-            ->leftJoin('usersbiodata', 'usersbiodata.user_id', '=', 'users.id')
-            ->join('approved_applicants', 'approved_applicants.user_id', '=', 'users.id')
-            ->leftJoin('pgs', 'pgs.user_id', '=', 'users.id')
-            ->leftJoin('academic_departments', 'academic_departments.id', '=', 'users.id')
-            ->leftJoin('colleges', 'colleges.id', '=', 'users.id')
-            ->leftJoin('programs', 'programs.id', '=', 'users.id')
-            ->select('users.*', 'usersbiodata.middle_name', 'approved_applicants.approval_date', 'pgs.course_applied', 'academic_departments.name', 'colleges.name', 'programs.duration')->get();
 
         //$programs= programs::orderBy('name','ASC')->get();
 
-        $facultyAndDept = array();
-        foreach ($pgadmission as $ca) {
-            $facultyAndDept = $this->getdptcolleg($ca->course_applied);
-        }
+          // Get the current user's details
+          $pgadmission = DB::table('users')
+          ->where('users.id', session('userid'))
+          ->join('approved_applicants', 'approved_applicants.user_id', '=', 'users.id')
+          ->leftJoin('usersbiodata', 'usersbiodata.user_id', '=', 'users.id')
+          ->leftJoin('academic_record', 'academic_record.user_id', '=', 'users.id')
+          ->leftJoin('academic_departments', 'academic_departments.id', '=', 'users.id')
+          ->leftJoin('colleges', 'colleges.id', '=', 'users.id')
+          ->leftJoin('programs', 'programs.id', '=', 'users.id')
+          ->get();
 
-        return view('admissions.pgletterPDF', compact('pgadmission', 'facultyAndDept'));
+          //  dd($pgadmission);
+
+      // Dynamically fetch the program ID based on the course_program from the user's data
+      if ($pgadmission && isset($pgadmission->course_program)) {
+          $programId = DB::table('programs')
+              ->where('name', $pgadmission->course_program)
+              ->value('id');
+          $pgadmission->program_id = $programId ?? null; // Add program_id to the details
+      }
+         //  dd($pgadmission);
+
+
+        return view('admissions.letterPDF', compact('pgadmission', ));
     }
 
     // DE FUNCTION PASSING PARAMETER USEFUL FOR THE BLADE

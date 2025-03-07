@@ -162,7 +162,7 @@ active
                                 <div class="form-row">
                                     <label for="admission_types">Choose Admission Type</label>
                                     <select name="admission-type" id="admission-type" onchange="updateCredentialInputs()">
-                                        <option value=" " disabled selected>Type Amission </option>
+                                        <option value=" " disabled selected>Type of Amission </option>
                                         <option value="Licentiate">Licentiate</option>
                                         <option value="Diploma">Diploma Programs </option>
                                         <option value="Certificate">Certificate Programs</option>
@@ -177,7 +177,7 @@ active
                                     <input type="text" name="congregation" class="congregation" id="congregation" placeholder="Congregation" required>
                                 </div>
                                 <div class="form-row">
-                                    <label for="address">Type Your Address</label>
+                                    <label for="address"> Address</label>
                                     <input type="text" name="address" class="address" id="address" placeholder="Contact Address" required>
                                 </div>
 
@@ -239,12 +239,17 @@ active
                                             }
                                             , {
                                                 name: "olevel1"
-                                                , placeholder: "Upload WAEC Results"
+                                                , placeholder: "Upload Olevel Results"
+                                                , type: "file"
+                                            }
+                                             , {
+                                                name: "olevel2"
+                                                , placeholder: "Upload Olevel Results (For Result Combination)"
                                                 , type: "file"
                                             }
                                             , {
                                                 name: "cert"
-                                                , placeholder: "Upload Degree Certificate"
+                                                , placeholder: "Upload Highest Qualification/ Degree Certificate"
                                                 , type: "file"
                                             }
                                             , {
@@ -287,9 +292,20 @@ active
                                                 name: "certificates_obtained"
                                                 , placeholder: "Certificates Obtained"
                                             }
+                                            ,{
+                                             name: "cert"
+                                                , placeholder: "Upload Highest Qualification/ Degree Certificate"
+                                                , type: "file"
+                                            }
+
                                             , {
                                                 name: "olevel1"
-                                                , placeholder: "Upload WAEC Results"
+                                                , placeholder: "Upload Olevel Results"
+                                                , type: "file"
+                                            }
+                                             , {
+                                                name: "olevel2"
+                                                , placeholder: "Upload Olevel Results (For Result Combination)"
                                                 , type: "file"
                                             }
                                             , {
@@ -319,8 +335,8 @@ active
                                                         , label: "Certificate in Spiritual Direction"
                                                     }
                                                     , {
-                                                        value: "Certificate in Chapter Facilitation"
-                                                        , label: "Certificate in Chapter Facilitation"
+                                                        value: "Certificate in  Facilitation and Leadership"
+                                                        , label: "Certificate in  Facilitation and Leadership"
                                                     }
                                                     , {
                                                         value: "Certificate in Fundraising & Project Management"
@@ -328,9 +344,19 @@ active
                                                     }
                                                 ]
                                             }
+                                            ,{
+                                             name: "cert"
+                                                , placeholder: "Upload Highest Qualification/ Degree Certificate"
+                                                , type: "file"
+                                            }
                                             , {
                                                 name: "olevel1"
-                                                , placeholder: "Upload WAEC Results"
+                                                , placeholder: "Upload Olevel Results"
+                                                , type: "file"
+                                            }
+                                             , {
+                                                name: "olevel2"
+                                                , placeholder: "Upload Olevel Results (For Result Combination)"
                                                 , type: "file"
                                             }
                                             , {

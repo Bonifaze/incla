@@ -225,7 +225,8 @@ toggleConfirmPassword.addEventListener("click", () => {
                 // Add the sorted country options to the dropdown
                 sortedCountries.forEach(country => {
                     const option = document.createElement('option');
-                    option.value = country.cca2;
+                    {{--  option.value = country.cca2;  --}}
+                    option.value = country.name.common; // This will set the full country name
                     option.textContent = country.name.common;
                     countrySelect.appendChild(option);
                 });
