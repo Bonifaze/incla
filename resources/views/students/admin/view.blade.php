@@ -13,7 +13,7 @@
     <style>
         /* General Card Styling */
         .app-card {
-            background-color: #fff;
+            background-color: #e5e5e5;
             box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1);
             border-radius: 12px;
             overflow: hidden;

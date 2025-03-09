@@ -170,8 +170,8 @@ be a descendant of the grid when it is being dragged.
 }
 
 .fc-time-grid-event-inset {
-  -webkit-box-shadow: 0px 0px 0px 1px #fff;
-  box-shadow: 0px 0px 0px 1px #fff;
+  -webkit-box-shadow: 0px 0px 0px 1px #e5e5e5;
+  box-shadow: 0px 0px 0px 1px #e5e5e5;
 }
 
 .fc-time-grid-event.fc-not-start {
@@ -270,7 +270,7 @@ be a descendant of the grid when it is being dragged.
   height: 8px;
   border-style: solid;
   border-color: inherit;
-  background: #fff;
+  background: #e5e5e5;
   /* horizontally center */
   left: 50%;
   margin-left: -5px;

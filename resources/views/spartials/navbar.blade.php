@@ -57,7 +57,7 @@
                     </span>
                 </button>
                 <div class="dropdown-menu dropdown-menu-end border-0 shadow-lg p-0 mt-2" style="border-radius: 12px; max-width: 320px;">
-                    <div class="card border-0 rounded-12 overflow-hidden box-shadow-custom" style="background: #ffffff; padding: 0;">
+                    <div class="card border-0 rounded-12 overflow-hidden box-shadow-custom" style="background: #e5e5e5; padding: 0;">
                         <div class="card-body py-4 px-3 text-center">
                             <div class="d-flex flex-column align-items-center mb-3">
                                 <img src="data:image/png;base64,{{ Auth::guard('student')->user()->passport }}" alt="User Image" class="rounded-circle mb-2" style="width: 60px; height: 60px; object-fit: cover;">
@@ -106,7 +106,7 @@
     padding: 0;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
     transition: all 0.3s ease;
-    background-color: #ffffff; /* White background for better contrast */
+    background-color: #e5e5e5; /* White background for better contrast */
 }
 
 /* Profile Image and Layout */
@@ -168,7 +168,7 @@
 .card {
     border-radius: 12px;
     overflow: hidden;
-    background-color: #ffffff; /* White background for the dropdown card */
+    background-color: #e5e5e5; /* White background for the dropdown card */
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Shadow for depth */
 }
 

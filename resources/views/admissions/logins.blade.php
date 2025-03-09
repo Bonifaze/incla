@@ -30,7 +30,7 @@
         .login-heading {
             text-align: center;
             margin: 20px;
-            color: #fff;
+            color: #e5e5e5;
             font-size: 2.5em;
             text-transform: uppercase;
             font-weight: 600;
@@ -52,7 +52,7 @@
             background-color: #f0ad4e;
             border: none;
             border-radius: 5px;
-            color: #fff;
+            color: #e5e5e5;
         }
 
         .btn-success:hover {
@@ -60,7 +60,7 @@
         }
 
         .card {
-            background-color: #fff;
+            background-color: #e5e5e5;
             padding: 20px;
             border-radius: 10px;
             box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
@@ -72,7 +72,7 @@
             margin-top: 10px;
             background-color: #0275d8;
             border-radius: 5px;
-            color: #fff;
+            color: #e5e5e5;
         }
 
         .advert-button:hover {

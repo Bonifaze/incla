@@ -187,7 +187,7 @@ body {
   -ms-transform: translate(-50%, -50%); }
 
 .signup-content {
-  background: #fff;
+  background: #e5e5e5;
   border-radius: 10px;
   -moz-border-radius: 10px;
   -webkit-border-radius: 10px;
@@ -263,7 +263,7 @@ body {
   box-sizing: border-box;
   font-size: 14px;
   font-weight: 700;
-  color: #fff;
+  color: #e5e5e5;
   text-transform: uppercase;
   border: none;
   background-image: -moz-linear-gradient(to left, #74ebd5, #9face6);

@@ -29,7 +29,7 @@ active
 
 
 @section('content')
-<div class="content-wrapper bg-white">
+<div class="content-wrapper ">
 
     <!-- Main content -->
     <section class="content">

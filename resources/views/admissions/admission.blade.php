@@ -565,5 +565,76 @@ active
         }
     });
 </script>
+
+
+{{-- 
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+    // Handle "Generate Matric Number" button click
+    var generateMatricButton = document.querySelector('.btn.btn-success[data-bs-toggle="modal"]');
+    
+    generateMatricButton.addEventListener('click', function(event) {
+        var button = event.target.closest('button'); // Ensure we're getting the button itself
+        var icon = button.querySelector('i');
+        var text = button.querySelector('span') || button; // If there's a <span> inside, use it; otherwise use the button text directly
+        
+        // Disable the button to prevent multiple clicks
+        button.disabled = true;  // Disable button to prevent further clicks
+
+        // Change the icon to a spinner
+        icon.classList.remove('fas', 'fa-cogs');
+        icon.classList.add('fas', 'fa-spinner', 'fa-spin'); // Adding spinner icon
+
+        // Change text to "Processing..."
+        text.innerHTML = 'Processing...';
+
+        // Simulate a delay or action (replace with actual action)
+        setTimeout(function() {
+            // Re-enable the button after action is complete
+            button.disabled = false; // Re-enable button
+            
+            // Reset the icon back to original
+            icon.classList.remove('fas', 'fa-spinner', 'fa-spin');
+            icon.classList.add('fas', 'fa-cogs'); // Reset icon to original
+
+            // Reset the button text back to its original state
+            text.innerHTML = '{{ __('Generate Matric Number') }}'; // Reset text (based on your server-side template)
+        }, 3000); // Simulate 3 seconds delay (replace with actual action)
+    });
+    
+    // Handle "Print Admission Letter" anchor tag click
+    var printLetterLink = document.querySelector('.btn.btn-success.mt-3');
+
+    printLetterLink.addEventListener('click', function(event) {
+        var link = event.target.closest('a'); // Ensure we're getting the anchor tag itself
+        var icon = link.querySelector('i');
+        var text = link.querySelector('span') || link; // If there's a <span> inside, use it; otherwise use the link text directly
+
+        // Disable the link to prevent multiple clicks
+        link.style.pointerEvents = 'none';  // Disable link click
+
+        // Change the icon to a spinner
+        icon.classList.remove('fas', 'fa-envelope');
+        icon.classList.add('fas', 'fa-spinner', 'fa-spin'); // Adding spinner icon
+
+        // Change text to "Processing..."
+        text.innerHTML = 'Processing...';
+
+        // Simulate a delay (replace with actual navigation or action)
+        setTimeout(function() {
+            // Re-enable the link after action is complete
+            link.style.pointerEvents = 'auto';  // Re-enable link click
+
+            // Reset the icon back to original
+            icon.classList.remove('fas', 'fa-spinner', 'fa-spin');
+            icon.classList.add('fas', 'fa-envelope'); // Reset icon to original
+
+            // Reset the link text back to its original state
+            text.innerHTML = 'Print Admission Letter'; // Reset text
+        }, 3000); // Simulate 3 seconds delay (replace with real action, such as navigating to /letter)
+    });
+});
+
+</script> --}}
 </body>
 @endsection

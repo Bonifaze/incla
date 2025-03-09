@@ -109,7 +109,7 @@
 		  box-shadow: none;
 }
 .bootstrap-select.btn-group .dropdown-menu li { position: relative; }
-.bootstrap-select.btn-group .dropdown-menu li.active small { color: #fff; }
+.bootstrap-select.btn-group .dropdown-menu li.active small { color: #e5e5e5; }
 .bootstrap-select.btn-group .dropdown-menu li.disabled a { cursor: not-allowed; }
 .bootstrap-select.btn-group .dropdown-menu li a {
 	cursor: pointer;

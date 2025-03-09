@@ -19,7 +19,7 @@
             background-color: #f0ad4e;
             border: none;
             border-radius: 30px;
-            color: #fff;
+            color: #e5e5e5;
             width: 100%;
             padding: 12px;
             font-size: 1.2em;

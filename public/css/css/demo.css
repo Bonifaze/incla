@@ -30,7 +30,7 @@
   height: max-content;
   display: block;
   z-index: 1;
-  background: #ffffff;
+  background: #e5e5e5;
   transition: all .3s;
   z-index: 1003;
   box-shadow: -1px 1px 20px rgba(69, 65, 78, 0.15);
@@ -55,7 +55,7 @@
     border-bottom-left-radius: 30px;
     /*border-right: 1px solid #177dff;*/
     cursor: pointer;
-    color: #ffffff;
+    color: #e5e5e5;
     box-shadow: -5px 5px 20px rgba(69, 65, 78, 0.21); }
     .custom-template .custom-toggle i {
       font-size: 20px;
@@ -65,7 +65,7 @@
     text-align: left;
     font-size: 16px;
     font-weight: 600;
-    color: #ffffff;
+    color: #e5e5e5;
     border-top-left-radius: 5px;
     border-bottom: 1px solid #ebedf2;
     background: #5867dd; }
@@ -105,7 +105,7 @@
         display: inline-flex;
         align-items: center; }
       .custom-template .btnSwitch button:not([data-color="white"], [data-color="bg1"], [data-color="bg2"], [data-color="bg3"]) .gg-check:after {
-        border-color: #fff; }
+        border-color: #e5e5e5; }
   .custom-template .img-pick {
     padding: 4px;
     min-height: 100px;
@@ -182,7 +182,7 @@ body[data-background-color="dark"] .demo-icon .icon-class {
       background: #ddd; }
 
 .btnSwitch button[data-color="white"] {
-  background-color: #fff; }
+  background-color: #e5e5e5; }
 .btnSwitch button[data-color="grey"] {
   background-color: #f1f1f1; }
 .btnSwitch button[data-color="black"] {
@@ -218,7 +218,7 @@ body[data-background-color="dark"] .demo-icon .icon-class {
 .btnSwitch button[data-color="bg1"] {
   background-color: #fafafa; }
 .btnSwitch button[data-color="bg2"] {
-  background-color: #fff; }
+  background-color: #e5e5e5; }
 .btnSwitch button[data-color="bg3"] {
   background-color: #f1f1f1; }
 
@@ -227,7 +227,7 @@ body[data-background-color="dark"] .demo-icon .icon-class {
   opacity: 0.7;
   display: flex; }
   #modalShowcase .btn-close svg {
-    fill: #fff;
+    fill: #e5e5e5;
     width: 16px;
     height: 16px; }
 #modalShowcase .preview-showcase {
@@ -257,7 +257,7 @@ body[data-background-color="dark"] .demo-icon .icon-class {
   position: fixed;
   bottom: 12px;
   right: 12px;
-  background: #fff;
+  background: #e5e5e5;
   color: #252F4A;
   font-weight: 600;
   flex-direction: column;
@@ -275,7 +275,7 @@ body[data-background-color="dark"] .demo-icon .icon-class {
     padding-top: 0.25rem !important; }
   #checkOutMoreDemos:hover {
     background: #1e2129;
-    color: #fff;
+    color: #e5e5e5;
     opacity: 1;
     transition: color .2s ease; }
 

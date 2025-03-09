@@ -16,7 +16,7 @@
 	height: 25px;
 	font-size: 999px;
 	text-align: right;
-	color: #fff;
+	color: #e5e5e5;
 	background: transparent url('../../images/preloader.gif') top left no-repeat;
 	border: none;
 }
@@ -118,7 +118,7 @@
 	width: 160px;
 	margin-bottom: 2px;
 	color: #428bca;
-	background: #fff;
+	background: #e5e5e5;
 	overflow-x: hidden;
 }
 

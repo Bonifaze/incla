@@ -1,4 +1,4 @@
-<aside class="main-sidebar sidebar-dark-primary elevation-4 nav-flat" style="background-color:#302b2b; color: #fff;">
+<aside class="main-sidebar sidebar-dark-primary elevation-4 nav-flat" style="background-color:#302b2b; color: #e5e5e5;">
     <!-- Brand Logo -->
     <style>
         .lightbulb-container {
@@ -16,7 +16,7 @@
             width: 60px;
             height: 60px;
             border-radius: 50%;
-            background-color: #fff;
+            background-color: #e5e5e5;
             transform: translateX(-50%);
             z-index: -1;
         }
@@ -28,7 +28,7 @@
 
         @keyframes rainbow {
             0% {
-                background-color: #ffffff;
+                background-color: #e5e5e5;
                 /* Red */
 
 

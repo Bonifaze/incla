@@ -14,7 +14,7 @@ a {
 }
 
 body {
-  --background-color: #fff;
+  --background-color: #e5e5e5;
   --error-code-color: var(--google-gray-700);
   --google-blue-100: rgb(210, 227, 252);
   --google-blue-300: rgb(138, 180, 248);
@@ -33,10 +33,10 @@ body {
   --popup-container-background-color: rgba(0,0,0,.65);
   --primary-button-fill-color-active: var(--google-blue-700);
   --primary-button-fill-color: var(--google-blue-600);
-  --primary-button-text-color: #fff;
+  --primary-button-text-color: #e5e5e5;
   --quiet-background-color: rgb(247, 247, 247);
   --secondary-button-border-color: var(--google-gray-500);
-  --secondary-button-fill-color: #fff;
+  --secondary-button-fill-color: #e5e5e5;
   --secondary-button-hover-border-color: var(--google-gray-600);
   --secondary-button-hover-fill-color: var(--google-gray-50);
   --secondary-button-text-color: var(--google-gray-700);
@@ -783,7 +783,7 @@ a {
   border-radius: 2px;
   bottom: 24px;
   box-sizing: border-box;
-  color: #fff;
+  color: #e5e5e5;
   font-size: .87em;
   left: 24px;
   max-width: 568px;
@@ -1318,12 +1318,12 @@ html[dir='rtl'].offline .icon-offline {
 }
 
 .offline.inverted {
-  background-color: #fff;
+  background-color: #e5e5e5;
   filter: invert(1);
 }
 
 .offline.inverted body {
-  background-color: #fff;
+  background-color: #e5e5e5;
 }
 
 .offline .interstitial-wrapper {
@@ -1463,7 +1463,7 @@ html[dir='rtl'].offline .icon-offline {
 }
 
 .slow-speed-option .slow-speed-toggle::after {
-  background: #fff;
+  background: #e5e5e5;
   border-radius: 50%;
   box-shadow: 0 1px 3px 0 rgb(0 0 0 / 40%);
   height: 1.2em;
@@ -1635,11 +1635,11 @@ html[dir='rtl'].offline .icon-offline {
   }
 
   .offline.inverted body {
-    background-color: #fff;
+    background-color: #e5e5e5;
   }
 
   .offline.inverted .offline-runner-live-region {
-    color: #fff;
+    color: #e5e5e5;
   }
 
   #suggestions-list a {

@@ -36,7 +36,7 @@
         .login-heading {
             text-align: center;
             margin: 20px;
-            color: #fff;
+            color: #e5e5e5;
             font-size: 2em;
             text-transform: uppercase;
             font-weight: 600;
@@ -47,7 +47,7 @@
             background-color: #f0ad4e;
             border: none;
             border-radius: 30px;
-            color: #fff;
+            color: #e5e5e5;
             width: 100%;
             padding: 12px;
             font-size: 1.2em;

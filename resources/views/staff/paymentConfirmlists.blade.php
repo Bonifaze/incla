@@ -24,11 +24,11 @@
 
 
 @section('content')
-    <div class="content-wrapper bg-white">
+    <div class="content-wrapper">
         <!-- Main content -->
 
     @section('content')
-        <div class="content-wrapper bg-white">
+        <div class="content-wrapper">
             <!-- Main content -->
             <section class="content">
                 <div class="container-fluid">

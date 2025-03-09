@@ -119,17 +119,17 @@
                     <div class="card border border-gray-100 rounded-12 box-shadow-custom">
                         <div class="card-body">
                             <div class="flex-align gap-8 mb-20 pb-20 border-bottom border-gray-100 text-center">
-                                <h4 class="mb-0">
+                                <h6 class="mb-0">
                                     <div class="info text-wrap">
                                         <a href="{{ route('staff.profile') }}" class="d-block">{{ Auth::guard('staff')->user()->full_name }}</a>
                                     </div>
-                                </h4>
+                                </h6>
                             </div>
                             <ul class="list-unstyled max-h-270 overflow-y-auto">
                                 <li class="mb-3">
-                                    <a href="setting.html" class="d-flex align-items-center py-2 px-3 text-dark text-decoration-none hover-bg-light rounded">
+                                    <a  href="{{ route('staff.password') }}" class="nav-link @yield('staff-password')" class="d-flex align-items-center py-2 px-3 text-dark text-decoration-none hover-bg-light rounded">
                                         <i class="fas fa-cog me-2 text-primary"></i>
-                                        Account Settings
+                                        Password Reset
                                     </a>
                                 </li>
                                 <li class="border-top pt-3">

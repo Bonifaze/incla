@@ -902,7 +902,7 @@ body .ui-tooltip {
 }
 .ui-widget-content {
 	border: 1px solid #dddddd;
-	background: #ffffff;
+	background: #e5e5e5;
 	color: #333333;
 }
 .ui-widget-content a {
@@ -983,17 +983,17 @@ a.ui-button:active,
 	border: 1px solid #003eff;
 	background: #007fff;
 	font-weight: normal;
-	color: #ffffff;
+	color: #e5e5e5;
 }
 .ui-icon-background,
 .ui-state-active .ui-icon-background {
 	border: #003eff;
-	background-color: #ffffff;
+	background-color: #e5e5e5;
 }
 .ui-state-active a,
 .ui-state-active a:link,
 .ui-state-active a:visited {
-	color: #ffffff;
+	color: #e5e5e5;
 	text-decoration: none;
 }
 

@@ -27,7 +27,7 @@
 <!-- End Sidebar links -->
 
 @section('content')
-    <div class="content-wrapper bg-white">
+    <div class="content-wrapper ">
         <!-- Content Header (Page header) -->
 
         <!-- Main content -->

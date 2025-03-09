@@ -271,7 +271,7 @@ temporary rendered events).
 
 .fc-event,
 .fc-event:hover {
-  color: #fff;
+  color: #e5e5e5;
   /* default TEXT color */
   text-decoration: none;
   /* if <a> has an href */
@@ -429,7 +429,7 @@ temporary rendered events).
   height: 6px;
   border-style: solid;
   border-color: inherit;
-  background: #fff;
+  background: #e5e5e5;
   /* vertically center */
   top: 50%;
   margin-top: -4px;
@@ -567,7 +567,7 @@ TODO: more distinction between this file and common.css
 }
 
 .fc-unthemed .fc-popover {
-  background-color: #fff;
+  background-color: #e5e5e5;
 }
 
 .fc-unthemed .fc-divider,
@@ -713,13 +713,13 @@ Lots taken from Flatly (MIT): https://bootswatch.com/4/flatly/bootstrap.css
 
 /* "primary" coloring */
 .fc-button-primary {
-  color: #fff;
+  color: #e5e5e5;
   background-color: #2C3E50;
   border-color: #2C3E50;
 }
 
 .fc-button-primary:hover {
-  color: #fff;
+  color: #e5e5e5;
   background-color: #1e2b37;
   border-color: #1a252f;
 }
@@ -730,14 +730,14 @@ Lots taken from Flatly (MIT): https://bootswatch.com/4/flatly/bootstrap.css
 }
 
 .fc-button-primary:disabled {
-  color: #fff;
+  color: #e5e5e5;
   background-color: #2C3E50;
   border-color: #2C3E50;
 }
 
 .fc-button-primary:not(:disabled):active,
 .fc-button-primary:not(:disabled).fc-button-active {
-  color: #fff;
+  color: #e5e5e5;
   background-color: #1a252f;
   border-color: #151e27;
 }

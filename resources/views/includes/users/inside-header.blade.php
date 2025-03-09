@@ -19,8 +19,8 @@
 	<style>
 #page-title-1 {
 	padding: 1px 0;
-	background-color: #fff;
-	border-bottom-color: #fff;
+	background-color: #e5e5e5;
+	border-bottom-color: #e5e5e5;
 	
 }
 	</style>

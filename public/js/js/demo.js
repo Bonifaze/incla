@@ -10,7 +10,7 @@ const modalShowcase = `
     justify-content: center;
 	padding: 16px 25px;
     background: #161B2C;
-    color: #fff;
+    color: #e5e5e5;
     border-radius: 10px;
     border: 1px solid #ffffff14;
 }

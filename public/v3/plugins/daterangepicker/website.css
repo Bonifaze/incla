@@ -129,12 +129,12 @@ input[type="text"] {
     background: #222;
     margin-top: 80px;
     padding: 10px;
-    color: #fff;
+    color: #e5e5e5;
     text-align: center;
 }
 #footer a:link, #footer a:visited {
-    color: #fff;
-    border-bottom: 1px dotted #fff;
+    color: #e5e5e5;
+    border-bottom: 1px dotted #e5e5e5;
 }
 #jumbo {
     background: #c1deef;

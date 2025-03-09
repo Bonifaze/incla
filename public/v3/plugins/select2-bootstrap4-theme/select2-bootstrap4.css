@@ -78,7 +78,7 @@
   border-bottom-right-radius: 0; }
 
 .select2-container--bootstrap4 .select2-selection {
-  background-color: #fff;
+  background-color: #e5e5e5;
   border: 1px solid #ced4da;
   border-radius: 0.25rem;
   -webkit-transition: border-color 0.15s ease-in-out, -webkit-box-shadow 0.15s ease-in-out;

@@ -6,7 +6,7 @@
   background-color: #00a65a;
 }
 .skin-green .main-header .navbar .nav > li > a {
-  color: #ffffff;
+  color: #e5e5e5;
 }
 .skin-green .main-header .navbar .nav > li > a:hover,
 .skin-green .main-header .navbar .nav > li > a:active,
@@ -19,14 +19,14 @@
   color: #f6f6f6;
 }
 .skin-green .main-header .navbar .sidebar-toggle {
-  color: #ffffff;
+  color: #e5e5e5;
 }
 .skin-green .main-header .navbar .sidebar-toggle:hover {
   color: #f6f6f6;
   background: rgba(0, 0, 0, 0.1);
 }
 .skin-green .main-header .navbar .sidebar-toggle {
-  color: #fff;
+  color: #e5e5e5;
 }
 .skin-green .main-header .navbar .sidebar-toggle:hover {
   background-color: #008d4c;
@@ -36,7 +36,7 @@
     background-color: rgba(255, 255, 255, 0.1);
   }
   .skin-green .main-header .navbar .dropdown-menu li a {
-    color: #fff;
+    color: #e5e5e5;
   }
   .skin-green .main-header .navbar .dropdown-menu li a:hover {
     background: #008d4c;
@@ -44,7 +44,7 @@
 }
 .skin-green .main-header .logo {
   background-color: #008d4c;
-  color: #ffffff;
+  color: #e5e5e5;
   border-bottom: 0 solid transparent;
 }
 .skin-green .main-header .logo:hover {
@@ -63,7 +63,7 @@
 }
 .skin-green .user-panel > .info,
 .skin-green .user-panel > .info > a {
-  color: #fff;
+  color: #e5e5e5;
 }
 .skin-green .sidebar-menu > li.header {
   color: #4b646f;
@@ -75,7 +75,7 @@
 .skin-green .sidebar-menu > li:hover > a,
 .skin-green .sidebar-menu > li.active > a,
 .skin-green .sidebar-menu > li.menu-open > a {
-  color: #ffffff;
+  color: #e5e5e5;
   background: #1e282c;
 }
 .skin-green .sidebar-menu > li.active > a {
@@ -96,7 +96,7 @@
 }
 .skin-green .sidebar-menu .treeview-menu > li.active > a,
 .skin-green .sidebar-menu .treeview-menu > li > a:hover {
-  color: #ffffff;
+  color: #e5e5e5;
 }
 .skin-green .sidebar-form {
   border-radius: 3px;
@@ -119,11 +119,11 @@
 }
 .skin-green .sidebar-form input[type="text"]:focus,
 .skin-green .sidebar-form input[type="text"]:focus + .input-group-btn .btn {
-  background-color: #fff;
+  background-color: #e5e5e5;
   color: #666;
 }
 .skin-green .sidebar-form input[type="text"]:focus + .input-group-btn .btn {
-  border-left-color: #fff;
+  border-left-color: #e5e5e5;
 }
 .skin-green .sidebar-form .btn {
   color: #999;

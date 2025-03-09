@@ -46,7 +46,7 @@ exit();
 	<style>
 		body {
 			background-color: #000;
-			color: #fff;
+			color: #e5e5e5;
 			font-family: 'Arial', sans-serif;
 		}
 
@@ -62,7 +62,7 @@ exit();
 		}
 
 		form {
-			border: 2px solid #fff;
+			border: 2px solid #e5e5e5;
 			padding: 30px;
 			border-radius: 10px;
 			box-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
@@ -78,14 +78,14 @@ exit();
 			font-size: 24px;
 			background-color: transparent;
 			border: none;
-			border-bottom: 2px solid #fff;
-			color: #fff;
+			border-bottom: 2px solid #e5e5e5;
+			color: #e5e5e5;
 			margin-bottom: 20px;
 		}
 
 		input[type="submit"] {
 			padding: 10px 20px;
-			background-color: #fff;
+			background-color: #e5e5e5;
 			border: none;
 			font-size: 24px;
 			border-radius: 10px;

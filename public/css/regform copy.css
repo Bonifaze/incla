@@ -14,7 +14,7 @@
 
   body {
     font-family: "Muli-Regular";
-    color: #fff;
+    color: #e5e5e5;
     font-size: 13px;
     margin: 0; }
 
@@ -58,7 +58,7 @@
       font-family: "Muli-Bold";
       text-align: center;
       margin-bottom: 32px;
-      color: #fff;
+      color: #e5e5e5;
       /* color: #333; */
       letter-spacing: 2px; }
 
@@ -112,7 +112,7 @@
     padding: 0;
     background: #ae3c33;
     font-size: 13px;
-    color: #fff;
+    color: #e5e5e5;
     text-transform: uppercase;
     font-family: "Muli-SemiBold";
     border-radius: 20px;

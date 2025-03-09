@@ -33,7 +33,7 @@
         .login-heading {
             text-align: center;
             margin: 20px;
-            color: #fff;
+            color: #e5e5e5;
             font-size: 2.5em;
             text-transform: uppercase;
             font-weight: 600;

@@ -57,27 +57,27 @@
 }
 .bootstrap-switch .bootstrap-switch-handle-on.bootstrap-switch-primary,
 .bootstrap-switch .bootstrap-switch-handle-off.bootstrap-switch-primary {
-	color: #fff;
+	color: #e5e5e5;
 	background: #337ab7;
 }
 .bootstrap-switch .bootstrap-switch-handle-on.bootstrap-switch-info,
 .bootstrap-switch .bootstrap-switch-handle-off.bootstrap-switch-info {
-	color: #fff;
+	color: #e5e5e5;
 	background: #5bc0de;
 }
 .bootstrap-switch .bootstrap-switch-handle-on.bootstrap-switch-success,
 .bootstrap-switch .bootstrap-switch-handle-off.bootstrap-switch-success {
-	color: #fff;
+	color: #e5e5e5;
 	background: #5cb85c;
 }
 .bootstrap-switch .bootstrap-switch-handle-on.bootstrap-switch-warning,
 .bootstrap-switch .bootstrap-switch-handle-off.bootstrap-switch-warning {
 	background: #f0ad4e;
-	color: #fff;
+	color: #e5e5e5;
 }
 .bootstrap-switch .bootstrap-switch-handle-on.bootstrap-switch-danger,
 .bootstrap-switch .bootstrap-switch-handle-off.bootstrap-switch-danger {
-	color: #fff;
+	color: #e5e5e5;
 	background: #d9534f;
 }
 .bootstrap-switch .bootstrap-switch-handle-on.bootstrap-switch-default,
@@ -88,13 +88,13 @@
 
 .bootstrap-switch .bootstrap-switch-handle-on.bootstrap-switch-themecolor,
 .bootstrap-switch .bootstrap-switch-handle-off.bootstrap-switch-themecolor {
-	color: #FFF;
+	color: #e5e5e5;
 	background: #1ABC9C;
 }
 
 .bootstrap-switch .bootstrap-switch-handle-on.bootstrap-switch-black,
 .bootstrap-switch .bootstrap-switch-handle-off.bootstrap-switch-black {
-	color: #FFF;
+	color: #e5e5e5;
 	background: #000;
 }
 
@@ -110,7 +110,7 @@
 	margin-bottom: -1px;
 	z-index: 100;
 	color: #333333;
-	background: #ffffff;
+	background: #e5e5e5;
 }
 .bootstrap-switch .bootstrap-switch-handle-on {
 	border-bottom-left-radius: 1px;
@@ -274,7 +274,7 @@ input.switch-toggle-round + label:before {
 
 input.switch-toggle-round + label:after {
 	width: 28px;
-	background-color: #FFF;
+	background-color: #e5e5e5;
 	-webkit-border-radius: 100%;
 	-o-border-radius: 100%;
 	border-radius: 100%;
@@ -384,7 +384,7 @@ input.switch-toggle-flat + label:before {
 	left: 2px;
 	bottom: 2px;
 	right: 2px;
-	background-color: #FFF;
+	background-color: #e5e5e5;
 	-webkit-border-radius: 30px;
 	-moz-border-radius: 30px;
 	-ms-border-radius: 30px;

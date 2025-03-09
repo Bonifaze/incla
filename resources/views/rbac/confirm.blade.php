@@ -29,7 +29,7 @@
             </div>
         </div>
 
-        <div class="my-8 space-y-5 border p-4 rounded-lg" style="background-color: #ffffff;">
+        <div class="my-8 space-y-5 border p-4 rounded-lg" style="background-color: #e5e5e5;">
             <h2 class="text-3xl text-center font-semibold text-slate-700 underline">Permission for Result Modification</h2>
             <ul class="text-slate-700" style="list-style-type: disc;">
                 <li>Results will only be modified after appropriate evaluation by the Senate Business Committee (SBC) and due approval by the University Senate. </li>
