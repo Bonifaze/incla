@@ -61,7 +61,9 @@ if(!session('adminId'))
                             <div class="card-header">
 
                                  <h5 class="app-page-title text-uppercase h5 font-weight p-2 mb-2 shadow-sm text-center text">
-                         {{ $session->name }} Academic Session {{ $session->semesterName($semester) }}
+                         {{ $session->name }} Academic Session
+
+                         {{--  {{ $session->semesterName($semester) }}  --}}
                     </h5>
 
                             </div>
@@ -81,7 +83,65 @@ if(!session('adminId'))
                                     @endif
                                     <form method="POST" action="/results/updateICT">
                                         @csrf
-                                        <div class="table-responsive mt-5 mb-4">
+
+
+
+<div class="table-responsive mt-5 mb-4">
+                                            <table class="table table-bordered table-striped table-hover">
+                                                <thead>
+                                                    <tr>
+                                                        <th>S/N</th>
+                                                        <th>Course Title</th>
+                                                        <th>Course Code</th>
+                                                        <th>CA1 Score</th>
+                                                        <th>CA2 Score</th>
+                                                        <th>CA3 Score</th>
+                                                        <th>Exam Score</th>
+                                                        <th>Total Score</th>
+                                                        <th>Grade</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+
+                                                    @foreach ($registered_courses as $student_course)
+                                                    <input type="hidden" name="reg_ids[]" value="{{ $student_course->id }}">
+                                                        <tr>
+                                                            <td>{{ $loop->iteration }}</td>
+                                                            <td>{{ $student_course->course_title }}</td>
+                                                            <td>{{ $student_course->course_code }}</td>
+
+                                                            <td><input type="number" name="ca1_scores[]"
+                                                                    value="{{ $student_course->ca1_score }}"
+                                                                    id="{{ 'ca1' . $student_course->student_id }}"
+                                                                    class="form-control ca"></td>
+                                                            <td><input type="number" name="ca2_scores[]"
+                                                                value="{{ $student_course->ca2_score }}"
+                                                                id="{{ 'ca2' . $student_course->student_id }}"
+                                                                class="form-control ca"></td>
+                                                            <td><input type="number" name="ca3_scores[]"
+                                                                value="{{ $student_course->ca3_score }}"
+                                                                id="{{ 'ca3' . $student_course->student_id }}"
+                                                                class="form-control ca"></td>
+                                                            <td><input type="number" name="exam_scores[]"
+                                                                    value="{{ $student_course->exam_score }}"
+                                                                    id="{{ 'exam' . $student_course->student_id }}"
+                                                                    class="form-control exam"></td>
+                                                            <td><input type="number" name="total_scores[]"
+                                                                    value="{{ $student_course->total }}"
+                                                                    class="form-control" readonly></td>
+                                                            <td>{{ $student_course->grade }}</td>
+                                                             <input type="hidden" name="old_total[]"
+                                                                    value="{{ $student_course->total }}"
+                                                                    id="{{ 'exam' . $student_course->student_id }}"
+                                                                    class="form-control exam">
+                                                        </tr>
+                                                    @endforeach
+                                                </tbody>
+                                            </table>
+                                        </div>
+
+
+                                        {{--  <div class="table-responsive mt-5 mb-4">
                                             <table class="table table-bordered table-striped table-hover">
                                                 <thead>
                                                     <tr>
@@ -138,7 +198,7 @@ if(!session('adminId'))
                                                     @endforeach
                                                 </tbody>
                                             </table>
-                                        </div>
+                                        </div>  --}}
                                         <div class="mb-4">
                                             <button type="submit" name="button" class="btn btn-success">Update Scores</button>
                                         </div>

@@ -82,13 +82,12 @@ class AdminStudentsController extends Controller
         $student->email = $request->email;
         $student->title = $request->title;
         $student->dob = $request->dob;
-        $student->marital_status = $request->marital_status;
+
         $student->nationality = $request->nationality;
         $student->state = $request->state;
         $student->lga_name = $request->lga_name;
-        // $student->city = $request->city;
-        $student->hobbies = $request->hobbies;
-        $student->religion = $request->religion;
+
+
         $student->address = $request->address;
         $student->password = Hash::make('welcome');
         $student->status = 1;
@@ -143,38 +142,32 @@ class AdminStudentsController extends Controller
         $contact->other_names = $request->eother_names;
         $contact->phone = $request->ephone;
         $contact->email = $request->eemail;
-        $contact->title = $request->etitle;
-        $contact->relationship = $request->relationship;
-        $contact->state = $request->estate;
-        $contact->city = $request->ecity;
+
+
+
         $contact->address = $request->eaddress;
 
         // academic information
         $academic = new StudentAcademic();
         $academic->mode_of_entry = $request->mode_of_entry;
         $academic->mode_of_study = $request->mode_of_study;
-        $academic->jamb_no = $request->jamb_no;
-        $academic->jamb_score = $request->jamb_score;
+
         $academic->entry_session_id = $request->entry_session_id;
         $academic->program_id = $request->program_id;
-        $academic->level = $request->level;
+
         // $academic->program_type = $request->program_type;
 
 
         // medical information
         $medical = new StudentMedical();
-        $medical->physical = $request->physical;
+
         $medical->blood_group = $request->blood_group;
         $medical->genotype = $request->genotype;
-        $medical->condition = $request->condition;
-        $medical->allergies = $request->allergies;
 
-        $studentCreditLoad1 = new StudentCreditLoad();
-        $studentCreditLoad1->semester =1;
-        $studentCreditLoad2 = new StudentCreditLoad();
-        $studentCreditLoad2->semester =2;
 
-        $studentDebit = new StudentDebt();
+
+
+
 
         DB::beginTransaction(); //Start transaction!
 
@@ -197,16 +190,9 @@ class AdminStudentsController extends Controller
             $medical->student_id = $student->id;
             $medical->save();
 
-            //save CreditLoad firstsemster
-            $studentCreditLoad1->student_id=$student->id;
-            $studentCreditLoad1->save();
 
-             //save CreditLoad secondsemester
-             $studentCreditLoad2->student_id=$student->id;
-             $studentCreditLoad2->save();
 
-             $studentDebit->student_id=$student->id;
-             $studentDebit->save();
+
 
             // $student->id=$student->studentID($request->only('program_id', 'entry_session_id', 'program_type'));
             $student->username = $student->setVunaMail();

@@ -57,13 +57,10 @@ List Students
                                 <th>Passport</th>
                                 <th>Name</th>
                                 <th>Phone</th>
-                                <th>Usernameame</th>
+
                                 <th>Matric No</th>
                                 <th>Gender</th>
-                                <th>Religion</th>
-                                <th>Parents Name</th>
-                                <th>Parents Email</th>
-                                <th>Parents Phone</th>
+
                                 @can('viewcourseform', 'App\StudentResult')
                                 <th>Registered Courses</th>
                                 @else
@@ -104,15 +101,12 @@ List Students
                                     </td>
                                     <td>{{ $student->full_name }}</td>
                                     <td>{{ $student->phone }}</td>
-                                    <td>{{ $student->username }}</td>
+
                                     @if ($student->academic)
                                     <td>{{ $student->academic->mat_no }}</td>
                                     @endif
                                     <td>{{ $student->gender}}</td>
-                                    <td>{{ $student->religion}}</td>
-                                    <td>{{ $student->contact->surname }} {{ $student->contact->other_names }}</td>
-                                    <td>{{ $student->contact->email }}</td>
-                                    <td>{{ $student->contact->phone }}</td>
+
                                     <td><a class="btn btn-primary" href="{{ route('result.coursesReg_student', $student->id) }}"> Show
                                             Courses</a></td>
                                     @can('view', 'App\Student')

@@ -147,7 +147,7 @@
                                 <canvas id="applicantPieChart" width="400" height="400"></canvas>
                             </div>
                         </div>
-                        
+
                         <!-- Bar Chart for student analytics -->
                         <div class="col-12 col-md-6 col-lg-4">
                             <div class="card shadow border border-success p-3">
@@ -201,7 +201,7 @@
                 responsive: true
             }
         });
-    
+
         // Bar Chart
         var ctxBar = document.getElementById('applicantBarChart').getContext('2d');
         var applicantBarChart = new Chart(ctxBar, {

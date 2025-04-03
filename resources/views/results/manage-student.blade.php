@@ -35,7 +35,7 @@
 
                     <div class="col form-group">
 
-                             <div class="card card-primary">
+                             <div class="card card">
                             <h1
                                 class="app-page-title text-uppercase h5 font-weight-bold p-2 mb-2 shadow-sm text-center text-success border">
                                 Remark Uploadfor {{ $student->full_name }} <span class="text-primary">
@@ -84,7 +84,7 @@
 
 
                     <div class="col form-group">
-                        <div class="card card-primary">
+                        <div class="card ">
                             <h1
                                 class="app-page-title text-uppercase h5 font-weight-bold p-2 mb-2 shadow-sm text-center text-success border">
                                 Result History for {{ $student->full_name }} <span class="text-primary">
@@ -100,7 +100,7 @@
                                 <div class="card-body">
                                     <div class="">
                                         Displays all academic results for this student.
-                                        Only Senate approve result will be shown without GPA and CGPA just Courses and Grade.
+                                         approve result will be shown without GPA and CGPA just Courses and Grade.
             <br>
 
                                     </div>
@@ -109,9 +109,9 @@
                                 <!-- /.card-body -->
 
                                 <div class="card-footer">
-                                    <a class="btn btn-info"
+                                    {{--  <a class="btn btn-info"
                                         href="{{ route('result.student.history', base64_encode($student->id)) }}"
-                                        target="_blank"> <i class="fa fa-eye"></i> Result History</a>
+                                        target="_blank"> <i class="fa fa-eye"></i> Result History</a>  --}}
 
                                           @can('transcript', 'App\Student')
                              <a class="btn btn-primary float-right" href="{{ route('student.transcript',base64_encode($student->id)) }}" target="_blank"> <i class="fa fa-eye"></i> Transcript</a>
@@ -194,7 +194,7 @@
                 @can('ICTOfficers', 'App\StudentResult')
 
 
-                        <di class="card card-primary">
+                        <di class="card">
                             <h1
                                 class="app-page-title text-uppercase h5 font-weight-bold p-2 mb-2 shadow-sm text-center text-success border">
                                 Result Upload for {{ $student->full_name }} <span class="text-primary"> {{ $academic->mat_no }}
@@ -217,7 +217,7 @@
                                             <span class="text-danger"> {{ $errors->first('session_id') }}</span>
                                         </div>
 
-                                        <div class="col-md-4 form-group">
+                                        {{--  <div class="col-md-4 form-group">
                                             <label for="semester">Semester :</label>
                                             {{ Form::select(
                                                 'semester',
@@ -229,28 +229,9 @@
                                                 ['class' => 'form-control select2'],
                                             ) }}
                                             <span class="text-danger"> {{ $errors->first('semester') }}</span>
-                                        </div>
+                                        </div>  --}}
 
-                                        <div class="col-md-4 form-group">
-                                            <label for="level">Level :</label>
-                                            {{ Form::select(
-                                                'level',
-                                                [
-                                                    '100' => '100 Level',
-                                                    '200' => '200 Level',
-                                                    '300' => '300 Level',
-                                                    '400' => '400 Level',
-                                                    '500' => '500 Level',
-                                                    '600' => '600 Level',
-                                                    '700' => 'PGD',
-                                                    '800' => 'MSc',
-                                                    '900' => 'PhD',
-                                                ],
-                                                100,
-                                                ['class' => 'form-control select2'],
-                                            ) }}
-                                            <span class="text-danger"> {{ $errors->first('level') }}</span>
-                                        </div>
+
 
                                     </div>
 
@@ -284,7 +265,7 @@
 
 
                 @can('register', 'App\StudentResult')
-                    <div class="card card-primary">
+                    <div class="card card">
                         <h1
                             class="app-page-title text-uppercase h5 font-weight-bold p-2 mb-2 shadow-sm text-center text-success border">
                             Course Registration for {{ $student->full_name }} <span class="text-primary">
@@ -306,7 +287,7 @@
                                             <span class="text-danger"> {{ $errors->first('session_id') }}</span>
                                         </div>
 
-                                        <div class="col-md-4 form-group">
+                                        {{--  <div class="col-md-4 form-group">
                                             <label for="semester">Semester :</label>
                                             {{ Form::select(
                                                 'semester',
@@ -318,9 +299,9 @@
                                                 ['class' => 'form-control select2'],
                                             ) }}
                                             <span class="text-danger"> {{ $errors->first('semester') }}</span>
-                                        </div>
+                                        </div>  --}}
 
-                                        <div class="col-md-4 form-group">
+                                        {{--  <div class="col-md-4 form-group">
                                             <label for="level">Level :</label>
                                             {{ Form::select(
                                                 'level',
@@ -339,7 +320,7 @@
                                                 ['class' => 'form-control select2'],
                                             ) }}
                                             <span class="text-danger"> {{ $errors->first('level') }}</span>
-                                        </div>
+                                        </div>  --}}
 
                                     </div>
 
@@ -367,74 +348,7 @@
                 @endcan
 
 
-{{--  //CLEARANCE  --}}
-                @can('register', 'App\StudentResult')
-                    <div class="card card-primary">
-                        <h1
-                            class="app-page-title text-uppercase h5 font-weight-bold p-2 mb-2 shadow-sm text-center text-success border">
-                           Clearance form {{ $student->full_name }} <span class="text-primary">
-                                {{ $academic->mat_no }} </span>
-                        </h1>
 
-                        <div class="table-responsive">
-
-                            <!-- form start -->
-
-                            {!! Form::open(['route' => 'pclearance.form', 'method' => 'POST', 'class' => 'nobottommargin']) !!}
-                            <div class="card-body">
-                                <div class="box-body">
-
-                                    <div class="row">
-                                    <div class="col-2"></div>
-                                        <div class="col-md-4 form-group">
-                                            <label for="session_id">Session :</label>
-                                            {{ Form::select('session_id', $sessions, null, ['class' => 'form-control', 'id' => 'session_id', 'name' => 'session_id']) }}
-                                            <span class="text-danger"> {{ $errors->first('session_id') }}</span>
-                                        </div>
-
-                                        <div class="col-md-4 form-group">
-                                            <label for="semester">Semester :</label>
-                                            {{ Form::select(
-                                                'semester',
-                                                [
-                                                    '1' => 'First Semester',
-                                                    '2' => 'Second Semester',
-                                                ],
-                                                1,
-                                                ['class' => 'form-control select2'],
-                                            ) }}
-                                            <span class="text-danger"> {{ $errors->first('semester') }}</span>
-                                        </div>
-
-
-
-                                    </div>
-                                    <div class="col-2"></div>
-
-                                    {{ Form::hidden('student_id', $student->id) }}
-
-                                </div>
-                            </div>
-
-
-                            <!-- /.card-body -->
-
-                            <div class="card-footer">
-
-                                {{ Form::submit('Select', ['class' => 'btn btn-primary']) }}
-                            </div>
-
-                        </div>
-                        <!-- /.box-body -->
-
-
-                        {!! Form::close() !!}
-
-                    </div>
-                @else
-                @endcan
-
-{{--  //CLEARANCE END  --}}
 
 
 

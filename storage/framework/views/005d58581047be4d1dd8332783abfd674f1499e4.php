@@ -13,14 +13,11 @@
 
 <?php $__env->startSection('staff'); ?>
     active
-
-
 <?php $__env->stopSection(); ?>
 
 <!-- Page -->
 <?php $__env->startSection('staff-home'); ?>
     active
-
 <?php $__env->stopSection(); ?>
 
 <!-- End Sidebar links -->
@@ -28,14 +25,15 @@
 
 
 <?php $__env->startSection('content'); ?>
-    <div class="content-wrapper bg-white">
+    <div class="content-wrapper ">
 
         <!-- Main content -->
         <section class="content">
             <div class="container-fluid">
                 <!-- left column -->
                 <div class="col_full">
-                    <h1 class="app-page-title text-uppercase h5 font-weight-bold p-2 mb-2 shadow-sm text-center text-success border">
+                    <h1
+                        class="app-page-title text-uppercase h5 font-weight-bold p-2 mb-2 shadow-sm text-center text-success border ">
                         Staff Home
                     </h1>
                     <?php echo $__env->make('partialsv3.flash', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
@@ -134,11 +132,42 @@
 
                         <!-- Widgets End -->
                     </div>
- <canvas id="applicantChart" width="400" height="400"></canvas>
+
+
+
+                    <div class="row justify-content-center">
+                        <!-- Pie Chart for Approved Applicants Analytics -->
+                        <div class="col-12 col-md-6 col-lg-4">
+                            <div class="card shadow border border-success p-3">
+                                <h5 class="card-title text-center mb-4">Applicant Analytics (Pie Chart)</h5>
+                                <canvas id="applicantPieChart" width="400" height="400"></canvas>
+                            </div>
+                        </div>
+
+                        <!-- Bar Chart for student analytics -->
+                        <div class="col-12 col-md-6 col-lg-4">
+                            <div class="card shadow border border-success p-3">
+                                <h5 class="card-title text-center mb-4">Applicant Analytics (Bar Chart)</h5>
+                                <canvas id="applicantBarChart" width="400" height="400"></canvas>
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
+        </section>
+
+    </div>
+<?php $__env->stopSection(); ?>
+
+<?php $__env->startSection('pagescript'); ?>
+    
+
 
     <script>
-        var ctx = document.getElementById('applicantChart').getContext('2d');
-        var applicantChart = new Chart(ctx, {
+        // Pie Chart
+        var ctxPie = document.getElementById('applicantPieChart').getContext('2d');
+        var applicantPieChart = new Chart(ctxPie, {
             type: 'pie',
             data: {
                 labels: ['Certificate', 'Licentiate', 'Diploma'],
@@ -152,17 +181,49 @@
                 responsive: true
             }
         });
+
+        // Bar Chart
+        var ctxBar = document.getElementById('applicantBarChart').getContext('2d');
+        var applicantBarChart = new Chart(ctxBar, {
+            type: 'bar',
+            data: {
+                labels: ['Certificate', 'Licentiate', 'Diploma'], // X-axis labels
+                datasets: [{
+                    data: [<?php echo e($certificateCount); ?>, <?php echo e($licentiateCount); ?>, <?php echo e($diplomaCount); ?>],
+                    backgroundColor: ['#ff6384', '#36a2eb', '#ffcd56'],
+                    borderColor: ['#ff4569', '#1e90ff', '#ffb200'],
+                    borderWidth: 1,
+                    hoverBackgroundColor: ['#ff4569', '#1e90ff', '#ffb200'],
+                    label: 'Applicant Categories'
+                }]
+            },
+            options: {
+                responsive: true,
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                },
+                plugins: {
+                    legend: {
+                        labels: {
+                            // Legend will show x-axis labels (Certificate, Licentiate, Diploma)
+                            generateLabels: function(chart) {
+                                return chart.data.labels.map(function(label, index) {
+                                    return {
+                                        text: label, // Label text for the legend
+                                        fillStyle: chart.data.datasets[0].backgroundColor[index], // Color for the label
+                                        strokeStyle: chart.data.datasets[0].borderColor[index], // Border color for the label
+                                        lineWidth: 1
+                                    };
+                                });
+                            }
+                        }
+                    }
+                }
+            }
+        });
     </script>
-                    
-                </div>
-            </div>
-        </section>
-
-    </div>
-<?php $__env->stopSection(); ?>
-
-<?php $__env->startSection('pagescript'); ?>
-    
 
     <script src="<?php echo asset('dist/js/bootbox.min.js'); ?>"></script>
 
@@ -197,8 +258,6 @@
             }
         }, 1000);
     </script>
-
-
 <?php $__env->stopSection(); ?>
 
 <?php echo $__env->make('layouts.mini', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH /Users/lifeofrence/Downloads/inclaproject/incla/resources/views/staff/home.blade.php ENDPATH**/ ?>

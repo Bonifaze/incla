@@ -25,7 +25,7 @@ active
 
 
 <?php $__env->startSection('content'); ?>
-<div class="content-wrapper bg-white">
+<div class="content-wrapper ">
 
     <!-- Main content -->
     <section class="content">

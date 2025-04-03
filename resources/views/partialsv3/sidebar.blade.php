@@ -317,7 +317,12 @@
                             <p>Search</p>
                         </a>
                     </li>
-
+                     <li class="nav-item">
+                        <a href="{{ route('student.create') }}" class="nav-link @yield('departments')">
+                            <i class="fas fa-list-alt nav-icon"></i>
+                            <p>Create</p>
+                        </a>
+                    </li>
 
                     <li class="nav-item has-treeview @yield('exam-officers-open')">
                         <a href="#" class="nav-link @yield('results')">

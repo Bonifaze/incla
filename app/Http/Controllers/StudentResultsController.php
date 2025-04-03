@@ -20,6 +20,9 @@ use App\Models\SemesterRemarkCourses;
 use Illuminate\Database\QueryException;
 use Illuminate\Support\Facades\Redirect;
 use App\Exports\AcademicDepartmentsExport;
+use Illuminate\Contracts\View\View;
+use Illuminate\Contracts\View\Factory;
+
 
 class StudentResultsController extends Controller
 {
@@ -67,24 +70,30 @@ class StudentResultsController extends Controller
         }
     } // end find
 
-    public function modifyResult(Request $request)
-    {
-        $student = Student::findOrFail($request->student_id);
-        $this->authorize('ictUpload', StudentResult::class);
-        $session = Session::findOrFail($request->session_id);
-        $semester = $request->semester;
-        $request->validate([
-            'session_id' => 'required',
-            'semester' => 'required',
-            'level' => 'required',
-        ]);
+    public function modifyResult(Request $request): Factory|View
+{
+    //dd($request);
+    $student = Student::findOrFail($request->student_id);
+    $this->authorize('ictUpload', StudentResult::class);
+    $session = Session::findOrFail($request->session_id);
+    // $semester = $request->semester;
+    $semester =1;
+      //  dd($semester);
 
-        $registered_courses = RegisteredCourse::where('student_id', $request->student_id)
-            ->where('session', $request->session_id)
-            ->where('semester', $request->semester)
-            ->get();
-        return view('results.modify', compact('registered_courses', 'session', 'semester', 'student'));
-    }
+    $request->validate([
+        'session_id' => 'required',
+        //'semester' => 'required',
+    ]);
+
+    $registered_courses = RegisteredCourse::where('student_id', $request->student_id)
+        ->where('session', $request->session_id)
+        // ->where('semester', $request->semester)
+        ->where('semester', $semester)
+        ->get();
+
+    return view('results.modify', compact('registered_courses', 'session', 'semester', 'student'));
+}
+
 
     public function updateResult(Request $request)
     {
@@ -180,6 +189,7 @@ class StudentResultsController extends Controller
 
     public function updateResultICT(Request $request)
     {
+       // dd($request);
 
         $staff = Auth::guard('staff')->user();
         $reg_ids = $request->reg_ids;
@@ -188,15 +198,15 @@ class StudentResultsController extends Controller
         $ca2_scores = $request->ca2_scores;
         $ca3_scores = $request->ca3_scores;
         $exam_scores = $request->exam_scores;
-        $total = $request->total;
+       // $total = $request->total;
         $old_total = $request->old_total;
         // dd($request->oldtotal);
 
         $registered_courses = RegisteredCourse::whereIn('id', $reg_ids)->get();
 
         for ($i = 0; $i < count($reg_ids); $i++) {
-            // $total_score = $ca1_scores[$i] + $ca2_scores[$i] + $ca3_scores[$i] + $exam_scores[$i];
-            $total_score = $total[$i];
+            $total_score = $ca1_scores[$i] + $ca2_scores[$i] + $ca3_scores[$i] + $exam_scores[$i];
+            //$total_score = $total[$i];
             $old_total_score = $old_total[$i];
             $course_reg = $registered_courses->where('id', $reg_ids[$i])->first();
             $course = Course::find($course_reg->course_id);
@@ -252,10 +262,10 @@ class StudentResultsController extends Controller
             //     ]);
             // }
             $registeredCourse = RegisteredCourse::findOrFail($reg_ids[$i]);
-            // $registeredCourse-> ca1_score = $ca1_scores[$i];
-            // $registeredCourse->ca2_score = $ca2_scores[$i];
-            // $registeredCourse->ca3_score = $ca3_scores[$i];
-            // $registeredCourse->exam_score = $exam_scores[$i];
+            $registeredCourse-> ca1_score = $ca1_scores[$i];
+            $registeredCourse->ca2_score = $ca2_scores[$i];
+            $registeredCourse->ca3_score = $ca3_scores[$i];
+            $registeredCourse->exam_score = $exam_scores[$i];
             $registeredCourse->total = $total_score;
            $registeredCourse->old_total = $old_total_score;
             $registeredCourse->grade_id = $grade_id;
@@ -389,15 +399,15 @@ class StudentResultsController extends Controller
     public function programSearchStudent()
     {
         $this->authorize('examOfficer', StudentResult::class);
-        $staff = Auth::guard('staff')->user();
-        if ($staff->isAcademic()) {
-            $programs = $staff->workProfile->admin->academic->programs->pluck('name', 'id');
+        // $staff = Auth::guard('staff')->user();
+        // if ($staff->isAcademic()) {
+            $programs = Program::pluck('name', 'id');
             $sessions = Session::where('status', 0)->orderBy('id', 'DESC')->pluck('name', 'id');
             return view('results.program-search-student', compact('programs','sessions'));
-        } else {
-            return redirect()->route('staff.home')
-                ->with('error', 'Academic Department not found');
-        }
+        // } else {
+            // return redirect()->route('staff.home')
+                // ->with('error', 'Academic Department not found');
+        // }
     }
 
 

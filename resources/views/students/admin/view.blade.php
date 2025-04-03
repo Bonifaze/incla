@@ -142,6 +142,10 @@
                                         </div>
                                         <!-- Personal Info -->
                                         <div class="info-section">
+                                              <div class="info-item py-3">
+                                                <div class="info-label"><strong>Title</strong></div>
+                                                <div class="info-data">{{ $student->title }}</div>
+                                            </div>
                                             <div class="info-item py-3">
                                                 <div class="info-label"><strong>Surname</strong></div>
                                                 <div class="info-data">{{ $student->surname }}</div>
@@ -191,6 +195,10 @@
                                                 <div class="info-label"><strong>Address</strong></div>
                                                 <div class="info-data">{{ $student->address }}</div>
                                             </div>
+                                              <div class="info-item py-3">
+                                                <div class="info-label"><strong>Nationality</strong></div>
+                                                <div class="info-data">{{ $student->nationality }}</div>
+                                            </div>
                                             <div class="info-item py-3">
                                                 <div class="info-label"><strong>State of Origin</strong></div>
                                                 <div class="info-data">{{ $student->state }}</div>
@@ -223,10 +231,7 @@
                                     </div>
                                     <div class="app-card-body p-4">
                                         <div class="info-section">
-                                            <div class="info-item py-3">
-                                                <div class="info-label"><strong>Title</strong></div>
-                                                <div class="info-data">{{ $contact->title }}</div>
-                                            </div>
+
                                             <div class="info-item py-3">
                                                 <div class="info-label"><strong>Surname</strong></div>
                                                 <div class="info-data">{{ $contact->surname }}</div>
@@ -242,6 +247,10 @@
                                             <div class="info-item py-3">
                                                 <div class="info-label"><strong>Phone</strong></div>
                                                 <div class="info-data">{{ $contact->phone }}</div>
+                                            </div>
+                                              <div class="info-item py-3">
+                                                <div class="info-label"><strong>Address</strong></div>
+                                                <div class="info-data">{{ $contact->address }}</div>
                                             </div>
                                         </div>
                                     </div>
