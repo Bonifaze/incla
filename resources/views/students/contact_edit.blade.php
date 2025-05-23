@@ -15,7 +15,7 @@
 
 <!-- Page -->
  @section('evaluation') active @endsection
- 
+
  <!-- End Sidebar links -->
 
 
@@ -24,7 +24,7 @@
 
 <div class="content-wrapper">
     <!-- Content Header (Page header) -->
-    
+
     <!-- Main content -->
     <section class="content">
       <div class="container-fluid">
@@ -34,7 +34,7 @@
             {!! Form::open(['method' => 'Post', 'route' => 'student.contact-update']) !!}
 
 
-            <div class="card card-primary">
+            <div class="card ">
               <div class="card-header">
                 <h3 class="card-title"> </h3>
 				</div>
@@ -43,7 +43,7 @@
                 <div class="card-body">
 
                     <div class="box-body">
-            
+
              @include('partialsv3.flash')
 
                             <div class="row form-group">

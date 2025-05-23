@@ -26,7 +26,7 @@
 
 
 
-            <div class="card card-primary">
+            <div class="card ">
               <div class="card-header">
                 <h3 class="card-title"> {{ $student->full_name }} <br /> {{$session->name}} - {{ $session->semesterName($semester)}} Result Upload </h3>
 				</div>

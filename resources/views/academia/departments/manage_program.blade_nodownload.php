@@ -9,26 +9,26 @@
 
 <div class="content-wrapper">
     <!-- Content Header (Page header) -->
-    
+
     <!-- Main content -->
     <section class="content">
       <div class="container-fluid">
         <!-- left column -->
         <div class="col_full">
-         
+
              @include('partialsv3.flash')
-            
-            <div class="card card-primary">
+
+            <div class="card ">
               <div class="card-header">
                 <h3 class="card-title">{{ $program->name }} </h3>
 
 				</div>
-            
+
              <div class="table-responsive card-body">
-  
+
 						<table class="table table-striped">
 						  <thead>
-							
+
 							  <th>Level</th>
                               <th>100L</th>
 							 <th>200L</th>
@@ -40,14 +40,14 @@
                               <th>PhD</th>
 
 
-							  
-							   
-							
+
+
+
 						  </thead>
-						  
-						  
+
+
 						  <tbody>
-						  
+
 						 <tr>
                              <td> Students</td>
                              <td><a class="btn btn-outline-info" href="{{ route('academia.department.program_level_students',[$program->id,100]) }}">  List ({{ $program->registeredStudentsCount(100) }})</a></td>
@@ -73,22 +73,22 @@
 
 
 
-							
+
 						  </tbody>
-						  
-						  
-						  
+
+
+
 						</table>
 
-						
+
             </div>
-            
+
           </div>
           <!-- /.box -->
 
         </div>
         <!--/.col (left) -->
-        
+
       </div>
       <!-- /.row -->
     </section>

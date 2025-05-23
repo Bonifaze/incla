@@ -13,7 +13,7 @@
 
 <!-- Page -->
  @section('remita-search') active @endsection
- 
+
  <!-- End Sidebar links -->
 
 
@@ -22,7 +22,7 @@
 
 <div class="content-wrapper">
     <!-- Content Header (Page header) -->
-    
+
     <!-- Main content -->
     <section class="content">
       <div class="container-fluid">
@@ -85,7 +85,7 @@
 
                 {!! Form::close() !!}
             </div>
-            <div class="card card-primary">
+            <div class="card ">
               <div class="card-header">
                 <h3 class="card-title"> Search RRR </h3>
 				</div>
@@ -113,7 +113,7 @@
             {!! Form::close() !!}
             </div>
 
-            <div class="card card-primary">
+            <div class="card ">
                 <div class="card-header">
                     <h3 class="card-title"> Search Student </h3>
                 </div>
@@ -152,7 +152,7 @@
 
         </div>
         <!--/.col (left) -->
-        
+
     </section>
     <!-- /.content -->
   </div>

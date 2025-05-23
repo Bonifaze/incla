@@ -4,7 +4,7 @@
 
 @section('pagetitle') List of Students  @endsection
 
-@section('css') 
+@section('css')
 <!-- Ekko Lightbox -->
   <link rel="stylesheet" href="{{asset('v3/plugins/ekko-lightbox/ekko-lightbox.css')}}">
 @endsection
@@ -19,7 +19,7 @@
 
 <!-- Page -->
  @section('bursary-search') active @endsection
- 
+
  <!-- End Sidebar links -->
 
 
@@ -28,26 +28,26 @@
 
 <div class="content-wrapper">
     <!-- Content Header (Page header) -->
-    
+
     <!-- Main content -->
     <section class="content">
       <div class="container-fluid">
         <!-- left column -->
         <div class="col_full">
-         
-            
-            <div class="card card-primary">
+
+
+            <div class="card ">
               <div class="card-header">
                 <h3 class="card-title">List of Students</h3>
 				</div>
-            
+
              <div class="table-responsive card-body">
-             
+
              @include('partialsv3.flash')
-  
+
 						<table class="table table-striped">
 						  <thead>
-							
+
 							  <th>#</th>
 							  <th>Name</th>
 							  <th>Phone</th>
@@ -57,8 +57,8 @@
 							   <th>Debt</th>
 
 						  </thead>
-						  
-						  
+
+
 						  <tbody>
 						    @foreach ($students as $key => $student)
 							<tr>
@@ -76,25 +76,25 @@
 
 
 							</tr>
-							
 
-							@endforeach	
-							
+
+							@endforeach
+
 						  </tbody>
-						  
-						  
-						  
+
+
+
 						</table>
-						
-						
+
+
             </div>
-            
+
           </div>
           <!-- /.box -->
 
         </div>
         <!--/.col (left) -->
-        
+
       </div>
       <!-- /.row -->
     </section>
@@ -107,8 +107,8 @@
 <script src="{{asset('js/bootbox.min.js')}}"></script>
 
  <script>
- 
-        
+
+
 
         	function confirm(id)
         	{
@@ -128,7 +128,7 @@
                         }
                 },
                 callback: function (result) {}
-                
+
             });
             // e.preventDefault(); // avoid to execute the actual submit of the form if onsubmit is used.
         }

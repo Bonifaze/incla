@@ -92,7 +92,7 @@
 
             <!-- form start -->
 
-            <div class="card card-primary">
+            <div class="card ">
                 <div class="card-header">
                     <h3 class="card-title">Add Remark Courses for {{$student->fullName}}</h3>
                 </div>

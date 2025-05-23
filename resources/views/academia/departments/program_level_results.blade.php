@@ -4,14 +4,14 @@
 @section('content')
 
 
-            <div class="card card-primary">
+            <div class="card ">
               <div class="card-header">
                 <h3 class="card-title">{{ $level }} Level1 Students </h3>
 
 				</div>
 
              <div class="table-responsive card-body">
-  
+
 						<table class="table table-striped">
 						  <thead>
                           <th>S/N</th>
@@ -25,7 +25,7 @@
                           <th>Remark</th>
 						  </thead>
 
-						  
+
 						  <tbody>
                           @foreach($students as $key => $student)
                               @php $gpa = $student->unApprovedGPA() @endphp
@@ -42,14 +42,14 @@
                               </tr>
                           @endforeach
 						  </tbody>
-						  
-						  
-						  
+
+
+
 						</table>
 
-						
+
             </div>
-            
+
           </div>
           <!-- /.box -->
 

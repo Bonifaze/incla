@@ -129,7 +129,7 @@
 
                     <!-- /.start third column -->
                     {{--  <div class="col-md-4 form-group">
-                        <div class="card card-primary">
+                        <div class="card ">
                             <div class="card-header">
                                 <h3 class="card-title"> Brought Forward CGPA </h3>
                             </div>

@@ -16,7 +16,7 @@
 
 <!-- Page -->
  @section('soteria-create') active @endsection
- 
+
  <!-- End Sidebar links -->
 
 
@@ -27,30 +27,30 @@
 
 <div class="content-wrapper">
     <!-- Content Header (Page header) -->
-    
+
 
     <!-- Main content -->
     <section class="content">
       <div class="container-fluid">
         <!-- left column -->
         <div class="col_full">
-          
-            
+
+
             <!-- form start -->
-            
-            <div class="card card-primary">
+
+            <div class="card ">
               <div class="card-header">
                 <h3 class="card-title">Create New Official System </h3>
               </div>
               <!-- /.card-header -->
               <!-- form start -->
             @include('partialsv3.flash')
-           
+
 						{!! Form::open(array('route' => 'soteria.official.store', 'method'=>'POST', 'class' => 'nobottommargin')) !!}
  			<div class="card-body">
-                
+
               <div class="box-body">
-              			
+
               			<div class="row">
 							<div class="col-md-4 form-group">
 								<label for="device_name">Device Name :</label>
@@ -160,25 +160,25 @@
                <!-- /.card-body -->
 
                 <div class="card-footer">
-                  
-							
+
+
 							{{ Form::submit('Create System', array('class' => 'btn btn-primary')) }}
-							
-						
+
+
                 </div>
               <!-- /.box-body -->
 
-             
+
             {!! Form::close() !!}
-            
-            
-            
+
+
+
           </div>
           <!-- /.box -->
 
         </div>
         <!--/.col (left) -->
-        
+
       </div>
       <!-- /.row -->
     </section>

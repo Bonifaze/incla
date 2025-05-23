@@ -42,72 +42,68 @@ class ApplicantController extends Controller
     //Mail base URL
     public function getBaseurl()
     {
-        return 'https://';
+        return 'https://portal.incla.edu.ng';
     }
 
     // Registeration Fuction
     public function register(Request $req)
     {
-        //dd($req);
-        //Comfirm password verification
-        if ($req->password == $req->password_confirmation) {
-            $jsonstring = "";
-            //db::beginTransaction is use if your going to be insert and updating into tables
-            DB::beginTransaction();
-            //try and catch to get the errors
-            try {
-                $idcard = DB::table('users')->insertGetId([
-
-                    'surname' => $req->surname,
-                    'first_name' => $req->first_name,
-                    'middle_name' => $req->middle_name,
-                    'phone' => $req->phone,
-                    'email' => $req->email,
-                    'Nationality' => $req->country,
-                    'session_id' => $this->getCurrentAdmissionSession(),
-                    //Hash::make to encrpty or hash the password
-                    'password' => Hash::make($req->password),
-
-                ]);
-
-                //$fullName = $req->first_name." ".$req->surname;
-                //Data That will be deisplayed at the email address portal
-                $mailData = [
-                    'title' => 'Welcome to Institute of Consecrated Life in Africa (InCLA)',
-                    'msg' => 'Thank you for Registering , please click on the button below to activate your account',
-                    'url' => $this->getBaseUrl() . '/confirmation/?applicant=' . base64_encode($idcard),
-                    // 'url' => $this->getBaseUrl().'/='.base64_encode($req->idcard),
-                    //  'surname'=>$req->surname
-                    'surname' => $req->first_name . " " . $req->middile_name . " " . $req->surname,
-                ];
-
-                DB::table('password_resets')->insert([
-                    'email' => $req->email,
-                    'token' => 'welcome',
-                ]);
-                //To send the mail to uour email
-                Mail::to($req->email)->send(new Confirmsignup($mailData));
-                DB::commit();
-
-                $signUpMsg = '<div class="alert alert-success alert-dismissible text-lg"><button type="button" class="close" data-dismiss="alert">&times;</button><strong>Success!</strong> ' . $req->first_name . ' Your Registration was successful, please follow the instruction sent to your mail ' . $req->email . ' to complete the process</div>';
-                return redirect('/register')->with('signUpMsg', $signUpMsg);
-            } catch (QueryException $e) {
-                DB::rollBack();
-                $error_code = $e->errorInfo[1];
-                if ($error_code == 1062) {
-                    $signUpMsg = '<div class="alert alert-danger alert-dismissible"><button type="button" class="close" data-dismiss="alert">&times;</button><strong>Error!</strong> You have registered before</div>';
-                    return redirect('/register')->with('signUpMsg', $signUpMsg);
-                } else {
-                    // $signUpMsg =$e->getMessage();
-                    $signUpMsg = '<div class="alert alert-danger alert-dismissible"><button type="button" class="close" data-dismiss="alert">&times;</button><strong>Error!</strong> Your registration was not successful, please try again later or Veritas Univeristy help line</div>';
-                    return redirect('/register')->with('signUpMsg', $signUpMsg);
-                }
+        $req->validate([
+            'surname' => 'required|string|max:255',
+            'first_name' => 'required|string|max:255',
+            'middle_name' => 'nullable|string|max:255',
+            'phone' => 'required|string|max:20',
+            'email' => 'required|email|unique:users,email',
+            'country' => 'required|string',
+            'password' => 'required|confirmed|min:6', // This handles matching
+        ]);
+    
+        DB::beginTransaction();
+    
+        try {
+            $idcard = DB::table('users')->insertGetId([
+                'surname' => $req->surname,
+                'first_name' => $req->first_name,
+                'middle_name' => $req->middle_name,
+                'phone' => $req->phone,
+                'email' => $req->email,
+                'Nationality' => $req->country,
+                'session_id' => $this->getCurrentAdmissionSession(),
+                'password' => Hash::make($req->password),
+            ]);
+    
+            $mailData = [
+                'title' => 'Welcome to Institute of Consecrated Life in Africa (InCLA)',
+                'msg' => 'Thank you for Registering, please click the button below to activate your account',
+                'url' => $this->getBaseUrl() . '/confirmation/?applicant=' . base64_encode($idcard),
+                'surname' => $req->first_name . " " . $req->middle_name . " " . $req->surname,
+            ];
+    
+            DB::table('password_resets')->insert([
+                'email' => $req->email,
+                'token' => 'welcome',
+            ]);
+    
+            Mail::to($req->email)->send(new Confirmsignup($mailData));
+    
+            DB::commit();
+    
+            $signUpMsg = '<div class="alert alert-success alert-dismissible text-lg"><button type="button" class="close" data-dismiss="alert">&times;</button><strong>Success!</strong> ' . $req->first_name . ' Your registration was successful. Please follow the instruction sent to ' . $req->email . ' to complete the process</div>';
+    
+            return redirect('/register')->with('signUpMsg', $signUpMsg);
+    
+        } catch (QueryException $e) {
+            DB::rollBack();
+            $error_code = $e->errorInfo[1];
+            if ($error_code == 1062) {
+                $signUpMsg = '<div class="alert alert-danger alert-dismissible"><button type="button" class="close" data-dismiss="alert">&times;</button><strong>Error!</strong> You have registered before</div>';
+            } else {
+                $signUpMsg = '<div class="alert alert-danger alert-dismissible"><button type="button" class="close" data-dismiss="alert">&times;</button><strong>Error!</strong> Your registration was not successful. Please try again later or contact InCLA University help line</div>';
             }
-        } else {
-            $signUpMsg = '<div class="alert alert-danger alert-dismissible"><button type="button" class="close" data-dismiss="alert">&times;</button><strong>Error!</strong> Password mismatched</div>';
             return redirect('/register')->with('signUpMsg', $signUpMsg);
         }
     }
+    
     //Function for verifying the sent email
     public function cofirmation(Request $req)
     {

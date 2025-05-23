@@ -41,7 +41,7 @@
 
             <!-- form start -->
 
-            <div class="card card-primary">
+            <div class="card ">
               {{--  <div class="card-header">
                 <h3 class="card-title">Create User Permission</h3>
               </div>  --}}

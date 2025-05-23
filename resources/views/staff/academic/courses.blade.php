@@ -15,7 +15,7 @@
 
 <!-- Page -->
  @section('staff-courses') active @endsection
- 
+
  <!-- End Sidebar links -->
 
 
@@ -25,26 +25,26 @@
 
 <div class="content-wrapper">
     <!-- Content Header (Page header) -->
-    
+
     <!-- Main content -->
     <section class="content">
       <div class="container-fluid">
         <!-- left column -->
         <div class="col_full">
-         
-            
-            <div class="card card-primary">
+
+
+            <div class="card ">
               <div class="card-header">
                 <h3 class="card-title">List of Courses</h3>
 				</div>
-            
+
             @include('partialsv3.flash')
-            
+
              <div class="table-responsive card-body">
-  
+
 						<table class="table table-striped">
 						  <thead>
-							
+
 							  <th>Id</th>
 							  <th>Course Code</th>
 							  <th>Course Title</th>
@@ -54,16 +54,16 @@
 							  <th>Students</th>
 							  <th>Result</th>
                               <th>Status</th>
-							  
-							   
-							
+
+
+
 						  </thead>
-						  
-						  
+
+
 						  <tbody>
-						  
+
 						  @foreach ($pcourses as $key => $pcourse)
-						  
+
 							<tr>
 							  <td>{{ $loop->iteration }}</td>
 							  <td>{{ $pcourse->course->code }}</td>
@@ -101,25 +101,25 @@
 								@endif
 
 							</tr>
-							
-							@endforeach	
-							
+
+							@endforeach
+
 						  </tbody>
-						  
-						  
-						  
+
+
+
 						</table>
 						 {!! $pcourses->render() !!}
-						 
-						
+
+
             </div>
-            
+
           </div>
           <!-- /.box -->
 
         </div>
         <!--/.col (left) -->
-        
+
       </div>
       <!-- /.row -->
     </section>

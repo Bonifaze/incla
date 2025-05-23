@@ -16,7 +16,7 @@
 
 <!-- Page -->
  @section('soteria-add') active @endsection
- 
+
  <!-- End Sidebar links -->
 
 
@@ -27,30 +27,30 @@
 
 <div class="content-wrapper">
     <!-- Content Header (Page header) -->
-    
+
 
     <!-- Main content -->
     <section class="content">
       <div class="container-fluid">
         <!-- left column -->
         <div class="col_full">
-          
-            
+
+
             <!-- form start -->
-            
-            <div class="card card-primary">
+
+            <div class="card ">
               <div class="card-header">
                 <h3 class="card-title">Add Network Device for {{$staff->fullName}} </h3>
               </div>
               <!-- /.card-header -->
               <!-- form start -->
             @include('partialsv3.flash')
-           
+
 						{!! Form::open(array('route' => 'soteria.staff.store', 'method'=>'POST', 'class' => 'nobottommargin')) !!}
  			<div class="card-body">
-                
+
               <div class="box-body">
-              			
+
               			<div class="row">
               			<div class="col-md-4 form-group">
 							<label for="status">Device Type :</label>
@@ -64,7 +64,7 @@
                                 ) }}
 							<span class="text-danger"> {{ $errors->first('device_type') }}</span>
 							</div>
-							
+
 							<div class="col-md-4 form-group">
 								<label for="os">OS :</label>
 								{{ Form::select('os', [
@@ -78,8 +78,8 @@
 							 <span class="text-danger"> {{ $errors->first('os') }}</span>
 							</div>
 </div>
-							
-							
+
+
 							<div class="row">
               			<div class="col-md-4 form-group">
 								<label for="antivirus">Antivirus :</label>
@@ -110,20 +110,20 @@
 						  <span class="text-danger"> {{ $errors->first('av_expire') }}</span>
 					  </div>
 				  </div>
-							
+
 
 
 				  {{ Form::hidden('user_type_id', 2) }}
 				  {{ Form::hidden('user_id', $staff->id) }}
 				  {{ Form::hidden('full_name', $staff->fullName) }}
-							
+
 							<div class="row">
-							
-						
+
+
 							<div class="col-md-6 form-group pull-left">
-							
-								
-							
+
+
+
 							</div>
 							</div>
               </div>
@@ -131,25 +131,25 @@
                <!-- /.card-body -->
 
                 <div class="card-footer">
-                  
-							
+
+
 							{{ Form::submit('Add Device', array('class' => 'btn btn-primary')) }}
-							
-						
+
+
                 </div>
               <!-- /.box-body -->
 
-             
+
             {!! Form::close() !!}
-            
-            
-            
+
+
+
           </div>
           <!-- /.box -->
 
         </div>
         <!--/.col (left) -->
-        
+
       </div>
       <!-- /.row -->
     </section>

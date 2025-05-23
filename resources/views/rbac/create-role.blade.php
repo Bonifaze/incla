@@ -39,7 +39,7 @@
 
             <!-- form start -->
 
-            <div class="card card-primary">
+            <div class="card ">
 
               <!-- /.card-header -->
               <!-- form start -->

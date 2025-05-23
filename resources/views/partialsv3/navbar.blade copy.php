@@ -108,7 +108,7 @@
                 <li><a href="{{ route('rbac.list-roles') }}" class="dropdown-item">List Roles</a></li>
                 <li><a href="{{ route('rbac.list-perms') }}" class="dropdown-item">List Permissions</a></li>
             </ul>
-        </li>  --}}
+        </li>  --}]\
 
         {{--  <li class="nav-item dropdown">
             <a id="dropdownSubMenu1" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"

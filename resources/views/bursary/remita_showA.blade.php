@@ -39,7 +39,7 @@
                       Applicant  {{ $remita->rrr }} Remita Details
                     </h1>
 
-            <div class="card card-primary">
+            <div class="card ">
 
 
              <div class="table-responsive card-body">

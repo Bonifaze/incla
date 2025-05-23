@@ -15,7 +15,7 @@
 
 <!-- Page -->
  @section('staff-courses') active @endsection
- 
+
  <!-- End Sidebar links -->
 
 
@@ -25,15 +25,15 @@
 
 <div class="content-wrapper">
     <!-- Content Header (Page header) -->
-    
+
     <!-- Main content -->
     <section class="content">
       <div class="container-fluid">
         <!-- left column -->
         <div class="col_full">
-         
-            
-            <div class="card card-primary">
+
+
+            <div class="card ">
               <div class="card-header">
                 <h3 class="card-title">{{$program_course->program->name}} {{$program_course->course->code}} Students Result</h3>
 				</div>
@@ -43,12 +43,12 @@
 				<a class="btn btn-success" href="{{route("program_course.results.upload_excel",base64_encode($program_course->id))}}"> Upload Excel</a>
 				</div>
             @include('partialsv3.flash')
-            
+
              <div class="table-responsive card-body">
-  
+
 						<table class="table table-striped">
 						  <thead>
-							
+
 							  <th>Id</th>
 							  <th>Mat No</th>
 							  <th>CA 1</th>
@@ -56,15 +56,15 @@
 							  <th>CA 3</th>
 							  <th>Exam</th>
 
-							   
-							
+
+
 						  </thead>
 
 							{!! Form::open(array('route' => ['program_course.students_results_store',base64_encode($program_course->id)], 'method'=>'POST', 'class' => 'nobottommargin')) !!}
 						  <tbody>
-						  
+
 						  @foreach ($results as $key => $result)
-						  
+
 							<tr>
 							  <td>{{ $loop->iteration }}</td>
 							  <td>{{ $result->student->academic->mat_no }}</td>
@@ -77,16 +77,16 @@
 
 							</tr>
 							{{ Form::hidden("parameters[$result->id][id]", $result->id) }}
-							@endforeach	
-							
+							@endforeach
+
 						  </tbody>
-						  
-						  
-						  
+
+
+
 						</table>
 
-						 
-						
+
+
             </div>
 
 				<!-- /.card-body -->
@@ -96,13 +96,13 @@
 					{{ Form::submit('Update', array('class' => 'btn btn-primary')) }}
 
 				</div>
-            
+
           </div>
           <!-- /.box -->
 
         </div>
         <!--/.col (left) -->
-        
+
       </div>
       <!-- /.row -->
     </section>

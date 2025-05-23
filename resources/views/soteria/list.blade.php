@@ -15,7 +15,7 @@
 
 <!-- Page -->
  @section('soteria-list') active @endsection
- 
+
  <!-- End Sidebar links -->
 
 
@@ -24,24 +24,24 @@
 
 <div class="content-wrapper">
     <!-- Content Header (Page header) -->
-    
+
     <!-- Main content -->
     <section class="content">
       <div class="container-fluid">
         <!-- left column -->
         <div class="col_full">
-         
-            
-            <div class="card card-primary">
+
+
+            <div class="card ">
               <div class="card-header">
                 <h3 class="card-title">List of Network Devices</h3>
 				</div>
             @include('partialsv3.flash')
              <div class="table-responsive card-body">
-  
+
 						<table class="table table-striped">
 						  <thead>
-							
+
 							  <th>#</th>
 							  <th>Name</th>
 							  <th>Mac Address</th>
@@ -52,17 +52,17 @@
 							   <th>Type</th>
 							 <th>Action</th>
 							  <th>Action</th>
-							 
-							  
-							   
-							
+
+
+
+
 						  </thead>
-						  
-						  
+
+
 						  <tbody>
-						  
+
 						  @foreach ($devices as $key => $device)
-						  
+
 							<tr>
 							  <td>{{ $loop->iteration }}</td>
 							  <td>{{ $device->full_name }}</td>
@@ -89,25 +89,25 @@
 
 								</td>
 				    		</tr>
-							
-							@endforeach	
-							
+
+							@endforeach
+
 						  </tbody>
-						  
-						  
-						  
+
+
+
 						</table>
 						 {!! $devices->render() !!}
-						 
-						
+
+
             </div>
-            
+
           </div>
           <!-- /.box -->
 
         </div>
         <!--/.col (left) -->
-        
+
       </div>
       <!-- /.row -->
     </section>

@@ -1,6 +1,8 @@
 <?php $__env->startComponent('mail::message'); ?>
 
-<p align='center'> <img src="<?php echo e(asset('img/logs.png')); ?>" width='1000' height='100' border='0' /></p>
+<p align='center'>
+    <img src="https://portal.incla.edu.ng/img/logs.png" width="1000" height="100" alt="Logo" />
+</p>
 
 
  <?php echo e($emailData['title']); ?>

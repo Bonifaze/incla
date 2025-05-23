@@ -478,7 +478,7 @@ class StudentResultsController extends Controller
     public function registration(Request $request)
     {
         $this->authorize('register', StudentResult::class);
-        return redirect()->route('result.register', [$request->student_id, $request->session_id, $request->semester, $request->level]);
+        return redirect()->route('result.register', [$request->student_id, $request->session_id, 1,100]);
     } // end registration
 
     public function register($student_id, $session_id, $semester, $level)
@@ -597,9 +597,11 @@ class StudentResultsController extends Controller
      */
     public function addCourse(Request $request)
     {
+        //dd($request);
         $this->authorize('register', StudentResult::class);
         $session = Session::findorFail($request->session_id);
-        $result = new StudentResult();
+        // $result = new StudentResult();
+       // dd($session);
         $student = Student::findOrFail($request->student_id);
         $semester = $request->semester;
         $level = $request->level;
@@ -608,14 +610,14 @@ class StudentResultsController extends Controller
         // dd( $program_id =$request->program_id);
         // if($student->hasExcessSemesterCredits($result->semesterRegisteredCourses($student->id,$session->id,$semester),$request->course_id,$request->session_id,$request->semester))
         // {
-        $result->program_course_id = $request->course_id;
-        $result->session_id = $session->id;
-        $result->semester = $semester;
-        $result->student_id = $student->id;
+        // $result->program_course_id = $request->course_id;
+        //$result->session_id = $session->id;
+        // $result->semester = $semester;
+        // $result->student_id = $student->id;
         DB::beginTransaction(); //Start transaction!
         try {
             // add course
-            $result->save();
+            //$result->save();
             //if(!$student->hasSemesterRegistration($session->id,$semester))
             //   {
             //register semester

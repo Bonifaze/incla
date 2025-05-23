@@ -15,7 +15,7 @@
 
 <!-- Page -->
  @section('vc-list') active @endsection
- 
+
  <!-- End Sidebar links -->
 
 
@@ -24,24 +24,24 @@
 
 <div class="content-wrapper">
     <!-- Content Header (Page header) -->
-    
+
     <!-- Main content -->
     <section class="content">
       <div class="container-fluid">
         <!-- left column -->
         <div class="col_full">
-         
-            
-            <div class="card card-primary">
+
+
+            <div class="card ">
               <div class="card-header">
                 <h3 class="card-title">Semester Result status</h3>
 				</div>
             @include('partialsv3.flash')
              <div class="table-responsive card-body">
-  
+
 						<table class="table table-striped">
 						  <thead>
-							
+
 							  <th>#</th>
 							  <th>Department</th>
 							  <th>Program</th>
@@ -51,11 +51,11 @@
 							   <th>Students Total</th>
 							 <th>Action</th>
 
-							   
-							
+
+
 						  </thead>
-						  
-						  
+
+
 						  <tbody>
 						  @php
 						  $session_id = $session->currentSession();
@@ -90,23 +90,23 @@
 
 							</tr>
 							@endforeach
-							
+
 						  </tbody>
-						  
-						  
-						  
+
+
+
 						</table>
 						 {!! $programs->render() !!}
 
-						
+
             </div>
-            
+
           </div>
           <!-- /.box -->
 
         </div>
         <!--/.col (left) -->
-        
+
       </div>
       <!-- /.row -->
     </section>

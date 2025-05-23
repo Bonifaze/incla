@@ -4,7 +4,7 @@
 
 @section('pagetitle') List of Students  @endsection
 
-@section('css') 
+@section('css')
 <!-- Ekko Lightbox -->
   <link rel="stylesheet" href="{{asset('v3/plugins/ekko-lightbox/ekko-lightbox.css')}}">
 @endsection
@@ -19,7 +19,7 @@
 
 <!-- Page -->
  @section('list-students') active @endsection
- 
+
  <!-- End Sidebar links -->
 
 
@@ -28,26 +28,26 @@
 
 <div class="content-wrapper">
     <!-- Content Header (Page header) -->
-    
+
     <!-- Main content -->
     <section class="content">
       <div class="container-fluid">
         <!-- left column -->
         <div class="col_full">
-         
-            
-            <div class="card card-primary">
+
+
+            <div class="card ">
               <div class="card-header">
                 <h3 class="card-title">List of Students</h3>
 				</div>
-            
+
              <div class="table-responsive card-body">
-             
+
              @include('partialsv3.flash')
-  
+
 						<table class="table table-striped">
 						  <thead>
-							
+
 							  <th>#</th>
 							  <th>Name</th>
 							  <th>Phone</th>
@@ -56,21 +56,21 @@
 							   <th>Amount</th>
 							   <th>Details</th>
 							   <th>Action</th>
-							   
-							   
-							  
-							 
-							  
-							   
-							
+
+
+
+
+
+
+
 						  </thead>
-						  
-						  
+
+
 						  <tbody>
 						    @foreach ($students as $key => $student)
-						  
+
 						  @php $payments = $student->payments; @endphp
-						  
+
 						  @foreach ($payments as $key => $payment)
 							<tr>
 							  <td>{{ $loop->parent->index }}</td>
@@ -82,55 +82,55 @@
 							   <td>
 							   <div class="col-md-3">
                                <a href="data:image/png;base64,{{$payment->evidence}}" data-toggle="lightbox" data-title="Payment Evidence">
-							<img src="data:image/png;base64,{{$payment->evidence}}" class="img elevation-2" alt="Payment Evidence" width="80px">	
+							<img src="data:image/png;base64,{{$payment->evidence}}" class="img elevation-2" alt="Payment Evidence" width="80px">
 							</a>
 							</div>
                                </td>
-							    
+
 							   @if ($payment->status == 1)
-							    <td> 
+							    <td>
 								{!! Form::open(['method' => 'Patch', 'route' => 'bursary.confirm', 'id'=>'confirmForm'.$payment->id]) !!}
 				    		{{ Form::hidden('id', $payment->id) }}
 				    		{{ Form::hidden('status', 2) }}
-				    		
-				    		
+
+
 				    		<button onclick="confirm({{$payment->id}})" type="button" class="{{$payment->id}} btn btn-success" > Confirm Payment </button>
-				    		
-				    		{!! Form::close() !!}	
-							
-							
-							
+
+				    		{!! Form::close() !!}
+
+
+
 							 </td>
-							 
+
 				    		@elseif ($payment->status == 2)
-							 <td> 
+							 <td>
 								<strong> Payment Confirmed </strong>
 							 </td>
-							  
+
 							  @endif
-							   
-							   
+
+
 							</tr>
-							
-							@endforeach	
-							
-							@endforeach	
-							
+
+							@endforeach
+
+							@endforeach
+
 						  </tbody>
-						  
-						  
-						  
+
+
+
 						</table>
-						
-						
+
+
             </div>
-            
+
           </div>
           <!-- /.box -->
 
         </div>
         <!--/.col (left) -->
-        
+
       </div>
       <!-- /.row -->
     </section>
@@ -143,8 +143,8 @@
 <script src="{{asset('js/bootbox.min.js')}}"></script>
 
  <script>
- 
-        
+
+
 
         	function confirm(id)
         	{
@@ -164,7 +164,7 @@
                         }
                 },
                 callback: function (result) {}
-                
+
             });
             // e.preventDefault(); // avoid to execute the actual submit of the form if onsubmit is used.
         }

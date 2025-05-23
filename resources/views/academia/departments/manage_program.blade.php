@@ -23,7 +23,7 @@
                         {{ $program->name }}
                     </h1>
 
-                    <div class="card card-primary">
+                    <div class="card ">
                         <div class="table-responsive card-body">
 
                             <table class="table table-striped">

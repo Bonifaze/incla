@@ -15,7 +15,7 @@
 
 <!-- Page -->
  @section('list-roles') active @endsection
- 
+
  <!-- End Sidebar links -->
 
 
@@ -24,19 +24,19 @@
 
 <div class="content-wrapper">
     <!-- Content Header (Page header) -->
-    
+
     <!-- Main content -->
     <section class="content">
       <div class="container-fluid">
         <!-- left column -->
         <div class="col_full">
-         
-            
-            <div class="card card-primary">
+
+
+            <div class="card ">
               <div class="card-header">
                 <h3 class="card-title">Reset All Students Password</h3>
 				</div>
-            
+
              <div class="table-responsive card-body">
 
 
@@ -75,17 +75,17 @@
 			<div style="color:#090; font-weight:bolder;"> {!! $reset !!}</div>
 
 					@endif
-						 
-						
+
+
            </div>
             </div>
               <!-- /.card-body -->
             </div>
-            
+
           </div>
           <!-- /.box -->
 
-        
+
     </section>
     <!-- /.content -->
   </div>
@@ -95,7 +95,7 @@
 <script src="{{ asset('dist/js/bootbox.min.js')}}"></script>
 
  <script>
- 			
+
 
 
 
@@ -117,13 +117,13 @@
                         }
                 },
                 callback: function (result) {}
-                
+
             });
             // e.preventDefault(); // avoid to execute the actual submit of the form if onsubmit is used.
         }
- 			
- 			
-	
+
+
+
     </script>
     @endsection
 

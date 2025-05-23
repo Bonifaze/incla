@@ -26,7 +26,7 @@
                     </h1>
 
 
-            <div class="card card-primary">
+            <div class="card ">
 
              @include("partialsv3.flash")
              <div class="table-responsive">

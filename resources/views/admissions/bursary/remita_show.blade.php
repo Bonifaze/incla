@@ -36,7 +36,7 @@
         <div class="col_full">
 
 
-            <div class="card card-primary">
+            <div class="card ">
               <div class="card-header">
                 <h3 class="card-title">{{ $remita->rrr }} Remita Details</h3>
 				</div>

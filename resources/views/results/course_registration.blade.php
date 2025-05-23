@@ -46,7 +46,7 @@
                             $student_id = 0;
                         @endphp
 
-                        <a class="btn btn-info" href="{{ route('semester.registration', [base64_encode($student->id), $session]) }}"
+                        <a class="btn btn-primary" href="{{ route('semester.registration', [base64_encode($student->id), $session]) }}"
                             target="_blank"> <i class="fa fa-eye"></i> Print Form </a>
                         {{--  <a class="btn btn-default" href="{{ route('semester.registration.modify-excess',base64_encode($registration->id)) }}" > <i class="fa fa-eye"></i> Modify Excess Credit </a>  --}}
 
@@ -214,12 +214,12 @@
 
                                 </tr>
                                 <tr>
-                                    <td><strong> Maximum Credit </strong></td>
+                                    {{--  <td><strong> Maximum Credit </strong></td>  --}}
                                     <td></td>
                                     <td></td>
                                     <td></td>
                                     {{--  <td> <strong> {{ $allowed_credits }} </strong></td>  --}}
-                                    <td> <strong> 24 </strong></td>
+                                    {{--  <td> <strong> 24 </strong></td>  --}}
 
                                     <td> </td>
 
@@ -251,7 +251,8 @@
                     <p> <br /></p>
 
                     <h1 class=" text-uppercase h5 font-weight-bold p-2 mb-2 shadow-sm text-left text-success border">
-                      {{ $session->semesterName($semester) }}  Cuurent Level Courses
+                      {{--  {{ $session->semesterName($semester) }}    --}}
+                      Cuurent Level Courses
                     </h1>
 
                     <div class="table-responsive">
@@ -317,14 +318,14 @@
 
 
 
-                    <h1 class=" text-uppercase h5 font-weight-bold p-2 mb-2 shadow-sm text-left text-success border">
+                    {{--  <h1 class=" text-uppercase h5 font-weight-bold p-2 mb-2 shadow-sm text-left text-success border">
                         Lower Level Courses
-                    </h1>
+                    </h1>  --}}
 
                     <div class="table-responsive">
 
                         <table class="table table-striped">
-                            <thead>
+                            {{--  <thead>
 
                                 <th>S/N</th>
                                 <th>Course Code</th>
@@ -333,7 +334,7 @@
                                 <th>Credit</th>
                                 <th>Action</th>
 
-                            </thead>
+                            </thead>  --}}
 
 
                             <tbody>

@@ -37,7 +37,7 @@
 
             <!-- form start -->
 
-            <div class="card card-primary">
+            <div class="card ">
 
                              <h1
                         class="app-page-title text-uppercase h5 font-weight-bold p-2 mb-2 shadow-sm text-center text-success border">

@@ -32,7 +32,7 @@
         <div class="col_full">
 
 
-            <div class="card card-primary">
+            <div class="card ">
               <div class="card-header">
                 <h3 class="card-title"> Currently Registered Courses test </h3>
 				</div>
