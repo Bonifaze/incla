@@ -8,10 +8,10 @@
  <br><br>
  <center> <strong>{{ $emailData['name_no'] }} {{ $emailData['identity_no'] }}  </strong>  </center>
 <br>
-{{--  <center> <strong> LOGIN DETAILS </strong> </center>
+<center> <strong> LOGIN DETAILS </strong> </center>
 <center> <strong> MatricNo.: </strong> {{ $emailData['identity_no'] }}  </center>
 
-<center> <strong> PASSWORD: </strong> {{ $emailData['password'] }} </center>  --}}
+<center> <strong> PASSWORD: </strong> {{ $emailData['password'] }} </center>
 
 
 @component('mail::button', ['url' => $emailData['url']])

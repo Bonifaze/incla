@@ -10,18 +10,20 @@ use App\Student;
 use App\StudentDebt;
 use App\ProgramCourse;
 use App\StudentResult;
+use App\StudentContact;
+use App\StudentMedical;
 use App\StudentAcademic;
 use App\EvaluationResult;
 use App\EvaluationQuestion;
+use App\Models\VoucherCode;
 use Illuminate\Http\Request;
 use App\SemesterRegistration;
 use Illuminate\Validation\Rule;
 use App\Models\RegisteredCourse;
 use App\Models\StudentCreditLoad;
-use App\Models\RemitasVerification;
-use App\Models\VoucherCode;
 use Illuminate\Support\Facades\DB;
 use App\Models\CourseRegistrations;
+use App\Models\RemitasVerification;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\View;
@@ -103,12 +105,57 @@ public function sidebaradmission()
         return view('students.profile',compact('student','contact','academic','medical','courseReg'));
     } //end profile
 
+    public function show()
+    {
+        $student = Auth::guard('student')->user();
+        $courseReg = CourseRegistrations::where('status', 1)->orderBy('id', 'ASC')->paginate(20);
+        $contact = $student->contact;
+
+        $academic = $student->academic;
+
+        $medical = $student->medical;
+
+        return view('students.show',compact('student','contact','academic','medical','courseReg'));
+
+    } //end profile
+
+    public function edit($id)
+    {
+        // $this->authorize('edit',Student::class);
+        $student = Student::findOrFail($id);
+        return view('students.edit',compact('student'));
+    } // end edit
+
+    public function editm($id)
+    {
+        // $this->authorize('edit', Student::class);
+        $medical = StudentMedical::findOrFail($id);
+        return view('students.editm',compact('medical'));
+    } // end edit
+    public function edita($id)
+    {
+    //    $this->authorize('edit', Student::class);
+        $academic = StudentAcademic::findOrFail($id);
+        $programs = Program::orderBy('name','ASC')->pluck('name','id');
+        $sessions = Session::pluck('name','id');
+        return view('students.edita',compact('academic', 'programs', 'sessions'));
+    } // end edit
+    public function editc($id)
+    {
+        // $this->authorize('edit', Student::class);
+        $contact = StudentContact::findOrFail($id);
+        return view('students.editc',compact('contact'));
+    } // end edit
+
+
     public function password()
     {
         //
         $courseReg = CourseRegistrations::where('status', 1)->orderBy('id', 'ASC')->paginate(20);
         return view('students.password', compact('courseReg'));
     }
+
+
 
 
     public function changePassword (Request $request)
@@ -143,6 +190,132 @@ public function sidebaradmission()
 
         return redirect()->route('student.home')->with("success","Password changed successfully !");
     }
+    
+    public function updatecontact(Request $request, $id)
+    {
+        
+        // $this->authorize('edit', Student::class);
+        $this->validate($request, [
+            'surname' => 'required|string|max:100',
+            // 'other_names' => 'required|string|max:100',
+            'phone' => 'required|string|max:20',
+            // 'email' => 'sometimes|nullable|string|email|max:100',
+
+
+            // 'state' => 'required|string|max:100',
+            // 'address' => 'required|string|max:200',
+        ]);
+
+        // emergency contacts or sponsor
+        $contact = StudentContact::findOrFail($id);
+        $contact->surname = $request->surname;
+        $contact->other_names = $request->other_names;
+        $contact->phone = $request->phone;
+        $contact->phone_2 = $request->phone_2;
+        $contact->email = $request->email;
+
+        $contact->address = $request->address;
+
+        try {
+            $contact->save();
+        } // end try
+        catch(\Exception $e)
+        {
+            //failed logic here
+            return redirect()->back()
+            ->with('error',"Errors in updating Student contact.");
+        }
+        return redirect()->back()
+        ->with('success','Student Contact updated successfully');
+    } //end update
+
+
+    public function updatebio(Request $request, $id)
+    {
+       
+        $validatedData = $request->validate([
+        //     'surname' => 'required|string|max:50',
+        //     'first_name' => 'required|string|max:50',
+        //     'middle_name' => 'sometimes|nullable|string|max:50',
+        //     'gender' => 'required|string|max:50',
+        //     'phone' => 'required|string|max:50',
+        //     'email' => 'required|string|email|max:100',
+        //     'title' => 'required|string|max:50',
+        //     'dob' => 'required|string|max:50',
+        //     'marital_status' => 'required|string|max:50',
+        //     'nationality' => 'required|string|max:100',
+        //     'state' => 'required|string|max:50',
+        //     'lga_name' => 'required|string|max:100',
+        //     'city' => 'required|string|max:50',
+        //     'hobbies' => 'required|string|max:200',
+        //     'religion' => 'required|string|max:50',
+        //     'address' => 'required|string|max:200',
+            'passport' => 'sometimes|image|mimes:jpeg,png,jpg,gif,svg|max:1048|dimensions:min_width=300',
+            'signature' => 'sometimes|image|mimes:jpeg,png,jpg,gif,svg|max:1048|dimensions:min_width=300',
+
+        ],
+
+            $messages = [
+                'passport.dimensions'    => 'Passport Image is too small. Must be at least 400px wide.',
+                'signature.dimensions'    => 'Signature is too small. Must be at least 400px wide.',
+            ]);
+
+        $student = Student::findOrFail($id);
+
+        $student->surname = $request->surname;
+        $student->first_name = $request->first_name;
+        $student->middle_name = $request->middle_name;
+        $student->gender = $request->gender;
+        $student->phone = $request->phone;
+        $student->email = $request->email;
+        $student->title = $request->title;
+        $student->dob = $request->dob;
+
+
+        $student->state = $request->state;
+        $student->lga_name = $request->lga_name;
+
+        $student->address = $request->address;
+
+        //process Passport upload
+        if($request->hasFile('passport'))
+        {
+            $img1 = Image::make($request->file('passport'))->resize(300, null, function ($constraint) {
+                $constraint->aspectRatio();
+            });
+
+                $passport = base64_encode($img1->encode()->encoded);
+                $student->passport = $passport;
+        } // end Passport
+
+        //process Signature upload
+        if($request->hasFile('signature'))
+        {
+            $img2 = Image::make($request->file('signature'))->resize(300, null, function ($constraint) {
+                $constraint->aspectRatio();
+            });
+
+                $signature = base64_encode($img2->encode()->encoded);
+                $student->signature = $signature;
+        } // end Signature
+
+        try {
+            //saving logic here
+            $student->save();
+        } // end try
+
+        catch(\Exception $e)
+        {
+            return redirect()->back()
+            ->with('error',"Errors in updating Student profile.");
+        }
+
+        return redirect()->back()
+        ->with('success','Student profile updated successfully');
+
+    } //end update
+
+
 
 
     private function getcurrentsession(){
