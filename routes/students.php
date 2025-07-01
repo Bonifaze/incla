@@ -9,6 +9,18 @@ Route::get('/courseform', 'StudentsController@courseform')->name('student.course
 
 Route::get('/students/profile', 'StudentsController@profile')->name('student.profile');
 
+Route::get('/students/showedit', 'StudentsController@show')->name('student.showedit');
+// Route::get('/students/editbio/{id}', 'StudentsController@editbio')->name('student.editbio');
+Route::get('/students/editbio/{id}', 'StudentsController@edit')->name('student.editbio');
+Route::get('/student-contacts/editbio/{id}', 'StudentsController@editc')->name('student-contact.editbio');
+Route::get('/student-academics/editbio/{id}', 'StudentsController@edita')->name('student-academic.editbio');
+Route::get('/student-medicals/editbio/{id}', 'StudentsController@editm')->name('student-medical.editbio');
+
+Route::patch('/student-contactsedit/edit/{id}', 'StudentsController@updatecontact')->name('student-contact.updateedit');
+
+Route::patch('/studentsedit/edit/{id}', 'StudentsController@updatebio')->name('student.updateedit');
+
+
 Route::get('/students/password', 'StudentsController@password')->name('student.password');
 
 Route::post('/students/change-password', 'StudentsController@changePassword')->name('student.change-password');

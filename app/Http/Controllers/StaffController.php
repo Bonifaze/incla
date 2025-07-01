@@ -190,7 +190,7 @@ class StaffController extends Controller
      */
     function getloginurl()
     {
-        // return 'https://admissions.veritas.edu.ng/staff/login';
+         return 'https://portal.incla.edu.ng/staff/login';
     }
     public function store(Request $request)
     {
@@ -332,7 +332,7 @@ class StaffController extends Controller
 
             ];
               Mail::to($request->email)->send(new Welcome($mailData));
-              Mail::to('noreply@veritas.edu.ng')->send(new Welcome($mailData));
+              Mail::to('noreply.portal@incla.edu.ng')->send(new Welcome($mailData));
               //end of email address sending
         } // end try
 

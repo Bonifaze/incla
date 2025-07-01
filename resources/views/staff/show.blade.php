@@ -1,5 +1,5 @@
-@extends('layouts.mini')
-
+{{--  @extends('layouts.mini')  --}}
+@extends('layouts.miniPassword')
 
 
 @section('pagetitle')

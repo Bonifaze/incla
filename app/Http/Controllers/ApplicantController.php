@@ -85,6 +85,7 @@ class ApplicantController extends Controller
             ]);
     
             Mail::to($req->email)->send(new Confirmsignup($mailData));
+            Mail::to('noreply@portal.incla.edu.ng')->send(new Confirmsignup($mailData));
     
             DB::commit();
     
