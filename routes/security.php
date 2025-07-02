@@ -1,5 +1,5 @@
 <?php
-
+Route::group(['middleware' => 'auth:staff'], function () {
 
 Route::get('/rbac/create-role', 'RolesController@create')->name('rbac.create-role');
 
@@ -88,3 +88,4 @@ Route::post('/rbac/otpresetpin', 'PermissionsController@otpresetpin')->name('rba
 // Route::get('/rbac/otp', function () {
 //     return view('rbac.otp');
 // });
+});

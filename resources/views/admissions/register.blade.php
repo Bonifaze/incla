@@ -207,32 +207,38 @@ toggleConfirmPassword.addEventListener("click", () => {
 });
 
         // Fetching country list using an external service (REST Countries API)
-        fetch('https://restcountries.com/v3.1/all')
-            .then(response => response.json())
-            .then(data => {
-                const countrySelect = document.getElementById('country');
+        fetch('https://restcountries.com/v3.1/all?fields=name')
+        .then(response => {
+            if (!response.ok) {
+                throw new Error(`HTTP error! Status: ${response.status}`);
+            }
+            return response.json();
+        })
+        .then(data => {
+            console.log('Fetched data:', data); // Debug line
+            if (!Array.isArray(data)) {
+                throw new Error('Expected an array of countries');
+            }
 
-                // Sort the countries alphabetically by name
-                const sortedCountries = data.sort((a, b) => a.name.common.localeCompare(b.name.common));
+            const countrySelect = document.getElementById('country');
 
-                // Place Nigeria at the top
-                const nigeria = sortedCountries.find(country => country.name.common === 'Nigeria');
-                if (nigeria) {
-                    sortedCountries.splice(sortedCountries.indexOf(nigeria), 1); // Remove Nigeria from its current position
-                    sortedCountries.unshift(nigeria); // Add Nigeria to the beginning
-                }
+            const sortedCountries = data.sort((a, b) => a.name.common.localeCompare(b.name.common));
 
-                // Add the sorted country options to the dropdown
-                sortedCountries.forEach(country => {
-                    const option = document.createElement('option');
-                    {{--  option.value = country.cca2;  --}}
-                    option.value = country.name.common; // This will set the full country name
-                    option.textContent = country.name.common;
-                    countrySelect.appendChild(option);
-                });
-            })
-            .catch(error => console.error('Error fetching country data:', error));
-    </script>
+            const nigeria = sortedCountries.find(country => country.name.common === 'Nigeria');
+            if (nigeria) {
+                sortedCountries.splice(sortedCountries.indexOf(nigeria), 1);
+                sortedCountries.unshift(nigeria);
+            }
+
+            sortedCountries.forEach(country => {
+                const option = document.createElement('option');
+                option.value = country.name.common;
+                option.textContent = country.name.common;
+                countrySelect.appendChild(option);
+            });
+        })
+        .catch(error => console.error('Error fetching country data:', error));
+</script>
 
     <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js"></script>

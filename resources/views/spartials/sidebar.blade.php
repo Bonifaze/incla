@@ -54,6 +54,12 @@
                             </a>
                         </li>
                         <li class="nav-item">
+                            <a href="{{ route('student.showedit') }}" class="nav-link @yield('gprofile')">
+                                <i class="fa fa-user-alt nav-icon"></i>
+                                <p>Edit Profile</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
                             <a href="{{ route('student.password') }}" class="nav-link @yield('password')">
                                 <i class="fa fa-unlock-alt nav-icon"></i>
                                 <p>Change Password</p>
@@ -72,22 +78,22 @@
                         </p>
                     </a>
                     <ul class="nav nav-treeview">
-                        @foreach ($courseReg as $key => $session)
+                        {{--  @foreach ($courseReg as $key => $session)  --}}
                             {{--  To ALLOW STUDENT SEE COURSE REGISTARION  --}}
-                            {{--  <li class="nav-item">
+                            <li class="nav-item">
                                 <a href="{{ route('student.course-registration') }}" class="nav-link @yield('registration')">
                                     <i class="fa fa-tasks nav-icon"></i>
                                     <p>Course Registration</p>
                                 </a>
-                            </li>  --}}
+                            </li>
                             {{--  To close Course Registration  --}}
-                            <li class="nav-item">
+                            {{--  <li class="nav-item">
                                 <a href="{{ $session->route }}" class="nav-link @yield('registration')">
                                     <i class="fa fa-tasks nav-icon"></i>
                                     <p>Course Registration</p>
                                 </a>
                             </li>
-                        @endforeach
+                        @endforeach  --}}
 
 
                         {{--  <li class="nav-item">

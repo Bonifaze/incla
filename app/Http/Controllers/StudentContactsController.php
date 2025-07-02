@@ -14,10 +14,10 @@ class StudentContactsController extends Controller
      *
      * @return void
      */
-    public function __construct()
-    {
-        $this->middleware('auth:staff');
-    }
+    // public function __construct()
+    // {
+    //     $this->middleware('auth:staff');
+    // }
 
     public function edit($id)
     {
@@ -29,7 +29,8 @@ class StudentContactsController extends Controller
 
     public function update(Request $request, $id)
     {
-        $this->authorize('edit', Student::class);
+        
+        // $this->authorize('edit', Student::class);
         $this->validate($request, [
             'surname' => 'required|string|max:100',
             // 'other_names' => 'required|string|max:100',
@@ -57,10 +58,10 @@ class StudentContactsController extends Controller
         catch(\Exception $e)
         {
             //failed logic here
-            return redirect()->route('student-contact.edit',$id)
+            return redirect()->back()
             ->with('error',"Errors in updating Student contact.");
         }
-        return redirect()->route('student.show', $contact->student_id)
+        return redirect()->back()
         ->with('success','Student Contact updated successfully');
     } //end update
 

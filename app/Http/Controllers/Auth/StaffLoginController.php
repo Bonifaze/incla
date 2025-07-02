@@ -100,17 +100,25 @@ private function getMacAddress()
             {
                 return redirect()->route('staff.password');
             }
+            
 
             //check for restricted
             $staff = Auth::guard('staff')->user();
             $list = array(2000);
+            // if($staff->phone =="08000000000")
+            // {
+            // return redirect()->intended("staff/show/{$staff->id}");
+            // }
+
             if(in_array($staff->id,$list))
             {
                 $this->logout();
             }
 
             // if success redirect to intended location
-            return redirect()->intended('/staff/home');
+             return redirect()->intended('/staff/home');
+            // return redirect()->intended("staff/show/{$staff->id}");
+
 
         }
         // unsuccessful redirect back to login with form data

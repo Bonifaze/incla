@@ -552,7 +552,7 @@ class ProgramCoursesController extends Controller
         $session = new Session();
         $program_id = $request->program_id;
         $program = Program::find($program_id);
-        // dd($program);
+         dd($program);
         $admin_department = AdminDepartment::where('academic_department_id' , $program->academic_department_id)->first();
         $courses = ProgramCourse::where('program_id', $program_id)->where('session_id', $session->currentSession())->get();
         $staffs = StaffWorkProfile::where('admin_department_id', $admin_department->id)->with('Staff')->get();
