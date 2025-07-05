@@ -452,7 +452,11 @@ public function sidebaradmission()
 
             //dd($stu_reg_courses->toArray(), $courseFirst->toArray(), $courseSecond->toArray());
             $courseform = RegisteredCourse::where('student_id', $student->id)
-            // ->where('registered_courses.semester', 1)
+            ->where('registered_courses.semester', 1)
+            ->where('session', $this->getcurrentsession())
+            ->get();
+            $courseform2 = RegisteredCourse::where('student_id', $student->id)
+            ->where('registered_courses.semester', 2)
             ->where('session', $this->getcurrentsession())
             ->get();
             // $courseform = DB::table('registered_courses')->where('student_id',$student->id )
@@ -490,7 +494,7 @@ public function sidebaradmission()
 
 
             // $prevsession = $this->getprevioussession();
-        return view('students.course_registration', compact('courseFirst','courseSecond', 'lowercourseFirst' ,'lowercourseSecond','session', 'courseform','courseReg'));
+        return view('students.course_registration', compact('courseFirst','courseSecond', 'lowercourseFirst' ,'lowercourseSecond','session', 'courseform','courseform2','courseReg'));
                 // return view('students.course_registration', compact('courseFirst','courseSecond','session', 'courseform'));
 
             }
@@ -546,9 +550,14 @@ public function sidebaradmission()
 
                 //dd($stu_reg_courses->toArray(), $courseFirst->toArray(), $courseSecond->toArray());
                 $courseform = RegisteredCourse::where('student_id', $student->id)
-                // ->where('registered_courses.semester', 1)
+                ->where('semester', 1)
                 ->where('session', $this->getcurrentsession())
                 ->get();
+                $courseform = RegisteredCourse::where('student_id', $student->id)
+                ->where('semester', 2)
+                ->where('session', $this->getcurrentsession())
+                ->get();
+
                 // $courseform = DB::table('registered_courses')->where('student_id',$student->id )
                 // ->where ('session', $this->getcurrentsession())
                 // ->leftJoin('courses', 'courses.id', '=', 'registered_courses.course_id')
@@ -1122,7 +1131,7 @@ private function getdptcolleg($program_id)
         //     $totalCGPA = $student->CGPA();
         //     return view('students.transcript',compact('student','academic','registrations','totalCGPA'));
         // } //end show
-    public function transcript()
+            public function transcript()
         {
             $student = Auth::guard('student')->user();
             // dd($student->id);

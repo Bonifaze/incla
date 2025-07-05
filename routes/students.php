@@ -20,6 +20,9 @@ Route::patch('/student-contactsedit/edit/{id}', 'StudentsController@updatecontac
 
 Route::patch('/studentsedit/edit/{id}', 'StudentsController@updatebio')->name('student.updateedit');
 
+Route::get('/complain',function () {
+    return view('students.complain');
+});
 
 Route::get('/students/password', 'StudentsController@password')->name('student.password');
 

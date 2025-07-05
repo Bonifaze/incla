@@ -257,6 +257,44 @@
                             <td align="center"></td>
                         </tr>
                     </table>
+
+
+                    <!-- Academic Session Table -->
+                    <table width="100%" height="87" cellpadding="0" cellspacing="0" style="margin-top: 20px;">
+                        <tr style="background-color: #D3D3D3;">
+                            {{-- <td colspan="5" align="center"></td> --}}
+                        </tr>
+                        <tr style="background-color: #D3D3D3;">
+                            <td width="5%" align="center"><strong>S/N</strong></td>
+                            <td width="15%" align="center"><strong>Course Code</strong></td>
+                            <td width="40%" align="center"><strong>Course Title</strong></td>
+                            <td width="10%" align="center"><strong>Credit Unit</strong></td>
+                            <td width="20%" align="center"><strong>Remark</strong></td>
+                        </tr>
+
+                        @php
+                            $totalCredits = 0;
+                        @endphp
+
+                        @foreach ($courseform2 as $key => $course)
+                            @php
+                                $totalCredits += $course->course_unit;
+                            @endphp
+                            <tr>
+                                <td align="center">{{ $key + 1 }}</td>
+                                <td align="center" ><strong>{{ $course->course_code }}</strong></td>
+                                <td align="center">{{ $course->course_title }}</td>
+                                <td align="center">{{ $course->course_unit }}</td>
+                                <td align="center"></td>
+                            </tr>
+                        @endforeach
+
+                        <tr style="background-color: #D3D3D3;">
+                            <td colspan="3" align="center"><strong>Total</strong></td>
+                            <td align="center"><strong>{{ $totalCredits }}</strong></td>
+                            <td align="center"></td>
+                        </tr>
+                    </table>
                 </td>
             </tr>
         </table>
