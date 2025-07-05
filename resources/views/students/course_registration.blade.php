@@ -42,10 +42,10 @@
                             @if (session('approvalMsg'))
                                 {!! session('approvalMsg') !!}
                             @endif
-                            {{--  <div class="h2 text-center">Course Registration ends in:  <span class="h2 text-danger font-weight-bold" id="demo"></span> </div>  --}}
+                              {{--  <div class="h2 text-center">Course Registration ends in:  <span class="h2 text-danger font-weight-bold" id="demo"></span> </div>  --}}
                             <div class="container">
                                 <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                                    {{--  <h6 class="m-0 font-weight-bold text-success">Current Level Course </h6>  --}}
+                                    <h6 class="m-0 font-weight-bold text-success">Current Level Course </h6>
                                     <div class="dropdown no-arrow">
                                         {{--  <input type=button class=" btn btn-sm btn-success shadow-sm" name=type
                                             id='bt1' value='Show Lower Level Courses'
@@ -65,27 +65,30 @@
                                     </thead>
 
                                     <tbody>
-                                        <form name="form1" id="form-1" method="post" action="/course-reg">
+                                        <form name=form1 id="form-1" method=post action="/course-reg">
                                             @csrf
                                             @php
-                                                $totalCredits = 0;
+                                                $tatolCredits = 0;
                                             @endphp
-                                            <input type="hidden" name="student_id"
+                                            <input id="" type="hidden" name="student_id"
                                                 value="{{ Auth::guard('student')->user()->id }}">
-                                            <input type="hidden" name="session" value="{{ $session->id }}">
+                                            <input id="" type="hidden" name="session" value="{{ $session->id }}">
+                                            {{--  <input id="" type>  --}}
+                                            {{--  <input id="" type="text"  name="session" value="{{ $prevsession }}" >  --}}
 
                                             @foreach ($courseFirst as $key => $course)
                                                 @if ($course->is_registered == 0)
                                                     @php
-                                                        $totalCredits += $course->credit_unit;
+                                                        $tatolCredits += $course->course_category == 1 ? $course->credit_unit : 0;
+
                                                     @endphp
                                                     <tr>
-                                                        <td>
-                                                            {{ $key + 1 }}.
-                                                            <input type="checkbox" name="courses1[]"
+                                                        <td> {{ $key + 1 }}. <input type="checkbox"
+                                                                id="{{ $course->credit_unit }}" name="courses1[]"
+                                                                {{ $course->course_category == 1 ? 'checked ' : '' }}
                                                                 value="{{ $course->course_id }}"
-                                                                data-credit="{{ $course->credit_unit }}"
-                                                                class="course-checkbox" onclick="calculateTotalCredits()">
+                                                                class="{{ $course->credit_unit }}"
+                                                                onclick="{{ $course->course_category == 1 ? '' : 'totalIt()' }}">
                                                             <input type="hidden" name="course_units1[]"
                                                                 value="{{ $course->credit_unit }}">
                                                             <input type="hidden" name="course_semester[]"
@@ -94,37 +97,171 @@
                                                         <td>{{ $course->course_code }}</td>
                                                         <td>{{ $course->course_title }}</td>
                                                         <td>{{ $course->credit_unit }}</td>
-                                                    </tr>
+                                                        {{--  <td>{{ $course->id }}</td>  --}}
                                                 @endif
                                             @endforeach
-
+                                            </tr>
                                             <tr>
                                                 <td><strong>Total Credit Unit</strong></td>
                                                 <td colspan="2"></td>
-                                                <td id="tcu">0</td>
+                                                <td id="tcu" name="total"></td>
                                             </tr>
-
                                     </tbody>
-
-                                    <script>
-                                        function calculateTotalCredits() {
-                                            let totalCredits = 0;
-
-                                            // Select all checked checkboxes and sum their credit units
-                                            document.querySelectorAll('.course-checkbox:checked').forEach((checkbox) => {
-                                                totalCredits += parseInt(checkbox.getAttribute('data-credit'));
-                                            });
-
-                                            // Update the total credit unit display
-                                            document.getElementById('tcu').innerText = totalCredits;
-                                        }
-                                    </script>
-
 
                                 </table>
                                 {{--  Second Semester Courses  --}}
+                                <table class="table table-bordered table-striped" width="100%" cellspacing="0">
+                                    <thead>
+                                        <tr>
+                                            <th col-span="1">Second Semester </th>
+                                            <th>Course Code</th>
+                                            <th>Course Title</th>
+                                            <th>Credit Unit</th>
+                                        </tr>
+                                    </thead>
 
+                                    <tbody>
+
+                                        @php
+                                            $tatolCredits = 0;
+                                        @endphp
+                                        <input id="" type="hidden" name="student_id"
+                                            value="{{ Auth::guard('student')->user()->id }}">
+                                        <input id="" type="hidden" name="session" value="{{ $session->id }}">
+                                        {{--  <input id="" type="text"  name="session" value="{{ $prevsession }}" >  --}}
+
+                                        @foreach ($courseSecond as $key => $course)
+                                            @if ($course->is_registered == 0)
+                                                @php
+                                                    $tatolCredits += $course->course_category == 1 ? $course->credit_unit : 0;
+                                                @endphp
+                                                <tr>
+                                                    <td> {{ $key + 1 }}. <input type="checkbox"
+                                                            id="{{ $course->credit_unit }}" name="courses2[]"
+                                                            {{ $course->course_category == 1 ? 'checked ' : '' }}
+                                                            value="{{ $course->course_id }}"
+                                                            class="{{ $course->credit_unit }}"
+                                                            onclick="{{ $course->course_category == 1 ? '' : 'totalIt2()' }}">
+                                                        <input type="hidden" name="course_units2[]"
+                                                            value="{{ $course->credit_unit }}">
+                                                        <input type="hidden" name="course_semester[]"
+                                                            value="{{ $course->semester }}">
+                                                    </td>
+                                                    <td>{{ $course->course_code }}</td>
+                                                    <td>{{ $course->course_title }}</td>
+                                                    <td>{{ $course->credit_unit }}</td>
+                                            @endif
+                                        @endforeach
+                                        </tr>
+                                        <tr>
+                                            <td><strong>Total Credit Unit</strong> </td>
+                                            <td colspan="2"></td>
+                                            <td id="tcu2" name="total"></td>
+
+                                        </tr>
+                                    </tbody>
+
+                                    <h4 id="limit" class=" font-weight-bold text-danger fw-bold"></h4>
+
+                                </table>
                                 {{--  To show First  lower level courses  --}}
+                                <div id="sub3" style="display: none">
+                                    <div
+                                        class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                                        <h6 class="m-0 font-weight-bold text-success">Lower First Level Course </h6>
+                                    </div>
+
+                                    <table class="table table-bordered table-striped" width="100%" cellspacing="0">
+                                        <thead>
+                                            <tr>
+                                                <th>First Semester </th>
+                                                <th>Course Code</th>
+                                                <th>Course Title</th>
+                                                <th>Credit Unit</th>
+                                            </tr>
+                                        </thead>
+
+                                        <tbody>
+                                            <input id="" type="hidden" name="student_id"
+                                                value="{{ Auth::guard('student')->user()->id }}">
+                                            <input id="" type="hidden" name="session"
+                                                value="{{ $session->id }}">
+                                            {{--  <input id="" type="text"  name="session" value="{{ $prevsession }}" >  --}}
+
+                                            @foreach ($lowercourseFirst as $key => $course)
+                                                <tr>
+                                                    <td> {{ $key + 1 }}. <input type="checkbox"
+                                                            id="{{ $course->credit_unit }}" name="courses1[]"
+                                                            {{ $course->course_category == 1 ? ' ' : '' }}
+                                                            value="{{ $course->course_id }}"
+                                                            class="{{ $course->credit_unit }}"
+                                                            onclick="{{ $course->course_category == 1 ? '' : 'totalIt2()' }}">
+                                                        <input type="hidden" name="course_units2[]"
+                                                            value="{{ $course->credit_unit }}">
+                                                        <input type="hidden" name="course_semester[]"
+                                                            value="{{ $course->semester }}">
+                                                    </td>
+                                                    <td>{{ $course->course_code }}</td>
+                                                    <td>{{ $course->course_title }}</td>
+                                                    <td>{{ $course->credit_unit }}</td>
+                                            @endforeach
+                                            </tr>
+                                            {{--  <tr>
+                                <td>Total Credit Unit</td>
+                                <td colspan="2"></td>
+                                <td id="result" name="total"></td>
+
+                                </tr>  --}}
+                                            <h4 id="limit2" class="font-weight-bold text-danger fw-bold"></h4>
+                                        </tbody>
+
+                                    </table>
+                                    {{-- Second Semester Lower Courses   --}}
+                                    <table class="table table-bordered table-striped" width="100%" cellspacing="0">
+                                        <thead>
+                                            <tr>
+                                                <th>Second Semester </th>
+                                                <th>Course Code</th>
+                                                <th>Course Title</th>
+                                                <th>Credit Unit</th>
+                                            </tr>
+                                        </thead>
+
+                                        <tbody>
+                                            <input id="" type="hidden" name="student_id"
+                                                value="{{ Auth::guard('student')->user()->id }}">
+                                            <input id="" type="hidden" name="session"
+                                                value="{{ $session->id }}">
+                                            {{--  <input id="" type="text"  name="session" value="{{ $prevsession }}" >  --}}
+
+                                            @foreach ($lowercourseSecond as $key => $course)
+                                                <tr>
+                                                    <td> {{ $key + 1 }}. <input type="checkbox"
+                                                            id="{{ $course->credit_unit }}" name="courses2[]"
+                                                            {{ $course->course_category == 1 ? ' ' : '' }}
+                                                            value="{{ $course->course_id }}"
+                                                            class="{{ $course->credit_unit }}"
+                                                            onclick="{{ $course->course_category == 1 ? '' : 'totalIt2()' }}">
+                                                        <input type="hidden" name="course_units2[]"
+                                                            value="{{ $course->credit_unit }}">
+                                                        <input type="hidden" name="course_semester[]"
+                                                            value="{{ $course->semester }}">
+                                                    </td>
+                                                    <td>{{ $course->course_code }}</td>
+                                                    <td>{{ $course->course_title }}</td>
+                                                    <td>{{ $course->credit_unit }}</td>
+                                            @endforeach
+                                            </tr>
+                                            {{--  <tr>
+                                <td>Total Credit Unit</td>
+                                <td colspan="2"></td>
+                                <td id="result" name="total"></td>
+
+                                </tr>  --}}
+                                        </tbody>
+
+                                    </table>
+                                </div>
 
 
                                 <button type="submit" class="btn btn-success">
@@ -149,7 +286,7 @@
                                 <table class="table table-bordered table-striped" width="100%" cellspacing="0">
                                     <thead>
                                         <tr>
-                                            <th> </th>
+                                            <th>First Semester </th>
                                             <th>Course Code</th>
                                             <th>Course Title</th>
                                             <th>Credit Unit</th>
@@ -178,14 +315,72 @@
                                                 @endphp
                                                 <tr>
                                                     {{--  <td> <input class="itemcourse" type="checkbox" id="course" name="courses[]" {{$course->course_category==1?"checked ":""}} value="{{ $course->course_code }}" onclick="{{$course->course_category==1?'return false':'totalIt()'}}"> </td>  --}}
-                                                    <td>  {{ $key + 1 }}.<input class="itemcourse" type="checkbox" id="course"
+                                                        <td>  {{ $key + 1 }}.<input class="itemcourse" type="checkbox" id="course"
                                                             name="courses[]"
 
                                                             value="{{ $course->course_id }}">
+                                                    <td>{{ $course->course_code }} </td>
+                                                    <td>{{ $course->course_title }}</td>
+                                                    <td>{{ $course->course_unit }}</td>
+                                                    {{--  <td><a class="btn btn-danger" type="button" href="">Delete Admin</a></td>  --}}
+                                                    {{--  <td>{!! $course->course_category == 1 ?'':'
+                        <form method=post action=/dropcourse">
+                                <div class="btn btn-danger px-3"> <i class="fas fa-credit-card text-white-50"></i>
+                                    <input type="text" class="form-control" id="js-rrr" value="'. $course->course_id .'" name="rrr" />
+                                    <input type="button" " value="Drop" button class="btn btn-danger"/>
+                                </div>
+                            </form>   '!!}</td>  --}}
+                                                    {{--  <td>{{ $course->id }} drop</td>  --}}
+                                            @endforeach
+                                            </tr>
+                                            <tr>
+                                                <td><strong>Total Credit Unit</strong> </td>
+                                                <td colspan="2"></td>
+                                                <td id="result" name="total">{{ $tatolCredits }}</td>
 
+                                            </tr>
+                                    </tbody>
 
+                                </table>
+                                  {{--  <button type="submit" class="btn btn-danger">
+                                    {{ __('Drop course') }}
+                                </button>  --}}
+                                 <table class="table table-bordered table-striped" width="100%" cellspacing="0">
+                                    <thead>
+                                        <tr>
+                                            <th>Second Semester </th>
+                                            <th>Course Code</th>
+                                            <th>Course Title</th>
+                                            <th>Credit Unit</th>
+                                            {{--  <th> Action</th>  --}}
+                                        </tr>
+                                    </thead>
 
-                                                    </td>
+                                    <tbody>
+                                        <form name=form1 method=post action="/dropcourse-reg">
+                                            @csrf
+
+                                            <input id="" type="hidden" name="student_id"
+                                                value="{{ Auth::guard('student')->user()->id }}">
+                                            <input id="" type="hidden" name="session"
+                                                value="{{ $session->id }}">
+                                            {{--  <input id="" type="text"  name="session" value="{{ $prevsession }}" >  --}}
+
+                                            @php
+                                                $tatolCredits = 0;
+                                            @endphp
+
+                                            @foreach ($courseform2 as $key => $course)
+                                                @php
+                                                    $tatolCredits += $course->course_unit;
+
+                                                @endphp
+                                                <tr>
+                                                    {{--  <td> <input class="itemcourse" type="checkbox" id="course" name="courses[]" {{$course->course_category==1?"checked ":""}} value="{{ $course->course_code }}" onclick="{{$course->course_category==1?'return false':'totalIt()'}}"> </td>  --}}
+                                                        <td>  {{ $key + 1 }}.<input class="itemcourse" type="checkbox" id="course"
+                                                            name="courses[]"
+
+                                                            value="{{ $course->course_id }}">
                                                     <td>{{ $course->course_code }} </td>
                                                     <td>{{ $course->course_title }}</td>
                                                     <td>{{ $course->course_unit }}</td>
@@ -239,14 +434,14 @@
 
     <script language="JavaScript">
         function setVisibility() {
-            let x = document.getElementById("sub3");
-            if (x.style.display === "none") {
-                x.style.display = "block";
-                document.getElementById("myButton").innerHTML = "Hide Lower Level Courses";
-            } else {
-                x.style.display = "none";
-                document.getElementById("myButton").innerHTML = "Show Lower Level Courses";
-            }
+             let x = document.getElementById("sub3");
+  if (x.style.display === "none") {
+    x.style.display = "block";
+    document.getElementById("myButton").innerHTML = "Hide Lower Level Courses";
+  } else {
+    x.style.display = "none";
+    document.getElementById("myButton").innerHTML = "Show Lower Level Courses";
+  }
         }
     </script>
 
@@ -293,32 +488,33 @@
 
 
         // Set the date we're counting down to
-        var countDownDate = new Date("october 31, 2023 23:59:00").getTime();
+var countDownDate = new Date("october 31, 2023 23:59:00").getTime();
 
-        // Update the count down every 1 second
-        var x = setInterval(function() {
+// Update the count down every 1 second
+var x = setInterval(function() {
 
-            // Get today's date and time
-            var now = new Date().getTime();
+  // Get today's date and time
+  var now = new Date().getTime();
 
-            // Find the distance between now and the count down date
-            var distance = countDownDate - now;
+  // Find the distance between now and the count down date
+  var distance = countDownDate - now;
 
-            // Time calculations for days, hours, minutes and seconds
-            var days = Math.floor(distance / (1000 * 60 * 60 * 24));
-            var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-            var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-            var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+  // Time calculations for days, hours, minutes and seconds
+  var days = Math.floor(distance / (1000 * 60 * 60 * 24));
+  var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+  var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+  var seconds = Math.floor((distance % (1000 * 60)) / 1000);
 
-            // Output the result in an element with id="demo"
-            document.getElementById("demo").innerHTML = days + "d " + hours + "h " +
-                minutes + "m " + seconds + "s ";
+  // Output the result in an element with id="demo"
+  document.getElementById("demo").innerHTML = days + "d " + hours + "h "
+  + minutes + "m " + seconds + "s ";
 
-            // If the count down is over, write some text
-            if (distance < 0) {
-                clearInterval(x);
-                document.getElementById("demo").innerHTML = "EXPIRED";
-            }
-        }, 1000);
+  // If the count down is over, write some text
+  if (distance < 0) {
+    clearInterval(x);
+    document.getElementById("demo").innerHTML = "EXPIRED";
+  }
+}, 1000);
+
     </script>
 @endsection

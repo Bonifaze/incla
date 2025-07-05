@@ -125,7 +125,7 @@
                         @endforeach
 
                         <div class="col-sm-6 col-md-4">
-                            <a href="" class=" @yield('/')">
+                            <a href="/complain" class=" @yield('/')">
                                 <div class="card card-stats card-round">
                                     <div class="card-body hover-card shadow-sm">
                                         <div class="row align-items-center">
@@ -135,8 +135,7 @@
                                                 </div>
                                             </div>
 
-                                            <!-- Your existing content -->
-
+                                        
                                             <div class="col col-stats ms-3 ms-sm-0" onclick="showComingSoonModal()">
                                                 <div class="numbers">
                                                     {{-- <p class="card-category">Complain</p> --}}
@@ -146,42 +145,6 @@
                                             <div class="col-auto">
                                                 <i class="fa fa-comments fa-3x text-success"></i>
                                             </div>
-
-
-
-                                            <!-- Modal Structure -->
-                                            <div class="modal fade" id="comingSoonModal" tabindex="-1"
-                                                aria-labelledby="comingSoonModalLabel" aria-hidden="true">
-                                                <div class="modal-dialog">
-                                                    <div class="modal-content">
-                                                        <div class="modal-header">
-                                                            <h5 class="modal-title" id="comingSoonModalLabel">Feature Coming
-                                                                Soon</h5>
-                                                            <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                                                aria-label="Close"></button>
-                                                        </div>
-                                                        <div class="modal-body">
-                                                            <p>This feature is coming soon. Stay tuned for updates!</p>
-                                                        </div>
-                                                        <div class="modal-footer">
-                                                            <button type="button" class="btn btn-secondary"
-                                                                data-bs-dismiss="modal">Close</button>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-
-                                            <!-- Bootstrap JS CDN -->
-                                            {{-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script> --}}
-
-                                            <script>
-                                                function showComingSoonModal() {
-                                                    var modalElement = document.getElementById('comingSoonModal');
-                                                    var myModal = new bootstrap.Modal(modalElement);
-                                                    myModal.show();
-                                                }
-                                            </script>
-
 
                                         </div>
                                     </div>
