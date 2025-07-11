@@ -478,11 +478,12 @@ class StudentResultsController extends Controller
     public function registration(Request $request)
     {
         $this->authorize('register', StudentResult::class);
-        return redirect()->route('result.register', [$request->student_id, $request->session_id, 1,100]);
+        return redirect()->route('result.register', [$request->student_id, $request->session_id, $request->semester,100]);
     } // end registration
 
     public function register($student_id, $session_id, $semester, $level)
     {
+        // dd($semester);
         $this->authorize('register', StudentResult::class);
         $student = Student::findOrFail($student_id);
 

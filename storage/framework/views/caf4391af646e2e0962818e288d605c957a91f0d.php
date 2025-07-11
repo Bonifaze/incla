@@ -151,7 +151,20 @@
                                             <span class="text-danger"> <?php echo e($errors->first('session_id')); ?></span>
                                         </div>
 
-                                        
+                                        <div class="col-md-4 form-group">
+                                            <label for="semester">Semester :</label>
+                                            <?php echo e(Form::select(
+                                                'semester',
+                                                [
+                                                    '1' => 'First Semester',
+                                                    '2' => 'Second Semester',
+                                                ],
+                                                1,
+                                                ['class' => 'form-control select2'],
+                                            )); ?>
+
+                                            <span class="text-danger"> <?php echo e($errors->first('semester')); ?></span>
+                                        </div>
 
 
 
@@ -214,7 +227,20 @@
                                             <span class="text-danger"> <?php echo e($errors->first('session_id')); ?></span>
                                         </div>
 
-                                        
+                                        <div class="col-md-4 form-group">
+                                            <label for="semester">Semester :</label>
+                                            <?php echo e(Form::select(
+                                                'semester',
+                                                [
+                                                    '1' => 'First Semester',
+                                                    '2' => 'Second Semester',
+                                                ],
+                                                1,
+                                                ['class' => 'form-control select2'],
+                                            )); ?>
+
+                                            <span class="text-danger"> <?php echo e($errors->first('semester')); ?></span>
+                                        </div>
 
                                         
 

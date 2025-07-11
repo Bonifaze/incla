@@ -16,6 +16,72 @@
 
     <!-- Right navbar links -->
     <ul class="navbar-nav ml-auto">
+     <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('ICTOfficers', 'App\StudentResult')): ?>
+            <li class="nav-item dropdown">
+                <a id="dropdownSubMenu1" style="color: #218c74;" href="#" data-toggle="dropdown" aria-haspopup="true"
+                    aria-expanded="false" class="nav-link dropdown-toggle">Session</a>
+                <ul aria-labelledby="dropdownSubMenu1" class="dropdown-menu border-0 shadow">
+
+             
+                      <li><a href="<?php echo e(route('session.create')); ?>" class="dropdown-item">Create Academic Sessions</a></li>
+                    <li><a href="<?php echo e(route('session.list')); ?>" class="dropdown-item">List Academic Sessions</a></li>
+                     <li><a href="<?php echo e(route('session.createAdmission')); ?>" class="dropdown-item">Create Admission Sessions</a></li>
+                    <li><a href="<?php echo e(route('session.listAdmission')); ?>" class="dropdown-item">List Admission Sessions</a></li>
+                     
+                    <!-- End Level two -->
+                </ul>
+            </li>
+        <?php else: ?>
+            <div></div>
+        <?php endif; ?>
+
+          <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('ICTOfficers', 'App\StudentResult')): ?>
+            <li class="nav-item dropdown">
+                <a id="dropdownSubMenu1" style="color: #218c74;" href="#" data-toggle="dropdown" aria-haspopup="true"
+                    aria-expanded="false" class="nav-link dropdown-toggle">Security</a>
+                <ul aria-labelledby="dropdownSubMenu1" class="dropdown-menu border-0 shadow">
+
+                    <!-- Level two dropdown-->
+
+                    <li class="dropdown-submenu dropdown-hover">
+                        <a id="dropdownSubMenu2" href="#" role="button" data-toggle="dropdown" aria-haspopup="true"
+                            aria-expanded="false" class="dropdown-item dropdown-toggle">Access Control</a>
+                        <ul aria-labelledby="dropdownSubMenu2" class="dropdown-menu border-0 shadow">
+
+                            <!-- Level two dropdown-->
+                            <li><a href="<?php echo e(route('rbac.create-role')); ?>" class="dropdown-item">Create Role </a></li>
+                            <li><a href="<?php echo e(route('rbac.create-perm')); ?>" class="dropdown-item">Create Permissions</a></li>
+                            <li><a href="<?php echo e(route('rbac.list-roles')); ?>" class="dropdown-item">List Roles</a></li>
+                            <li><a href="<?php echo e(route('rbac.list-perms')); ?>" class="dropdown-item">List Permissions</a></li>
+                        </ul>
+                    </li>
+                    <!-- End Level two -->
+                    <!-- Level two dropdown-->
+                    <li class="dropdown-submenu dropdown-hover">
+                        
+                        <ul aria-labelledby="dropdownSubMenu2" class="dropdown-menu border-0 shadow">
+
+                            <!-- Level two dropdown-->
+                            
+                            <li><a href="/adminTaskToRole" class="dropdown-item">Add Task to Role</a></li>
+                            <li><a href="/roleToAdmin" class="dropdown-item">Assign Role to Admin</a></li>
+                            <li><a href="/adminRemoveTaskFromRole" class="dropdown-item">Remove Task</a></li>
+                            <li><a href="/removeRoleFromAdmin" class="dropdown-item">Remove Role</a></li>
+
+
+                        </ul>
+                    </li>
+
+                    
+                    <li><a href="<?php echo e(route('rbac.audit')); ?>" class="dropdown-item">Audit </a></li>
+                    <li><a href="<?php echo e(route('staff.securitylist')); ?>" class="dropdown-item">List Staff Roles </a></li>
+                
+                    <!-- End Level two -->
+                </ul>
+            </li>
+        <?php else: ?>
+            <div></div>
+        <?php endif; ?>
 
              <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('ICTOfficers', 'App\StudentResult')): ?>
             <li class="nav-item dropdown">
