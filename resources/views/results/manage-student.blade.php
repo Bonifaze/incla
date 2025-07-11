@@ -217,7 +217,7 @@
                                             <span class="text-danger"> {{ $errors->first('session_id') }}</span>
                                         </div>
 
-                                        {{--  <div class="col-md-4 form-group">
+                                        <div class="col-md-4 form-group">
                                             <label for="semester">Semester :</label>
                                             {{ Form::select(
                                                 'semester',
@@ -229,7 +229,7 @@
                                                 ['class' => 'form-control select2'],
                                             ) }}
                                             <span class="text-danger"> {{ $errors->first('semester') }}</span>
-                                        </div>  --}}
+                                        </div>
 
 
 
@@ -287,7 +287,7 @@
                                             <span class="text-danger"> {{ $errors->first('session_id') }}</span>
                                         </div>
 
-                                        {{--  <div class="col-md-4 form-group">
+                                        <div class="col-md-4 form-group">
                                             <label for="semester">Semester :</label>
                                             {{ Form::select(
                                                 'semester',
@@ -299,7 +299,7 @@
                                                 ['class' => 'form-control select2'],
                                             ) }}
                                             <span class="text-danger"> {{ $errors->first('semester') }}</span>
-                                        </div>  --}}
+                                        </div>
 
                                         {{--  <div class="col-md-4 form-group">
                                             <label for="level">Level :</label>

@@ -106,8 +106,8 @@ active
                                                     @endforeach
                                                 </tbody>
                                             </table>
-                                            {{--  <a href="{{ route('admin.course_uploadprevious') }}" type="submit" class="btn btn-success" data-bs-target="#myModal"> <i class="fas fa-solid fa-eye"></i>
-                                                View My Courses History</a>  --}}
+                                            <a href="{{ route('admin.course_uploadprevious') }}" type="submit" class="btn btn-success" data-bs-target="#myModal"> <i class="fas fa-solid fa-eye"></i>
+                                                View My Courses History</a>
                                         </div>
                                     </div>
                                 </div>

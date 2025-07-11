@@ -38,7 +38,7 @@
 
               			<div class="col-md-6 form-group">
 								<label for="mat_no"> Matric Number :</label>
-								<?php echo Form::text('mat_no', null, array( 'placeholder' => 'Incla/CBT/1/0003 ','class' => 'form-control', 'id' => 'mat_no', 'required' => 'required')); ?>
+								<?php echo Form::text('mat_no', null, array( 'placeholder' => 'Incla/CBT/1/0123 ','class' => 'form-control', 'id' => 'mat_no', 'required' => 'required')); ?>
 
 	                    			<span class="text-danger"> <?php echo e($errors->first('mat_no')); ?></span>
 							</div>

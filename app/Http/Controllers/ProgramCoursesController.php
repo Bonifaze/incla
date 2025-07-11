@@ -549,17 +549,36 @@ class ProgramCoursesController extends Controller
 
     public function getCoursesAndStaff(Request $request)
     {
-        $session = new Session();
         $program_id = $request->program_id;
         $program = Program::find($program_id);
-         dd($program);
-        $admin_department = AdminDepartment::where('academic_department_id' , $program->academic_department_id)->first();
-        $courses = ProgramCourse::where('program_id', $program_id)->where('session_id', $session->currentSession())->get();
-        $staffs = StaffWorkProfile::where('admin_department_id', $admin_department->id)->with('Staff')->get();
-
+    
+        if (!$program) {
+            return response()->json(['error' => 'Invalid program ID'], 400);
+        }
+    
+        $admin_department = AdminDepartment::where('academic_department_id', $program->academic_department_id)->first();
+        if (!$admin_department) {
+            return response()->json(['error' => 'Admin department not found'], 400);
+        }
+    
+        $session = new Session();
+        $session_id = $session->currentSession();
+    
+        if (!$session_id) {
+            return response()->json(['error' => 'Session not found'], 400);
+        }
+    
+        $courses = ProgramCourse::where('program_id', $program_id)
+                    ->where('session_id', $session_id)
+                    ->get();
+    
+        $staffs = StaffWorkProfile::where('admin_department_id', $admin_department->id)
+                    ->with('Staff')
+                    ->get();
+    
         return response(['courses' => $courses, 'staffs' => $staffs], 200);
     }
-
+    
     // LEFTOUT
 
 
