@@ -194,7 +194,7 @@
                         @endif
                         <button type="submit" class="btn btn-success"> {{ __('Login') }}</button>
                         <br>
-                        <p class="link-text"><a href="/forgotpassword" class="text-danger active-link"> Forgot Password</a> </p>
+                        <p class="link-text"><a href="/forgotpassword" class="text-danger active-link"> Forgot Password ?</a> </p>
                         <br>
                         <p class="link-text"> I Don't have an Account <a href="/register" class="text-success h4 active-link">Create Account here </a></p>
                     </form>
