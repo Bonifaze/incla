@@ -1,11 +1,6 @@
-
-@extends('layouts.mini')
-
-
-
-@section('pagetitle')
+<?php $__env->startSection('pagetitle'); ?>
     Staff Home
-@endsection
+<?php $__env->stopSection(); ?>
 
 <style>
   /* Styling for the small avatar container */
@@ -30,24 +25,24 @@
 <!-- Sidebar Links -->
 
 <!-- Treeview -->
-@section('staff-open')
+<?php $__env->startSection('staff-open'); ?>
     menu-open
-@endsection
+<?php $__env->stopSection(); ?>
 
-@section('staff')
+<?php $__env->startSection('staff'); ?>
     active
-@endsection
+<?php $__env->stopSection(); ?>
 
 <!-- Page -->
-@section('staff-home')
+<?php $__env->startSection('staff-home'); ?>
     active
-@endsection
+<?php $__env->stopSection(); ?>
 
 <!-- End Sidebar links -->
 
 
 
-@section('content')
+<?php $__env->startSection('content'); ?>
     <div class="content-wrapper bg-white">
 
         <!-- Main content -->
@@ -58,7 +53,7 @@
 
 
 <h1 class="app-page-title text-uppercase h6 font-weight-bold p-3 mb-3 shadow-sm text-center text-white bg-success border rounded">
-                    Welcome to InCLA {{ $userType }} APPLICANTS LIST
+                    Welcome to InCLA <?php echo e($userType); ?> APPLICANTS LIST
                 </h1>
 
 
@@ -66,17 +61,17 @@
 <div class="card-body ps-0" style="overflow-x: auto; white-space: nowrap; padding-bottom: 1rem;">
                     <div class="d-flex">
                         <!-- Avatar items with responsive grid classes -->
-                       @foreach ($applicants as $applicant)
+                       <?php $__currentLoopData = $applicants; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $applicant): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
 
 
                         <div class="col-lg-1 col-md-2 col-sm-3 col-4 text-center mb-3">
-                            <a href="/adminView/{{$applicant -> applicant_type}}/{{urlencode(base64_encode($applicant -> id))}}" class="avatar avatar-sm rounded-circle border border-primary">
-                                <img alt=" {{$applicant -> first_name}} {{$applicant -> first_name}} " title="{{ ucwords(strtolower($applicant->surname)) }} {{ ucwords(strtolower($applicant->first_name)) }} {{ ucwords(strtolower($applicant->middle_name)) }}" class="avatar-img" src="data:image/png;base64,{{ $applicant->passport }}">
+                            <a href="/adminView/<?php echo e($applicant -> applicant_type); ?>/<?php echo e(urlencode(base64_encode($applicant -> id))); ?>" class="avatar avatar-sm rounded-circle border border-primary">
+                                <img alt=" <?php echo e($applicant -> first_name); ?> <?php echo e($applicant -> first_name); ?> " title="<?php echo e(ucwords(strtolower($applicant->surname))); ?> <?php echo e(ucwords(strtolower($applicant->first_name))); ?> <?php echo e(ucwords(strtolower($applicant->middle_name))); ?>" class="avatar-img" src="data:image/png;base64,<?php echo e($applicant->passport); ?>">
                             </a>
-                            <p class="mb-0 text-sm" >{{ ucwords(strtolower($applicant->surname)) }} {{ ucwords(strtolower($applicant->first_name)) }}</p>
-                            {{--  <small class="mb-0 text-sm"> </small>  --}}
+                            <p class="mb-0 text-sm" ><?php echo e(ucwords(strtolower($applicant->surname))); ?> <?php echo e(ucwords(strtolower($applicant->first_name))); ?></p>
+                            
                         </div>
-                        @endforeach
+                        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
 
                         <!-- More avatars can be added here -->
                     </div>
@@ -88,23 +83,24 @@
                 <div class="col-xl-12 col-lg-12">
                     <!-- Card Header - Dropdown -->
                     <div class="card m-3 shadow">
-                      @if (session('approvalMsg'))
-                            {!! session('approvalMsg') !!}
-                            @endif
+                      <?php if(session('approvalMsg')): ?>
+                            <?php echo session('approvalMsg'); ?>
+
+                            <?php endif; ?>
                    <div class="card-header py-3 bg-light">
     <h5 class="fw-bold text-dark mb-3">🔍 View Applicants by Status</h5>
     <hr class="sidebar-divider mb-3">
 
     <div class="d-flex flex-wrap align-items-center">
-        <a href="/allApprovedApplicants/{{ $userType }}" class="btn btn-success shadow fw-bold px-4 py-2 me-3 mb-2">
+        <a href="/allApprovedApplicants/<?php echo e($userType); ?>" class="btn btn-success shadow fw-bold px-4 py-2 me-3 mb-2">
             ✅ View Approved Applicants
         </a>
 
-        <a href="/qualified/{{ $userType }}" class="btn btn-primary shadow fw-bold px-4 py-2 me-3 mb-2">
+        <a href="/qualified/<?php echo e($userType); ?>" class="btn btn-primary shadow fw-bold px-4 py-2 me-3 mb-2">
             ⭐ View Recommended Applicants
         </a>
 
-        <a href="/allRejectedApplicants/{{ $userType }}" class="btn btn-danger shadow fw-bold px-4 py-2 mb-2">
+        <a href="/allRejectedApplicants/<?php echo e($userType); ?>" class="btn btn-danger shadow fw-bold px-4 py-2 mb-2">
             ❌ View Rejected Applicants
         </a>
     </div>
@@ -116,7 +112,7 @@
                             <div class="table-responsive">
                                 <hr class="sidebar-divider">
                                 <form action="/adminUtmeFilter" method="POST">
-                                    @csrf
+                                    <?php echo csrf_field(); ?>
                                     <label for="start"><b class="text-success">Apllied From:</b></label>
                                     <input type="date" id="start" name="start_date" value="" class="mr-5 rounded">
                                     <input type="hidden" name="applicant_type" value="UTME">
@@ -140,42 +136,42 @@
         </tr>
     </thead>
     <tbody>
-        @foreach ($applicants as $applicant)
+        <?php $__currentLoopData = $applicants; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $applicant): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
             <tr>
-                <td>{{ $applicant->first_name }}</td>
-                <td>{{ $applicant->surname }}</td>
-                <td>{{ $applicant->phone }}</td>
-                <td>{{ $applicant->gender }}</td>
-                <td>{{ $applicant->course_program }}</td>
-                <td>{{ $applicant->created_at }}</td>
+                <td><?php echo e($applicant->first_name); ?></td>
+                <td><?php echo e($applicant->surname); ?></td>
+                <td><?php echo e($applicant->phone); ?></td>
+                <td><?php echo e($applicant->gender); ?></td>
+                <td><?php echo e($applicant->course_program); ?></td>
+                <td><?php echo e($applicant->created_at); ?></td>
 
-                {{-- Reject Button --}}
+                
                 <td>
-                    <form method="GET" action="/rejection/{{ $applicant->applicant_type }}/{{ urlencode(base64_encode($applicant->id)) }}">
-                        @csrf
+                    <form method="GET" action="/rejection/<?php echo e($applicant->applicant_type); ?>/<?php echo e(urlencode(base64_encode($applicant->id))); ?>">
+                        <?php echo csrf_field(); ?>
                         <button type="submit" class="btn btn-danger text-white">
                             Reject
                         </button>
                     </form>
                 </td>
 
-                {{-- Recommend Button --}}
+                
                 <td>
-                    <a href="/recommend/{{ $applicant->applicant_type }}/{{ urlencode(base64_encode($applicant->id)) }}"
+                    <a href="/recommend/<?php echo e($applicant->applicant_type); ?>/<?php echo e(urlencode(base64_encode($applicant->id))); ?>"
                        class="btn btn-primary mt-1">
                         Recommend
                     </a>
                 </td>
 
-                {{-- Full Details Button --}}
+                
                 <td>
-                    <a href="/adminView/{{ $applicant->applicant_type }}/{{ urlencode(base64_encode($applicant->id)) }}"
+                    <a href="/adminView/<?php echo e($applicant->applicant_type); ?>/<?php echo e(urlencode(base64_encode($applicant->id))); ?>"
                        class="btn btn-secondary mt-1">
                         View
                     </a>
                 </td>
             </tr>
-        @endforeach
+        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
     </tbody>
 </table>
 
@@ -195,8 +191,10 @@
             </div>
         </section>
     </div>
-@endsection
+<?php $__env->stopSection(); ?>
 
-@section('pagescript')
+<?php $__env->startSection('pagescript'); ?>
     <script src="<?php echo asset('dist/js/bootbox.min.js'); ?>"></script>
-@endsection
+<?php $__env->stopSection(); ?>
+
+<?php echo $__env->make('layouts.mini', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH /Users/lifeofrence/Downloads/PROJECTCODE/inclaproject/incla/resources/views/admissions/formview.blade.php ENDPATH**/ ?>

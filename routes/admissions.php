@@ -268,6 +268,7 @@ Route::post('/editusersinfo', 'App\Http\Controllers\AdminController@editusersinf
 
 Route::get('/adminallApplicants', 'App\Http\Controllers\AdminController@allApplicants');
 Route::get('/allApprovedApplicants/{allApprovedApplicants}', 'App\Http\Controllers\AdminController@allApprovedApplicants');
+Route::get('/allRejectedApplicants/{allRejecteddApplicants}', 'App\Http\Controllers\AdminController@allRejectedApplicants');
 
 Route::get('/adminutme', 'App\Http\Controllers\AdminController@utme');
 Route::get('/adminde', 'App\Http\Controllers\AdminController@DE');
