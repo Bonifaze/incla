@@ -1,32 +1,19 @@
-{{-- @php
-
-if(!session('adminId'))
-{
-
-  header('location: /adminLogin');
-  exit;
-}
-@endphp  --}}
-@extends('layouts.mini')
-
-
-
-@section('pagetitle')
+<?php $__env->startSection('pagetitle'); ?>
     Staff Home
-@endsection
+<?php $__env->stopSection(); ?>
 
 
 
 <!-- Sidebar Links -->
 
 <!-- Treeview -->
-@section('staff-open')
+<?php $__env->startSection('staff-open'); ?>
     menu-open
-@endsection
+<?php $__env->stopSection(); ?>
 
-@section('staff')
+<?php $__env->startSection('staff'); ?>
     active
-@endsection
+<?php $__env->stopSection(); ?>
 <!-- Add this to your CSS -->
 <style>
     .zoom-img {
@@ -39,15 +26,15 @@ if(!session('adminId'))
     }
 </style>
 <!-- Page -->
-@section('staff-home')
+<?php $__env->startSection('staff-home'); ?>
     active
-@endsection
+<?php $__env->stopSection(); ?>
 
 <!-- End Sidebar links -->
 
 
 
-@section('content')
+<?php $__env->startSection('content'); ?>
     <div class="content-wrapper bg-white">
 
         <!-- Main content -->
@@ -65,32 +52,35 @@ if(!session('adminId'))
 
                         <div class="app-content pt-3 p-md-3 p-lg-4">
                             <div class="container-xl">
-                                @csrf
-                                @if (session('approvalMsg'))
-                                    {!! session('approvalMsg') !!}
-                                @endif
+                                <?php echo csrf_field(); ?>
+                                <?php if(session('approvalMsg')): ?>
+                                    <?php echo session('approvalMsg'); ?>
+
+                                <?php endif; ?>
                                 <div class="container py-5">
                                     <div class="col-6 col-lg-6">
                                         <form method="get"
-                                            action="/recommend/{{ $applicantsDetails->applicant_type }}/{{ urlencode(base64_encode($applicantsDetails->user_id)) }}">
-                                            @csrf
+                                            action="/recommend/<?php echo e($applicantsDetails->applicant_type); ?>/<?php echo e(urlencode(base64_encode($applicantsDetails->user_id))); ?>">
+                                            <?php echo csrf_field(); ?>
                                            
 
                                                 <button type="submit"
                                                     class=" btn text-white fw-bold bg-success bg-gradient mb-3 px-5">
-                                                    {{ __('Recommend') }}
+                                                    <?php echo e(__('Recommend')); ?>
+
                                                 </button>
                                            
                                         </form>
                                         </div>
                                         <div class="col-6 col-lg-6">
                                         <form method="get"
-                                                        action="/rejection/{{ $applicantsDetails->applicant_type }}/{{ urlencode(base64_encode($applicantsDetails->user_id)) }}">
-                                                        @csrf
+                                                        action="/rejection/<?php echo e($applicantsDetails->applicant_type); ?>/<?php echo e(urlencode(base64_encode($applicantsDetails->user_id))); ?>">
+                                                        <?php echo csrf_field(); ?>
                                                         
                                                             <button type="submit"
                                                                 class=" btn text-white fw-bold bg-danger bg-gradient mb-3 px-5 float-end">
-                                                                {{ __('Reject ') }}
+                                                                <?php echo e(__('Reject ')); ?>
+
                                                             </button>
                                                         </div>
                                                     </form>
@@ -106,7 +96,7 @@ if(!session('adminId'))
                                                 <div class="card-body">
                                                     <!-- Profile Photo -->
                                                     <div class="mb-4 text-center">
-                                                        <img src="data:image/jpg;base64,{{ $applicantsDetails->passport }}"
+                                                        <img src="data:image/jpg;base64,<?php echo e($applicantsDetails->passport); ?>"
                                                             alt="Applicant Passport"
                                                             class="rounded-circle shadow-lg border-4 border-primary"
                                                             style="width: 100px; height: 100px; max-width: 100%; object-fit: cover;">
@@ -117,17 +107,17 @@ if(!session('adminId'))
                                                         <p
                                                             class="fs-5 text-dark fw-bold d-flex justify-content-between mb-3">
                                                             Surname: <span
-                                                                class="text-muted">{{ $applicantsDetails->surname }}</span>
+                                                                class="text-muted"><?php echo e($applicantsDetails->surname); ?></span>
                                                         </p>
                                                         <p
                                                             class="fs-5 text-dark fw-bold d-flex justify-content-between mb-3">
                                                             First Name: <span
-                                                                class="text-muted">{{ $applicantsDetails->first_name }}</span>
+                                                                class="text-muted"><?php echo e($applicantsDetails->first_name); ?></span>
                                                         </p>
                                                         <p
                                                             class="fs-5 text-dark fw-bold d-flex justify-content-between mb-3">
                                                             Other Name: <span
-                                                                class="text-muted">{{ $applicantsDetails->middle_name }}</span>
+                                                                class="text-muted"><?php echo e($applicantsDetails->middle_name); ?></span>
                                                         </p>
                                                     </div>
 
@@ -137,11 +127,11 @@ if(!session('adminId'))
                                                         <!-- Gender and Date of Birth on the same line, left and right aligned -->
                                                         <div class="d-flex justify-content-between mb-3">
                                                             <div class="fw-bold text-muted">Gender:</div>
-                                                            <div class="text-dark">{{ $applicantsDetails->gender }}</div>
+                                                            <div class="text-dark"><?php echo e($applicantsDetails->gender); ?></div>
 
                                                             <div class="fw-bold text-muted ms-5">Date of Birth:</div>
                                                             <!-- Added space between the fields -->
-                                                            <div class="text-dark">{{ $applicantsDetails->dob }}</div>
+                                                            <div class="text-dark"><?php echo e($applicantsDetails->dob); ?></div>
                                                         </div>
                                                         <!-- State of Origin and LGA on the same line, left and right aligned -->
 
@@ -149,21 +139,22 @@ if(!session('adminId'))
                                                         <div class="d-flex justify-content-between mb-3">
                                                             <div class="fw-bold text-muted">State of Origin:</div>
                                                             <div class="text-dark ms-auto">
-                                                                {{ $applicantsDetails->state_origin }}</div>
+                                                                <?php echo e($applicantsDetails->state_origin); ?></div>
 
                                                             <div class="fw-bold text-muted">LGA:</div>
-                                                            <div class="text-dark ms-auto">{{ $applicantsDetails->lga }}
+                                                            <div class="text-dark ms-auto"><?php echo e($applicantsDetails->lga); ?>
+
                                                             </div>
                                                         </div>
 
                                                         <div class="d-flex justify-content-between mb-3">
                                                             <div class="fw-bold text-muted">Email:</div>
-                                                            <div class="text-dark">{{ $applicantsDetails->email }}</div>
+                                                            <div class="text-dark"><?php echo e($applicantsDetails->email); ?></div>
                                                         </div>
 
                                                         <div class="d-flex justify-content-between mb-3">
                                                             <div class="fw-bold text-muted">Address:</div>
-                                                            <div class="text-dark">{{ $applicantsDetails->address }}</div>
+                                                            <div class="text-dark"><?php echo e($applicantsDetails->address); ?></div>
                                                         </div>
                                                     </div>
 
@@ -182,25 +173,27 @@ if(!session('adminId'))
                                                         <div class="d-flex justify-content-between mb-3">
                                                             <div class="fw-bold text-muted">Sponsors Name:</div>
                                                             <div class="text-dark">
-                                                                {{ $applicantsDetails->sponsor_surname }}</div>
+                                                                <?php echo e($applicantsDetails->sponsor_surname); ?></div>
                                                         </div>
 
                                                         <div class="d-flex justify-content-between mb-3">
                                                             <div class="fw-bold text-muted">Sponsors Email:</div>
-                                                            <div class="text-dark">{{ $applicantsDetails->sponsors_email }}
+                                                            <div class="text-dark"><?php echo e($applicantsDetails->sponsors_email); ?>
+
                                                             </div>
                                                         </div>
 
                                                         <div class="d-flex justify-content-between mb-3">
                                                             <div class="fw-bold text-muted">Sponsors Phone Number:</div>
-                                                            <div class="text-dark">{{ $applicantsDetails->sponsors_phone }}
+                                                            <div class="text-dark"><?php echo e($applicantsDetails->sponsors_phone); ?>
+
                                                             </div>
                                                         </div>
 
                                                         <div class="d-flex justify-content-between mb-3">
                                                             <div class="fw-bold text-muted">Sponsors Address:</div>
                                                             <div class="text-dark">
-                                                                {{ $applicantsDetails->sponsors_address }}</div>
+                                                                <?php echo e($applicantsDetails->sponsors_address); ?></div>
                                                         </div>
                                                         <br>
                                                         <br>
@@ -209,32 +202,32 @@ if(!session('adminId'))
                                                         <div class="d-flex justify-content-between mb-3">
                                                             <div class="fw-bold text-muted">Admission Type:</div>
                                                             <div class="text-dark">
-                                                                <b>{{ $applicantsDetails->admission_type }}</b></div>
+                                                                <b><?php echo e($applicantsDetails->admission_type); ?></b></div>
                                                         </div>
 
                                                         <div class="d-flex justify-content-between mb-3">
                                                             <div class="fw-bold text-muted">Course Applied:</div>
                                                             <div class="text-dark">
-                                                                <b>{{ $applicantsDetails->course_program }}</b></div>
+                                                                <b><?php echo e($applicantsDetails->course_program); ?></b></div>
                                                         </div>
 
                                                         <div class="d-flex justify-content-between mb-3">
                                                             <div class="fw-bold text-muted">School Attended:</div>
                                                             <div class="text-dark">
-                                                                <b>{{ $applicantsDetails->school_attended }}</b></div>
+                                                                <b><?php echo e($applicantsDetails->school_attended); ?></b></div>
                                                         </div>
 
                                                         <div class="d-flex justify-content-between mb-3">
                                                             <div class="fw-bold text-muted">Certificates Obtained:</div>
                                                             <div class="text-dark">
-                                                                <b>{{ $applicantsDetails->certificates_obtained }}</b>
+                                                                <b><?php echo e($applicantsDetails->certificates_obtained); ?></b>
                                                             </div>
                                                         </div>
 
                                                         <div class="d-flex justify-content-between mb-3">
                                                             <div class="fw-bold text-muted">Previous Project Topic:</div>
                                                             <div class="text-dark">
-                                                                <b>{{ $applicantsDetails->pr_topic }}</b></div>
+                                                                <b><?php echo e($applicantsDetails->pr_topic); ?></b></div>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -255,7 +248,7 @@ if(!session('adminId'))
                                                         <div class="col-12 col-md-6 mb-3">
                                                             <div class="image-container">
                                                                 <img class="mx-auto d-block zoom-img"
-                                                                    src="data:image/jpeg;base64,{{ $applicantsDetails->cert }}"
+                                                                    src="data:image/jpeg;base64,<?php echo e($applicantsDetails->cert); ?>"
                                                                     alt="Degree Certificate"
                                                                     style="height: 510px; width: 100%; object-fit: cover;">
                                                             </div>
@@ -265,18 +258,18 @@ if(!session('adminId'))
                                                         <div class="col-12 col-md-6 mb-3">
                                                             <div class="image-container">
                                                                 <img class="mx-auto d-block zoom-img"
-                                                                    src="data:image/jpeg;base64,{{ $applicantsDetails->olevel1 }}"
+                                                                    src="data:image/jpeg;base64,<?php echo e($applicantsDetails->olevel1); ?>"
                                                                     alt="Olevel Second Sitting"
                                                                     style="height: 500px; width: 100%; object-fit: cover;">
                                                             </div>
                                                         </div>
-                                                        @if(!empty($applicantsDetails->olevel2))
+                                                        <?php if(!empty($applicantsDetails->olevel2)): ?>
     <div class="col-12 col-md-6 mb-3">
         <div class="image-container">
-            <img class="mx-auto d-block zoom-img" src="data:image/jpeg;base64,{{ $applicantsDetails->olevel2 }}" alt="Olevel Second Sitting" style="height: 500px; width: 100%; object-fit: cover;">
+            <img class="mx-auto d-block zoom-img" src="data:image/jpeg;base64,<?php echo e($applicantsDetails->olevel2); ?>" alt="Olevel Second Sitting" style="height: 500px; width: 100%; object-fit: cover;">
         </div>
     </div>
-@endif
+<?php endif; ?>
 
                                                     </div>
                                                 </div>
@@ -301,8 +294,10 @@ if(!session('adminId'))
                 
         </section>
     </div>
-@endsection
+<?php $__env->stopSection(); ?>
 
-@section('pagescript')
+<?php $__env->startSection('pagescript'); ?>
     <script src="<?php echo asset('dist/js/bootbox.min.js'); ?>"></script>
-@endsection
+<?php $__env->stopSection(); ?>
+
+<?php echo $__env->make('layouts.mini', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH /Users/lifeofrence/Downloads/PROJECTCODE/inclaproject/incla/resources/views/admissions/layouts/viewUtmeApplicants.blade.php ENDPATH**/ ?>

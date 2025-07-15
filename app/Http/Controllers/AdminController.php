@@ -1139,17 +1139,17 @@ public function uploadScores(Request $request)
                 ]);
 
                 $approvalMsg = '<div class="alert alert-warning alert-dismissible" role="alert"> <button type="button" class="close" data-dismiss="alert"> &times; </button> Student has been rejected </div>';
-                return redirect('/qualified/' . $pageLink)->with('approvalMsg', $approvalMsg);
+                return back()->with('approvalMsg', $approvalMsg);
             } catch (QueryException $e) {
                 $error_code = $e->errorInfo[1];
                 if ($error_code == 1062) {
                     // $rejectionMsg = '<div class="alert alert-danger alert-dismissible" role="alert"> <button type="button" class="close" data-dismiss="alert"> &times; </button> Student has already been rejected </div>';
                     $approvalMsg = '<div class="alert alert-danger alert-dismissible" role="alert"> <button type="button" class="close" data-dismiss="alert"> &times; </button> Student has already been rejected </div>';
                     // return redirect('/qualified/' . $pageLink)->with('rejectionMsg', $rejectionMsg);
-                    return redirect('/qualified/' . $pageLink)->with('approvalMsg', $approvalMsg);
+                    return back()->with('approvalMsg', $approvalMsg);
                 } else {
                     $approvalMsg = '<div class="alert alert-danger alert-dismissible" role="alert"> <button type="button" class="close" data-dismiss="alert"> &times; </button> Your rejection was not successful'.$e->getMessage().' </div>';
-                    return redirect('/qualified/' . $pageLink)->with('approvalMsg', $approvalMsg);
+                    return back()->with('approvalMsg', $approvalMsg);
                 }
             }
         // } else {
@@ -2407,29 +2407,38 @@ public function viewaddRemitasServiceType(){
     {
         $this->authorize('undergraduateapplicant', Session::class);
         $currentSessionId = $this->getCurrentAdmissionSession();
-
-        $userType;
-        $applicants = DB::table('approved_applicants')->get();
-        $approvedArr = array();
-        $counter = 0;
-        foreach ($applicants as $app) {
-            $approvedArr[$counter] = $app->user_id;
-            $counter++;
-        }
-
-        // Use the $userType in your query
+    
+        // Get approved applicants
+        $approvedApplicants = DB::table('approved_applicants')->pluck('user_id')->toArray();
+    
+        // Get rejected applicants
+        $rejectedApplicants = DB::table('rejected_applicants')->pluck('user_id')->toArray();
+    
+        // Combine both to exclude
+        $excludedUserIds = array_merge($approvedApplicants, $rejectedApplicants);
+    
+        // Fetch applicants excluding approved and rejected ones
         $applicants = DB::table('users')
-            ->where('applicant_type', $userType) // Dynamically filter by user type
-            ->whereNotIn('users.id', $approvedArr)
+            ->where('applicant_type', $userType)
+            ->whereNotIn('users.id', $excludedUserIds)
             ->join('usersbiodata', 'usersbiodata.user_id', '=', 'users.id')
             ->where('usersbiodata.session_id', $currentSessionId)
             ->join('academic_record', 'academic_record.user_id', '=', 'users.id')
-            ->select('users.*', 'usersbiodata.gender', 'usersbiodata.dob', 'usersbiodata.passport', 'usersbiodata.status', 'academic_record.course_program','usersbiodata.created_at')
+            ->select(
+                'users.*',
+                'usersbiodata.gender',
+                'usersbiodata.dob',
+                'usersbiodata.passport',
+                'usersbiodata.status',
+                'academic_record.course_program',
+                'usersbiodata.created_at'
+            )
             ->where('usersbiodata.status', '1')
             ->get();
-
-        return view('admissions.formview', compact('applicants','userType'));
+    
+        return view('admissions.formview', compact('applicants', 'userType'));
     }
+    
 
 
     public function viewApplicants($applicantType, $id)
@@ -2465,26 +2474,33 @@ public function viewQualifiedApplicants($user_type)
     // Fetch already approved applicants
     $approvedArr = DB::table('approved_applicants')->pluck('user_id')->toArray();
 
-    // Fetch qualified applicants
-    $qualifiedApplicants = DB::table('users')
-        ->where('users.applicant_type', $user_type) // Step 1: Filter by user type
-        ->where('users.session_id', $currentSessionId) // Step 2: Filter by session
-        ->whereNotIn('users.id', $approvedArr) // Step 3: Exclude approved applicants
-        ->whereIn('users.id', function ($query) { // Step 4: Check recommended applicants
-            $query->select('user_id')
-                  ->from('recommended_applicants');
-        })
-        ->join('usersbiodata', 'usersbiodata.user_id', '=', 'users.id') // Join usersbiodata
-        ->join('academic_record', 'academic_record.user_id', '=', 'users.id') // Join academic_record
-        ->select(
-            'users.*',
-            'usersbiodata.gender',
-            'usersbiodata.passport',
-            'usersbiodata.created_at',
-            'usersbiodata.dob',
-            'academic_record.course_program'
-        )
-        ->get();
+          // Get approved applicants
+          $approvedApplicants = DB::table('approved_applicants')->pluck('user_id')->toArray();
+    
+          // Get rejected applicants
+          $rejectedApplicants = DB::table('rejected_applicants')->pluck('user_id')->toArray();
+      
+          // Combine both to exclude
+          $excludedUserIds = array_merge($approvedApplicants, $rejectedApplicants);
+      
+          // Fetch applicants excluding approved and rejected ones
+          $qualifiedApplicants = DB::table('users')
+              ->where('applicant_type', $user_type)
+              ->whereNotIn('users.id', $excludedUserIds)
+              ->join('usersbiodata', 'usersbiodata.user_id', '=', 'users.id')
+              ->where('usersbiodata.session_id', $currentSessionId)
+              ->join('academic_record', 'academic_record.user_id', '=', 'users.id')
+              ->select(
+                  'users.*',
+                  'usersbiodata.gender',
+                  'usersbiodata.dob',
+                  'usersbiodata.passport',
+                  'usersbiodata.status',
+                  'academic_record.course_program',
+                  'usersbiodata.created_at'
+              )
+              ->where('usersbiodata.status', '1')
+              ->get();
 
     // Pass the qualified applicants to the view
     return view('admissions.qualifiedApplicants', compact('qualifiedApplicants', 'user_type'));
@@ -2495,7 +2511,8 @@ public function allApprovedApplicants($user_type)
 {
     $this->authorize('allapprovedapplicant', Session::class);
     $currentSessionId = $this->getCurrentAdmissionSession();
-
+    
+    $status ='Approved';
     // Fetch approved applicants and join with necessary tables
     $allApplicants = DB::table('approved_applicants')
         ->join('users', 'approved_applicants.user_id', '=', 'users.id')
@@ -2509,12 +2526,38 @@ public function allApprovedApplicants($user_type)
     if ($allApplicants->isEmpty()) {
         // Optionally, handle the case where no applicants are found
         // e.g., you can pass a message or handle an empty array in the view
-        return view('admissions.allApprovedApplicants', compact('allApplicants', 'user_type'))->with('message', 'No approved applicants found.');
+        return view('admissions.allApprovedApplicants', compact('allApplicants', 'user_type', 'status'))->with('message', 'No approved applicants found.');
     }
 
     // Return view with all approved applicants data
-    return view('admissions.allApprovedApplicants', compact('allApplicants', 'user_type'));
+    return view('admissions.allApprovedApplicants', compact('allApplicants', 'user_type', 'status'));
 }
+
+public function allRejectedApplicants($user_type)
+{
+    $this->authorize('allapprovedapplicant', Session::class);
+    $currentSessionId = $this->getCurrentAdmissionSession();
+    $status ='Rejected';
+    // Fetch approved applicants and join with necessary tables
+    $allApplicants = DB::table('rejected_applicants')
+        ->join('users', 'rejected_applicants.user_id', '=', 'users.id')
+        ->join('usersbiodata', 'usersbiodata.user_id', '=', 'users.id')
+        ->join('academic_record', 'academic_record.user_id', '=', 'users.id')
+        ->select('users.*', 'usersbiodata.gender', 'academic_record.course_program', 'rejected_applicants.*')
+        ->where('users.session_id', $currentSessionId)
+        ->get();
+
+    // Check if any applicants were retrieved
+    if ($allApplicants->isEmpty()) {
+        // Optionally, handle the case where no applicants are found
+        // e.g., you can pass a message or handle an empty array in the view
+        return view('admissions.allApprovedApplicants', compact('allApplicants', 'user_type','status'))->with('message', 'No Rejected applicants found.');
+    }
+
+    // Return view with all approved applicants data
+    return view('admissions.allApprovedApplicants', compact('allApplicants', 'user_type', 'status'));
+}
+
 
 
 }

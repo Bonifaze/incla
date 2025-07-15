@@ -162,16 +162,7 @@
                         </ul>
                     </li>
 
-                     <li class="nav-item dropdown">
-            <a id="dropdownSubMenu1" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
-                class="nav-link dropdown-toggle">Security</a>
-            <ul aria-labelledby="dropdownSubMenu1" class="dropdown-menu border-0 shadow">
-                <li><a href="{{ route('rbac.create-role') }}" class="dropdown-item">Create Role </a></li>
-                <li><a href="{{ route('rbac.create-perm') }}" class="dropdown-item">Create Permissions</a></li>
-                <li><a href="{{ route('rbac.list-roles') }}" class="dropdown-item">List Roles</a></li>
-                <li><a href="{{ route('rbac.list-perms') }}" class="dropdown-item">List Permissions</a></li>
-            </ul>
-        </li>
+                    
 
 
 
