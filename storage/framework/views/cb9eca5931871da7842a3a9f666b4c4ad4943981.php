@@ -328,17 +328,11 @@
                         </a>
                         <ul class="nav nav-treeview">
                             <li class="nav-item">
-                                <a href="<?php echo e(route('student.list_level', 100)); ?>" class="nav-link <?php echo $__env->yieldContent('exam-remark'); ?>">
+                                <a href="<?php echo e(route('student.list_level', base64_encode(100))); ?>" class="nav-link <?php echo $__env->yieldContent('exam-remark'); ?>">
                                     <i class="fas fa-list-alt nav-icon"></i>
                                     <p> All students</p>
                                 </a>
-                            </li>
-
-
-
-
-
-
+                            </li> 
                         </ul>
 
                     </li>
@@ -351,23 +345,43 @@
                             </p>
                         </a>
                         <ul class="nav nav-treeview">
-                            <li class="nav-item">
-                                <a href="<?php echo e(route('student.list_session', 17)); ?>"
+                        <li class="nav-item">
+                                <a href="<?php echo e(route('student.list_session', 5)); ?>"
+                                    class="nav-link <?php echo $__env->yieldContent('exam-remark'); ?>">
+                                    <i class="fas fa-list-alt nav-icon"></i>
+                                    <p>2025/2026 </p>
+                                </a>
+                            </li>
+
+                        <li class="nav-item">
+                                <a href="<?php echo e(route('student.list_session', 4)); ?>"
+                                    class="nav-link <?php echo $__env->yieldContent('exam-remark'); ?>">
+                                    <i class="fas fa-list-alt nav-icon"></i>
+                                    <p>2024/2025 </p>
+                                </a>
+                            </li>
+
+                        <li class="nav-item">
+                                <a href="<?php echo e(route('student.list_session', 3)); ?>"
                                     class="nav-link <?php echo $__env->yieldContent('exam-remark'); ?>">
                                     <i class="fas fa-list-alt nav-icon"></i>
                                     <p>2023/2024 </p>
                                 </a>
                             </li>
 
-
-
-
+                            <li class="nav-item">
+                                <a href="<?php echo e(route('student.list_session', 2)); ?>"
+                                    class="nav-link <?php echo $__env->yieldContent('exam-remark'); ?>">
+                                    <i class="fas fa-list-alt nav-icon"></i>
+                                    <p>2022/2023 </p>
+                                </a>
+                            </li>
 
                             <li class="nav-item">
-                                <a href="<?php echo e(route('student.list_session', 11)); ?>"
+                                <a href="<?php echo e(route('student.list_session', 1)); ?>"
                                     class="nav-link <?php echo $__env->yieldContent('exam-download'); ?>">
                                     <i class="fas fa-list-alt nav-icon"></i>
-                                    <p>2017/2018</p>
+                                    <p>2021/2022</p>
                                 </a>
                             </li>
 

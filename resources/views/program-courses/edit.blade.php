@@ -57,7 +57,7 @@
 							<span class="text-danger"> {{ $errors->first('host_program_id') }}</span>
 							</div>  --}}
 
-							<div class="col-md-4 form-group">
+							<div class="col-md-5 form-group">
 								<label for="program_id">Program :</label>
 								<select name="program_id" id="program_id" class="form-control">
 									<option value="">Select Program</option>
@@ -76,18 +76,30 @@
                                     ]) !!}
 
 
-                                {!! Form::hidden('semester', 1, [
+                                {{--  {!! Form::hidden('semester', 1, [
                                         'placeholder' => '',
                                         'class' => 'form-control',
                                         'id' => 'serial_no',
                                         'readonly',
-                                    ]) !!}
+                                    ]) !!}  --}}
 
                             <div class="col-md-4 form-group">
 								<label for="session_id">Session :</label>
 								{{ Form::select('session_id', $sessions, null,['class' => 'form-control', 'id' => 'session_id', 'name' => 'session_id']) }}
 							<span class="text-danger"> {{ $errors->first('session_id') }}</span>
 							</div>
+
+							<div class="col-md-3 form-group">
+								<label for="semester">Semester :</label>
+								{{ Form::select('semester', [
+	                        		'1' => 'First Semester',
+	                        		'2' => 'Second Semester',
+	                        		],
+	                        		$pcourse->semester,
+	                       			 ['class' => 'form-control select2']
+	                    			) }}
+	                    			<span class="text-danger"> {{ $errors->first('semester') }}</span>
+							</div>
 							</div>
 
 
@@ -95,19 +107,12 @@
 
 
 
-
-
-
-
-
-
-
 							</div>
 
 
 
 							<div class="row">
-              			<div class="col-md-5 form-group">
+              				<div class="col-md-8 form-group">
 								<label for="course_id">Course Describe :</label>
 								<select name="course_id" id="course_id" class="form-control">
 									@foreach ($courses as $id => $name)
@@ -130,7 +135,7 @@
 
 
 
-              </div>
+        
               </div>
                <!-- /.card-body -->
 

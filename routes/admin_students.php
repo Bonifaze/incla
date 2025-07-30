@@ -24,9 +24,9 @@ Route::get('/students/transcript/{encode}', 'AdminStudentsController@transcript'
 
 Route::patch('/students/reset', 'AdminStudentsController@reset')->name('student.reset');
 
-Route::get('/students/list-level/{level}', 'AdminStudentsController@listLevel')->name('student.list_level');
+Route::get('/students/list-level/{encode}', 'AdminStudentsController@listLevel')->name('student.list_level');
 
-Route::get('/students/list-level/{level}', 'AdminStudentsController@listLevel')->name('student.list_level');
+// Route::get('/students/list-level/{level}', 'AdminStudentsController@listLevel')->name('student.list_level');
 
 Route::POST('/students/findprogram', 'AdminStudentsController@findprogram')->name('student.findprogram');
 

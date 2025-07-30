@@ -299,9 +299,11 @@ class AdminStudentsController extends Controller
         return view('students.admin.list',compact('students'));
     } //end list
 
-    public function listLevel($level)
+    public function listLevel($encode)
     {
         $this->authorize('search', Student::class);
+        $level = base64_decode($encode);
+        // dd($level);
         $sum = "LIST OF $level LEVEL STUDENTS";
         $students = Student::with(['contact', 'academic', 'medical', 'academic.program'])
             ->whereHas('academic', function ($query) use ($level)

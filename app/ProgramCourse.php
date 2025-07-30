@@ -403,6 +403,19 @@ public function getActionAttribute()
         );
     }
 
+    public function getSemesterNameAttribute()
+{
+    if ($this->semester == 1) {
+        return "First Semester";
+    } elseif ($this->semester == 2) {
+        return "Second Semester";
+    } elseif ($this->semester == 3) {
+        return "Summer Semester";
+    } else {
+        return "Unknown Semester";
+    }
+}
+
 
     protected $appends = ['course_title', 'course_code', 'staff_name'];
 

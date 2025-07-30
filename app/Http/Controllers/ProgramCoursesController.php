@@ -52,19 +52,24 @@ class ProgramCoursesController extends Controller
     {
         $this->authorize('list',ProgramCourse::class);
         $session = new Session();
-        //  $lecturers = Staff::join('staff_work_profiles', 'staff.id', '=', 'staff_work_profiles.staff_id')
-        // ->orderBy('staff_work_profiles.staff_type_id','ASC')
-        // ->orderBy('staff_work_profiles.admin_department_id','ASC')->get()->pluck('full_name','id');
-        // dd($lecturers);
-        $pcourses = ProgramCourse::with(['course','staff', 'program', 'session'])
-        ->where('semester', $session->currentSemester())
-        ->where('session_id', $session->currentSession())
-        ->orderBy('id','DESC')
-        // ->orderBy('program_id','ASC')
-        // ->orderBy('level','ASC')
-        ->paginate(100);
 
-        return view('/program-courses/list',compact('pcourses'));
+        // Fetch all program courses
+        $pcourses = ProgramCourse::with(['course', 'program', 'session'])
+            // ->where('semester', $session->currentSemester())
+            ->where('session_id', $session->currentSession())
+            ->orderBy('id','DESC')
+            ->paginate(100);
+        
+        // Fetch all staff_courses (to map staff to courses)
+        $staff_courses = StaffCourse::with('staff')
+            ->where('session_id', $session->currentSession())
+            ->get()
+            ->groupBy(function ($item) {
+                return $item->program_id . '-' . $item->course_id . '-' . $item->session_id;
+            });
+        
+        return view('program-courses.list', compact('pcourses', 'staff_courses'));
+    
     }
 //esting
 
@@ -232,23 +237,39 @@ class ProgramCoursesController extends Controller
 
     public function assign()
     {
-        $this->authorize('gstallocate',ProgramCourse::class);
-        // $programs = Program::orderBy('name','ASC')->pluck('name','id');
-        // $sessions = Session::orderBy('id','DESC')->pluck('name','id');
-        // $courses = Course::orderBy('course_code', 'ASC')->get()->pluck('courseDescribe','id');
-
+        $this->authorize('gstallocate', ProgramCourse::class);
+        $session = new Session();
+    
         $programs = Program::orderBy('name', 'ASC')->where('status', 1)->get();
+    
+        $lecturers = Staff::where('staff.status', 1)
+            ->orderBy('first_name', 'ASC')
+            ->get()->pluck('full_name', 'id');
+    
+            $session = new Session();
 
-        $lecturers = Staff::where('staff.status',1)
-        ->orderBy('first_name','ASC')
-        ->get()->pluck('full_name','id');
-
-        return view('/program-courses/assign_courses',compact('programs', 'lecturers'));
-
-        // $courses = Course::orderBy('course_code', 'ASC')->get()->pluck('courseDescribe','id');
-
-        // return view('/program-courses/create',compact('courses','programs','sessions', 'lecturers'));
+        // Fetch all program courses
+        $pcourses = ProgramCourse::with(['course', 'program', 'session'])
+            // ->where('semester', $session->currentSemester())
+            ->where('session_id', $session->currentSession())
+            // ->orderBy('updated_at','DESC')
+            ->paginate(100);
+        
+        // Fetch all staff_courses (to map staff to courses)
+        $staff_courses = StaffCourse::with('staff')
+            ->where('session_id', $session->currentSession())
+            ->orderBy('updated_at','DESC')
+            ->get()
+            ->groupBy(function ($item) {
+                return $item->program_id . '-' . $item->course_id . '-' . $item->session_id;
+            });
+        
+       
+    
+        return view('/program-courses/assign_courses', compact('programs', 'lecturers', 'pcourses','staff_courses'));
     }
+    
+
 
     public function store2(Request $request)
     {
@@ -291,21 +312,29 @@ class ProgramCoursesController extends Controller
 
     public function find(Request $request)
     {
-        $this->authorize('search',ProgramCourse::class);
-        $pcourses = ProgramCourse::with(['course', 'program', 'lecturer', 'session'])
-        // ->where('semester',  $request->semester)
-         ->where('session_id', $request->session_id)
-         ->where('level', [100,200,300,400])
-        // ->where('semester',  $request->semester)
-        //  ->where('session_id', 17)
-        //  ->where('level', $request->level)
-        ->where('program_id', $request->program)
-        ->orderBy('id','DESC')
-        ->orderBy('program_id','ASC')->orderBy('level','ASC')->paginate(100);
-
-      return view('program-courses.list',compact('pcourses'));
-    } // end find
-
+        $this->authorize('search', ProgramCourse::class);
+    
+        // Fetch program courses based on filters
+        $pcourses = ProgramCourse::with(['course', 'program', 'session'])
+            ->where('session_id', $request->session_id)
+            ->where('program_id', $request->program)
+            ->whereIn('level', [100, 200, 300, 400])
+            ->orderBy('id', 'DESC')
+            ->orderBy('program_id', 'ASC')
+            ->orderBy('level', 'ASC')
+            ->paginate(100);
+    
+        // Fetch staff-course mappings for this session
+        $staff_courses = StaffCourse::with('staff')
+            ->where('session_id', $request->session_id)
+            ->get()
+            ->groupBy(function ($item) {
+                return $item->program_id . '-' . $item->course_id . '-' . $item->session_id;
+            });
+    
+        return view('program-courses.list', compact('pcourses', 'staff_courses'));
+    }
+    
 
     public function RegisteredCourses($program_course_id)
     {
