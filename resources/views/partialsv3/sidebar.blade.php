@@ -240,7 +240,7 @@
                             <li class="nav-item">
                                 <a href="{{ route('program_course.list') }}" class="nav-link @yield('exam-remark')">
                                     <i class="fa fa-eye nav-icon"></i>
-                                    <p>Allocted Courses </p>
+                                    <p>Allocated Courses </p>
                                 </a>
                             </li>
                             <li class="nav-item">

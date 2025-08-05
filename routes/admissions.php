@@ -157,7 +157,7 @@ Route::post('/pgolevel', 'App\Http\Controllers\ApplicantController@pgolevel');
 // });
 
 // Route::get('/utmeletter', 'App\Http\Controllers\ApplicantController@utmeletter');
-Route::get('/letter', 'App\Http\Controllers\ApplicantController@generatePDF');
+// Route::get('/letter', 'App\Http\Controllers\ApplicantController@generatePDF');
 //Route::get('generate-pdf', [PDFController::class, 'generatePDF']);
 // Route::get('/generate-pdf', 'App\Http\Controllers\PDFController@generatePDF');
 //route for downloading admission leter
