@@ -240,7 +240,7 @@
                             <li class="nav-item">
                                 <a href="<?php echo e(route('program_course.list')); ?>" class="nav-link <?php echo $__env->yieldContent('exam-remark'); ?>">
                                     <i class="fa fa-eye nav-icon"></i>
-                                    <p>Allocted Courses </p>
+                                    <p>Allocated Courses </p>
                                 </a>
                             </li>
                             <li class="nav-item">

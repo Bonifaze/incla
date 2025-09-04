@@ -48,9 +48,8 @@
                             <div class="card-header">
 
                                  <h5 class="app-page-title text-uppercase h5 font-weight p-2 mb-2 shadow-sm text-center text">
-                         <?php echo e($session->name); ?> Academic Session
+                         <?php echo e($session->name); ?> Academic Session <?php echo e($session->semesterName($semester)); ?>
 
-                         
                     </h5>
 
                             </div>
@@ -72,10 +71,7 @@
                                     <?php endif; ?>
                                     <form method="POST" action="/results/updateICT">
                                         <?php echo csrf_field(); ?>
-
-
-
-<div class="table-responsive mt-5 mb-4">
+                                        <div class="table-responsive mt-5 mb-4">
                                             <table class="table table-bordered table-striped table-hover">
                                                 <thead>
                                                     <tr>
@@ -86,51 +82,53 @@
                                                         <th>CA2 Score</th>
                                                         <th>CA3 Score</th>
                                                         <th>Exam Score</th>
+                                                          <th>Change Total Score</th>
                                                         <th>Total Score</th>
                                                         <th>Grade</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
-
                                                     <?php $__currentLoopData = $registered_courses; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $student_course): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                                     <input type="hidden" name="reg_ids[]" value="<?php echo e($student_course->id); ?>">
                                                         <tr>
                                                             <td><?php echo e($loop->iteration); ?></td>
                                                             <td><?php echo e($student_course->course_title); ?></td>
                                                             <td><?php echo e($student_course->course_code); ?></td>
-
                                                             <td><input type="number" name="ca1_scores[]"
                                                                     value="<?php echo e($student_course->ca1_score); ?>"
                                                                     id="<?php echo e('ca1' . $student_course->student_id); ?>"
-                                                                    class="form-control ca"></td>
+                                                                    class="form-control ca" readonly></td>
                                                             <td><input type="number" name="ca2_scores[]"
                                                                 value="<?php echo e($student_course->ca2_score); ?>"
                                                                 id="<?php echo e('ca2' . $student_course->student_id); ?>"
-                                                                class="form-control ca"></td>
+                                                                class="form-control ca" readonly></td>
                                                             <td><input type="number" name="ca3_scores[]"
                                                                 value="<?php echo e($student_course->ca3_score); ?>"
                                                                 id="<?php echo e('ca3' . $student_course->student_id); ?>"
-                                                                class="form-control ca"></td>
+                                                                class="form-control ca" readonly></td>
                                                             <td><input type="number" name="exam_scores[]"
                                                                     value="<?php echo e($student_course->exam_score); ?>"
                                                                     id="<?php echo e('exam' . $student_course->student_id); ?>"
+                                                                    class="form-control exam" readonly></td>
+                                                                    <td><input type="number" name="total[]"
+                                                                    value="<?php echo e($student_course->total); ?>"
+                                                                    id="<?php echo e('exam' . $student_course->student_id); ?>"
                                                                     class="form-control exam"></td>
+
+                                                                        <input type="hidden" name="old_total[]"
+                                                                    value="<?php echo e($student_course->total); ?>"
+                                                                    id="<?php echo e('exam' . $student_course->student_id); ?>"
+                                                                    class="form-control exam">
+
                                                             <td><input type="number" name="total_scores[]"
                                                                     value="<?php echo e($student_course->total); ?>"
                                                                     class="form-control" readonly></td>
                                                             <td><?php echo e($student_course->grade); ?></td>
-                                                             <input type="hidden" name="old_total[]"
-                                                                    value="<?php echo e($student_course->total); ?>"
-                                                                    id="<?php echo e('exam' . $student_course->student_id); ?>"
-                                                                    class="form-control exam">
                                                         </tr>
                                                     <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                                                 </tbody>
                                             </table>
                                         </div>
-
-
-                                        
                                         <div class="mb-4">
                                             <button type="submit" name="button" class="btn btn-success">Update Scores</button>
                                         </div>
