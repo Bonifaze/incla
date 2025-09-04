@@ -40,7 +40,7 @@ active
                                 @endif
                         <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
                             <h6 class="m-0 font-weight-bold text-success">Admission Status : {{ $status }}</h6>
-                            <div class="dropdown no-arrow">
+                            {{--  <div class="dropdown no-arrow">
 
                                 {!! $status=="Successful"?'
                                        <a href="/letter" class="btn btn-success mt-3"> <i class=" fas fa-envelope fa-sm text-white-50 p-2"></i>Print Addmission Letter</a>
@@ -48,7 +48,7 @@ active
                                 ':'' !!}
 
 
-                            </div>
+                            </div>  --}}
 
                         </div>
 

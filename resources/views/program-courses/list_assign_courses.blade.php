@@ -67,12 +67,12 @@
 
 							<tr>
 							  <td>{{ $pcourse->id }}</td>
-							  <td>{{ $pcourse->course->courseDescribe }}</td>
+							  <td>{{ $pcourse->course->CourseCode }}</td>
 							   <td>{{ $pcourse->program->name }}</td>
 							   <td>{{ $pcourse->level }}</td>
 							 <td>{{ $pcourse->hours }}</td>
 							 <td>{{ $pcourse->session->name }}</td>
-							 {{--  <td>{{ $pcourse->lecturer->fullName }}</td>  --}}
+							 <td>{{ $pcourse->lecturer->fullName ?? '' }}</td>
 							<td><a href="{{ route('program_course.edit',$pcourse->id) }}"> Edit </td>
 
 							    <td>

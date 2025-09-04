@@ -218,10 +218,7 @@
                              <?php echo e($session->name); ?>
 
                              </td>
-                            <td colspan="2" align="center"><strong>LEVEL</strong>:
-                             <?php echo e($session->registered_courses1->last()?->level); ?>
-
-                             </td>
+                            
                             <td colspan="2"><strong>SEMESTER</strong>:
                         
                              FIRST
@@ -326,10 +323,7 @@
      <?php echo e($session->name); ?>
 
      </td>
-    <td colspan="2" align="center"><strong>LEVEL</strong>:
-     <?php echo e($session->registered_courses2->last()?->level); ?>
-
-     </td>
+    
     <td colspan="2"><strong>SEMESTER</strong>:
  
  SECOND

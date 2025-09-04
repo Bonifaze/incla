@@ -80,12 +80,19 @@
                                     ]) !!}
 
 
-                                {!! Form::hidden('semester', 1, [
-                                        'placeholder' => '',
-                                        'class' => 'form-control',
-                                        'id' => 'serial_no',
-                                        'readonly',
-                                    ]) !!}
+                             <div class="col-md-3 form-group">
+                                    <label for="semester">Semester :</label>
+                                    {{ Form::select(
+                                        'semester',
+                                        [
+                                            '1' => 'First Semester',
+                                            '2' => 'Second Semester',
+                                        ],
+                                        1,
+                                        ['class' => 'form-control select2'],
+                                    ) }}
+                                    <span class="text-danger"> {{ $errors->first('semester') }}</span>
+                                </div>
 
 
                                     {{--  <label for="level">Level :</label>
@@ -130,7 +137,7 @@
 
 
                             <div class="row">
-                                <div class="col-md-4 form-group">
+                                <div class="col-md-8 form-group">
                                     <label for="course_id">Course Title :</label>
                                     {{ Form::select('course_id', $courses, null, ['onchange' => 'getHours()', 'class' => 'form-control select2', 'id' => 'course_id', 'name' => 'course_id']) }}
                                     {{--  <select $courses class="form-control"  name="course_id" id="course_id" onchange="getHours()">  --}}

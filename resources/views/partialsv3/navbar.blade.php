@@ -25,8 +25,8 @@
              
                       <li><a href="{{ route('session.create') }}" class="dropdown-item">Create Academic Sessions</a></li>
                     <li><a href="{{ route('session.list') }}" class="dropdown-item">List Academic Sessions</a></li>
-                     <li><a href="{{ route('session.createAdmission') }}" class="dropdown-item">Create Admission Sessions</a></li>
-                    <li><a href="{{ route('session.listAdmission') }}" class="dropdown-item">List Admission Sessions</a></li>
+                     {{--  <li><a href="{{ route('session.createAdmission') }}" class="dropdown-item">Create Admission Sessions</a></li>
+                    <li><a href="{{ route('session.listAdmission') }}" class="dropdown-item">List Admission Sessions</a></li>  --}}
                      {{--  <li><a href="{{ route('create.Admission') }}" class="dropdown-item">Create Admission</a></li>  --}}
                     <!-- End Level two -->
                 </ul>

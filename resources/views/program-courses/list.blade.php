@@ -52,7 +52,8 @@
 							  {{--  <th>Level</th>  --}}
 							  <th>Credit</th>
 							  <th>Session</th>
-							  {{--  <th>Lecturer</th>  --}}
+							  <th>Semester</th>
+							  <th>Lecturer</th>
 							  <th>Action</th>
 							  <th>Action</th>
 
@@ -63,30 +64,49 @@
 
 						  <tbody>
 
-						  @foreach ($pcourses as $key => $pcourse)
+						 @foreach ($pcourses as $key => $pcourse)
+    @php
+        $key = $pcourse->program_id . '-' . $pcourse->course_id . '-' . $pcourse->session_id;
+        $staffs = $staff_courses[$key] ?? collect();
+    @endphp
 
-							<tr>
-							  {{--  <td>{{ $pcourse->id }}</td>  --}}
-							  <td>{{ $pcourse->course->courseDescribe ?? ' ' }}</td>
-							   <td>{{ $pcourse->program->name }}</td>
-							   {{--  <td>{{ $pcourse->level }}</td>  --}}
-							 <td>{{ $pcourse->credit_unit }}</td>
-							 <td>{{ $pcourse->session->name }}</td>
- {{--  <td>{{ $pcourse->lecturer->FullName  ?? ' '}}</td>  --}}
-							<td><a href="{{ route('program_course.edit',$pcourse->id) }}" class="btn btn-warning"> Edit </td>
+    <tr>
+        <td>{{ $pcourse->course->courseDescribe ?? ' ' }}</td>
+        <td>{{ $pcourse->program->name }}</td>
+        <td>{{ $pcourse->credit_unit }}</td>
+        <td>{{ $pcourse->session->name }}</td>
+        @if ($pcourse->semester == 1)
+         <td> First  </td>
+        @else
+         <td>  Second </td>
+        @endif
+        {{--  <td>{{ $pcourse->semester }}</td>  --}}
 
-							    <td>
-							    {!! Form::open(['method' => 'Delete', 'route' => 'program_course.delete', 'id'=>'deletePCourseForm'.$pcourse->id]) !!}
-				    		{{ Form::hidden('id', $pcourse->id) }}
+        {{-- Show assigned lecturer names --}}
+        <td>
+            @if($staffs->count())
+                @foreach($staffs as $sc)
+                    {{ $sc->staff->full_name ?? 'No Name' }}<br>
+                @endforeach
+            @else
+                <em> </em>
+            @endif
+        </td>
 
+        <td>
+            <a href="{{ route('program_course.edit', $pcourse->id) }}" class="btn btn-warning">Edit</a>
+        </td>
+        <td>
+            {!! Form::open(['method' => 'Delete', 'route' => 'program_course.delete', 'id' => 'deletePCourseForm'.$pcourse->id]) !!}
+                {{ Form::hidden('id', $pcourse->id) }}
+                <button onclick="deletePCourse({{ $pcourse->id }})" type="button" class="btn btn-danger">
+                    <span class="icon-line2-trash"></span> Delete
+                </button>
+            {!! Form::close() !!}
+        </td>
+    </tr>
+@endforeach
 
-				    		<button onclick="deletePCourse({{$pcourse->id}})" type="button" class="{{$pcourse->id}} btn btn-danger" ><span class="icon-line2-trash"></span> Delete</button>
-				    		{!! Form::close() !!}
-
-							 </td>
-							</tr>
-
-							@endforeach
 
 						  </tbody>
 

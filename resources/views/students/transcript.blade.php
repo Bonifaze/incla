@@ -223,9 +223,9 @@
                             <td colspan="3"><strong>ACADEMIC SESSION</strong>:
                              {{  $session->name }}
                              </td>
-                            <td colspan="2" align="center"><strong>LEVEL</strong>:
+                            {{--  <td colspan="2" align="center"><strong>LEVEL</strong>:
                              {{ $session->registered_courses1->last()?->level }}
-                             </td>
+                             </td>  --}}
                             <td colspan="2"><strong>SEMESTER</strong>:
                         {{--  {{ $session->registered_courses1->first()?->semester }}  --}}
                              FIRST
@@ -329,9 +329,9 @@
     <td colspan="3"><strong>ACADEMIC SESSION</strong>:
      {{  $session->name }}
      </td>
-    <td colspan="2" align="center"><strong>LEVEL</strong>:
+    {{--  <td colspan="2" align="center"><strong>LEVEL</strong>:
      {{ $session->registered_courses2->last()?->level }}
-     </td>
+     </td>  --}}
     <td colspan="2"><strong>SEMESTER</strong>:
  {{--   {{ $session->registered_courses2->first()?->semester }} --}}
  SECOND

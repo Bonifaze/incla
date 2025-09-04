@@ -30,7 +30,35 @@ class SessionsController extends Controller
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
+     * 
+     * 
      */
+
+
+     public function create()
+{
+    $this->authorize('list', Session::class);
+    $text ="Create Session";
+
+    return view('/sessions/create', compact('text'));
+}
+public function store(Request $request)
+    {
+        $this->authorize('list', Session::class);
+    	$this->validate($request, [
+    	    'name' => 'required|string|max:255|unique:permissions',
+
+    	]);
+    	$create = new Session();
+    		$create->name = $request->name;
+    		$create->start_date = $request->start_date;
+            $create->end_date = $request->end_date;
+    		$create->save();
+    	return redirect()->to('/sessions/list')
+    	->with('success','New Academic Session created successfully');
+    }
+
+
     public function index()
     {
         $this->authorize('list', Session::class);

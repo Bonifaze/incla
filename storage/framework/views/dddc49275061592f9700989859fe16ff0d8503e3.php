@@ -124,6 +124,55 @@
                     </div>
                     <!-- /.box -->
 
+
+                   <h3 class="text-lg font-semibold mt-10 mb-4">Assigned Courses</h3>
+
+<table id="coursesTable" class="table table-bordered">
+
+    <thead>
+        <tr>
+            
+            <th>Course</th>
+            <th>Program</th>
+            <th>semester</th>
+            <th>Lecturer(s)</th>
+        </tr>
+    </thead>
+    <tbody>
+      
+						<?php $__currentLoopData = $pcourses; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $key => $pcourse): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+    <?php
+        $lookupKey = $pcourse->program_id . '-' . $pcourse->course_id . '-' . $pcourse->session_id;
+        $staffs = $staff_courses[$lookupKey] ?? collect();
+    ?>
+
+    <?php if($staffs->count()): ?>
+    <tr>
+        <td><?php echo e($pcourse->course->courseDescribe ?? ' '); ?></td>
+        <td><?php echo e($pcourse->program->name); ?></td>
+        
+        
+        <td>
+            <?php if($pcourse->semester == 1): ?>
+                First
+            <?php else: ?>
+                Second
+            <?php endif; ?>
+        </td>
+        <td>
+            <?php $__currentLoopData = $staffs; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $sc): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                <?php echo e($sc->staff->full_name ?? 'No Name'); ?><br>
+            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+        </td>
+       
+    </tr>
+    <?php endif; ?>
+<?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+
+    </tbody>
+</table>
+
+
                 </div>
                 <!--/.col (left) -->
 
@@ -263,7 +312,24 @@
 
 
         }
+        
     </script>
+
+    <script>
+    $(document).ready(function () {
+        $('#coursesTable').DataTable({
+            paging: true,
+            searching: true,
+            ordering: true,
+            pageLength: 10,
+            language: {
+                search: "Filter courses:",
+                emptyTable: "No assigned courses found"
+            }
+        });
+    });
+</script>
+
 <?php $__env->stopSection(); ?>
 
 <?php echo $__env->make('layouts.mini', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH /Users/lifeofrence/Downloads/PROJECTCODE/inclaproject/incla/resources/views//program-courses/assign_courses.blade.php ENDPATH**/ ?>

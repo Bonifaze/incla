@@ -53,10 +53,22 @@ class StaffCourse extends Model implements Auditable
         return $this->belongsTo('App\Session', 'session_id');
     }
 
+    public function course()
+    {
+        return $this->belongsTo(Course::class);
+    }
+    
+
     public function getCourseSemesterAttribute()
     {
         return ProgramCourse::where('id', $this->course_id)->first()->semester_id ?? null;
     }
+
+    public function staff()
+{
+    return $this->belongsTo(Staff::class);
+}
+
     protected $appends = [
         'course_title',
         'course_code',
