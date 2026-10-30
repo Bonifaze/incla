@@ -61,7 +61,7 @@ class AdminStudentsController extends Controller
     }
     function getloginurl()
     {
-        return 'https://admissions.veritas.edu.ng/students/login';
+        return 'https://portal.incla.edu.ng/students/login';
     }
     public function store(Request $request)
     {

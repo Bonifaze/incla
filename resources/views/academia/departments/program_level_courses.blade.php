@@ -2,7 +2,7 @@
 
 
 
-@section('pagetitle') {{ $level }} Level Courses @endsection
+@section('pagetitle') Courses @endsection
 
 
 @section('content')
@@ -22,7 +22,7 @@
 
                              <h1
                         class="app-page-title text-uppercase h5 font-weight-bold p-2 mb-2 shadow-sm text-center text-success border">
-                       {{ $level }} Level Courses
+                     Courses
                     </h1>
 
              <div class="table-responsive card-body">

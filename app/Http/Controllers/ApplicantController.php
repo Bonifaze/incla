@@ -1298,6 +1298,20 @@ class ApplicantController extends Controller
 
         //dd($req);
 
+        $req->validate([
+            'passport' => 'nullable|mimes:jpeg,png,jpg,gif,svg,webp|max:5120',
+            'signature' => 'nullable|mimes:jpeg,png,jpg,gif,svg,webp|max:5120',
+            'cert' => 'nullable|mimes:jpeg,png,jpg,gif,svg,webp|max:5120',
+            'olevel1' => 'nullable|mimes:jpeg,png,jpg,gif,svg,webp|max:5120',
+            'olevel2' => 'nullable|mimes:jpeg,png,jpg,gif,svg,webp|max:5120',
+        ], [
+            'passport.mimes' => 'The passport must be an image (jpeg, png, jpg, gif, svg, webp). PDFs are not allowed.',
+            'signature.mimes' => 'The signature must be an image (jpeg, png, jpg, gif, svg, webp). PDFs are not allowed.',
+            'cert.mimes' => 'The certificate must be an image (jpeg, png, jpg, gif, svg, webp). PDFs are not allowed.',
+            'olevel1.mimes' => 'The O-Level result 1 must be an image (jpeg, png, jpg, gif, svg, webp). PDFs are not allowed.',
+            'olevel2.mimes' => 'The O-Level result 2 must be an image (jpeg, png, jpg, gif, svg, webp). PDFs are not allowed.',
+        ]);
+
         DB::beginTransaction();
 
         try {
@@ -1389,7 +1403,9 @@ class ApplicantController extends Controller
 
             $errorMessage = $e instanceof \Illuminate\Database\QueryException  && $e->errorInfo[1] == 1062
             ? 'You cannot fill the form again.'
-            : 'Please try again later or contact support.';
+            : (str_contains($e->getMessage(), 'Unsupported image type') 
+                ? 'Invalid file uploaded. Please ensure your passport, signature, and certificates are image files (JPG, PNG) and not PDFs.'
+                : 'Please try again later or contact support.');
 
             // Add the exception message to the displayed error for debugging (only in development)
             $exceptionMessage = config('app.debug') ? ' Debug Info: ' . $e->getMessage() : '';

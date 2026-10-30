@@ -21,7 +21,7 @@ class StudentContactsController extends Controller
 
     public function edit($id)
     {
-        $this->authorize('edit', Student::class);
+       // $this->authorize('edit', Student::class);
         $contact = StudentContact::findOrFail($id);
         return view('students.admin.contact.edit',compact('contact'));
     } // end edit

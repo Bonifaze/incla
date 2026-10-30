@@ -225,7 +225,7 @@ protected function genMatricNumber(array $fields)
 */
 function getloginurl()
 {
-    return 'https://admissions.veritas.edu.ng/students/login';
+    return 'https://portal.incla.edu.ng/students/login';
 }
 public function update(Request $request, $id)
 {

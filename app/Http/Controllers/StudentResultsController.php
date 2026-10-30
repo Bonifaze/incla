@@ -76,19 +76,19 @@ class StudentResultsController extends Controller
     $student = Student::findOrFail($request->student_id);
     $this->authorize('ictUpload', StudentResult::class);
     $session = Session::findOrFail($request->session_id);
-    // $semester = $request->semester;
-    $semester =1;
-      //  dd($semester);
+    $semester = $request->semester;
+    //$semester =1;
+        //dd($semester);
 
     $request->validate([
         'session_id' => 'required',
-        //'semester' => 'required',
+        'semester' => 'required',
     ]);
 
     $registered_courses = RegisteredCourse::where('student_id', $request->student_id)
         ->where('session', $request->session_id)
-        // ->where('semester', $request->semester)
-        ->where('semester', $semester)
+        ->where('semester', $request->semester)
+       // ->where('semester', $semester)
         ->get();
 
     return view('results.modify', compact('registered_courses', 'session', 'semester', 'student'));

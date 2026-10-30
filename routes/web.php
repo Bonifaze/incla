@@ -25,6 +25,10 @@ Route::get('/',function () {
     return view('default');
 });
 
+Route::get('/demo',function () {
+    return view('test');
+});
+
 
 // MAINTAINCE PAGE
 // Route::get('/students/remita/feestype', function () {

@@ -456,9 +456,9 @@
                 }
             }
             document.getElementById("tcu").innerHTML = sum;
-            if (sum > 24) {
+            if (sum > 50) {
                 document.getElementById("limit").innerHTML =
-                    "Total credit load should not exceed 24 unit for First Semester Courses";
+                    "Total credit load should not exceed 50 unit for First Semester Courses";
                 frm.cbs[j].checked = false;
                 // let unmarkedBoxCount = document.querySelectorAll('input[type="checkbox"]:not(:checked)');
                 //  unmarkedBoxCount.disabled = true
@@ -476,9 +476,9 @@
                 }
             }
             document.getElementById("tcu2").innerHTML = sum1;
-            if (sum1 > 24) {
+            if (sum1 > 50) {
                 document.getElementById("limit2").innerHTML =
-                    "Total credit load should not exceed 24 unit For Second Semester Courses";
+                    "Total credit load should not exceed 50 unit For Second Semester Courses";
                 frm.cbs1[j].checked = false;
                 // let unmarkedBoxCount = document.querySelectorAll('input[type="checkbox"]:not(:checked)');
                 //  unmarkedBoxCount.disabled = true
